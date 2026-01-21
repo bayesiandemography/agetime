@@ -1,11 +1,26 @@
 Package: agetime
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Labels for Age Groups, Periods, and Cohorts
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R: 
+    c(person(given = "John",
+             family = "Bryant",
+             role = c("aut", "cre"),
+             email = "john@bayesiandemography.com"),
+      person(given = "Junni",
+             family = "Zhang",
+             role = "aut",
+             email = "junni@bayesiandemography.com"))
+Description: Functions for working with age group, period,
+    and cohort labels. Includes functions for creation,
+    checking, manipulation, and extracting information.
+    Implements standard label formats and types.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Imports:
+    cli,
+    S7
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
