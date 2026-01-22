@@ -1,0 +1,46 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# agetime
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+Work with labels for age groups, periods, and cohorts.
+
+## Installation
+
+``` r
+devtools::install_github("bayesiandemography/agetime")
+```
+
+## Example
+
+```{r example}
+library(agetime)
+library(dplyr, warn.conflicts = FALSE)
+
+df <- tribble(   ~age,  ~count,
+               "0-14",     100,
+               "100+",      40,
+              "15-65",     200 )
+df 
+
+df |>
+  mutate(age_width = age_width(age))
+
+df |>
+  filter(age_lower(age) >= 15)
+```
