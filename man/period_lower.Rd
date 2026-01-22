@@ -38,16 +38,16 @@ period_mid(
 \item{label_single}{Whether labels
 for single-year periods are based on the
 lower or upper limit of the period.
-Default is `"lower"`.}
+Default is \code{"lower"}.}
 
 \item{label_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
-Default is `"include"`.}
+Default is \code{"include"}.}
 }
 \value{
-A numeric vector with same length as `x`.
+A numeric vector with same length as \code{x}.
 }
 \description{
 Calculate lower limits, upper limits,

@@ -6,36 +6,37 @@
 \alias{agetime-package}
 \title{Functions for Working with Age, Period, and Cohort Labels}
 \description{
-| Function            | Description            | Output         
-|---------------------|------------------------|-----------------|
-| [age_check()]       | Validity tests         | `TRUE` or error | 
-| [age_create()]      | New labels             | Standard labels |
-| [age_standard()]    | Reformat labels        | Standard labels |
-| [age_lower()]       | Lower limits           | Numeric vector  |
-| [age_mapping()]     | Mapping between labels | Data frame      |
-| [age_mid()]         | Midpoints              | Numeric vector  |
-| [age_open()]        | Define open age group  | Labels          |
-| [age_upper()]       | Upper limits           | Numeric vector  |
-| [age_width()]       | Interval widths        | Numeric vector  |
-| [cohort_check()]    | Validity tests         | `TRUE` or error | 
-| [cohort_create()]   | New labels             | Standard labels |
-| [cohort_extend()]   | Add extra labels       | Labels          |
-| [cohort_format()]   | Reformat labels        | Standard Labels |
-| [cohort_lower()]    | Lower limits           | Numeric vector  |
-| [cohort_mapping()]  | Mapping between labels | Data frame      |
-| [cohort_mid()]      | Midpoints              | Numeric vector  |
-| [cohort_open()]     | Define open cohort     | Labels          |
-| [cohort_upper()]    | Upper limits           | Numeric vector  |
-| [cohort_width()]    | Interval widths        | Numeric vector  |
-| [period_check()]    | Validity tests         | `TRUE` or error | 
-| [period_create()]   | New labels             | Standard labels |
-| [period_extend()]   | Add extra labels       | Labels          |
-| [period_format()]   | Reformat labels        | Standard labels |
-| [period_lower()]    | Lower limits           | Numeric vector  |
-| [period_mapping()]  | Mapping between labels | Data frame      |
-| [period_mid()]      | Midpoints              | Numeric vector  |
-| [period_upper()]    | Upper limits           | Numeric vector  |
-| [period_width()]    | Interval widths        | Numeric vector  |
+\tabular{lll}{
+   Function \tab Description \tab Output \cr
+   \code{\link[=age_check]{age_check()}} \tab Validity tests \tab \code{TRUE} or error \cr
+   \code{\link[=age_create]{age_create()}} \tab New labels \tab Standard labels \cr
+   \code{\link[=age_standard]{age_standard()}} \tab Reformat labels \tab Standard labels \cr
+   \code{\link[=age_lower]{age_lower()}} \tab Lower limits \tab Numeric vector \cr
+   \code{\link[=age_mapping]{age_mapping()}} \tab Mapping between labels \tab Data frame \cr
+   \code{\link[=age_mid]{age_mid()}} \tab Midpoints \tab Numeric vector \cr
+   \code{\link[=age_open]{age_open()}} \tab Define open age group \tab Labels \cr
+   \code{\link[=age_upper]{age_upper()}} \tab Upper limits \tab Numeric vector \cr
+   \code{\link[=age_width]{age_width()}} \tab Interval widths \tab Numeric vector \cr
+   \code{\link[=cohort_check]{cohort_check()}} \tab Validity tests \tab \code{TRUE} or error \cr
+   \code{\link[=cohort_create]{cohort_create()}} \tab New labels \tab Standard labels \cr
+   \code{\link[=cohort_extend]{cohort_extend()}} \tab Add extra labels \tab Labels \cr
+   \code{\link[=cohort_format]{cohort_format()}} \tab Reformat labels \tab Standard Labels \cr
+   \code{\link[=cohort_lower]{cohort_lower()}} \tab Lower limits \tab Numeric vector \cr
+   \code{\link[=cohort_mapping]{cohort_mapping()}} \tab Mapping between labels \tab Data frame \cr
+   \code{\link[=cohort_mid]{cohort_mid()}} \tab Midpoints \tab Numeric vector \cr
+   \code{\link[=cohort_open]{cohort_open()}} \tab Define open cohort \tab Labels \cr
+   \code{\link[=cohort_upper]{cohort_upper()}} \tab Upper limits \tab Numeric vector \cr
+   \code{\link[=cohort_width]{cohort_width()}} \tab Interval widths \tab Numeric vector \cr
+   \code{\link[=period_check]{period_check()}} \tab Validity tests \tab \code{TRUE} or error \cr
+   \code{\link[=period_create]{period_create()}} \tab New labels \tab Standard labels \cr
+   \code{\link[=period_extend]{period_extend()}} \tab Add extra labels \tab Labels \cr
+   \code{\link[=period_format]{period_format()}} \tab Reformat labels \tab Standard labels \cr
+   \code{\link[=period_lower]{period_lower()}} \tab Lower limits \tab Numeric vector \cr
+   \code{\link[=period_mapping]{period_mapping()}} \tab Mapping between labels \tab Data frame \cr
+   \code{\link[=period_mid]{period_mid()}} \tab Midpoints \tab Numeric vector \cr
+   \code{\link[=period_upper]{period_upper()}} \tab Upper limits \tab Numeric vector \cr
+   \code{\link[=period_width]{period_width()}} \tab Interval widths \tab Numeric vector \cr
+}
 }
 \seealso{
 Useful links:

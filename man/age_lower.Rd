@@ -20,7 +20,7 @@ age_mid(x)
 \item{x}{A vector of age group labels.}
 }
 \value{
-A numeric vector with same length as `x`.
+A numeric vector with same length as \code{x}.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -30,11 +30,11 @@ widths and midpoints for age groups.
 Lower and upper limits can be used
 filter on age. See below for examples.
 
-`age_mid()` uses the formula
-`age_lower(x) + 0.5 * age_width(x)`,
-except for open age groups, such as `"100+"`,
-where it uses `age_lower(x) + 0.5 * median_width`
-where `median_width` is the median over
+\code{age_mid()} uses the formula
+\code{age_lower(x) + 0.5 * age_width(x)},
+except for open age groups, such as \code{"100+"},
+where it uses \code{age_lower(x) + 0.5 * median_width}
+where \code{median_width} is the median over
 closed intervals.
 }
 \examples{
