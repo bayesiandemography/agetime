@@ -59,17 +59,17 @@ widths and midpoints for age groups.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A numeric vector with same length as `x`.</p>
+    <p>A numeric vector with same length as <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Lower and upper limits can be used
 filter on age. See below for examples.</p>
-<p>`age_mid()` uses the formula
-`age_lower(x) + 0.5 * age_width(x)`,
-except for open age groups, such as `"100+"`,
-where it uses `age_lower(x) + 0.5 * median_width`
-where `median_width` is the median over
+<p><code>age_mid()</code> uses the formula
+<code>age_lower(x) + 0.5 * age_width(x)</code>,
+except for open age groups, such as <code>"100+"</code>,
+where it uses <code>age_lower(x) + 0.5 * median_width</code>
+where <code>median_width</code> is the median over
 closed intervals.</p>
     </div>
 

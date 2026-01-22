@@ -23,17 +23,17 @@ age_mid(x)
 
 ## Value
 
-A numeric vector with same length as \`x\`.
+A numeric vector with same length as `x`.
 
 ## Details
 
 Lower and upper limits can be used filter on age. See below for
 examples.
 
-\`age_mid()\` uses the formula \`age_lower(x) + 0.5 \* age_width(x)\`,
-except for open age groups, such as \`"100+"\`, where it uses
-\`age_lower(x) + 0.5 \* median_width\` where \`median_width\` is the
-median over closed intervals.
+`age_mid()` uses the formula `age_lower(x) + 0.5 * age_width(x)`, except
+for open age groups, such as `"100+"`, where it uses
+`age_lower(x) + 0.5 * median_width` where `median_width` is the median
+over closed intervals.
 
 ## Examples
 

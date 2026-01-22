@@ -39,16 +39,16 @@ period_mid(
 - label_single:
 
   Whether labels for single-year periods are based on the lower or upper
-  limit of the period. Default is \`"lower"\`.
+  limit of the period. Default is `"lower"`.
 
 - label_multi:
 
   Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is \`"include"\`.
+  year of the period. Default is `"include"`.
 
 ## Value
 
-A numeric vector with same length as \`x\`.
+A numeric vector with same length as `x`.
 
 ## Details
 

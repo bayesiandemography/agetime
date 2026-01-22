@@ -1,5 +1,7 @@
 # agetime
 
+[![](reference/figures/sticker/agetime_sticker.png)](https://github.com/bayesiandemography/bage)
+
 Work with labels for age groups, periods, and cohorts.
 
 ## Installation
