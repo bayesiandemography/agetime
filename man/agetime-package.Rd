@@ -37,6 +37,13 @@
 | [period_upper()]    | Upper limits           | Numeric vector  |
 | [period_width()]    | Interval widths        | Numeric vector  |
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://bayesiandemography.github.io/agetime/}
+}
+
+}
 \author{
 \strong{Maintainer}: John Bryant \email{john@bayesiandemography.com}
 
