@@ -1,32 +1,74 @@
 
-get_lower <- function(x) x$m[x$i, 1L]
+get_i <- function(object) object$i
 
-get_mid <- function(x) {
-  m <- x$m
-  i <- x$i
-  lower <- m[, 1L]
-  upper <- m[, 2L]
-  width <- upper - lower
-  ans <- lower + 0.5 * width
-  is_width_defined <- !is.na(width) & is.finite(width)
-  if (any(is_width_defined)) {
-    median_width <- stats::median(width[is_width_defined])
-    is_open_left <- is.infinite(lower)
-    is_open_right <- is.infinite(upper)
-    ans[is_open_left] <- upper[is_open_left] - 0.5 * median_width
-    ans[is_open_right] <- lower[is_open_right] + 0.5 * median_width
-  }
-  ans
+get_i_x_to_xu <- function(object) object$i_x_to_xu
+
+get_i_xun_to_xunu <- function(object) object$i_xun_to_xunu
+
+get_is_na <- function(object) {
+  labels <- get_labels_unique_norm_unique(object)
+  is.na(labels)
 }
 
-get_upper <- function(x) x$m[x$i, 2L]
+get_is_open <- function(object) {
+  m <- get_m(object)
+  i <- get_i(object)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  o <- is.infinite(l) | is.infinite(u)
+  o[i]
+}
 
-get_width <- function(x) {
-  m <- x$m
-  i <- x$i
-  lower <- m[, 1L]
-  upper <- m[, 2L]
-  upper - lower
+get_is_total <- function(object) {
+  labels <- get_labels_unique_norm_unique(object)
+  labels == "total"
+}
+
+get_labels_unique <- function(object) object$labels_unique
+
+get_labels_unique_norm_unique <- function(object) object$labels_unique_norm_unique
+
+get_lower <- function(object) {
+  i <- get_i(object)
+  m <- get_m(object)
+  m[i, 1L]
+}
+
+get_m <- function(object) object$m
+
+get_mid <- function(object) {
+  m <- get_m(object)
+  i <- get_i(object)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  w <- u - l
+  m <- l + 0.5 * w
+  is_open_left <- is.infinite(l)
+  is_open_right <- is.infinite(u)
+  if (any(is_open_left) || any(is_open_right)) {
+    is_w_defined <- !is.na(w) & is.finite(w)
+    if (any(is_w_defined)) {
+      median_w <- stats::median(w[is_w_defined])
+      m[is_open_left] <- u[is_open_left] - 0.5 * median_w
+      m[is_open_right] <- l[is_open_right] + 0.5 * median_w
+    }
+  }
+  m[i]
+}
+
+get_upper <- function(object) {
+  i <- get_i(object)
+  m <- get_m(object)
+  m[i, 2L]
+}
+
+get_width <- function(object) {
+  m <- get_m(object)
+  i <- get_i(object)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  w <- u - l
+  w[i]
 }
 
 

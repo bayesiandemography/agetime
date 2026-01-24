@@ -10,7 +10,7 @@
 #' to filter on periods.
 #' See below for examples.
 #'
-#' @param x A vector of age group labels.
+#' @param x A vector of period labels.
 #' @param label_single Whether labels
 #' for single-year periods are based on the
 #' lower or upper limit of the period.
@@ -20,6 +20,10 @@
 #' include or exclude the final
 #' year of the period.
 #' Default is `"include"`.
+#' @param invalid Action if a label
+#' cannot be interpreted. Choices are
+#' `"error"` (the default), `"warn"`,
+#' and `"silent"`.
 #'
 #' @return A numeric vector with same length as `x`.
 #'
@@ -58,54 +62,74 @@
 #' period_lower("2025-2029", label_multi = "exclude")
 #' period_upper("2025-2029", label_multi = "exclude")
 #' period_width("2025-2029", label_multi = "exclude")
+#'
+#' ## no action when label invalid
+#' period_lower(c("2000-2005", "long time ago"),
+#'              invalid = "silent")
 #' @export
 period_lower <- function(x,
                          label_single = c("lower", "upper"),
-                         label_multi = c("include", "exclude")) {
+                         label_multi = c("include", "exclude"),
+                         invalid = c("error", "warn", "silent")) {
   label_single <- match.arg(label_single)
   label_multi <- match.arg(label_multi)
-  obj <- make_intervals_period(labels = x,
-                               label_single = label_single,
-                               label_multi = label_multi)
-  get_lower(obj)
+  invalid <- match.arg(invalid)
+  object <- intervals(labels = x,
+                      type = "period",
+                      label_single = label_single,
+                      label_multi = label_multi,
+                      invalid = invalid)
+  get_lower(object)
 }
 
 #' @export
 #' @rdname period_lower
 period_upper <- function(x,
                          label_single = c("lower", "upper"),
-                         label_multi = c("include", "exclude")) {
+                         label_multi = c("include", "exclude"),
+                         invalid = c("error", "warn", "silent")) {
   label_single <- match.arg(label_single)
   label_multi <- match.arg(label_multi)
-  obj <- make_intervals_period(labels = x,
-                               label_single = label_single,
-                               label_multi = label_multi)
-  get_upper(obj)
+  invalid <- match.arg(invalid)
+  object <- intervals(labels = x,
+                      type = "period",
+                      label_single = label_single,
+                      label_multi = label_multi,
+                      invalid = invalid)
+  get_upper(object)
 }
 
 #' @export
 #' @rdname period_lower
 period_width <- function(x,
-                         label_single = c("lower", "upper"), ## not needed, but keep so interface constant
-                         label_multi = c("include", "exclude")) {
+                         label_single = c("lower", "upper"), ## redundant, but keep so interface constant
+                         label_multi = c("include", "exclude"),
+                         invalid = c("error", "warn", "silent")) {
   label_single <- match.arg(label_single)
   label_multi <- match.arg(label_multi)
-  obj <- make_intervals_period(labels = x,
-                               label_single = label_single,
-                               label_multi = label_multi)
-  get_width(obj)
+  invalid <- match.arg(invalid)
+  object <- intervals(labels = x,
+                      type = "period",
+                      label_single = label_single,
+                      label_multi = label_multi,
+                      invalid = invalid)
+  get_width(object)
 }
 
 #' @export
 #' @rdname period_lower
 period_mid <- function(x,
                        label_single = c("lower", "upper"),
-                       label_multi = c("include", "exclude")) {
+                       label_multi = c("include", "exclude"),
+                       invalid = c("error", "warn", "silent")) {
   label_single <- match.arg(label_single)
   label_multi <- match.arg(label_multi)
-  obj <- make_intervals_period(labels = x,
-                               label_single = label_single,
-                               label_multi = label_multi)
-  get_mid(obj)
+  invalid <- match.arg(invalid)
+  object <- intervals(labels = x,
+                      type = "period",
+                      label_single = label_single,
+                      label_multi = label_multi,
+                      invalid = invalid)
+  get_mid(object)
 }
 

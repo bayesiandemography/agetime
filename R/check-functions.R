@@ -48,3 +48,37 @@ check_is_integerish <- function(x) {
 }
 
 
+
+
+
+check_mapping_constraints <- function(m_mapping,
+                                      x_complete,
+                                      y_complete,
+                                      x_unique,
+                                      y_unique,
+                                      check) {
+  rowsum <- rowSums(m_mapping, na.rm = TRUE)
+  colsum <- colSums(m_mapping, na.rm = TRUE)
+  is_x_complete <- all(rowsum > 0L)
+  is_y_complete <- all(colsum > 0L)
+  is_x_unique <- all(rowsum %in% c(0L, 1L))
+  is_y_unique <- all(colsum %in% c(0L, 1L))
+  for (nm in c("x_complete", "y_complete", "x_unique", "y_unique")) {
+    val_constr <- get(nm)
+    if (!is.null(val_constr)) {
+      if (!(val_constr %in% c(TRUE, FALSE)))
+        cli::cli_abort(c("{.arg {nm}} is {.val {val_constr}}.",
+                         i = paste("{.arg {nm}} must be {.val {NULL}},",
+                                   "{.val {TRUE}}, or {.val {FALSE}}.")))
+      val_check <- get(paste("is_", nm))
+      if (!identical(val_constr, val_check)) {
+        msg <- "Constraint {.code {nm} = {val_constr}} not satisfied."
+        if (check == "error")
+          cli::cli_abort(msg)
+        else
+          cli::cli_warn(msg)
+      }
+    }
+  }
+  invisible(TRUE)
+}

@@ -1,4 +1,18 @@
 
+label_parser_total <- function(label) {
+  if (identical(label, "total"))
+    c(NA_real_, NA_real_)
+  else
+    NULL
+}
+
+label_parser_na <- function(label) {
+  if (is.na(label))
+    c(NA_real_, NA_real_)
+  else
+    NULL
+}
+
 label_parser_range <- function(label, label_multi) {
   label_multi <- match.arg(label_multi, choices = c("include", "exclude"))
   m <- regexec("^(\\d+)-(\\d+)$", label, perl = TRUE)

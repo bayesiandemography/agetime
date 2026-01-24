@@ -1,6 +1,38 @@
 
 ## Normalization functions - listed in the order in which they should be run
 
+## Tokens for whole label (whitespace, tolower) -------------------------------
+
+NA_TOKENS <- c("unknown",
+               "unk",
+               "unspecified",
+               "notknown",
+               "missing",
+               "notstated",
+               "na",
+               "n/a")
+
+TOTAL_TOKENS <- c("total",
+                  "all",
+                  "overall",
+                  "allage",
+                  "allages",
+                  "allcohort",
+                  "allcohorts",
+                  "allperiod",
+                  "allperiods")
+
+INFANT_TOKENS <- c("infants",
+                   "in1st",
+                   "lessthan1",
+                   "under1",
+                   "lessthanone",
+                   "in1styear",
+                   "0-0")
+
+
+## Translate, remove elements within label ------------------------------------
+
 ## Convert to Lower Case
 norm_tolower <- function(x) tolower(x)
 
@@ -56,13 +88,26 @@ norm_range <- function(x) {
   x
 }
 
-## Replace Synonyms for Infant with 0
-norm_infant <- function(x) {
-  infant <- "^(infants?|in1st|lessthan1|under1|lessthanone|in1styear|0-0|0_0)$"
-  sub(infant, "0", x, perl = TRUE)
+
+## Translate entire label -----------------------------------------------------
+
+## Convert Synonyms for Total to Standard Label
+norm_total <- function(x) {
+  x[x %in% TOTAL_TOKENS] <- "total"
+  x
 }
 
+## Convert Synonyms for NA to NA
+norm_na <- function(x) {
+  x[x %in% NA_TOKENS] <- NA
+  x
+}
 
+## Convert Synonyms for Infant to Standard Label
+norm_infant <- function(x) {
+  x[x %in% INFANT_TOKENS] <- "0"
+  x
+}
 
 
 

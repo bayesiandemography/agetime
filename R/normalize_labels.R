@@ -9,6 +9,8 @@ make_labels_normalizers <- function(use_tolower,
                                     use_lessthan,
                                     use_plus,
                                     use_range,
+                                    use_total,
+                                    use_na,
                                     use_infant) {
   ans <- list()
   if (use_tolower)
@@ -29,6 +31,10 @@ make_labels_normalizers <- function(use_tolower,
     ans <- append(ans, norm_plus)
   if (use_range)
     ans <- append(ans, norm_range)
+  if (use_total)
+    ans <- append(ans, norm_total)
+  if (use_na)
+    ans <- append(ans, norm_na)
   if (use_infant)
     ans <- append(ans, norm_infant)
   ans
@@ -45,6 +51,8 @@ make_labels_normalizers_age <- function()
                           use_lessthan = FALSE,
                           use_plus = TRUE,
                           use_range = TRUE,
+                          use_total = TRUE,
+                          use_na = TRUE,
                           use_infant = TRUE)
 
 
@@ -58,6 +66,8 @@ make_labels_normalizers_cohort <- function()
                           use_lessthan = TRUE,
                           use_plus = FALSE,
                           use_range = TRUE,
+                          use_total = TRUE,
+                          use_na = TRUE,
                           use_infant = FALSE)
 
 make_labels_normalizers_period <- function() 
@@ -70,6 +80,8 @@ make_labels_normalizers_period <- function()
                           use_lessthan = FALSE,
                           use_plus = FALSE,
                           use_range = TRUE,
+                          use_total = TRUE,
+                          use_na = TRUE,
                           use_infant = FALSE)
 
 

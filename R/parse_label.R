@@ -4,7 +4,8 @@ make_label_parsers <- function(label_single,
                                label_multi,
                                allow_openleft,
                                allow_openright) {
-  ans <- list()
+  ans <- list(label_parser_total,
+              label_parser_na)
   label_parser_single_inner <- function(label)
     label_parser_single(label = label,
                         label_single = label_single)
@@ -46,7 +47,7 @@ make_label_parsers_period <- function(label_single,
 }
 
 
-parse_label <- function(label, label_parsers) {
+parse_label <- function(label, label_parsers, invalid) {
   na <- c(NA_real_, NA_real_)
   if (is.na(label))
     return(na)
@@ -55,5 +56,10 @@ parse_label <- function(label, label_parsers) {
     if (!is.null(val))
       return(val)
   }
+  msg <- "Don't know how to intepret label {.val {label}}."
+  if (invalid == "error")
+    cli::cli_abort(msg)
+  if (invalid == "warn")
+    cli::cli_warn(msg)
   na
 }    
