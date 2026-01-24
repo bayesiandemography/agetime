@@ -6,13 +6,13 @@ groups.
 ## Usage
 
 ``` r
-age_lower(x)
+age_lower(x, invalid = c("error", "warn", "silent"))
 
-age_upper(x)
+age_upper(x, invalid = c("error", "warn", "silent"))
 
-age_width(x)
+age_width(x, invalid = c("error", "warn", "silent"))
 
-age_mid(x)
+age_mid(x, invalid = c("error", "warn", "silent"))
 ```
 
 ## Arguments
@@ -20,6 +20,11 @@ age_mid(x)
 - x:
 
   A vector of age group labels.
+
+- invalid:
+
+  Action if a label cannot be interpreted. Choices are `"error"` (the
+  default), `"warn"`, and `"silent"`.
 
 ## Value
 
@@ -40,13 +45,17 @@ over closed intervals.
 ``` r
 x <- c("5-9", "10-14", "100+")
 age_lower(x)
-#> [1]   5  10 100
+#>   5-9 10-14  100+ 
+#>     5    10   100 
 age_upper(x)
-#> [1]  10  15 Inf
+#>   5-9 10-14  100+ 
+#>    10    15   Inf 
 age_width(x)
-#> [1]   5   5 Inf
+#>   5-9 10-14  100+ 
+#>     5     5   Inf 
 age_mid(x)
-#> [1]   7.5  12.5 102.5
+#>   5-9 10-14  100+ 
+#>   7.5  12.5 102.5 
 
 ## use 'age_lower()' to filter on age
 library(dplyr, warn.conflicts = FALSE)
@@ -67,4 +76,10 @@ df |> filter(age_lower(age) >= 10)
 #>   <chr> <dbl>
 #> 1 10-14    20
 #> 2 100+      7
+
+## no action when label invalid
+age_lower(c("0-4", "young people", "50plus"),
+          invalid = "silent")
+#>         0-4 youngpeople         50+ 
+#>           0          NA          50 
 ```
