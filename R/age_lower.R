@@ -16,11 +16,10 @@
 #' where `median_width` is the median over
 #' closed intervals.
 #'
-#' @param x A vector of age group labels.
-#' @param invalid Action if a label
-#' cannot be interpreted. Choices are
-#' `"error"` (the default), `"warn"`,
-#' and `"silent"`.
+#' @param x Vector of age group labels.
+#' @param invalid Action if meaning of label
+#' unclear. Choices are `"error"` (the default),
+#' `"warn"`, and `"silent"`.
 #'
 #' @return A numeric vector with same length as `x`.
 #'
@@ -46,43 +45,47 @@
 #' @export
 age_lower <- function(x,
                       invalid = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x, nm_x = "x")
   invalid <- match.arg(invalid)
-  object <- intervals(labels = x,
+  intervals <- intervals(labels = x,
                       type = "age",
                       invalid = invalid)
-  get_lower(object)
+  get_lower(intervals)
 }
 
 #' @export
 #' @rdname age_lower
 age_upper <- function(x,
                       invalid = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x, nm_x = "x")
   invalid <- match.arg(invalid)
-  object <- intervals(labels = x,
+  intervals <- intervals(labels = x,
                       type = "age",
                       invalid = invalid)
-  get_upper(object)
+  get_upper(intervals)
 }
 
 #' @export
 #' @rdname age_lower
 age_width <- function(x,
                       invalid = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x, nm_x = "x")
   invalid <- match.arg(invalid)
-  object <- intervals(labels = x,
+  intervals <- intervals(labels = x,
                       type = "age",
                       invalid = invalid)
-  get_width(object)
+  get_width(intervals)
 }
 
 #' @export
 #' @rdname age_lower
 age_mid <- function(x,
                     invalid = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x, nm_x = "x")
   invalid <- match.arg(invalid)
-  object <- intervals(labels = x,
+  intervals <- intervals(labels = x,
                       type = "age",
                       invalid = invalid)
-  get_mid(object)
+  get_mid(intervals)
 }
 

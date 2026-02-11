@@ -11,8 +11,8 @@
 #' See below for examples.
 #'
 #' @param x A vector of period labels.
-#' @param label_single Whether labels
-#' for single-year periods are based on the
+#' @param label_one Whether labels
+#' for one-year periods are based on the
 #' lower or upper limit of the period.
 #' Default is `"lower"`.
 #' @param label_multi Whether
@@ -43,15 +43,15 @@
 #' df
 #' df |> filter(period_lower(period) >= 2025)
 #'
-#' ## 'label_single' is "lower" (the default)
+#' ## 'label_one' is "lower" (the default)
 #' period_lower("2025")
 #' period_upper("2025")
 #' period_width("2025")
 #'
-#' ## 'label_single' is "upper"
-#' period_lower("2025", label_single = "upper")
-#' period_upper("2025", label_single = "upper")
-#' period_width("2025", label_single = "upper")
+#' ## 'label_one' is "upper"
+#' period_lower("2025", label_one = "upper")
+#' period_upper("2025", label_one = "upper")
+#' period_width("2025", label_one = "upper")
 #' 
 #' ## 'label_multi' is "include" (the default)
 #' period_lower("2025-2029")
@@ -68,15 +68,16 @@
 #'              invalid = "silent")
 #' @export
 period_lower <- function(x,
-                         label_single = c("lower", "upper"),
+                         label_one = c("lower", "upper"),
                          label_multi = c("include", "exclude"),
                          invalid = c("error", "warn", "silent")) {
-  label_single <- match.arg(label_single)
+  x <- to_character_or_factor(x = x, nm_x = "x")
+  label_one <- match.arg(label_one)
   label_multi <- match.arg(label_multi)
   invalid <- match.arg(invalid)
   object <- intervals(labels = x,
                       type = "period",
-                      label_single = label_single,
+                      label_one = label_one,
                       label_multi = label_multi,
                       invalid = invalid)
   get_lower(object)
@@ -85,15 +86,16 @@ period_lower <- function(x,
 #' @export
 #' @rdname period_lower
 period_upper <- function(x,
-                         label_single = c("lower", "upper"),
+                         label_one = c("lower", "upper"),
                          label_multi = c("include", "exclude"),
                          invalid = c("error", "warn", "silent")) {
-  label_single <- match.arg(label_single)
+  x <- to_character_or_factor(x = x, nm_x = "x")
+  label_one <- match.arg(label_one)
   label_multi <- match.arg(label_multi)
   invalid <- match.arg(invalid)
   object <- intervals(labels = x,
                       type = "period",
-                      label_single = label_single,
+                      label_one = label_one,
                       label_multi = label_multi,
                       invalid = invalid)
   get_upper(object)
@@ -102,15 +104,16 @@ period_upper <- function(x,
 #' @export
 #' @rdname period_lower
 period_width <- function(x,
-                         label_single = c("lower", "upper"), ## redundant, but keep so interface constant
+                         label_one = c("lower", "upper"), ## redundant, but keep so interface constant
                          label_multi = c("include", "exclude"),
                          invalid = c("error", "warn", "silent")) {
-  label_single <- match.arg(label_single)
+  x <- to_character_or_factor(x = x, nm_x = "x")
+  label_one <- match.arg(label_one)
   label_multi <- match.arg(label_multi)
   invalid <- match.arg(invalid)
   object <- intervals(labels = x,
                       type = "period",
-                      label_single = label_single,
+                      label_one = label_one,
                       label_multi = label_multi,
                       invalid = invalid)
   get_width(object)
@@ -119,15 +122,16 @@ period_width <- function(x,
 #' @export
 #' @rdname period_lower
 period_mid <- function(x,
-                       label_single = c("lower", "upper"),
+                       label_one = c("lower", "upper"),
                        label_multi = c("include", "exclude"),
                        invalid = c("error", "warn", "silent")) {
-  label_single <- match.arg(label_single)
+  x <- to_character_or_factor(x = x, nm_x = "x")
+  label_one <- match.arg(label_one)
   label_multi <- match.arg(label_multi)
   invalid <- match.arg(invalid)
   object <- intervals(labels = x,
                       type = "period",
-                      label_single = label_single,
+                      label_one = label_one,
                       label_multi = label_multi,
                       invalid = invalid)
   get_mid(object)

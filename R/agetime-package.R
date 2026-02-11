@@ -3,22 +3,31 @@
 #'
 #' | age                 | period                 | cohort                 | Description                |
 #' |---------------------|------------------------|------------------------|----------------------------|
-#' | [age_create()]      | [period_create()]      | [cohort_create()]      | Make new label set         |
-#' | [age_open()]        | [period_open()]        | [cohort_open()]        | Define open interval       |
-#' | [age_extend()]      | [period_extend()]      | [cohort_extend()]      | Append to existing set     |
-#' | [age_standard()]    | [period_standard()]    | [cohort_standard()]    | Convert to standard format |
-#' | [age_check()]       | [period_check()]       | [cohort_check()]       | Label format valid?        |
-#' | [age_lower()]       | [period_lower()]       | [cohort_lower()]       | Lower limits of intervals  |
-#' | [age_upper()]       | [period_upper()]       | [cohort_upper()]       | Upper limits of intervals  |
-#' | [age_width()]       | [period_width()]       | [cohort_width()]       | Widths of intervals        |
-#' | [age_mid()]         | [period_mid()]         | [cohort_mid()]         | Midpoints of intervals     |
-#' | [age_mapping()]     | [period_mapping()]     | [cohort_mapping()]     | Mapping between label sets |
-#' | [age_is_total()]    | [period_is_total()]    | [cohort_is_total()]    | Is interval 'total'?       |
-#' | [age_is_open()]     | [period_is_open()]     | [cohort_is_open()]     | Is interval open?          |
-#' | [age_coarsen()]     | [period_coarsen()]     | [cohort_coarsen()]     | Less detailed label set    |
-#' | [age_complete()]    | [period_complete()]    | [cohort_complete()]    | Intervals cover range?     |
-#' | [age_disjoint()]    | [period_disjoint()]    | [cohort_disjoint()]    | Intervals do not overlap?  |
-#' | [age_uniform()]     | [period_uniform()]     | [cohort_uniform()]     | Intervals equal width?     |
+#' | [age_lower()]       | [period_lower()]       | [cohort_lower()]       | Lower limits               |
+#' | [age_upper()]       | [period_upper()]       | [cohort_upper()]       | Upper limits               |
+#' | [age_width()]       | [period_width()]       | [cohort_width()]       | Widths                     |
+#' | [age_mid()]         | [period_mid()]         | [cohort_mid()]         | Midpoints                  |
+#' | [age_set_open()]    | -                      | [cohort_set_open()]    | Specify open interval      |
+#' | [age_is_open()]     | [period_is_open()]     | [cohort_is_open()]     | Find open intervals        |
+#' | [age_is_total()]    | [period_is_total()]    | [cohort_is_total()]    | Find totals                |
+#' | [age_to()]          | [period_to()]          | [cohort_to()]          | Recode labels              |
+#' | [age_to_one()]      | [period_to_one()]      | [cohort_to_one()]      | Recode to 1-year           | 
+#' | [age_to_five()]     | [period_to_five()]     | [cohort_to_five()]     | Recode to 5-year           | 
+#' | [age_to_ten()]      | [period_to_ten()]      | [cohort_to_ten()]      | Recode to 10-year          | 
+#' | [age_to_life()]     | -                      | -                      | Recode to lifetable ages   |
+#' | [age_to_labor()]    | -                      | -                      | Recode to labor force ages |
+#' | [age_extend()]      | [period_extend()]      | [cohort_extend()]      | Add extra labels           |
+#' | [age_standardize()] | [period_standardize()] | [cohort_standardize()] | Convert to standard format |
+#' | [age_labels()]      | [period_labels()]      | [cohort_labels()]      | New label set              |
+#' | [age_labels_one()]  | [period_labels_one()]  | [cohort_labels_one()]  | New 1-year label set       |
+#' | [age_labels_five()] | [period_labels_five()] | [cohort_labels_five()] | New 5-year label set       |
+#' | [age_labels_ten()]  | [period_labels_ten()]  | [cohort_labels_ten()]  | New 10-year label set      |
+#' | [age_labels_life()] | -                      | -                      | New lifetable label set    |
+#' | [age_labels_labor()]| -                      | -                      | New labor force label set  |
+#' | [age_assert()]      | [period_assert()]      | [cohort_assert()]      | Assertions about labels    |
+#' | [age_mapping()]     | [period_mapping()]     | [cohort_mapping()]     | Mapping between labels     |
+#' | [age_match()]       | [period_match()]       | [cohort_match()]       | Locate matched interval    |
+#' | [age_matched()]     | [period_matched()]     | [cohort_matched()]     | Does interval match        |
 #'
 #' @keywords internal
 "_PACKAGE"

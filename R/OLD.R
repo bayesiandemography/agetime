@@ -323,7 +323,7 @@
 ## #'
 ## #' `age_oldest()` requires that `x` and
 ## #' the return value have a
-## #' a five-year, single-year, or life table format,
+## #' a five-year, one-year, or life table format,
 ## #' as described in [age_labels()].
 ## #'
 ## #' @param x A vector of age labels.

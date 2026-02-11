@@ -10,28 +10,28 @@ and Midpoints of Periods}
 \usage{
 period_lower(
   x,
-  label_single = c("lower", "upper"),
+  label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   invalid = c("error", "warn", "silent")
 )
 
 period_upper(
   x,
-  label_single = c("lower", "upper"),
+  label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   invalid = c("error", "warn", "silent")
 )
 
 period_width(
   x,
-  label_single = c("lower", "upper"),
+  label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   invalid = c("error", "warn", "silent")
 )
 
 period_mid(
   x,
-  label_single = c("lower", "upper"),
+  label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   invalid = c("error", "warn", "silent")
 )
@@ -39,8 +39,8 @@ period_mid(
 \arguments{
 \item{x}{A vector of period labels.}
 
-\item{label_single}{Whether labels
-for single-year periods are based on the
+\item{label_one}{Whether labels
+for one-year periods are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
@@ -83,15 +83,15 @@ df <- tribble(    ~period, ~count,
 df
 df |> filter(period_lower(period) >= 2025)
 
-## 'label_single' is "lower" (the default)
+## 'label_one' is "lower" (the default)
 period_lower("2025")
 period_upper("2025")
 period_width("2025")
 
-## 'label_single' is "upper"
-period_lower("2025", label_single = "upper")
-period_upper("2025", label_single = "upper")
-period_width("2025", label_single = "upper")
+## 'label_one' is "upper"
+period_lower("2025", label_one = "upper")
+period_upper("2025", label_one = "upper")
+period_width("2025", label_one = "upper")
 
 ## 'label_multi' is "include" (the default)
 period_lower("2025-2029")

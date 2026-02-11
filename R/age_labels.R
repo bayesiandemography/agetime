@@ -1,0 +1,219 @@
+#' Create a New Set of Age Labels
+#'
+#' @param breaks Age group boundaries.
+#' A numeric vector.
+#' @param open Whether the oldest age group
+#' is "open", i.e. has no upper limit.
+#' Default is `TRUE`.
+#' @param lower_first The lower limit of the
+#' youngest age group. 
+#' @param lower_last The lower limit of the
+#' last age group.
+#' @param include_total Whether to include a
+#' `"Total"` category.
+#' @param include_na Whether to include
+#' an `NA` category.
+#'
+#' @returns A character vector
+#'
+#' @examples
+#' ## traditional labor force age groups
+#' age_labels(breaks = c(0, 15, 65))
+#'
+#' ## working ages start at 20, not 15
+#' age_labels(breaks = c(0, 20, 65))
+#'
+#' ## default 5-year age groups
+#' age_labels_five()
+#'
+#' ## open age group is 80+
+#' age_labels_five(lower_last = 80)
+#'
+#' ## reproductive age groups
+#' age_labels_five(lower_first = 15,
+#'                 lower_last = 45,
+#'                 open = FALSE)
+#'
+#' ## life table age groups with
+#' ## open age group of 75+
+#' age_labels_life(lower_last = 75)
+#'
+#' ## include total
+#' age_labels_five(lower_last = 20,
+#'                 include_total = TRUE)
+#' @export
+age_labels <- function(breaks,
+                       open = TRUE,
+                       include_total = FALSE,
+                       include_na = FALSE) {
+  check_breaks(breaks)
+  check_flag(x = open, nm_x = "open")
+  check_flag(x = include_total, nm_x = "include_total")
+  check_flag(x = include_na, nm_x = "include_na")
+  make_levels_from_breaks(breaks = breaks,
+                          is_open_left = FALSE,
+                          is_open_right = open,
+                          labels_one = "lower",
+                          labels_multi = "exclude",
+                          include_total = include_total,
+                          include_na = include_na)
+}
+
+#' @rdname age_labels
+#' @export
+age_labels_one <- function(lower_first = 0,
+                           lower_last = 100,
+                           open = TRUE,
+                           include_total = FALSE,
+                           include_na = FALSE) {
+  poputils::check_n(n = lower_first,
+                    nm_n = "lower_first",
+                    min = 0L,
+                    max = NULL,
+                    divisible_by = 1L)
+  poputils::check_n(n = lower_last,
+                    nm_n = "lower_last",
+                    min = 1L,
+                    max = NULL,
+                    divisible_by = 1L)
+  check_x_lt_y(x = lower_first,
+               y = lower_last,
+               nm_x = "lower_first",
+               nm_y = "lower_last")
+  check_flag(x = open, nm_x = "open")
+  check_flag(x = include_total, nm_x = "include_total")
+  check_flag(x = include_na, nm_x = "include_na")
+  to <- lower_last + if (open) 0L else 1L
+  breaks <- seq.int(from = lower_first,
+                    to = to,
+                    by = 1L)
+  age_labels(breaks = breaks,
+             open = open,
+             include_total = include_total,
+             include_na = include_na)
+}
+
+
+#' @rdname age_labels
+#' @export
+age_labels_five <- function(lower_first = 0,
+                            lower_last = 100,
+                            open = TRUE,
+                            include_total = FALSE,
+                            include_na = FALSE) {
+  poputils::check_n(n = lower_first,
+                    nm_n = "lower_first",
+                    min = 0L,
+                    max = NULL,
+                    divisible_by = 5L)
+  poputils::check_n(n = lower_last,
+                    nm_n = "lower_last",
+                    min = 5L,
+                    max = NULL,
+                    divisible_by = 5L)
+  check_x_lt_y(x = lower_first,
+               y = lower_last,
+               nm_x = "lower_first",
+               nm_y = "lower_last")
+  check_flag(x = open, nm_x = "open")
+  check_flag(x = include_total, nm_x = "include_total")
+  check_flag(x = include_na, nm_x = "include_na")
+  to <- lower_last + if (open) 0L else 5L
+  breaks <- seq.int(from = lower_first,
+                    to = to,
+                    by = 5L)
+  age_labels(breaks = breaks,
+             open = open,
+             include_total = include_total,
+             include_na = include_na)
+}
+
+#' @rdname age_labels
+#' @export
+age_labels_ten <- function(lower_first = 0,
+                           lower_last = 100,
+                           open = TRUE,
+                           include_total = FALSE,
+                           include_na = FALSE) {
+  poputils::check_n(n = lower_first,
+                    nm_n = "lower_first",
+                    min = 0L,
+                    max = NULL,
+                    divisible_by = 10L)
+  poputils::check_n(n = lower_last,
+                    nm_n = "lower_last",
+                    min = 10L,
+                    max = NULL,
+                    divisible_by = 10L)
+  check_x_lt_y(x = lower_first,
+               y = lower_last,
+               nm_x = "lower_first",
+               nm_y = "lower_last")
+  check_flag(x = open, nm_x = "open")
+  check_flag(x = include_total, nm_x = "include_total")
+  check_flag(x = include_na, nm_x = "include_na")
+  to <- lower_last + if (open) 0L else 10L
+  breaks <- seq.int(from = lower_first,
+                    to = to,
+                    by = 10L)
+  age_labels(breaks = breaks,
+             open = open,
+             include_total = include_total,
+             include_na = include_na)
+}
+
+
+#' @rdname age_labels
+#' @export
+age_labels_life <- function(lower_last = 100,
+                            include_total = FALSE,
+                            include_na = FALSE) {
+  poputils::check_n(n = lower_last,
+                    nm_n = "lower_last",
+                    min = 5L,
+                    max = NULL,
+                    divisible_by = 5L)
+  check_flag(x = open, nm_x = "open")
+  check_flag(x = include_total, nm_x = "include_total")
+  check_flag(x = include_na, nm_x = "include_na")
+  s <- seq(from = 5L,
+           to = lower_last,
+           by = 5L) 
+  breaks <- c(0L, 1L, s)
+  age_labels(breaks = breaks,
+             open = TRUE,
+             include_total = include_total,
+             include_na = include_na)
+}
+
+#' @rdname age_labels
+#' @export
+age_labels_labor <- function(age_work = 20,
+                             age_retire = 65,
+                             include_total = FALSE,
+                             include_na = FALSE) {
+  poputils::check_n(n = age_work,
+                    nm_n = "age_work",
+                    min = 1L,
+                    max = NULL,
+                    divisible_by = 1L)
+  poputils::check_n(n = age_retire,
+                    nm_n = "age_retire",
+                    min = 2L,
+                    max = NULL,
+                    divisible_by = 1L)
+  check_x_lt_y(x = age_work,
+               y = age_retire,
+               nm_x = "age_work",
+               nm_y = "age_retire")
+  check_flag(x = include_total, nm_x = "include_total")
+  check_flag(x = include_na, nm_x = "include_na")
+  breaks <- c(0L, age_work, age_retire)
+  age_labels(breaks = breaks,
+             open = TRUE,
+             include_total = include_total,
+             include_na = include_na)
+}
+
+
+

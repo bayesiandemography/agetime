@@ -43,17 +43,18 @@ age_mapping <- function(x,
                         check = c("error", "warn"),
                         return_val = c("data.frame", "matrix"),
                         invalid = c("error", "warn", "silent")) {
-  check <- match.arg(check)
+  x <- to_character_or_factor(x = x, nm_x = "x")
+  y <- to_character_or_factor(x = y, nm_x = "y")
   return_val <- match.arg(return_val)
   invalid <- match.arg(invalid)
-  obj1 <- intervals(labels = x,
-                    type = "age",
-                    invalid = invalid)
-  obj2 <- intervals(labels = y,
-                    type = "age",
-                    invalid = invalid)
-  make_mapping(obj1 = obj1,
-               obj2 = obj2,
+  intervals_x <- intervals(labels = x,
+                           type = "age",
+                           invalid = invalid)
+  intervals_y <- intervals(labels = y,
+                           type = "age",
+                           invalid = invalid)
+  make_mapping(obj1 = intervals_x,
+               obj2 = intervals_y,
                x_complete = x_complete,
                y_complete = y_complete,
                x_unique = x_unique,

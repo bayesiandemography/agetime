@@ -11,17 +11,21 @@ Authors@R:
              family = "Zhang",
              role = "aut",
              email = "junni@bayesiandemography.com"))
-Description: Functions for working with age group, period,
-    and cohort labels. Includes functions for creation,
-    checking, manipulation, and extracting information.
-    Implements standard label formats and types.
+Description: Functions for working with age, period,
+    and cohort labels. Includes functions for creating,
+    interpreting, and modifying labels. Also includes
+    functions for extracting information from labels,
+    which can be used for filtering and sorting.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R (>= 4.1.0)
 Imports:
     cli,
     lifecycle,
-    stats
+    stats,
+    tibble
 Suggests:
     dplyr,
     testthat (>= 3.0.0)

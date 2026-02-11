@@ -3,7 +3,7 @@
 
 intervals <- function(labels,
                       type,
-                      label_single,
+                      label_one,
                       label_multi,
                       invalid) {
   type <- match.arg(type, choices = c("age", "cohort", "period"))
@@ -13,12 +13,12 @@ intervals <- function(labels,
   }
   else if (type == "cohort") {
     labels_normalizers <- make_labels_normalizers_cohort()
-    label_parsers <- make_label_parsers_cohort(label_single = label_single,
+    label_parsers <- make_label_parsers_cohort(label_one = label_one,
                                                label_multi = label_multi)
   }
   else {
     labels_normalizers <- make_labels_normalizers_period()
-    label_parsers <- make_label_parsers_period(label_single = label_single,
+    label_parsers <- make_label_parsers_period(label_one = label_one,
                                                label_multi = label_multi)
   }
   ans <- intervals_inner(labels = labels,
@@ -37,8 +37,10 @@ intervals_inner <- function(labels,
                             label_parsers,
                             type,
                             invalid) {
-  labels <- as.character(labels)
-  labels_unique <- unique(labels)
+  if (is.factor(labels))
+    labels_unique <- levels(labels)
+  else
+    labels_unique <- unique(labels)
   labels_unique_norm <- normalize_labels(labels = labels_unique,
                                          labels_normalizers = labels_normalizers)
   labels_unique_norm_unique <- unique(labels_unique_norm)

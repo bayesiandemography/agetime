@@ -40,10 +40,9 @@ or \code{y_unique} is not met. The choices are
 return value. The choices are \code{"data.frame"}
 (the default) or \code{"matrix"}.}
 
-\item{invalid}{Action if a label
-cannot be interpreted. Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{invalid}{Action if meaning of label
+unclear. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 A data.frame or matrix

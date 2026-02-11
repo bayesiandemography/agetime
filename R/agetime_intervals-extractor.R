@@ -1,44 +1,50 @@
 
-get_i <- function(object) object$i
+get_i <- function(intervals) intervals$i
 
-get_i_x_to_xu <- function(object) object$i_x_to_xu
+get_i_x_to_xu <- function(intervals) intervals$i_x_to_xu
 
-get_i_xun_to_xunu <- function(object) object$i_xun_to_xunu
+get_i_xun_to_xunu <- function(intervals) intervals$i_xun_to_xunu
 
-get_is_na <- function(object) {
-  labels <- get_labels_unique_norm_unique(object)
+get_i_x_to_xunu <- function(intervals) {
+  i_x_to_xu <- get_i_x_to_xu(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  i_xun_to_xunu[i_x_to_xu]
+}
+
+get_is_na <- function(intervals) {
+  labels <- get_labels_unique_norm_unique(intervals)
   is.na(labels)
 }
 
-get_is_open <- function(object) {
-  m <- get_m(object)
-  i <- get_i(object)
+get_is_open <- function(intervals) {
+  m <- get_m(intervals)
+  i <- get_i(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
   o <- is.infinite(l) | is.infinite(u)
   o[i]
 }
 
-get_is_total <- function(object) {
-  labels <- get_labels_unique_norm_unique(object)
+get_is_total <- function(intervals) {
+  labels <- get_labels_unique_norm_unique(intervals)
   labels == "total"
 }
 
-get_labels_unique <- function(object) object$labels_unique
+get_labels_unique <- function(intervals) intervals$labels_unique
 
-get_labels_unique_norm_unique <- function(object) object$labels_unique_norm_unique
+get_labels_unique_norm_unique <- function(intervals) intervals$labels_unique_norm_unique
 
-get_lower <- function(object) {
-  i <- get_i(object)
-  m <- get_m(object)
+get_lower <- function(intervals) {
+  i <- get_i(intervals)
+  m <- get_m(intervals)
   m[i, 1L]
 }
 
-get_m <- function(object) object$m
+get_m <- function(intervals) intervals$m
 
-get_mid <- function(object) {
-  m <- get_m(object)
-  i <- get_i(object)
+get_mid <- function(intervals) {
+  m <- get_m(intervals)
+  i <- get_i(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
   w <- u - l
@@ -56,20 +62,22 @@ get_mid <- function(object) {
   m[i]
 }
 
-get_upper <- function(object) {
-  i <- get_i(object)
-  m <- get_m(object)
+get_upper <- function(intervals) {
+  i <- get_i(intervals)
+  m <- get_m(intervals)
   m[i, 2L]
 }
 
-get_width <- function(object) {
-  m <- get_m(object)
-  i <- get_i(object)
+get_width <- function(intervals) {
+  m <- get_m(intervals)
+  i <- get_i(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
   w <- u - l
   w[i]
 }
+
+
 
 
   

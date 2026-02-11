@@ -8,22 +8,31 @@
 \description{
 \tabular{llll}{
    age \tab period \tab cohort \tab Description \cr
-   \code{\link[=age_create]{age_create()}} \tab \code{\link[=period_create]{period_create()}} \tab \code{\link[=cohort_create]{cohort_create()}} \tab Make new label set \cr
-   \code{\link[=age_open]{age_open()}} \tab \code{\link[=period_open]{period_open()}} \tab \code{\link[=cohort_open]{cohort_open()}} \tab Define open interval \cr
-   \code{\link[=age_extend]{age_extend()}} \tab \code{\link[=period_extend]{period_extend()}} \tab \code{\link[=cohort_extend]{cohort_extend()}} \tab Append to existing set \cr
-   \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \tab Convert to standard format \cr
-   \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \tab Label format valid? \cr
-   \code{\link[=age_lower]{age_lower()}} \tab \code{\link[=period_lower]{period_lower()}} \tab \code{\link[=cohort_lower]{cohort_lower()}} \tab Lower limits of intervals \cr
-   \code{\link[=age_upper]{age_upper()}} \tab \code{\link[=period_upper]{period_upper()}} \tab \code{\link[=cohort_upper]{cohort_upper()}} \tab Upper limits of intervals \cr
-   \code{\link[=age_width]{age_width()}} \tab \code{\link[=period_width]{period_width()}} \tab \code{\link[=cohort_width]{cohort_width()}} \tab Widths of intervals \cr
-   \code{\link[=age_mid]{age_mid()}} \tab \code{\link[=period_mid]{period_mid()}} \tab \code{\link[=cohort_mid]{cohort_mid()}} \tab Midpoints of intervals \cr
-   \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \tab Mapping between label sets \cr
-   \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \tab Is interval 'total'? \cr
-   \code{\link[=age_is_open]{age_is_open()}} \tab \code{\link[=period_is_open]{period_is_open()}} \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \tab Is interval open? \cr
-   \code{\link[=age_coarsen]{age_coarsen()}} \tab \code{\link[=period_coarsen]{period_coarsen()}} \tab \code{\link[=cohort_coarsen]{cohort_coarsen()}} \tab Less detailed label set \cr
-   \code{\link[=age_complete]{age_complete()}} \tab \code{\link[=period_complete]{period_complete()}} \tab \code{\link[=cohort_complete]{cohort_complete()}} \tab Intervals cover range? \cr
-   \code{\link[=age_disjoint]{age_disjoint()}} \tab \code{\link[=period_disjoint]{period_disjoint()}} \tab \code{\link[=cohort_disjoint]{cohort_disjoint()}} \tab Intervals do not overlap? \cr
-   \code{\link[=age_uniform]{age_uniform()}} \tab \code{\link[=period_uniform]{period_uniform()}} \tab \code{\link[=cohort_uniform]{cohort_uniform()}} \tab Intervals equal width? \cr
+   \code{\link[=age_lower]{age_lower()}} \tab \code{\link[=period_lower]{period_lower()}} \tab \code{\link[=cohort_lower]{cohort_lower()}} \tab Lower limits \cr
+   \code{\link[=age_upper]{age_upper()}} \tab \code{\link[=period_upper]{period_upper()}} \tab \code{\link[=cohort_upper]{cohort_upper()}} \tab Upper limits \cr
+   \code{\link[=age_width]{age_width()}} \tab \code{\link[=period_width]{period_width()}} \tab \code{\link[=cohort_width]{cohort_width()}} \tab Widths \cr
+   \code{\link[=age_mid]{age_mid()}} \tab \code{\link[=period_mid]{period_mid()}} \tab \code{\link[=cohort_mid]{cohort_mid()}} \tab Midpoints \cr
+   \code{\link[=age_set_open]{age_set_open()}} \tab - \tab \code{\link[=cohort_set_open]{cohort_set_open()}} \tab Specify open interval \cr
+   \code{\link[=age_is_open]{age_is_open()}} \tab \code{\link[=period_is_open]{period_is_open()}} \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \tab Find open intervals \cr
+   \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \tab Find totals \cr
+   \code{\link[=age_to]{age_to()}} \tab \code{\link[=period_to]{period_to()}} \tab \code{\link[=cohort_to]{cohort_to()}} \tab Recode labels \cr
+   \code{\link[=age_to_one]{age_to_one()}} \tab \code{\link[=period_to_one]{period_to_one()}} \tab \code{\link[=cohort_to_one]{cohort_to_one()}} \tab Recode to 1-year \cr
+   \code{\link[=age_to_five]{age_to_five()}} \tab \code{\link[=period_to_five]{period_to_five()}} \tab \code{\link[=cohort_to_five]{cohort_to_five()}} \tab Recode to 5-year \cr
+   \code{\link[=age_to_ten]{age_to_ten()}} \tab \code{\link[=period_to_ten]{period_to_ten()}} \tab \code{\link[=cohort_to_ten]{cohort_to_ten()}} \tab Recode to 10-year \cr
+   \code{\link[=age_to_life]{age_to_life()}} \tab - \tab - \tab Recode to lifetable ages \cr
+   \code{\link[=age_to_labor]{age_to_labor()}} \tab - \tab - \tab Recode to labor force ages \cr
+   \code{\link[=age_extend]{age_extend()}} \tab \code{\link[=period_extend]{period_extend()}} \tab \code{\link[=cohort_extend]{cohort_extend()}} \tab Add extra labels \cr
+   \code{\link[=age_standardize]{age_standardize()}} \tab \code{\link[=period_standardize]{period_standardize()}} \tab \code{\link[=cohort_standardize]{cohort_standardize()}} \tab Convert to standard format \cr
+   \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \tab New label set \cr
+   \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \tab New 1-year label set \cr
+   \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \tab New 5-year label set \cr
+   \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \tab New 10-year label set \cr
+   \code{\link[=age_labels_life]{age_labels_life()}} \tab - \tab - \tab New lifetable label set \cr
+   \code{\link[=age_labels_labor]{age_labels_labor()}} \tab - \tab - \tab New labor force label set \cr
+   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \tab Assertions about labels \cr
+   \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \tab Mapping between labels \cr
+   \code{\link[=age_match]{age_match()}} \tab \code{\link[=period_match]{period_match()}} \tab \code{\link[=cohort_match]{cohort_match()}} \tab Locate matched interval \cr
+   \code{\link[=age_matched]{age_matched()}} \tab \code{\link[=period_matched]{period_matched()}} \tab \code{\link[=cohort_matched]{cohort_matched()}} \tab Does interval match \cr
 }
 }
 \seealso{

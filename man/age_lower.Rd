@@ -17,12 +17,11 @@ age_width(x, invalid = c("error", "warn", "silent"))
 age_mid(x, invalid = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{A vector of age group labels.}
+\item{x}{Vector of age group labels.}
 
-\item{invalid}{Action if a label
-cannot be interpreted. Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{invalid}{Action if meaning of label
+unclear. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 A numeric vector with same length as \code{x}.

@@ -1,15 +1,15 @@
 
 
-make_label_parsers <- function(label_single,
+make_label_parsers <- function(label_one,
                                label_multi,
                                allow_openleft,
                                allow_openright) {
   ans <- list(label_parser_total,
               label_parser_na)
-  label_parser_single_inner <- function(label)
-    label_parser_single(label = label,
-                        label_single = label_single)
-  ans <- append(ans, label_parser_single_inner)
+  label_parser_one_inner <- function(label)
+    label_parser_one(label = label,
+                        label_one = label_one)
+  ans <- append(ans, label_parser_one_inner)
   label_parser_range_inner <- function(label)
     label_parser_range(label = label,
                        label_multi = label_multi)
@@ -23,24 +23,24 @@ make_label_parsers <- function(label_single,
 
 
 make_label_parsers_age <- function() {
-  make_label_parsers(label_single = "lower",
+  make_label_parsers(label_one = "lower",
                      label_multi = "exclude",
                      allow_openleft = FALSE,
                      allow_openright = TRUE)
 }
 
-make_label_parsers_cohort <- function(label_single,
+make_label_parsers_cohort <- function(label_one,
                                       label_multi) {
-  make_label_parsers(label_single = label_single,
+  make_label_parsers(label_one = label_one,
                      label_multi = label_multi,
                      allow_openleft = TRUE,
                      allow_openright = FALSE)
 }
 
 
-make_label_parsers_period <- function(label_single,
+make_label_parsers_period <- function(label_one,
                                       label_multi) {
-  make_label_parsers(label_single = label_single,
+  make_label_parsers(label_one = label_one,
                      label_multi = label_multi,
                      allow_openleft = FALSE,
                      allow_openright = FALSE)

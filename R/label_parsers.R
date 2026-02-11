@@ -26,13 +26,13 @@ label_parser_range <- function(label, label_multi) {
   c(l, u)
 }
 
-label_parser_single <- function(label, label_single) {
-  label_single <- match.arg(label_single, choices = c("lower", "upper"))
+label_parser_one <- function(label, label_one) {
+  label_one <- match.arg(label_one, choices = c("lower", "upper"))
   m <- regexec("^(\\d+)$", label, perl = TRUE)
   mm <- regmatches(label, m)[[1L]]
   if (length(mm) == 0L)
     return(NULL)
-  if (label_single == "lower") {
+  if (label_one == "lower") {
     l <- as.double(mm[[2L]])
     u <- l + 1
   }
