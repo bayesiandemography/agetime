@@ -27,7 +27,7 @@ get_is_open <- function(intervals) {
 
 get_is_total <- function(intervals) {
   labels <- get_labels_unique_norm_unique(intervals)
-  labels == "total"
+  !is.na(labels) & (labels == "total")
 }
 
 get_labels_unique <- function(intervals) intervals$labels_unique

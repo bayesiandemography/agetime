@@ -23,13 +23,14 @@
    \code{\link[=age_to_labor]{age_to_labor()}} \tab - \tab - \tab Recode to labor force ages \cr
    \code{\link[=age_extend]{age_extend()}} \tab \code{\link[=period_extend]{period_extend()}} \tab \code{\link[=cohort_extend]{cohort_extend()}} \tab Add extra labels \cr
    \code{\link[=age_standardize]{age_standardize()}} \tab \code{\link[=period_standardize]{period_standardize()}} \tab \code{\link[=cohort_standardize]{cohort_standardize()}} \tab Convert to standard format \cr
-   \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \tab New label set \cr
-   \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \tab New 1-year label set \cr
-   \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \tab New 5-year label set \cr
-   \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \tab New 10-year label set \cr
-   \code{\link[=age_labels_life]{age_labels_life()}} \tab - \tab - \tab New lifetable label set \cr
-   \code{\link[=age_labels_labor]{age_labels_labor()}} \tab - \tab - \tab New labor force label set \cr
-   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \tab Assertions about labels \cr
+   \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \tab New labels \cr
+   \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \tab New 1-year labels \cr
+   \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \tab New 5-year labels \cr
+   \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \tab New 10-year labels \cr
+   \code{\link[=age_labels_life]{age_labels_life()}} \tab - \tab - \tab New lifetable labels \cr
+   \code{\link[=age_labels_labor]{age_labels_labor()}} \tab - \tab - \tab New labor force labels \cr
+   \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \tab Characterize intervals \cr
+   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \tab Assertions about intervals \cr
    \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \tab Mapping between labels \cr
    \code{\link[=age_match]{age_match()}} \tab \code{\link[=period_match]{period_match()}} \tab \code{\link[=cohort_match]{cohort_match()}} \tab Locate matched interval \cr
    \code{\link[=age_matched]{age_matched()}} \tab \code{\link[=period_matched]{period_matched()}} \tab \code{\link[=cohort_matched]{cohort_matched()}} \tab Does interval match \cr

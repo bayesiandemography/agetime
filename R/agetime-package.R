@@ -18,13 +18,14 @@
 #' | [age_to_labor()]    | -                      | -                      | Recode to labor force ages |
 #' | [age_extend()]      | [period_extend()]      | [cohort_extend()]      | Add extra labels           |
 #' | [age_standardize()] | [period_standardize()] | [cohort_standardize()] | Convert to standard format |
-#' | [age_labels()]      | [period_labels()]      | [cohort_labels()]      | New label set              |
-#' | [age_labels_one()]  | [period_labels_one()]  | [cohort_labels_one()]  | New 1-year label set       |
-#' | [age_labels_five()] | [period_labels_five()] | [cohort_labels_five()] | New 5-year label set       |
-#' | [age_labels_ten()]  | [period_labels_ten()]  | [cohort_labels_ten()]  | New 10-year label set      |
-#' | [age_labels_life()] | -                      | -                      | New lifetable label set    |
-#' | [age_labels_labor()]| -                      | -                      | New labor force label set  |
-#' | [age_assert()]      | [period_assert()]      | [cohort_assert()]      | Assertions about labels    |
+#' | [age_labels()]      | [period_labels()]      | [cohort_labels()]      | New labels                 |
+#' | [age_labels_one()]  | [period_labels_one()]  | [cohort_labels_one()]  | New 1-year labels          |
+#' | [age_labels_five()] | [period_labels_five()] | [cohort_labels_five()] | New 5-year labels          |
+#' | [age_labels_ten()]  | [period_labels_ten()]  | [cohort_labels_ten()]  | New 10-year labels         |
+#' | [age_labels_life()] | -                      | -                      | New lifetable labels       |
+#' | [age_labels_labor()]| -                      | -                      | New labor force labels     |
+#' | [age_check()]       | [period_check()]       | [cohort_check()]       | Characterize intervals     |
+#' | [age_assert()]      | [period_assert()]      | [cohort_assert()]      | Assertions about intervals |
 #' | [age_mapping()]     | [period_mapping()]     | [cohort_mapping()]     | Mapping between labels     |
 #' | [age_match()]       | [period_match()]       | [cohort_match()]       | Locate matched interval    |
 #' | [age_matched()]     | [period_matched()]     | [cohort_matched()]     | Does interval match        |
