@@ -27,17 +27,19 @@
 #' @export
 age_set_open <- function(x,
                          lower_last,
-                         invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
+                         unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = FALSE)
   poputils::check_n(n = lower_last,
                     nm_n = "lower_last",
                     min = 0L,
                     max = NULL,
                     divisible_by = NULL)
-  invalid <- match.arg(invalid)
+  unknown_label <- match.arg(unknown_label)
   intervals <- intervals(labels = x,
-                      type = "age",
-                      invalid = invalid)
+                      label_type = "age",
+                      unknown_label = unknown_label)
   m <- get_m(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   i_x_to_x_xunu <- get_i_x_to_xunu(intervals)

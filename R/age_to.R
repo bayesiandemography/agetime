@@ -5,7 +5,7 @@
 #'
 #' @inheritParams age_labels
 #' @param x Vector of age group labels.
-#' @param invalid Action if meaning
+#' @param unknown_label Action if meaning
 #' of label unclear. Choices are
 #' `"error"` (the default), `"warn"`,
 #' and `"silent"`.
@@ -21,15 +21,17 @@ age_to <- function(x,
                    open = TRUE,
                    include_total = NULL,
                    include_na = NULL,
-                   invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
+                   unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
   check_breaks(breaks)
   breaks <- as.integer(breaks)
   check_flag(x = open, nm_x = "open")
-  invalid <- match.arg(invalid)
+  unknown_label <- match.arg(unknown_label)
   intervals <- intervals(labels = x,
-                         type = "age",
-                         invalid = invalid)
+                         label_type = "age",
+                         unknown_label = unknown_label)
   age_to_inner(x = x,
                breaks = breaks,
                open = open,
@@ -70,13 +72,15 @@ age_to_one <- function(x,
                        open = TRUE,
                        include_total = NULL,
                        include_na = NULL,
-                       invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
+                       unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
   check_flag(x = open, nm_x = "open")
-  invalid <- match.arg(invalid)
+  unknown_label <- match.arg(unknown_label)
   intervals <- intervals(labels = x,
-                         type = "age",
-                         invalid = invalid)
+                         label_type = "age",
+                         unknown_label = unknown_label)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
                                   open = open,
@@ -112,13 +116,15 @@ age_to_five <- function(x,
                         open = TRUE,
                         include_total = NULL,
                         include_na = NULL,
-                        invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
+                        unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
   check_flag(x = open, nm_x = "open")
-  invalid <- match.arg(invalid)
+  unknown_label <- match.arg(unknown_label)
   intervals <- intervals(labels = x,
-                         type = "age",
-                         invalid = invalid)
+                         label_type = "age",
+                         unknown_label = unknown_label)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
                                   open = open,
@@ -153,13 +159,15 @@ age_to_ten <- function(x,
                         open = TRUE,
                         include_total = NULL,
                         include_na = NULL,
-                        invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
+                        unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
   check_flag(x = open, nm_x = "open")
-  invalid <- match.arg(invalid)
+  unknown_label <- match.arg(unknown_label)
   intervals <- intervals(labels = x,
-                         type = "age",
-                         invalid = invalid)
+                         label_type = "age",
+                         unknown_label = unknown_label)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
                                   open = open,
@@ -193,12 +201,14 @@ age_to_life <- function(x,
                         lower_last = NULL,
                         include_total = NULL,
                         include_na = NULL,
-                        invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
-  invalid <- match.arg(invalid)
+                        unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
+  unknown_label <- match.arg(unknown_label)
   intervals <- intervals(labels = x,
-                         type = "age",
-                         invalid = invalid)
+                         label_type = "age",
+                         unknown_label = unknown_label)
   lower_last <- make_lower_last(lower_last = lower_last,
                                 intervals = intervals,
                                 open = TRUE,
@@ -224,7 +234,10 @@ age_to_labor <- function(x,
                          age_retire = 65,
                          include_total = NULL,
                          include_na = NULL,
-                         invalid = c("error", "warn", "silent")) {
+                         unknown_label = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
   poputils::check_n(n = age_work,
                     nm_n = "age_work",
                     min = 1L,
@@ -240,13 +253,13 @@ age_to_labor <- function(x,
                nm_x = "age_work",
                nm_y = "age_retire")
   breaks <- c(0L, age_work, age_retire)
-  invalid <- match.arg(invalid)
+  unknown_label <- match.arg(unknown_label)
   age_to(x = x,
          breaks = breaks,
          open = TRUE,
          include_total = include_total,
          include_na = include_na,
-         invalid = invalid)
+         unknown_label = unknown_label)
 }
 
 
@@ -258,8 +271,8 @@ age_to_inner <- function(x,
                          include_total,
                          include_na,
                          intervals) {
-  int_has_total <- has_total(intervals)
-  int_has_na <- has_na(intervals)
+  int_has_total <- int_has_total(intervals)
+  int_has_na <- int_has_na(intervals)
   if (is.null(include_total))
     include_total <- int_has_total
   else {
@@ -279,8 +292,8 @@ age_to_inner <- function(x,
   levels_breaks <- make_levels_from_breaks(breaks = breaks,
                                            is_open_left = FALSE,
                                            is_open_right = open,
-                                           labels_one = "lower",
-                                           labels_multi = "exclude",
+                                           label_one = "lower",
+                                           label_multi = "exclude",
                                            include_total = include_total,
                                            include_na = include_na)
   m_contains <- make_m_contains(breaks = breaks,
@@ -291,7 +304,7 @@ age_to_inner <- function(x,
                                 include_na = include_na,
                                 intervals = intervals)
   check_m_contains(m_contains = m_contains,
-                   type = "age")
+                   label_type = "age")
   i_new <- apply(m_contains, 2L, which)
   i_x_to_xu <- get_i_x_to_xu(intervals)
   ans <- levels_breaks[i_new][i_x_to_xu]

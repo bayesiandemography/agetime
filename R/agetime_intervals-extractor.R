@@ -1,6 +1,4 @@
 
-get_i <- function(intervals) intervals$i
-
 get_i_x_to_xu <- function(intervals) intervals$i_x_to_xu
 
 get_i_xun_to_xunu <- function(intervals) intervals$i_xun_to_xunu
@@ -16,68 +14,75 @@ get_is_na <- function(intervals) {
   is.na(labels)
 }
 
-get_is_open <- function(intervals) {
+
+get_is_one <- function(intervals) {
+  tol <- 1e-10
   m <- get_m(intervals)
-  i <- get_i(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
-  o <- is.infinite(l) | is.infinite(u)
-  o[i]
+  is.finite(l) & is.finite(u) & (abs(u - l - 1) < tol)
 }
+
+
+get_is_open <- function(intervals) {
+  m <- get_m(intervals)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  is.infinite(l) || is.infinite(u)
+}
+
+get_is_open_left <- function(intervals) {
+  m <- get_m(intervals)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  is.infinite(l) & is.finite(u)
+}
+
+get_is_open_right <- function(intervals) {
+  m <- get_m(intervals)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  is.finite(l) & is.infinite(u)
+}
+
+get_is_range <- function(intervals) {
+  m <- get_m(intervals)
+  l <- m[, 1L]
+  u <- m[, 2L]
+  is.finite(l) & is.finite(u) & (u - l > 1.5)
+}
+
 
 get_is_total <- function(intervals) {
   labels <- get_labels_unique_norm_unique(intervals)
   !is.na(labels) & (labels == "total")
 }
 
-get_labels_unique <- function(intervals) intervals$labels_unique
+get_labels_unique <- function(intervals)
+  intervals$labels_unique
 
-get_labels_unique_norm_unique <- function(intervals) intervals$labels_unique_norm_unique
+get_labels_unique_norm_unique <- function(intervals)
+  intervals$labels_unique_norm_unique
 
 get_lower <- function(intervals) {
-  i <- get_i(intervals)
   m <- get_m(intervals)
-  m[i, 1L]
+  m[, 1L]
 }
 
-get_m <- function(intervals) intervals$m
+get_m <- function(intervals)
+  intervals$m
 
-get_mid <- function(intervals) {
-  m <- get_m(intervals)
-  i <- get_i(intervals)
-  l <- m[, 1L]
-  u <- m[, 2L]
-  w <- u - l
-  m <- l + 0.5 * w
-  is_open_left <- is.infinite(l)
-  is_open_right <- is.infinite(u)
-  if (any(is_open_left) || any(is_open_right)) {
-    is_w_defined <- !is.na(w) & is.finite(w)
-    if (any(is_w_defined)) {
-      median_w <- stats::median(w[is_w_defined])
-      m[is_open_left] <- u[is_open_left] - 0.5 * median_w
-      m[is_open_right] <- l[is_open_right] + 0.5 * median_w
-    }
-  }
-  m[i]
-}
 
 get_upper <- function(intervals) {
-  i <- get_i(intervals)
   m <- get_m(intervals)
-  m[i, 2L]
+  m[, 2L]
 }
 
 get_width <- function(intervals) {
   m <- get_m(intervals)
-  i <- get_i(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
-  w <- u - l
-  w[i]
+  u - l
 }
-
-
-
 
   

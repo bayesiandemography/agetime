@@ -6,41 +6,26 @@
 \usage{
 age_mapping(
   x,
-  y,
-  x_complete = NULL,
-  y_complete = NULL,
-  x_unique = NULL,
-  y_unique = NULL,
-  check = c("error", "warn"),
+  y = NULL,
+  relation = c("equals", "contains", "contained", "overlaps"),
   return_val = c("data.frame", "matrix"),
-  invalid = c("error", "warn", "silent")
+  unknown_label = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x, y}{Vectors of age group labels.}
+\item{x}{Vector of age group labels.}
 
-\item{x_complete}{Each label in \code{x} maps to
-at least one label in \code{y}}
+\item{y}{Vector of age group labels. If
+no value supplied, \code{x} is mapped with itself.}
 
-\item{y_complete}{Each label in \code{y} maps to
-at least one label in \code{x}}
-
-\item{x_unique}{Each label in \code{x} maps to
-at most one label in \code{y}}
-
-\item{y_unique}{Each label in \code{y} maps to
-at most one label in \code{x}}
-
-\item{check}{Action if condition specified
-by \code{x_complete}, \code{y_complete}, \code{x_unique},
-or \code{y_unique} is not met. The choices are
-\code{"error"} (the default) or \code{"warn"}.}
+\item{relation}{\code{"equals"} (the default),
+\code{"contains"} \code{"contained"}, or \code{"overlaps"}}
 
 \item{return_val}{The format of the
 return value. The choices are \code{"data.frame"}
 (the default) or \code{"matrix"}.}
 
-\item{invalid}{Action if meaning of label
+\item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
@@ -48,16 +33,25 @@ unclear. Choices are \code{"error"} (the default),
 A data.frame or matrix
 }
 \description{
-Include the pair (x_i, y_j) in the mapping
-if a person or event included in x_i
-could, in principle, be included in y_j.
+Make Mapping Between Age Labels
 }
-\details{
-If x_i is total or NA,
-then all pairs involving
-x_i are included in the mapping.
+\section{The \code{relation} argument}{
 
-If y_j is total or NA,
-then all pairs involving
-y_j are included in the mapping.
+\itemize{
+\item \code{"equals"}. \code{x} equals \code{y}. Lower limit of \code{x}
+= lower limit \code{y}, and upper limit of \code{x} =
+upper limit of \code{y}.
+\item \code{"contains"}. \code{x} contains \code{y}.
+Lower limit of \code{x} <= lower limit of \code{y},
+and upper limit of \code{x} >= upper limit of \code{y}.
+\item \code{"contained"}. \code{x} is contained by \code{y}.
+Lower limit of \code{x} >= lower limit of \code{y}, and
+Upper limit of \code{x} <= upper limit of \code{y}.
+\item \code{"overlaps"}. \code{x} overlaps \code{y}.
+Lower limit of \code{y} <= lower limit
+of \code{x} <  upper limit of \code{y}, or
+lower limit of \code{y} <= upper limit of \code{x} <
+upper limit of \code{y}, or both.
 }
+}
+

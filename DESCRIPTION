@@ -24,6 +24,7 @@ Depends:
 Imports:
     cli,
     lifecycle,
+    pillar,
     stats,
     tibble
 Suggests:

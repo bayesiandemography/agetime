@@ -4,7 +4,7 @@
 \alias{age_set_open}
 \title{Define the Oldest Age Group}
 \usage{
-age_set_open(x, lower_last, invalid = c("error", "warn", "silent"))
+age_set_open(x, lower_last, unknown_label = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
@@ -12,7 +12,7 @@ age_set_open(x, lower_last, invalid = c("error", "warn", "silent"))
 \item{lower_last}{Lower limit of
 an existing age group in \code{x}.}
 
-\item{invalid}{Action if meaning of label
+\item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }

@@ -6,6 +6,18 @@ check_breaks <- function(breaks) {
 }
   
 
+check_flag <- function(x, nm_x) {
+  if (length(x) != 1L)
+    cli::cli_abort(c("{.arg {nm_x}} does not have length 1.",
+                     i = "{.arg {nm_x}} has length {.val {length(x)}}."))
+  if (is.na(x))
+    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.")
+  if (!(x %in% c(TRUE, FALSE, 1L, 0L)))
+    cli::cli_abort(c("{.arg {nm_x}} is not {.val {TRUE}} or {.val {FALSE}}.",
+                     "{.arg {nm_x}} equals {.val {x}}."))
+  invisible(TRUE)
+}
+
 
 check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   eps <- 1e-8
@@ -38,8 +50,8 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
     
 
 
-check_m_contains <- function(m_contains, type) {
-  int_name <- switch(type,
+check_m_contains <- function(m_contains, label_type) {
+  int_name <- switch(label_type,
                      age = "age group",
                      cohort = "cohort",
                      period = "period")
@@ -58,17 +70,27 @@ check_m_contains <- function(m_contains, type) {
   
 
 
-check_flag <- function(x, nm_x) {
-  if (length(x) != 1L)
-    cli::cli_abort(c("{.arg {nm_x}} does not have length 1.",
+check_number <- function(x, nm_x, min) {
+  if (!is.numeric(x))
+    cli::cli_abort(c("{.arg {nm_x}} is non-numeric",
+                     i = "{.arg {nm_x}} has class {.cls {class(x)}}."))
+  if (!identical(length(x), 1L))
+    cli::cli_abort(c("{.arg {nm_x}} does not have length {.val {1}}.",
                      i = "{.arg {nm_x}} has length {.val {length(x)}}."))
   if (is.na(x))
     cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.")
-  if (!(x %in% c(TRUE, FALSE, 1L, 0L)))
-    cli::cli_abort(c("{.arg {nm_x}} is not {.val {TRUE}} or {.val {FALSE}}.",
+  if (x < min)
+    cli::cli_abort(c("{.arg {nm_x}} is less than {.val {min}}.",
                      "{.arg {nm_x}} equals {.val {x}}."))
   invisible(TRUE)
 }
+
+    
+    
+                   
+
+      
+
 
 
 

@@ -17,7 +17,7 @@
 #' | [age_to_life()]     | -                      | -                      | Recode to lifetable ages   |
 #' | [age_to_labor()]    | -                      | -                      | Recode to labor force ages |
 #' | [age_extend()]      | [period_extend()]      | [cohort_extend()]      | Add extra labels           |
-#' | [age_standardize()] | [period_standardize()] | [cohort_standardize()] | Convert to standard format |
+#' | [age_standard()]    | [period_standard()]    | [cohort_standard()]    | Convert to standard format |
 #' | [age_labels()]      | [period_labels()]      | [cohort_labels()]      | New labels                 |
 #' | [age_labels_one()]  | [period_labels_one()]  | [cohort_labels_one()]  | New 1-year labels          |
 #' | [age_labels_five()] | [period_labels_five()] | [cohort_labels_five()] | New 5-year labels          |
@@ -27,8 +27,6 @@
 #' | [age_check()]       | [period_check()]       | [cohort_check()]       | Characterize intervals     |
 #' | [age_assert()]      | [period_assert()]      | [cohort_assert()]      | Assertions about intervals |
 #' | [age_mapping()]     | [period_mapping()]     | [cohort_mapping()]     | Mapping between labels     |
-#' | [age_match()]       | [period_match()]       | [cohort_match()]       | Locate matched interval    |
-#' | [age_matched()]     | [period_matched()]     | [cohort_matched()]     | Does interval match        |
 #'
 #' @keywords internal
 "_PACKAGE"

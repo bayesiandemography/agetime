@@ -2,24 +2,24 @@
 % Please edit documentation in R/age_lower.R
 \name{age_lower}
 \alias{age_lower}
+\alias{age_mid}
 \alias{age_upper}
 \alias{age_width}
-\alias{age_mid}
 \title{Lower Limits, Upper Limits, Widths
 and Midpoints of Age Groups}
 \usage{
-age_lower(x, invalid = c("error", "warn", "silent"))
+age_lower(x, unknown_label = c("error", "warn", "silent"))
 
-age_upper(x, invalid = c("error", "warn", "silent"))
+age_mid(x, unknown_label = c("error", "warn", "silent"))
 
-age_width(x, invalid = c("error", "warn", "silent"))
+age_upper(x, unknown_label = c("error", "warn", "silent"))
 
-age_mid(x, invalid = c("error", "warn", "silent"))
+age_width(x, unknown_label = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{invalid}{Action if meaning of label
+\item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
@@ -57,7 +57,7 @@ df <- tribble(   ~age, ~count,
 df
 df |> filter(age_lower(age) >= 10)
 
-## no action when label invalid
+## no action when 'unknown_label' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
-          invalid = "silent")
+          unknown_label = "silent")
 }

@@ -47,7 +47,7 @@ make_label_parsers_period <- function(label_one,
 }
 
 
-parse_label <- function(label, label_parsers, invalid) {
+parse_label <- function(label, label_parsers, unknown_label) {
   na <- c(NA_real_, NA_real_)
   if (is.na(label))
     return(na)
@@ -57,9 +57,9 @@ parse_label <- function(label, label_parsers, invalid) {
       return(val)
   }
   msg <- "Don't know how to intepret label {.val {label}}."
-  if (invalid == "error")
+  if (unknown_label == "error")
     cli::cli_abort(msg)
-  if (invalid == "warn")
+  if (unknown_label == "warn")
     cli::cli_warn(msg)
   na
 }    

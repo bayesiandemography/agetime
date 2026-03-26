@@ -2,16 +2,16 @@
 ## constructor ----------------------------------------------------------------
 
 intervals <- function(labels,
-                      type,
+                      label_type,
                       label_one,
                       label_multi,
-                      invalid) {
-  type <- match.arg(type, choices = c("age", "cohort", "period"))
-  if (type == "age") {
+                      unknown_label) {
+  label_type <- match.arg(label_type, choices = c("age", "cohort", "period"))
+  if (label_type == "age") {
     labels_normalizers <- make_labels_normalizers_age()
     label_parsers <- make_label_parsers_age()
   }
-  else if (type == "cohort") {
+  else if (label_type == "cohort") {
     labels_normalizers <- make_labels_normalizers_cohort()
     label_parsers <- make_label_parsers_cohort(label_one = label_one,
                                                label_multi = label_multi)
@@ -24,10 +24,8 @@ intervals <- function(labels,
   ans <- intervals_inner(labels = labels,
                          labels_normalizers = labels_normalizers,
                          label_parsers = label_parsers,
-                         type = type,
-                         invalid = invalid)
-  ## validate_agetime_interval(object = ans,
-  ##                           type = type)
+                         label_type = label_type,
+                         unknown_label = unknown_label)
   ans
 }
   
@@ -35,8 +33,8 @@ intervals <- function(labels,
 intervals_inner <- function(labels,
                             labels_normalizers,
                             label_parsers,
-                            type,
-                            invalid) {
+                            label_type,
+                            unknown_label) {
   if (is.factor(labels))
     labels_unique <- levels(labels)
   else
@@ -51,7 +49,7 @@ intervals_inner <- function(labels,
               FUN = parse_label,
               FUN.VALUE = c(NA_real_, NA_real_),
               label_parsers = label_parsers,
-              invalid = invalid)
+              unknown_label = unknown_label)
   m <- t(m)
   ans <- list(labels_unique = labels_unique,
               labels_unique_norm_unique = labels_unique_norm_unique,
@@ -60,7 +58,7 @@ intervals_inner <- function(labels,
               i_x_to_xu = i_x_to_xu,
               i_xun_to_xunu = i_xun_to_xunu)
   class <- "agetime_intervals"
-  class <- c(paste(class, type, sep = "_"), class)
+  class <- c(paste(class, label_type, sep = "_"), class)
   class(ans) <- class
   ans
 }
@@ -74,7 +72,7 @@ intervals_inner <- function(labels,
 #' @returns TRUE
 #'
 #' @noRd
-validate_agetime_interval <- function(object, type) {
+validate_agetime_interval <- function(object, label_type) {
   labels_unique <- get_labels_unique(object)
   m <- get_m(object)
   i <- get_i(object)
@@ -92,9 +90,9 @@ validate_agetime_interval <- function(object, type) {
                 m = m)
   check_i_x_to_xu_and_labels_unique(i_x_to_xu = i_x_to_xu,
                                     labels_unique = labels_unique)
-  if (type == "age")
+  if (label_type == "age")
     check_m_age(m)
-  else if (type == "cohort")
+  else if (label_type == "cohort")
     check_m_cohort(m)
   else
     check_m_period(m)

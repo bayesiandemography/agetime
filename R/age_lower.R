@@ -17,7 +17,7 @@
 #' closed intervals.
 #'
 #' @param x Vector of age group labels.
-#' @param invalid Action if meaning of label
+#' @param unknown_label Action if meaning of label
 #' unclear. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
 #'
@@ -39,53 +39,53 @@
 #' df
 #' df |> filter(age_lower(age) >= 10)
 #'
-#' ## no action when label invalid
+#' ## no action when 'unknown_label' is "silent"
 #' age_lower(c("0-4", "young people", "50plus"),
-#'           invalid = "silent")
+#'           unknown_label = "silent")
 #' @export
 age_lower <- function(x,
-                      invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
-  invalid <- match.arg(invalid)
-  intervals <- intervals(labels = x,
-                      type = "age",
-                      invalid = invalid)
-  get_lower(intervals)
-}
-
-#' @export
-#' @rdname age_lower
-age_upper <- function(x,
-                      invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
-  invalid <- match.arg(invalid)
-  intervals <- intervals(labels = x,
-                      type = "age",
-                      invalid = invalid)
-  get_upper(intervals)
-}
-
-#' @export
-#' @rdname age_lower
-age_width <- function(x,
-                      invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
-  invalid <- match.arg(invalid)
-  intervals <- intervals(labels = x,
-                      type = "age",
-                      invalid = invalid)
-  get_width(intervals)
+                      unknown_label = c("error", "warn", "silent")) {
+  unknown_label <- match.arg(unknown_label)
+  inner_lower(x = x,
+              label_type = "age",
+              label_one = "lower",
+              label_multi = "exclude",
+              unknown_label = unknown_label)
 }
 
 #' @export
 #' @rdname age_lower
 age_mid <- function(x,
-                    invalid = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x, nm_x = "x")
-  invalid <- match.arg(invalid)
-  intervals <- intervals(labels = x,
-                      type = "age",
-                      invalid = invalid)
-  get_mid(intervals)
+                    unknown_label = c("error", "warn", "silent")) {
+  unknown_label <- match.arg(unknown_label)
+  inner_mid(x = x,
+            label_type = "age",
+            label_one = "lower",
+            label_multi = "exclude",
+            unknown_label = unknown_label)
+}
+
+#' @export
+#' @rdname age_lower
+age_upper <- function(x,
+                      unknown_label = c("error", "warn", "silent")) {
+  unknown_label <- match.arg(unknown_label)
+  inner_upper(x = x,
+              label_type = "age",
+              label_one = "lower",
+              label_multi = "exclude",
+              unknown_label = unknown_label)
+}
+
+#' @export
+#' @rdname age_lower
+age_width <- function(x,
+                      unknown_label = c("error", "warn", "silent")) {
+  unknown_label <- match.arg(unknown_label)
+  inner_width(x = x,
+              label_type = "age",
+              label_one = "lower",
+              label_multi = "exclude",
+              unknown_label = unknown_label)
 }
 

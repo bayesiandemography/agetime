@@ -4,12 +4,12 @@
 \alias{age_is_open}
 \title{Identify Labels that Refer to Open Age Groups}
 \usage{
-age_is_open(x, invalid = c("error", "warn", "silent"))
+age_is_open(x, unknown_label = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{invalid}{Action if meaning of label
+\item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
@@ -17,7 +17,10 @@ unclear. Choices are \code{"error"} (the default),
 \code{TRUE} or \code{FALSE}
 }
 \description{
-Identify Labels that Refer to Open Age Groups
+Return a logical vector the same length as \code{x} with
+\code{TRUE} for labels that \pkg{agetime} interprets as
+open age groups, and \code{FALSE} otherwise.
+An open age group is one with no upper limit, eg \code{"100+"}.
 }
 \examples{
 x <- c("20+", "infant", "100+", "60to79")

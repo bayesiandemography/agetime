@@ -10,13 +10,13 @@ age_to(
   open = TRUE,
   include_total = NULL,
   include_na = NULL,
-  invalid = c("error", "warn", "silent")
+  unknown_label = c("error", "warn", "silent")
 )
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{breaks}{Age group boundaries.
+\item{breaks}{Boundaries between age groups.
 A numeric vector.}
 
 \item{open}{Whether the oldest age group
@@ -29,7 +29,7 @@ Default is \code{TRUE}.}
 \item{include_na}{Whether to include
 an \code{NA} category.}
 
-\item{invalid}{Action if meaning
+\item{unknown_label}{Action if meaning
 of label unclear. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}

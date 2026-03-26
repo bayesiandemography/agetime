@@ -1,0 +1,139 @@
+#' Create a New Set of Cohort Labels
+#'
+#' @inheritParams cohort_lower
+#' @param breaks Boundaries between cohorts
+#' A numeric vector.
+#' @param lower_first The lower limit of the
+#' first cohort.
+#' @param lower_last The lower limit of the
+#' last cohort.
+#' @param open Whether the first cohort
+#' is "open", i.e. has no lower limit.
+#' Default is `FALSE`.
+#' @param include_total Whether to include a
+#' `"Total"` category.
+#' @param include_na Whether to include
+#' an `NA` category.
+#'
+#' @returns A character vector
+#'
+#' @examples
+#' ## 5-year cohorts
+#' cohort_labels_five(lower_first = 2000,
+#'                    lower_last = 2010)
+#'
+#' ## 5-year cohorts, first cohort is open
+#' cohort_labels_five(lower_first = 1960,
+#'                    lower_last = 2020,
+#'                    open = TRUE)
+#'
+#' ## single-year cohorts
+#' cohort_labels_one(lower_first = 2000,
+#'                   lower_last = 2010)
+#'
+#' ## single-year cohorts, 'label_one' is "upper"
+#' cohort_labels_one(lower_first = 2000,
+#'                   lower_last = 2010,
+#'                   label_one = "upper")
+#' 
+#' ## ten-year cohorts
+#' cohort_labels_ten(lower_first = 2000,
+#'                   lower_last = 2010)
+#'
+#' ## ten-year cohorts, 'label_multi' is "exclude",
+#' cohort_labels_ten(lower_first = 2000,
+#'                   lower_last = 2010,
+#'                   label_multi = "exclude")
+#'
+#' ## include total and NA
+#' cohort_labels_ten(lower_first = 2000,
+#'                   lower_last = 2010,
+#'                   include_total = TRUE,
+#'                   include_na = TRUE)
+#' @export
+cohort_labels <- function(breaks,
+                          open = FALSE,
+                          label_one = c("lower", "upper"),
+                          label_multi = c("include", "exclude"),
+                          include_total = FALSE,
+                          include_na = FALSE) {
+  check_flag(x = open, nm_x = "open")
+  label_one <- match.arg(label_one)
+  label_multi <- match.arg(label_multi)
+  inner_labels(breaks = breaks,
+               label_one = label_one,
+               label_multi = label_multi,
+               is_open_left = open,
+               is_open_right = FALSE,
+               include_total = include_total,
+               include_na = include_na)
+}
+
+#' @rdname cohort_labels
+#' @export
+cohort_labels_one <- function(lower_first,
+                              lower_last,
+                              open = FALSE,
+                              label_one = c("lower", "upper"),
+                              label_multi = c("include", "exclude"),
+                              include_total = FALSE,
+                              include_na = FALSE) {
+  check_flag(x = open, nm_x = "open")
+  label_one <- match.arg(label_one)
+  label_multi <- match.arg(label_multi)
+  inner_labels_one(lower_first = lower_first,
+                   lower_last = lower_last,
+                   label_one = label_one,
+                   label_multi = label_multi,
+                   is_open_left = open,
+                   is_open_right = FALSE,
+                   include_total = include_total,
+                   include_na = include_na)
+}
+
+
+#' @rdname cohort_labels
+#' @export
+cohort_labels_five <- function(lower_first,
+                               lower_last,
+                               open = FALSE,
+                               label_one = c("lower", "upper"),
+                               label_multi = c("include", "exclude"),
+                               include_total = FALSE,
+                               include_na = FALSE) {
+  check_flag(x = open, nm_x = "open")
+  label_one <- match.arg(label_one)
+  label_multi <- match.arg(label_multi)
+  inner_labels_five(lower_first = lower_first,
+                    lower_last = lower_last,
+                    label_one = label_one,
+                    label_multi = label_multi,
+                    is_open_left = open,
+                    is_open_right = FALSE,
+                    include_total = include_total,
+                    include_na = include_na)
+}
+
+#' @rdname cohort_labels
+#' @export
+cohort_labels_ten <- function(lower_first,
+                              lower_last,
+                              open = FALSE,
+                              label_one = c("lower", "upper"),
+                              label_multi = c("include", "exclude"),
+                              include_total = FALSE,
+                              include_na = FALSE) {
+  check_flag(x = open, nm_x = "open")
+  label_one <- match.arg(label_one)
+  label_multi <- match.arg(label_multi)
+  inner_labels_ten(lower_first = lower_first,
+                   lower_last = lower_last,
+                   label_one = label_one,
+                   label_multi = label_multi,
+                   is_open_left = open,
+                   is_open_right = FALSE,
+                   include_total = include_total,
+                   include_na = include_na)
+}
+
+

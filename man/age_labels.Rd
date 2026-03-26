@@ -45,7 +45,7 @@ age_labels_labor(
 )
 }
 \arguments{
-\item{breaks}{Age group boundaries.
+\item{breaks}{Boundaries between age groups.
 A numeric vector.}
 
 \item{open}{Whether the oldest age group
@@ -71,28 +71,36 @@ A character vector
 Create a New Set of Age Labels
 }
 \examples{
-## traditional labor force age groups
-age_labels(breaks = c(0, 15, 65))
-
-## working ages start at 20, not 15
-age_labels(breaks = c(0, 20, 65))
-
 ## default 5-year age groups
 age_labels_five()
 
 ## open age group is 80+
 age_labels_five(lower_last = 80)
 
-## reproductive age groups
+## reproductive ages: 5-year
 age_labels_five(lower_first = 15,
                 lower_last = 45,
                 open = FALSE)
+
+## reproductive ages: 1-year
+age_labels_one(lower_first = 15,
+               lower_last = 49,
+               open = FALSE)
+
+## include total and NA
+age_labels_five(lower_last = 20,
+                include_total = TRUE,
+                include_na = TRUE)
+
+## arbitrary age groups
+age_labels(breaks = c(0, 5, 10, 14, 18),
+           open = FALSE)
 
 ## life table age groups with
 ## open age group of 75+
 age_labels_life(lower_last = 75)
 
-## include total
-age_labels_five(lower_last = 20,
-                include_total = TRUE)
+## labor force age groups
+age_labels_labor()
+age_labels_labor(age_retire = 67)
 }

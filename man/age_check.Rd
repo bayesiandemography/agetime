@@ -13,7 +13,7 @@ age_check(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
-  invalid = c("error", "warn", "silent")
+  unknown_label = c("error", "warn", "silent")
 )
 
 age_assert(
@@ -24,7 +24,7 @@ age_assert(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
-  invalid = c("error", "warn", "silent")
+  unknown_label = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -46,7 +46,7 @@ have a lower limit of zero.}
 \item{include_open}{One or more age groups
 has no upper limit.}
 
-\item{invalid}{Action if meaning of label
+\item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
@@ -54,13 +54,33 @@ unclear. Choices are \code{"error"} (the default),
 \itemize{
 \item \code{age_check()} returns a list with
 components \code{ok} (a logical flag)
-and \code{details} (a data frame). \code{ok} is \code{TRUE}
-if all assertions are satisfied, and \code{FALSE}
-otherwise.
+and \code{details} (a data frame).
 \item \code{age_assert()} returns \code{x} invisibly,
 or throws an error.
 }
 }
 \description{
-Check or Make Assertions About Age Groups
+Collect information on age group labels (\code{age_check()}),
+or throw an error if age group labels do not
+conform to expectations (\code{age_assert}).
+}
+\examples{
+lab <- age_labels_labor()
+lab
+
+## get info on everything
+age_check(x = lab,
+          no_overlap = TRUE,
+          no_gap = TRUE,
+          no_total = TRUE,
+          no_na = TRUE,
+          include_zero = TRUE,
+          include_open = TRUE)
+
+## throw error if gaps
+age_assert(x = lab, no_gap = TRUE)
+
+lab_gap <- lab[c(1, 3)]
+## throw error if no gaps
+age_assert(x = lab_gap, no_gap = FALSE)
 }

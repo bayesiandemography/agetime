@@ -4,21 +4,22 @@
 \alias{age_is_total}
 \title{Identify Labels that Refer to Totals}
 \usage{
-age_is_total(x, invalid = c("error", "warn", "silent"))
+age_is_total(x, unknown_label = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{invalid}{Action if meaning of label
+\item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-A logical vector the same
-length as \code{x}.
+A logical vector
 }
 \description{
-Identify Labels that Refer to Totals
+Return a logical vector the same length as \code{x} with
+\code{TRUE} for labels that \pkg{agetime} interprets as
+totals, and \code{FALSE} otherwise.
 }
 \examples{
 x <- c("20-24", "Total", "100+", "ALL")

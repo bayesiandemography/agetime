@@ -22,7 +22,8 @@ TOTAL_TOKENS <- c("total",
                   "allperiod",
                   "allperiods")
 
-INFANT_TOKENS <- c("infants",
+INFANT_TOKENS <- c("infant",
+                   "infants",
                    "in1st",
                    "lessthan1",
                    "under1",
