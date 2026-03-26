@@ -6,24 +6,24 @@ groups.
 ## Usage
 
 ``` r
-age_lower(x, invalid = c("error", "warn", "silent"))
+age_lower(x, unknown_label = c("error", "warn", "silent"))
 
-age_upper(x, invalid = c("error", "warn", "silent"))
+age_mid(x, unknown_label = c("error", "warn", "silent"))
 
-age_width(x, invalid = c("error", "warn", "silent"))
+age_upper(x, unknown_label = c("error", "warn", "silent"))
 
-age_mid(x, invalid = c("error", "warn", "silent"))
+age_width(x, unknown_label = c("error", "warn", "silent"))
 ```
 
 ## Arguments
 
 - x:
 
-  A vector of age group labels.
+  Vector of age group labels.
 
-- invalid:
+- unknown_label:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
+  Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
 
 ## Value
@@ -77,9 +77,9 @@ df |> filter(age_lower(age) >= 10)
 #> 1 10-14    20
 #> 2 100+      7
 
-## no action when label invalid
+## no action when 'unknown_label' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
-          invalid = "silent")
+          unknown_label = "silent")
 #>         0-4 youngpeople         50+ 
 #>           0          NA          50 
 ```

@@ -1,70 +1,59 @@
 # Make Mapping Between Age Labels
 
-Include the pair (x_i, y_j) in the mapping if a person or event included
-in x_i could, in principle, be included in y_j.
+Make Mapping Between Age Labels
 
 ## Usage
 
 ``` r
 age_mapping(
   x,
-  y,
-  x_complete = NULL,
-  y_complete = NULL,
-  x_unique = NULL,
-  y_unique = NULL,
-  check = c("error", "warn"),
+  y = NULL,
+  relation = c("equals", "contains", "contained", "overlaps"),
   return_val = c("data.frame", "matrix"),
-  invalid = c("error", "warn", "silent")
+  unknown_label = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x, y:
+- x:
 
-  Vectors of age group labels.
+  Vector of age group labels.
 
-- x_complete:
+- y:
 
-  Each label in `x` maps to at least one label in `y`
+  Vector of age group labels. If no value supplied, `x` is mapped with
+  itself.
 
-- y_complete:
+- relation:
 
-  Each label in `y` maps to at least one label in `x`
-
-- x_unique:
-
-  Each label in `x` maps to at most one label in `y`
-
-- y_unique:
-
-  Each label in `y` maps to at most one label in `x`
-
-- check:
-
-  Action if condition specified by `x_complete`, `y_complete`,
-  `x_unique`, or `y_unique` is not met. The choices are `"error"` (the
-  default) or `"warn"`.
+  `"equals"` (the default), `"contains"` `"contained"`, or `"overlaps"`
 
 - return_val:
 
   The format of the return value. The choices are `"data.frame"` (the
   default) or `"matrix"`.
 
-- invalid:
+- unknown_label:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
+  Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
 
 ## Value
 
 A data.frame or matrix
 
-## Details
+## The `relation` argument
 
-If x_i is total or NA, then all pairs involving x_i are included in the
-mapping.
+- `"equals"`. `x` equals `y`. Lower limit of `x` = lower limit `y`, and
+  upper limit of `x` = upper limit of `y`.
 
-If y_j is total or NA, then all pairs involving y_j are included in the
-mapping.
+- `"contains"`. `x` contains `y`. Lower limit of `x` \<= lower limit of
+  `y`, and upper limit of `x` \>= upper limit of `y`.
+
+- `"contained"`. `x` is contained by `y`. Lower limit of `x` \>= lower
+  limit of `y`, and Upper limit of `x` \<= upper limit of `y`.
+
+- `"overlaps"`. `x` overlaps `y`. Lower limit of `y` \<= lower limit of
+  `x` \< upper limit of `y`, or lower limit of `y` \<= upper limit of
+  `x` \< upper limit of `y`, or both.

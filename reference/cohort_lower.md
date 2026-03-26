@@ -1,32 +1,32 @@
-# Lower Limits, Upper Limits, Widths, and Midpoints of Periods
+# Lower Limits, Upper Limits, Widths, and Midpoints of Cohorts
 
-Calculate lower limits, upper limits, widths, and midpoints for periods.
+Calculate lower limits, upper limits, widths, and midpoints for cohorts.
 
 ## Usage
 
 ``` r
-period_lower(
+cohort_lower(
   x,
   label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   unknown_label = c("error", "warn", "silent")
 )
 
-period_mid(
+cohort_mid(
   x,
   label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   unknown_label = c("error", "warn", "silent")
 )
 
-period_upper(
+cohort_upper(
   x,
   label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
   unknown_label = c("error", "warn", "silent")
 )
 
-period_width(
+cohort_width(
   x,
   label_one = c("lower", "upper"),
   label_multi = c("include", "exclude"),
@@ -38,11 +38,11 @@ period_width(
 
 - x:
 
-  A vector of period labels.
+  A vector of cohort labels.
 
 - label_one:
 
-  Whether labels for one-year periods are based on the lower or upper
+  Whether labels for one-year cohorts are based on the lower or upper
   limit of the period. Default is `"lower"`.
 
 - label_multi:
@@ -61,92 +61,92 @@ A numeric vector with same length as `x`.
 
 ## Details
 
-Lower and upper limits can be used to filter on periods. See below for
+Lower and upper limits can be used to filter on cohorts. See below for
 examples.
 
 ## Examples
 
 ``` r
-x <- c("2025-2030", "2020-2025", "2030-2035")
-period_lower(x)
-#> 2025-2030 2020-2025 2030-2035 
-#>      2025      2020      2030 
-period_upper(x)
-#> 2025-2030 2020-2025 2030-2035 
+x <- c("2025-2030", "<2025", "2030-2035")
+cohort_lower(x)
+#> 2025-2030     <2025 2030-2035 
+#>      2025      -Inf      2030 
+cohort_upper(x)
+#> 2025-2030     <2025 2030-2035 
 #>      2030      2025      2035 
-period_width(x)
-#> 2025-2030 2020-2025 2030-2035 
-#>         5         5         5 
-period_mid(x)
-#> 2025-2030 2020-2025 2030-2035 
+cohort_width(x)
+#> 2025-2030     <2025 2030-2035 
+#>         5       Inf         5 
+cohort_mid(x)
+#> 2025-2030     <2025 2030-2035 
 #>    2027.5    2022.5    2032.5 
 
-## use 'period_lower()' to filter on period
+## use 'cohort_lower()' to filter on cohort
 library(dplyr, warn.conflicts = FALSE)
-df <- tribble(    ~period, ~count,
-              "2020-2025",     20,
-              "2025-2030",      5,
+df <- tribble(    ~cohort, ~count,
+              "2025-2030",     20,
+                  "<2025",      5,
               "2030-2035",     11 )
 df
 #> # A tibble: 3 × 2
-#>   period    count
+#>   cohort    count
 #>   <chr>     <dbl>
-#> 1 2020-2025    20
-#> 2 2025-2030     5
+#> 1 2025-2030    20
+#> 2 <2025         5
 #> 3 2030-2035    11
-df |> filter(period_lower(period) >= 2025)
+df |> filter(cohort_lower(cohort) >= 2025)
 #> # A tibble: 2 × 2
-#>   period    count
+#>   cohort    count
 #>   <chr>     <dbl>
-#> 1 2025-2030     5
+#> 1 2025-2030    20
 #> 2 2030-2035    11
 
 ## 'label_one' is "lower" (the default)
-period_lower("2025")
+cohort_lower("2025")
 #> 2025 
 #> 2025 
-period_upper("2025")
+cohort_upper("2025")
 #> 2025 
 #> 2026 
-period_width("2025")
+cohort_width("2025")
 #> 2025 
 #>    1 
 
 ## 'label_one' is "upper"
-period_lower("2025", label_one = "upper")
+cohort_lower("2025", label_one = "upper")
 #> 2025 
 #> 2024 
-period_upper("2025", label_one = "upper")
+cohort_upper("2025", label_one = "upper")
 #> 2025 
 #> 2025 
-period_width("2025", label_one = "upper")
+cohort_width("2025", label_one = "upper")
 #> 2025 
 #>    1 
 
 ## 'label_multi' is "include" (the default)
-period_lower("2025-2030")
+cohort_lower("2025-2030")
 #> 2025-2030 
 #>      2025 
-period_upper("2025-2030")
+cohort_upper("2025-2030")
 #> 2025-2030 
 #>      2030 
-period_width("2025-2030")
+cohort_width("2025-2030")
 #> 2025-2030 
 #>         5 
 
 ## 'label_multi' is "exclude"
-period_lower("2025-2030", label_multi = "exclude")
+cohort_lower("2025-2030", label_multi = "exclude")
 #> 2025-2030 
 #>      2025 
-period_upper("2025-2030", label_multi = "exclude")
+cohort_upper("2025-2030", label_multi = "exclude")
 #> 2025-2030 
 #>      2031 
-period_width("2025-2030", label_multi = "exclude")
+cohort_width("2025-2030", label_multi = "exclude")
 #> 2025-2030 
 #>         6 
 
 ## no action when 'unknown_label' is "silent"
-period_lower(c("2000-2005", "long time ago"),
+cohort_lower(c("2000-2005", "long time ago"),
              unknown_label = "silent")
 #>   2000-2005 longtimeago 
 #>        2000          NA 
