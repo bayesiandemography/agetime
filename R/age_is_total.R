@@ -1,13 +1,11 @@
 
-#' Identify Labels that Refer to Totals
+#' Identify Age Group Labels that Refer to Totals
 #'
-#' Return a logical vector the same length as `x` with
-#' `TRUE` for labels that \pkg{agetime} interprets as
-#' totals, and `FALSE` otherwise.
+#' Find age group labels that \pkg{agetime} interprets as totals.
 #' 
 #' @inheritParams age_lower
 #'
-#' @returns A logical vector
+#' @returns A logical vector the same length as `x`.
 #'
 #' @examples
 #' x <- c("20-24", "Total", "100+", "ALL")
@@ -26,14 +24,12 @@ age_is_total <- function(x,
 
 #' Identify Labels that Refer to Open Age Groups
 #'
-#' Return a logical vector the same length as `x` with
-#' `TRUE` for labels that \pkg{agetime} interprets as
-#' open age groups, and `FALSE` otherwise.
-#' An open age group is one with no upper limit, eg `"100+"`.
+#' Find age group labels that \pkg{agetime} interprets as
+#' open, ie as having no upper limit.
 #' 
 #' @inheritParams age_lower
 #'
-#' @returns `TRUE` or `FALSE`
+#' @returns A logical vector the same length as `x`.
 #'
 #' @examples
 #' x <- c("20+", "infant", "100+", "60to79")

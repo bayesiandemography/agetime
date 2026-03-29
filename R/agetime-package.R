@@ -8,7 +8,7 @@
 #' | [age_width()]       | [period_width()]       | [cohort_width()]       | Widths                     |
 #' | [age_mid()]         | [period_mid()]         | [cohort_mid()]         | Midpoints                  |
 #' | [age_set_open()]    | -                      | [cohort_set_open()]    | Specify open interval      |
-#' | [age_is_open()]     | [period_is_open()]     | [cohort_is_open()]     | Find open intervals        |
+#' | [age_is_open()]     | -                      | [cohort_is_open()]     | Find open intervals        |
 #' | [age_is_total()]    | [period_is_total()]    | [cohort_is_total()]    | Find totals                |
 #' | [age_to()]          | [period_to()]          | [cohort_to()]          | Recode labels              |
 #' | [age_to_one()]      | [period_to_one()]      | [cohort_to_one()]      | Recode to 1-year           | 

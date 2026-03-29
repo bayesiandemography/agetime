@@ -13,7 +13,7 @@
    \code{\link[=age_width]{age_width()}} \tab \code{\link[=period_width]{period_width()}} \tab \code{\link[=cohort_width]{cohort_width()}} \tab Widths \cr
    \code{\link[=age_mid]{age_mid()}} \tab \code{\link[=period_mid]{period_mid()}} \tab \code{\link[=cohort_mid]{cohort_mid()}} \tab Midpoints \cr
    \code{\link[=age_set_open]{age_set_open()}} \tab - \tab \code{\link[=cohort_set_open]{cohort_set_open()}} \tab Specify open interval \cr
-   \code{\link[=age_is_open]{age_is_open()}} \tab \code{\link[=period_is_open]{period_is_open()}} \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \tab Find open intervals \cr
+   \code{\link[=age_is_open]{age_is_open()}} \tab - \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \tab Find open intervals \cr
    \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \tab Find totals \cr
    \code{\link[=age_to]{age_to()}} \tab \code{\link[=period_to]{period_to()}} \tab \code{\link[=cohort_to]{cohort_to()}} \tab Recode labels \cr
    \code{\link[=age_to_one]{age_to_one()}} \tab \code{\link[=period_to_one]{period_to_one()}} \tab \code{\link[=cohort_to_one]{cohort_to_one()}} \tab Recode to 1-year \cr

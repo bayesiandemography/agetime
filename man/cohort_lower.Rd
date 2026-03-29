@@ -94,12 +94,10 @@ cohort_upper("2025", label_one = "upper")
 cohort_width("2025", label_one = "upper")
 
 ## 'label_multi' is "include" (the default)
-cohort_lower("2025-2030")
 cohort_upper("2025-2030")
 cohort_width("2025-2030")
 
 ## 'label_multi' is "exclude"
-cohort_lower("2025-2030", label_multi = "exclude")
 cohort_upper("2025-2030", label_multi = "exclude")
 cohort_width("2025-2030", label_multi = "exclude")
 

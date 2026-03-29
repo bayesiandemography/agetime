@@ -14,13 +14,11 @@ unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-\code{TRUE} or \code{FALSE}
+A logical vector the same length as \code{x}.
 }
 \description{
-Return a logical vector the same length as \code{x} with
-\code{TRUE} for labels that \pkg{agetime} interprets as
-open age groups, and \code{FALSE} otherwise.
-An open age group is one with no upper limit, eg \code{"100+"}.
+Find age group labels that \pkg{agetime} interprets as
+open, ie as having no upper limit.
 }
 \examples{
 x <- c("20+", "infant", "100+", "60to79")

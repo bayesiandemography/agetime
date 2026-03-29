@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_is_total.R
 \name{age_is_total}
 \alias{age_is_total}
-\title{Identify Labels that Refer to Totals}
+\title{Identify Age Group Labels that Refer to Totals}
 \usage{
 age_is_total(x, unknown_label = c("error", "warn", "silent"))
 }
@@ -14,12 +14,10 @@ unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-A logical vector
+A logical vector the same length as \code{x}.
 }
 \description{
-Return a logical vector the same length as \code{x} with
-\code{TRUE} for labels that \pkg{agetime} interprets as
-totals, and \code{FALSE} otherwise.
+Find age group labels that \pkg{agetime} interprets as totals.
 }
 \examples{
 x <- c("20-24", "Total", "100+", "ALL")
