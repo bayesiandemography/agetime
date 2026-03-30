@@ -1,7 +1,7 @@
 
 #' Functions for Working with Age, Period, and Cohort Labels
 #'
-#' | age                 | period                 | cohort                 | Description                |
+#' | Age                 | Period                 | Cohort                 | Description                |
 #' |---------------------|------------------------|------------------------|----------------------------|
 #' | [age_lower()]       | [period_lower()]       | [cohort_lower()]       | Lower limits               |
 #' | [age_upper()]       | [period_upper()]       | [cohort_upper()]       | Upper limits               |
@@ -28,6 +28,7 @@
 #' | [age_assert()]      | [period_assert()]      | [cohort_assert()]      | Assertions about intervals |
 #' | [age_mapping()]     | [period_mapping()]     | [cohort_mapping()]     | Mapping between labels     |
 #'
-#' @keywords internal
+#' @docType package
+#' @name agetime
+#' @aliases agetime-package
 "_PACKAGE"
-NULL

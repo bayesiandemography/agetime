@@ -1,34 +1,48 @@
-#' Make Mapping Between Age Labels
+#' Mapping Between Age Group Labels
 #'
+#' @description
+#' 
+#' Create a mapping between age group labels. The mapping is
+#' based on one of four types of relationship:
+#  "equals", "contains", "is contained by",
+#  and "overlaps with".
+#'
+#' @details
+#'
+#' If no value for `y` is supplied,
+#' `x` is mapped onto itself.
+#' 
 #' @section The `relation` argument:
-#'
-#' - `"equals"`. `x` equals `y`. Lower limit of `x`
-#'   = lower limit `y`, and upper limit of `x` =
-#'   upper limit of `y`.
-#' - `"contains"`. `x` contains `y`.
-#'   Lower limit of `x` <= lower limit of `y`,
-#'   and upper limit of `x` >= upper limit of `y`.
-#' - `"contained"`. `x` is contained by `y`.
-#'   Lower limit of `x` >= lower limit of `y`, and
-#'   Upper limit of `x` <= upper limit of `y`.
-#' - `"overlaps"`. `x` overlaps `y`.
-#'   Lower limit of `y` <= lower limit
-#'   of `x` <  upper limit of `y`, or
-#'   lower limit of `y` <= upper limit of `x` <
-#'   upper limit of `y`, or both.
-#'
+#' 
+#' | `relation` | Endpoints of `x` and `y`                   |
+#' |:--------|-----------------------------------------------|
+#' | `"equals"` | `age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)`   |
+#' | `"contains"` | `age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)` |
+#' | `"contained"`| `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)`  |
+#' | `"overlaps"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` &#124; `(age_lower(y) <= age_upper(x) < age_upper(y))` |
+#' 
 #' @inheritParams age_lower
 #' @param x Vector of age group labels.
 #' @param y Vector of age group labels. If
-#' no value supplied, `x` is mapped with itself.
-#' @param relation `"equals"` (the default),
-#' `"contains"` `"contained"`, or `"overlaps"`
+#' no value supplied, `x` is mapped onto itself.
+#' @param relation Relationship between
+#' labels. The choices are `"equals"` (the default),
+#' `"contains"`, `"contained"`, and `"overlaps"`.
+#' See below for details and examples.
 #' @param return_val The format of the
 #' return value. The choices are `"data.frame"`
 #' (the default) or `"matrix"`.
 #'
 #' @returns A data.frame or matrix
 #'
+#' @examples
+#' x <- c("0-4", "10", "5-7")
+#' y <- c("5-9", "0-4", "6-14")
+#' age_mapping(x = x, y = y)
+#' age_mapping(x, return_val = "matrix")
+#' age_mapping(x = x, y = y, relation = "contains")
+#' age_mapping(x = x, y = y, relation = "contained")
+#' age_mapping(x = x, y = y, relation = "overlaps")
 #' @export
 age_mapping <- function(x,
                         y = NULL,
@@ -49,9 +63,13 @@ age_mapping <- function(x,
   unknown_label <- match.arg(unknown_label)
   intervals_x <- intervals(labels = x,
                            label_type = "age",
+                           label_one = "lower",
+                           label_multi = "exclude",
                            unknown_label = unknown_label)
   intervals_y <- intervals(labels = y,
                            label_type = "age",
+                           label_one = "lower",
+                           label_multi = "exclude",
                            unknown_label = unknown_label)
   make_mapping(intervals_x = intervals_x,
                intervals_y = intervals_y,

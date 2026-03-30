@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_mapping.R
 \name{age_mapping}
 \alias{age_mapping}
-\title{Make Mapping Between Age Labels}
+\title{Mapping Between Age Group Labels}
 \usage{
 age_mapping(
   x,
@@ -16,10 +16,12 @@ age_mapping(
 \item{x}{Vector of age group labels.}
 
 \item{y}{Vector of age group labels. If
-no value supplied, \code{x} is mapped with itself.}
+no value supplied, \code{x} is mapped onto itself.}
 
-\item{relation}{\code{"equals"} (the default),
-\code{"contains"} \code{"contained"}, or \code{"overlaps"}}
+\item{relation}{Relationship between
+labels. The choices are \code{"equals"} (the default),
+\code{"contains"}, \code{"contained"}, and \code{"overlaps"}.
+See below for details and examples.}
 
 \item{return_val}{The format of the
 return value. The choices are \code{"data.frame"}
@@ -33,25 +35,29 @@ unclear. Choices are \code{"error"} (the default),
 A data.frame or matrix
 }
 \description{
-Make Mapping Between Age Labels
+Create a mapping between age group labels. The mapping is
+based on one of four types of relationship:
+}
+\details{
+If no value for \code{y} is supplied,
+\code{x} is mapped onto itself.
 }
 \section{The \code{relation} argument}{
-
-\itemize{
-\item \code{"equals"}. \code{x} equals \code{y}. Lower limit of \code{x}
-= lower limit \code{y}, and upper limit of \code{x} =
-upper limit of \code{y}.
-\item \code{"contains"}. \code{x} contains \code{y}.
-Lower limit of \code{x} <= lower limit of \code{y},
-and upper limit of \code{x} >= upper limit of \code{y}.
-\item \code{"contained"}. \code{x} is contained by \code{y}.
-Lower limit of \code{x} >= lower limit of \code{y}, and
-Upper limit of \code{x} <= upper limit of \code{y}.
-\item \code{"overlaps"}. \code{x} overlaps \code{y}.
-Lower limit of \code{y} <= lower limit
-of \code{x} <  upper limit of \code{y}, or
-lower limit of \code{y} <= upper limit of \code{x} <
-upper limit of \code{y}, or both.
+\tabular{ll}{
+   \code{relation} \tab Endpoints of \code{x} and \code{y} \cr
+   \code{"equals"} \tab \code{age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)} \cr
+   \code{"contains"} \tab \code{age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)} \cr
+   \code{"contained"} \tab \code{age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)} \cr
+   \code{"overlaps"} \tab \verb{(age_lower(y) <= age_lower(x) < age_upper(y))} | \verb{(age_lower(y) <= age_upper(x) < age_upper(y))} \cr
 }
 }
 
+\examples{
+x <- c("0-4", "10", "5-7")
+y <- c("5-9", "0-4", "6-14")
+age_mapping(x = x, y = y)
+age_mapping(x, return_val = "matrix")
+age_mapping(x = x, y = y, relation = "contains")
+age_mapping(x = x, y = y, relation = "contained")
+age_mapping(x = x, y = y, relation = "overlaps")
+}
