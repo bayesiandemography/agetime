@@ -43,6 +43,7 @@ age_is_open <- function(x,
                 label_one = "lower",
                 label_multi = "exclude",
                 unknown_label = unknown_label,
-                open = "right")
+                check_open_left = FALSE,
+                check_open_right = TRUE)
 }
 

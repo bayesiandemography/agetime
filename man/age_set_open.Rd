@@ -2,15 +2,14 @@
 % Please edit documentation in R/age_set_open.R
 \name{age_set_open}
 \alias{age_set_open}
-\title{Define the Oldest Age Group}
+\title{Define Open Age Group}
 \usage{
-age_set_open(x, lower_last, unknown_label = c("error", "warn", "silent"))
+age_set_open(x, open, unknown_label = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{lower_last}{Lower limit of
-an existing age group in \code{x}.}
+\item{open}{Lower limit of open age group.}
 
 \item{unknown_label}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
@@ -20,27 +19,12 @@ unclear. Choices are \code{"error"} (the default),
 Modified version of \code{x}.
 }
 \description{
-\subsection{TODO - WEAKEN REQUIREMENT THAT}{
-}
-
-\subsection{lower_last IS AN EXISTING}{
-}
-
-\subsection{'lower'.}{
-}
-}
-\details{
-If the oldest age group in \code{x} was not previously
-open, then calling \code{age_set_open()} on \code{x} makes
-it open.
+Set an open age group, i.e. an age group
+with no upper limit. Replace existing
+age groups where necessary.
 }
 \examples{
 x <- c("20-24", "80-84", "100+")
-age_set_open(x, lower_last = 80)
-age_set_open(x, lower_last = 20)
-
-## 'x' does not have open age group
-x <- c("20-24", "80-84", "100")
-age_set_open(x, 100)
-age_set_open(x, 80)
+age_set_open(x, open = 80)
+age_set_open(x, open = 50)
 }

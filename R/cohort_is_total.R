@@ -47,6 +47,7 @@ cohort_is_open <- function(x,
                 label_one = label_one,
                 label_multi = label_multi,
                 unknown_label = unknown_label,
-                open = "left")
+                check_open_left = TRUE,
+                check_open_right = FALSE)
 }
 
