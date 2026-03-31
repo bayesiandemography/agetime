@@ -26,20 +26,20 @@ period_extend <- function(x,
                           n = 1L,
                           width = NULL,
                           include_x = TRUE,
-                          label_one = c("lower", "upper"),
-                          label_multi = c("include", "exclude"),
-                          unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                          parse_one = c("lower", "upper"),
+                          parse_multi = c("include", "exclude"),
+                          parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_extend(x = x,
                n = n,
                width = width,
                include_x = include_x,
                label_type = "period",
-               label_one = label_one,
-               label_multi = label_multi,
-               unknown_label = unknown_label)
+               parse_one = parse_one,
+               parse_multi = parse_multi,
+               parse_fail = parse_fail)
 }
 
 

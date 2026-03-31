@@ -5,7 +5,7 @@
 #'
 #' @inheritParams age_labels
 #' @param x Vector of age group labels.
-#' @param unknown_label Action if meaning
+#' @param parse_fail Action if meaning
 #' of label unclear. Choices are
 #' `"error"` (the default), `"warn"`,
 #' and `"silent"`.
@@ -21,17 +21,17 @@ age_to <- function(x,
                    open = TRUE,
                    include_total = NULL,
                    include_na = NULL,
-                   unknown_label = c("error", "warn", "silent")) {
+                   parse_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   check_breaks(breaks)
   breaks <- as.integer(breaks)
   check_flag(x = open, nm_x = "open")
-  unknown_label <- match.arg(unknown_label)
+  parse_fail <- match.arg(parse_fail)
   intervals <- intervals(labels = x,
                          label_type = "age",
-                         unknown_label = unknown_label)
+                         parse_fail = parse_fail)
   age_to_inner(x = x,
                breaks = breaks,
                open = open,
@@ -72,15 +72,15 @@ age_to_one <- function(x,
                        open = TRUE,
                        include_total = NULL,
                        include_na = NULL,
-                       unknown_label = c("error", "warn", "silent")) {
+                       parse_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   check_flag(x = open, nm_x = "open")
-  unknown_label <- match.arg(unknown_label)
+  parse_fail <- match.arg(parse_fail)
   intervals <- intervals(labels = x,
                          label_type = "age",
-                         unknown_label = unknown_label)
+                         parse_fail = parse_fail)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
                                   open = open,
@@ -116,15 +116,15 @@ age_to_five <- function(x,
                         open = TRUE,
                         include_total = NULL,
                         include_na = NULL,
-                        unknown_label = c("error", "warn", "silent")) {
+                        parse_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   check_flag(x = open, nm_x = "open")
-  unknown_label <- match.arg(unknown_label)
+  parse_fail <- match.arg(parse_fail)
   intervals <- intervals(labels = x,
                          label_type = "age",
-                         unknown_label = unknown_label)
+                         parse_fail = parse_fail)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
                                   open = open,
@@ -159,15 +159,15 @@ age_to_ten <- function(x,
                         open = TRUE,
                         include_total = NULL,
                         include_na = NULL,
-                        unknown_label = c("error", "warn", "silent")) {
+                        parse_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   check_flag(x = open, nm_x = "open")
-  unknown_label <- match.arg(unknown_label)
+  parse_fail <- match.arg(parse_fail)
   intervals <- intervals(labels = x,
                          label_type = "age",
-                         unknown_label = unknown_label)
+                         parse_fail = parse_fail)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
                                   open = open,
@@ -201,14 +201,14 @@ age_to_life <- function(x,
                         lower_last = NULL,
                         include_total = NULL,
                         include_na = NULL,
-                        unknown_label = c("error", "warn", "silent")) {
+                        parse_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
-  unknown_label <- match.arg(unknown_label)
+  parse_fail <- match.arg(parse_fail)
   intervals <- intervals(labels = x,
                          label_type = "age",
-                         unknown_label = unknown_label)
+                         parse_fail = parse_fail)
   lower_last <- make_lower_last(lower_last = lower_last,
                                 intervals = intervals,
                                 open = TRUE,
@@ -234,7 +234,7 @@ age_to_labor <- function(x,
                          age_retire = 65,
                          include_total = NULL,
                          include_na = NULL,
-                         unknown_label = c("error", "warn", "silent")) {
+                         parse_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
@@ -253,13 +253,13 @@ age_to_labor <- function(x,
                nm_x = "age_work",
                nm_y = "age_retire")
   breaks <- c(0L, age_work, age_retire)
-  unknown_label <- match.arg(unknown_label)
+  parse_fail <- match.arg(parse_fail)
   age_to(x = x,
          breaks = breaks,
          open = TRUE,
          include_total = include_total,
          include_na = include_na,
-         unknown_label = unknown_label)
+         parse_fail = parse_fail)
 }
 
 
@@ -292,8 +292,8 @@ age_to_inner <- function(x,
   levels_breaks <- make_levels_from_breaks(breaks = breaks,
                                            is_open_left = FALSE,
                                            is_open_right = open,
-                                           label_one = "lower",
-                                           label_multi = "exclude",
+                                           parse_one = "lower",
+                                           parse_multi = "exclude",
                                            include_total = include_total,
                                            include_na = include_na)
   m_contains <- make_m_contains(breaks = breaks,

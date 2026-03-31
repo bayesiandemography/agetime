@@ -9,9 +9,9 @@ period_extend(
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
+  parse_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -23,18 +23,18 @@ Default is \code{1}.}
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
 
-\item{label_one}{Whether labels
+\item{parse_one}{Whether labels
 for one-year periods are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{label_multi}{Whether
+\item{parse_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{unknown_label}{Action if a label
+\item{parse_fail}{Action if a label
 cannot be interpreted. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}

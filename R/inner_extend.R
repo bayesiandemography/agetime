@@ -4,9 +4,9 @@ inner_extend <- function(x,
                          width,
                          include_x,
                          label_type,
-                         label_one,
-                         label_multi,
-                         unknown_label) {
+                         parse_one,
+                         parse_multi,
+                         parse_fail) {
   is_factor <- is.factor(x)
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
@@ -24,9 +24,9 @@ inner_extend <- function(x,
   tail <- as.character(x[[length(x)]])
   intervals_tail <- intervals(labels = tail,
                               label_type = label_type,
-                              label_one = label_one,
-                              label_multi = label_multi,
-                              unknown_label = unknown_label)
+                              parse_one = parse_one,
+                              parse_multi = parse_multi,
+                              parse_fail = parse_fail)
   is_open <- get_is_open(intervals_tail)
   if (is_open)
     cli::cli_abort(c("Final interval is open.",
@@ -45,8 +45,8 @@ inner_extend <- function(x,
                     by = width,
                     length.out = n + 1L)
   ans <- inner_labels(breaks = breaks,
-                      label_one = label_one,
-                      label_multi = label_multi,
+                      parse_one = parse_one,
+                      parse_multi = parse_multi,
                       is_open_left = FALSE,
                       is_open_right = FALSE,
                       include_total = FALSE,

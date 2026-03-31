@@ -10,47 +10,47 @@ and Midpoints of Periods}
 \usage{
 period_lower(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
+  parse_fail = c("error", "warn", "silent")
 )
 
 period_mid(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
+  parse_fail = c("error", "warn", "silent")
 )
 
 period_upper(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
+  parse_fail = c("error", "warn", "silent")
 )
 
 period_width(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
+  parse_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
 \item{x}{A vector of period labels.}
 
-\item{label_one}{Whether labels
+\item{parse_one}{Whether labels
 for one-year periods are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{label_multi}{Whether
+\item{parse_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{unknown_label}{Action if a label
+\item{parse_fail}{Action if a label
 cannot be interpreted. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}
@@ -83,25 +83,25 @@ df <- tribble(    ~period, ~count,
 df
 df |> filter(period_lower(period) >= 2025)
 
-## 'label_one' is "lower" (the default)
+## 'parse_one' is "lower" (the default)
 period_lower("2025")
 period_upper("2025")
 period_width("2025")
 
-## 'label_one' is "upper"
-period_lower("2025", label_one = "upper")
-period_upper("2025", label_one = "upper")
-period_width("2025", label_one = "upper")
+## 'parse_one' is "upper"
+period_lower("2025", parse_one = "upper")
+period_upper("2025", parse_one = "upper")
+period_width("2025", parse_one = "upper")
 
-## 'label_multi' is "include" (the default)
+## 'parse_multi' is "include" (the default)
 period_upper("2025-2030")
 period_width("2025-2030")
 
-## 'label_multi' is "exclude"
-period_upper("2025-2030", label_multi = "exclude")
-period_width("2025-2030", label_multi = "exclude")
+## 'parse_multi' is "exclude"
+period_upper("2025-2030", parse_multi = "exclude")
+period_width("2025-2030", parse_multi = "exclude")
 
-## no action when 'unknown_label' is "silent"
+## no action when 'parse_fail' is "silent"
 period_lower(c("2000-2005", "long time ago"),
-             unknown_label = "silent")
+             parse_fail = "silent")
 }

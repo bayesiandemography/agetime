@@ -11,16 +11,16 @@
 #' See below for examples.
 #'
 #' @param x A vector of period labels.
-#' @param label_one Whether labels
+#' @param parse_one Whether labels
 #' for one-year periods are based on the
 #' lower or upper limit of the period.
 #' Default is `"lower"`.
-#' @param label_multi Whether
+#' @param parse_multi Whether
 #' labels for multi-year periods
 #' include or exclude the final
 #' year of the period.
 #' Default is `"include"`.
-#' @param unknown_label Action if a label
+#' @param parse_fail Action if a label
 #' cannot be interpreted. Choices are
 #' `"error"` (the default), `"warn"`,
 #' and `"silent"`.
@@ -43,89 +43,89 @@
 #' df
 #' df |> filter(period_lower(period) >= 2025)
 #'
-#' ## 'label_one' is "lower" (the default)
+#' ## 'parse_one' is "lower" (the default)
 #' period_lower("2025")
 #' period_upper("2025")
 #' period_width("2025")
 #'
-#' ## 'label_one' is "upper"
-#' period_lower("2025", label_one = "upper")
-#' period_upper("2025", label_one = "upper")
-#' period_width("2025", label_one = "upper")
+#' ## 'parse_one' is "upper"
+#' period_lower("2025", parse_one = "upper")
+#' period_upper("2025", parse_one = "upper")
+#' period_width("2025", parse_one = "upper")
 #' 
-#' ## 'label_multi' is "include" (the default)
+#' ## 'parse_multi' is "include" (the default)
 #' period_upper("2025-2030")
 #' period_width("2025-2030")
 #'
-#' ## 'label_multi' is "exclude"
-#' period_upper("2025-2030", label_multi = "exclude")
-#' period_width("2025-2030", label_multi = "exclude")
+#' ## 'parse_multi' is "exclude"
+#' period_upper("2025-2030", parse_multi = "exclude")
+#' period_width("2025-2030", parse_multi = "exclude")
 #'
-#' ## no action when 'unknown_label' is "silent"
+#' ## no action when 'parse_fail' is "silent"
 #' period_lower(c("2000-2005", "long time ago"),
-#'              unknown_label = "silent")
+#'              parse_fail = "silent")
 #' @export
 period_lower <- function(x,
-                         label_one = c("lower", "upper"),
-                         label_multi = c("include", "exclude"),
-                         unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                         parse_one = c("lower", "upper"),
+                         parse_multi = c("include", "exclude"),
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_lower(x = x,
               label_type = "period",
-              label_one = label_one,
-              label_multi = label_multi,
-              unknown_label = unknown_label)
+              parse_one = parse_one,
+              parse_multi = parse_multi,
+              parse_fail = parse_fail)
 }
 
 
 #' @export
 #' @rdname period_lower
 period_mid <- function(x,
-                       label_one = c("lower", "upper"),
-                       label_multi = c("include", "exclude"),
-                       unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                       parse_one = c("lower", "upper"),
+                       parse_multi = c("include", "exclude"),
+                       parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_mid(x = x,
             label_type = "period",
-            label_one = label_one,
-            label_multi = label_multi,
-            unknown_label = unknown_label)
+            parse_one = parse_one,
+            parse_multi = parse_multi,
+            parse_fail = parse_fail)
 }
 
 
 #' @export
 #' @rdname period_lower
 period_upper <- function(x,
-                         label_one = c("lower", "upper"),
-                         label_multi = c("include", "exclude"),
-                         unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                         parse_one = c("lower", "upper"),
+                         parse_multi = c("include", "exclude"),
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_upper(x = x,
               label_type = "period",
-              label_one = label_one,
-              label_multi = label_multi,
-              unknown_label = unknown_label)
+              parse_one = parse_one,
+              parse_multi = parse_multi,
+              parse_fail = parse_fail)
 }
 
 
 #' @export
 #' @rdname period_lower
 period_width <- function(x,
-                         label_one = c("lower", "upper"), ## redundant, but keep so interface constant
-                         label_multi = c("include", "exclude"),
-                         unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                         parse_one = c("lower", "upper"), ## redundant, but keep so interface constant
+                         parse_multi = c("include", "exclude"),
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_width(x = x,
               label_type = "period",
-              label_one = label_one,
-              label_multi = label_multi,
-              unknown_label = unknown_label)
+              parse_one = parse_one,
+              parse_multi = parse_multi,
+              parse_fail = parse_fail)
 }

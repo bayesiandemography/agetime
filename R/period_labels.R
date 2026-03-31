@@ -23,19 +23,19 @@
 #' period_labels_one(lower_first = 2000,
 #'                   lower_last = 2010)
 #'
-#' ## single-year periods, 'label_one' is "upper"
+#' ## single-year periods, 'parse_one' is "upper"
 #' period_labels_one(lower_first = 2000,
 #'                   lower_last = 2010,
-#'                   label_one = "upper")
+#'                   parse_one = "upper")
 #' 
 #' ## ten-year periods
 #' period_labels_ten(lower_first = 2000,
 #'                   lower_last = 2010)
 #'
-#' ## ten-year periods, 'label_multi' is "exclude",
+#' ## ten-year periods, 'parse_multi' is "exclude",
 #' period_labels_ten(lower_first = 2000,
 #'                   lower_last = 2010,
-#'                   label_multi = "exclude")
+#'                   parse_multi = "exclude")
 #'
 #' ## include total and NA
 #' period_labels_ten(lower_first = 2000,
@@ -44,15 +44,15 @@
 #'                   include_na = TRUE)
 #' @export
 period_labels <- function(breaks,
-                          label_one = c("lower", "upper"),
-                          label_multi = c("include", "exclude"),
+                          parse_one = c("lower", "upper"),
+                          parse_multi = c("include", "exclude"),
                           include_total = FALSE,
                           include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels(breaks = breaks,
-               label_one = label_one,
-               label_multi = label_multi,
+               parse_one = parse_one,
+               parse_multi = parse_multi,
                is_open_left = FALSE,
                is_open_right = FALSE,
                include_total = include_total,
@@ -63,16 +63,16 @@ period_labels <- function(breaks,
 #' @export
 period_labels_one <- function(lower_first,
                               lower_last,
-                              label_one = c("lower", "upper"),
-                              label_multi = c("include", "exclude"),
+                              parse_one = c("lower", "upper"),
+                              parse_multi = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels_one(lower_first = lower_first,
                    lower_last = lower_last,
-                   label_one = label_one,
-                   label_multi = label_multi,
+                   parse_one = parse_one,
+                   parse_multi = parse_multi,
                    is_open_left = FALSE,
                    is_open_right = FALSE,
                    include_total = include_total,
@@ -84,16 +84,16 @@ period_labels_one <- function(lower_first,
 #' @export
 period_labels_five <- function(lower_first,
                                lower_last,
-                               label_one = c("lower", "upper"),
-                               label_multi = c("include", "exclude"),
+                               parse_one = c("lower", "upper"),
+                               parse_multi = c("include", "exclude"),
                                include_total = FALSE,
                                include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels_five(lower_first = lower_first,
                     lower_last = lower_last,
-                    label_one = label_one,
-                    label_multi = label_multi,
+                    parse_one = parse_one,
+                    parse_multi = parse_multi,
                     is_open_left = FALSE,
                     is_open_right = FALSE,
                     include_total = include_total,
@@ -104,16 +104,16 @@ period_labels_five <- function(lower_first,
 #' @export
 period_labels_ten <- function(lower_first,
                               lower_last,
-                              label_one = c("lower", "upper"),
-                              label_multi = c("include", "exclude"),
+                              parse_one = c("lower", "upper"),
+                              parse_multi = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels_ten(lower_first = lower_first,
                    lower_last = lower_last,
-                   label_one = label_one,
-                   label_multi = label_multi,
+                   parse_one = parse_one,
+                   parse_multi = parse_multi,
                    is_open_left = FALSE,
                    is_open_right = FALSE,
                    include_total = include_total,

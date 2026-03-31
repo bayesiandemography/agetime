@@ -1,17 +1,17 @@
 
 inner_low_mid_up_width <- function(x,
                                    label_type,
-                                   label_one,
-                                   label_multi,
-                                   unknown_label) {
+                                   parse_one,
+                                   parse_multi,
+                                   parse_fail) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   intervals <- intervals(labels = x,
                          label_type = label_type,
-                         label_one = label_one,
-                         label_multi = label_multi,
-                         unknown_label = unknown_label)
+                         parse_one = parse_one,
+                         parse_multi = parse_multi,
+                         parse_fail = parse_fail)
   m <- get_m(intervals)
   i <- get_i_x_to_xunu(intervals)
   list(m = m, i = i)
@@ -19,14 +19,14 @@ inner_low_mid_up_width <- function(x,
 
 inner_lower <- function(x,
                         label_type,
-                        label_one,
-                        label_multi,
-                        unknown_label) {
+                        parse_one,
+                        parse_multi,
+                        parse_fail) {
   l <- inner_low_mid_up_width(x = x,
                               label_type = label_type,
-                              label_one = label_one,
-                              label_multi = label_multi,
-                              unknown_label = unknown_label)
+                              parse_one = parse_one,
+                              parse_multi = parse_multi,
+                              parse_fail = parse_fail)
   m <- l$m
   i <- l$i
   m[i, 1L]
@@ -36,14 +36,14 @@ inner_lower <- function(x,
 
 inner_mid <- function(x,
                       label_type,
-                      label_one,
-                      label_multi,
-                      unknown_label) {
+                      parse_one,
+                      parse_multi,
+                      parse_fail) {
   l <- inner_low_mid_up_width(x = x,
                               label_type = label_type,
-                              label_one = label_one,
-                              label_multi = label_multi,
-                              unknown_label = unknown_label)
+                              parse_one = parse_one,
+                              parse_multi = parse_multi,
+                              parse_fail = parse_fail)
   m <- l$m
   i <- l$i
   l <- m[, 1L]
@@ -66,14 +66,14 @@ inner_mid <- function(x,
 
 inner_upper <- function(x,
                         label_type,
-                        label_one,
-                        label_multi,
-                        unknown_label) {
+                        parse_one,
+                        parse_multi,
+                        parse_fail) {
   l <- inner_low_mid_up_width(x = x,
                               label_type = label_type,
-                              label_one = label_one,
-                              label_multi = label_multi,
-                              unknown_label = unknown_label)
+                              parse_one = parse_one,
+                              parse_multi = parse_multi,
+                              parse_fail = parse_fail)
   m <- l$m
   i <- l$i
   m[i, 2L]
@@ -82,14 +82,14 @@ inner_upper <- function(x,
 
 inner_width <- function(x,
                         label_type,
-                        label_one,
-                        label_multi,
-                        unknown_label) {
+                        parse_one,
+                        parse_multi,
+                        parse_fail) {
   l <- inner_low_mid_up_width(x = x,
                               label_type = label_type,
-                              label_one = label_one,
-                              label_multi = label_multi,
-                              unknown_label = unknown_label)
+                              parse_one = parse_one,
+                              parse_multi = parse_multi,
+                              parse_fail = parse_fail)
   m <- l$m
   i <- l$i
   l <- m[, 1L]

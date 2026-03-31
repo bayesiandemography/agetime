@@ -17,14 +17,14 @@
 #' @export
 age_set_open <- function(x,
                          open,
-                         unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_set_open(x = x,
                  open = open,
                  make_open_left = FALSE,
                  make_open_right = TRUE,
                  label_type = "age",
-                 label_one = "lower",
-                 label_multi = "exclude",
-                 unknown_label = unknown_label)
+                 parse_one = "lower",
+                 parse_multi = "exclude",
+                 parse_fail = parse_fail)
 }

@@ -4,12 +4,12 @@
 \alias{age_is_total}
 \title{Identify Age Group Labels that Refer to Totals}
 \usage{
-age_is_total(x, unknown_label = c("error", "warn", "silent"))
+age_is_total(x, parse_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{unknown_label}{Action if meaning of label
+\item{parse_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }

@@ -4,12 +4,12 @@
 \alias{age_standard}
 \title{Standardize Age Group Labels}
 \usage{
-age_standard(x, unknown_label = c("error", "warn", "silent"))
+age_standard(x, parse_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{unknown_label}{Action if meaning of label
+\item{parse_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }

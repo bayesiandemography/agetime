@@ -9,7 +9,7 @@ age_extend(
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ Default is \code{1}.}
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
 
-\item{unknown_label}{Action if meaning of label
+\item{parse_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }

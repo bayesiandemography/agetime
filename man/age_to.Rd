@@ -10,7 +10,7 @@ age_to(
   open = TRUE,
   include_total = NULL,
   include_na = NULL,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -29,7 +29,7 @@ Default is \code{TRUE}.}
 \item{include_na}{Whether to include
 an \code{NA} category.}
 
-\item{unknown_label}{Action if meaning
+\item{parse_fail}{Action if meaning
 of label unclear. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}

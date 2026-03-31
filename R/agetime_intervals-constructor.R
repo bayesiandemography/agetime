@@ -3,9 +3,9 @@
 
 intervals <- function(labels,
                       label_type,
-                      label_one,
-                      label_multi,
-                      unknown_label) {
+                      parse_one,
+                      parse_multi,
+                      parse_fail) {
   label_type <- match.arg(label_type, choices = c("age", "cohort", "period"))
   if (label_type == "age") {
     labels_normalizers <- make_labels_normalizers_age()
@@ -13,19 +13,19 @@ intervals <- function(labels,
   }
   else if (label_type == "cohort") {
     labels_normalizers <- make_labels_normalizers_cohort()
-    label_parsers <- make_label_parsers_cohort(label_one = label_one,
-                                               label_multi = label_multi)
+    label_parsers <- make_label_parsers_cohort(parse_one = parse_one,
+                                               parse_multi = parse_multi)
   }
   else {
     labels_normalizers <- make_labels_normalizers_period()
-    label_parsers <- make_label_parsers_period(label_one = label_one,
-                                               label_multi = label_multi)
+    label_parsers <- make_label_parsers_period(parse_one = parse_one,
+                                               parse_multi = parse_multi)
   }
   ans <- intervals_inner(labels = labels,
                          labels_normalizers = labels_normalizers,
                          label_parsers = label_parsers,
                          label_type = label_type,
-                         unknown_label = unknown_label)
+                         parse_fail = parse_fail)
   ans
 }
   
@@ -34,7 +34,7 @@ intervals_inner <- function(labels,
                             labels_normalizers,
                             label_parsers,
                             label_type,
-                            unknown_label) {
+                            parse_fail) {
   if (is.factor(labels))
     labels_unique <- levels(labels)
   else
@@ -49,7 +49,7 @@ intervals_inner <- function(labels,
               FUN = parse_label,
               FUN.VALUE = c(NA_real_, NA_real_),
               label_parsers = label_parsers,
-              unknown_label = unknown_label)
+              parse_fail = parse_fail)
   m <- t(m)
   ans <- list(labels_unique = labels_unique,
               labels_unique_norm_unique = labels_unique_norm_unique,

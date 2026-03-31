@@ -12,8 +12,8 @@ make_is_open <- function(intervals) {
 
 
 make_labels_intervals <- function(intervals,
-                                  label_one,
-                                  label_multi) {
+                                  parse_one,
+                                  parse_multi) {
   is_one <- get_is_one(intervals)
   is_range <- get_is_range(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -29,18 +29,18 @@ make_labels_intervals <- function(intervals,
   l <- m[, 1L]
   u <- m[, 2L]
   ans <- character(length = length(l))
-  if (label_one == "lower")
+  if (parse_one == "lower")
     ans[is_one] <- as.character(l[is_one])
-  else if (label_one == "upper")
+  else if (parse_one == "upper")
     ans[is_one] <- as.character(u[is_one])
   else
-    cli::cli_abort("Internal error: 'label_one' invalid.")
-  if (label_multi == "include")
+    cli::cli_abort("Internal error: 'parse_one' invalid.")
+  if (parse_multi == "include")
     ans[is_range] <- paste(l[is_range], u[is_range], sep = "-")
-  else if (label_multi == "exclude")
+  else if (parse_multi == "exclude")
     ans[is_range] <- paste(l[is_range], u[is_range] - 1, sep = "-")
   else
-    cli::cli_abort("Internal error: 'label_multi' invalid.")
+    cli::cli_abort("Internal error: 'parse_multi' invalid.")
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"
@@ -52,8 +52,8 @@ make_labels_intervals <- function(intervals,
 make_levels_from_breaks <- function(breaks,
                                     is_open_left,
                                     is_open_right,
-                                    label_one,
-                                    label_multi,
+                                    parse_one,
+                                    parse_multi,
                                     include_total,
                                     include_na) {
   lower <- breaks[-length(breaks)]
@@ -74,11 +74,11 @@ make_levels_from_breaks <- function(breaks,
   ans <- character(length = length(lower))
   ans[is_open_left] <- paste0("<", lower[is_open_left])
   ans[is_open_right] <- paste0(lower[is_open_right], "+")
-  if (label_one == "lower")
+  if (parse_one == "lower")
     ans[is_one] <- lower[is_one]
   else
     ans[is_one] <- upper[is_one]
-  if (label_multi == "exclude")
+  if (parse_multi == "exclude")
     ans[is_multi] <- paste(lower[is_multi],
                            upper[is_multi] - 1L,
                            sep = "-")

@@ -4,9 +4,9 @@ inner_set_open <- function(x,
                            make_open_left,
                            make_open_right,
                            label_type,
-                           label_one,
-                           label_multi,
-                           unknown_label) {
+                           parse_one,
+                           parse_multi,
+                           parse_fail) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = FALSE)
@@ -17,9 +17,9 @@ inner_set_open <- function(x,
                     divisible_by = NULL)
   intervals <- intervals(labels = x,
                          label_type = label_type,
-                         label_one = label_one,
-                         label_multi = label_multi,
-                         unknown_label = unknown_label)
+                         parse_one = parse_one,
+                         parse_multi = parse_multi,
+                         parse_fail = parse_fail)
   m <- get_m(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   i_x_to_xunu <- get_i_x_to_xunu(intervals)

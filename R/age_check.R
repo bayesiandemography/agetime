@@ -51,13 +51,13 @@ age_check <- function(x,
                       no_na = NA,
                       include_zero = NA,
                       include_open = NA,
-                      unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                      parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_check(x = x,
               label_type = "age",
-              label_one = "lower",
-              label_multi = "exclude",
-              unknown_label = unknown_label,
+              parse_one = "lower",
+              parse_multi = "exclude",
+              parse_fail = parse_fail,
               no_overlap = no_overlap,
               no_gap = no_gap,
               no_total = no_total,
@@ -75,13 +75,13 @@ age_assert <- function(x,
                        no_na = NA,
                        include_zero = NA,
                        include_open = NA,
-                       unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                       parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_assert(x = x,
                label_type = "age",
-               label_one = "lower",
-               label_multi = "exclude",
-               unknown_label = unknown_label,
+               parse_one = "lower",
+               parse_multi = "exclude",
+               parse_fail = parse_fail,
                no_overlap = no_overlap,
                no_gap = no_gap,
                no_total = no_total,

@@ -13,13 +13,13 @@
 #' age_standard(x)
 #' @export
 age_standard <- function(x,
-                         unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_standard(x = x,
                  label_type = "age",
-                 label_one = "lower",
-                 label_multi = "exclude",
-                 unknown_label = unknown_label)
+                 parse_one = "lower",
+                 parse_multi = "exclude",
+                 parse_fail = parse_fail)
 }
 
 

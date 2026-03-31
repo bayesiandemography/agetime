@@ -15,7 +15,7 @@ age_to_one(
   open = TRUE,
   include_total = NULL,
   include_na = NULL,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 
 age_to_five(
@@ -25,7 +25,7 @@ age_to_five(
   open = TRUE,
   include_total = NULL,
   include_na = NULL,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 
 age_to_ten(
@@ -35,7 +35,7 @@ age_to_ten(
   open = TRUE,
   include_total = NULL,
   include_na = NULL,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 
 age_to_life(
@@ -43,7 +43,7 @@ age_to_life(
   lower_last = NULL,
   include_total = NULL,
   include_na = NULL,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 
 age_to_labor(
@@ -52,7 +52,7 @@ age_to_labor(
   age_retire = 65,
   include_total = NULL,
   include_na = NULL,
-  unknown_label = c("error", "warn", "silent")
+  parse_fail = c("error", "warn", "silent")
 )
 }
 \arguments{

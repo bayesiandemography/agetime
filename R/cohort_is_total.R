@@ -12,15 +12,15 @@
 #' cohort_is_total(x)
 #' @export
 cohort_is_total <- function(x, 
-                            label_one = c("lower", "upper"),
-                            label_multi = c("include", "exclude"),
-                            unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                            parse_one = c("lower", "upper"),
+                            parse_multi = c("include", "exclude"),
+                            parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_is_total(x = x,
                  label_type = "cohort",
-                 label_one = label_one,
-                 label_multi = label_multi,
-                 unknown_label = unknown_label)
+                 parse_one = parse_one,
+                 parse_multi = parse_multi,
+                 parse_fail = parse_fail)
 }
 
 
@@ -38,15 +38,15 @@ cohort_is_total <- function(x,
 #' cohort_is_open(x)
 #' @export
 cohort_is_open <- function(x, 
-                           label_one = c("lower", "upper"),
-                           label_multi = c("include", "exclude"),
-                           unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                           parse_one = c("lower", "upper"),
+                           parse_multi = c("include", "exclude"),
+                           parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_is_open(x = x,
                 label_type = "cohort",
-                label_one = label_one,
-                label_multi = label_multi,
-                unknown_label = unknown_label,
+                parse_one = parse_one,
+                parse_multi = parse_multi,
+                parse_fail = parse_fail,
                 check_open_left = TRUE,
                 check_open_right = FALSE)
 }

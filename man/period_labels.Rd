@@ -9,8 +9,8 @@
 \usage{
 period_labels(
   breaks,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -18,8 +18,8 @@ period_labels(
 period_labels_one(
   lower_first,
   lower_last,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -27,8 +27,8 @@ period_labels_one(
 period_labels_five(
   lower_first,
   lower_last,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -36,8 +36,8 @@ period_labels_five(
 period_labels_ten(
   lower_first,
   lower_last,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -46,12 +46,12 @@ period_labels_ten(
 \item{breaks}{Boundaries between periods
 A numeric vector.}
 
-\item{label_one}{Whether labels
+\item{parse_one}{Whether labels
 for one-year periods are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{label_multi}{Whether
+\item{parse_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
@@ -84,19 +84,19 @@ period_labels_five(lower_first = 2000,
 period_labels_one(lower_first = 2000,
                   lower_last = 2010)
 
-## single-year periods, 'label_one' is "upper"
+## single-year periods, 'parse_one' is "upper"
 period_labels_one(lower_first = 2000,
                   lower_last = 2010,
-                  label_one = "upper")
+                  parse_one = "upper")
 
 ## ten-year periods
 period_labels_ten(lower_first = 2000,
                   lower_last = 2010)
 
-## ten-year periods, 'label_multi' is "exclude",
+## ten-year periods, 'parse_multi' is "exclude",
 period_labels_ten(lower_first = 2000,
                   lower_last = 2010,
-                  label_multi = "exclude")
+                  parse_multi = "exclude")
 
 ## include total and NA
 period_labels_ten(lower_first = 2000,

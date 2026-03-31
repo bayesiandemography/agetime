@@ -17,18 +17,18 @@
 #' @export
 cohort_set_open <- function(x,
                             open,
-                            label_one = c("lower", "upper"),
-                            label_multi = c("include", "exclude"),
-                            unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+                            parse_one = c("lower", "upper"),
+                            parse_multi = c("include", "exclude"),
+                            parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_set_open(x = x,
                  open = open,
                  make_open_left = FALSE,
                  make_open_right = TRUE,
                  label_type = "cohort",
-                 label_one = label_one,
-                 label_multi = label_multi,
-                 unknown_label = unknown_label)
+                 parse_one = parse_one,
+                 parse_multi = parse_multi,
+                 parse_fail = parse_fail)
 }

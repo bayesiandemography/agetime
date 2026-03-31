@@ -10,8 +10,8 @@
 cohort_labels(
   breaks,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -20,8 +20,8 @@ cohort_labels_one(
   lower_first,
   lower_last,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -30,8 +30,8 @@ cohort_labels_five(
   lower_first,
   lower_last,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -40,8 +40,8 @@ cohort_labels_ten(
   lower_first,
   lower_last,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  parse_one = c("lower", "upper"),
+  parse_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -54,12 +54,12 @@ A numeric vector.}
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
-\item{label_one}{Whether labels
+\item{parse_one}{Whether labels
 for one-year cohorts are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{label_multi}{Whether
+\item{parse_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
@@ -97,19 +97,19 @@ cohort_labels_five(lower_first = 1960,
 cohort_labels_one(lower_first = 2000,
                   lower_last = 2010)
 
-## single-year cohorts, 'label_one' is "upper"
+## single-year cohorts, 'parse_one' is "upper"
 cohort_labels_one(lower_first = 2000,
                   lower_last = 2010,
-                  label_one = "upper")
+                  parse_one = "upper")
 
 ## ten-year cohorts
 cohort_labels_ten(lower_first = 2000,
                   lower_last = 2010)
 
-## ten-year cohorts, 'label_multi' is "exclude",
+## ten-year cohorts, 'parse_multi' is "exclude",
 cohort_labels_ten(lower_first = 2000,
                   lower_last = 2010,
-                  label_multi = "exclude")
+                  parse_multi = "exclude")
 
 ## include total and NA
 cohort_labels_ten(lower_first = 2000,

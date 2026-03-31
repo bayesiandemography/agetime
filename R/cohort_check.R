@@ -48,17 +48,17 @@ cohort_check <- function(x,
                          no_total = NA,
                          no_na = NA,
                          include_open = NA,
-                         label_one = c("lower", "upper"),
-                         label_multi = c("include", "exclude"),
-                         unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                         parse_one = c("lower", "upper"),
+                         parse_multi = c("include", "exclude"),
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_check(x = x,
               label_type = "cohort",
-              label_one = label_one,
-              label_multi = label_multi,
-              unknown_label = unknown_label,
+              parse_one = parse_one,
+              parse_multi = parse_multi,
+              parse_fail = parse_fail,
               no_overlap = no_overlap,
               no_gap = no_gap,
               no_total = no_total,
@@ -75,17 +75,17 @@ cohort_assert <- function(x,
                           no_total = NA,
                           no_na = NA,
                           include_open = NA,
-                          label_one = c("lower", "upper"),
-                          label_multi = c("include", "exclude"),
-                          unknown_label = c("error", "warn", "silent")) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
-  unknown_label <- match.arg(unknown_label)
+                          parse_one = c("lower", "upper"),
+                          parse_multi = c("include", "exclude"),
+                          parse_fail = c("error", "warn", "silent")) {
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
+  parse_fail <- match.arg(parse_fail)
   inner_assert(x = x,
                label_type = "age",
-               label_one = "lower",
-               label_multi = "exclude",
-               unknown_label = unknown_label,
+               parse_one = "lower",
+               parse_multi = "exclude",
+               parse_fail = parse_fail,
                no_overlap = no_overlap,
                no_gap = no_gap,
                no_total = no_total,

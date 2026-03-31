@@ -12,13 +12,13 @@
 #' age_is_total(x)
 #' @export
 age_is_total <- function(x, 
-                         unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                         parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_is_total(x = x,
                  label_type = "age",
-                 label_one = "lower",
-                 label_multi = "exclude",
-                 unknown_label = unknown_label)
+                 parse_one = "lower",
+                 parse_multi = "exclude",
+                 parse_fail = parse_fail)
 }
 
 
@@ -36,13 +36,13 @@ age_is_total <- function(x,
 #' age_is_open(x)
 #' @export
 age_is_open <- function(x, 
-                        unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                        parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_is_open(x = x,
                 label_type = "age",
-                label_one = "lower",
-                label_multi = "exclude",
-                unknown_label = unknown_label,
+                parse_one = "lower",
+                parse_multi = "exclude",
+                parse_fail = parse_fail,
                 check_open_left = FALSE,
                 check_open_right = TRUE)
 }

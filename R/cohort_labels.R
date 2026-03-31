@@ -31,19 +31,19 @@
 #' cohort_labels_one(lower_first = 2000,
 #'                   lower_last = 2010)
 #'
-#' ## single-year cohorts, 'label_one' is "upper"
+#' ## single-year cohorts, 'parse_one' is "upper"
 #' cohort_labels_one(lower_first = 2000,
 #'                   lower_last = 2010,
-#'                   label_one = "upper")
+#'                   parse_one = "upper")
 #' 
 #' ## ten-year cohorts
 #' cohort_labels_ten(lower_first = 2000,
 #'                   lower_last = 2010)
 #'
-#' ## ten-year cohorts, 'label_multi' is "exclude",
+#' ## ten-year cohorts, 'parse_multi' is "exclude",
 #' cohort_labels_ten(lower_first = 2000,
 #'                   lower_last = 2010,
-#'                   label_multi = "exclude")
+#'                   parse_multi = "exclude")
 #'
 #' ## include total and NA
 #' cohort_labels_ten(lower_first = 2000,
@@ -53,16 +53,16 @@
 #' @export
 cohort_labels <- function(breaks,
                           open = FALSE,
-                          label_one = c("lower", "upper"),
-                          label_multi = c("include", "exclude"),
+                          parse_one = c("lower", "upper"),
+                          parse_multi = c("include", "exclude"),
                           include_total = FALSE,
                           include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels(breaks = breaks,
-               label_one = label_one,
-               label_multi = label_multi,
+               parse_one = parse_one,
+               parse_multi = parse_multi,
                is_open_left = open,
                is_open_right = FALSE,
                include_total = include_total,
@@ -74,17 +74,17 @@ cohort_labels <- function(breaks,
 cohort_labels_one <- function(lower_first,
                               lower_last,
                               open = FALSE,
-                              label_one = c("lower", "upper"),
-                              label_multi = c("include", "exclude"),
+                              parse_one = c("lower", "upper"),
+                              parse_multi = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels_one(lower_first = lower_first,
                    lower_last = lower_last,
-                   label_one = label_one,
-                   label_multi = label_multi,
+                   parse_one = parse_one,
+                   parse_multi = parse_multi,
                    is_open_left = open,
                    is_open_right = FALSE,
                    include_total = include_total,
@@ -97,17 +97,17 @@ cohort_labels_one <- function(lower_first,
 cohort_labels_five <- function(lower_first,
                                lower_last,
                                open = FALSE,
-                               label_one = c("lower", "upper"),
-                               label_multi = c("include", "exclude"),
+                               parse_one = c("lower", "upper"),
+                               parse_multi = c("include", "exclude"),
                                include_total = FALSE,
                                include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels_five(lower_first = lower_first,
                     lower_last = lower_last,
-                    label_one = label_one,
-                    label_multi = label_multi,
+                    parse_one = parse_one,
+                    parse_multi = parse_multi,
                     is_open_left = open,
                     is_open_right = FALSE,
                     include_total = include_total,
@@ -119,17 +119,17 @@ cohort_labels_five <- function(lower_first,
 cohort_labels_ten <- function(lower_first,
                               lower_last,
                               open = FALSE,
-                              label_one = c("lower", "upper"),
-                              label_multi = c("include", "exclude"),
+                              parse_one = c("lower", "upper"),
+                              parse_multi = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  parse_one <- match.arg(parse_one)
+  parse_multi <- match.arg(parse_multi)
   inner_labels_ten(lower_first = lower_first,
                    lower_last = lower_last,
-                   label_one = label_one,
-                   label_multi = label_multi,
+                   parse_one = parse_one,
+                   parse_multi = parse_multi,
                    is_open_left = open,
                    is_open_right = FALSE,
                    include_total = include_total,

@@ -26,16 +26,16 @@ age_extend <- function(x,
                        n = 1L,
                        width = NULL,
                        include_x = TRUE,
-                       unknown_label = c("error", "warn", "silent")) {
-  unknown_label <- match.arg(unknown_label)
+                       parse_fail = c("error", "warn", "silent")) {
+  parse_fail <- match.arg(parse_fail)
   inner_extend(x = x,
                n = n,
                width = width,
                include_x = include_x,
                label_type = "age",
-               label_one = "lower",
-               label_multi = "exclude",
-               unknown_label = unknown_label)
+               parse_one = "lower",
+               parse_multi = "exclude",
+               parse_fail = parse_fail)
 }
 
 
