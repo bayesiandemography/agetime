@@ -14,10 +14,10 @@ unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-A character vector same the length as \code{x}.
+A modified version of \code{x}.
 }
 \description{
-Standardize Age Group Labels
+Convert age group labels to a 'standard' format.
 }
 \examples{
 x <- c("5to9", "10--14", "100plus")

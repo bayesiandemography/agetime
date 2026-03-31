@@ -29,6 +29,6 @@
 #' | [age_mapping()]     | [period_mapping()]     | [cohort_mapping()]     | Mapping between labels     |
 #'
 #' @docType package
-#' @name agetime
-#' @aliases agetime-package
+#' @name agetime-package
+#' @aliases agetime
 "_PACKAGE"
