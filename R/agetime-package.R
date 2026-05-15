@@ -15,7 +15,7 @@
 #' | [age_convert_ten()]  | [period_convert_ten()] | [cohort_convert_ten()] | Convert to 10-year intervals | 
 #' | [age_convert_life()] | -                      | -                      | Convert to life table ages   |
 #' | [age_extend()]       | [period_extend()]      | [cohort_extend()]      | Add extra labels at end      |
-#' | [age_complete()]     | [period_complete()]    | [cohort_complete()]    | Fill in gaps                 |
+#' | [age_complete()]     | [period_complete()]    | [cohort_complete()]    | Fill in gaps in levels       |
 #' | [age_standard()]     | [period_standard()]    | [cohort_standard()]    | Apply standard formatting    |
 #' | [age_labels()]       | [period_labels()]      | [cohort_labels()]      | New labels                   |
 #' | [age_labels_one()]   | [period_labels_one()]  | [cohort_labels_one()]  | New 1-year labels            |

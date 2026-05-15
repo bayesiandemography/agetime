@@ -4,7 +4,7 @@
 \alias{age_convert_five}
 \alias{age_convert_ten}
 \alias{age_convert_life}
-\title{Convert to New Specialised Age Groups}
+\title{Convert to Specialised Age Groups}
 \usage{
 age_convert_five(x, x_fail = c("error", "warn", "silent"))
 
@@ -26,8 +26,8 @@ a factor; otherwise it is a character vector.
 \description{
 Modify the age groups used by \code{x}.
 The new age groups must contain
-the old groups, and follow a regular
-standard pattern:
+the old age groups, and follow a regular
+pattern:
 \itemize{
 \item \code{age_convert_five} Five-year age groups
 \item \code{age_convert_ten} Ten-year age groups
@@ -42,9 +42,10 @@ age_convert_life(x)
 }
 \seealso{
 \code{\link[=age_convert]{age_convert()}} Convert to general age groups
+\code{\link[=age_life]{age_life()}} Convert to life table age groups
 \code{\link[=period_convert_five]{period_convert_five()}} Period equivalent of \code{age_convert_five()}
 \code{\link[=period_convert_ten]{period_convert_ten()}} Period equivalent of \code{age_convert_ten()}
 \code{\link[=cohort_convert_five]{cohort_convert_five()}} Cohort equivalent of \code{age_convert_five()}
 \code{\link[=cohort_convert_ten]{cohort_convert_ten()}} Cohort equivalent of \code{age_convert_ten()}
-age_fill()] Add intermediate age groups
+age_fill()] Add levels for intermediate age groups
 }

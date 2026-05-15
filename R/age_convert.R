@@ -1,4 +1,4 @@
-#' Convert to New General Age Groups
+#' Convert to New Age Groups
 #'
 #' Modify the age groups used by `x`. The
 #' the new age groups must
@@ -18,9 +18,9 @@
 #' @seealso
 #' [age_convert_five()] Convert to 5-year age groups
 #' [age_convert_ten()] Convert to 10-year age groups
+#' [age_convert_life()] Convert to life table age groups
 #' [period_convert()] Period equivalent of `age_convert()`
 #' [cohort_convert()] Cohort equivalent of `age_convert()`
-#' age_fill()] Add intermediate age groups
 #' 
 #' @examples
 #' x <- c("1-4", "87-89", "0", "50-54")
@@ -44,14 +44,14 @@ age_convert <- function(x,
 }
 
 
-#' Convert to New Specialised Age Groups
+#' Convert to Specialised Age Groups
 #'
 #' @description
 #'
 #' Modify the age groups used by `x`.
 #' The new age groups must contain
-#' the old groups, and follow a regular
-#' standard pattern:
+#' the old age groups, and follow a regular
+#' pattern:
 #' 
 #' - `age_convert_five` Five-year age groups
 #' - `age_convert_ten` Ten-year age groups
@@ -65,11 +65,12 @@ age_convert <- function(x,
 #'
 #' @seealso
 #' [age_convert()] Convert to general age groups
+#' [age_life()] Convert to life table age groups
 #' [period_convert_five()] Period equivalent of `age_convert_five()`
 #' [period_convert_ten()] Period equivalent of `age_convert_ten()`
 #' [cohort_convert_five()] Cohort equivalent of `age_convert_five()`
 #' [cohort_convert_ten()] Cohort equivalent of `age_convert_ten()`
-#' age_fill()] Add intermediate age groups
+#' age_complete()] Add levels for intermediate age groups
 #' 
 #' @examples
 #' x <- c("1-4", "87-89", "0", "90+", "total", "50-54")

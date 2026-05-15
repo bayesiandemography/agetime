@@ -82,7 +82,7 @@ inner_convert_width <- function(x,
     if (is_open_left)
       start <- start + width - remainder_start
     else
-      start <- start - remainders_start
+      start <- start - remainder_start
   }
   if (is_open_right) {
     l <- get_lower(intervals)
@@ -105,7 +105,7 @@ inner_convert_width <- function(x,
                 is_open_left = is_open_left,
                 is_open_right = is_open_right,
                 label_type = label_type,
-                x_one = "lower",
-                x_multi = "exclude",
+                x_one = x_one,
+                x_multi = x_multi,
                 x_fail = x_fail)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_convert.R
 \name{age_convert}
 \alias{age_convert}
-\title{Convert to New General Age Groups}
+\title{Convert to New Age Groups}
 \usage{
 age_convert(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
 }
@@ -37,7 +37,7 @@ age_convert(breaks = c(0, 10, 40, 90), open = FALSE)
 \seealso{
 \code{\link[=age_convert_five]{age_convert_five()}} Convert to 5-year age groups
 \code{\link[=age_convert_ten]{age_convert_ten()}} Convert to 10-year age groups
+\code{\link[=age_convert_life]{age_convert_life()}} Convert to life table age groups
 \code{\link[=period_convert]{period_convert()}} Period equivalent of \code{age_convert()}
 \code{\link[=cohort_convert]{cohort_convert()}} Cohort equivalent of \code{age_convert()}
-age_fill()] Add intermediate age groups
 }
