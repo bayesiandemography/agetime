@@ -1,4 +1,4 @@
-#' Create a New Set of Age Labels
+#' Create a New Set of Unique Age Labels
 #'
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
@@ -14,7 +14,7 @@
 #' @param include_na Whether to include
 #' an `NA` category.
 #'
-#' @returns A character vector
+#' @returns A character vector.
 #'
 #' @examples
 #' ## default 5-year age groups
@@ -56,8 +56,8 @@ age_labels <- function(breaks,
                        include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
   inner_labels(breaks = breaks,
-               parse_one = "lower",
-               parse_multi = "exclude",
+               x_one = "lower",
+               x_multi = "exclude",
                is_open_left = FALSE,
                is_open_right = open,
                include_total = include_total,
@@ -74,8 +74,8 @@ age_labels_one <- function(lower_first = 0,
   check_flag(x = open, nm_x = "open")
   inner_labels_one(lower_first = lower_first,
                    lower_last = lower_last,
-                   parse_one = "lower",
-                   parse_multi = "exclude",
+                   x_one = "lower",
+                   x_multi = "exclude",
                    is_open_left = FALSE,
                    is_open_right = open,
                    include_total = include_total,
@@ -93,8 +93,8 @@ age_labels_five <- function(lower_first = 0,
   check_flag(x = open, nm_x = "open")
   inner_labels_five(lower_first = lower_first,
                     lower_last = lower_last,
-                    parse_one = "lower",
-                    parse_multi = "exclude",
+                    x_one = "lower",
+                    x_multi = "exclude",
                     is_open_left = FALSE,
                     is_open_right = open,
                     include_total = include_total,
@@ -111,8 +111,8 @@ age_labels_ten <- function(lower_first = 0,
   check_flag(x = open, nm_x = "open")
   inner_labels_ten(lower_first = lower_first,
                    lower_last = lower_last,
-                   parse_one = "lower",
-                   parse_multi = "exclude",
+                   x_one = "lower",
+                   x_multi = "exclude",
                    is_open_left = FALSE,
                    is_open_right = open,
                    include_total = include_total,
@@ -125,7 +125,7 @@ age_labels_ten <- function(lower_first = 0,
 age_labels_life <- function(lower_last = 100,
                             include_total = FALSE,
                             include_na = FALSE) {
-  poputils::check_n(n = lower_last,
+  check_n(n = lower_last,
                     nm_n = "lower_last",
                     min = 5L,
                     max = NULL,
@@ -148,12 +148,12 @@ age_labels_labor <- function(age_work = 20,
                              age_retire = 65,
                              include_total = FALSE,
                              include_na = FALSE) {
-  poputils::check_n(n = age_work,
+  check_n(n = age_work,
                     nm_n = "age_work",
                     min = 1L,
                     max = NULL,
                     divisible_by = 1L)
-  poputils::check_n(n = age_retire,
+  check_n(n = age_retire,
                     nm_n = "age_retire",
                     min = 2L,
                     max = NULL,

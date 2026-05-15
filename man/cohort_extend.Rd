@@ -9,9 +9,9 @@ cohort_extend(
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
-  parse_fail = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -23,26 +23,25 @@ Default is \code{1}.}
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
 
-\item{parse_one}{Whether labels
+\item{x_one}{Whether labels
 for one-year cohorts are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{parse_multi}{Whether
+\item{x_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{parse_fail}{Action if a label
+\item{x_fail}{Action if a label
 cannot be interpreted. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, \code{cohort_extend}
-returns a factor; otherwise it returns
-a character vector.
+If \code{x} is a factor, then the return value is
+a factor; otherwise it is a character vector.
 }
 \description{
 Add \code{n} cohorts to an existing set of labels \code{x}.

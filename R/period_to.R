@@ -1,15 +1,15 @@
 
 ## User-Visible Functions ------------------------------------------------------
 
-#' Convert Age Group Labels to New Format
+#' Convert Period Labels to New Format
 #'
-#' Modify a set of age labels by aggregating
-#' age groups.
+#' Modify a set of period labels by aggregating
+#' periods or changing the .
 #'
 #' @inheritParams age_labels
-#' @param x Vector of age group labels.
-#' @param x_fail Action if label in
-#' `x` cannot be interpreted. Choices are
+#' @param x Vector of period labels.
+#' @param x_fail Action if meaning
+#' of label unclear. Choices are
 #' `"error"` (the default), `"warn"`,
 #' and `"silent"`.
 #'
@@ -18,97 +18,106 @@
 #' a factor; otherwise it is a character vector.
 #'
 #' @examples
-#' x <- c("1-4", "87-89", "50-54")
-#' age_to(x, breaks = c(0, 50, 90))
-#' age_to(x, breaks = c(0, 25, 100), open = FALSE)
+#' x <- c("2021-2024", "2017-2019", "2022")
+#' period_to(x, breaks = c(2000, 2020, 2030))
 #' @export
-age_to <- function(x,
-                   breaks,
-                   open = TRUE,
-                   x_fail = c("error", "warn", "silent")) {
+period_to <- function(x,
+                      breaks,
+                      open = TRUE,
+                      x_one = c("lower", "upper"),
+                      x_multi = c("include", "exclude"),
+                      x_fail = c("error", "warn", "silent")) {
+  x_one <- match.arg(x_one)
+  x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
   inner_to(x = x,
            breaks = breaks,
            is_open_left = FALSE,
-           is_open_right = open,
-           label_type = "age",
+           is_open_right = FALSE,
+           label_type = "period",
            x_one = x_one,
            x_multi = x_multi,
            x_fail = x_fail)
 }
 
+  
 
-#' Convert Age Group Labels to Specialized Format
+#' Convert Period Group Labels to Specialized Format
 #'
 #' @description
 #' 
-#' Modify a set of existing age group labels
+#' Modify a set of existing period group labels
 #' so that it conforms to a specialised format.
 #'
-#' - `age_to_one` Single-year age groups
-#' - `age_to_five` Five-year age groups
-#' - `age_to_ten` Ten-year age groups
-#' - `age_to_life` Age groups used in 'abridged' life tables
-#' - `age_to_labor` Labor force age groups
+#' - `period_to_one` Single-year period groups
+#' - `period_to_five` Five-year period groups
+#' - `period_to_ten` Ten-year period groups
 #'
 #' @details
 #'
-#' @inheritParams age_labels
-#' @param lower_first Lower limit of first age group.
-#' Default is `0`.
-#' @param lower_last Lower limit of last age group.
-#' Default is `100`.
+#' @inheritParams period_labels
+#' @param lower_first Lower limit of first period.
+#' @param lower_last Lower limit of last period.
 #'
 #' @returns
 #' If `x` is a factor, then the return value is
 #' a factor; otherwise it is a character vector.
 #' 
 #' @examples
-#' x <- c("1-4", "87-89", "50-54")
-#' age_to_five(x)
-#' age_to_five(lower_last = 90)
-#' age_to_five(open = FALSE)
-#' age_to_ten(x)
-#' age_to_life(x)
-#'
-#' x <- factor(c("0-9", "70+", "22"))
-#' age_to_labor(x)
-#' age_to_labor(x,
-#'              age_work = 20,
-#'              age_retire = 67)
-#'
-#' x <- c(NA, 1, 10, "Total")
-#' age_to_five(x)
+#' x <- c("2001-2003", "2007-2008", "2005"))
+#' period_to_five(x, lower_first = 2000, lower_last = 2005)
+#' period_to_five(x, lower_first = 2001, lower_last = 2006)
+#' period_to_ten(x, lower_first = 1990, lower_last = 2010)
 #' @export
-age_to_one <- function(x,
-                       lower_first = 0,
-                       lower_last = 100,
-                       open = TRUE,
-                       x_fail = c("error", "warn", "silent")) {
+period_to_one <- function(x,
+                          lower_first = NULL,
+                          lower_last = NULL,
+                          x_one = c("lower", "upper"),
+                          x_multi = c("include", "exclude"),
+                          x_fail = c("error", "warn", "silent")) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
+  check_flag(x = open, nm_x = "open")
   x_fail <- match.arg(x_fail)
-  breaks <- make_breaks_age(x = x,
-                            lower_last = lower_first,
-                            lower_last = lower_last,
-                            open = open,
-                            width = 1L,
-                            x_fail = x_fail)
-  inner_to(x = x,
-           breaks = breaks,
-           is_open_left = FALSE,
-           is_open_right = open,
-           label_type = "age",
-           x_one = x_one,
-           x_multi = x_multi,
-           x_fail = x_fail)
+  intervals <- intervals(labels = x,
+                         label_type = "period",
+                         x_fail = x_fail)
+  lower_first <- make_lower_first(lower_first = lower_first,
+                                  intervals = intervals,
+                                  open = open,
+                                  min = 0L,
+                                  divisible_by = 1L)
+  lower_last <- make_lower_last(lower_last = lower_last,
+                                intervals = intervals,
+                                open = open,
+                                min = 0L,
+                                divisible_by = 1L)
+  check_x_lt_y(x = lower_first,
+               y = lower_last,
+               nm_x = "lower_first",
+               nm_y = "lower_last")
+  to <- if (open) lower_last else lower_last + 1L
+  breaks <- seq.int(from = lower_first,
+                    to = to,
+                    by = 1L)
+  period_to_inner(x = x,
+                  breaks = breaks,
+                  open = open,
+                  include_total = include_total,
+                  include_na = include_na,
+                  intervals = intervals)
 }
 
 
-#' @rdname age_to_one
+#' @rdname period_to_one
 #' @export
-age_to_five <- function(x,
-                        lower_first = 0,
-                        lower_last = 100,
+period_to_five <- function(x,
+                        lower_first = NULL,
+                        lower_last = NULL,
                         open = TRUE,
+                        include_total = NULL,
+                        include_na = NULL,
                         x_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
@@ -116,7 +125,7 @@ age_to_five <- function(x,
   check_flag(x = open, nm_x = "open")
   x_fail <- match.arg(x_fail)
   intervals <- intervals(labels = x,
-                         label_type = "age",
+                         label_type = "period",
                          x_fail = x_fail)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
@@ -136,7 +145,7 @@ age_to_five <- function(x,
   breaks <- seq.int(from = lower_first,
                     to = to,
                     by = 5L)
-  age_to_inner(x = x,
+  period_to_inner(x = x,
                breaks = breaks,
                open = open,
                include_total = include_total,
@@ -144,12 +153,14 @@ age_to_five <- function(x,
                intervals = intervals)
 }
 
-#' @rdname age_to_one
+#' @rdname period_to_one
 #' @export
-age_to_ten <- function(x,
+period_to_ten <- function(x,
                         lower_first = NULL,
                         lower_last = NULL,
                         open = TRUE,
+                        include_total = NULL,
+                        include_na = NULL,
                         x_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
@@ -157,7 +168,7 @@ age_to_ten <- function(x,
   check_flag(x = open, nm_x = "open")
   x_fail <- match.arg(x_fail)
   intervals <- intervals(labels = x,
-                         label_type = "age",
+                         label_type = "period",
                          x_fail = x_fail)
   lower_first <- make_lower_first(lower_first = lower_first,
                                   intervals = intervals,
@@ -177,7 +188,7 @@ age_to_ten <- function(x,
   breaks <- seq.int(from = lower_first,
                     to = to,
                     by = 10L)
-  age_to_inner(x = x,
+  period_to_inner(x = x,
                breaks = breaks,
                open = open,
                include_total = include_total,
@@ -186,17 +197,19 @@ age_to_ten <- function(x,
 }
 
 
-#' @rdname age_to_one
+#' @rdname period_to_one
 #' @export
-age_to_life <- function(x,
+period_to_life <- function(x,
                         lower_last = NULL,
+                        include_total = NULL,
+                        include_na = NULL,
                         x_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   x_fail <- match.arg(x_fail)
   intervals <- intervals(labels = x,
-                         label_type = "age",
+                         label_type = "period",
                          x_fail = x_fail)
   lower_last <- make_lower_last(lower_last = lower_last,
                                 intervals = intervals,
@@ -207,7 +220,7 @@ age_to_life <- function(x,
                to = lower_last,
                by = 5L)
   breaks <- c(0L, 1L, s)
-  age_to_inner(x = x,
+  period_to_inner(x = x,
                breaks = breaks,
                open = TRUE,
                include_total = include_total,
@@ -216,45 +229,45 @@ age_to_life <- function(x,
 }
 
 
-#' @rdname age_to_one
+#' @rdname period_to_one
 #' @export
-age_to_labor <- function(x,
-                         age_work = 20,
-                         age_retire = 65,
-                         x_fail = c("error", "warn", "silent")) {
+period_to_labor <- function(x,
+                            period_work = 20,
+                            period_retire = 65,
+                            include_total = NULL,
+                            include_na = NULL,
+                            x_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
-  check_n(n = age_work,
-                    nm_n = "age_work",
-                    min = 1L,
-                    max = NULL,
-                    divisible_by = 1L)
-  check_n(n = age_retire,
-                    nm_n = "age_retire",
-                    min = 2L,
-                    max = NULL,
-                    divisible_by = 1L)
-  check_x_lt_y(x = age_work,
-               y = age_retire,
-               nm_x = "age_work",
-               nm_y = "age_retire")
-  breaks <- c(0L, age_work, age_retire)
+  check_n(n = period_work,
+          nm_n = "period_work",
+          min = 1L,
+          max = NULL,
+          divisible_by = 1L)
+  check_n(n = period_retire,
+          nm_n = "period_retire",
+          min = 2L,
+          max = NULL,
+          divisible_by = 1L)
+  check_x_lt_y(x = period_work,
+               y = period_retire,
+               nm_x = "period_work",
+               nm_y = "period_retire")
+  breaks <- c(0L, period_work, period_retire)
   x_fail <- match.arg(x_fail)
-  age_to(x = x,
-         breaks = breaks,
-         open = TRUE,
-         include_total = include_total,
-         include_na = include_na,
-         x_fail = x_fail)
+  period_to(x = x,
+            breaks = breaks,
+            open = TRUE,
+            include_total = include_total,
+            include_na = include_na,
+            x_fail = x_fail)
 }
 
 
 ## Internal Functions ---------------------------------------------------------
 
-  
-
-age_to_inner <- function(x,
+period_to_inner <- function(x,
                          breaks,
                          open,
                          include_total,
@@ -293,7 +306,7 @@ age_to_inner <- function(x,
                                 include_na = include_na,
                                 intervals = intervals)
   check_m_contains(m_contains = m_contains,
-                   label_type = "age")
+                   label_type = "period")
   i_new <- apply(m_contains, 2L, which)
   i_x_to_xu <- get_i_x_to_xu(intervals)
   ans <- levels_breaks[i_new][i_x_to_xu]

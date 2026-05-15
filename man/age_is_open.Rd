@@ -4,12 +4,12 @@
 \alias{age_is_open}
 \title{Identify Labels that Refer to Open Age Groups}
 \usage{
-age_is_open(x, parse_fail = c("error", "warn", "silent"))
+age_is_open(x, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{parse_fail}{Action if meaning of label
+\item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }

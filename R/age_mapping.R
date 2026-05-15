@@ -48,7 +48,7 @@ age_mapping <- function(x,
                         y = NULL,
                         relation = c("equals", "contains", "contained", "overlaps"),
                         return_val = c("data.frame", "matrix"),
-                        parse_fail = c("error", "warn", "silent")) {
+                        x_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = FALSE)
@@ -60,17 +60,17 @@ age_mapping <- function(x,
                                 length_zero_ok = FALSE)
   relation <- match.arg(relation)
   return_val <- match.arg(return_val)
-  parse_fail <- match.arg(parse_fail)
+  x_fail <- match.arg(x_fail)
   intervals_x <- intervals(labels = x,
                            label_type = "age",
-                           parse_one = "lower",
-                           parse_multi = "exclude",
-                           parse_fail = parse_fail)
+                           x_one = "lower",
+                           x_multi = "exclude",
+                           x_fail = x_fail)
   intervals_y <- intervals(labels = y,
                            label_type = "age",
-                           parse_one = "lower",
-                           parse_multi = "exclude",
-                           parse_fail = parse_fail)
+                           x_one = "lower",
+                           x_multi = "exclude",
+                           x_fail = x_fail)
   make_mapping(intervals_x = intervals_x,
                intervals_y = intervals_y,
                relation = relation,

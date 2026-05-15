@@ -5,13 +5,13 @@
 \alias{cohort_labels_one}
 \alias{cohort_labels_five}
 \alias{cohort_labels_ten}
-\title{Create a New Set of Cohort Labels}
+\title{Create a New Set of Unique Cohort Labels}
 \usage{
 cohort_labels(
   breaks,
   open = FALSE,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -20,8 +20,8 @@ cohort_labels_one(
   lower_first,
   lower_last,
   open = FALSE,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -30,8 +30,8 @@ cohort_labels_five(
   lower_first,
   lower_last,
   open = FALSE,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -40,8 +40,8 @@ cohort_labels_ten(
   lower_first,
   lower_last,
   open = FALSE,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -54,12 +54,12 @@ A numeric vector.}
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
-\item{parse_one}{Whether labels
+\item{x_one}{Whether labels
 for one-year cohorts are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{parse_multi}{Whether
+\item{x_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
@@ -78,10 +78,10 @@ first cohort.}
 last cohort.}
 }
 \value{
-A character vector
+A character vector.
 }
 \description{
-Create a New Set of Cohort Labels
+Create a New Set of Unique Cohort Labels
 }
 \examples{
 ## 5-year cohorts
@@ -97,19 +97,19 @@ cohort_labels_five(lower_first = 1960,
 cohort_labels_one(lower_first = 2000,
                   lower_last = 2010)
 
-## single-year cohorts, 'parse_one' is "upper"
+## single-year cohorts, 'x_one' is "upper"
 cohort_labels_one(lower_first = 2000,
                   lower_last = 2010,
-                  parse_one = "upper")
+                  x_one = "upper")
 
 ## ten-year cohorts
 cohort_labels_ten(lower_first = 2000,
                   lower_last = 2010)
 
-## ten-year cohorts, 'parse_multi' is "exclude",
+## ten-year cohorts, 'x_multi' is "exclude",
 cohort_labels_ten(lower_first = 2000,
                   lower_last = 2010,
-                  parse_multi = "exclude")
+                  x_multi = "exclude")
 
 ## include total and NA
 cohort_labels_ten(lower_first = 2000,

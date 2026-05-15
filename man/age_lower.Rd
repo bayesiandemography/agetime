@@ -8,18 +8,18 @@
 \title{Lower Limits, Upper Limits, Widths
 and Midpoints of Age Groups}
 \usage{
-age_lower(x, parse_fail = c("error", "warn", "silent"))
+age_lower(x, x_fail = c("error", "warn", "silent"))
 
-age_mid(x, parse_fail = c("error", "warn", "silent"))
+age_mid(x, x_fail = c("error", "warn", "silent"))
 
-age_upper(x, parse_fail = c("error", "warn", "silent"))
+age_upper(x, x_fail = c("error", "warn", "silent"))
 
-age_width(x, parse_fail = c("error", "warn", "silent"))
+age_width(x, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{parse_fail}{Action if meaning of label
+\item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
@@ -57,7 +57,7 @@ df <- tribble(   ~age, ~count,
 df
 df |> filter(age_lower(age) >= 10)
 
-## no action when 'parse_fail' is "silent"
+## no action when 'x_fail' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
-          parse_fail = "silent")
+          x_fail = "silent")
 }

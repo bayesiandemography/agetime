@@ -1,4 +1,67 @@
 
+make_breaks_age <- function(x,
+                            lower_first,
+                            lower_last,
+                            width,
+                            x_fail) {
+  x <- to_character_or_factor(x = x,
+                              nm_x = "x",
+                              length_zero_ok = TRUE)
+  intervals <- intervals(labels = x,
+                         label_type = "age",
+                         x_one = "lower",
+                         interpet_multi = "exclude",
+                         x_fail = x_fail)
+  lower <- get_lower(intervals)
+  for (nm in c("lower_first", "lower_last")) {
+    val <- get(nm)
+    has_val <- !is.null(val)
+    if (has_val) {
+      check_n(n = val,
+                        nm_n = nm,
+                        min = 0L,
+                        max = NULL,
+                        divisible_by = width)
+    }
+    assign(nm, as.integer(val))
+    assign(paste0("has_", nm), has_val)
+  }
+  if (has_lower_first && has_lower_last)
+    check_x_lt_y(x = lower_first,
+                 y = lower_last,
+                 nm_x = "lower_first",
+                 nm_y = "lower_last")
+  if (has_lower_first) {
+    check_val_not_inside_interval(val = lower_first,
+                                  nm_val = "lower_first",
+                                  intervals = intervals)
+    check_lower_first_le_all_intervals(lower_first = lower_first,
+                                       intervals = intervals)
+    from <- lower_first
+  }
+  else {
+    from <- min(lower, na.rm = TRUE)
+    from <- (from %/% width) * width
+  }
+  if (has_lower_last) {
+    check_val_not_inside_interval(val = lower_last,
+                                  nm_val = "lower_last",
+                                  intervals = intervals)
+    
+    check_lower_last_ge_all_intervals(lower_last = lower_last,
+                                      intervals = intervals)
+    to <- lower_last + width
+  }
+  else {
+    to <- max(lower[is.finite(upper)])
+    if (to %% divisible_by > 0L)
+      to <- ((to %/% width) + 1L) * width
+  }
+  seq.int(from = from,
+          to = to,
+          by = width)
+}
+
 
 make_is_open <- function(intervals) {
   m <- get_m(intervals)
@@ -12,8 +75,8 @@ make_is_open <- function(intervals) {
 
 
 make_labels_intervals <- function(intervals,
-                                  parse_one,
-                                  parse_multi) {
+                                  x_one,
+                                  x_multi) {
   is_one <- get_is_one(intervals)
   is_range <- get_is_range(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -29,18 +92,18 @@ make_labels_intervals <- function(intervals,
   l <- m[, 1L]
   u <- m[, 2L]
   ans <- character(length = length(l))
-  if (parse_one == "lower")
+  if (x_one == "lower")
     ans[is_one] <- as.character(l[is_one])
-  else if (parse_one == "upper")
+  else if (x_one == "upper")
     ans[is_one] <- as.character(u[is_one])
   else
-    cli::cli_abort("Internal error: 'parse_one' invalid.")
-  if (parse_multi == "include")
+    cli::cli_abort("Internal error: 'x_one' invalid.")
+  if (x_multi == "include")
     ans[is_range] <- paste(l[is_range], u[is_range], sep = "-")
-  else if (parse_multi == "exclude")
+  else if (x_multi == "exclude")
     ans[is_range] <- paste(l[is_range], u[is_range] - 1, sep = "-")
   else
-    cli::cli_abort("Internal error: 'parse_multi' invalid.")
+    cli::cli_abort("Internal error: 'x_multi' invalid.")
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"
@@ -52,8 +115,8 @@ make_labels_intervals <- function(intervals,
 make_levels_from_breaks <- function(breaks,
                                     is_open_left,
                                     is_open_right,
-                                    parse_one,
-                                    parse_multi,
+                                    x_one,
+                                    x_multi,
                                     include_total,
                                     include_na) {
   lower <- breaks[-length(breaks)]
@@ -74,11 +137,11 @@ make_levels_from_breaks <- function(breaks,
   ans <- character(length = length(lower))
   ans[is_open_left] <- paste0("<", lower[is_open_left])
   ans[is_open_right] <- paste0(lower[is_open_right], "+")
-  if (parse_one == "lower")
+  if (x_one == "lower")
     ans[is_one] <- lower[is_one]
   else
     ans[is_one] <- upper[is_one]
-  if (parse_multi == "exclude")
+  if (x_multi == "exclude")
     ans[is_multi] <- paste(lower[is_multi],
                            upper[is_multi] - 1L,
                            sep = "-")
@@ -97,12 +160,12 @@ make_levels_from_breaks <- function(breaks,
 
 make_lower_first <- function(lower_first,
                              intervals,
-                             open,
+                             is_open_left,
                              min,
                              divisible_by) {
   user_supplied_value <- !is.null(lower_first)
   if (user_supplied_value) {
-    poputils::check_n(n = lower_first,
+    check_n(n = lower_first,
                       nm_n = "lower_first",
                       min = min,
                       max = NULL,
@@ -150,7 +213,7 @@ make_lower_last <- function(lower_last,
                             divisible_by) {
   user_supplied_value <- !is.null(lower_last)
   if (user_supplied_value) {
-    poputils::check_n(n = lower_last,
+    check_n(n = lower_last,
                       nm_n = "lower_last",
                       min = min,
                       max = NULL,

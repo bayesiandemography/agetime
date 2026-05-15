@@ -6,26 +6,22 @@
 \alias{age_to_ten}
 \alias{age_to_life}
 \alias{age_to_labor}
-\title{Convert Age Group Labels to Specific New Format}
+\title{Convert Age Group Labels to Specialized Format}
 \usage{
 age_to_one(
   x,
-  lower_first = NULL,
-  lower_last = NULL,
+  lower_first = 0,
+  lower_last = 100,
   open = TRUE,
-  include_total = NULL,
-  include_na = NULL,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 
 age_to_five(
   x,
-  lower_first = NULL,
-  lower_last = NULL,
+  lower_first = 0,
+  lower_last = 100,
   open = TRUE,
-  include_total = NULL,
-  include_na = NULL,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 
 age_to_ten(
@@ -33,45 +29,51 @@ age_to_ten(
   lower_first = NULL,
   lower_last = NULL,
   open = TRUE,
-  include_total = NULL,
-  include_na = NULL,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 
-age_to_life(
-  x,
-  lower_last = NULL,
-  include_total = NULL,
-  include_na = NULL,
-  parse_fail = c("error", "warn", "silent")
-)
+age_to_life(x, lower_last = NULL, x_fail = c("error", "warn", "silent"))
 
 age_to_labor(
   x,
   age_work = 20,
   age_retire = 65,
-  include_total = NULL,
-  include_na = NULL,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{lower_first}{Integer or NULL}
+\item{lower_first}{Lower limit of first age group.
+Default is \code{0}.}
 
-\item{lower_last}{Integer or NULL}
+\item{lower_last}{Lower limit of last age group.
+Default is \code{100}.}
+
+\item{open}{Whether the oldest age group
+is "open", i.e. has no upper limit.
+Default is \code{TRUE}.}
 }
 \value{
-A factor the same length as \code{x}.
+If \code{x} is a factor, then the return value is
+a factor; otherwise it is a character vector.
 }
 \description{
-Convert Age Group Labels to Specific New Format
+Modify a set of existing age group labels
+so that it conforms to a specialised format.
+\itemize{
+\item \code{age_to_one} Single-year age groups
+\item \code{age_to_five} Five-year age groups
+\item \code{age_to_ten} Ten-year age groups
+\item \code{age_to_life} Age groups used in 'abridged' life tables
+\item \code{age_to_labor} Labor force age groups
+}
 }
 \examples{
-x <- factor(c("1-4", "87-89", "50-54"))
+x <- c("1-4", "87-89", "50-54")
 age_to_five(x)
-age_to_life(x)
+age_to_five(lower_last = 90)
+age_to_five(open = FALSE)
 age_to_ten(x)
-age_to_ten(x, open = FALSE)
+age_to_life(x)
 
 x <- factor(c("0-9", "70+", "22"))
 age_to_labor(x)

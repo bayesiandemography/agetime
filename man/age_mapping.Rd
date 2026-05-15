@@ -9,7 +9,7 @@ age_mapping(
   y = NULL,
   relation = c("equals", "contains", "contained", "overlaps"),
   return_val = c("data.frame", "matrix"),
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -27,7 +27,7 @@ See below for details and examples.}
 return value. The choices are \code{"data.frame"}
 (the default) or \code{"matrix"}.}
 
-\item{parse_fail}{Action if meaning of label
+\item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }

@@ -8,7 +8,9 @@
 #' @inheritParams cohort_lower
 #' @param open Upper limit of open cohort.
 #'
-#' @returns Modified version of `x`.
+#' @returns
+#' If `x` is a factor, then the return value is
+#' a factor; otherwise it is a character vector.
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")
@@ -17,18 +19,18 @@
 #' @export
 cohort_set_open <- function(x,
                             open,
-                            parse_one = c("lower", "upper"),
-                            parse_multi = c("include", "exclude"),
-                            parse_fail = c("error", "warn", "silent")) {
-  parse_fail <- match.arg(parse_fail)
-  parse_one <- match.arg(parse_one)
-  parse_multi <- match.arg(parse_multi)
+                            x_one = c("lower", "upper"),
+                            x_multi = c("include", "exclude"),
+                            x_fail = c("error", "warn", "silent")) {
+  x_fail <- match.arg(x_fail)
+  x_one <- match.arg(x_one)
+  x_multi <- match.arg(x_multi)
   inner_set_open(x = x,
                  open = open,
                  make_open_left = FALSE,
                  make_open_right = TRUE,
                  label_type = "cohort",
-                 parse_one = parse_one,
-                 parse_multi = parse_multi,
-                 parse_fail = parse_fail)
+                 x_one = x_one,
+                 x_multi = x_multi,
+                 x_fail = x_fail)
 }

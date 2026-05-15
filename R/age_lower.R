@@ -17,7 +17,7 @@
 #' closed intervals.
 #'
 #' @param x Vector of age group labels.
-#' @param parse_fail Action if meaning of label
+#' @param x_fail Action if meaning of label
 #' unclear. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
 #'
@@ -39,53 +39,53 @@
 #' df
 #' df |> filter(age_lower(age) >= 10)
 #'
-#' ## no action when 'parse_fail' is "silent"
+#' ## no action when 'x_fail' is "silent"
 #' age_lower(c("0-4", "young people", "50plus"),
-#'           parse_fail = "silent")
+#'           x_fail = "silent")
 #' @export
 age_lower <- function(x,
-                      parse_fail = c("error", "warn", "silent")) {
-  parse_fail <- match.arg(parse_fail)
+                      x_fail = c("error", "warn", "silent")) {
+  x_fail <- match.arg(x_fail)
   inner_lower(x = x,
               label_type = "age",
-              parse_one = "lower",
-              parse_multi = "exclude",
-              parse_fail = parse_fail)
+              x_one = "lower",
+              x_multi = "exclude",
+              x_fail = x_fail)
 }
 
 #' @export
 #' @rdname age_lower
 age_mid <- function(x,
-                    parse_fail = c("error", "warn", "silent")) {
-  parse_fail <- match.arg(parse_fail)
+                    x_fail = c("error", "warn", "silent")) {
+  x_fail <- match.arg(x_fail)
   inner_mid(x = x,
             label_type = "age",
-            parse_one = "lower",
-            parse_multi = "exclude",
-            parse_fail = parse_fail)
+            x_one = "lower",
+            x_multi = "exclude",
+            x_fail = x_fail)
 }
 
 #' @export
 #' @rdname age_lower
 age_upper <- function(x,
-                      parse_fail = c("error", "warn", "silent")) {
-  parse_fail <- match.arg(parse_fail)
+                      x_fail = c("error", "warn", "silent")) {
+  x_fail <- match.arg(x_fail)
   inner_upper(x = x,
               label_type = "age",
-              parse_one = "lower",
-              parse_multi = "exclude",
-              parse_fail = parse_fail)
+              x_one = "lower",
+              x_multi = "exclude",
+              x_fail = x_fail)
 }
 
 #' @export
 #' @rdname age_lower
 age_width <- function(x,
-                      parse_fail = c("error", "warn", "silent")) {
-  parse_fail <- match.arg(parse_fail)
+                      x_fail = c("error", "warn", "silent")) {
+  x_fail <- match.arg(x_fail)
   inner_width(x = x,
               label_type = "age",
-              parse_one = "lower",
-              parse_multi = "exclude",
-              parse_fail = parse_fail)
+              x_one = "lower",
+              x_multi = "exclude",
+              x_fail = x_fail)
 }
 

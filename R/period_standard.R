@@ -13,17 +13,17 @@
 #' period_standard(x)
 #' @export
 period_standard <- function(x,
-                            parse_one = c("lower", "upper"),
-                            parse_multi = c("include", "exclude"),
-                            parse_fail = c("error", "warn", "silent")) {
-  parse_one <- match.arg(parse_one)
-  parse_multi <- match.arg(parse_multi)
-  parse_fail <- match.arg(parse_fail)
+                            x_one = c("lower", "upper"),
+                            x_multi = c("include", "exclude"),
+                            x_fail = c("error", "warn", "silent")) {
+  x_one <- match.arg(x_one)
+  x_multi <- match.arg(x_multi)
+  x_fail <- match.arg(x_fail)
   inner_standard(x = x,
                  label_type = "period",
-                 parse_one = parse_one,
-                 parse_multi = parse_multi,
-                 parse_fail = parse_fail)
+                 x_one = x_one,
+                 x_multi = x_multi,
+                 x_fail = x_fail)
 }
 
 

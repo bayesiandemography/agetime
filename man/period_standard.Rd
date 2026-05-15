@@ -6,27 +6,26 @@
 \usage{
 period_standard(
   x,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
-  parse_fail = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{A vector of period labels.}
+\item{x}{Vector of period labels.}
 
-\item{parse_one}{Whether labels
-for one-year periods are based on the
-lower or upper limit of the period.
-Default is \code{"lower"}.}
+\item{x_one}{How to interpret
+labels in \code{x} that describe one-year periods.
+Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{parse_multi}{Whether
-labels for multi-year periods
-include or exclude the final
-year of the period.
-Default is \code{"include"}.}
+\item{x_multi}{How to interpret
+labels in \code{x} that describe multi-year periods.
+Choices are \code{"include"} (the default) and
+\code{"exclude"}.}
 
-\item{parse_fail}{Action if a label
-cannot be interpreted. Choices are
+\item{x_fail}{What to do if a
+label in \code{x} cannot be interpreted.
+Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}
 }

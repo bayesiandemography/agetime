@@ -48,17 +48,17 @@ cohort_check <- function(x,
                          no_total = NA,
                          no_na = NA,
                          include_open = NA,
-                         parse_one = c("lower", "upper"),
-                         parse_multi = c("include", "exclude"),
-                         parse_fail = c("error", "warn", "silent")) {
-  parse_one <- match.arg(parse_one)
-  parse_multi <- match.arg(parse_multi)
-  parse_fail <- match.arg(parse_fail)
+                         x_one = c("lower", "upper"),
+                         x_multi = c("include", "exclude"),
+                         x_fail = c("error", "warn", "silent")) {
+  x_one <- match.arg(x_one)
+  x_multi <- match.arg(x_multi)
+  x_fail <- match.arg(x_fail)
   inner_check(x = x,
               label_type = "cohort",
-              parse_one = parse_one,
-              parse_multi = parse_multi,
-              parse_fail = parse_fail,
+              x_one = x_one,
+              x_multi = x_multi,
+              x_fail = x_fail,
               no_overlap = no_overlap,
               no_gap = no_gap,
               no_total = no_total,
@@ -75,17 +75,17 @@ cohort_assert <- function(x,
                           no_total = NA,
                           no_na = NA,
                           include_open = NA,
-                          parse_one = c("lower", "upper"),
-                          parse_multi = c("include", "exclude"),
-                          parse_fail = c("error", "warn", "silent")) {
-  parse_one <- match.arg(parse_one)
-  parse_multi <- match.arg(parse_multi)
-  parse_fail <- match.arg(parse_fail)
+                          x_one = c("lower", "upper"),
+                          x_multi = c("include", "exclude"),
+                          x_fail = c("error", "warn", "silent")) {
+  x_one <- match.arg(x_one)
+  x_multi <- match.arg(x_multi)
+  x_fail <- match.arg(x_fail)
   inner_assert(x = x,
                label_type = "age",
-               parse_one = "lower",
-               parse_multi = "exclude",
-               parse_fail = parse_fail,
+               x_one = "lower",
+               x_multi = "exclude",
+               x_fail = x_fail,
                no_overlap = no_overlap,
                no_gap = no_gap,
                no_total = no_total,

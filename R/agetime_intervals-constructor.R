@@ -3,9 +3,9 @@
 
 intervals <- function(labels,
                       label_type,
-                      parse_one,
-                      parse_multi,
-                      parse_fail) {
+                      x_one,
+                      x_multi,
+                      x_fail) {
   label_type <- match.arg(label_type, choices = c("age", "cohort", "period"))
   if (label_type == "age") {
     labels_normalizers <- make_labels_normalizers_age()
@@ -13,19 +13,19 @@ intervals <- function(labels,
   }
   else if (label_type == "cohort") {
     labels_normalizers <- make_labels_normalizers_cohort()
-    label_parsers <- make_label_parsers_cohort(parse_one = parse_one,
-                                               parse_multi = parse_multi)
+    label_parsers <- make_label_parsers_cohort(x_one = x_one,
+                                               x_multi = x_multi)
   }
   else {
     labels_normalizers <- make_labels_normalizers_period()
-    label_parsers <- make_label_parsers_period(parse_one = parse_one,
-                                               parse_multi = parse_multi)
+    label_parsers <- make_label_parsers_period(x_one = x_one,
+                                               x_multi = x_multi)
   }
   ans <- intervals_inner(labels = labels,
                          labels_normalizers = labels_normalizers,
                          label_parsers = label_parsers,
                          label_type = label_type,
-                         parse_fail = parse_fail)
+                         x_fail = x_fail)
   ans
 }
   
@@ -34,7 +34,7 @@ intervals_inner <- function(labels,
                             labels_normalizers,
                             label_parsers,
                             label_type,
-                            parse_fail) {
+                            x_fail) {
   if (is.factor(labels))
     labels_unique <- levels(labels)
   else
@@ -46,10 +46,10 @@ intervals_inner <- function(labels,
   i_xun_to_xunu <- match(labels_unique_norm, labels_unique_norm_unique)
   i <- i_xun_to_xunu[i_x_to_xu]
   m <- vapply(labels_unique_norm_unique,
-              FUN = parse_label,
+              FUN = x_label,
               FUN.VALUE = c(NA_real_, NA_real_),
               label_parsers = label_parsers,
-              parse_fail = parse_fail)
+              x_fail = x_fail)
   m <- t(m)
   ans <- list(labels_unique = labels_unique,
               labels_unique_norm_unique = labels_unique_norm_unique,

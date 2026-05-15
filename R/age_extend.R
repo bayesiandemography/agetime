@@ -12,9 +12,9 @@
 #' @param include_x Should the return value
 #' include `x`? Default is `TRUE`.
 #'
-#' @returns If `x` is a factor, `age_extend`
-#' returns a factor; otherwise it returns
-#' a character vector.
+#' @returns
+#' If `x` is a factor, then the return value is
+#' a factor; otherwise it is a character vector.
 #'
 #' @examples
 #' x <- c("0-4", "5-9")
@@ -26,16 +26,16 @@ age_extend <- function(x,
                        n = 1L,
                        width = NULL,
                        include_x = TRUE,
-                       parse_fail = c("error", "warn", "silent")) {
-  parse_fail <- match.arg(parse_fail)
+                       x_fail = c("error", "warn", "silent")) {
+  x_fail <- match.arg(x_fail)
   inner_extend(x = x,
                n = n,
                width = width,
                include_x = include_x,
                label_type = "age",
-               parse_one = "lower",
-               parse_multi = "exclude",
-               parse_fail = parse_fail)
+               x_one = "lower",
+               x_multi = "exclude",
+               x_fail = x_fail)
 }
 
 

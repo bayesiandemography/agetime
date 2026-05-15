@@ -7,7 +7,7 @@
 \alias{age_labels_ten}
 \alias{age_labels_life}
 \alias{age_labels_labor}
-\title{Create a New Set of Age Labels}
+\title{Create a New Set of Unique Age Labels}
 \usage{
 age_labels(breaks, open = TRUE, include_total = FALSE, include_na = FALSE)
 
@@ -65,10 +65,10 @@ youngest age group.}
 last age group.}
 }
 \value{
-A character vector
+A character vector.
 }
 \description{
-Create a New Set of Age Labels
+Create a New Set of Unique Age Labels
 }
 \examples{
 ## default 5-year age groups

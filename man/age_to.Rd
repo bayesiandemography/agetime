@@ -4,14 +4,7 @@
 \alias{age_to}
 \title{Convert Age Group Labels to New Format}
 \usage{
-age_to(
-  x,
-  breaks,
-  open = TRUE,
-  include_total = NULL,
-  include_na = NULL,
-  parse_fail = c("error", "warn", "silent")
-)
+age_to(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
@@ -23,24 +16,21 @@ A numeric vector.}
 is "open", i.e. has no upper limit.
 Default is \code{TRUE}.}
 
-\item{include_total}{Whether to include a
-\code{"Total"} category.}
-
-\item{include_na}{Whether to include
-an \code{NA} category.}
-
-\item{parse_fail}{Action if meaning
-of label unclear. Choices are
+\item{x_fail}{Action if label in
+\code{x} cannot be interpreted. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}
 }
 \value{
-A factor with the same length as \code{x}.
+If \code{x} is a factor, then the return value is
+a factor; otherwise it is a character vector.
 }
 \description{
-Convert Age Group Labels to New Format
+Modify a set of age labels by aggregating
+age groups.
 }
 \examples{
-x <- factor(c("1-4", "87-89", "50-54"))
+x <- c("1-4", "87-89", "50-54")
 age_to(x, breaks = c(0, 50, 90))
+age_to(x, breaks = c(0, 25, 100), open = FALSE)
 }

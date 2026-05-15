@@ -13,26 +13,26 @@ label_parser_na <- function(label) {
     NULL
 }
 
-label_parser_range <- function(label, parse_multi) {
-  parse_multi <- match.arg(parse_multi, choices = c("include", "exclude"))
+label_parser_range <- function(label, x_multi) {
+  x_multi <- match.arg(x_multi, choices = c("include", "exclude"))
   m <- regexec("^(\\d+)-(\\d+)$", label, perl = TRUE)
   mm <- regmatches(label, m)[[1L]]
   if (length(mm) == 0L)
     return(NULL)
   l <- as.double(mm[[2L]])
   u <- as.double(mm[[3L]])
-  if (parse_multi == "exclude")
+  if (x_multi == "exclude")
     u <- u + 1
   c(l, u)
 }
 
-label_parser_one <- function(label, parse_one) {
-  parse_one <- match.arg(parse_one, choices = c("lower", "upper"))
+label_parser_one <- function(label, x_one) {
+  x_one <- match.arg(x_one, choices = c("lower", "upper"))
   m <- regexec("^(\\d+)$", label, perl = TRUE)
   mm <- regmatches(label, m)[[1L]]
   if (length(mm) == 0L)
     return(NULL)
-  if (parse_one == "lower") {
+  if (x_one == "lower") {
     l <- as.double(mm[[2L]])
     u <- l + 1
   }

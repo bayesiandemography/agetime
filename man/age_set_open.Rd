@@ -4,19 +4,20 @@
 \alias{age_set_open}
 \title{Define Open Age Group}
 \usage{
-age_set_open(x, open, parse_fail = c("error", "warn", "silent"))
+age_set_open(x, open, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
 \item{open}{Lower limit of open age group.}
 
-\item{parse_fail}{Action if meaning of label
+\item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Modified version of \code{x}.
+If \code{x} is a factor, then the return value is
+a factor; otherwise it is a character vector.
 }
 \description{
 Set an open age group, i.e. an age group

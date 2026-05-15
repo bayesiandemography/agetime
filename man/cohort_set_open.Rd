@@ -7,9 +7,9 @@
 cohort_set_open(
   x,
   open,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
-  parse_fail = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -17,24 +17,25 @@ cohort_set_open(
 
 \item{open}{Upper limit of open cohort.}
 
-\item{parse_one}{Whether labels
+\item{x_one}{Whether labels
 for one-year cohorts are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{parse_multi}{Whether
+\item{x_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{parse_fail}{Action if a label
+\item{x_fail}{Action if a label
 cannot be interpreted. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}
 }
 \value{
-Modified version of \code{x}.
+If \code{x} is a factor, then the return value is
+a factor; otherwise it is a character vector.
 }
 \description{
 Set an open cohort, i.e. a cohort with no

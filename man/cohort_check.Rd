@@ -12,9 +12,9 @@ cohort_check(
   no_total = NA,
   no_na = NA,
   include_open = NA,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
-  parse_fail = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 cohort_assert(
@@ -24,9 +24,9 @@ cohort_assert(
   no_total = NA,
   no_na = NA,
   include_open = NA,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
-  parse_fail = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -45,18 +45,18 @@ to the upper limit of the latest cohort}
 \item{include_open}{One or more cohorts
 has no lower limit.}
 
-\item{parse_one}{Whether labels
+\item{x_one}{Whether labels
 for one-year cohorts are based on the
 lower or upper limit of the period.
 Default is \code{"lower"}.}
 
-\item{parse_multi}{Whether
+\item{x_multi}{Whether
 labels for multi-year periods
 include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{parse_fail}{Action if a label
+\item{x_fail}{Action if a label
 cannot be interpreted. Choices are
 \code{"error"} (the default), \code{"warn"},
 and \code{"silent"}.}

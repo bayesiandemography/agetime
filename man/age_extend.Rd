@@ -9,7 +9,7 @@ age_extend(
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -21,14 +21,13 @@ Default is \code{1}.}
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
 
-\item{parse_fail}{Action if meaning of label
+\item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, \code{age_extend}
-returns a factor; otherwise it returns
-a character vector.
+If \code{x} is a factor, then the return value is
+a factor; otherwise it is a character vector.
 }
 \description{
 Add \code{n} age groups to an existing set of labels \code{x}.

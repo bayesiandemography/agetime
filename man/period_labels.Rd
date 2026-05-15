@@ -5,12 +5,12 @@
 \alias{period_labels_one}
 \alias{period_labels_five}
 \alias{period_labels_ten}
-\title{Create a New Set of Period Labels}
+\title{Create a New Set of Unique Period Labels}
 \usage{
 period_labels(
   breaks,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -18,8 +18,8 @@ period_labels(
 period_labels_one(
   lower_first,
   lower_last,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -27,8 +27,8 @@ period_labels_one(
 period_labels_five(
   lower_first,
   lower_last,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -36,8 +36,8 @@ period_labels_five(
 period_labels_ten(
   lower_first,
   lower_last,
-  parse_one = c("lower", "upper"),
-  parse_multi = c("include", "exclude"),
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -46,16 +46,14 @@ period_labels_ten(
 \item{breaks}{Boundaries between periods
 A numeric vector.}
 
-\item{parse_one}{Whether labels
-for one-year periods are based on the
-lower or upper limit of the period.
-Default is \code{"lower"}.}
+\item{x_one}{How to interpret
+labels in \code{x} that describe one-year periods.
+Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{parse_multi}{Whether
-labels for multi-year periods
-include or exclude the final
-year of the period.
-Default is \code{"include"}.}
+\item{x_multi}{How to interpret
+labels in \code{x} that describe multi-year periods.
+Choices are \code{"include"} (the default) and
+\code{"exclude"}.}
 
 \item{include_total}{Whether to include a
 \code{"Total"} category.}
@@ -70,10 +68,10 @@ first period.}
 last period.}
 }
 \value{
-A character vector
+A character vector.
 }
 \description{
-Create a New Set of Period Labels
+Create a New Set of Unique Period Labels
 }
 \examples{
 ## 5-year periods
@@ -84,19 +82,19 @@ period_labels_five(lower_first = 2000,
 period_labels_one(lower_first = 2000,
                   lower_last = 2010)
 
-## single-year periods, 'parse_one' is "upper"
+## single-year periods, 'x_one' is "upper"
 period_labels_one(lower_first = 2000,
                   lower_last = 2010,
-                  parse_one = "upper")
+                  x_one = "upper")
 
 ## ten-year periods
 period_labels_ten(lower_first = 2000,
                   lower_last = 2010)
 
-## ten-year periods, 'parse_multi' is "exclude",
+## ten-year periods, 'x_multi' is "exclude",
 period_labels_ten(lower_first = 2000,
                   lower_last = 2010,
-                  parse_multi = "exclude")
+                  x_multi = "exclude")
 
 ## include total and NA
 period_labels_ten(lower_first = 2000,

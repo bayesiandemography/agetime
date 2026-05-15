@@ -13,7 +13,7 @@ age_check(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 
 age_assert(
@@ -24,7 +24,7 @@ age_assert(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
-  parse_fail = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
@@ -46,7 +46,7 @@ have a lower limit of zero.}
 \item{include_open}{One or more age groups
 has no upper limit.}
 
-\item{parse_fail}{Action if meaning of label
+\item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
