@@ -43,7 +43,7 @@ inner_set_open <- function(x,
       levels_new <- ifelse(is_label_now_open, label_open, levels_old)
       x <- factor(x = x,
                   levels = levels_old,
-                  labels = labels_new)
+                  labels = levels_new)
     }
     else
       x[i_x_to_xunu %in% i_le_open] <- label_open
@@ -58,7 +58,7 @@ inner_set_open <- function(x,
       levels_new <- ifelse(is_label_now_open, label_open, levels_old)
       x <- factor(x = x,
                   levels = levels_old,
-                  labels = labels_new)
+                  labels = levels_new)
     }
     else
       x[i_x_to_xunu %in% i_ge_open] <- label_open

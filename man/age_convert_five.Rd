@@ -10,7 +10,7 @@ age_convert_five(x, x_fail = c("error", "warn", "silent"))
 
 age_convert_ten(x, x_fail = c("error", "warn", "silent"))
 
-age_convert_life(x, lower_last = NULL, x_fail = c("error", "warn", "silent"))
+age_convert_life(x, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
@@ -35,17 +35,16 @@ pattern:
 }
 }
 \examples{
-x <- c("1-4", "87-89", "0", "90+", "total", "50-54")
+x <- c("1-3", "87-89", "0", "91+", "total", "52")
 age_convert_five(x)
 age_convert_ten(x)
 age_convert_life(x)
 }
 \seealso{
 \code{\link[=age_convert]{age_convert()}} Convert to general age groups
-\code{\link[=age_life]{age_life()}} Convert to life table age groups
 \code{\link[=period_convert_five]{period_convert_five()}} Period equivalent of \code{age_convert_five()}
 \code{\link[=period_convert_ten]{period_convert_ten()}} Period equivalent of \code{age_convert_ten()}
 \code{\link[=cohort_convert_five]{cohort_convert_five()}} Cohort equivalent of \code{age_convert_five()}
 \code{\link[=cohort_convert_ten]{cohort_convert_ten()}} Cohort equivalent of \code{age_convert_ten()}
-age_fill()] Add levels for intermediate age groups
+age_complete()] Add levels for intermediate age groups
 }

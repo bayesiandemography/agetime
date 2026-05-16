@@ -31,8 +31,8 @@ contain the old ones.
 }
 \examples{
 x <- c("1-4", "87-89", "0", "50-54")
-age_convert(breaks = c(0, 10, 40, 90))
-age_convert(breaks = c(0, 10, 40, 90), open = FALSE)
+age_convert(x, breaks = c(0, 10, 40, 90))
+age_convert(x, breaks = c(0, 10, 40, 90), open = FALSE)
 }
 \seealso{
 \code{\link[=age_convert_five]{age_convert_five()}} Convert to 5-year age groups

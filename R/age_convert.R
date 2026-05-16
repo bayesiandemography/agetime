@@ -24,8 +24,8 @@
 #' 
 #' @examples
 #' x <- c("1-4", "87-89", "0", "50-54")
-#' age_convert(breaks = c(0, 10, 40, 90))
-#' age_convert(breaks = c(0, 10, 40, 90), open = FALSE)
+#' age_convert(x, breaks = c(0, 10, 40, 90))
+#' age_convert(x, breaks = c(0, 10, 40, 90), open = FALSE)
 #' @export
 age_convert <- function(x,
                         breaks,
@@ -65,7 +65,6 @@ age_convert <- function(x,
 #'
 #' @seealso
 #' [age_convert()] Convert to general age groups
-#' [age_life()] Convert to life table age groups
 #' [period_convert_five()] Period equivalent of `age_convert_five()`
 #' [period_convert_ten()] Period equivalent of `age_convert_ten()`
 #' [cohort_convert_five()] Cohort equivalent of `age_convert_five()`
@@ -73,7 +72,7 @@ age_convert <- function(x,
 #' age_complete()] Add levels for intermediate age groups
 #' 
 #' @examples
-#' x <- c("1-4", "87-89", "0", "90+", "total", "50-54")
+#' x <- c("1-3", "87-89", "0", "91+", "total", "52")
 #' age_convert_five(x)
 #' age_convert_ten(x)
 #' age_convert_life(x)
@@ -104,34 +103,40 @@ age_convert_ten <- function(x,
                       x_fail = x_fail)
 }
 
-
 #' @rdname age_convert_five
 #' @export
 age_convert_life <- function(x,
-                        lower_last = NULL,
-                        x_fail = c("error", "warn", "silent")) {
+                             x_fail = c("error", "warn", "silent")) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   x_fail <- match.arg(x_fail)
+  if (identical(length(x), 0L))
+    return(val_length_zero(x))
   intervals <- intervals(labels = x,
                          label_type = "age",
+                         x_one = "lower",
+                         x_multi = "exclude",
                          x_fail = x_fail)
-  lower_last <- make_lower_last(lower_last = lower_last,
-                                intervals = intervals,
-                                open = TRUE,
-                                min = 5L,
-                                divisible_by = 5L)
-  s <- seq.int(from = 5L,
-               to = lower_last,
-               by = 5L)
-  breaks <- c(0L, 1L, s)
-  age_convert_inner(x = x,
-               breaks = breaks,
-               open = TRUE,
-               include_total = include_total,
-               include_na = include_na,
-               intervals = intervals)
+  l <- get_lower(intervals)
+  end <- max(l, na.rm = TRUE)
+  if (end == 1L)
+    breaks <- c(0L, 1L)
+  else if (end <= 5L)
+    breaks = c(0, 1L, 5L)
+  else {
+    remainder_end <- end  %% 5L
+    if (remainder_end > 0L)
+      end <- end - remainder_end
+    breaks <- c(0L, 1L, seq.int(from = 5L, to = end, by = 5L))
+  }
+  inner_convert(x = x,
+                breaks = breaks,
+                is_open_left = FALSE,
+                is_open_right = TRUE,
+                label_type = "age",
+                x_one = "lower",
+                x_multi = "exclude",
+                x_fail = x_fail)
 }
-
 

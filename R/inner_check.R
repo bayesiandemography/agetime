@@ -57,12 +57,12 @@ inner_check <- function(x,
                                                asserted = include_zero)
   val_include_open <- inner_check_include_open(intervals = intervals,
                                                asserted = include_open)
-  details <- vctrs::vec_rbind(val_no_overlap,
-                              val_no_gap,
-                              val_no_total,
-                              val_no_na,
-                              val_include_zero,
-                              val_include_open)
+  details <- rbind(val_no_overlap,
+                   val_no_gap,
+                   val_no_total,
+                   val_no_na,
+                   val_include_zero,
+                   val_include_open)
   details <- details[!is.na(details$asserted), ]
   ok <- all(details$asserted == details$observed)
   list(ok = ok,
@@ -265,10 +265,6 @@ inner_check_include_open <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }  
-
-
-
-
 
 throw_assert_error <- function(val) {
   if (!val$ok) {

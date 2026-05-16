@@ -25,7 +25,7 @@ period_convert_ten(
 \item{x}{Vector of period labels.}
 
 \item{offset}{Parameter controlling
-alignment of periods. Defult is \code{0}.}
+alignment of periods. Default is \code{0}.}
 
 \item{x_one}{How to interpret
 labels in \code{x} that describe one-year periods.
@@ -59,11 +59,11 @@ pattern:
 \examples{
 x <- c("2002-2004", "1987-1989", "2000", "Total")
 period_convert_five(x)
-period_covert_five(x, offset = 1)
-period_covert_five(x, offset = 2)
-period_covert_ten(x)
-period_covert_ten(x, offset = 1)
-period_covert_ten(x, offset = 2)
+period_convert_five(x, offset = 1)
+period_convert_five(x, offset = 2)
+period_convert_ten(x)
+period_convert_ten(x, offset = 1)
+period_convert_ten(x, offset = 2)
 }
 \seealso{
 \code{\link[=period_convert]{period_convert()}} Convert to general periods
@@ -71,5 +71,5 @@ period_covert_ten(x, offset = 2)
 \code{\link[=age_convert_ten]{age_convert_ten()}} Age equivalent of \code{period_convert_ten()}
 \code{\link[=cohort_convert_five]{cohort_convert_five()}} Cohort equivalent of \code{period_convert_five()}
 \code{\link[=cohort_convert_ten]{cohort_convert_ten()}} Cohort equivalent of \code{period_convert_ten()}
-period_fill()] Add levels for intermediate periods
+\code{\link[=period_complete]{period_complete()}} Add levels for intermediate periods
 }

@@ -4,29 +4,51 @@
 \name{agetime-package}
 \alias{agetime-package}
 \alias{agetime}
-\title{Functions for Working with Age, Period, and Cohort Labels}
+\title{Functions for Working with Age Group, Period, and Cohort Labels}
 \description{
+\strong{Create new labels}
+}
+\details{
 \tabular{llll}{
+   Age \tab Period \tab Cohort \tab Description \cr
+   \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \tab New labels \cr
+   \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \tab New 1-year labels \cr
+   \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \tab New 5-year labels \cr
+   \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \tab New 10-year labels \cr
+   \code{\link[=age_labels_life]{age_labels_life()}} \tab - \tab - \tab New life table labels \cr
+}
+
+
+\strong{Tidy existing labels}\tabular{llll}{
+   Age \tab Period \tab Cohort \tab Description \cr
+   \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \tab Apply standard formatting \cr
+}
+
+
+\strong{Extract information about intervals}\tabular{llll}{
    Age \tab Period \tab Cohort \tab Description \cr
    \code{\link[=age_lower]{age_lower()}} \tab \code{\link[=period_lower]{period_lower()}} \tab \code{\link[=cohort_lower]{cohort_lower()}} \tab Lower limits \cr
    \code{\link[=age_upper]{age_upper()}} \tab \code{\link[=period_upper]{period_upper()}} \tab \code{\link[=cohort_upper]{cohort_upper()}} \tab Upper limits \cr
    \code{\link[=age_width]{age_width()}} \tab \code{\link[=period_width]{period_width()}} \tab \code{\link[=cohort_width]{cohort_width()}} \tab Widths \cr
    \code{\link[=age_mid]{age_mid()}} \tab \code{\link[=period_mid]{period_mid()}} \tab \code{\link[=cohort_mid]{cohort_mid()}} \tab Midpoints \cr
-   \code{\link[=age_set_open]{age_set_open()}} \tab - \tab \code{\link[=cohort_set_open]{cohort_set_open()}} \tab Specify open interval \cr
    \code{\link[=age_is_open]{age_is_open()}} \tab - \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \tab Find open intervals \cr
    \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \tab Find totals \cr
+}
+
+
+\strong{Modify intervals}\tabular{llll}{
+   Age \tab Period \tab Cohort \tab Description \cr
    \code{\link[=age_convert]{age_convert()}} \tab \code{\link[=period_convert]{period_convert()}} \tab \code{\link[=cohort_convert]{cohort_convert()}} \tab Convert to new intervals \cr
    \code{\link[=age_convert_five]{age_convert_five()}} \tab \code{\link[=period_convert_five]{period_convert_five()}} \tab \code{\link[=cohort_convert_five]{cohort_convert_five()}} \tab Convert to 5-year intervals \cr
    \code{\link[=age_convert_ten]{age_convert_ten()}} \tab \code{\link[=period_convert_ten]{period_convert_ten()}} \tab \code{\link[=cohort_convert_ten]{cohort_convert_ten()}} \tab Convert to 10-year intervals \cr
-   \code{\link[=age_convert_life]{age_convert_life()}} \tab - \tab - \tab Convert to life table ages \cr
-   \code{\link[=age_extend]{age_extend()}} \tab \code{\link[=period_extend]{period_extend()}} \tab \code{\link[=cohort_extend]{cohort_extend()}} \tab Add extra labels at end \cr
-   \code{\link[=age_complete]{age_complete()}} \tab \code{\link[=period_complete]{period_complete()}} \tab \code{\link[=cohort_complete]{cohort_complete()}} \tab Fill in gaps \cr
-   \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \tab Apply standard formatting \cr
-   \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \tab New labels \cr
-   \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \tab New 1-year labels \cr
-   \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \tab New 5-year labels \cr
-   \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \tab New 10-year labels \cr
-   \code{\link[=age_labels_life]{age_labels_life()}} \tab - \tab - \tab New lifetable labels \cr
+   \code{\link[=age_convert_life]{age_convert_life()}} \tab - \tab - \tab Convert to life table \cr
+   \code{\link[=age_extend]{age_extend()}} \tab \code{\link[=period_extend]{period_extend()}} \tab \code{\link[=cohort_extend]{cohort_extend()}} \tab Add extra intervals \cr
+   \code{\link[=age_complete]{age_complete()}} \tab \code{\link[=period_complete]{period_complete()}} \tab \code{\link[=cohort_complete]{cohort_complete()}} \tab Add missing intervals \cr
+}
+
+
+\strong{Programming}\tabular{llll}{
+   Age \tab Period \tab Cohort \tab Description \cr
    \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \tab Characterize intervals \cr
    \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \tab Assertions about intervals \cr
    \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \tab Mapping between labels \cr

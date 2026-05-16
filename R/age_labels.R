@@ -45,10 +45,6 @@
 #' ## life table age groups with
 #' ## open age group of 75+
 #' age_labels_life(lower_last = 75)
-#'
-#' ## labor force age groups
-#' age_labels_labor()
-#' age_labels_labor(age_retire = 67)
 #' @export
 age_labels <- function(breaks,
                        open = TRUE,
@@ -136,35 +132,6 @@ age_labels_life <- function(lower_last = 100,
            to = lower_last,
            by = 5L) 
   breaks <- c(0L, 1L, s)
-  age_labels(breaks = breaks,
-             open = TRUE,
-             include_total = include_total,
-             include_na = include_na)
-}
-
-#' @rdname age_labels
-#' @export
-age_labels_labor <- function(age_work = 20,
-                             age_retire = 65,
-                             include_total = FALSE,
-                             include_na = FALSE) {
-  check_n(n = age_work,
-                    nm_n = "age_work",
-                    min = 1L,
-                    max = NULL,
-                    divisible_by = 1L)
-  check_n(n = age_retire,
-                    nm_n = "age_retire",
-                    min = 2L,
-                    max = NULL,
-                    divisible_by = 1L)
-  check_x_lt_y(x = age_work,
-               y = age_retire,
-               nm_x = "age_work",
-               nm_y = "age_retire")
-  check_flag(x = include_total, nm_x = "include_total")
-  check_flag(x = include_na, nm_x = "include_na")
-  breaks <- c(0L, age_work, age_retire)
   age_labels(breaks = breaks,
              open = TRUE,
              include_total = include_total,

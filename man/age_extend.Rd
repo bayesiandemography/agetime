@@ -15,8 +15,11 @@ age_extend(
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{n}{The number of age groups to add.
+\item{n}{Number of age groups to add.
 Default is \code{1}.}
+
+\item{width}{Width of the age groups
+to be added.}
 
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
@@ -30,10 +33,11 @@ If \code{x} is a factor, then the return value is
 a factor; otherwise it is a character vector.
 }
 \description{
-Add \code{n} age groups to an existing set of labels \code{x}.
-The width of the age groups is derived from the
-\code{width} argument, or from the width of the last
-label in \code{x}.
+Create \code{n} new age groups.
+The width of the new age groups
+can be specified through the \code{width}
+argument.  Otherwise it is derived from
+the last element of \code{x}.
 }
 \examples{
 x <- c("0-4", "5-9")

@@ -6,7 +6,6 @@
 \alias{age_labels_five}
 \alias{age_labels_ten}
 \alias{age_labels_life}
-\alias{age_labels_labor}
 \title{Create a New Set of Unique Age Labels}
 \usage{
 age_labels(breaks, open = TRUE, include_total = FALSE, include_na = FALSE)
@@ -36,13 +35,6 @@ age_labels_ten(
 )
 
 age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
-
-age_labels_labor(
-  age_work = 20,
-  age_retire = 65,
-  include_total = FALSE,
-  include_na = FALSE
-)
 }
 \arguments{
 \item{breaks}{Boundaries between age groups.
@@ -99,8 +91,4 @@ age_labels(breaks = c(0, 5, 10, 14, 18),
 ## life table age groups with
 ## open age group of 75+
 age_labels_life(lower_last = 75)
-
-## labor force age groups
-age_labels_labor()
-age_labels_labor(age_retire = 67)
 }

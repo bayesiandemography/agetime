@@ -17,8 +17,11 @@ cohort_extend(
 \arguments{
 \item{x}{A vector of cohort labels.}
 
-\item{n}{The number of cohorts to add.
+\item{n}{Number of cohorts to add.
 Default is \code{1}.}
+
+\item{width}{Width of the cohorts
+to be added.}
 
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
@@ -44,10 +47,11 @@ If \code{x} is a factor, then the return value is
 a factor; otherwise it is a character vector.
 }
 \description{
-Add \code{n} cohorts to an existing set of labels \code{x}.
-The width of the cohorts is derived from the
-\code{width} argument, or from the width of the last
-label in \code{x}.
+Create \code{n} new cohorts.
+The width of the new cohorts
+can be specified through the \code{width}
+argument.  Otherwise it is derived from
+the last element of \code{x}.
 }
 \examples{
 x <- c("2020-2025", "2025-2030")

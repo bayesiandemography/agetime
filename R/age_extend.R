@@ -1,14 +1,17 @@
 
 #' Extend a Set of Age Groups
 #'
-#' Add `n` age groups to an existing set of labels `x`.
-#' The width of the age groups is derived from the
-#' `width` argument, or from the width of the last
-#' label in `x`.
+#' Create `n` new age groups.
+#' The width of the new age groups
+#' can be specified through the `width`
+#' argument.  Otherwise it is derived from
+#' the last element of `x`.
 #'
 #' @inheritParams age_lower
-#' @param n The number of age groups to add.
+#' @param n Number of age groups to add.
 #' Default is `1`.
+#' @param width Width of the age groups
+#' to be added. 
 #' @param include_x Should the return value
 #' include `x`? Default is `TRUE`.
 #'

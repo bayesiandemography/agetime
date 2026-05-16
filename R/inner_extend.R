@@ -11,16 +11,18 @@ inner_extend <- function(x,
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = FALSE)
-  check_n(x = n,
-          nm_x = "n",
+  check_n(n = n,
+          nm_n = "n",
           min = 1L,
           max = NULL,
           divisible_by = NULL)
   has_width <- !is.null(width)
   if (has_width)
-    check_number(x = width,
-                 nm_x = "width",
-                 min = 1L)
+    check_n(n = width,
+            nm_n = "width",
+            min = 1L,
+            max = NULL,
+            divisible_by = 1L)
   check_flag(x = include_x,
              nm_x = "include_x")
   tail <- as.character(x[[length(x)]])

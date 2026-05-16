@@ -25,7 +25,7 @@
 #'   or throws an error.
 #'
 #' @examples
-#' lab <- age_labels_labor()
+#' lab <- age_labels_life()
 #' lab
 #'
 #' ## get info on everything

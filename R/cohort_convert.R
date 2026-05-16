@@ -1,84 +1,90 @@
-#' Convert to New Periods
+#' Convert to New Cohorts
 #'
-#' Modify the periods used by `x`. The
-#' the new periods must
+#' Modify the cohorts used by `x`. The
+#' the new cohorts must
 #' contain the old ones.
 #'
-#' @inheritParams period_lower
-#' @param breaks Boundaries between periods.
+#' @inheritParams cohort_lower
+#' @param breaks Boundaries between cohorts.
 #' A numeric vector.
+#' @param open Whether the first cohort
+#' is "open", i.e. has no lower limit.
+#' Default is `FALSE`.
 #'
 #' @returns
 #' If `x` is a factor, then the return value is
 #' a factor; otherwise it is a character vector.
 #'
 #' @seealso
-#' [period_convert_five()] Convert to 5-year periods
-#' [period_convert_ten()] Convert to 10-year periods
-#' [age_convert()] Age group equivalent of `period_convert()`
-#' [cohort_convert()] Cohort equivalent of `period_convert()`
+#' [cohort_convert_five()] Convert to 5-year cohorts
+#' [cohort_convert_ten()] Convert to 10-year cohorts
+#' [age_convert()] Age group equivalent of `cohort_convert()`
+#' [period_convert()] Period equivalent of `cohort_convert()`
 #' 
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-#' period_convert(x, breaks = c(1970, 2000, 2005, 2015))
+#' cohort_convert(x, breaks = c(1970, 2000, 2005, 2015))
+#' cohort_convert(x, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
 #' @export
-period_convert <- function(x,
+cohort_convert <- function(x,
                            breaks,
+                           open = FALSE,
                            x_one = c("lower", "upper"),
                            x_multi = c("include", "exclude"),
                            x_fail = c("error", "warn", "silent")) {
+  check_flag(x = open, nm_x = "open")
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
   inner_convert(x = x,
                 breaks = breaks,
-                is_open_left = FALSE,
+                is_open_left = open,
                 is_open_right = FALSE,
-                label_type = "period",
+                label_type = "cohort",
                 x_one = x_one,
                 x_multi = x_multi,
                 x_fail = x_fail)
 }
 
 
-#' Convert to Equal-Length Periods
+#' Convert to Equal-Length Cohorts
 #'
 #' @description
 #'
-#' Modify the periods used by `x`.
-#' The new periods must contain
-#' the old periods, and follow a regular
+#' Modify the cohorts used by `x`.
+#' The new cohorts must contain
+#' the old cohorts, and follow a regular
 #' pattern:
 #' 
-#' - `period_convert_five` Five-year periods
-#' - `period_convert_ten` Ten-year periods
+#' - `cohort_convert_five` Five-year cohorts
+#' - `cohort_convert_ten` Ten-year cohorts
 #'
-#' @inheritParams period_lower
+#' @inheritParams cohort_lower
 #' @param offset Parameter controlling
-#' alignment of periods. Default is `0`.
+#' alignment of cohorts. Default is `0`.
 #'
 #' @returns
 #' If `x` is a factor, then the return value is
 #' a factor; otherwise it is a character vector.
 #'
 #' @seealso
-#' [period_convert()] Convert to general periods
-#' [age_convert_five()] Age equivalent of `period_convert_five()`
-#' [age_convert_ten()] Age equivalent of `period_convert_ten()`
-#' [cohort_convert_five()] Cohort equivalent of `period_convert_five()`
-#' [cohort_convert_ten()] Cohort equivalent of `period_convert_ten()`
-#' [period_complete()] Add levels for intermediate periods
+#' [cohort_convert()] Convert to general cohorts
+#' [age_convert_five()] Age equivalent of `cohort_convert_five()`
+#' [age_convert_ten()] Age equivalent of `cohort_convert_ten()`
+#' [period_convert_five()] Period equivalent of `cohort_convert_five()`
+#' [period_convert_ten()] Period equivalent of `cohort_convert_ten()`
+#' [cohort_complete()] Add levels for intermediate cohorts
 #' 
 #' @examples
 #' x <- c("2002-2004", "1987-1989", "2000", "Total")
-#' period_convert_five(x)
-#' period_convert_five(x, offset = 1)
-#' period_convert_five(x, offset = 2)
-#' period_convert_ten(x)
-#' period_convert_ten(x, offset = 1)
-#' period_convert_ten(x, offset = 2)
+#' cohort_convert_five(x)
+#' cohort_convert_five(x, offset = 1)
+#' cohort_convert_five(x, offset = 2)
+#' cohort_convert_ten(x)
+#' cohort_convert_ten(x, offset = 1)
+#' cohort_convert_ten(x, offset = 2)
 #' @export
-period_convert_five <- function(x,
+cohort_convert_five <- function(x,
                                 offset = 0,
                                 x_one = c("lower", "upper"),
                                 x_multi = c("include", "exclude"),
@@ -89,15 +95,15 @@ period_convert_five <- function(x,
   inner_convert_width(x = x,
                       width = 5L,
                       offset = offset,
-                      label_type = "period",
+                      label_type = "cohort",
                       x_one = x_one,
                       x_multi = x_multi,
                       x_fail = x_fail)
 }
 
-#' @rdname period_convert_five
+#' @rdname cohort_convert_five
 #' @export
-period_convert_ten <- function(x,
+cohort_convert_ten <- function(x,
                                offset = 0,
                                x_one = c("lower", "upper"),
                                x_multi = c("include", "exclude"),
@@ -108,7 +114,7 @@ period_convert_ten <- function(x,
   inner_convert_width(x = x,
                       width = 10L,
                       offset = offset,
-                      label_type = "period",
+                      label_type = "cohort",
                       x_one = x_one,
                       x_multi = x_multi,
                       x_fail = x_fail)

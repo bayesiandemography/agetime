@@ -65,7 +65,7 @@ or throw an error if age group labels do not
 conform to expectations (\code{age_assert}).
 }
 \examples{
-lab <- age_labels_labor()
+lab <- age_labels_life()
 lab
 
 ## get info on everything

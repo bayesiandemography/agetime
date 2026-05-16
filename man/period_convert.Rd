@@ -44,7 +44,7 @@ contain the old ones.
 }
 \examples{
 x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-period_convert(breaks = c(1990, 2000, 2005, 2015))
+period_convert(x, breaks = c(1970, 2000, 2005, 2015))
 }
 \seealso{
 \code{\link[=period_convert_five]{period_convert_five()}} Convert to 5-year periods

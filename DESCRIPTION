@@ -1,6 +1,6 @@
 Package: agetime
 Type: Package
-Title: Labels for Age Groups, Periods, and Cohorts
+Title: Work with Labels for Age Groups, Periods, and Cohorts
 Version: 0.1.0
 Authors@R: 
     c(person(given = "John",
@@ -23,7 +23,6 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
-    lifecycle,
     pillar,
     stats,
     tibble
