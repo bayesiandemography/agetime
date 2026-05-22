@@ -13,16 +13,16 @@
 #' a factor; otherwise it is a character vector.
 #'
 #' @seealso
-#' [period_convert_five()] Convert to 5-year periods
-#' [period_convert_ten()] Convert to 10-year periods
-#' [age_convert()] Age group equivalent of `period_convert()`
-#' [cohort_convert()] Cohort equivalent of `period_convert()`
+#' [period_modify_five()] Convert to 5-year periods
+#' [period_modify_ten()] Convert to 10-year periods
+#' [age_modify()] Age group equivalent of `period_modify()`
+#' [cohort_modify()] Cohort equivalent of `period_modify()`
 #' 
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-#' period_convert(x, breaks = c(1970, 2000, 2005, 2015))
+#' period_modify(x, breaks = c(1970, 2000, 2005, 2015))
 #' @export
-period_convert <- function(x,
+period_modify <- function(x,
                            breaks,
                            x_one = c("lower", "upper"),
                            x_multi = c("include", "exclude"),
@@ -30,7 +30,7 @@ period_convert <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_convert(x = x,
+  inner_modify(x = x,
                 breaks = breaks,
                 is_open_left = FALSE,
                 is_open_right = FALSE,
@@ -50,8 +50,8 @@ period_convert <- function(x,
 #' the old periods, and follow a regular
 #' pattern:
 #' 
-#' - `period_convert_five` Five-year periods
-#' - `period_convert_ten` Ten-year periods
+#' - `period_modify_five` Five-year periods
+#' - `period_modify_ten` Ten-year periods
 #'
 #' @inheritParams period_lower
 #' @param offset Parameter controlling
@@ -62,23 +62,23 @@ period_convert <- function(x,
 #' a factor; otherwise it is a character vector.
 #'
 #' @seealso
-#' [period_convert()] Convert to general periods
-#' [age_convert_five()] Age equivalent of `period_convert_five()`
-#' [age_convert_ten()] Age equivalent of `period_convert_ten()`
-#' [cohort_convert_five()] Cohort equivalent of `period_convert_five()`
-#' [cohort_convert_ten()] Cohort equivalent of `period_convert_ten()`
-#' [period_complete()] Add levels for intermediate periods
+#' [period_modify()] Convert to general periods
+#' [age_modify_five()] Age equivalent of `period_modify_five()`
+#' [age_modify_ten()] Age equivalent of `period_modify_ten()`
+#' [cohort_modify_five()] Cohort equivalent of `period_modify_five()`
+#' [cohort_modify_ten()] Cohort equivalent of `period_modify_ten()`
+#' [period_levels_fill()] Add levels for intermediate periods
 #' 
 #' @examples
 #' x <- c("2002-2004", "1987-1989", "2000", "Total")
-#' period_convert_five(x)
-#' period_convert_five(x, offset = 1)
-#' period_convert_five(x, offset = 2)
-#' period_convert_ten(x)
-#' period_convert_ten(x, offset = 1)
-#' period_convert_ten(x, offset = 2)
+#' period_modify_five(x)
+#' period_modify_five(x, offset = 1)
+#' period_modify_five(x, offset = 2)
+#' period_modify_ten(x)
+#' period_modify_ten(x, offset = 1)
+#' period_modify_ten(x, offset = 2)
 #' @export
-period_convert_five <- function(x,
+period_modify_five <- function(x,
                                 offset = 0,
                                 x_one = c("lower", "upper"),
                                 x_multi = c("include", "exclude"),
@@ -86,7 +86,7 @@ period_convert_five <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_convert_width(x = x,
+  inner_modify_width(x = x,
                       width = 5L,
                       offset = offset,
                       label_type = "period",
@@ -95,9 +95,9 @@ period_convert_five <- function(x,
                       x_fail = x_fail)
 }
 
-#' @rdname period_convert_five
+#' @rdname period_modify_five
 #' @export
-period_convert_ten <- function(x,
+period_modify_ten <- function(x,
                                offset = 0,
                                x_one = c("lower", "upper"),
                                x_multi = c("include", "exclude"),
@@ -105,7 +105,7 @@ period_convert_ten <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_convert_width(x = x,
+  inner_modify_width(x = x,
                       width = 10L,
                       offset = offset,
                       label_type = "period",

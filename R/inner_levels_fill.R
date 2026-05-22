@@ -1,5 +1,5 @@
 
-inner_complete <- function(x,
+inner_levels_fill <- function(x,
                            breaks,
                            label_type,
                            x_one,
@@ -65,8 +65,8 @@ inner_complete <- function(x,
                                   is_open_right = FALSE,
                                   include_total = FALSE,
                                   include_na = FALSE)
+      levels_extra[[i - 1L]] <- labels_gap
     }
-    levels_extra[[i - 1L]] <- labels_gap
   }
   unord <- match(seq_len(n), ord)
   levels_extra <- levels_extra[unord]

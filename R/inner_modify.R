@@ -1,4 +1,4 @@
-inner_convert <- function(x,
+inner_modify <- function(x,
                           breaks,
                           is_open_left,
                           is_open_right,
@@ -45,7 +45,7 @@ inner_convert <- function(x,
 }
 
 
-inner_convert_width <- function(x,
+inner_modify_width <- function(x,
                                 width,
                                 offset,
                                 label_type,
@@ -100,7 +100,7 @@ inner_convert_width <- function(x,
       end <- end + width - remainder_end
   }
   breaks <- seq.int(from = start, to = end, by = width)
-  inner_convert(x = x,
+  inner_modify(x = x,
                 breaks = breaks,
                 is_open_left = is_open_left,
                 is_open_right = is_open_right,

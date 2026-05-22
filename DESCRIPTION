@@ -1,6 +1,6 @@
 Package: agetime
 Type: Package
-Title: Work with Labels for Age Groups, Periods, and Cohorts
+Title: Work with Age, Period, and Cohort Labels and Intervals
 Version: 0.1.0
 Authors@R: 
     c(person(given = "John",
@@ -11,11 +11,12 @@ Authors@R:
              family = "Zhang",
              role = "aut",
              email = "junni@bayesiandemography.com"))
-Description: Functions for working with age, period,
-    and cohort labels. Includes functions for creating,
-    interpreting, and modifying labels. Also includes
-    functions for extracting information from labels,
-    which can be used for filtering and sorting.
+Description: Tools for working with age, period,
+    and cohort labels, and with the intervals underlying
+    the labels. Includes functions for cleaning
+    interpreting, and manipulating labels.
+    Makes it easy to filter and sort data involving ages,
+    periods, and cohorts.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
