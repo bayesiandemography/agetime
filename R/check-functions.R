@@ -18,6 +18,31 @@ check_flag <- function(x, nm_x) {
   invisible(TRUE)
 }
 
+check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
+  m <- get_m(intervals)
+  labels <- get_labels_unique(intervals)
+  lower <- m[, 1L]
+  upper <- m[, 2L]
+  if (all(is.na(lower)) || all(is.na(upper)))
+    return(invisible(TRUE))
+  i_lowest <- which.min(lower)
+  i_highest <- which.max(upper)
+  lowest <- lower[[i_lowest]]
+  highest <- upper[[i_highest]]
+  is_in <- (lowest <= x) & (x < highest)
+  i_not_in <- match(FALSE, is_in, nomatch = 0L)
+  if (i_not_in > 0L)
+    cli::cli_abort(c(paste("Value in {.arg {nm_x}} outside",
+                           "range for {.arg {nm_intervals}}."),
+                     i = "Value in {.arg {nm_x}}: {.val {x[[i_not_in]]}}.",
+                     i = paste("Lowest interval in {.arg {nm_intervals}}:",
+                               "{.val {labels[[i_lowest]]}}."),
+                     i = paste("Highest interval in {.arg {nm_intervals}}:",
+                               "{.val {labels[[i_highest]]}}.")))
+  invisible(TRUE)
+}
+
+
 
 check_incr_nonneg_integers <- function(x, nm_x, min_length) {
     eps <- 1e-8
@@ -117,13 +142,6 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
 
     
     
-                   
-
-      
-
-
-
-
 check_is_integerish <- function(x) {
   tol <- 1e-8
   x <- as.double(x)
@@ -169,6 +187,30 @@ check_mapping_constraints <- function(m_mapping,
   }
   invisible(TRUE)
 }
+
+check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
+  m <- get_m(intervals)
+  labels <- get_labels_unique(intervals)
+  lower <- m[, 1L]
+  upper <- m[, 2L]
+  for (i in seq_along(lower)) {
+    l <- lower[[i]]
+    u <- upper[[i]]
+    is_finite <- is.finite(l) && is.finite(u)
+    if (is_finite) {
+      is_in <- (l < x) & (x < u)
+      i_in <- match(TRUE, is_in, nomatch = 0L)
+      if (i_in > 0L)
+        cli::cli_abort(c(paste("Value in {.arg {nm_x}} inside",
+                               "interval from {.arg {nm_intervals}}."),
+                         i = "Value in {.arg {nm_x}}: {.val {x[[i_in]]}}.",
+                         i = "Interval: {.val {labels[[i]]}}."))
+    }
+  }
+  invisible(TRUE)
+}
+
+
 
 check_x_lt_y <- function(x, y, nm_x, nm_y) {
   if (x >= y)
