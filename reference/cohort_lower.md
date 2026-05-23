@@ -7,30 +7,30 @@ Calculate lower limits, upper limits, widths, and midpoints for cohorts.
 ``` r
 cohort_lower(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 cohort_mid(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 cohort_upper(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 cohort_width(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -40,17 +40,17 @@ cohort_width(
 
   A vector of cohort labels.
 
-- label_one:
+- x_one:
 
   Whether labels for one-year cohorts are based on the lower or upper
   limit of the period. Default is `"lower"`.
 
-- label_multi:
+- x_multi:
 
   Whether labels for multi-year periods include or exclude the final
   year of the period. Default is `"include"`.
 
-- unknown_label:
+- x_fail:
 
   Action if a label cannot be interpreted. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
@@ -101,7 +101,7 @@ df |> filter(cohort_lower(cohort) >= 2025)
 #> 1 2025-2030    20
 #> 2 2030-2035    11
 
-## 'label_one' is "lower" (the default)
+## 'x_one' is "lower" (the default)
 cohort_lower("2025")
 #> 2025 
 #> 2025 
@@ -112,21 +112,18 @@ cohort_width("2025")
 #> 2025 
 #>    1 
 
-## 'label_one' is "upper"
-cohort_lower("2025", label_one = "upper")
+## 'x_one' is "upper"
+cohort_lower("2025", x_one = "upper")
 #> 2025 
 #> 2024 
-cohort_upper("2025", label_one = "upper")
+cohort_upper("2025", x_one = "upper")
 #> 2025 
 #> 2025 
-cohort_width("2025", label_one = "upper")
+cohort_width("2025", x_one = "upper")
 #> 2025 
 #>    1 
 
-## 'label_multi' is "include" (the default)
-cohort_lower("2025-2030")
-#> 2025-2030 
-#>      2025 
+## 'x_multi' is "include" (the default)
 cohort_upper("2025-2030")
 #> 2025-2030 
 #>      2030 
@@ -134,20 +131,17 @@ cohort_width("2025-2030")
 #> 2025-2030 
 #>         5 
 
-## 'label_multi' is "exclude"
-cohort_lower("2025-2030", label_multi = "exclude")
-#> 2025-2030 
-#>      2025 
-cohort_upper("2025-2030", label_multi = "exclude")
+## 'x_multi' is "exclude"
+cohort_upper("2025-2030", x_multi = "exclude")
 #> 2025-2030 
 #>      2031 
-cohort_width("2025-2030", label_multi = "exclude")
+cohort_width("2025-2030", x_multi = "exclude")
 #> 2025-2030 
 #>         6 
 
-## no action when 'unknown_label' is "silent"
+## no action when 'x_fail' is "silent"
 cohort_lower(c("2000-2005", "long time ago"),
-             unknown_label = "silent")
+             x_fail = "silent")
 #>   2000-2005 longtimeago 
 #>        2000          NA 
 ```

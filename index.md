@@ -7,12 +7,14 @@ Work with labels for age groups, periods, and cohorts.
 ## Installation
 
 ``` r
+
 devtools::install_github("bayesiandemography/agetime")
 ```
 
 ## Example
 
 ``` r
+
 library(agetime)
 library(dplyr, warn.conflicts = FALSE)
 

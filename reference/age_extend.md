@@ -1,8 +1,8 @@
 # Extend a Set of Age Groups
 
-Add `n` age groups to an existing set of labels `x`. The width of the
-age groups is derived from the `width` argument, or from the width of
-the last label in `x`.
+Create `n` new age groups. The width of the new age groups can be
+specified through the `width` argument. Otherwise it is derived from the
+last element of `x`.
 
 ## Usage
 
@@ -12,7 +12,7 @@ age_extend(
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  unknown_label = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -24,21 +24,25 @@ age_extend(
 
 - n:
 
-  The number of age groups to add. Default is `1`.
+  Number of age groups to add. Default is `1`.
+
+- width:
+
+  Width of the age groups to be added.
 
 - include_x:
 
   Should the return value include `x`? Default is `TRUE`.
 
-- unknown_label:
+- x_fail:
 
   Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
 
 ## Value
 
-If `x` is a factor, `age_extend` returns a factor; otherwise it returns
-a character vector.
+If `x` is a factor, then the return value is a factor; otherwise it is a
+character vector.
 
 ## Examples
 

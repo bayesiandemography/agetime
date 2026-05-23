@@ -1,15 +1,12 @@
-# Define the Oldest Age Group
+# Define Open Age Group
 
-### TODO - WEAKEN REQUIREMENT THAT
-
-### lower_last IS AN EXISTING
-
-### 'lower'.
+Set an open age group, i.e. an age group with no upper limit. Replace
+existing age groups where necessary.
 
 ## Usage
 
 ``` r
-age_set_open(x, lower_last, unknown_label = c("error", "warn", "silent"))
+age_set_open(x, open, x_fail = c("error", "warn", "silent"))
 ```
 
 ## Arguments
@@ -18,37 +15,26 @@ age_set_open(x, lower_last, unknown_label = c("error", "warn", "silent"))
 
   Vector of age group labels.
 
-- lower_last:
+- open:
 
-  Lower limit of an existing age group in `x`.
+  Lower limit of open age group.
 
-- unknown_label:
+- x_fail:
 
   Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Modified version of `x`.
-
-## Details
-
-If the oldest age group in `x` was not previously open, then calling
-`age_set_open()` on `x` makes it open.
+If `x` is a factor, then the return value is a factor; otherwise it is a
+character vector.
 
 ## Examples
 
 ``` r
 x <- c("20-24", "80-84", "100+")
-age_set_open(x, lower_last = 80)
-#> Error in loadNamespace(x): there is no package called ‘poputils’
-age_set_open(x, lower_last = 20)
-#> Error in loadNamespace(x): there is no package called ‘poputils’
-
-## 'x' does not have open age group
-x <- c("20-24", "80-84", "100")
-age_set_open(x, 100)
-#> Error in loadNamespace(x): there is no package called ‘poputils’
-age_set_open(x, 80)
-#> Error in loadNamespace(x): there is no package called ‘poputils’
+age_set_open(x, open = 80)
+#> [1] "20-24" "80+"   "80+"  
+age_set_open(x, open = 50)
+#> [1] "20-24" "50+"   "50+"  
 ```

@@ -1,6 +1,7 @@
-# Make Mapping Between Age Labels
+# Mapping Between Age Group Labels
 
-Make Mapping Between Age Labels
+Create a mapping between age group labels. The mapping is based on one
+of four types of relationship:
 
 ## Usage
 
@@ -10,7 +11,7 @@ age_mapping(
   y = NULL,
   relation = c("equals", "contains", "contained", "overlaps"),
   return_val = c("data.frame", "matrix"),
-  unknown_label = c("error", "warn", "silent")
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -22,19 +23,21 @@ age_mapping(
 
 - y:
 
-  Vector of age group labels. If no value supplied, `x` is mapped with
+  Vector of age group labels. If no value supplied, `x` is mapped onto
   itself.
 
 - relation:
 
-  `"equals"` (the default), `"contains"` `"contained"`, or `"overlaps"`
+  Relationship between labels. The choices are `"equals"` (the default),
+  `"contains"`, `"contained"`, and `"overlaps"`. See below for details
+  and examples.
 
 - return_val:
 
   The format of the return value. The choices are `"data.frame"` (the
   default) or `"matrix"`.
 
-- unknown_label:
+- x_fail:
 
   Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
@@ -43,17 +46,54 @@ age_mapping(
 
 A data.frame or matrix
 
+## Details
+
+If no value for `y` is supplied, `x` is mapped onto itself.
+
 ## The `relation` argument
 
-- `"equals"`. `x` equals `y`. Lower limit of `x` = lower limit `y`, and
-  upper limit of `x` = upper limit of `y`.
+|  |  |
+|----|----|
+| `relation` | Endpoints of `x` and `y` |
+| `"equals"` | `age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)` |
+| `"contains"` | `age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)` |
+| `"contained"` | `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)` |
+| `"overlaps"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` \| `(age_lower(y) <= age_upper(x) < age_upper(y))` |
 
-- `"contains"`. `x` contains `y`. Lower limit of `x` \<= lower limit of
-  `y`, and upper limit of `x` \>= upper limit of `y`.
+## Examples
 
-- `"contained"`. `x` is contained by `y`. Lower limit of `x` \>= lower
-  limit of `y`, and Upper limit of `x` \<= upper limit of `y`.
-
-- `"overlaps"`. `x` overlaps `y`. Lower limit of `y` \<= lower limit of
-  `x` \< upper limit of `y`, or lower limit of `y` \<= upper limit of
-  `x` \< upper limit of `y`, or both.
+``` r
+x <- c("0-4", "10", "5-7")
+y <- c("5-9", "0-4", "6-14")
+age_mapping(x = x, y = y)
+#> # A tibble: 1 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 0-4   0-4  
+age_mapping(x, return_val = "matrix")
+#>      y
+#> x     0-4 10 5-7
+#>   0-4   1  0   0
+#>   10    0  1   0
+#>   5-7   0  0   1
+age_mapping(x = x, y = y, relation = "contains")
+#> # A tibble: 1 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 0-4   0-4  
+age_mapping(x = x, y = y, relation = "contained")
+#> # A tibble: 3 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 5-7   5-9  
+#> 2 0-4   0-4  
+#> 3 10    6-14 
+age_mapping(x = x, y = y, relation = "overlaps")
+#> # A tibble: 4 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 5-7   5-9  
+#> 2 0-4   0-4  
+#> 3 10    6-14 
+#> 4 5-7   6-14 
+```

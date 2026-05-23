@@ -1,8 +1,8 @@
 # Extend a Set of Periods
 
-Add `n` periods to an existing set of labels `x`. The width of the
-periods is derived from the `width` argument, or from the width of the
-last label in `x`.
+Create `n` new periods. The width of the new periods can be specified
+through the `width` argument. Otherwise it is derived from the last
+element of `x`.
 
 ## Usage
 
@@ -12,9 +12,9 @@ period_extend(
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -22,35 +22,39 @@ period_extend(
 
 - x:
 
-  A vector of period labels.
+  Vector of period labels.
 
 - n:
 
-  The number of periods to add. Default is `1`.
+  Number of periods to add. Default is `1`.
+
+- width:
+
+  Width of the periods to be added.
 
 - include_x:
 
   Should the return value include `x`? Default is `TRUE`.
 
-- label_one:
+- x_one:
 
-  Whether labels for one-year periods are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  How to interpret labels in `x` that describe one-year periods. Choices
+  are `"lower"` (the default) and `"upper"`.
 
-- label_multi:
+- x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  How to interpret labels in `x` that describe multi-year periods.
+  Choices are `"include"` (the default) and `"exclude"`.
 
-- unknown_label:
+- x_fail:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  What to do if a label in `x` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-If `x` is a factor, `period_extend` returns a factor; otherwise it
-returns a character vector.
+If `x` is a factor, then the return value is a factor; otherwise it is a
+character vector.
 
 ## Examples
 

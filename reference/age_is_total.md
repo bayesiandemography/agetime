@@ -1,12 +1,11 @@
-# Identify Labels that Refer to Totals
+# Identify Age Group Labels that Refer to Totals
 
-Return a logical vector the same length as `x` with `TRUE` for labels
-that agetime interprets as totals, and `FALSE` otherwise.
+Find age group labels that agetime interprets as totals.
 
 ## Usage
 
 ``` r
-age_is_total(x, unknown_label = c("error", "warn", "silent"))
+age_is_total(x, x_fail = c("error", "warn", "silent"))
 ```
 
 ## Arguments
@@ -15,14 +14,14 @@ age_is_total(x, unknown_label = c("error", "warn", "silent"))
 
   Vector of age group labels.
 
-- unknown_label:
+- x_fail:
 
   Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
 
 ## Value
 
-A logical vector
+A logical vector the same length as `x`.
 
 ## Examples
 

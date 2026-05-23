@@ -14,7 +14,8 @@ age_check(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
-  unknown_label = c("error", "warn", "silent")
+  valid_life = NA,
+  x_fail = c("error", "warn", "silent")
 )
 
 age_assert(
@@ -25,7 +26,8 @@ age_assert(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
-  unknown_label = c("error", "warn", "silent")
+  valid_life = NA,
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -60,7 +62,11 @@ age_assert(
 
   One or more age groups has no upper limit.
 
-- unknown_label:
+- valid_life:
+
+  All labels valid for (abridged) life table.
+
+- x_fail:
 
   Action if meaning of label unclear. Choices are `"error"` (the
   default), `"warn"`, and `"silent"`.
@@ -75,10 +81,11 @@ age_assert(
 ## Examples
 
 ``` r
-lab <- age_labels_labor()
-#> Error in loadNamespace(x): there is no package called ‘poputils’
+lab <- age_labels_life()
 lab
-#> Error: object 'lab' not found
+#>  [1] "0"     "1-4"   "5-9"   "10-14" "15-19" "20-24" "25-29" "30-34" "35-39"
+#> [10] "40-44" "45-49" "50-54" "55-59" "60-64" "65-69" "70-74" "75-79" "80-84"
+#> [19] "85-89" "90-94" "95-99" "100+" 
 
 ## get info on everything
 age_check(x = lab,
@@ -87,16 +94,28 @@ age_check(x = lab,
           no_total = TRUE,
           no_na = TRUE,
           include_zero = TRUE,
-          include_open = TRUE)
-#> Error: object 'lab' not found
+          include_open = TRUE,
+          valid_life = TRUE)
+#> $ok
+#> [1] TRUE
+#> 
+#> $details
+#> # A tibble: 7 × 4
+#>   check        asserted observed comment
+#>   <chr>        <lgl>    <lgl>    <chr>  
+#> 1 no_overlap   TRUE     TRUE     Passed 
+#> 2 no_gap       TRUE     TRUE     Passed 
+#> 3 no_total     TRUE     TRUE     Passed 
+#> 4 no_na        TRUE     TRUE     Passed 
+#> 5 include_zero TRUE     TRUE     Passed 
+#> 6 include_open TRUE     TRUE     Passed 
+#> 7 valid_life   TRUE     TRUE     Passed 
+#> 
 
 ## throw error if gaps
 age_assert(x = lab, no_gap = TRUE)
-#> Error: object 'lab' not found
 
 lab_gap <- lab[c(1, 3)]
-#> Error: object 'lab' not found
 ## throw error if no gaps
 age_assert(x = lab_gap, no_gap = FALSE)
-#> Error: object 'lab_gap' not found
 ```

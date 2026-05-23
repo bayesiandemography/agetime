@@ -12,9 +12,9 @@ period_check(
   no_gap = NA,
   no_total = NA,
   no_na = NA,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 period_assert(
@@ -23,9 +23,9 @@ period_assert(
   no_gap = NA,
   no_total = NA,
   no_na = NA,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -33,7 +33,7 @@ period_assert(
 
 - x:
 
-  A vector of period labels.
+  Vector of period labels.
 
 - no_overlap:
 
@@ -52,20 +52,20 @@ period_assert(
 
   No NA label
 
-- label_one:
+- x_one:
 
-  Whether labels for one-year periods are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  How to interpret labels in `x` that describe one-year periods. Choices
+  are `"lower"` (the default) and `"upper"`.
 
-- label_multi:
+- x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  How to interpret labels in `x` that describe multi-year periods.
+  Choices are `"include"` (the default) and `"exclude"`.
 
-- unknown_label:
+- x_fail:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  What to do if a label in `x` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
@@ -79,9 +79,8 @@ period_assert(
 ``` r
 lab <- period_labels_five(lower_first = 2020,
                           lower_last = 2030)
-#> Error in loadNamespace(x): there is no package called ‘poputils’
 lab
-#> Error: object 'lab' not found
+#> [1] "2020-2025" "2025-2030" "2030-2035"
 
 ## get info on everything
 period_check(x = lab,
@@ -89,15 +88,23 @@ period_check(x = lab,
              no_gap = TRUE,
              no_total = TRUE,
              no_na = TRUE)
-#> Error: object 'lab' not found
+#> $ok
+#> [1] TRUE
+#> 
+#> $details
+#> # A tibble: 4 × 4
+#>   check      asserted observed comment
+#>   <chr>      <lgl>    <lgl>    <chr>  
+#> 1 no_overlap TRUE     TRUE     Passed 
+#> 2 no_gap     TRUE     TRUE     Passed 
+#> 3 no_total   TRUE     TRUE     Passed 
+#> 4 no_na      TRUE     TRUE     Passed 
+#> 
 
 ## throw error if gaps
 period_assert(x = lab, no_gap = TRUE)
-#> Error: object 'lab' not found
 
 lab_gap <- lab[c(1, 3)]
-#> Error: object 'lab' not found
 ## throw error if no gaps
 period_assert(lab_gap, no_gap = FALSE)
-#> Error: object 'lab_gap' not found
 ```

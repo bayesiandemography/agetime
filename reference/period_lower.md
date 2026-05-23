@@ -7,30 +7,30 @@ Calculate lower limits, upper limits, widths, and midpoints for periods.
 ``` r
 period_lower(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 period_mid(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 period_upper(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 
 period_width(
   x,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
-  unknown_label = c("error", "warn", "silent")
+  x_one = c("lower", "upper"),
+  x_multi = c("include", "exclude"),
+  x_fail = c("error", "warn", "silent")
 )
 ```
 
@@ -38,31 +38,56 @@ period_width(
 
 - x:
 
-  A vector of period labels.
+  Vector of period labels.
 
-- label_one:
+- x_one:
 
-  Whether labels for one-year periods are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  How to interpret labels in `x` that describe one-year periods. Choices
+  are `"lower"` (the default) and `"upper"`.
 
-- label_multi:
+- x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  How to interpret labels in `x` that describe multi-year periods.
+  Choices are `"include"` (the default) and `"exclude"`.
 
-- unknown_label:
+- x_fail:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  What to do if a label in `x` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-A numeric vector with same length as `x`.
+Numeric vector the same length as `x`.
 
 ## Details
 
 Lower and upper limits can be used to filter on periods. See below for
 examples.
+
+## Interpretation parameters
+
+`x_one`, `x_multi`, and `x_fail` control how agetime understands and
+processes values in `x`.
+
+- `x_one`. How to interpret a one-year period label such as `"2030"`.
+  When `x_one` is `"lower"`, agetime assumes that the label is based on
+  the lower limit, so that `"2030"` refers to a period such as 1 January
+  2030 to 1 January 2031. When `x_one` is `"upper"`, agetime assumes
+  that the label is based on the upper limit, so that `"2030"` refers to
+  a period such as 30 June 2029 to 30 June 2030.
+
+- `x_multi`. How to interpret a multi-year period label such as
+  `"2030-2035"`. When `x_multi` is `"include"`, agetime assumes that the
+  label includes the upper limit, so that `"2030-2035"` refers to a
+  period such as 30 June 2030 to 30 June 2035. When `x_multi` is
+  `"exclude"`, agetime assumes that the label excludes the upper limit,
+  so that `"2030-2035"` refers to a period such as 1 January 2030 to 1
+  January 2036.
+
+- `x_fail`. Action agetime should take if it can't interpret a label.
+  When `x_fail` is `"error"`, agetime throws an error. When `x_fail` is
+  `"warn"`, agetime throws a warning. When `interpet_fail` is
+  `"silent"`, agetime ignores the label and carries on.
 
 ## Examples
 
@@ -101,7 +126,7 @@ df |> filter(period_lower(period) >= 2025)
 #> 1 2025-2030     5
 #> 2 2030-2035    11
 
-## 'label_one' is "lower" (the default)
+## 'x_one' is "lower" (the default)
 period_lower("2025")
 #> 2025 
 #> 2025 
@@ -112,21 +137,18 @@ period_width("2025")
 #> 2025 
 #>    1 
 
-## 'label_one' is "upper"
-period_lower("2025", label_one = "upper")
+## 'x_one' is "upper"
+period_lower("2025", x_one = "upper")
 #> 2025 
 #> 2024 
-period_upper("2025", label_one = "upper")
+period_upper("2025", x_one = "upper")
 #> 2025 
 #> 2025 
-period_width("2025", label_one = "upper")
+period_width("2025", x_one = "upper")
 #> 2025 
 #>    1 
 
-## 'label_multi' is "include" (the default)
-period_lower("2025-2030")
-#> 2025-2030 
-#>      2025 
+## 'x_multi' is "include" (the default)
 period_upper("2025-2030")
 #> 2025-2030 
 #>      2030 
@@ -134,20 +156,17 @@ period_width("2025-2030")
 #> 2025-2030 
 #>         5 
 
-## 'label_multi' is "exclude"
-period_lower("2025-2030", label_multi = "exclude")
-#> 2025-2030 
-#>      2025 
-period_upper("2025-2030", label_multi = "exclude")
+## 'x_multi' is "exclude"
+period_upper("2025-2030", x_multi = "exclude")
 #> 2025-2030 
 #>      2031 
-period_width("2025-2030", label_multi = "exclude")
+period_width("2025-2030", x_multi = "exclude")
 #> 2025-2030 
 #>         6 
 
-## no action when 'unknown_label' is "silent"
+## no action when 'x_fail' is "silent"
 period_lower(c("2000-2005", "long time ago"),
-             unknown_label = "silent")
+             x_fail = "silent")
 #>   2000-2005 longtimeago 
 #>        2000          NA 
 ```
