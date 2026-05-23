@@ -13,6 +13,7 @@ age_check(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
+  valid_life = NA,
   x_fail = c("error", "warn", "silent")
 )
 
@@ -24,6 +25,7 @@ age_assert(
   no_na = NA,
   include_zero = NA,
   include_open = NA,
+  valid_life = NA,
   x_fail = c("error", "warn", "silent")
 )
 }
@@ -45,6 +47,9 @@ have a lower limit of zero.}
 
 \item{include_open}{One or more age groups
 has no upper limit.}
+
+\item{valid_life}{All labels valid for
+(abridged) life table.}
 
 \item{x_fail}{Action if meaning of label
 unclear. Choices are \code{"error"} (the default),
@@ -75,7 +80,8 @@ age_check(x = lab,
           no_total = TRUE,
           no_na = TRUE,
           include_zero = TRUE,
-          include_open = TRUE)
+          include_open = TRUE,
+          valid_life = TRUE)
 
 ## throw error if gaps
 age_assert(x = lab, no_gap = TRUE)

@@ -9,7 +9,8 @@ inner_assert <- function(x,
                          no_total,
                          no_na,
                          include_zero,
-                         include_open) {
+                         include_open,
+                         valid_life) {
   val <- inner_check(x = x,
                      label_type = label_type,
                      x_one = x_one,
@@ -20,7 +21,8 @@ inner_assert <- function(x,
                      no_total = no_total,
                      no_na = no_na,
                      include_zero = include_zero,
-                     include_open = include_open)
+                     include_open = include_open,
+                     valid_life = valid_life)
   throw_assert_error(val)
   invisible(x)
 }
@@ -36,7 +38,8 @@ inner_check <- function(x,
                         no_total,
                         no_na,
                         include_zero,
-                        include_open) {
+                        include_open,
+                        valid_life) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
@@ -57,12 +60,15 @@ inner_check <- function(x,
                                                asserted = include_zero)
   val_include_open <- inner_check_include_open(intervals = intervals,
                                                asserted = include_open)
+  val_valid_life <- inner_check_valid_life(intervals = intervals,
+                                           asserted = valid_life)
   details <- rbind(val_no_overlap,
                    val_no_gap,
                    val_no_total,
                    val_no_na,
                    val_include_zero,
-                   val_include_open)
+                   val_include_open,
+                   val_valid_life)
   details <- details[!is.na(details$asserted), ]
   ok <- all(details$asserted == details$observed)
   list(ok = ok,
@@ -264,13 +270,40 @@ inner_check_include_open <- function(intervals, asserted) {
                      asserted = asserted,
                      observed = observed,
                      comment = comment)
+}
+
+
+
+inner_check_valid_life <- function(intervals, asserted) {
+  int_is_empty <- int_is_empty(intervals)
+  if (int_is_empty)
+    observed <- TRUE
+  else {
+    val <- label_non_life(intervals)
+    observed <- is.null(val)
+  }
+  if (is.na(asserted))
+    comment <- "No test done"
+  else if (asserted == observed)
+    comment <- "Passed"
+  else if (asserted && !observed) {
+    comment <- sprintf("Not valid for life table: '%s'", val)
+  }
+  else { ## !asserted && observed
+    comment <- "All labels valid for life table."
+  }
+  tibble::tibble_row(check = "valid_life",
+                     asserted = asserted,
+                     observed = observed,
+                     comment = comment)
 }  
+
 
 throw_assert_error <- function(val) {
   if (!val$ok) {
     details <- val$details
     details <- pillar::pillar(details)
-    details <- paste(capture.output(print(details)),
+    details <- paste(utils::capture.output(print(details)),
                      collapse = "\n")
     msg <- c("Check failed.", " " = details)
     cli::cli_abort(msg)

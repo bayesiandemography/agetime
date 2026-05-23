@@ -4,10 +4,95 @@
 \name{agetime-package}
 \alias{agetime-package}
 \alias{agetime}
-\title{Functions for Working with Age Group, Period, and Cohort Labels}
+\title{Work with Age, Period, and Cohort Labels and Intervals}
 \description{
 Bla bla bla
 }
+\section{Get information about existing labels}{
+
+
+\strong{Extract lower limits, upper limits, widths, midpoints}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_lower]{age_lower()}} \tab \code{\link[=period_lower]{period_lower()}} \tab \code{\link[=cohort_lower]{cohort_lower()}} \cr
+   \code{\link[=age_upper]{age_upper()}} \tab \code{\link[=period_upper]{period_upper()}} \tab \code{\link[=cohort_upper]{cohort_upper()}} \cr
+   \code{\link[=age_width]{age_width()}} \tab \code{\link[=period_width]{period_width()}} \tab \code{\link[=cohort_width]{cohort_width()}} \cr
+   \code{\link[=age_mid]{age_mid()}} \tab \code{\link[=period_mid]{period_mid()}} \tab \code{\link[=cohort_mid]{cohort_mid()}} \cr
+}
+
+
+\strong{Identify open intervals and totals}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_is_open]{age_is_open()}} \tab - \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \cr
+   \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \cr
+}
+
+
+\strong{Characterise or make assertions}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \cr
+   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \cr
+}
+
+
+\strong{Create mappings between intervals}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \cr
+}
+}
+
+\section{Clean or modify existing labels}{
+
+
+\strong{Use standard format}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \cr
+}
+
+
+\strong{Modify boundaries}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_modify]{age_modify()}} \tab \code{\link[=period_modify]{period_modify()}} \tab \code{\link[=cohort_modify]{cohort_modify()}} \cr
+   \code{\link[=age_modify_five]{age_modify_five()}} \tab \code{\link[=period_modify_five]{period_modify_five()}} \tab \code{\link[=cohort_modify_five]{cohort_modify_five()}} \cr
+   \code{\link[=age_modify_ten]{age_modify_ten()}} \tab \code{\link[=period_modify_ten]{period_modify_ten()}} \tab \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} \cr
+   \code{\link[=age_modify_life]{age_modify_life()}} \tab - \tab - \cr
+}
+
+
+\strong{Continue series}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_extend]{age_extend()}} \tab \code{\link[=period_extend]{period_extend()}} \tab \code{\link[=cohort_extend]{cohort_extend()}} \cr
+}
+
+
+\strong{Fill in gaps in levels}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_levels_fill]{age_levels_fill()}} \tab \code{\link[=period_levels_fill]{period_levels_fill()}} \tab \code{\link[=cohort_levels_fill]{cohort_levels_fill()}} \cr
+   \code{\link[=age_levels_fill_one]{age_levels_fill_one()}} \tab \code{\link[=period_levels_fill_one]{period_levels_fill_one()}} \tab \code{\link[=cohort_levels_fill_one]{cohort_levels_fill_one()}} \cr
+   \code{\link[=age_levels_fill_five]{age_levels_fill_five()}} \tab \code{\link[=period_levels_fill_five]{period_levels_fill_five()}} \tab \code{\link[=cohort_levels_fill_five]{cohort_levels_fill_five()}} \cr
+   \code{\link[=age_levels_fill_ten]{age_levels_fill_ten()}} \tab \code{\link[=period_levels_fill_ten]{period_levels_fill_ten()}} \tab \code{\link[=cohort_levels_fill_ten]{cohort_levels_fill_ten()}} \cr
+   \code{\link[=age_levels_fill_life]{age_levels_fill_life()}} \tab - \tab - \cr
+}
+
+
+\strong{Put levels in order}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_levels_sort]{age_levels_sort()}} \tab \code{\link[=period_levels_sort]{period_levels_sort()}} \tab \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} \cr
+}
+}
+
+\section{Make new labels}{
+
+
+\strong{New labels with standard format}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \cr
+   \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \cr
+   \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \cr
+   \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \cr
+   \code{\link[=age_labels_life]{age_labels_life()}} \tab - \tab - \cr
+}
+}
+
 \seealso{
 Useful links:
 \itemize{

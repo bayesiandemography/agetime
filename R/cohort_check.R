@@ -64,7 +64,8 @@ cohort_check <- function(x,
               no_total = no_total,
               no_na = no_na,
               include_zero = NA,
-              include_open = include_open)
+              include_open = include_open,
+              valid_life = NA)
 }
 
 #' @rdname cohort_check
@@ -91,6 +92,7 @@ cohort_assert <- function(x,
                no_total = no_total,
                no_na = no_na,
                include_zero = NA,
-               include_open = include_open)
+               include_open = include_open,
+               valid_life = NA)
 }
 

@@ -19,14 +19,14 @@ inner_levels_sort <- function(x,
   is_total <- get_is_total(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  i_unique <- seq_along(i_xun_to_xunu)
+  i_xun <- seq_along(i_xun_to_xunu)
   ord_norm <- order(lower,
                     upper,
                     is_total)
   ord_norm <- ord_norm[i_xun_to_xunu]
-  i_ord <- match(i_unique, ord_norm)
-  ord_unique <- order(i_ord,
-                      i_unique,
+  i_rank <- match(i_xun, ord_norm)
+  ord_unique <- order(i_rank,
+                      i_xun,
                       decreasing = decreasing)
   levels_new <- labels_unique[ord_unique]
   factor(x, levels = levels_new, exclude = NULL)

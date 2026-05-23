@@ -1,14 +1,16 @@
-#' Sort Age Groups
+#' Sort Age Group Levels
 #'
-#' @description 
-#' If `x` is not a factor, convert it
-#' to one, then sort its levels.
-#' sort its levels. Sorting is based
-#' on lower limits, with upper limits
-#' used to resolve ties.
+#' Sort the levels of `x`.
 #'
-#' `"Total"`s come last, and NAs second-to-last
-#' (unless `decreasing = TRUE`).
+#' If `x` is not a factor, and so
+#' does not have levels,
+#' convert it to a factor before
+#' sorting the levels.
+#' 
+#' Levels are sorted on their lower
+#' limits. Upper limits are used
+#' to resolve times. `NA`s come
+#' second-to-last and totals come last.
 #'
 #' @inheritParams age_lower
 #' @param decreasing Whether sort is
@@ -23,14 +25,14 @@
 #' age_levels_sort(x)
 #' @export
 age_levels_sort <- function(x,
-                     decreasing = FALSE,
-                     x_fail = c("error", "warn", "silent")) {
+                            decreasing = FALSE,
+                            x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
   inner_levels_sort(x = x,
-             decreasing = decreasing,
-             label_type = "age",
-             x_one = "lower",
-             x_multi = "exclude",
-             x_fail = x_fail)
+                    decreasing = decreasing,
+                    label_type = "age",
+                    x_one = "lower",
+                    x_multi = "exclude",
+                    x_fail = x_fail)
 }
 

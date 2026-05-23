@@ -17,7 +17,7 @@ check_flag <- function(x, nm_x) {
                      "{.arg {nm_x}} equals {.val {x}}."))
   invisible(TRUE)
 }
-
+ 
 check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)

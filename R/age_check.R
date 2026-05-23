@@ -16,6 +16,8 @@
 #' have a lower limit of zero.
 #' @param include_open One or more age groups
 #' has no upper limit. 
+#' @param valid_life All labels valid for
+#' (abridged) life table.
 #'
 #' @returns
 #' - `age_check()` returns a list with
@@ -35,7 +37,8 @@
 #'           no_total = TRUE,
 #'           no_na = TRUE,
 #'           include_zero = TRUE,
-#'           include_open = TRUE)
+#'           include_open = TRUE,
+#'           valid_life = TRUE)
 #'
 #' ## throw error if gaps
 #' age_assert(x = lab, no_gap = TRUE)
@@ -51,6 +54,7 @@ age_check <- function(x,
                       no_na = NA,
                       include_zero = NA,
                       include_open = NA,
+                      valid_life = NA,
                       x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
   inner_check(x = x,
@@ -63,7 +67,8 @@ age_check <- function(x,
               no_total = no_total,
               no_na = no_na,
               include_zero = include_zero,
-              include_open = include_open)
+              include_open = include_open,
+              valid_life = valid_life)
 }
 
 #' @rdname age_check
@@ -75,6 +80,7 @@ age_assert <- function(x,
                        no_na = NA,
                        include_zero = NA,
                        include_open = NA,
+                       valid_life = NA,
                        x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
   inner_assert(x = x,
@@ -87,6 +93,7 @@ age_assert <- function(x,
                no_total = no_total,
                no_na = no_na,
                include_zero = include_zero,
-               include_open = include_open)
+               include_open = include_open,
+               valid_life = valid_life)
 }
 

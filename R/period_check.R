@@ -60,7 +60,8 @@ period_check <- function(x,
               no_total = no_total,
               no_na = no_na,
               include_zero = NA,
-              include_open = NA)
+              include_open = NA,
+              valid_life = NA)
 }
 
 #' @rdname period_check
@@ -86,6 +87,7 @@ period_assert <- function(x,
                no_total = no_total,
                no_na = no_na,
                include_zero = NA,
-               include_open = NA)
+               include_open = NA,
+               valid_life = NA)
 }
 

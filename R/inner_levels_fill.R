@@ -1,18 +1,14 @@
-
+## Can omit 'breaks' and 'width', but cannot give values for both
 inner_levels_fill <- function(x,
-                           breaks,
-                           label_type,
-                           x_one,
-                           x_multi,
-                           x_fail) {
+                              breaks,
+                              width,
+                              label_type,
+                              x_one,
+                              x_multi,
+                              x_fail) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = FALSE)
-  has_breaks <- length(breaks) > 0L
-  if (has_breaks)
-    check_incr_nonneg_integers(x = breaks,
-                               nm_x = "breaks",
-                               min_length = 1L)
   if (is.factor(x))
     levels <- levels(x)
   else
@@ -24,14 +20,23 @@ inner_levels_fill <- function(x,
                          x_one = x_one,
                          x_multi = x_multi,
                          x_fail = x_fail)
-  check_not_in_intervals(x = breaks,
-                         nm_x = "breaks",
-                         intervals = intervals,
-                         nm_intervals = "x")
-  check_in_limits_intervals(x = breaks,
-                            nm_x = "breaks",
-                            intervals = intervals,
-                            nm_intervals = "x")
+  has_breaks <- length(breaks) > 0L
+  has_width <- length(width) > 0L
+  if (has_breaks && has_width)
+    cli::cli_abort("Internal error: 'breaks' and 'width' both supplied.")
+  if (has_breaks) {
+    check_incr_nonneg_integers(x = breaks,
+                               nm_x = "breaks",
+                               min_length = 1L)
+    check_not_in_intervals(x = breaks,
+                           nm_x = "breaks",
+                           intervals = intervals,
+                           nm_intervals = "x")
+    check_in_limits_intervals(x = breaks,
+                              nm_x = "breaks",
+                              intervals = intervals,
+                              nm_intervals = "x")
+  }
   m <- get_m(intervals)
   n <- nrow(m)
   can_have_gaps <- n >= 2L
@@ -45,19 +50,32 @@ inner_levels_fill <- function(x,
   m <- m[ord, , drop = FALSE]
   lower <- m[, 1L]
   uppermax <- cummax(m[, 2L])
+  labels <- labels[ord]
   levels_extra <- vector(mode = "list", length = n)
   for (i in seq.int(from = 2L, to = n)) {
-    l <- lower[[i]]
-    u <- uppermax[[i - 1L]]
-    diff <- l - u
+    l_curr <- lower[[i]]
+    u_prev <- uppermax[[i - 1L]]
+    diff <- l_curr - u_prev
     is_gap <- is.finite(diff) && (diff > 0L)
     if (is_gap) {
       if (has_breaks) {
-        breaks_internal <- breaks[(u < breaks) & (breaks < l)]
-        breaks_gap <- c(u, breaks_internal, l)
+        breaks_internal <- breaks[(u_prev < breaks) & (breaks < l_curr)]
+        breaks_gap <- c(u_prev, breaks_internal, l_curr)
+      }
+      else if (has_width) {
+        if (diff %% width != 0L) {
+          label_curr <- labels[[i]]
+          label_prev <- labels[[i - 1L]]
+          cli::cli_abort(paste("Gap between {.val {label_prev}} and",
+                               "{.val {label_curr}} not divisible",
+                               "by {.val {width}}."))
+        }
+        breaks_gap <- seq.int(from = u_prev,
+                              to = l_curr,
+                              by = width)
       }
       else
-        breaks_gap <- c(u, l)
+        breaks_gap <- c(u_prev, l_curr)
       labels_gap <-  inner_labels(breaks = breaks_gap,
                                   x_one = x_one,
                                   x_multi = x_multi,
@@ -72,8 +90,8 @@ inner_levels_fill <- function(x,
   levels_extra <- levels_extra[unord]
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   levels_extra <- levels_extra[i_xun_to_xunu]
-  levels_current <- as.list(levels)
-  levels <- rbind(levels_current, levels_extra)
+  levels_old <- as.list(levels)
+  levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
   levels <- unique(levels)
   if (is.factor(x))

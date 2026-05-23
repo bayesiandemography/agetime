@@ -150,7 +150,41 @@ is_m1_inside_m2 <- function(m1, m2) {
   ans
 }
 
-
+## return label of first interval that is
+## not found in an abridged life table
+label_non_life <- function(intervals) {
+  m <- get_m(intervals)
+  labels <- get_labels_unique(intervals)
+  n <- nrow(m)
+  is_equal <- function(x, y)
+    isTRUE(all.equal(x, y, check.attributes = FALSE))
+  for (i in seq_len(n)) {
+    l <- m[i, 1L]
+    u <- m[i, 2L]
+    label <- labels[[i]]
+    if (is.na(l)) {
+      NULL
+    }
+    else if (is.infinite(l)) {
+      return(label)
+    }
+    else if (is_equal(l, 0L)) {
+      if (!is_equal(u, 1L))
+        return(label)
+    }
+    else if (is_equal(l, 1L)) {
+      if (!is_equal(u, 5L))
+        return(label)
+    }
+    else {
+      if (l %% 5L != 0L)
+        return(label)
+      if (is.finite(u) && (((u - l) %% 5L) != 0L))
+        return(label)
+    }
+  }
+  NULL
+}
 
 to_character_or_factor <- function(x, nm_x, length_zero_ok) {
   msg <- c("{.arg {nm_x}} must be a vector of labels.",

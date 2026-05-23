@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_levels_sort.R
 \name{age_levels_sort}
 \alias{age_levels_sort}
-\title{Sort Age Groups}
+\title{Sort Age Group Levels}
 \usage{
 age_levels_sort(x, decreasing = FALSE, x_fail = c("error", "warn", "silent"))
 }
@@ -21,14 +21,18 @@ unclear. Choices are \code{"error"} (the default),
 A factor, the same length as \code{x}.
 }
 \description{
-If \code{x} is not a factor, convert it
-to one, then sort its levels.
-sort its levels. Sorting is based
-on lower limits, with upper limits
-used to resolve ties.
+Sort the levels of \code{x}.
+}
+\details{
+If \code{x} is not a factor, and so
+does not have levels,
+convert it to a factor before
+sorting the levels.
 
-\code{"Total"}s come last, and NAs second-to-last
-(unless \code{decreasing = TRUE}).
+Levels are sorted on their lower
+limits. Upper limits are used
+to resolve times. \code{NA}s come
+second-to-last and totals come last.
 }
 \examples{
 x <- c("0-4", "50+", "Total", NA, "20-24")

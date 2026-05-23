@@ -5,15 +5,18 @@
 \alias{age_levels_fill_one}
 \alias{age_levels_fill_five}
 \alias{age_levels_fill_ten}
-\title{Complete a Set of Age Groups}
+\alias{age_levels_fill_life}
+\title{Fill in Gaps in Age Group Levels}
 \usage{
 age_levels_fill(x, breaks = NULL, x_fail = c("error", "warn", "silent"))
 
-age_levels_fill_one(x, width, x_fail = c("error", "warn", "silent"))
+age_levels_fill_one(x, x_fail = c("error", "warn", "silent"))
 
-age_levels_fill_five(x, width, x_fail = c("error", "warn", "silent"))
+age_levels_fill_five(x, x_fail = c("error", "warn", "silent"))
 
-age_levels_fill_ten(x, width, x_fail = c("error", "warn", "silent"))
+age_levels_fill_ten(x, x_fail = c("error", "warn", "silent"))
+
+age_levels_fill_life(x, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
@@ -31,10 +34,12 @@ unclear. Choices are \code{"error"} (the default),
 A factor, the same length as \code{x}.
 }
 \description{
-If \code{x} is not a factor, convert
-it to one, then  add
-extra age groups to its \code{"levels"}
-attribute so that there are no gaps.
+Fill in gaps in the levels of \code{x}.
+}
+\details{
+If \code{x} is not a factor, and so does
+not have levels, convert it to
+a factor before filling in the levels.
 \itemize{
 \item \code{age_levels_fill} adds the age groups
 specified by \code{breaks}.
@@ -52,7 +57,6 @@ used by a life table.
 x <- factor(c("0-4", "20-24"))
 x
 age_levels_fill(x) ## uses existing boundaries
-table(age_levels_fill(x))
 age_levels_fill(x, breaks = c(8, 12))
 age_levels_fill_one(x)
 age_levels_fill_five(x)
@@ -62,4 +66,18 @@ age_levels_fill_ten(x)
 
 x <- c("60+", "0")
 age_levels_fill_life(x)
+
+## levels are used by functions
+## such as 'table()'
+x <- c("30-39", "0-9")
+x |> table()
+x |>
+  age_levels_fill() |>
+  table()
+
+## sort after filling
+x |>
+  age_levels_fill() |>
+  age_levels_sort() |>
+  table()
 }
