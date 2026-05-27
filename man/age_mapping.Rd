@@ -27,9 +27,9 @@ See below for details and examples.}
 return value. The choices are \code{"data.frame"}
 (the default) or \code{"matrix"}.}
 
-\item{x_fail}{Action if meaning of label
-unclear. Choices are \code{"error"} (the default),
-\code{"warn"}, and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
 A data.frame or matrix

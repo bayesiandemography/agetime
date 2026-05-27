@@ -35,26 +35,31 @@ labels in \code{x} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{What to do if a
-label in \code{x} cannot be interpreted.
-Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, then the return value is
-a factor; otherwise it is a character vector.
+A factor if \code{x} is a factor; otherwise a character vector.
 }
 \description{
-Create \code{n} new periods.
-The width of the new periods
-can be specified through the \code{width}
-argument.  Otherwise it is derived from
-the last element of \code{x}.
+Add new periods at the end of \code{x}.
+}
+\details{
+By default, the width of the new periods
+is derived from the last element of \code{x},
+but a value can be specified through the
+\code{width} arugment.
 }
 \examples{
 x <- c("2020-2025", "2025-2030")
 period_extend(x, n = 2)
 period_extend(x, n = 2, width = 10)
 period_extend(x, n = 2, include_x = FALSE)
+}
+\seealso{
+\itemize{
+\item \code{\link[=age_extend]{age_extend()}} Age equivalent of \code{period_extend()}
+\item \code{\link[=cohort_extend]{cohort_extend()}} Cohort equivalent of \code{period_extend()}
+}
 }

@@ -24,24 +24,31 @@ to be added.}
 \item{include_x}{Should the return value
 include \code{x}? Default is \code{TRUE}.}
 
-\item{x_fail}{Action if meaning of label
-unclear. Choices are \code{"error"} (the default),
-\code{"warn"}, and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, then the return value is
-a factor; otherwise it is a character vector.
+A factor if \code{x} is a factor; otherwise a character vector.
 }
 \description{
-Create \code{n} new age groups.
-The width of the new age groups
-can be specified through the \code{width}
-argument.  Otherwise it is derived from
-the last element of \code{x}.
+Add new age groups at the end of \code{x}.
+}
+\details{
+By default, the width of the new age groups
+is derived from the last element of \code{x},
+but a value can be specified through the
+\code{width} arugment.
 }
 \examples{
 x <- c("0-4", "5-9")
 age_extend(x, n = 2)
 age_extend(x, n = 2, width = 10)
 age_extend(x, n = 2, include_x = FALSE)
+}
+\seealso{
+\itemize{
+\item \code{\link[=period_extend]{period_extend()}} Period equivalent of \code{age_extend()}
+\item \code{\link[=cohort_extend]{cohort_extend()}} Cohort equivalent of \code{age_extend()}
+}
 }

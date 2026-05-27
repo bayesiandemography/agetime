@@ -9,8 +9,7 @@
 #' @param open Upper limit of open cohort.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")

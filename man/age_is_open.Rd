@@ -9,9 +9,9 @@ age_is_open(x, x_fail = c("error", "warn", "silent"))
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{x_fail}{Action if meaning of label
-unclear. Choices are \code{"error"} (the default),
-\code{"warn"}, and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
 A logical vector the same length as \code{x}.

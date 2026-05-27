@@ -51,9 +51,9 @@ has no upper limit.}
 \item{valid_life}{All labels valid for
 (abridged) life table.}
 
-\item{x_fail}{Action if meaning of label
-unclear. Choices are \code{"error"} (the default),
-\code{"warn"}, and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
 \itemize{

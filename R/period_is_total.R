@@ -1,11 +1,16 @@
 
-#' Identify Period Labels that Refer to Totals
+#' Identify Period Labels for Totals
 #'
 #' Find period labels that \pkg{agetime} interprets as totals.
 #' 
 #' @inheritParams period_lower
 #'
-#' @returns A logical vector the same length as `x`.
+#' @returns
+#' Logical vector the same length as `x`.
+#'
+#' @seealso
+#' [age_is_total()] Age equivalent of `[period_is_total()`
+#' [cohort_is_total()] Cohort equivalent of `period_is_total()`
 #'
 #' @examples
 #' x <- c("2020-2025", "Total", "1999", "ALL")

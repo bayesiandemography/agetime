@@ -34,10 +34,9 @@ include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if a label
-cannot be interpreted. Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
 If \code{x} is a factor, then the return value is
@@ -54,8 +53,10 @@ cohort_modify(x, breaks = c(1970, 2000, 2005, 2015))
 cohort_modify(x, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
 }
 \seealso{
-\code{\link[=cohort_modify_five]{cohort_modify_five()}} Convert to 5-year cohorts
-\code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Convert to 10-year cohorts
-\code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{cohort_modify()}
-\code{\link[=period_modify]{period_modify()}} Period equivalent of \code{cohort_modify()}
+\itemize{
+\item \code{\link[=cohort_modify_five]{cohort_modify_five()}} Convert to 5-year cohorts
+\item \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Convert to 10-year cohorts
+\item \code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{cohort_modify()}
+\item \code{\link[=period_modify]{period_modify()}} Period equivalent of \code{cohort_modify()}
+}
 }

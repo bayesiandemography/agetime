@@ -1,12 +1,13 @@
 
 #' Extend a Set of Cohorts
 #'
-#' Create `n` new cohorts.
-#' The width of the new cohorts
-#' can be specified through the `width`
-#' argument.  Otherwise it is derived from
-#' the last element of `x`.
+#' Add new cohorts at the end of `x`.
 #'
+#' By default, the width of the new cohorts
+#' is derived from the last element of `x`,
+#' but a value can be specified through the
+#' `width` arugment.
+#' 
 #' @inheritParams cohort_lower
 #' @param n Number of cohorts to add.
 #' Default is `1`.
@@ -16,8 +17,11 @@
 #' include `x`? Default is `TRUE`.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
+#'
+#' @seealso
+#' - [age_extend()] Age equivalent of `cohort_extend()`
+#' - [period_extend()] Period equivalent of `cohort_extend()`
 #'
 #' @examples
 #' x <- c("2020-2025", "2025-2030")

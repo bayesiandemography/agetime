@@ -1,11 +1,12 @@
 
 #' Extend a Set of Age Groups
 #'
-#' Create `n` new age groups.
-#' The width of the new age groups
-#' can be specified through the `width`
-#' argument.  Otherwise it is derived from
-#' the last element of `x`.
+#' Add new age groups at the end of `x`.
+#'
+#' By default, the width of the new age groups
+#' is derived from the last element of `x`,
+#' but a value can be specified through the
+#' `width` arugment.
 #'
 #' @inheritParams age_lower
 #' @param n Number of age groups to add.
@@ -16,8 +17,11 @@
 #' include `x`? Default is `TRUE`.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
+#'
+#' @seealso
+#' - [period_extend()] Period equivalent of `age_extend()`
+#' - [cohort_extend()] Cohort equivalent of `age_extend()`
 #'
 #' @examples
 #' x <- c("0-4", "5-9")

@@ -9,8 +9,7 @@
 #' @param open Lower limit of open age group.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @examples
 #' x <- c("20-24", "80-84", "100+")

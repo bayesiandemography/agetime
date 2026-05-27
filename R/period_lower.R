@@ -51,13 +51,12 @@
 #' labels in `x` that describe multi-year periods.
 #' Choices are `"include"` (the default) and
 #' `"exclude"`. 
-#' @param x_fail What to do if a
-#' label in `x` cannot be interpreted.
-#' Choices are
-#' `"error"` (the default), `"warn"`,
-#' and `"silent"`.
+#' @param x_fail Action if element of `x`
+#' cannot be parsed: `"error"` (the default),
+#' `"warn"`, or `"silent"`.
 #'
-#' @return Numeric vector the same length as `x`.
+#' @return
+#' Numeric vector the same length as `x`.
 #'
 #' @examples
 #' x <- c("2025-2030", "2020-2025", "2030-2035")

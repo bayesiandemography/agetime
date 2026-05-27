@@ -1,11 +1,17 @@
 
-#' Identify Cohort Labels that Refer to Totals
+#' Identify Cohort Labels for Totals
 #'
 #' Find cohort labels that \pkg{agetime} interprets as totals.
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @returns A logical vector the same length as `x`.
+#' @returns
+#' Logical vector the same length as `x`.
+#'
+#' @seealso
+#' [cohort_is_open()] Find open cohorts
+#' [age_is_total()] Age equivalent of `cohort_is_total()`
+#' [period_is_total()] Period equivalent of `cohort_is_total()`
 #'
 #' @examples
 #' x <- c("2020-2025", "Total", "1999", "ALL")
@@ -24,14 +30,19 @@ cohort_is_total <- function(x,
 }
 
 
-#' Identify Labels that Refer to Open Cohorts
+#' Identify Cohort Labels for Open Cohorts
 #'
 #' Find cohort labels that \pkg{agetime} interprets as
-#' open, ie as having no lower limit.
+#' open, ie  having no lower limit.
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @returns A logical vector the same length as `x`.
+#' @returns
+#' Logical vector the same length as `x`.
+#'
+#' @seealso
+#' [cohort_is_total()] Find cohort labels for totals
+#' [age_is_open()] Age equivalent of `cohort_is_open()`
 #'
 #' @examples
 #' x <- c("2020", "<1900", "2040-2050", "<2022")

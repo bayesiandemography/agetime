@@ -17,11 +17,12 @@
 #' closed intervals.
 #'
 #' @param x Vector of age group labels.
-#' @param x_fail Action if meaning of label
-#' unclear. Choices are `"error"` (the default),
-#' `"warn"`, and `"silent"`.
+#' @param x_fail Action if element of `x`
+#' cannot be parsed: `"error"` (the default),
+#' `"warn"`, or `"silent"`.
 #'
-#' @return A numeric vector with same length as `x`.
+#' @return
+#' Numeric vector with same length as `x`.
 #'
 #' @examples
 #' x <- c("5-9", "10-14", "100+")

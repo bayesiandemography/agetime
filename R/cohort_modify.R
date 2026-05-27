@@ -16,10 +16,10 @@
 #' a factor; otherwise it is a character vector.
 #'
 #' @seealso
-#' [cohort_modify_five()] Convert to 5-year cohorts
-#' [cohort_modify_ten()] Convert to 10-year cohorts
-#' [age_modify()] Age group equivalent of `cohort_modify()`
-#' [period_modify()] Period equivalent of `cohort_modify()`
+#' - [cohort_modify_five()] Convert to 5-year cohorts
+#' - [cohort_modify_ten()] Convert to 10-year cohorts
+#' - [age_modify()] Age group equivalent of `cohort_modify()`
+#' - [period_modify()] Period equivalent of `cohort_modify()`
 #' 
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
@@ -64,8 +64,7 @@ cohort_modify <- function(x,
 #' alignment of cohorts. Default is `0`.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
 #' [cohort_modify()] Convert to general cohorts

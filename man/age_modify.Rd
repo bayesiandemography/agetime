@@ -16,13 +16,12 @@ A numeric vector.}
 is "open", i.e. has no upper limit.
 Default is \code{TRUE}.}
 
-\item{x_fail}{Action if meaning of label
-unclear. Choices are \code{"error"} (the default),
-\code{"warn"}, and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, then the return value is
-a factor; otherwise it is a character vector.
+A factor if \code{x} is a factor; otherwise a character vector.
 }
 \description{
 Modify the age groups used by \code{x}. The
@@ -35,9 +34,11 @@ age_modify(x, breaks = c(0, 10, 40, 90))
 age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
 }
 \seealso{
-\code{\link[=age_modify_five]{age_modify_five()}} Convert to 5-year age groups
-\code{\link[=age_modify_ten]{age_modify_ten()}} Convert to 10-year age groups
-\code{\link[=age_modify_life]{age_modify_life()}} Convert to life table age groups
-\code{\link[=period_modify]{period_modify()}} Period equivalent of \code{age_modify()}
-\code{\link[=cohort_modify]{cohort_modify()}} Cohort equivalent of \code{age_modify()}
+\itemize{
+\item \code{\link[=age_modify_five]{age_modify_five()}} Convert to 5-year age groups
+\item \code{\link[=age_modify_ten]{age_modify_ten()}} Convert to 10-year age groups
+\item \code{\link[=age_modify_life]{age_modify_life()}} Convert to life table age groups
+\item \code{\link[=period_modify]{period_modify()}} Period equivalent of \code{age_modify()}
+\item \code{\link[=cohort_modify]{cohort_modify()}} Cohort equivalent of \code{age_modify()}
+}
 }

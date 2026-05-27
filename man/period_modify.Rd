@@ -27,15 +27,12 @@ labels in \code{x} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{What to do if a
-label in \code{x} cannot be interpreted.
-Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, then the return value is
-a factor; otherwise it is a character vector.
+A factor if \code{x} is a factor; otherwise a character vector.
 }
 \description{
 Modify the periods used by \code{x}. The
@@ -47,8 +44,10 @@ x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 period_modify(x, breaks = c(1970, 2000, 2005, 2015))
 }
 \seealso{
-\code{\link[=period_modify_five]{period_modify_five()}} Convert to 5-year periods
-\code{\link[=period_modify_ten]{period_modify_ten()}} Convert to 10-year periods
-\code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{period_modify()}
-\code{\link[=cohort_modify]{cohort_modify()}} Cohort equivalent of \code{period_modify()}
+\itemize{
+\item \code{\link[=period_modify_five]{period_modify_five()}} Convert to 5-year periods
+\item \code{\link[=period_modify_ten]{period_modify_ten()}} Convert to 10-year periods
+\item \code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{period_modify()}
+\item \code{\link[=cohort_modify]{cohort_modify()}} Cohort equivalent of \code{period_modify()}
+}
 }

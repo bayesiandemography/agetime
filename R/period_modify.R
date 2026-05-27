@@ -9,14 +9,13 @@
 #' A numeric vector.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
-#' [period_modify_five()] Convert to 5-year periods
-#' [period_modify_ten()] Convert to 10-year periods
-#' [age_modify()] Age group equivalent of `period_modify()`
-#' [cohort_modify()] Cohort equivalent of `period_modify()`
+#' - [period_modify_five()] Convert to 5-year periods
+#' - [period_modify_ten()] Convert to 10-year periods
+#' - [age_modify()] Age group equivalent of `period_modify()`
+#' - [cohort_modify()] Cohort equivalent of `period_modify()`
 #' 
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
@@ -58,8 +57,7 @@ period_modify <- function(x,
 #' alignment of periods. Default is `0`.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
 #' [period_modify()] Convert to general periods

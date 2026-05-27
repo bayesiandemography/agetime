@@ -1,11 +1,12 @@
 
 #' Extend a Set of Periods
 #'
-#' Create `n` new periods.
-#' The width of the new periods
-#' can be specified through the `width`
-#' argument.  Otherwise it is derived from
-#' the last element of `x`.
+#' Add new periods at the end of `x`.
+#'
+#' By default, the width of the new periods
+#' is derived from the last element of `x`,
+#' but a value can be specified through the
+#' `width` arugment.
 #'
 #' @inheritParams period_lower
 #' @param n Number of periods to add.
@@ -16,8 +17,11 @@
 #' include `x`? Default is `TRUE`.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
+#'
+#' @seealso
+#' - [age_extend()] Age equivalent of `period_extend()`
+#' - [cohort_extend()] Cohort equivalent of `period_extend()`
 #'
 #' @examples
 #' x <- c("2020-2025", "2025-2030")

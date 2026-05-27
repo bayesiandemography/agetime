@@ -56,10 +56,9 @@ include or exclude the final
 year of the period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if a label
-cannot be interpreted. Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
 \itemize{

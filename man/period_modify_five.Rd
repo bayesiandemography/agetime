@@ -36,15 +36,12 @@ labels in \code{x} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{What to do if a
-label in \code{x} cannot be interpreted.
-Choices are
-\code{"error"} (the default), \code{"warn"},
-and \code{"silent"}.}
+\item{x_fail}{Action if element of \code{x}
+cannot be parsed: \code{"error"} (the default),
+\code{"warn"}, or \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, then the return value is
-a factor; otherwise it is a character vector.
+A factor if \code{x} is a factor; otherwise a character vector.
 }
 \description{
 Modify the periods used by \code{x}.

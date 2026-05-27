@@ -12,15 +12,14 @@
 #' Default is `TRUE`.
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
-#' [age_modify_five()] Convert to 5-year age groups
-#' [age_modify_ten()] Convert to 10-year age groups
-#' [age_modify_life()] Convert to life table age groups
-#' [period_modify()] Period equivalent of `age_modify()`
-#' [cohort_modify()] Cohort equivalent of `age_modify()`
+#' - [age_modify_five()] Convert to 5-year age groups
+#' - [age_modify_ten()] Convert to 10-year age groups
+#' - [age_modify_life()] Convert to life table age groups
+#' - [period_modify()] Period equivalent of `age_modify()`
+#' - [cohort_modify()] Cohort equivalent of `age_modify()`
 #' 
 #' @examples
 #' x <- c("1-4", "87-89", "0", "50-54")
@@ -60,8 +59,7 @@ age_modify <- function(x,
 #' @inheritParams age_lower
 #'
 #' @returns
-#' If `x` is a factor, then the return value is
-#' a factor; otherwise it is a character vector.
+#' A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
 #' [age_modify()] Convert to general age groups

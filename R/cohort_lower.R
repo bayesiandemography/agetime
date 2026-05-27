@@ -20,12 +20,12 @@
 #' include or exclude the final
 #' year of the period.
 #' Default is `"include"`.
-#' @param x_fail Action if a label
-#' cannot be interpreted. Choices are
-#' `"error"` (the default), `"warn"`,
-#' and `"silent"`.
+#' @param x_fail Action if element of `x`
+#' cannot be parsed: `"error"` (the default),
+#' `"warn"`, or `"silent"`.
 #'
-#' @return A numeric vector with same length as `x`.
+#' @return
+#' Numeric vector the same length as `x`.
 #'
 #' @examples
 #' x <- c("2025-2030", "<2025", "2030-2035")
