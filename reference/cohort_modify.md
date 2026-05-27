@@ -43,8 +43,8 @@ cohort_modify(
 
 - x_fail:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
@@ -53,14 +53,17 @@ character vector.
 
 ## See also
 
-[`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
-Convert to 5-year cohorts
-[`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
-Convert to 10-year cohorts
-[`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md)
-Age group equivalent of `cohort_modify()`
-[`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md)
-Period equivalent of `cohort_modify()`
+- [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
+  Convert to 5-year cohorts
+
+- [`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
+  Convert to 10-year cohorts
+
+- [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md)
+  Age group equivalent of `cohort_modify()`
+
+- [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md)
+  Period equivalent of `cohort_modify()`
 
 ## Examples
 

@@ -1,8 +1,6 @@
 # Extend a Set of Age Groups
 
-Create `n` new age groups. The width of the new age groups can be
-specified through the `width` argument. Otherwise it is derived from the
-last element of `x`.
+Add new age groups at the end of `x`.
 
 ## Usage
 
@@ -36,13 +34,26 @@ age_extend(
 
 - x_fail:
 
-  Action if meaning of label unclear. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
-If `x` is a factor, then the return value is a factor; otherwise it is a
-character vector.
+A factor if `x` is a factor; otherwise a character vector.
+
+## Details
+
+By default, the width of the new age groups is derived from the last
+element of `x`, but a value can be specified through the `width`
+arugment.
+
+## See also
+
+- [`period_extend()`](https://bayesiandemography.github.io/agetime/reference/period_extend.md)
+  Period equivalent of `age_extend()`
+
+- [`cohort_extend()`](https://bayesiandemography.github.io/agetime/reference/cohort_extend.md)
+  Cohort equivalent of `age_extend()`
 
 ## Examples
 

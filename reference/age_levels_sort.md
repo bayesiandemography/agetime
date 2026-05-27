@@ -20,8 +20,8 @@ age_levels_sort(x, decreasing = FALSE, x_fail = c("error", "warn", "silent"))
 
 - x_fail:
 
-  Action if meaning of label unclear. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 

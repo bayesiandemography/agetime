@@ -52,12 +52,12 @@ cohort_width(
 
 - x_fail:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
-A numeric vector with same length as `x`.
+Numeric vector the same length as `x`.
 
 ## Details
 

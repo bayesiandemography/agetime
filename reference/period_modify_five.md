@@ -49,13 +49,12 @@ period_modify_ten(
 
 - x_fail:
 
-  What to do if a label in `x` cannot be interpreted. Choices are
-  `"error"` (the default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
-If `x` is a factor, then the return value is a factor; otherwise it is a
-character vector.
+A factor if `x` is a factor; otherwise a character vector.
 
 ## See also
 

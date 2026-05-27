@@ -39,8 +39,8 @@ age_mapping(
 
 - x_fail:
 
-  Action if meaning of label unclear. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 

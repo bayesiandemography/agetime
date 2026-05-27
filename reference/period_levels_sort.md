@@ -36,8 +36,8 @@ period_levels_sort(
 
 - x_fail:
 
-  What to do if a label in `x` cannot be interpreted. Choices are
-  `"error"` (the default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 

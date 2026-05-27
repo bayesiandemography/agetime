@@ -1,8 +1,6 @@
 # Extend a Set of Cohorts
 
-Create `n` new cohorts. The width of the new cohorts can be specified
-through the `width` argument. Otherwise it is derived from the last
-element of `x`.
+Add new cohorts at the end of `x`.
 
 ## Usage
 
@@ -48,13 +46,26 @@ cohort_extend(
 
 - x_fail:
 
-  Action if a label cannot be interpreted. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
-If `x` is a factor, then the return value is a factor; otherwise it is a
-character vector.
+A factor if `x` is a factor; otherwise a character vector.
+
+## Details
+
+By default, the width of the new cohorts is derived from the last
+element of `x`, but a value can be specified through the `width`
+arugment.
+
+## See also
+
+- [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
+  Age equivalent of `cohort_extend()`
+
+- [`period_extend()`](https://bayesiandemography.github.io/agetime/reference/period_extend.md)
+  Period equivalent of `cohort_extend()`
 
 ## Examples
 

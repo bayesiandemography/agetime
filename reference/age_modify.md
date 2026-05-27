@@ -26,26 +26,29 @@ age_modify(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
 
 - x_fail:
 
-  Action if meaning of label unclear. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
-If `x` is a factor, then the return value is a factor; otherwise it is a
-character vector.
+A factor if `x` is a factor; otherwise a character vector.
 
 ## See also
 
-[`age_modify_five()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
-Convert to 5-year age groups
-[`age_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
-Convert to 10-year age groups
-[`age_modify_life()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
-Convert to life table age groups
-[`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md)
-Period equivalent of `age_modify()`
-[`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md)
-Cohort equivalent of `age_modify()`
+- [`age_modify_five()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
+  Convert to 5-year age groups
+
+- [`age_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
+  Convert to 10-year age groups
+
+- [`age_modify_life()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
+  Convert to life table age groups
+
+- [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md)
+  Period equivalent of `age_modify()`
+
+- [`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md)
+  Cohort equivalent of `age_modify()`
 
 ## Examples
 

@@ -23,12 +23,12 @@ age_width(x, x_fail = c("error", "warn", "silent"))
 
 - x_fail:
 
-  Action if meaning of label unclear. Choices are `"error"` (the
-  default), `"warn"`, and `"silent"`.
+  Action if element of `x` cannot be parsed: `"error"` (the default),
+  `"warn"`, or `"silent"`.
 
 ## Value
 
-A numeric vector with same length as `x`.
+Numeric vector with same length as `x`.
 
 ## Details
 
