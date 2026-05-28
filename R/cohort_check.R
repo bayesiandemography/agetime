@@ -83,9 +83,9 @@ cohort_assert <- function(x,
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
   inner_assert(x = x,
-               label_type = "age",
-               x_one = "lower",
-               x_multi = "exclude",
+               label_type = "cohort",
+               x_one = x_one,
+               x_multi = x_multi,
                x_fail = x_fail,
                no_overlap = no_overlap,
                no_gap = no_gap,

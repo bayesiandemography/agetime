@@ -223,10 +223,15 @@ inner_check_include_zero <- function(intervals, asserted) {
   else if (identical(asserted, observed))
     comment <- "Passed"
   else if (asserted && !observed) {
-    i_min <- which.min(lower)
-    i_xu <- match(i_min, i_xun_to_xunu)
-    lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Lowest interval: '%s'", lab)
+    if (int_is_empty) {
+      comment <- "No intervals."
+    }
+    else {
+      i_min <- which.min(lower)
+      i_xu <- match(i_min, i_xun_to_xunu)
+      lab <- labels_unique[[i_xu]]
+      comment <- sprintf("Lowest interval: '%s'", lab)
+    }
   }
   else { ## !asserted && observed
     i_zero <- match(0, lower)
@@ -255,10 +260,15 @@ inner_check_include_open <- function(intervals, asserted) {
   else if (asserted == observed)
     comment <- "Passed"
   else if (asserted && !observed) {
-    i_max <- which.max(upper)
-    i_xu <- match(i_max, i_xun_to_xunu)
-    lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Highest interval: '%s'", lab)
+    if (int_is_empty) {
+      comment <- "No intervals."
+    }
+    else {
+      i_max <- which.max(upper)
+      i_xu <- match(i_max, i_xun_to_xunu)
+      lab <- labels_unique[[i_xu]]
+      comment <- sprintf("Highest interval: '%s'", lab)
+    }
   }
   else { ## !asserted && observed
     i_open <- match(TRUE, is.infinite(upper))
