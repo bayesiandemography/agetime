@@ -2,7 +2,7 @@
 % Please edit documentation in R/cohort_is_total.R
 \name{cohort_is_total}
 \alias{cohort_is_total}
-\title{Identify Cohort Labels that Refer to Totals}
+\title{Identify Cohort Labels for Totals}
 \usage{
 cohort_is_total(
   x,
@@ -30,7 +30,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A logical vector the same length as \code{x}.
+Logical vector the same length as \code{x}.
 }
 \description{
 Find cohort labels that \pkg{agetime} interprets as totals.
@@ -38,4 +38,9 @@ Find cohort labels that \pkg{agetime} interprets as totals.
 \examples{
 x <- c("2020-2025", "Total", "1999", "ALL")
 cohort_is_total(x)
+}
+\seealso{
+\code{\link[=cohort_is_open]{cohort_is_open()}} Find open cohorts
+\code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{cohort_is_total()}
+\code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{cohort_is_total()}
 }

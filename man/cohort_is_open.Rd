@@ -2,7 +2,7 @@
 % Please edit documentation in R/cohort_is_total.R
 \name{cohort_is_open}
 \alias{cohort_is_open}
-\title{Identify Labels that Refer to Open Cohorts}
+\title{Identify Cohort Labels for Open Cohorts}
 \usage{
 cohort_is_open(
   x,
@@ -30,13 +30,17 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A logical vector the same length as \code{x}.
+Logical vector the same length as \code{x}.
 }
 \description{
 Find cohort labels that \pkg{agetime} interprets as
-open, ie as having no lower limit.
+open, ie  having no lower limit.
 }
 \examples{
 x <- c("2020", "<1900", "2040-2050", "<2022")
 cohort_is_open(x)
+}
+\seealso{
+\code{\link[=cohort_is_total]{cohort_is_total()}} Find cohort labels for totals
+\code{\link[=age_is_open]{age_is_open()}} Age equivalent of \code{cohort_is_open()}
 }

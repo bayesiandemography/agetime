@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_is_total.R
 \name{age_is_total}
 \alias{age_is_total}
-\title{Identify Age Group Labels that Refer to Totals}
+\title{Identify Age Group Labels for Totals}
 \usage{
 age_is_total(x, x_fail = c("error", "warn", "silent"))
 }
@@ -14,7 +14,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A logical vector the same length as \code{x}.
+Logical vector the same length as \code{x}.
 }
 \description{
 Find age group labels that \pkg{agetime} interprets as totals.
@@ -22,4 +22,9 @@ Find age group labels that \pkg{agetime} interprets as totals.
 \examples{
 x <- c("20-24", "Total", "100+", "ALL")
 age_is_total(x)
+}
+\seealso{
+\code{\link[=age_is_open]{age_is_open()}} Find open age groups
+\code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{age_is_total()}
+\code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{age_is_total()}
 }

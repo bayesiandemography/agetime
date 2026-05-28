@@ -131,8 +131,7 @@ age_levels_fill_life <- function(x,
                          x_fail = x_fail)
   val <- label_non_life(intervals)
   if (!is.null(val))
-    cli::cli_abort(c("{.arg x} has a label that is not valid for a life table.",
-                     i = "Invalid label: {.val {val}}."))
+    cli::cli_abort("Label {.val {val}} is not valid for a life table.")
   m <- get_m(intervals)
   n <- nrow(m)
   can_have_gaps <- n >= 2L

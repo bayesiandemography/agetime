@@ -66,9 +66,8 @@ inner_levels_fill <- function(x,
         if (diff %% width != 0L) {
           label_curr <- labels[[i]]
           label_prev <- labels[[i - 1L]]
-          cli::cli_abort(paste("Gap between {.val {label_prev}} and",
-                               "{.val {label_curr}} not divisible",
-                               "by {.val {width}}."))
+          cli::cli_abort(c("Gap between {.val {label_prev}} and {.val {label_curr}} is not divisible by {.val {width}}.",
+                           i = "Choose a different {.arg width}?"))
         }
         breaks_gap <- seq.int(from = u_prev,
                               to = l_curr,

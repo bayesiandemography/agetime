@@ -56,7 +56,7 @@ x_label <- function(label, label_parsers, x_fail) {
     if (!is.null(val))
       return(val)
   }
-  msg <- "Don't know how to intepret label {.val {label}}."
+  msg <- "Don't know how to interpret label {.val {label}}."
   if (x_fail == "error")
     cli::cli_abort(msg)
   if (x_fail == "warn")

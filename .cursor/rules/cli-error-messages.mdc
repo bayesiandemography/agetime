@@ -1,0 +1,55 @@
+---
+description: cli::cli_abort error message style for agetime (tidyverse-style)
+globs: R/**/*.R
+alwaysApply: true
+---
+
+# Error messages (`cli::cli_abort`)
+
+When adding or editing user-facing errors in this package, follow this style.
+
+## Structure
+
+1. **First line:** state succinctly what went wrong (a fact), not the rule violated.
+2. **Context lines (`i`):** extra detail; end with `.`
+3. **Suggestion lines (`i`):** actionable fix; end with `?`
+
+Use `cli::cli_abort(c("...", i = "..."))` for multi-line messages.
+
+## Good vs bad
+
+```r
+# BAD — states the rule
+cli::cli_abort("{.arg x} must be a vector of labels.")
+
+# GOOD — states the problem
+cli::cli_abort("{.arg x} is a data frame.")
+```
+
+```r
+# BAD — suggestion ends with a period
+cli::cli_abort(c("{.arg x} has length 0.",
+                 i = "Supply {.arg width} explicitly."))
+
+# GOOD
+cli::cli_abort(c("{.arg x} has length 0.",
+                 i = "Supply {.arg width} explicitly?"))
+```
+
+```r
+# GOOD — context is factual, not a suggestion
+cli::cli_abort(c("{.arg n} has length {.val {length(n)}}.",
+                 i = "Supply a single value?"))
+```
+
+## Wording
+
+- Prefer `{.arg name}` and `{.val {value}}` for argument/value markup.
+- Single-line errors are fine when no extra context is needed.
+- Do **not** change `Internal error:` messages unless fixing a bug.
+
+## Examples in this codebase
+
+- `R/inner_extend.R` — length-0 + missing `width`
+- `R/util.R` — invalid `x` type in `to_character_or_factor()`
+- `R/check-functions.R` — argument validation helpers

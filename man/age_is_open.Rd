@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_is_total.R
 \name{age_is_open}
 \alias{age_is_open}
-\title{Identify Labels that Refer to Open Age Groups}
+\title{Identify Age Labels for Open Age Groups}
 \usage{
 age_is_open(x, x_fail = c("error", "warn", "silent"))
 }
@@ -14,13 +14,17 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A logical vector the same length as \code{x}.
+Logical vector the same length as \code{x}.
 }
 \description{
 Find age group labels that \pkg{agetime} interprets as
-open, ie as having no upper limit.
+open, ie having no upper limit.
 }
 \examples{
 x <- c("20+", "infant", "100+", "60to79")
 age_is_open(x)
+}
+\seealso{
+\code{\link[=age_is_total]{age_is_total()}} Find age labels for totals
+\code{\link[=cohort_is_open]{cohort_is_open()}} Cohort equivalent of \code{age_is_open()}
 }

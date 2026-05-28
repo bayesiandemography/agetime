@@ -30,8 +30,7 @@ inner_set_open <- function(x,
   i_splits_interval <- match(TRUE, is_splits_interval, nomatch = 0L)
   if (i_splits_interval > 0L) {
     lab_split <- labels_unique[[i_splits_interval]]
-    cli::cli_abort(paste("Setting {.arg open} to {.val {open}} splits",
-                         "existing interval {.val {lab_split}}."))
+    cli::cli_abort("Interval {.val {lab_split}} would be split.")
   }
   if (make_open_left) {
     is_le_open <- !is.na(u) & (u <= open)

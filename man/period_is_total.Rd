@@ -2,7 +2,7 @@
 % Please edit documentation in R/period_is_total.R
 \name{period_is_total}
 \alias{period_is_total}
-\title{Identify Period Labels that Refer to Totals}
+\title{Identify Period Labels for Totals}
 \usage{
 period_is_total(
   x,
@@ -28,7 +28,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A logical vector the same length as \code{x}.
+Logical vector the same length as \code{x}.
 }
 \description{
 Find period labels that \pkg{agetime} interprets as totals.
@@ -36,4 +36,8 @@ Find period labels that \pkg{agetime} interprets as totals.
 \examples{
 x <- c("2020-2025", "Total", "1999", "ALL")
 period_is_total(x)
+}
+\seealso{
+\code{\link[=age_is_total]{age_is_total()}} Age equivalent of \verb{[period_is_total()}
+\code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{period_is_total()}
 }

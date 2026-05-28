@@ -187,19 +187,14 @@ label_non_life <- function(intervals) {
 }
 
 to_character_or_factor <- function(x, nm_x, length_zero_ok) {
-  msg <- c("{.arg {nm_x}} must be a vector of labels.",
-           i = "{.arg {nm_x}} has class {.cls {class(x)}}.")
   if (is.data.frame(x)) {
-    msg[["i"]] <- "{.arg {nm_x}} is a data frame."
-    cli::cli_abort(msg)
+    cli::cli_abort("{.arg {nm_x}} is a data frame.")
   }
   if (is.list(x)) {
-    msg[["i"]] <- "{.arg {nm_x}} is a list."
-    cli::cli_abort(msg)
+    cli::cli_abort("{.arg {nm_x}} is a list.")
   }
   if (!is.null(dim(x))) {
-    msg[["i"]] <- "{.arg {nm_x}} is not a vector (it has dimensions)."
-    cli::cli_abort(msg)
+    cli::cli_abort("{.arg {nm_x}} is not a vector.")
   }
   if (identical(length(x), 0L) && !length_zero_ok)
     cli::cli_abort("{.arg {nm_x}} has length 0.")
@@ -207,7 +202,8 @@ to_character_or_factor <- function(x, nm_x, length_zero_ok) {
     return(x)
   x_char <- tryCatch(as.character(x), error = function(e) NULL)
   if (is.null(x_char)) {
-    cli::cli_abort(msg)
+    cli::cli_abort(c("{.arg {nm_x}} is not a vector of labels.",
+                     i = "{.arg {nm_x}} has class {.cls {class(x)}}."))
   }
   x_char
 }
