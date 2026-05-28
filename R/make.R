@@ -19,14 +19,15 @@ make_labels_intervals <- function(intervals,
   is_open_right <- get_is_open_right(intervals)
   is_total <- get_is_total(intervals)
   is_na <- get_is_na(intervals)
-  is_valid <- (is_one | is_range
-    | is_open_left | is_open_right
-    | is_total | is_na)
-  if (any(!is_valid))
-    cli::cli_abort("Internal error: Invalid interval.")
   m <- get_m(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
+  is_unparseable <- is.na(l) & is.na(u) & !is_na & !is_total
+  is_valid <- (is_one | is_range
+    | is_open_left | is_open_right
+    | is_total | is_na | is_unparseable)
+  if (any(!is_valid))
+    cli::cli_abort("Internal error: Invalid interval.")
   ans <- character(length = length(l))
   if (x_one == "lower")
     ans[is_one] <- as.character(l[is_one])
@@ -44,6 +45,7 @@ make_labels_intervals <- function(intervals,
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"
   ans[is_na] <- NA_character_
+  ans[is_unparseable] <- NA_character_
   ans
 }
                         
@@ -119,9 +121,7 @@ make_lower_first <- function(lower_first,
     if (any(is_lf_inside_int)) {
       labels_inside <- labels_unique[i_xun_to_xunu %in% which(is_lf_inside_int)]
       n_inside <- length(labels_inside)
-      cli::cli_abort(c(paste("Value supplied for {.arg lower_first} falls within",
-                             "existing {cli::qty(n_inside)} interval{?s}",
-                             "in {.arg x}."),
+      cli::cli_abort(c("{.arg lower_first} falls inside an existing interval.",
                        i = "{.arg lower_first}: {.val {lower_first}}.",
                        i = "Existing interval{?s}: {.val {labels_inside}}."))
     }
@@ -130,10 +130,9 @@ make_lower_first <- function(lower_first,
     if (any(is_excluded)) {
       labels_excl <- labels_unique[i_xun_to_xunu %in% which(is_excluded)]
       n_excl <- length(labels_excl)
-      cli::cli_abort(c(paste("Value supplied for {.arg lower_first} would exclude",
-                             "existing {cli::qty(n_excl)} interval{?s} in {.arg x}."),
+      cli::cli_abort(c("{.arg lower_first} would exclude existing interval{?s}.",
                        i = "{.arg lower_first}: {.val {lower_first}}.",
-                       i = "Would be excluded: {.val {labels_excl}}."))
+                       i = "Excluded interval{?s}: {.val {labels_excl}}."))
     }
     return(lower_first)
   }
@@ -167,9 +166,7 @@ make_lower_last <- function(lower_last,
     if (any(is_lf_inside_int)) {
       labels_inside <- labels_unique[i_xun_to_xunu %in% which(is_lf_inside_int)]
       n_inside <- length(labels_inside)
-      cli::cli_abort(c(paste("Value supplied for {.arg lower_last} falls within",
-                             "existing {cli::qty(n_inside)} interval{?s}",
-                             "in {.arg x}."),
+      cli::cli_abort(c("{.arg lower_last} falls inside an existing interval.",
                        i = "{.arg lower_last}: {.val {lower_last}}.",
                        i = "Existing interval{?s}: {.val {labels_inside}}."))
     }
@@ -178,10 +175,9 @@ make_lower_last <- function(lower_last,
     if (any(is_excluded)) {
       labels_excl <- labels_unique[i_xun_to_xunu %in% which(is_excluded)]
       n_excl <- length(labels_excl)
-      cli::cli_abort(c(paste("Value supplied for {.arg lower_last} would exclude",
-                             "existing {cli::qty(n_excl)} interval{?s} in {.arg x}."),
+      cli::cli_abort(c("{.arg lower_last} would exclude existing interval{?s}.",
                        i = "{.arg lower_last}: {.val {lower_last}}.",
-                       i = "Would be excluded: {.val {labels_excl}}."))
+                       i = "Excluded interval{?s}: {.val {labels_excl}}."))
     }
     return(lower_last)
   }

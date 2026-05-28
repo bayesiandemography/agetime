@@ -5,8 +5,7 @@
 #' Convert cohort labels to a 'standard' format.
 #'
 #' @inheritParams cohort_lower
-#'
-#' @return A modified version of `x`.
+#' @inherit age_standard return
 #'
 #' @examples
 #' x <- c("2025to2030", "1910--1914", " < 2022 ")
