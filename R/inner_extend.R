@@ -10,7 +10,13 @@ inner_extend <- function(x,
   is_factor <- is.factor(x)
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
-                              length_zero_ok = FALSE)
+                              length_zero_ok = TRUE)
+  if (identical(length(x), 0L) && is.null(width)) {
+    cli::cli_abort(c("{.arg x} has length 0.",
+                     i = "Supply {.arg width} explicitly?"))
+  }
+  if (identical(length(x), 0L))
+    cli::cli_abort("{.arg x} has length 0.")
   check_n(n = n,
           nm_n = "n",
           min = 1L,
@@ -33,15 +39,13 @@ inner_extend <- function(x,
                               x_fail = x_fail)
   is_open <- get_is_open(intervals_tail)
   if (is_open)
-    cli::cli_abort(c("Final interval is open.",
-                     i = "Final interval: {.val {tail}}."))
+    cli::cli_abort("Final interval {.val {tail}} is open.")
   is_na <- get_is_na(intervals_tail)
   if (is_na)
-    cli::cli_abort("Final interval is NA.")
+    cli::cli_abort("Final interval is {.val {NA}}.")
   is_total <- get_is_total(intervals_tail)
   if (is_total)
-    cli::cli_abort(c("Final interval is total.",
-                     i = "Final interval: {.val {tail}}."))
+    cli::cli_abort("Final interval {.val {tail}} is total.")
   if (!has_width)
     width <- get_width(intervals_tail)
   upper <- get_upper(intervals_tail)
