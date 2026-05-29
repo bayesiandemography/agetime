@@ -1,7 +1,7 @@
-# Identify Labels that Refer to Open Cohorts
+# Identify Cohort Labels for Open Cohorts
 
-Find cohort labels that agetime interprets as open, ie as having no
-lower limit.
+Find cohort labels that agetime interprets as open, ie having no lower
+limit.
 
 ## Usage
 
@@ -37,7 +37,14 @@ cohort_is_open(
 
 ## Value
 
-A logical vector the same length as `x`.
+Logical vector the same length as `x`.
+
+## See also
+
+[`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
+Find cohort labels for totals
+[`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
+Age equivalent of `cohort_is_open()`
 
 ## Examples
 

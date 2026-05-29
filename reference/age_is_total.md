@@ -1,4 +1,4 @@
-# Identify Age Group Labels that Refer to Totals
+# Identify Age Group Labels for Totals
 
 Find age group labels that agetime interprets as totals.
 
@@ -21,7 +21,16 @@ age_is_total(x, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-A logical vector the same length as `x`.
+Logical vector the same length as `x`.
+
+## See also
+
+[`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
+Find open age groups
+[`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
+Period equivalent of `age_is_total()`
+[`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
+Cohort equivalent of `age_is_total()`
 
 ## Examples
 

@@ -29,7 +29,8 @@ period_modify_ten Ten-year periods
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/agetime.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -106,7 +107,18 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A factor if <code>x</code> is a factor; otherwise a character vector.</p>
+    <p>A vector the same length as <code>x</code> with modified labels.</p>
+<p>If <code>x</code> is a character vector, returns a character vector.
+When <code>length(x) == 0</code>, returns <code>character(0)</code>.</p>
+<p>If <code>x</code> is a factor, returns a factor with the same length and
+<code>ordered</code> attribute as <code>x</code>. Element values are mapped to the new
+periods and <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> is the full label set defined by <code>breaks</code>.
+When <code>length(x) == 0</code>, <code>levels(x)</code> are still modified.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
+    <p>When <code>length(x) == 0</code> and <code>x</code> is a factor with no levels, <code>x</code> is
+returned unchanged (there is no range from which to infer new groups).</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

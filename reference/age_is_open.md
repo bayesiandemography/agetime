@@ -1,6 +1,6 @@
-# Identify Labels that Refer to Open Age Groups
+# Identify Age Labels for Open Age Groups
 
-Find age group labels that agetime interprets as open, ie as having no
+Find age group labels that agetime interprets as open, ie having no
 upper limit.
 
 ## Usage
@@ -22,7 +22,14 @@ age_is_open(x, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-A logical vector the same length as `x`.
+Logical vector the same length as `x`.
+
+## See also
+
+[`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
+Find age labels for totals
+[`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
+Cohort equivalent of `age_is_open()`
 
 ## Examples
 

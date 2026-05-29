@@ -31,7 +31,16 @@ age_modify(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-A factor if `x` is a factor; otherwise a character vector.
+A vector the same length as `x` with modified labels.
+
+If `x` is a character vector, returns a character vector. When
+`length(x) == 0`, returns `character(0)`.
+
+If `x` is a factor, returns a factor with the same length and `ordered`
+attribute as `x`. Element values are mapped to the new age groups and
+[`levels()`](https://rdrr.io/r/base/levels.html) is the full label set
+defined by `breaks` (and `open`, where relevant). When `length(x) == 0`,
+`levels(x)` are still modified.
 
 ## See also
 
@@ -58,4 +67,9 @@ age_modify(x, breaks = c(0, 10, 40, 90))
 #> [1] "0-9"   "40-89" "0-9"   "40-89"
 age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
 #> [1] "0-9"   "40-89" "0-9"   "40-89"
+
+## factor input: factor in, factor out
+age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))
+#> [1] 0-9 0-9
+#> Levels: 0-9 10-89 90+
 ```

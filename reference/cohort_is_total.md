@@ -1,4 +1,4 @@
-# Identify Cohort Labels that Refer to Totals
+# Identify Cohort Labels for Totals
 
 Find cohort labels that agetime interprets as totals.
 
@@ -36,7 +36,16 @@ cohort_is_total(
 
 ## Value
 
-A logical vector the same length as `x`.
+Logical vector the same length as `x`.
+
+## See also
+
+[`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
+Find open cohorts
+[`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
+Age equivalent of `cohort_is_total()`
+[`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
+Period equivalent of `cohort_is_total()`
 
 ## Examples
 

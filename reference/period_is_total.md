@@ -1,4 +1,4 @@
-# Identify Period Labels that Refer to Totals
+# Identify Period Labels for Totals
 
 Find period labels that agetime interprets as totals.
 
@@ -36,7 +36,14 @@ period_is_total(
 
 ## Value
 
-A logical vector the same length as `x`.
+Logical vector the same length as `x`.
+
+## See also
+
+[`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
+Age equivalent of `[period_is_total()`
+[`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
+Cohort equivalent of `period_is_total()`
 
 ## Examples
 

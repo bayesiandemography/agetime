@@ -19,7 +19,8 @@ contain the old ones."></head><body>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
-      <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+      <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/agetime.html">Get started</a></li>
+<li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -73,7 +74,14 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A factor if <code>x</code> is a factor; otherwise a character vector.</p>
+    <p>A vector the same length as <code>x</code> with modified labels.</p>
+<p>If <code>x</code> is a character vector, returns a character vector.
+When <code>length(x) == 0</code>, returns <code>character(0)</code>.</p>
+<p>If <code>x</code> is a factor, returns a factor with the same length and
+<code>ordered</code> attribute as <code>x</code>. Element values are mapped to the new age
+groups and <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> is the full label set defined by <code>breaks</code> (and
+<code>open</code>, where relevant).
+When <code>length(x) == 0</code>, <code>levels(x)</code> are still modified.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -93,6 +101,12 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0-9"   "40-89" "0-9"   "40-89"</span>
 <span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">90</span><span class="op">)</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0-9"   "40-89" "0-9"   "40-89"</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## factor input: factor in, factor out</span></span></span>
+<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0-9 0-9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 0-9 10-89 90+</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

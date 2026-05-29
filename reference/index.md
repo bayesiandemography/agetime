@@ -8,9 +8,9 @@
 - [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
   : Extend a Set of Age Groups
 - [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
-  : Identify Labels that Refer to Open Age Groups
+  : Identify Age Labels for Open Age Groups
 - [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
-  : Identify Age Group Labels that Refer to Totals
+  : Identify Age Group Labels for Totals
 - [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   [`age_labels_one()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
@@ -51,9 +51,9 @@
 - [`cohort_extend()`](https://bayesiandemography.github.io/agetime/reference/cohort_extend.md)
   : Extend a Set of Cohorts
 - [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
-  : Identify Labels that Refer to Open Cohorts
+  : Identify Cohort Labels for Open Cohorts
 - [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
-  : Identify Cohort Labels that Refer to Totals
+  : Identify Cohort Labels for Totals
 - [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   [`cohort_labels_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
@@ -88,7 +88,7 @@
 - [`period_extend()`](https://bayesiandemography.github.io/agetime/reference/period_extend.md)
   : Extend a Set of Periods
 - [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
-  : Identify Period Labels that Refer to Totals
+  : Identify Period Labels for Totals
 - [`period_labels()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   [`period_labels_one()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)

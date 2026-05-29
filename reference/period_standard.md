@@ -36,7 +36,18 @@ period_standard(
 
 ## Value
 
-A modified version of `x`.
+A vector the same length as `x` with standardized labels.
+
+If `x` is a character vector, returns a character vector. If `x` is a
+factor, returns a factor with the same length and `ordered` attribute as
+`x`. Element values and `levels(x)` are standardized; level order is
+unchanged except where two or more levels collapse to the same string
+after standardization (the first occurrence in `levels(x)` is kept).
+When `length(x) == 0`, standardized `levels(x)` are still applied.
+
+With `x_fail = "silent"`, labels that cannot be parsed are mapped to
+`NA` (including in [`levels()`](https://rdrr.io/r/base/levels.html) for
+factors).
 
 ## Examples
 
