@@ -1,0 +1,132 @@
+---
+title: "Quick start"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quick start}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Demographic tables often store age, period, or cohort as **character labels** such as `"0-14"`, `"2020-2025"`, or `"100+"`.
+The **agetime** package parses these labels into the numeric intervals they represent, so you can filter, recode, and validate them reliably.
+
+This vignette introduces the main ideas using **age** labels.
+Equivalent functions exist for **period** and **cohort** (`period_*()`, `cohort_*()`).
+
+## Read intervals from labels
+
+Given a vector of age group labels, extract lower limits, upper limits, and widths:
+
+```{r extract}
+library(agetime)
+
+x <- c("0-4", "5-9", "100+")
+age_lower(x)
+age_upper(x)
+age_width(x)
+```
+
+Open-ended groups (`"100+"`) and closed groups are handled consistently.
+Use the lower limit to **filter** data:
+
+```{r filter}
+library(dplyr, warn.conflicts = FALSE)
+
+df <- tibble(
+  age   = c("0-14", "15-64", "65+"),
+  count = c(100, 200, 50)
+)
+
+df |>
+  filter(age_lower(age) >= 15)
+```
+
+## Standardize messy labels
+
+Real data often uses inconsistent formatting.
+`age_standard()` converts labels to a standard form:
+
+```{r standard}
+x <- c("5to9", "10--14", "100plus")
+age_standard(x)
+```
+
+If `x` is a factor, `age_standard()` returns a factor and updates `levels()` as well as values.
+
+## Create a regular series of labels
+
+To generate labels from scratch, use `age_labels_*()` functions.
+For example, five-year age groups from 0 to 20:
+
+```{r labels}
+age_labels_five(lower_first = 0, lower_last = 20)
+```
+
+See `?age_labels` for one-year, ten-year, and life-table variants.
+
+## Modify to new groupings
+
+To **widen** or **realign** age groups while ensuring every old group fits inside a new one, use `age_modify()` or the convenience functions `age_modify_five()`, `age_modify_ten()`, and `age_modify_life()`:
+
+```{r modify}
+x <- c("0-4", "5-9", "10-14", "50-54")
+age_modify(x, breaks = c(0, 15, 55))
+age_modify_five(x)
+```
+
+Related helpers work on factor **levels** rather than recoding values: `age_levels_fill()` adds missing age groups to the levels (see `?age_levels_fill` for one-year, five-year, ten-year, and life-table variants), and `age_levels_sort()` sorts levels by their lower limits.
+
+## Check and assert
+
+Before analysis, check whether a set of labels has gaps, overlaps, or other properties:
+
+```{r check}
+lab <- age_labels_five(lower_first = 0, lower_last = 85, open = TRUE)
+age_check(lab,
+          no_overlap = TRUE,
+          no_gap = TRUE,
+          include_zero = TRUE,
+          include_open = TRUE)
+```
+
+Use `age_assert()` when you want a failed check to throw an error.
+For individual labels, `age_is_open()` and `age_is_total()` return logical vectors indicating open-ended groups and totals.
+
+## Map between label sets
+
+When comparing or aggregating tables that use different age groupings, `age_mapping()` builds a mapping between two sets of labels.
+By default it finds pairs with **equal** intervals; the `relation` argument can instead match groups where one **contains** the other, is **contained** in the other, or **overlaps** (see `?age_mapping` for definitions).
+If `y` is omitted, `x` is mapped onto itself.
+
+```{r mapping}
+x <- c("0-4", "5-9", "10-14")
+y <- c("0-9", "10-19")
+age_mapping(x, y)
+age_mapping(x, y, relation = "contained")
+```
+
+## Period and cohort
+
+The same workflow applies to periods and cohorts.
+Function names follow the pattern `period_*()` and `cohort_*()`:
+
+| Task              | Age              | Period              | Cohort              |
+|-------------------|------------------|---------------------|---------------------|
+| Lower limit       | `age_lower()`    | `period_lower()`    | `cohort_lower()`    |
+| Standardize       | `age_standard()` | `period_standard()` | `cohort_standard()` |
+| Five-year labels  | `age_labels_five()` | `period_labels_five()` | `cohort_labels_five()` |
+| Modify            | `age_modify()`   | `period_modify()`   | `cohort_modify()`   |
+
+Period and cohort functions accept `x_one` and `x_multi` arguments to control how one-year and multi-year labels are interpreted; see `?period_lower` and `?cohort_lower`.
+
+## Learn more
+
+- `?agetime` for a full list of functions grouped by task
+- Package website: <https://bayesiandemography.github.io/agetime/>
