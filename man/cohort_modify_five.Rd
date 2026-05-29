@@ -43,7 +43,16 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor if \code{x} is a factor; otherwise a character vector.
+A vector the same length as \code{x} with modified labels.
+
+If \code{x} is a character vector, returns a character vector.
+When \code{length(x) == 0}, returns \code{character(0)}.
+
+If \code{x} is a factor, returns a factor with the same length and
+\code{ordered} attribute as \code{x}. Element values are mapped to the new
+cohorts and \code{levels()} is the full label set defined by \code{breaks}
+(and \code{open}, where relevant).
+When \code{length(x) == 0}, \code{levels(x)} are still modified.
 }
 \description{
 Modify the cohorts used by \code{x}.
@@ -54,6 +63,10 @@ pattern:
 \item \code{cohort_modify_five} Five-year cohorts
 \item \code{cohort_modify_ten} Ten-year cohorts
 }
+}
+\details{
+When \code{length(x) == 0} and \code{x} is a factor with no levels, \code{x} is
+returned unchanged (there is no range from which to infer new groups).
 }
 \examples{
 x <- c("2002-2004", "1987-1989", "2000", "Total")

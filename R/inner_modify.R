@@ -6,11 +6,12 @@ inner_modify <- function(x,
                           x_one,
                           x_multi,
                           x_fail) {
+  is_factor <- is.factor(x)
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
-  if (identical(length(x), 0L))
-    return(val_length_zero(x))
+  if (identical(length(x), 0L) && !is_factor)
+    return(character(0))
   intervals <- intervals(labels = x,
                          label_type = label_type,
                          x_one = x_one,
@@ -33,13 +34,14 @@ inner_modify <- function(x,
                                 include_na = int_has_na,
                                 intervals = intervals)
   check_m_contains(m_contains = m_contains,
-                   label_type = "age")
+                   label_type = label_type)
   i_new <- apply(m_contains, 2L, which)
   i_x_to_xu <- get_i_x_to_xu(intervals)
   ans <- levels_breaks[i_new][i_x_to_xu]
-  if (is.factor(x))
+  if (is_factor)
     ans <- factor(x = ans,
                   levels = levels_breaks,
+                  ordered = is.ordered(x),
                   exclude = NULL)
   ans
 }
@@ -52,11 +54,14 @@ inner_modify_width <- function(x,
                                 x_one,
                                 x_multi,
                                 x_fail) {
+  is_factor <- is.factor(x)
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
-  if (identical(length(x), 0L))
-    return(val_length_zero(x))
+  if (identical(length(x), 0L) && !is_factor)
+    return(character(0))
+  if (identical(length(x), 0L) && is_factor && nlevels(x) == 0L)
+    return(factor(levels = character(), ordered = is.ordered(x)))
   check_n(n = offset,
           nm_n = "offset",
           min = 0L,

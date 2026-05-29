@@ -8,18 +8,26 @@
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
 #'
-#' @returns
-#' A factor if `x` is a factor; otherwise a character vector.
+#' @return
+#' A vector the same length as `x` with modified labels.
+#'
+#' If `x` is a character vector, returns a character vector.
+#' When `length(x) == 0`, returns `character(0)`.
+#'
+#' If `x` is a factor, returns a factor with the same length and
+#' `ordered` attribute as `x`. Element values are mapped to the new
+#' periods and `levels()` is the full label set defined by `breaks`.
+#' When `length(x) == 0`, `levels(x)` are still modified.
+#'
+#' @examples
+#' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
+#' period_modify(x, breaks = c(1970, 2000, 2005, 2015))
 #'
 #' @seealso
 #' - [period_modify_five()] Convert to 5-year periods
 #' - [period_modify_ten()] Convert to 10-year periods
 #' - [age_modify()] Age group equivalent of `period_modify()`
 #' - [cohort_modify()] Cohort equivalent of `period_modify()`
-#' 
-#' @examples
-#' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-#' period_modify(x, breaks = c(1970, 2000, 2005, 2015))
 #' @export
 period_modify <- function(x,
                            breaks,
@@ -55,9 +63,10 @@ period_modify <- function(x,
 #' @inheritParams period_lower
 #' @param offset Parameter controlling
 #' alignment of periods. Default is `0`.
-#'
-#' @returns
-#' A factor if `x` is a factor; otherwise a character vector.
+#' @inherit period_modify return
+#' @details
+#' When `length(x) == 0` and `x` is a factor with no levels, `x` is
+#' returned unchanged (there is no range from which to infer new groups).
 #'
 #' @seealso
 #' [period_modify()] Convert to general periods

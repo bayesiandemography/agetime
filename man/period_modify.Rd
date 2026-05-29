@@ -32,7 +32,15 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor if \code{x} is a factor; otherwise a character vector.
+A vector the same length as \code{x} with modified labels.
+
+If \code{x} is a character vector, returns a character vector.
+When \code{length(x) == 0}, returns \code{character(0)}.
+
+If \code{x} is a factor, returns a factor with the same length and
+\code{ordered} attribute as \code{x}. Element values are mapped to the new
+periods and \code{levels()} is the full label set defined by \code{breaks}.
+When \code{length(x) == 0}, \code{levels(x)} are still modified.
 }
 \description{
 Modify the periods used by \code{x}. The
@@ -42,6 +50,7 @@ contain the old ones.
 \examples{
 x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 period_modify(x, breaks = c(1970, 2000, 2005, 2015))
+
 }
 \seealso{
 \itemize{

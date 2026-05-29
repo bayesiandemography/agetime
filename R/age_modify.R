@@ -11,8 +11,25 @@
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
 #'
-#' @returns
-#' A factor if `x` is a factor; otherwise a character vector.
+#' @return
+#' A vector the same length as `x` with modified labels.
+#'
+#' If `x` is a character vector, returns a character vector.
+#' When `length(x) == 0`, returns `character(0)`.
+#'
+#' If `x` is a factor, returns a factor with the same length and
+#' `ordered` attribute as `x`. Element values are mapped to the new age
+#' groups and `levels()` is the full label set defined by `breaks` (and
+#' `open`, where relevant).
+#' When `length(x) == 0`, `levels(x)` are still modified.
+#'
+#' @examples
+#' x <- c("1-4", "87-89", "0", "50-54")
+#' age_modify(x, breaks = c(0, 10, 40, 90))
+#' age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
+#'
+#' ## factor input: factor in, factor out
+#' age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))
 #'
 #' @seealso
 #' - [age_modify_five()] Convert to 5-year age groups
@@ -20,11 +37,6 @@
 #' - [age_modify_life()] Convert to life table age groups
 #' - [period_modify()] Period equivalent of `age_modify()`
 #' - [cohort_modify()] Cohort equivalent of `age_modify()`
-#' 
-#' @examples
-#' x <- c("1-4", "87-89", "0", "50-54")
-#' age_modify(x, breaks = c(0, 10, 40, 90))
-#' age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
 #' @export
 age_modify <- function(x,
                         breaks,
@@ -57,9 +69,10 @@ age_modify <- function(x,
 #' - `age_modify_life` Age groups used in 'abridged' life tables
 #'
 #' @inheritParams age_lower
-#'
-#' @returns
-#' A factor if `x` is a factor; otherwise a character vector.
+#' @inherit age_modify return
+#' @details
+#' When `length(x) == 0` and `x` is a factor with no levels, `x` is
+#' returned unchanged (there is no range from which to infer new groups).
 #'
 #' @seealso
 #' [age_modify()] Convert to general age groups
@@ -105,12 +118,15 @@ age_modify_ten <- function(x,
 #' @export
 age_modify_life <- function(x,
                              x_fail = c("error", "warn", "silent")) {
+  is_factor <- is.factor(x)
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
   x_fail <- match.arg(x_fail)
-  if (identical(length(x), 0L))
-    return(val_length_zero(x))
+  if (identical(length(x), 0L) && !is_factor)
+    return(character(0))
+  if (identical(length(x), 0L) && is_factor && nlevels(x) == 0L)
+    return(factor(levels = character(), ordered = is.ordered(x)))
   intervals <- intervals(labels = x,
                          label_type = "age",
                          x_one = "lower",

@@ -39,8 +39,16 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-If \code{x} is a factor, then the return value is
-a factor; otherwise it is a character vector.
+A vector the same length as \code{x} with modified labels.
+
+If \code{x} is a character vector, returns a character vector.
+When \code{length(x) == 0}, returns \code{character(0)}.
+
+If \code{x} is a factor, returns a factor with the same length and
+\code{ordered} attribute as \code{x}. Element values are mapped to the new
+cohorts and \code{levels()} is the full label set defined by \code{breaks}
+(and \code{open}, where relevant).
+When \code{length(x) == 0}, \code{levels(x)} are still modified.
 }
 \description{
 Modify the cohorts used by \code{x}. The
@@ -51,6 +59,7 @@ contain the old ones.
 x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 cohort_modify(x, breaks = c(1970, 2000, 2005, 2015))
 cohort_modify(x, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
+
 }
 \seealso{
 \itemize{

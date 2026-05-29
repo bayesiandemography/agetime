@@ -21,7 +21,16 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor if \code{x} is a factor; otherwise a character vector.
+A vector the same length as \code{x} with modified labels.
+
+If \code{x} is a character vector, returns a character vector.
+When \code{length(x) == 0}, returns \code{character(0)}.
+
+If \code{x} is a factor, returns a factor with the same length and
+\code{ordered} attribute as \code{x}. Element values are mapped to the new age
+groups and \code{levels()} is the full label set defined by \code{breaks} (and
+\code{open}, where relevant).
+When \code{length(x) == 0}, \code{levels(x)} are still modified.
 }
 \description{
 Modify the age groups used by \code{x}. The
@@ -32,6 +41,10 @@ contain the old ones.
 x <- c("1-4", "87-89", "0", "50-54")
 age_modify(x, breaks = c(0, 10, 40, 90))
 age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
+
+## factor input: factor in, factor out
+age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))
+
 }
 \seealso{
 \itemize{
