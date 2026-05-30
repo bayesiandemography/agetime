@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 Datasets often use character labels such as `"0-14"`, `"2020-2025"`, or `"1980-1990"` for age groups, periods, and cohorts.
 **agetime** infers the numeric intervals underlying the labels, and provides tools for filtering, recoding, and validating these intervals.
 
-This vignette focuses on age group labels. **agetime** functions for period and cohorts work like the functions for ages.
+This vignette focuses on age group labels. **agetime** functions for periods and cohorts work like the functions for ages.
 
 ## Read intervals from labels
 
