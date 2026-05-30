@@ -1,3 +1,64 @@
+inner_levels_fill_prep <- function(x,
+                                     breaks,
+                                     nm_x) {
+  is_factor <- is.factor(x)
+  is_ordered <- is_factor && is.ordered(x)
+  x <- to_character_or_factor(x = x,
+                              nm_x = nm_x,
+                              length_zero_ok = TRUE)
+  if (is.factor(x))
+    levels <- levels(x)
+  else
+    levels <- unique(x)
+  list(x = x,
+       is_factor = is_factor,
+       is_ordered = is_ordered,
+       levels = levels)
+}
+
+inner_levels_fill_empty <- function(levels,
+                                    breaks,
+                                    is_ordered,
+                                    x_one,
+                                    x_multi) {
+  if (length(levels) > 0L)
+    return(NULL)
+  if (length(breaks) > 0L) {
+    check_incr_nonneg_integers(x = breaks,
+                               nm_x = "breaks",
+                               min_length = 1L)
+    labels_new <- inner_labels(breaks = breaks,
+                               x_one = x_one,
+                               x_multi = x_multi,
+                               is_open_left = FALSE,
+                               is_open_right = FALSE,
+                               include_total = FALSE,
+                               include_na = FALSE)
+    return(factor(x = character(0),
+                  levels = labels_new,
+                  ordered = is_ordered,
+                  exclude = NULL))
+  }
+  if (is_ordered)
+    return(factor(levels = character(), ordered = TRUE))
+  factor()
+}
+
+inner_levels_fill_factor <- function(x,
+                                     levels,
+                                     is_ordered) {
+  if (is.factor(x)) {
+    levels(x) <- levels
+    if (is_ordered && !is.ordered(x))
+      x <- ordered(x, levels = levels(x))
+    return(x)
+  }
+  factor(x = x,
+         levels = levels,
+         ordered = is_ordered,
+         exclude = NULL)
+}
+
 ## Can omit 'breaks' and 'width', but cannot give values for both
 inner_levels_fill <- function(x,
                               breaks,
@@ -6,15 +67,18 @@ inner_levels_fill <- function(x,
                               x_one,
                               x_multi,
                               x_fail) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = FALSE)
-  if (is.factor(x))
-    levels <- levels(x)
-  else
-    levels <- unique(x)
-  if (identical(length(levels), 0L))
-    return(factor())
+  prep <- inner_levels_fill_prep(x = x,
+                                 breaks = breaks,
+                                 nm_x = "x")
+  empty <- inner_levels_fill_empty(levels = prep$levels,
+                                   breaks = breaks,
+                                   is_ordered = prep$is_ordered,
+                                   x_one = x_one,
+                                   x_multi = x_multi)
+  if (!is.null(empty))
+    return(empty)
+  x <- prep$x
+  levels <- prep$levels
   intervals <- intervals(labels = levels,
                          label_type = label_type,
                          x_one = x_one,
@@ -93,19 +157,77 @@ inner_levels_fill <- function(x,
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
   levels <- unique(levels)
-  if (is.factor(x))
-    levels(x) <- levels
-  else
-    x <- factor(x, levels = levels, exclude = NULL)
-  x
+  inner_levels_fill_factor(x = x,
+                           levels = levels,
+                           is_ordered = prep$is_ordered)
 }
-    
-    
-  
-   
-## inner_complete(c("0-4", "10-14", "20-24"),
-##                width = 5,
-##                label_type = "age",
-##                x_one = "lower",
-##                x_multi = "exclude",
-##                x_fail = "error")
+
+inner_levels_fill_life <- function(x,
+                                   x_fail) {
+  prep <- inner_levels_fill_prep(x = x,
+                                 breaks = NULL,
+                                 nm_x = "x")
+  empty <- inner_levels_fill_empty(levels = prep$levels,
+                                   breaks = NULL,
+                                   is_ordered = prep$is_ordered,
+                                   x_one = "lower",
+                                   x_multi = "exclude")
+  if (!is.null(empty))
+    return(empty)
+  x <- prep$x
+  levels <- prep$levels
+  intervals <- intervals(labels = levels,
+                         label_type = "age",
+                         x_one = "lower",
+                         x_multi = "exclude",
+                         x_fail = x_fail)
+  val <- label_non_life(intervals)
+  if (!is.null(val))
+    cli::cli_abort("Label {.val {val}} is not valid for a life table.")
+  m <- get_m(intervals)
+  n <- nrow(m)
+  can_have_gaps <- n >= 2L
+  if (!can_have_gaps) {
+    if (!is.factor(x))
+      x <- factor(x)
+    return(x)
+  }
+  labels <- get_labels_unique_norm_unique(intervals)
+  ord <- order(m[, 1L], m[, 2L])
+  m <- m[ord, , drop = FALSE]
+  lower <- m[, 1L]
+  uppermax <- cummax(m[, 2L])
+  labels <- labels[ord]
+  levels_extra <- vector(mode = "list", length = n)
+  for (i in seq.int(from = 2L, to = n)) {
+    l_curr <- lower[[i]]
+    u_prev <- uppermax[[i - 1L]]
+    diff <- l_curr - u_prev
+    is_gap <- is.finite(diff) && (diff > 0L)
+    if (is_gap) {
+      if ((u_prev == 1L) && (l_curr == 5L))
+        breaks_gap <- c(u_prev, l_curr)
+      else
+        breaks_gap <- c(u_prev, seq(from = 5L, to = l_curr, by = 5L))
+      labels_gap <-  inner_labels(breaks = breaks_gap,
+                                  x_one = "lower",
+                                  x_multi = "exclude",
+                                  is_open_left = FALSE,
+                                  is_open_right = FALSE,
+                                  include_total = FALSE,
+                                  include_na = FALSE)
+      levels_extra[[i - 1L]] <- labels_gap
+    }
+  }
+  unord <- match(seq_len(n), ord)
+  levels_extra <- levels_extra[unord]
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  levels_extra <- levels_extra[i_xun_to_xunu]
+  levels_old <- as.list(levels)
+  levels <- rbind(levels_old, levels_extra)
+  levels <- unlist(levels)
+  levels <- unique(levels)
+  inner_levels_fill_factor(x = x,
+                           levels = levels,
+                           is_ordered = prep$is_ordered)
+}

@@ -23,9 +23,15 @@
 #' (Boundaries supplied by existing
 #' age groups can be omitted.)
 #'
-#' @returns
+#' @return
 #' A factor, the same length as `x`.
-#' 
+#'
+#' When `length(x) == 0` and there are no levels to fill, returns an empty
+#' factor. If `breaks` is supplied to `age_levels_fill()`, levels are built
+#' from `breaks`. When `length(x) == 0` but `x` is a factor with levels,
+#' `levels()` are still filled in. The `ordered` attribute is preserved when
+#' `x` is an ordered factor.
+#'
 #' @examples
 #' x <- factor(c("0-4", "20-24"))
 #' x
@@ -114,72 +120,9 @@ age_levels_fill_ten <- function(x,
 #' @export
 age_levels_fill_life <- function(x,
                                  x_fail = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = FALSE)
   x_fail <- match.arg(x_fail)
-  if (is.factor(x))
-    levels <- levels(x)
-  else
-    levels <- unique(x)
-  if (identical(length(levels), 0L))
-    return(factor())
-  intervals <- intervals(labels = levels,
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
+  inner_levels_fill_life(x = x,
                          x_fail = x_fail)
-  val <- label_non_life(intervals)
-  if (!is.null(val))
-    cli::cli_abort("Label {.val {val}} is not valid for a life table.")
-  m <- get_m(intervals)
-  n <- nrow(m)
-  can_have_gaps <- n >= 2L
-  if (!can_have_gaps) {
-    if (!is.factor(x))
-      x <- factor(x)
-    return(x)
-  }
-  labels <- get_labels_unique_norm_unique(intervals)
-  ord <- order(m[, 1L], m[, 2L])
-  m <- m[ord, , drop = FALSE]
-  lower <- m[, 1L]
-  uppermax <- cummax(m[, 2L])
-  labels <- labels[ord]
-  levels_extra <- vector(mode = "list", length = n)
-  for (i in seq.int(from = 2L, to = n)) {
-    l_curr <- lower[[i]]
-    u_prev <- uppermax[[i - 1L]]
-    diff <- l_curr - u_prev
-    is_gap <- is.finite(diff) && (diff > 0L)
-    if (is_gap) {
-      if ((u_prev == 1L) && (l_curr == 5L))
-        breaks_gap <- c(u_prev, l_curr)
-      else
-        breaks_gap <- c(u_prev, seq(from = 5L, to = l_curr, by = 5L))
-      labels_gap <-  inner_labels(breaks = breaks_gap,
-                                  x_one = "lower",
-                                  x_multi = "exclude",
-                                  is_open_left = FALSE,
-                                  is_open_right = FALSE,
-                                  include_total = FALSE,
-                                  include_na = FALSE)
-      levels_extra[[i - 1L]] <- labels_gap
-    }
-  }
-  unord <- match(seq_len(n), ord)
-  levels_extra <- levels_extra[unord]
-  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  levels_extra <- levels_extra[i_xun_to_xunu]
-  levels_old <- as.list(levels)
-  levels <- rbind(levels_old, levels_extra)
-  levels <- unlist(levels)
-  levels <- unique(levels)
-  if (is.factor(x))
-    levels(x) <- levels
-  else
-    x <- factor(x, levels = levels, exclude = NULL)
-  x
 }
   
    
