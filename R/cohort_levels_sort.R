@@ -17,9 +17,14 @@
 #' increasing or decreasing. Default
 #' is `FALSE`.
 #'
-#' @returns
+#' @return
 #' A factor, the same length as `x`.
-#' 
+#'
+#' When `length(x) == 0` and there are no levels to sort, returns an empty
+#' factor. When `length(x) == 0` but `x` is a factor with levels, `levels()`
+#' are still sorted. The `ordered` attribute is preserved when `x` is an
+#' ordered factor.
+#'
 #' @examples
 #' x <- c("2020-2025", "<1990", "Total", NA, "2025-2050")
 #' cohort_levels_sort(x)

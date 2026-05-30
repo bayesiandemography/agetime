@@ -5,9 +5,17 @@ inner_levels_sort <- function(x,
                               x_one,
                               x_multi,
                               x_fail) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = FALSE)
+  prep <- inner_levels_fill_prep(x = x,
+                                 breaks = NULL,
+                                 nm_x = "x")
+  empty <- inner_levels_fill_empty(levels = prep$levels,
+                                   breaks = NULL,
+                                   is_ordered = prep$is_ordered,
+                                   x_one = x_one,
+                                   x_multi = x_multi)
+  if (!is.null(empty))
+    return(empty)
+  x <- prep$x
   check_flag(x = decreasing, nm_x = "decreasing")
   intervals <- intervals(labels = x,
                          label_type = label_type,
@@ -29,7 +37,7 @@ inner_levels_sort <- function(x,
                       i_xun,
                       decreasing = decreasing)
   levels_new <- labels_unique[ord_unique]
-  factor(x, levels = levels_new, exclude = NULL)
-}    
-  
-   
+  inner_levels_fill_factor(x = x,
+                           levels = levels_new,
+                           is_ordered = prep$is_ordered)
+}

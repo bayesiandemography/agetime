@@ -34,6 +34,11 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A factor, the same length as \code{x}.
+
+When \code{length(x) == 0} and there are no levels to sort, returns an empty
+factor. When \code{length(x) == 0} but \code{x} is a factor with levels, \code{levels()}
+are still sorted. The \code{ordered} attribute is preserved when \code{x} is an
+ordered factor.
 }
 \description{
 Sort the levels of \code{x}.
