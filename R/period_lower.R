@@ -58,6 +58,8 @@
 #' @return
 #' Numeric vector the same length as `x`.
 #'
+#' When `length(x) == 0`, returns `numeric(0)`.
+#'
 #' @examples
 #' x <- c("2025-2030", "2020-2025", "2030-2035")
 #' period_lower(x)

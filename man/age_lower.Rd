@@ -25,6 +25,8 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 Numeric vector with same length as \code{x}.
+
+When \code{length(x) == 0}, returns \code{numeric(0)}.
 }
 \description{
 Calculate lower limits, upper limits,

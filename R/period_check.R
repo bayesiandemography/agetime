@@ -13,12 +13,15 @@
 #' @param no_total No "Total" label
 #' @param no_na No NA label
 #'
-#' @returns
+#' @return
 #' - `period_check()` returns a list with
 #'   components `ok` (a logical flag)
 #'   and `details` (a data frame).
 #' - `period_assert()` returns `x` invisibly,
 #'   or throws an error.
+#'
+#' When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
+#' vacuously satisfied (`observed = TRUE`).
 #'
 #' @examples
 #' lab <- period_labels_five(lower_first = 2020,

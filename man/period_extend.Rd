@@ -41,6 +41,9 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A factor if \code{x} is a factor; otherwise a character vector.
+
+When \code{length(x) == 0}, throws an error (there is no interval to extend from).
+If \code{width} is \code{NULL}, the error suggests supplying \code{width} explicitly.
 }
 \description{
 Add new periods at the end of \code{x}.

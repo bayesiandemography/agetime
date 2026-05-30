@@ -36,7 +36,8 @@ If \code{x} is a factor, returns a factor with the same length and
 standardized; level order is unchanged except where two or more
 levels collapse to the same string after standardization (the first
 occurrence in \code{levels(x)} is kept).
-When \code{length(x) == 0}, standardized \code{levels(x)} are still applied.
+When \code{length(x) == 0}, returns \code{character(0)} for character input; for
+factors, standardized \code{levels(x)} are still applied.
 
 With \code{x_fail = "silent"}, labels that cannot be parsed are mapped to
 \code{NA} (including in \code{levels()} for factors).

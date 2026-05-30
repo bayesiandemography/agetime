@@ -5,8 +5,10 @@
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @returns
+#' @return
 #' Logical vector the same length as `x`.
+#'
+#' When `length(x) == 0`, returns `logical(0)`.
 #'
 #' @seealso
 #' [cohort_is_open()] Find open cohorts
@@ -37,8 +39,10 @@ cohort_is_total <- function(x,
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @returns
+#' @return
 #' Logical vector the same length as `x`.
+#'
+#' When `length(x) == 0`, returns `logical(0)`.
 #'
 #' @seealso
 #' [cohort_is_total()] Find cohort labels for totals

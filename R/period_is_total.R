@@ -5,8 +5,10 @@
 #' 
 #' @inheritParams period_lower
 #'
-#' @returns
+#' @return
 #' Logical vector the same length as `x`.
+#'
+#' When `length(x) == 0`, returns `logical(0)`.
 #'
 #' @seealso
 #' [age_is_total()] Age equivalent of `[period_is_total()`

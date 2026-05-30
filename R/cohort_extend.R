@@ -16,8 +16,11 @@
 #' @param include_x Should the return value
 #' include `x`? Default is `TRUE`.
 #'
-#' @returns
+#' @return
 #' A factor if `x` is a factor; otherwise a character vector.
+#'
+#' When `length(x) == 0`, throws an error (there is no interval to extend from).
+#' If `width` is `NULL`, the error suggests supplying `width` explicitly.
 #'
 #' @seealso
 #' - [age_extend()] Age equivalent of `cohort_extend()`

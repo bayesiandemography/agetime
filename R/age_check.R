@@ -19,12 +19,16 @@
 #' @param valid_life All labels valid for
 #' (abridged) life table.
 #'
-#' @returns
+#' @return
 #' - `age_check()` returns a list with
 #'   components `ok` (a logical flag)
 #'   and `details` (a data frame).
 #' - `age_assert()` returns `x` invisibly,
 #'   or throws an error.
+#'
+#' When `length(x) == 0`, checks on overlap, gaps, totals, NA, and life-table
+#' validity are vacuously satisfied (`observed = TRUE`). Checks that require at
+#' least one interval (`include_*`) fail (`observed = FALSE`).
 #'
 #' @examples
 #' lab <- age_labels_life()

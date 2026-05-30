@@ -68,6 +68,10 @@ and \code{details} (a data frame).
 \item \code{cohort_assert()} returns \code{x} invisibly,
 or throws an error.
 }
+
+When \code{length(x) == 0}, checks on overlap, gaps, totals, and NA are
+vacuously satisfied (\code{observed = TRUE}). Checks that require at least one
+interval (\code{include_open}) fail (\code{observed = FALSE}).
 }
 \description{
 Collect information on cohort labels (\code{cohort_check()}),

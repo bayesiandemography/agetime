@@ -63,6 +63,10 @@ and \code{details} (a data frame).
 \item \code{age_assert()} returns \code{x} invisibly,
 or throws an error.
 }
+
+When \code{length(x) == 0}, checks on overlap, gaps, totals, NA, and life-table
+validity are vacuously satisfied (\code{observed = TRUE}). Checks that require at
+least one interval (\verb{include_*}) fail (\code{observed = FALSE}).
 }
 \description{
 Collect information on age group labels (\code{age_check()}),

@@ -24,6 +24,8 @@
 #' @return
 #' Numeric vector with same length as `x`.
 #'
+#' When `length(x) == 0`, returns `numeric(0)`.
+#'
 #' @examples
 #' x <- c("5-9", "10-14", "100+")
 #' age_lower(x)

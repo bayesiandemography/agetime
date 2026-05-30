@@ -61,6 +61,9 @@ and \code{details} (a data frame).
 \item \code{period_assert()} returns \code{x} invisibly,
 or throws an error.
 }
+
+When \code{length(x) == 0}, checks on overlap, gaps, totals, and NA are
+vacuously satisfied (\code{observed = TRUE}).
 }
 \description{
 Collect information on period labels (\code{period_check()}),

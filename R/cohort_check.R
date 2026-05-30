@@ -15,12 +15,16 @@
 #' @param include_open One or more cohorts
 #' has no lower limit. 
 #'
-#' @returns
+#' @return
 #' - `cohort_check()` returns a list with
 #'   components `ok` (a logical flag)
 #'   and `details` (a data frame).
 #' - `cohort_assert()` returns `x` invisibly,
 #'   or throws an error.
+#'
+#' When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
+#' vacuously satisfied (`observed = TRUE`). Checks that require at least one
+#' interval (`include_open`) fail (`observed = FALSE`).
 #'
 #' @examples
 #' lab <- cohort_labels_five(lower_first = 2020,
