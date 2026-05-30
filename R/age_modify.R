@@ -11,17 +11,7 @@
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
 #'
-#' @return
-#' A vector the same length as `x` with modified labels.
-#'
-#' If `x` is a character vector, returns a character vector.
-#' When `length(x) == 0`, returns `character(0)`.
-#'
-#' If `x` is a factor, returns a factor with the same length and
-#' `ordered` attribute as `x`. Element values are mapped to the new age
-#' groups and `levels()` is the full label set defined by `breaks` (and
-#' `open`, where relevant).
-#' When `length(x) == 0`, `levels(x)` are still modified.
+#' @return A vector the same length as `x` with modified labels.
 #'
 #' @examples
 #' x <- c("1-4", "87-89", "0", "50-54")
@@ -38,6 +28,10 @@
 #' - [period_modify()] Period equivalent of `age_modify()`
 #' - [cohort_modify()] Cohort equivalent of `age_modify()`
 #' @export
+
+# Character input returns character; factor input returns factor with the same
+# length and ordered attribute. When length(x) == 0, returns character(0) or
+# still modifies factor levels().
 age_modify <- function(x,
                         breaks,
                         open = TRUE, 
@@ -70,9 +64,6 @@ age_modify <- function(x,
 #'
 #' @inheritParams age_lower
 #' @inherit age_modify return
-#' @details
-#' When `length(x) == 0` and `x` is a factor with no levels, `x` is
-#' returned unchanged (there is no range from which to infer new groups).
 #'
 #' @seealso
 #' [age_modify()] Convert to general age groups
@@ -80,7 +71,7 @@ age_modify <- function(x,
 #' [period_modify_ten()] Period equivalent of `age_modify_ten()`
 #' [cohort_modify_five()] Cohort equivalent of `age_modify_five()`
 #' [cohort_modify_ten()] Cohort equivalent of `age_modify_ten()`
-#' age_levels_fill()] Add levels for intermediate age groups
+#' [age_levels_fill()] Add levels for intermediate age groups
 #' 
 #' @examples
 #' x <- c("1-3", "87-89", "0", "91+", "total", "52")
@@ -88,6 +79,8 @@ age_modify <- function(x,
 #' age_modify_ten(x)
 #' age_modify_life(x)
 #' @export
+
+# When length(x) == 0 and x is a factor with no levels, x is returned unchanged.
 age_modify_five <- function(x,
                              x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)

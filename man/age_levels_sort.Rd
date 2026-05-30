@@ -19,11 +19,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A factor, the same length as \code{x}.
-
-When \code{length(x) == 0} and there are no levels to sort, returns an empty
-factor. When \code{length(x) == 0} but \code{x} is a factor with levels, \code{levels()}
-are still sorted. The \code{ordered} attribute is preserved when \code{x} is an
-ordered factor.
 }
 \description{
 Sort the levels of \code{x}.
@@ -42,4 +37,8 @@ second-to-last and totals come last.
 \examples{
 x <- c("0-4", "50+", "Total", NA, "20-24")
 age_levels_sort(x)
+}
+\seealso{
+\code{\link[=period_levels_sort]{period_levels_sort()}} Period equivalent of \code{age_levels_sort()}
+\code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{age_levels_sort()}
 }

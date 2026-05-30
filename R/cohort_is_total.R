@@ -5,10 +5,7 @@
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @return
-#' Logical vector the same length as `x`.
-#'
-#' When `length(x) == 0`, returns `logical(0)`.
+#' @return Logical vector the same length as `x`.
 #'
 #' @seealso
 #' [cohort_is_open()] Find open cohorts
@@ -19,6 +16,8 @@
 #' x <- c("2020-2025", "Total", "1999", "ALL")
 #' cohort_is_total(x)
 #' @export
+
+# When length(x) == 0, returns logical(0).
 cohort_is_total <- function(x, 
                             x_one = c("lower", "upper"),
                             x_multi = c("include", "exclude"),
@@ -39,10 +38,7 @@ cohort_is_total <- function(x,
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @return
-#' Logical vector the same length as `x`.
-#'
-#' When `length(x) == 0`, returns `logical(0)`.
+#' @return Logical vector the same length as `x`.
 #'
 #' @seealso
 #' [cohort_is_total()] Find cohort labels for totals
@@ -52,6 +48,8 @@ cohort_is_total <- function(x,
 #' x <- c("2020", "<1900", "2040-2050", "<2022")
 #' cohort_is_open(x)
 #' @export
+
+# When length(x) == 0, returns logical(0).
 cohort_is_open <- function(x, 
                            x_one = c("lower", "upper"),
                            x_multi = c("include", "exclude"),

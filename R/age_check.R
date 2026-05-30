@@ -19,16 +19,11 @@
 #' @param valid_life All labels valid for
 #' (abridged) life table.
 #'
-#' @return
-#' - `age_check()` returns a list with
-#'   components `ok` (a logical flag)
-#'   and `details` (a data frame).
-#' - `age_assert()` returns `x` invisibly,
-#'   or throws an error.
+#' @return A list (`age_check()`) or `x` invisibly (`age_assert()`).
 #'
-#' When `length(x) == 0`, checks on overlap, gaps, totals, NA, and life-table
-#' validity are vacuously satisfied (`observed = TRUE`). Checks that require at
-#' least one interval (`include_*`) fail (`observed = FALSE`).
+#' @seealso
+#' [period_check()] Period equivalent of `age_check()`
+#' [cohort_check()] Cohort equivalent of `age_check()`
 #'
 #' @examples
 #' lab <- age_labels_life()
@@ -51,6 +46,10 @@
 #' ## throw error if no gaps
 #' age_assert(x = lab_gap, no_gap = FALSE)
 #' @export
+
+# When length(x) == 0, checks on overlap, gaps, totals, NA, and life-table
+# validity are vacuously satisfied (observed = TRUE). Checks that require at
+# least one interval (include_*) fail (observed = FALSE).
 age_check <- function(x,
                       no_overlap = NA,
                       no_gap = NA,

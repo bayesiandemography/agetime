@@ -21,15 +21,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A vector the same length as \code{x} with modified labels.
-
-If \code{x} is a character vector, returns a character vector.
-When \code{length(x) == 0}, returns \code{character(0)}.
-
-If \code{x} is a factor, returns a factor with the same length and
-\code{ordered} attribute as \code{x}. Element values are mapped to the new age
-groups and \code{levels()} is the full label set defined by \code{breaks} (and
-\code{open}, where relevant).
-When \code{length(x) == 0}, \code{levels(x)} are still modified.
 }
 \description{
 Modify the age groups used by \code{x}.
@@ -41,10 +32,6 @@ pattern:
 \item \code{age_modify_ten} Ten-year age groups
 \item \code{age_modify_life} Age groups used in 'abridged' life tables
 }
-}
-\details{
-When \code{length(x) == 0} and \code{x} is a factor with no levels, \code{x} is
-returned unchanged (there is no range from which to infer new groups).
 }
 \examples{
 x <- c("1-3", "87-89", "0", "91+", "total", "52")
@@ -58,5 +45,5 @@ age_modify_life(x)
 \code{\link[=period_modify_ten]{period_modify_ten()}} Period equivalent of \code{age_modify_ten()}
 \code{\link[=cohort_modify_five]{cohort_modify_five()}} Cohort equivalent of \code{age_modify_five()}
 \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Cohort equivalent of \code{age_modify_ten()}
-age_levels_fill()] Add levels for intermediate age groups
+\code{\link[=age_levels_fill]{age_levels_fill()}} Add levels for intermediate age groups
 }

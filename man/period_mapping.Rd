@@ -44,10 +44,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A data.frame or matrix.
-
-When \code{x} or \code{y} is \code{character(0)}, or a factor with no levels, returns an
-empty mapping (a zero-row data frame or zero-by-zero matrix, according to
-\code{return_val}).
 }
 \description{
 Create a mapping between period labels. The mapping is
@@ -75,4 +71,8 @@ period_mapping(x, return_val = "matrix")
 period_mapping(x = x, y = y, relation = "contains")
 period_mapping(x = x, y = y, relation = "contained")
 period_mapping(x = x, y = y, relation = "overlaps")
+}
+\seealso{
+\code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{period_mapping()}
+\code{\link[=cohort_mapping]{cohort_mapping()}} Cohort equivalent of \code{period_mapping()}
 }

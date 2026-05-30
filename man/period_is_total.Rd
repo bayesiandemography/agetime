@@ -29,8 +29,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 Logical vector the same length as \code{x}.
-
-When \code{length(x) == 0}, returns \code{logical(0)}.
 }
 \description{
 Find period labels that \pkg{agetime} interprets as totals.
@@ -40,6 +38,6 @@ x <- c("2020-2025", "Total", "1999", "ALL")
 period_is_total(x)
 }
 \seealso{
-\code{\link[=age_is_total]{age_is_total()}} Age equivalent of \verb{[period_is_total()}
+\code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{period_is_total()}
 \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{period_is_total()}
 }

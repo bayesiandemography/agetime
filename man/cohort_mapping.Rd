@@ -46,10 +46,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A data.frame or matrix.
-
-When \code{x} or \code{y} is \code{character(0)}, or a factor with no levels, returns an
-empty mapping (a zero-row data frame or zero-by-zero matrix, according to
-\code{return_val}).
 }
 \description{
 Create a mapping between cohort labels. The mapping is
@@ -77,4 +73,8 @@ cohort_mapping(x, return_val = "matrix")
 cohort_mapping(x = x, y = y, relation = "contains")
 cohort_mapping(x = x, y = y, relation = "contained")
 cohort_mapping(x = x, y = y, relation = "overlaps")
+}
+\seealso{
+\code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{cohort_mapping()}
+\code{\link[=period_mapping]{period_mapping()}} Period equivalent of \code{cohort_mapping()}
 }

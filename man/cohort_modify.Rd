@@ -40,15 +40,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A vector the same length as \code{x} with modified labels.
-
-If \code{x} is a character vector, returns a character vector.
-When \code{length(x) == 0}, returns \code{character(0)}.
-
-If \code{x} is a factor, returns a factor with the same length and
-\code{ordered} attribute as \code{x}. Element values are mapped to the new
-cohorts and \code{levels()} is the full label set defined by \code{breaks}
-(and \code{open}, where relevant).
-When \code{length(x) == 0}, \code{levels(x)} are still modified.
 }
 \description{
 Modify the cohorts used by \code{x}. The

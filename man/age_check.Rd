@@ -56,17 +56,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-\itemize{
-\item \code{age_check()} returns a list with
-components \code{ok} (a logical flag)
-and \code{details} (a data frame).
-\item \code{age_assert()} returns \code{x} invisibly,
-or throws an error.
-}
-
-When \code{length(x) == 0}, checks on overlap, gaps, totals, NA, and life-table
-validity are vacuously satisfied (\code{observed = TRUE}). Checks that require at
-least one interval (\verb{include_*}) fail (\code{observed = FALSE}).
+A list (\code{age_check()}) or \code{x} invisibly (\code{age_assert()}).
 }
 \description{
 Collect information on age group labels (\code{age_check()}),
@@ -93,4 +83,8 @@ age_assert(x = lab, no_gap = TRUE)
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
 age_assert(x = lab_gap, no_gap = FALSE)
+}
+\seealso{
+\code{\link[=period_check]{period_check()}} Period equivalent of \code{age_check()}
+\code{\link[=cohort_check]{cohort_check()}} Cohort equivalent of \code{age_check()}
 }

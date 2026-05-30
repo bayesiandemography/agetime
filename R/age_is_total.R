@@ -5,10 +5,7 @@
 #' 
 #' @inheritParams age_lower
 #'
-#' @return
-#' Logical vector the same length as `x`.
-#'
-#' When `length(x) == 0`, returns `logical(0)`.
+#' @return Logical vector the same length as `x`.
 #'
 #' @seealso
 #' [age_is_open()] Find open age groups
@@ -19,6 +16,8 @@
 #' x <- c("20-24", "Total", "100+", "ALL")
 #' age_is_total(x)
 #' @export
+
+# When length(x) == 0, returns logical(0).
 age_is_total <- function(x, 
                          x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
@@ -37,10 +36,7 @@ age_is_total <- function(x,
 #' 
 #' @inheritParams age_lower
 #'
-#' @return
-#' Logical vector the same length as `x`.
-#'
-#' When `length(x) == 0`, returns `logical(0)`.
+#' @return Logical vector the same length as `x`.
 #'
 #' @seealso
 #' [age_is_total()] Find age labels for totals
@@ -50,6 +46,8 @@ age_is_total <- function(x,
 #' x <- c("20+", "infant", "100+", "60to79")
 #' age_is_open(x)
 #' @export
+
+# When length(x) == 0, returns logical(0).
 age_is_open <- function(x, 
                         x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)

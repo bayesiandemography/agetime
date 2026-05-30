@@ -8,19 +8,21 @@
 #' @inheritParams cohort_lower
 #' @param open Upper limit of open cohort.
 #'
-#' @return
-#' A factor if `x` is a factor; otherwise a character vector.
+#' @return A factor if `x` is a factor; otherwise a character vector.
 #'
-#' If no labels qualify for the open group (including when `x` is
-#' `character(0)` or a factor with no levels), `x` is returned unchanged.
-#' When `x` is a factor with levels but no element values, qualifying levels
-#' are still relabelled.
+#' @seealso
+#' [age_set_open()] Age equivalent of `cohort_set_open()`
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")
 #' cohort_set_open(x, open = 2020)
 #' cohort_set_open(x, open = 2005)
 #' @export
+
+# If no labels qualify for the open group (including when `x` is
+# character(0) or a factor with no levels), `x` is returned unchanged.
+# When `x` is a factor with levels but no element values, qualifying levels
+# are still relabelled.
 cohort_set_open <- function(x,
                             open,
                             x_one = c("lower", "upper"),

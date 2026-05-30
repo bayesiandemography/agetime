@@ -21,10 +21,11 @@
 #' cannot be parsed: `"error"` (the default),
 #' `"warn"`, or `"silent"`.
 #'
-#' @return
-#' Numeric vector with same length as `x`.
+#' @return Numeric vector with same length as `x`.
 #'
-#' When `length(x) == 0`, returns `numeric(0)`.
+#' @seealso
+#' [period_lower()] Period equivalent of `age_lower()`
+#' [cohort_lower()] Cohort equivalent of `age_lower()`
 #'
 #' @examples
 #' x <- c("5-9", "10-14", "100+")
@@ -46,6 +47,8 @@
 #' age_lower(c("0-4", "young people", "50plus"),
 #'           x_fail = "silent")
 #' @export
+
+# When length(x) == 0, returns numeric(0).
 age_lower <- function(x,
                       x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)

@@ -15,8 +15,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 Logical vector the same length as \code{x}.
-
-When \code{length(x) == 0}, returns \code{logical(0)}.
 }
 \description{
 Find age group labels that \pkg{agetime} interprets as

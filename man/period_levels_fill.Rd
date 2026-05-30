@@ -59,12 +59,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A factor, the same length as \code{x}.
-
-When \code{length(x) == 0} and there are no levels to fill, returns an empty
-factor. If \code{breaks} is supplied to \code{period_levels_fill()}, levels are built
-from \code{breaks}. When \code{length(x) == 0} but \code{x} is a factor with levels,
-\code{levels()} are still filled in. The \code{ordered} attribute is preserved when
-\code{x} is an ordered factor.
 }
 \description{
 Fill in gaps in the levels of \code{x}.
@@ -107,4 +101,8 @@ x |>
   period_levels_fill_ten() |>
   period_levels_sort() |>
   table()
+}
+\seealso{
+\code{\link[=age_levels_fill]{age_levels_fill()}} Age equivalent of \code{period_levels_fill()}
+\code{\link[=cohort_levels_fill]{cohort_levels_fill()}} Cohort equivalent of \code{period_levels_fill()}
 }

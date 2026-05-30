@@ -54,16 +54,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-\itemize{
-\item \code{period_check()} returns a list with
-components \code{ok} (a logical flag)
-and \code{details} (a data frame).
-\item \code{period_assert()} returns \code{x} invisibly,
-or throws an error.
-}
-
-When \code{length(x) == 0}, checks on overlap, gaps, totals, and NA are
-vacuously satisfied (\code{observed = TRUE}).
+A list (\code{period_check()}) or \code{x} invisibly (\code{period_assert()}).
 }
 \description{
 Collect information on period labels (\code{period_check()}),
@@ -88,4 +79,8 @@ period_assert(x = lab, no_gap = TRUE)
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
 period_assert(lab_gap, no_gap = FALSE)
+}
+\seealso{
+\code{\link[=age_check]{age_check()}} Age equivalent of \code{period_check()}
+\code{\link[=cohort_check]{cohort_check()}} Cohort equivalent of \code{period_check()}
 }

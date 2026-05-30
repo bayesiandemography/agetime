@@ -17,18 +17,20 @@
 #' increasing or decreasing. Default
 #' is `FALSE`.
 #'
-#' @return
-#' A factor, the same length as `x`.
+#' @return A factor, the same length as `x`.
 #'
-#' When `length(x) == 0` and there are no levels to sort, returns an empty
-#' factor. When `length(x) == 0` but `x` is a factor with levels, `levels()`
-#' are still sorted. The `ordered` attribute is preserved when `x` is an
-#' ordered factor.
+#' @seealso
+#' [age_levels_sort()] Age equivalent of `cohort_levels_sort()`
+#' [period_levels_sort()] Period equivalent of `cohort_levels_sort()`
 #'
 #' @examples
 #' x <- c("2020-2025", "<1990", "Total", NA, "2025-2050")
 #' cohort_levels_sort(x)
 #' @export
+
+# When length(x) == 0 and there are no levels to sort, returns an empty factor.
+# When length(x) == 0 but x is a factor with levels, levels() are still sorted.
+# The ordered attribute is preserved when x is an ordered factor.
 cohort_levels_sort <- function(x,
                                decreasing = FALSE,
                                x_one = c("lower", "upper"),

@@ -16,6 +16,10 @@
 #'
 #' @returns A character vector.
 #'
+#' @seealso
+#' [period_labels()] Period equivalent of `age_labels()`
+#' [cohort_labels()] Cohort equivalent of `age_labels()`
+#'
 #' @examples
 #' ## default 5-year age groups
 #' age_labels_five()

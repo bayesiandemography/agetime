@@ -34,11 +34,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A factor if \code{x} is a factor; otherwise a character vector.
-
-If no labels qualify for the open group (including when \code{x} is
-\code{character(0)} or a factor with no levels), \code{x} is returned unchanged.
-When \code{x} is a factor with levels but no element values, qualifying levels
-are still relabelled.
 }
 \description{
 Set an open cohort, i.e. a cohort with no
@@ -49,4 +44,7 @@ cohorts where necessary.
 x <- c("2020-2024", "<2000", "2015")
 cohort_set_open(x, open = 2020)
 cohort_set_open(x, open = 2005)
+}
+\seealso{
+\code{\link[=age_set_open]{age_set_open()}} Age equivalent of \code{cohort_set_open()}
 }

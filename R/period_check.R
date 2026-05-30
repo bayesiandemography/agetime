@@ -13,15 +13,11 @@
 #' @param no_total No "Total" label
 #' @param no_na No NA label
 #'
-#' @return
-#' - `period_check()` returns a list with
-#'   components `ok` (a logical flag)
-#'   and `details` (a data frame).
-#' - `period_assert()` returns `x` invisibly,
-#'   or throws an error.
+#' @return A list (`period_check()`) or `x` invisibly (`period_assert()`).
 #'
-#' When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
-#' vacuously satisfied (`observed = TRUE`).
+#' @seealso
+#' [age_check()] Age equivalent of `period_check()`
+#' [cohort_check()] Cohort equivalent of `period_check()`
 #'
 #' @examples
 #' lab <- period_labels_five(lower_first = 2020,
@@ -42,6 +38,9 @@
 #' ## throw error if no gaps
 #' period_assert(lab_gap, no_gap = FALSE)
 #' @export
+
+# When length(x) == 0, checks on overlap, gaps, totals, and NA are vacuously
+# satisfied (observed = TRUE).
 period_check <- function(x,
                          no_overlap = NA,
                          no_gap = NA,

@@ -31,18 +31,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 A vector the same length as \code{x} with standardized labels.
-
-If \code{x} is a character vector, returns a character vector.
-If \code{x} is a factor, returns a factor with the same length and
-\code{ordered} attribute as \code{x}. Element values and \code{levels(x)} are
-standardized; level order is unchanged except where two or more
-levels collapse to the same string after standardization (the first
-occurrence in \code{levels(x)} is kept).
-When \code{length(x) == 0}, returns \code{character(0)} for character input; for
-factors, standardized \code{levels(x)} are still applied.
-
-With \code{x_fail = "silent"}, labels that cannot be parsed are mapped to
-\code{NA} (including in \code{levels()} for factors).
 }
 \description{
 Convert cohort labels to a 'standard' format.
@@ -50,4 +38,8 @@ Convert cohort labels to a 'standard' format.
 \examples{
 x <- c("2025to2030", "1910--1914", " < 2022 ")
 cohort_standard(x)
+}
+\seealso{
+\code{\link[=age_standard]{age_standard()}} Age equivalent of \code{cohort_standard()}
+\code{\link[=period_standard]{period_standard()}} Period equivalent of \code{cohort_standard()}
 }

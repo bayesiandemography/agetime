@@ -16,11 +16,7 @@
 #' @param include_x Should the return value
 #' include `x`? Default is `TRUE`.
 #'
-#' @return
-#' A factor if `x` is a factor; otherwise a character vector.
-#'
-#' When `length(x) == 0`, throws an error (there is no interval to extend from).
-#' If `width` is `NULL`, the error suggests supplying `width` explicitly.
+#' @return A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
 #' - [age_extend()] Age equivalent of `period_extend()`
@@ -32,6 +28,9 @@
 #' period_extend(x, n = 2, width = 10)
 #' period_extend(x, n = 2, include_x = FALSE)
 #' @export
+
+# When length(x) == 0, throws an error (no interval to extend from). If width
+# is NULL, the error suggests supplying width explicitly.
 period_extend <- function(x,
                           n = 1L,
                           width = NULL,

@@ -7,6 +7,10 @@
 #' @inheritParams cohort_lower
 #' @inherit age_standard return
 #'
+#' @seealso
+#' [age_standard()] Age equivalent of `cohort_standard()`
+#' [period_standard()] Period equivalent of `cohort_standard()`
+#'
 #' @examples
 #' x <- c("2025to2030", "1910--1914", " < 2022 ")
 #' cohort_standard(x)

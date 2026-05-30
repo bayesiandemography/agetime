@@ -5,19 +5,18 @@
 #' 
 #' @inheritParams period_lower
 #'
-#' @return
-#' Logical vector the same length as `x`.
-#'
-#' When `length(x) == 0`, returns `logical(0)`.
+#' @return Logical vector the same length as `x`.
 #'
 #' @seealso
-#' [age_is_total()] Age equivalent of `[period_is_total()`
+#' [age_is_total()] Age equivalent of `period_is_total()`
 #' [cohort_is_total()] Cohort equivalent of `period_is_total()`
 #'
 #' @examples
 #' x <- c("2020-2025", "Total", "1999", "ALL")
 #' period_is_total(x)
 #' @export
+
+# When length(x) == 0, returns logical(0).
 period_is_total <- function(x,
                             x_one = c("lower", "upper"),
                             x_multi = c("include", "exclude"),

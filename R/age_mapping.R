@@ -35,9 +35,9 @@
 #'
 #' @return A data.frame or matrix.
 #'
-#' When `x` or `y` is `character(0)`, or a factor with no levels, returns an
-#' empty mapping (a zero-row data frame or zero-by-zero matrix, according to
-#' `return_val`).
+#' @seealso
+#' [period_mapping()] Period equivalent of `age_mapping()`
+#' [cohort_mapping()] Cohort equivalent of `age_mapping()`
 #'
 #' @examples
 #' x <- c("0-4", "10", "5-7")
@@ -48,6 +48,9 @@
 #' age_mapping(x = x, y = y, relation = "contained")
 #' age_mapping(x = x, y = y, relation = "overlaps")
 #' @export
+
+# When x or y is character(0), or a factor with no levels, returns an empty
+# mapping (zero-row data frame or zero-by-zero matrix, per return_val).
 age_mapping <- function(x,
                         y = NULL,
                         relation = c("equals", "contains", "contained", "overlaps"),

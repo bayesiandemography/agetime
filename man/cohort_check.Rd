@@ -61,17 +61,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-\itemize{
-\item \code{cohort_check()} returns a list with
-components \code{ok} (a logical flag)
-and \code{details} (a data frame).
-\item \code{cohort_assert()} returns \code{x} invisibly,
-or throws an error.
-}
-
-When \code{length(x) == 0}, checks on overlap, gaps, totals, and NA are
-vacuously satisfied (\code{observed = TRUE}). Checks that require at least one
-interval (\code{include_open}) fail (\code{observed = FALSE}).
+A list (\code{cohort_check()}) or \code{x} invisibly (\code{cohort_assert()}).
 }
 \description{
 Collect information on cohort labels (\code{cohort_check()}),
@@ -97,4 +87,8 @@ cohort_assert(x = lab, no_gap = TRUE)
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
 cohort_assert(lab_gap, no_gap = FALSE)
+}
+\seealso{
+\code{\link[=age_check]{age_check()}} Age equivalent of \code{cohort_check()}
+\code{\link[=period_check]{period_check()}} Period equivalent of \code{cohort_check()}
 }

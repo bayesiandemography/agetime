@@ -25,8 +25,6 @@ cannot be parsed: \code{"error"} (the default),
 }
 \value{
 Numeric vector with same length as \code{x}.
-
-When \code{length(x) == 0}, returns \code{numeric(0)}.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -62,4 +60,8 @@ df |> filter(age_lower(age) >= 10)
 ## no action when 'x_fail' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
           x_fail = "silent")
+}
+\seealso{
+\code{\link[=period_lower]{period_lower()}} Period equivalent of \code{age_lower()}
+\code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{age_lower()}
 }

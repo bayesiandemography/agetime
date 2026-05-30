@@ -21,14 +21,11 @@
 #' (Boundaries supplied by existing
 #' cohorts can be omitted.)
 #'
-#' @return
-#' A factor, the same length as `x`.
+#' @return A factor, the same length as `x`.
 #'
-#' When `length(x) == 0` and there are no levels to fill, returns an empty
-#' factor. If `breaks` is supplied to `cohort_levels_fill()`, levels are built
-#' from `breaks`. When `length(x) == 0` but `x` is a factor with levels,
-#' `levels()` are still filled in. The `ordered` attribute is preserved when
-#' `x` is an ordered factor.
+#' @seealso
+#' [age_levels_fill()] Age equivalent of `cohort_levels_fill()`
+#' [period_levels_fill()] Period equivalent of `cohort_levels_fill()`
 #'
 #' @examples
 #' x <- factor(c("2020-2025", "2030-2035"))
@@ -54,6 +51,11 @@
 #'   cohort_levels_sort() |>
 #'   table()
 #' @export
+
+# When length(x) == 0 and there are no levels to fill, returns an empty factor.
+# If breaks is supplied, levels are built from breaks. When length(x) == 0 but x
+# is a factor with levels, levels() are still filled in. The ordered attribute
+# is preserved when x is an ordered factor.
 cohort_levels_fill <- function(x,
                                breaks = NULL,
                                x_one = c("lower", "upper"),

@@ -53,9 +53,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Numeric vector the same length as \code{x}.
-
-When \code{length(x) == 0}, returns \code{numeric(0)}.
+Numeric vector with same length as \code{x}.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -139,4 +137,8 @@ period_width("2025-2030", x_multi = "exclude")
 ## no action when 'x_fail' is "silent"
 period_lower(c("2000-2005", "long time ago"),
              x_fail = "silent")
+}
+\seealso{
+\code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
+\code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
 }

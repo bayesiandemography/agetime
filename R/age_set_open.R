@@ -8,19 +8,21 @@
 #' @inheritParams age_lower
 #' @param open Lower limit of open age group.
 #'
-#' @return
-#' A factor if `x` is a factor; otherwise a character vector.
+#' @return A factor if `x` is a factor; otherwise a character vector.
 #'
-#' If no labels qualify for the open group (including when `x` is
-#' `character(0)` or a factor with no levels), `x` is returned unchanged.
-#' When `x` is a factor with levels but no element values, qualifying levels
-#' are still relabelled.
+#' @seealso
+#' [cohort_set_open()] Cohort equivalent of `age_set_open()`
 #'
 #' @examples
 #' x <- c("20-24", "80-84", "100+")
 #' age_set_open(x, open = 80)
 #' age_set_open(x, open = 50)
 #' @export
+
+# If no labels qualify for the open group (including when `x` is
+# character(0) or a factor with no levels), `x` is returned unchanged.
+# When `x` is a factor with levels but no element values, qualifying levels
+# are still relabelled.
 age_set_open <- function(x,
                          open,
                          x_fail = c("error", "warn", "silent")) {

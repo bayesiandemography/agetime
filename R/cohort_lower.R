@@ -24,10 +24,11 @@
 #' cannot be parsed: `"error"` (the default),
 #' `"warn"`, or `"silent"`.
 #'
-#' @return
-#' Numeric vector the same length as `x`.
+#' @return Numeric vector with same length as `x`.
 #'
-#' When `length(x) == 0`, returns `numeric(0)`.
+#' @seealso
+#' [age_lower()] Age equivalent of `cohort_lower()`
+#' [period_lower()] Period equivalent of `cohort_lower()`
 #'
 #' @examples
 #' x <- c("2025-2030", "<2025", "2030-2035")
@@ -67,6 +68,8 @@
 #' cohort_lower(c("2000-2005", "long time ago"),
 #'              x_fail = "silent")
 #' @export
+
+# When length(x) == 0, returns numeric(0).
 cohort_lower <- function(x,
                          x_one = c("lower", "upper"),
                          x_multi = c("include", "exclude"),

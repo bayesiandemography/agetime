@@ -102,3 +102,7 @@ period_labels_ten(lower_first = 2000,
                   include_total = TRUE,
                   include_na = TRUE)
 }
+\seealso{
+\code{\link[=age_labels]{age_labels()}} Age equivalent of \code{period_labels()}
+\code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{period_labels()}
+}

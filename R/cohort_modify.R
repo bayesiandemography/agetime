@@ -11,17 +11,7 @@
 #' is "open", i.e. has no lower limit.
 #' Default is `FALSE`.
 #'
-#' @return
-#' A vector the same length as `x` with modified labels.
-#'
-#' If `x` is a character vector, returns a character vector.
-#' When `length(x) == 0`, returns `character(0)`.
-#'
-#' If `x` is a factor, returns a factor with the same length and
-#' `ordered` attribute as `x`. Element values are mapped to the new
-#' cohorts and `levels()` is the full label set defined by `breaks`
-#' (and `open`, where relevant).
-#' When `length(x) == 0`, `levels(x)` are still modified.
+#' @return A vector the same length as `x` with modified labels.
 #'
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
@@ -34,6 +24,10 @@
 #' - [age_modify()] Age group equivalent of `cohort_modify()`
 #' - [period_modify()] Period equivalent of `cohort_modify()`
 #' @export
+
+# Character input returns character; factor input returns factor with the same
+# length and ordered attribute. When length(x) == 0, returns character(0) or
+# still modifies factor levels().
 cohort_modify <- function(x,
                            breaks,
                            open = FALSE,
@@ -71,9 +65,6 @@ cohort_modify <- function(x,
 #' @param offset Parameter controlling
 #' alignment of cohorts. Default is `0`.
 #' @inherit cohort_modify return
-#' @details
-#' When `length(x) == 0` and `x` is a factor with no levels, `x` is
-#' returned unchanged (there is no range from which to infer new groups).
 #'
 #' @seealso
 #' [cohort_modify()] Convert to general cohorts
@@ -92,6 +83,8 @@ cohort_modify <- function(x,
 #' cohort_modify_ten(x, offset = 1)
 #' cohort_modify_ten(x, offset = 2)
 #' @export
+
+# When length(x) == 0 and x is a factor with no levels, x is returned unchanged.
 cohort_modify_five <- function(x,
                                 offset = 0,
                                 x_one = c("lower", "upper"),

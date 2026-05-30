@@ -8,16 +8,7 @@
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
 #'
-#' @return
-#' A vector the same length as `x` with modified labels.
-#'
-#' If `x` is a character vector, returns a character vector.
-#' When `length(x) == 0`, returns `character(0)`.
-#'
-#' If `x` is a factor, returns a factor with the same length and
-#' `ordered` attribute as `x`. Element values are mapped to the new
-#' periods and `levels()` is the full label set defined by `breaks`.
-#' When `length(x) == 0`, `levels(x)` are still modified.
+#' @return A vector the same length as `x` with modified labels.
 #'
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
@@ -29,6 +20,10 @@
 #' - [age_modify()] Age group equivalent of `period_modify()`
 #' - [cohort_modify()] Cohort equivalent of `period_modify()`
 #' @export
+
+# Character input returns character; factor input returns factor with the same
+# length and ordered attribute. When length(x) == 0, returns character(0) or
+# still modifies factor levels().
 period_modify <- function(x,
                            breaks,
                            x_one = c("lower", "upper"),
@@ -64,9 +59,6 @@ period_modify <- function(x,
 #' @param offset Parameter controlling
 #' alignment of periods. Default is `0`.
 #' @inherit period_modify return
-#' @details
-#' When `length(x) == 0` and `x` is a factor with no levels, `x` is
-#' returned unchanged (there is no range from which to infer new groups).
 #'
 #' @seealso
 #' [period_modify()] Convert to general periods
@@ -85,6 +77,8 @@ period_modify <- function(x,
 #' period_modify_ten(x, offset = 1)
 #' period_modify_ten(x, offset = 2)
 #' @export
+
+# When length(x) == 0 and x is a factor with no levels, x is returned unchanged.
 period_modify_five <- function(x,
                                 offset = 0,
                                 x_one = c("lower", "upper"),

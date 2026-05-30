@@ -92,3 +92,7 @@ age_labels(breaks = c(0, 5, 10, 14, 18),
 ## open age group of 75+
 age_labels_life(lower_last = 75)
 }
+\seealso{
+\code{\link[=period_labels]{period_labels()}} Period equivalent of \code{age_labels()}
+\code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{age_labels()}
+}
