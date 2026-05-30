@@ -58,13 +58,13 @@
 
     
     
-<p>Datasets often use <strong>character labels</strong> such as
-<code>"0-14"</code>, <code>"2020-2025"</code>, or <code>"100+"</code>
-for age groups, periods, and cohorts. <strong>agetime</strong> infers
-the numeric intervals underlying the labels, and provides tools for
-filtering, recoding, and validating the intervals.</p>
-<p>This vignette introduces the main ideas using age labels. Equivalent
-functions exist for periods and cohorts.</p>
+<p>Datasets often use character labels such as <code>"0-14"</code>,
+<code>"2020-2025"</code>, or <code>"1980-1990"</code> for age groups,
+periods, and cohorts. <strong>agetime</strong> infers the numeric
+intervals underlying the labels, and provides tools for filtering,
+recoding, and validating these intervals.</p>
+<p>This vignette focuses on age group labels. <strong>agetime</strong>
+functions for periods and cohorts work like the functions for ages.</p>
 <div class="section level2">
 <h2 id="read-intervals-from-labels">Read intervals from labels<a class="anchor" aria-label="anchor" href="#read-intervals-from-labels"></a>
 </h2>
@@ -86,7 +86,7 @@ limits, midpoints, and widths:</p>
 <span><span class="fu"><a href="../reference/age_lower.html">age_width</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   0 1-4 5-9 10+ </span></span>
 <span><span class="co">#&gt;   1   4   5 Inf</span></span></code></pre></div>
-<p>Use the lower limit to <strong>filter</strong> data:</p>
+<p>Use the lower limit to filter rows:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
@@ -133,8 +133,8 @@ limits, midpoints, and widths:</p>
 <div class="section level2">
 <h2 id="standardize-messy-labels">Standardize messy labels<a class="anchor" aria-label="anchor" href="#standardize-messy-labels"></a>
 </h2>
-<p>There are many conventions for age group labels.
-<code><a href="../reference/age_standard.html">age_standard()</a></code> converts labels to a standard form:</p>
+<p>There are many ways of formatting age group labels.
+<code><a href="../reference/age_standard.html">age_standard()</a></code> converts labels to a standard format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"5to9"</span>, <span class="st">"10--14"</span>, <span class="st">"100plus"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_standard.html">age_standard</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
@@ -158,8 +158,8 @@ functions.</p>
 <div class="section level2">
 <h2 id="modify-to-new-groupings">Modify to new groupings<a class="anchor" aria-label="anchor" href="#modify-to-new-groupings"></a>
 </h2>
-<p>To <strong>widen</strong> or <strong>realign</strong> age groups, use
-the <code>age_modify</code> functions.</p>
+<p>To widen or realign age groups, use an <code>age_modify</code>
+function.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-14"</span>, <span class="st">"50-54"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_modify.html">age_modify</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span>, <span class="fl">55</span><span class="op">)</span><span class="op">)</span></span>
@@ -194,7 +194,7 @@ levels, and <code><a href="../reference/age_levels_sort.html">age_levels_sort()<
 <p>With <code><a href="../reference/age_check.html">age_assert()</a></code>, failed checks throw an error.</p>
 </div>
 <div class="section level2">
-<h2 id="map-between-label-sets">Map between label sets<a class="anchor" aria-label="anchor" href="#map-between-label-sets"></a>
+<h2 id="create-mappings">Create mappings<a class="anchor" aria-label="anchor" href="#create-mappings"></a>
 </h2>
 <p><code><a href="../reference/age_mapping.html">age_mapping()</a></code> builds a mapping between sets of
 labels.</p>
@@ -221,43 +221,36 @@ identical.</p>
 <div class="section level2">
 <h2 id="period-and-cohort">Period and cohort<a class="anchor" aria-label="anchor" href="#period-and-cohort"></a>
 </h2>
-<p>Functions for periods and cohorts work the same way as functions for
-age groups.<br>
-For instance:</p>
-<table style="width:100%;" class="table">
+<p>Age group functions have period and cohort equivalents. For
+instance:</p>
+<table class="table">
 <colgroup>
-<col width="24%">
-<col width="22%">
-<col width="26%">
-<col width="26%">
+<col width="30%">
+<col width="34%">
+<col width="34%">
 </colgroup>
 <thead><tr class="header">
-<th>Task</th>
 <th>Age</th>
 <th>Period</th>
 <th>Cohort</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td>Lower limit</td>
 <td><code><a href="../reference/age_lower.html">age_lower()</a></code></td>
 <td><code><a href="../reference/period_lower.html">period_lower()</a></code></td>
 <td><code><a href="../reference/cohort_lower.html">cohort_lower()</a></code></td>
 </tr>
 <tr class="even">
-<td>Standardize</td>
 <td><code><a href="../reference/age_standard.html">age_standard()</a></code></td>
 <td><code><a href="../reference/period_standard.html">period_standard()</a></code></td>
 <td><code><a href="../reference/cohort_standard.html">cohort_standard()</a></code></td>
 </tr>
 <tr class="odd">
-<td>Five-year labels</td>
 <td><code><a href="../reference/age_labels.html">age_labels_five()</a></code></td>
 <td><code><a href="../reference/period_labels.html">period_labels_five()</a></code></td>
 <td><code><a href="../reference/cohort_labels.html">cohort_labels_five()</a></code></td>
 </tr>
 <tr class="even">
-<td>Modify</td>
 <td><code><a href="../reference/age_modify.html">age_modify()</a></code></td>
 <td><code><a href="../reference/period_modify.html">period_modify()</a></code></td>
 <td><code><a href="../reference/cohort_modify.html">cohort_modify()</a></code></td>

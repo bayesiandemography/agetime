@@ -59,6 +59,8 @@ period_width(
 
 Numeric vector the same length as `x`.
 
+When `length(x) == 0`, returns `numeric(0)`.
+
 ## Details
 
 Lower and upper limits can be used to filter on periods. See below for

@@ -23,6 +23,8 @@ age_is_total(x, x_fail = c("error", "warn", "silent"))
 
 Logical vector the same length as `x`.
 
+When `length(x) == 0`, returns `logical(0)`.
+
 ## See also
 
 [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)

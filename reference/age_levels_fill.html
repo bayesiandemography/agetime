@@ -73,6 +73,11 @@ cannot be parsed: <code>"error"</code> (the default),
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A factor, the same length as <code>x</code>.</p>
+<p>When <code>length(x) == 0</code> and there are no levels to fill, returns an empty
+factor. If <code>breaks</code> is supplied to <code>age_levels_fill()</code>, levels are built
+from <code>breaks</code>. When <code>length(x) == 0</code> but <code>x</code> is a factor with levels,
+<code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> are still filled in. The <code>ordered</code> attribute is preserved when
+<code>x</code> is an ordered factor.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -140,7 +145,7 @@ used by a life table.</p></li>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0-9 10-29 30-39 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1     0     1 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1     1     0 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

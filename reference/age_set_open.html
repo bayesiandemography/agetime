@@ -68,6 +68,10 @@ cannot be parsed: <code>"error"</code> (the default),
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A factor if <code>x</code> is a factor; otherwise a character vector.</p>
+<p>If no labels qualify for the open group (including when <code>x</code> is
+<code>character(0)</code> or a factor with no levels), <code>x</code> is returned unchanged.
+When <code>x</code> is a factor with levels but no element values, qualifying levels
+are still relabelled.</p>
     </div>
 
     <div class="section level2">

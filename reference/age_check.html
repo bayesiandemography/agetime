@@ -124,7 +124,10 @@ components <code>ok</code> (a logical flag)
 and <code>details</code> (a data frame).</p></li>
 <li><p><code>age_assert()</code> returns <code>x</code> invisibly,
 or throws an error.</p></li>
-</ul></div>
+</ul><p>When <code>length(x) == 0</code>, checks on overlap, gaps, totals, NA, and life-table
+validity are vacuously satisfied (<code>observed = TRUE</code>). Checks that require at
+least one interval (<code>include_*</code>) fail (<code>observed = FALSE</code>).</p>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

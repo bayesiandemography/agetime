@@ -80,6 +80,10 @@ cohort_assert(
 
 - `cohort_assert()` returns `x` invisibly, or throws an error.
 
+When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
+vacuously satisfied (`observed = TRUE`). Checks that require at least
+one interval (`include_open`) fail (`observed = FALSE`).
+
 ## Examples
 
 ``` r

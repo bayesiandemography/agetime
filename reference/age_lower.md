@@ -30,6 +30,8 @@ age_width(x, x_fail = c("error", "warn", "silent"))
 
 Numeric vector with same length as `x`.
 
+When `length(x) == 0`, returns `numeric(0)`.
+
 ## Details
 
 Lower and upper limits can be used filter on age. See below for

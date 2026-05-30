@@ -56,7 +56,11 @@ cohort_mapping(
 
 ## Value
 
-A data.frame or matrix
+A data.frame or matrix.
+
+When `x` or `y` is `character(0)`, or a factor with no levels, returns
+an empty mapping (a zero-row data frame or zero-by-zero matrix,
+according to `return_val`).
 
 ## Details
 

@@ -36,6 +36,12 @@ age_levels_fill_life(x, x_fail = c("error", "warn", "silent"))
 
 A factor, the same length as `x`.
 
+When `length(x) == 0` and there are no levels to fill, returns an empty
+factor. If `breaks` is supplied to `age_levels_fill()`, levels are built
+from `breaks`. When `length(x) == 0` but `x` is a factor with levels,
+[`levels()`](https://rdrr.io/r/base/levels.html) are still filled in.
+The `ordered` attribute is preserved when `x` is an ordered factor.
+
 ## Details
 
 If `x` is not a factor, and so does not have levels, convert it to a
@@ -102,5 +108,5 @@ x |>
   table()
 #> 
 #>   0-9 10-29 30-39 
-#>     1     0     1 
+#>     1     1     0 
 ```

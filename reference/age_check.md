@@ -78,6 +78,11 @@ age_assert(
 
 - `age_assert()` returns `x` invisibly, or throws an error.
 
+When `length(x) == 0`, checks on overlap, gaps, totals, NA, and
+life-table validity are vacuously satisfied (`observed = TRUE`). Checks
+that require at least one interval (`include_*`) fail
+(`observed = FALSE`).
+
 ## Examples
 
 ``` r

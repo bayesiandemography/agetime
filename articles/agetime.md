@@ -1,12 +1,12 @@
 # Quick start
 
-Datasets often use **character labels** such as `"0-14"`, `"2020-2025"`,
-or `"100+"` for age groups, periods, and cohorts. **agetime** infers the
-numeric intervals underlying the labels, and provides tools for
-filtering, recoding, and validating the intervals.
+Datasets often use character labels such as `"0-14"`, `"2020-2025"`, or
+`"1980-1990"` for age groups, periods, and cohorts. **agetime** infers
+the numeric intervals underlying the labels, and provides tools for
+filtering, recoding, and validating these intervals.
 
-This vignette introduces the main ideas using age labels. Equivalent
-functions exist for periods and cohorts.
+This vignette focuses on age group labels. **agetime** functions for
+periods and cohorts work like the functions for ages.
 
 ## Read intervals from labels
 
@@ -32,7 +32,7 @@ age_width(x)
 #>   1   4   5 Inf
 ```
 
-Use the lower limit to **filter** data:
+Use the lower limit to filter rows:
 
 ``` r
 
@@ -85,9 +85,9 @@ df |>
 
 ## Standardize messy labels
 
-There are many conventions for age group labels.
+There are many ways of formatting age group labels.
 [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
-converts labels to a standard form:
+converts labels to a standard format:
 
 ``` r
 
@@ -116,7 +116,7 @@ age_labels_life()
 
 ## Modify to new groupings
 
-To **widen** or **realign** age groups, use the `age_modify` functions.
+To widen or realign age groups, use an `age_modify` function.
 
 ``` r
 
@@ -161,7 +161,7 @@ With
 [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md),
 failed checks throw an error.
 
-## Map between label sets
+## Create mappings
 
 [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
 builds a mapping between sets of labels.
@@ -196,16 +196,14 @@ age_mapping(x, y, relation = "contains", return_val = "matrix")
 
 ## Period and cohort
 
-Functions for periods and cohorts work the same way as functions for age
-groups.  
-For instance:
+Age group functions have period and cohort equivalents. For instance:
 
-| Task | Age | Period | Cohort |
-|----|----|----|----|
-| Lower limit | [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md) | [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md) | [`cohort_lower()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md) |
-| Standardize | [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md) | [`period_standard()`](https://bayesiandemography.github.io/agetime/reference/period_standard.md) | [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md) |
-| Five-year labels | [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
-| Modify | [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md) | [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md) | [`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md) |
+| Age | Period | Cohort |
+|----|----|----|
+| [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md) | [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md) | [`cohort_lower()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md) |
+| [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md) | [`period_standard()`](https://bayesiandemography.github.io/agetime/reference/period_standard.md) | [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md) |
+| [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
+| [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md) | [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md) | [`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md) |
 
 ## Learn more
 

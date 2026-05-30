@@ -38,6 +38,8 @@ period_is_total(
 
 Logical vector the same length as `x`.
 
+When `length(x) == 0`, returns `logical(0)`.
+
 ## See also
 
 [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)

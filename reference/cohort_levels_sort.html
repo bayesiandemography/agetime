@@ -85,6 +85,10 @@ cannot be parsed: <code>"error"</code> (the default),
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>A factor, the same length as <code>x</code>.</p>
+<p>When <code>length(x) == 0</code> and there are no levels to sort, returns an empty
+factor. When <code>length(x) == 0</code> but <code>x</code> is a factor with levels, <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code>
+are still sorted. The <code>ordered</code> attribute is preserved when <code>x</code> is an
+ordered factor.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

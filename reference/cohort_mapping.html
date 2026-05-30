@@ -101,7 +101,10 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data.frame or matrix</p>
+    <p>A data.frame or matrix.</p>
+<p>When <code>x</code> or <code>y</code> is <code>character(0)</code>, or a factor with no levels, returns an
+empty mapping (a zero-row data frame or zero-by-zero matrix, according to
+<code>return_val</code>).</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>

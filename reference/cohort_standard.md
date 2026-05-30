@@ -43,7 +43,8 @@ factor, returns a factor with the same length and `ordered` attribute as
 `x`. Element values and `levels(x)` are standardized; level order is
 unchanged except where two or more levels collapse to the same string
 after standardization (the first occurrence in `levels(x)` is kept).
-When `length(x) == 0`, standardized `levels(x)` are still applied.
+When `length(x) == 0`, returns `character(0)` for character input; for
+factors, standardized `levels(x)` are still applied.
 
 With `x_fail = "silent"`, labels that cannot be parsed are mapped to
 `NA` (including in [`levels()`](https://rdrr.io/r/base/levels.html) for

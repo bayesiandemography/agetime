@@ -27,6 +27,11 @@ age_levels_sort(x, decreasing = FALSE, x_fail = c("error", "warn", "silent"))
 
 A factor, the same length as `x`.
 
+When `length(x) == 0` and there are no levels to sort, returns an empty
+factor. When `length(x) == 0` but `x` is a factor with levels,
+[`levels()`](https://rdrr.io/r/base/levels.html) are still sorted. The
+`ordered` attribute is preserved when `x` is an ordered factor.
+
 ## Details
 
 If `x` is not a factor, and so does not have levels, convert it to a

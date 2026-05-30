@@ -74,6 +74,9 @@ period_assert(
 
 - `period_assert()` returns `x` invisibly, or throws an error.
 
+When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
+vacuously satisfied (`observed = TRUE`).
+
 ## Examples
 
 ``` r

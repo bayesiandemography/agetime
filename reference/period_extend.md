@@ -53,6 +53,10 @@ period_extend(
 
 A factor if `x` is a factor; otherwise a character vector.
 
+When `length(x) == 0`, throws an error (there is no interval to extend
+from). If `width` is `NULL`, the error suggests supplying `width`
+explicitly.
+
 ## Details
 
 By default, the width of the new periods is derived from the last

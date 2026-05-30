@@ -38,6 +38,8 @@ cohort_is_total(
 
 Logical vector the same length as `x`.
 
+When `length(x) == 0`, returns `logical(0)`.
+
 ## See also
 
 [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)

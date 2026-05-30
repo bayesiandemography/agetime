@@ -84,7 +84,8 @@ If <code>x</code> is a factor, returns a factor with the same length and
 standardized; level order is unchanged except where two or more
 levels collapse to the same string after standardization (the first
 occurrence in <code>levels(x)</code> is kept).
-When <code>length(x) == 0</code>, standardized <code>levels(x)</code> are still applied.</p>
+When <code>length(x) == 0</code>, returns <code>character(0)</code> for character input; for
+factors, standardized <code>levels(x)</code> are still applied.</p>
 <p>With <code>x_fail = "silent"</code>, labels that cannot be parsed are mapped to
 <code>NA</code> (including in <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> for factors).</p>
     </div>
