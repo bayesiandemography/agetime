@@ -8,9 +8,9 @@
 #' @return Logical vector the same length as `x`.
 #'
 #' @seealso
-#' [cohort_is_open()] Find open cohorts
-#' [age_is_total()] Age equivalent of `cohort_is_total()`
-#' [period_is_total()] Period equivalent of `cohort_is_total()`
+#' - [cohort_is_open()] Find open cohorts
+#' - [age_is_total()] Age equivalent of `cohort_is_total()`
+#' - [period_is_total()] Period equivalent of `cohort_is_total()`
 #'
 #' @examples
 #' x <- c("2020-2025", "Total", "1999", "ALL")
@@ -41,8 +41,8 @@ cohort_is_total <- function(x,
 #' @return Logical vector the same length as `x`.
 #'
 #' @seealso
-#' [cohort_is_total()] Find cohort labels for totals
-#' [age_is_open()] Age equivalent of `cohort_is_open()`
+#' - [cohort_is_total()] Find cohort labels for totals
+#' - [age_is_open()] Age equivalent of `cohort_is_open()`
 #'
 #' @examples
 #' x <- c("2020", "<1900", "2040-2050", "<2022")

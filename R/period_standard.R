@@ -8,8 +8,8 @@
 #' @inherit age_standard return
 #'
 #' @seealso
-#' [age_standard()] Age equivalent of `period_standard()`
-#' [cohort_standard()] Cohort equivalent of `period_standard()`
+#' - [age_standard()] Age equivalent of `period_standard()`
+#' - [cohort_standard()] Cohort equivalent of `period_standard()`
 #'
 #' @examples
 #' x <- c("2025to2030", "1910--1914", " 2022 ")

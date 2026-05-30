@@ -25,8 +25,8 @@
 #' @return A factor, the same length as `x`.
 #'
 #' @seealso
-#' [period_levels_fill()] Period equivalent of `age_levels_fill()`
-#' [cohort_levels_fill()] Cohort equivalent of `age_levels_fill()`
+#' - [period_levels_fill()] Period equivalent of `age_levels_fill()`
+#' - [cohort_levels_fill()] Cohort equivalent of `age_levels_fill()`
 #'
 #' @examples
 #' x <- factor(c("0-4", "20-24"))

@@ -54,6 +54,8 @@ x <- c("2020-2025", "2050", "Total", NA, "2025-2050")
 period_levels_sort(x)
 }
 \seealso{
-\code{\link[=age_levels_sort]{age_levels_sort()}} Age equivalent of \code{period_levels_sort()}
-\code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{period_levels_sort()}
+\itemize{
+\item \code{\link[=age_levels_sort]{age_levels_sort()}} Age equivalent of \code{period_levels_sort()}
+\item \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{period_levels_sort()}
+}
 }

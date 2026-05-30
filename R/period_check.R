@@ -15,8 +15,8 @@
 #' @return A list (`period_check()`) or `x` invisibly (`period_assert()`).
 #'
 #' @seealso
-#' [age_check()] Age equivalent of `period_check()`
-#' [cohort_check()] Cohort equivalent of `period_check()`
+#' - [age_check()] Age equivalent of `period_check()`
+#' - [cohort_check()] Cohort equivalent of `period_check()`
 #'
 #' @examples
 #' lab <- period_labels_five(lower_first = 2020,

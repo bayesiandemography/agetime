@@ -46,5 +46,7 @@ cohort_set_open(x, open = 2020)
 cohort_set_open(x, open = 2005)
 }
 \seealso{
-\code{\link[=age_set_open]{age_set_open()}} Age equivalent of \code{cohort_set_open()}
+\itemize{
+\item \code{\link[=age_set_open]{age_set_open()}} Age equivalent of \code{cohort_set_open()}
+}
 }

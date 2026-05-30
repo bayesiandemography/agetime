@@ -57,8 +57,8 @@
 #' @return Numeric vector with same length as `x`.
 #'
 #' @seealso
-#' [age_lower()] Age equivalent of `period_lower()`
-#' [cohort_lower()] Cohort equivalent of `period_lower()`
+#' - [age_lower()] Age equivalent of `period_lower()`
+#' - [cohort_lower()] Cohort equivalent of `period_lower()`
 #'
 #' @examples
 #' x <- c("2025-2030", "2020-2025", "2030-2035")

@@ -27,6 +27,8 @@ age_standard(x)
 age_standard(factor(c("5to9", "10--14")))
 }
 \seealso{
-\code{\link[=period_standard]{period_standard()}} Period equivalent of \code{age_standard()}
-\code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{age_standard()}
+\itemize{
+\item \code{\link[=period_standard]{period_standard()}} Period equivalent of \code{age_standard()}
+\item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{age_standard()}
+}
 }

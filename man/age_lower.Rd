@@ -62,6 +62,8 @@ age_lower(c("0-4", "young people", "50plus"),
           x_fail = "silent")
 }
 \seealso{
-\code{\link[=period_lower]{period_lower()}} Period equivalent of \code{age_lower()}
-\code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{age_lower()}
+\itemize{
+\item \code{\link[=period_lower]{period_lower()}} Period equivalent of \code{age_lower()}
+\item \code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{age_lower()}
+}
 }

@@ -39,6 +39,8 @@ x <- c("0-4", "50+", "Total", NA, "20-24")
 age_levels_sort(x)
 }
 \seealso{
-\code{\link[=period_levels_sort]{period_levels_sort()}} Period equivalent of \code{age_levels_sort()}
-\code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{age_levels_sort()}
+\itemize{
+\item \code{\link[=period_levels_sort]{period_levels_sort()}} Period equivalent of \code{age_levels_sort()}
+\item \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{age_levels_sort()}
+}
 }

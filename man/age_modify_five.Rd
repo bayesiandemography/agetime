@@ -40,10 +40,12 @@ age_modify_ten(x)
 age_modify_life(x)
 }
 \seealso{
-\code{\link[=age_modify]{age_modify()}} Convert to general age groups
-\code{\link[=period_modify_five]{period_modify_five()}} Period equivalent of \code{age_modify_five()}
-\code{\link[=period_modify_ten]{period_modify_ten()}} Period equivalent of \code{age_modify_ten()}
-\code{\link[=cohort_modify_five]{cohort_modify_five()}} Cohort equivalent of \code{age_modify_five()}
-\code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Cohort equivalent of \code{age_modify_ten()}
-\code{\link[=age_levels_fill]{age_levels_fill()}} Add levels for intermediate age groups
+\itemize{
+\item \code{\link[=age_modify]{age_modify()}} Convert to general age groups
+\item \code{\link[=period_modify_five]{period_modify_five()}} Period equivalent of \code{age_modify_five()}
+\item \code{\link[=period_modify_ten]{period_modify_ten()}} Period equivalent of \code{age_modify_ten()}
+\item \code{\link[=cohort_modify_five]{cohort_modify_five()}} Cohort equivalent of \code{age_modify_five()}
+\item \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Cohort equivalent of \code{age_modify_ten()}
+\item \code{\link[=age_levels_fill]{age_levels_fill()}} Add levels for intermediate age groups
+}
 }

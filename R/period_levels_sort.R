@@ -19,8 +19,8 @@
 #' @return A factor, the same length as `x`.
 #'
 #' @seealso
-#' [age_levels_sort()] Age equivalent of `period_levels_sort()`
-#' [cohort_levels_sort()] Cohort equivalent of `period_levels_sort()`
+#' - [age_levels_sort()] Age equivalent of `period_levels_sort()`
+#' - [cohort_levels_sort()] Cohort equivalent of `period_levels_sort()`
 #'
 #' @examples
 #' x <- c("2020-2025", "2050", "Total", NA, "2025-2050")

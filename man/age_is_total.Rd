@@ -24,7 +24,9 @@ x <- c("20-24", "Total", "100+", "ALL")
 age_is_total(x)
 }
 \seealso{
-\code{\link[=age_is_open]{age_is_open()}} Find open age groups
-\code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{age_is_total()}
-\code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{age_is_total()}
+\itemize{
+\item \code{\link[=age_is_open]{age_is_open()}} Find open age groups
+\item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{age_is_total()}
+\item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{age_is_total()}
+}
 }

@@ -81,6 +81,8 @@ lab_gap <- lab[c(1, 3)]
 period_assert(lab_gap, no_gap = FALSE)
 }
 \seealso{
-\code{\link[=age_check]{age_check()}} Age equivalent of \code{period_check()}
-\code{\link[=cohort_check]{cohort_check()}} Cohort equivalent of \code{period_check()}
+\itemize{
+\item \code{\link[=age_check]{age_check()}} Age equivalent of \code{period_check()}
+\item \code{\link[=cohort_check]{cohort_check()}} Cohort equivalent of \code{period_check()}
+}
 }

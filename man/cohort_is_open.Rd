@@ -41,6 +41,8 @@ x <- c("2020", "<1900", "2040-2050", "<2022")
 cohort_is_open(x)
 }
 \seealso{
-\code{\link[=cohort_is_total]{cohort_is_total()}} Find cohort labels for totals
-\code{\link[=age_is_open]{age_is_open()}} Age equivalent of \code{cohort_is_open()}
+\itemize{
+\item \code{\link[=cohort_is_total]{cohort_is_total()}} Find cohort labels for totals
+\item \code{\link[=age_is_open]{age_is_open()}} Age equivalent of \code{cohort_is_open()}
+}
 }

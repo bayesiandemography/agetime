@@ -38,6 +38,8 @@ x <- c("2025to2030", "1910--1914", " 2022 ")
 period_standard(x)
 }
 \seealso{
-\code{\link[=age_standard]{age_standard()}} Age equivalent of \code{period_standard()}
-\code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{period_standard()}
+\itemize{
+\item \code{\link[=age_standard]{age_standard()}} Age equivalent of \code{period_standard()}
+\item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{period_standard()}
+}
 }

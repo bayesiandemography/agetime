@@ -63,10 +63,12 @@ period_modify_ten(x, offset = 1)
 period_modify_ten(x, offset = 2)
 }
 \seealso{
-\code{\link[=period_modify]{period_modify()}} Convert to general periods
-\code{\link[=age_modify_five]{age_modify_five()}} Age equivalent of \code{period_modify_five()}
-\code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{period_modify_ten()}
-\code{\link[=cohort_modify_five]{cohort_modify_five()}} Cohort equivalent of \code{period_modify_five()}
-\code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Cohort equivalent of \code{period_modify_ten()}
-\code{\link[=period_levels_fill]{period_levels_fill()}} Add levels for intermediate periods
+\itemize{
+\item \code{\link[=period_modify]{period_modify()}} Convert to general periods
+\item \code{\link[=age_modify_five]{age_modify_five()}} Age equivalent of \code{period_modify_five()}
+\item \code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{period_modify_ten()}
+\item \code{\link[=cohort_modify_five]{cohort_modify_five()}} Cohort equivalent of \code{period_modify_five()}
+\item \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Cohort equivalent of \code{period_modify_ten()}
+\item \code{\link[=period_levels_fill]{period_levels_fill()}} Add levels for intermediate periods
+}
 }

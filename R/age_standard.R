@@ -9,8 +9,8 @@
 #' @return A vector the same length as `x` with standardized labels.
 #'
 #' @seealso
-#' [period_standard()] Period equivalent of `age_standard()`
-#' [cohort_standard()] Cohort equivalent of `age_standard()`
+#' - [period_standard()] Period equivalent of `age_standard()`
+#' - [cohort_standard()] Cohort equivalent of `age_standard()`
 #'
 #' @examples
 #' x <- c("5to9", "10--14", "100plus")

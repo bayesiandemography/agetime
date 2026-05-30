@@ -23,8 +23,8 @@
 #' @return Numeric vector with same length as `x`.
 #'
 #' @seealso
-#' [period_lower()] Period equivalent of `age_lower()`
-#' [cohort_lower()] Cohort equivalent of `age_lower()`
+#' - [period_lower()] Period equivalent of `age_lower()`
+#' - [cohort_lower()] Cohort equivalent of `age_lower()`
 #'
 #' @examples
 #' x <- c("5-9", "10-14", "100+")

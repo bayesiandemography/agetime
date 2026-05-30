@@ -73,6 +73,8 @@ period_mapping(x = x, y = y, relation = "contained")
 period_mapping(x = x, y = y, relation = "overlaps")
 }
 \seealso{
-\code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{period_mapping()}
-\code{\link[=cohort_mapping]{cohort_mapping()}} Cohort equivalent of \code{period_mapping()}
+\itemize{
+\item \code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{period_mapping()}
+\item \code{\link[=cohort_mapping]{cohort_mapping()}} Cohort equivalent of \code{period_mapping()}
+}
 }

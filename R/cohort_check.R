@@ -17,8 +17,8 @@
 #' @return A list (`cohort_check()`) or `x` invisibly (`cohort_assert()`).
 #'
 #' @seealso
-#' [age_check()] Age equivalent of `cohort_check()`
-#' [period_check()] Period equivalent of `cohort_check()`
+#' - [age_check()] Age equivalent of `cohort_check()`
+#' - [period_check()] Period equivalent of `cohort_check()`
 #'
 #' @examples
 #' lab <- cohort_labels_five(lower_first = 2020,

@@ -21,8 +21,8 @@
 #' @return A list (`age_check()`) or `x` invisibly (`age_assert()`).
 #'
 #' @seealso
-#' [period_check()] Period equivalent of `age_check()`
-#' [cohort_check()] Cohort equivalent of `age_check()`
+#' - [period_check()] Period equivalent of `age_check()`
+#' - [cohort_check()] Cohort equivalent of `age_check()`
 #'
 #' @examples
 #' lab <- age_labels_life()

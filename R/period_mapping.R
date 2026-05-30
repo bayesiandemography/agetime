@@ -35,8 +35,8 @@
 #' @return A data.frame or matrix.
 #'
 #' @seealso
-#' [age_mapping()] Age equivalent of `period_mapping()`
-#' [cohort_mapping()] Cohort equivalent of `period_mapping()`
+#' - [age_mapping()] Age equivalent of `period_mapping()`
+#' - [cohort_mapping()] Cohort equivalent of `period_mapping()`
 #'
 #' @examples
 #' x <- c("2020-2025", "2030", "2025-2027")

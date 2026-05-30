@@ -82,6 +82,8 @@ x |>
   table()
 }
 \seealso{
-\code{\link[=period_levels_fill]{period_levels_fill()}} Period equivalent of \code{age_levels_fill()}
-\code{\link[=cohort_levels_fill]{cohort_levels_fill()}} Cohort equivalent of \code{age_levels_fill()}
+\itemize{
+\item \code{\link[=period_levels_fill]{period_levels_fill()}} Period equivalent of \code{age_levels_fill()}
+\item \code{\link[=cohort_levels_fill]{cohort_levels_fill()}} Cohort equivalent of \code{age_levels_fill()}
+}
 }

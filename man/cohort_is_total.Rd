@@ -40,7 +40,9 @@ x <- c("2020-2025", "Total", "1999", "ALL")
 cohort_is_total(x)
 }
 \seealso{
-\code{\link[=cohort_is_open]{cohort_is_open()}} Find open cohorts
-\code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{cohort_is_total()}
-\code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{cohort_is_total()}
+\itemize{
+\item \code{\link[=cohort_is_open]{cohort_is_open()}} Find open cohorts
+\item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{cohort_is_total()}
+\item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{cohort_is_total()}
+}
 }

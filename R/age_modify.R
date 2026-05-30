@@ -65,12 +65,12 @@ age_modify <- function(x,
 #' @inherit age_modify return
 #'
 #' @seealso
-#' [age_modify()] Convert to general age groups
-#' [period_modify_five()] Period equivalent of `age_modify_five()`
-#' [period_modify_ten()] Period equivalent of `age_modify_ten()`
-#' [cohort_modify_five()] Cohort equivalent of `age_modify_five()`
-#' [cohort_modify_ten()] Cohort equivalent of `age_modify_ten()`
-#' [age_levels_fill()] Add levels for intermediate age groups
+#' - [age_modify()] Convert to general age groups
+#' - [period_modify_five()] Period equivalent of `age_modify_five()`
+#' - [period_modify_ten()] Period equivalent of `age_modify_ten()`
+#' - [cohort_modify_five()] Cohort equivalent of `age_modify_five()`
+#' - [cohort_modify_ten()] Cohort equivalent of `age_modify_ten()`
+#' - [age_levels_fill()] Add levels for intermediate age groups
 #' 
 #' @examples
 #' x <- c("1-3", "87-89", "0", "91+", "total", "52")

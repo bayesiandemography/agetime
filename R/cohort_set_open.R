@@ -10,7 +10,7 @@
 #' @return A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso
-#' [age_set_open()] Age equivalent of `cohort_set_open()`
+#' - [age_set_open()] Age equivalent of `cohort_set_open()`
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")

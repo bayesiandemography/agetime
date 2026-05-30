@@ -139,6 +139,8 @@ period_lower(c("2000-2005", "long time ago"),
              x_fail = "silent")
 }
 \seealso{
-\code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
-\code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
+\itemize{
+\item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
+\item \code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
+}
 }

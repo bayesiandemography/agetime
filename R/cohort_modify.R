@@ -66,12 +66,12 @@ cohort_modify <- function(x,
 #' @inherit cohort_modify return
 #'
 #' @seealso
-#' [cohort_modify()] Convert to general cohorts
-#' [age_modify_five()] Age equivalent of `cohort_modify_five()`
-#' [age_modify_ten()] Age equivalent of `cohort_modify_ten()`
-#' [period_modify_five()] Period equivalent of `cohort_modify_five()`
-#' [period_modify_ten()] Period equivalent of `cohort_modify_ten()`
-#' [cohort_levels_fill()] Add levels for intermediate cohorts
+#' - [cohort_modify()] Convert to general cohorts
+#' - [age_modify_five()] Age equivalent of `cohort_modify_five()`
+#' - [age_modify_ten()] Age equivalent of `cohort_modify_ten()`
+#' - [period_modify_five()] Period equivalent of `cohort_modify_five()`
+#' - [period_modify_ten()] Period equivalent of `cohort_modify_ten()`
+#' - [cohort_levels_fill()] Add levels for intermediate cohorts
 #' 
 #' @examples
 #' x <- c("2002-2004", "1987-1989", "2000", "Total")

@@ -25,6 +25,8 @@ x <- c("20+", "infant", "100+", "60to79")
 age_is_open(x)
 }
 \seealso{
-\code{\link[=age_is_total]{age_is_total()}} Find age labels for totals
-\code{\link[=cohort_is_open]{cohort_is_open()}} Cohort equivalent of \code{age_is_open()}
+\itemize{
+\item \code{\link[=age_is_total]{age_is_total()}} Find age labels for totals
+\item \code{\link[=cohort_is_open]{cohort_is_open()}} Cohort equivalent of \code{age_is_open()}
+}
 }
