@@ -1,24 +1,25 @@
-#' Create a New Set of Unique Age Labels
+#' Create New Age Group Labels
 #'
+#' Create a new set of age group labels.
+
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
 #' @param open Whether the oldest age group
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
-#' @param lower_first The lower limit of the
-#' youngest age group. 
-#' @param lower_last The lower limit of the
+#' @param lower_first Lower limit of
+#' youngest age group.
+#' @param lower_last Lower limit of
 #' last age group.
 #' @param include_total Whether to include a
 #' `"Total"` category.
 #' @param include_na Whether to include
 #' an `NA` category.
-#'
 #' @returns A character vector.
 #'
 #' @seealso
-#' [period_labels()] Period equivalent of `age_labels()`
-#' [cohort_labels()] Cohort equivalent of `age_labels()`
+#' - [period_labels()] Period equivalent of `age_labels()`
+#' - [cohort_labels()] Cohort equivalent of `age_labels()`
 #'
 #' @examples
 #' ## default 5-year age groups

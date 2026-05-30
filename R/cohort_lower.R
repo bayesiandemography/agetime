@@ -10,7 +10,7 @@
 #' to filter on cohorts.
 #' See below for examples.
 #'
-#' @param x A vector of cohort labels.
+#' @param x Vector of cohort labels.
 #' @param x_one Whether labels
 #' for one-year cohorts are based on the
 #' lower or upper limit of the period.
@@ -23,12 +23,11 @@
 #' @param x_fail Action if element of `x`
 #' cannot be parsed: `"error"` (the default),
 #' `"warn"`, or `"silent"`.
-#'
 #' @return Numeric vector with same length as `x`.
 #'
 #' @seealso
-#' [age_lower()] Age equivalent of `cohort_lower()`
-#' [period_lower()] Period equivalent of `cohort_lower()`
+#' - [age_lower()] Age equivalent of `cohort_lower()`
+#' - [period_lower()] Period equivalent of `cohort_lower()`
 #'
 #' @examples
 #' x <- c("2025-2030", "<2025", "2030-2035")

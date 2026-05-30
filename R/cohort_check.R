@@ -6,15 +6,14 @@
 #' conform to expectations (`cohort_assert`).
 #'
 #' @inheritParams cohort_lower
-#' @param no_overlap No cohorts overlap
+#' @param no_overlap No cohorts overlap.
 #' @param no_gap The cohorts span the entire
 #' range from the lower limit of the earliest cohort
-#' to the upper limit of the latest cohort
-#' @param no_total No "Total" label
-#' @param no_na No NA label
+#' to the upper limit of the latest cohort.
+#' @param no_total No "Total" label.
+#' @param no_na No NA label.
 #' @param include_open One or more cohorts
-#' has no lower limit. 
-#'
+#' has no lower limit.
 #' @return A list (`cohort_check()`) or `x` invisibly (`cohort_assert()`).
 #'
 #' @seealso

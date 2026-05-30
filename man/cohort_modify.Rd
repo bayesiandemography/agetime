@@ -14,7 +14,7 @@ cohort_modify(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{breaks}{Boundaries between cohorts.
 A numeric vector.}

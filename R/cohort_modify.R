@@ -10,7 +10,6 @@
 #' @param open Whether the first cohort
 #' is "open", i.e. has no lower limit.
 #' Default is `FALSE`.
-#'
 #' @return A vector the same length as `x` with modified labels.
 #'
 #' @examples

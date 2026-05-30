@@ -1,22 +1,22 @@
-#' Create a New Set of Unique Period Labels
+#' Create New Period Labels
+#'
+#' Create a new set of period labels.
+
 #'
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods
 #' A numeric vector.
-#' @param lower_first The lower limit of the
-#' first period.
-#' @param lower_last The lower limit of the
-#' last period.
+#' @param lower_first Lower limit of first period.
+#' @param lower_last Lower limit of last period.
 #' @param include_total Whether to include a
 #' `"Total"` category.
 #' @param include_na Whether to include
 #' an `NA` category.
-#'
 #' @returns A character vector.
 #'
 #' @seealso
-#' [age_labels()] Age equivalent of `period_labels()`
-#' [cohort_labels()] Cohort equivalent of `period_labels()`
+#' - [age_labels()] Age equivalent of `period_labels()`
+#' - [cohort_labels()] Cohort equivalent of `period_labels()`
 #'
 #' @examples
 #' ## 5-year periods

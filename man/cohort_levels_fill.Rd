@@ -37,7 +37,7 @@ cohort_levels_fill_ten(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{breaks}{Boundaries of the
 the newly-created cohorts.

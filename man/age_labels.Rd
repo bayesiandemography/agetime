@@ -6,7 +6,7 @@
 \alias{age_labels_five}
 \alias{age_labels_ten}
 \alias{age_labels_life}
-\title{Create a New Set of Unique Age Labels}
+\title{Create New Age Group Labels}
 \usage{
 age_labels(breaks, open = TRUE, include_total = FALSE, include_na = FALSE)
 
@@ -50,17 +50,17 @@ Default is \code{TRUE}.}
 \item{include_na}{Whether to include
 an \code{NA} category.}
 
-\item{lower_first}{The lower limit of the
+\item{lower_first}{Lower limit of
 youngest age group.}
 
-\item{lower_last}{The lower limit of the
+\item{lower_last}{Lower limit of
 last age group.}
 }
 \value{
 A character vector.
 }
 \description{
-Create a New Set of Unique Age Labels
+Create a new set of age group labels.
 }
 \examples{
 ## default 5-year age groups
@@ -93,6 +93,8 @@ age_labels(breaks = c(0, 5, 10, 14, 18),
 age_labels_life(lower_last = 75)
 }
 \seealso{
-\code{\link[=period_labels]{period_labels()}} Period equivalent of \code{age_labels()}
-\code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{age_labels()}
+\itemize{
+\item \code{\link[=period_labels]{period_labels()}} Period equivalent of \code{age_labels()}
+\item \code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{age_labels()}
+}
 }

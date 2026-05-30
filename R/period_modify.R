@@ -7,7 +7,6 @@
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
-#'
 #' @return A vector the same length as `x` with modified labels.
 #'
 #' @examples

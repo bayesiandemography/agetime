@@ -13,7 +13,7 @@ cohort_levels_sort(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{decreasing}{Whether sort is
 increasing or decreasing. Default

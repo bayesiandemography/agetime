@@ -15,7 +15,7 @@ cohort_extend(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{n}{Number of cohorts to add.
 Default is \code{1}.}

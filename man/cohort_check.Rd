@@ -30,17 +30,17 @@ cohort_assert(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
-\item{no_overlap}{No cohorts overlap}
+\item{no_overlap}{No cohorts overlap.}
 
 \item{no_gap}{The cohorts span the entire
 range from the lower limit of the earliest cohort
-to the upper limit of the latest cohort}
+to the upper limit of the latest cohort.}
 
-\item{no_total}{No "Total" label}
+\item{no_total}{No "Total" label.}
 
-\item{no_na}{No NA label}
+\item{no_na}{No NA label.}
 
 \item{include_open}{One or more cohorts
 has no lower limit.}

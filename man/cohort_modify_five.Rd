@@ -22,7 +22,7 @@ cohort_modify_ten(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{offset}{Parameter controlling
 alignment of cohorts. Default is \code{0}.}

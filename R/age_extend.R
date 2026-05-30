@@ -12,10 +12,9 @@
 #' @param n Number of age groups to add.
 #' Default is `1`.
 #' @param width Width of the age groups
-#' to be added. 
+#' to be added.
 #' @param include_x Should the return value
 #' include `x`? Default is `TRUE`.
-#'
 #' @return A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso

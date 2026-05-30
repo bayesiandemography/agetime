@@ -13,7 +13,7 @@ cohort_set_open(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{open}{Upper limit of open cohort.}
 

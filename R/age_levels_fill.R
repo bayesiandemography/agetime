@@ -22,7 +22,6 @@
 #' the newly-created age groups.
 #' (Boundaries supplied by existing
 #' age groups can be omitted.)
-#'
 #' @return A factor, the same length as `x`.
 #'
 #' @seealso

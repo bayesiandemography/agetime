@@ -1,7 +1,6 @@
 #' Does First Interval Contain Second
 #'
-#' @param int1,int2 Numeric vectors of length 2
-#'
+#' @param int1,int2 Numeric vectors of length 2.
 #' @returns TRUE, FALSE, or NA
 #'
 #' @noRd
@@ -15,8 +14,7 @@ does_int1_contain_int2 <- function(int1, int2) {
 
 #' Does First Interval Equal Second
 #'
-#' @param int1,int2 Numeric vectors of length 2
-#'
+#' @param int1,int2 Numeric vectors of length 2.
 #' @returns TRUE or FALSE, or NA
 #'
 #' @noRd
@@ -33,8 +31,7 @@ does_int1_equal_int2 <- function(int1, int2) {
 ## HAS_TESTS
 #' Does First Interval Overlap Second
 #'
-#' @param int1,int2 Numeric vectors of length 2
-#'
+#' @param int1,int2 Numeric vectors of length 2.
 #' @returns TRUE, FALSE, or NA
 #'
 #' @noRd
@@ -51,8 +48,7 @@ does_int1_overlap_int2 <- function(int1, int2) {
 
 #' Do Intervals from One Matrix Contain Intervals from Another Matrix
 #'
-#' @param m1,m2 Matrices with 2 columns
-#'
+#' @param m1,m2 Matrices with 2 columns.
 #' @returns Logical matrix with nrow(m1) rows and nrow(m1) columns
 #'
 #' @noRd
@@ -72,8 +68,7 @@ does_m1_contain_m2 <- function(m1, m2) {
 
 #' Do Intervals from One Matrix Equal Intervals from Another Matrix
 #'
-#' @param m1,m2 Matrices with 2 columns
-#'
+#' @param m1,m2 Matrices with 2 columns.
 #' @returns Logical matrix with nrow(m1) rows and nrow(m1) columns
 #'
 #' @noRd
@@ -95,8 +90,7 @@ does_m1_equal_m2 <- function(m1, m2) {
 ## HAS_TESTS
 #' Do Intervals from One Matrix Overlap Intervals from Another Matrix
 #'
-#' @param m1,m2 Matrices with 2 columns
-#'
+#' @param m1,m2 Matrices with 2 columns.
 #' @returns Logical matrix with nrow(m1) rows and nrow(m1) columns
 #'
 #' @noRd
@@ -116,8 +110,7 @@ does_m1_overlap_m2 <- function(m1, m2) {
 
 #' Is the First Interval Inside the Second
 #'
-#' @param int1,int2 Numeric vectors of length 2
-#'
+#' @param int1,int2 Numeric vectors of length 2.
 #' @returns TRUE, FALSE, or NA
 #'
 #' @noRd
@@ -131,8 +124,7 @@ is_int1_inside_int2 <- function(int1, int2) {
 
 #' Are Intervals from One Matrix Inside Intervals from Another Matrix
 #'
-#' @param m1,m2 Matrices with 2 columns
-#'
+#' @param m1,m2 Matrices with 2 columns.
 #' @returns Logical matrix with nrow(m1) rows and nrow(m1) columns
 #'
 #' @noRd

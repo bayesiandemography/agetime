@@ -10,7 +10,6 @@
 #' @param open Whether the oldest age group
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
-#'
 #' @return A vector the same length as `x` with modified labels.
 #'
 #' @examples

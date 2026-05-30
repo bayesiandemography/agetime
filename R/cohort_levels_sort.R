@@ -16,7 +16,6 @@
 #' @param decreasing Whether sort is
 #' increasing or decreasing. Default
 #' is `FALSE`.
-#'
 #' @return A factor, the same length as `x`.
 #'
 #' @seealso

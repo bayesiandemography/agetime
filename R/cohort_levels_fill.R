@@ -20,7 +20,6 @@
 #' the newly-created cohorts.
 #' (Boundaries supplied by existing
 #' cohorts can be omitted.)
-#'
 #' @return A factor, the same length as `x`.
 #'
 #' @seealso

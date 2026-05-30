@@ -20,7 +20,6 @@
 #' the newly-created periods.
 #' (Boundaries supplied by existing
 #' periods can be omitted.)
-#'
 #' @return A factor, the same length as `x`.
 #'
 #' @seealso

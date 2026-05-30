@@ -240,11 +240,10 @@ make_m_contains <- function(breaks,
 #' Make a Mapping Between Two Sets of Labels
 #'
 #' @param intervals_x,intervals_y Objects of class "agetime_intervals"
-#' constructed from two label vectors
+#' constructed from two label vectors.
 #' @param relation `"equals"`,
-#' `"contains"`, `"contained"` or `"overlaps"`
-#' @param return_val Type of return value
-#'
+#' `"contains"`, `"contained"` or `"overlaps"`.
+#' @param return_val Type of return value.
 #' @returns Tibble or matrix
 #'
 #' @noRd

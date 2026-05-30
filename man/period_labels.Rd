@@ -5,7 +5,7 @@
 \alias{period_labels_one}
 \alias{period_labels_five}
 \alias{period_labels_ten}
-\title{Create a New Set of Unique Period Labels}
+\title{Create New Period Labels}
 \usage{
 period_labels(
   breaks,
@@ -61,17 +61,15 @@ Choices are \code{"include"} (the default) and
 \item{include_na}{Whether to include
 an \code{NA} category.}
 
-\item{lower_first}{The lower limit of the
-first period.}
+\item{lower_first}{Lower limit of first period.}
 
-\item{lower_last}{The lower limit of the
-last period.}
+\item{lower_last}{Lower limit of last period.}
 }
 \value{
 A character vector.
 }
 \description{
-Create a New Set of Unique Period Labels
+Create a new set of period labels.
 }
 \examples{
 ## 5-year periods
@@ -103,6 +101,8 @@ period_labels_ten(lower_first = 2000,
                   include_na = TRUE)
 }
 \seealso{
-\code{\link[=age_labels]{age_labels()}} Age equivalent of \code{period_labels()}
-\code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{period_labels()}
+\itemize{
+\item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{period_labels()}
+\item \code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{period_labels()}
+}
 }

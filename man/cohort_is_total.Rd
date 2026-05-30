@@ -12,7 +12,7 @@ cohort_is_total(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{x_one}{Whether labels
 for one-year cohorts are based on the

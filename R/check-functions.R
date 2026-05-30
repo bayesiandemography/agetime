@@ -102,12 +102,11 @@ check_m_contains <- function(m_contains, label_type) {
 #' and optionally within a specified range
 #' and divisible by a specified number.
 #'
-#' @param n A whole number
-#' @param nm_n Name for 'n' to be used in error messages
+#' @param n A whole number.
+#' @param nm_n Name for 'n' to be used in error messages.
 #' @param min Minimum value 'n' can take. Can be NULL.
 #' @param max Maximum values 'n' can take. Can be NULL.
 #' @param divisible_by 'n' must be divisible by this. Can be NULL.
-#'
 #' @returns
 #' If all tests pass, `check_n()` returns `TRUE` invisibly.
 #' Otherwise it throws an error.

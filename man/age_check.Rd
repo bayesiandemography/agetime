@@ -32,15 +32,15 @@ age_assert(
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{no_overlap}{No age groups overlap}
+\item{no_overlap}{No age groups overlap.}
 
-\item{no_gap}{The age groups span the entire
-range from the lower limit of the youngest age
-group to the upper limit of the oldest age group}
+\item{no_gap}{Age groups span entire
+range from lower limit of youngest age
+group to upper limit of oldest age group.}
 
-\item{no_total}{No "Total" age group}
+\item{no_total}{No "Total" age group.}
 
-\item{no_na}{No NA age group}
+\item{no_na}{No NA age group.}
 
 \item{include_zero}{One or more age groups
 have a lower limit of zero.}

@@ -6,13 +6,12 @@
 #' conform to expectations (`period_assert`).
 #'
 #' @inheritParams period_lower
-#' @param no_overlap No periods overlap
+#' @param no_overlap No periods overlap.
 #' @param no_gap The periods span the entire
 #' range from the lower limit of the earliest period
-#' to the upper limit of the latest period
-#' @param no_total No "Total" label
-#' @param no_na No NA label
-#'
+#' to the upper limit of the latest period.
+#' @param no_total No "Total" label.
+#' @param no_na No NA label.
 #' @return A list (`period_check()`) or `x` invisibly (`period_assert()`).
 #'
 #' @seealso

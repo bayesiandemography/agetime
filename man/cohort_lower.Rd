@@ -37,7 +37,7 @@ cohort_width(
 )
 }
 \arguments{
-\item{x}{A vector of cohort labels.}
+\item{x}{Vector of cohort labels.}
 
 \item{x_one}{Whether labels
 for one-year cohorts are based on the
@@ -105,6 +105,8 @@ cohort_lower(c("2000-2005", "long time ago"),
              x_fail = "silent")
 }
 \seealso{
-\code{\link[=age_lower]{age_lower()}} Age equivalent of \code{cohort_lower()}
-\code{\link[=period_lower]{period_lower()}} Period equivalent of \code{cohort_lower()}
+\itemize{
+\item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{cohort_lower()}
+\item \code{\link[=period_lower]{period_lower()}} Period equivalent of \code{cohort_lower()}
+}
 }

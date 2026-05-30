@@ -50,11 +50,10 @@
 #' @param x_multi How to interpret
 #' labels in `x` that describe multi-year periods.
 #' Choices are `"include"` (the default) and
-#' `"exclude"`. 
+#' `"exclude"`.
 #' @param x_fail Action if element of `x`
 #' cannot be parsed: `"error"` (the default),
 #' `"warn"`, or `"silent"`.
-#'
 #' @return Numeric vector with same length as `x`.
 #'
 #' @seealso

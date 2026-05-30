@@ -1,25 +1,26 @@
-#' Create a New Set of Unique Cohort Labels
+#' Create New Cohort Labels
 #'
+#' Create a new set of cohort labels.
+
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries between cohorts
 #' A numeric vector.
-#' @param lower_first The lower limit of the
+#' @param lower_first Lower limit of
 #' first cohort.
-#' @param lower_last The lower limit of the
+#' @param lower_last Lower limit of
 #' last cohort.
-#' @param open Whether the first cohort
+#' @param open Whether first cohort
 #' is "open", i.e. has no lower limit.
 #' Default is `FALSE`.
 #' @param include_total Whether to include a
 #' `"Total"` category.
 #' @param include_na Whether to include
 #' an `NA` category.
-#'
 #' @returns A character vector.
 #'
 #' @seealso
-#' [age_labels()] Age equivalent of `cohort_labels()`
-#' [period_labels()] Period equivalent of `cohort_labels()`
+#' - [age_labels()] Age equivalent of `cohort_labels()`
+#' - [period_labels()] Period equivalent of `cohort_labels()`
 #'
 #' @examples
 #' ## 5-year cohorts

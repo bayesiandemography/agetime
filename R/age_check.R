@@ -6,19 +6,18 @@
 #' conform to expectations (`age_assert`).
 #'
 #' @inheritParams age_lower
-#' @param no_overlap No age groups overlap
-#' @param no_gap The age groups span the entire
-#' range from the lower limit of the youngest age
-#' group to the upper limit of the oldest age group
-#' @param no_total No "Total" age group
-#' @param no_na No NA age group
+#' @param no_overlap No age groups overlap.
+#' @param no_gap Age groups span entire
+#' range from lower limit of youngest age
+#' group to upper limit of oldest age group.
+#' @param no_total No "Total" age group.
+#' @param no_na No NA age group.
 #' @param include_zero One or more age groups
 #' have a lower limit of zero.
 #' @param include_open One or more age groups
-#' has no upper limit. 
+#' has no upper limit.
 #' @param valid_life All labels valid for
 #' (abridged) life table.
-#'
 #' @return A list (`age_check()`) or `x` invisibly (`age_assert()`).
 #'
 #' @seealso

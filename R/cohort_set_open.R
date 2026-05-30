@@ -7,7 +7,6 @@
 #' 
 #' @inheritParams cohort_lower
 #' @param open Upper limit of open cohort.
-#'
 #' @return A factor if `x` is a factor; otherwise a character vector.
 #'
 #' @seealso

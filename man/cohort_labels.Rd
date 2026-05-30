@@ -5,7 +5,7 @@
 \alias{cohort_labels_one}
 \alias{cohort_labels_five}
 \alias{cohort_labels_ten}
-\title{Create a New Set of Unique Cohort Labels}
+\title{Create New Cohort Labels}
 \usage{
 cohort_labels(
   breaks,
@@ -50,7 +50,7 @@ cohort_labels_ten(
 \item{breaks}{Boundaries between cohorts
 A numeric vector.}
 
-\item{open}{Whether the first cohort
+\item{open}{Whether first cohort
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
@@ -71,17 +71,17 @@ Default is \code{"include"}.}
 \item{include_na}{Whether to include
 an \code{NA} category.}
 
-\item{lower_first}{The lower limit of the
+\item{lower_first}{Lower limit of
 first cohort.}
 
-\item{lower_last}{The lower limit of the
+\item{lower_last}{Lower limit of
 last cohort.}
 }
 \value{
 A character vector.
 }
 \description{
-Create a New Set of Unique Cohort Labels
+Create a new set of cohort labels.
 }
 \examples{
 ## 5-year cohorts
@@ -118,6 +118,8 @@ cohort_labels_ten(lower_first = 2000,
                   include_na = TRUE)
 }
 \seealso{
-\code{\link[=age_labels]{age_labels()}} Age equivalent of \code{cohort_labels()}
-\code{\link[=period_labels]{period_labels()}} Period equivalent of \code{cohort_labels()}
+\itemize{
+\item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{cohort_labels()}
+\item \code{\link[=period_labels]{period_labels()}} Period equivalent of \code{cohort_labels()}
+}
 }

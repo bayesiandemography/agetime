@@ -32,7 +32,6 @@
 #' @param return_val The format of the
 #' return value. The choices are `"data.frame"`
 #' (the default) or `"matrix"`.
-#'
 #' @return A data.frame or matrix.
 #'
 #' @seealso

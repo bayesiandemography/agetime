@@ -30,15 +30,15 @@ period_assert(
 \arguments{
 \item{x}{Vector of period labels.}
 
-\item{no_overlap}{No periods overlap}
+\item{no_overlap}{No periods overlap.}
 
 \item{no_gap}{The periods span the entire
 range from the lower limit of the earliest period
-to the upper limit of the latest period}
+to the upper limit of the latest period.}
 
-\item{no_total}{No "Total" label}
+\item{no_total}{No "Total" label.}
 
-\item{no_na}{No NA label}
+\item{no_na}{No NA label.}
 
 \item{x_one}{How to interpret
 labels in \code{x} that describe one-year periods.
