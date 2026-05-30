@@ -16,6 +16,7 @@
 #' `details`; for `period_assert()`, `x` invisibly or an error.
 #'
 #' @seealso
+#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_check()] Age equivalent of `period_check()`
 #' - [cohort_check()] Cohort equivalent of `period_check()`
 #'

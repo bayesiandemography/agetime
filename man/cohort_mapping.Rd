@@ -30,14 +30,14 @@ return value. The choices are \code{"data.frame"}
 (the default) or \code{"matrix"}.}
 
 \item{x_one}{Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is \code{"lower"}.}
 
 \item{x_multi}{Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is \code{"include"}.}
 
 \item{x_fail}{Action if element of \code{x}
@@ -76,6 +76,7 @@ cohort_mapping(x = x, y = y, relation = "overlaps")
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{cohort_mapping()}
 \item \code{\link[=period_mapping]{period_mapping()}} Period equivalent of \code{cohort_mapping()}
 }

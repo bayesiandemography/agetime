@@ -83,6 +83,7 @@ period_assert(lab_gap, no_gap = FALSE)
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_check]{age_check()}} Age equivalent of \code{period_check()}
 \item \code{\link[=cohort_check]{cohort_check()}} Cohort equivalent of \code{period_check()}
 }

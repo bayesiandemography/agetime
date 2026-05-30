@@ -5,7 +5,7 @@
 \alias{age_mid}
 \alias{age_upper}
 \alias{age_width}
-\title{Lower Limits, Upper Limits, Widths
+\title{Lower Limits, Upper Limits, Widths,
 and Midpoints of Age Groups}
 \usage{
 age_lower(x, x_fail = c("error", "warn", "silent"))
@@ -28,16 +28,16 @@ Numeric vector with the same length as \code{x}.
 }
 \description{
 Calculate lower limits, upper limits,
-widths and midpoints for age groups.
+widths, and midpoints for age groups.
 }
 \details{
 Lower and upper limits can be used
-filter on age. See below for examples.
+to filter on age. See below for examples.
 
 \code{age_mid()} uses the formula
-\code{age_lower(x) + 0.5 * age_width(x)},
+\code{age_mid(x) = age_lower(x) + 0.5 * age_width(x)},
 except for open age groups, such as \code{"100+"},
-where it uses \code{age_lower(x) + 0.5 * median_width}
+where it uses \code{age_mid(x) = age_lower(x) + 0.5 * median_width}
 where \code{median_width} is the median over
 closed intervals.
 }

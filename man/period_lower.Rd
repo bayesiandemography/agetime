@@ -64,42 +64,6 @@ Lower and upper limits can be used
 to filter on periods.
 See below for examples.
 }
-\section{Interpretation parameters}{
-
-
-\code{x_one}, \code{x_multi}, and \code{x_fail}
-control how \pkg{agetime} understands and processes
-values in \code{x}.
-\itemize{
-\item \code{x_one}. How to interpret a one-year period
-label such as \code{"2030"}. When \code{x_one} is \code{"lower"},
-\pkg{agetime} assumes that the label
-is based on the lower limit, so that
-\code{"2030"} refers to a period such as
-1 January 2030 to 1 January 2031.
-When \code{x_one} is \code{"upper"},
-\pkg{agetime} assumes that the label is based on the
-upper limit, so that \code{"2030"} refers to a period
-such as 30 June 2029 to 30 June 2030.
-\item \code{x_multi}. How to interpret a multi-year period
-label such as \code{"2030-2035"}.
-When \code{x_multi} is \code{"include"},
-\pkg{agetime} assumes that the label includes the upper limit,
-so that \code{"2030-2035"} refers to a period such as
-30 June 2030 to 30 June 2035.
-When \code{x_multi} is \code{"exclude"},
-\pkg{agetime} assumes that the label excludes
-the upper limit, so that \code{"2030-2035"} refers to a
-period such as 1 January 2030 to 1 January 2036.
-\item \code{x_fail}. Action \pkg{agetime} should take
-if it can't interpret a label. When \code{x_fail} is
-\code{"error"}, \pkg{agetime} throws an error.
-When \code{x_fail} is \code{"warn"},
-\pkg{agetime} throws a warning. When \code{interpet_fail}
-is \code{"silent"}, \pkg{agetime} ignores the label and carries on.
-}
-}
-
 \examples{
 x <- c("2025-2030", "2020-2025", "2030-2035")
 period_lower(x)
@@ -140,6 +104,7 @@ period_lower(c("2000-2005", "long time ago"),
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
 \item \code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
 }

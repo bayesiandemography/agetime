@@ -8,6 +8,7 @@
 #' @inherit age_standard return
 #'
 #' @seealso
+#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_standard()] Age equivalent of `period_standard()`
 #' - [cohort_standard()] Cohort equivalent of `period_standard()`
 #'

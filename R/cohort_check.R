@@ -18,6 +18,7 @@
 #' `details`; for `cohort_assert()`, `x` invisibly or an error.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_check()] Age equivalent of `cohort_check()`
 #' - [period_check()] Period equivalent of `cohort_check()`
 #'

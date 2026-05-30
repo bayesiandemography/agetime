@@ -102,6 +102,7 @@ x |>
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_levels_fill]{age_levels_fill()}} Age equivalent of \code{period_levels_fill()}
 \item \code{\link[=cohort_levels_fill]{cohort_levels_fill()}} Cohort equivalent of \code{period_levels_fill()}
 }

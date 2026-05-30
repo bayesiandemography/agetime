@@ -10,39 +10,6 @@
 #' to filter on periods.
 #' See below for examples.
 #'
-#' @section Interpretation parameters:
-#'
-#' `x_one`, `x_multi`, and `x_fail`
-#' control how \pkg{agetime} understands and processes
-#' values in `x`.
-#'
-#' - `x_one`. How to interpret a one-year period
-#'   label such as `"2030"`. When `x_one` is `"lower"`,
-#'   \pkg{agetime} assumes that the label
-#'   is based on the lower limit, so that
-#'   `"2030"` refers to a period such as
-#'   1 January 2030 to 1 January 2031.
-#'   When `x_one` is `"upper"`,
-#'   \pkg{agetime} assumes that the label is based on the
-#'   upper limit, so that `"2030"` refers to a period
-#'   such as 30 June 2029 to 30 June 2030.
-#' - `x_multi`. How to interpret a multi-year period
-#'   label such as `"2030-2035"`.
-#'   When `x_multi` is `"include"`,
-#'   \pkg{agetime} assumes that the label includes the upper limit,
-#'   so that `"2030-2035"` refers to a period such as
-#'   30 June 2030 to 30 June 2035.
-#'   When `x_multi` is `"exclude"`,
-#'   \pkg{agetime} assumes that the label excludes
-#'   the upper limit, so that `"2030-2035"` refers to a
-#'   period such as 1 January 2030 to 1 January 2036.
-#' - `x_fail`. Action \pkg{agetime} should take
-#'   if it can't interpret a label. When `x_fail` is
-#'   `"error"`, \pkg{agetime} throws an error.
-#'   When `x_fail` is `"warn"`,
-#'   \pkg{agetime} throws a warning. When `interpet_fail`
-#'   is `"silent"`, \pkg{agetime} ignores the label and carries on.
-#'
 #' @param x Vector of period labels.
 #' @param x_one How to interpret
 #' labels in `x` that describe one-year periods.
@@ -57,6 +24,7 @@
 #' @return Numeric vector with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_lower()] Age equivalent of `period_lower()`
 #' - [cohort_lower()] Cohort equivalent of `period_lower()`
 #'

@@ -103,6 +103,7 @@ period_labels_ten(lower_first = 2000,
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{period_labels()}
 \item \code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{period_labels()}
 }

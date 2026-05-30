@@ -19,6 +19,7 @@
 #' @return Factor with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_levels_sort()] Age equivalent of `cohort_levels_sort()`
 #' - [period_levels_sort()] Period equivalent of `cohort_levels_sort()`
 #'

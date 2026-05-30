@@ -20,6 +20,7 @@
 #' Length depends on the function arguments.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_labels()] Age equivalent of `cohort_labels()`
 #' - [period_labels()] Period equivalent of `cohort_labels()`
 #'

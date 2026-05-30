@@ -43,14 +43,14 @@ cohort_levels_fill_ten(
 Boundaries for existing cohorts can be omitted.}
 
 \item{x_one}{Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is \code{"lower"}.}
 
 \item{x_multi}{Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is \code{"include"}.}
 
 \item{x_fail}{Action if element of \code{x}
@@ -104,6 +104,7 @@ x |>
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_levels_fill]{age_levels_fill()}} Age equivalent of \code{cohort_levels_fill()}
 \item \code{\link[=period_levels_fill]{period_levels_fill()}} Period equivalent of \code{cohort_levels_fill()}
 }

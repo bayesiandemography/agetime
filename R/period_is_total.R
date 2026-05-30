@@ -8,6 +8,7 @@
 #' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_is_total()] Age equivalent of `period_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `period_is_total()`
 #'

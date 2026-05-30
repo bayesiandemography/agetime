@@ -35,6 +35,7 @@
 #' @return Data frame or matrix, depending on `return_val`.
 #'
 #' @seealso
+#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_mapping()] Age equivalent of `period_mapping()`
 #' - [cohort_mapping()] Cohort equivalent of `period_mapping()`
 #'

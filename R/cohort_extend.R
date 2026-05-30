@@ -19,6 +19,7 @@
 #' Length is `n`, or `length(x) + n` when `include_x` is `TRUE`.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_extend()] Age equivalent of `cohort_extend()`
 #' - [period_extend()] Period equivalent of `cohort_extend()`
 #'

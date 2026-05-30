@@ -55,14 +55,14 @@ is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
 \item{x_one}{Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is \code{"lower"}.}
 
 \item{x_multi}{Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is \code{"include"}.}
 
 \item{include_total}{Whether to include a
@@ -120,6 +120,7 @@ cohort_labels_ten(lower_first = 2000,
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{cohort_labels()}
 \item \code{\link[=period_labels]{period_labels()}} Period equivalent of \code{cohort_labels()}
 }

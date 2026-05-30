@@ -39,6 +39,7 @@ period_standard(x)
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_standard]{age_standard()}} Age equivalent of \code{period_standard()}
 \item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{period_standard()}
 }

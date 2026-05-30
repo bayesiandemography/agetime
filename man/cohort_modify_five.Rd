@@ -28,14 +28,14 @@ cohort_modify_ten(
 alignment of cohorts. Default is \code{0}.}
 
 \item{x_one}{Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is \code{"lower"}.}
 
 \item{x_multi}{Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is \code{"include"}.}
 
 \item{x_fail}{Action if element of \code{x}
@@ -66,6 +66,7 @@ cohort_modify_ten(x, offset = 2)
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=cohort_modify]{cohort_modify()}} Convert to general cohorts
 \item \code{\link[=age_modify_five]{age_modify_five()}} Age equivalent of \code{cohort_modify_five()}
 \item \code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{cohort_modify_ten()}

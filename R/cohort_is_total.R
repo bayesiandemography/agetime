@@ -8,6 +8,7 @@
 #' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [cohort_is_open()] Find open cohorts
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
@@ -41,6 +42,7 @@ cohort_is_total <- function(x,
 #' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [cohort_is_total()] Find cohort labels for totals
 #' - [age_is_open()] Age equivalent of `cohort_is_open()`
 #'

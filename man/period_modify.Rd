@@ -46,6 +46,7 @@ period_modify(x, breaks = c(1970, 2000, 2005, 2015))
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=period_modify_five]{period_modify_five()}} Convert to 5-year periods
 \item \code{\link[=period_modify_ten]{period_modify_ten()}} Convert to 10-year periods
 \item \code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{period_modify()}

@@ -10,6 +10,7 @@
 #' @return Character vector or factor with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_set_open()] Age equivalent of `cohort_set_open()`
 #'
 #' @examples

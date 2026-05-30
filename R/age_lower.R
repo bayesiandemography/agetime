@@ -1,18 +1,18 @@
 
 ## HAS_TESTS
-#' Lower Limits, Upper Limits, Widths
+#' Lower Limits, Upper Limits, Widths,
 #' and Midpoints of Age Groups
 #'
 #' Calculate lower limits, upper limits,
-#' widths and midpoints for age groups.
+#' widths, and midpoints for age groups.
 #'
 #' Lower and upper limits can be used
-#' filter on age. See below for examples.
+#' to filter on age. See below for examples.
 #'
 #' `age_mid()` uses the formula
-#' `age_lower(x) + 0.5 * age_width(x)`,
+#' `age_mid(x) = age_lower(x) + 0.5 * age_width(x)`,
 #' except for open age groups, such as `"100+"`,
-#' where it uses `age_lower(x) + 0.5 * median_width`
+#' where it uses `age_mid(x) = age_lower(x) + 0.5 * median_width`
 #' where `median_width` is the median over
 #' closed intervals.
 #'

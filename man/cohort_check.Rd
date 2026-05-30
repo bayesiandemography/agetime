@@ -46,14 +46,14 @@ to the upper limit of the latest cohort.}
 has no lower limit.}
 
 \item{x_one}{Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is \code{"lower"}.}
 
 \item{x_multi}{Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is \code{"include"}.}
 
 \item{x_fail}{Action if element of \code{x}
@@ -91,6 +91,7 @@ cohort_assert(lab_gap, no_gap = FALSE)
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_check]{age_check()}} Age equivalent of \code{cohort_check()}
 \item \code{\link[=period_check]{period_check()}} Period equivalent of \code{cohort_check()}
 }

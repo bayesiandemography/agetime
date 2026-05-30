@@ -64,6 +64,7 @@ period_modify_ten(x, offset = 2)
 }
 \seealso{
 \itemize{
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=period_modify]{period_modify()}} Convert to general periods
 \item \code{\link[=age_modify_five]{age_modify_five()}} Age equivalent of \code{period_modify_five()}
 \item \code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{period_modify_ten()}

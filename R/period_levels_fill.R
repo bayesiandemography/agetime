@@ -21,6 +21,7 @@
 #' @return Factor with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_levels_fill()] Age equivalent of `period_levels_fill()`
 #' - [cohort_levels_fill()] Cohort equivalent of `period_levels_fill()`
 #'

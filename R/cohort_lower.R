@@ -12,13 +12,13 @@
 #'
 #' @param x Vector of cohort labels.
 #' @param x_one Whether labels
-#' for one-year cohorts are based on the
-#' lower or upper limit of the period.
+#' for one-year cohorts are based on
+#' lower or upper limit of period.
 #' Default is `"lower"`.
 #' @param x_multi Whether
 #' labels for multi-year periods
-#' include or exclude the final
-#' year of the period.
+#' include or exclude final
+#' year of period.
 #' Default is `"include"`.
 #' @param x_fail Action if element of `x`
 #' cannot be parsed: `"error"` (the default),
@@ -26,6 +26,7 @@
 #' @return Numeric vector with the same length as `x`.
 #'
 #' @seealso
+#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
 #' - [age_lower()] Age equivalent of `cohort_lower()`
 #' - [period_lower()] Period equivalent of `cohort_lower()`
 #'
