@@ -39,10 +39,8 @@ period_levels_fill_ten(
 \arguments{
 \item{x}{Vector of period labels.}
 
-\item{breaks}{Boundaries of the
-the newly-created periods.
-(Boundaries supplied by existing
-periods can be omitted.)}
+\item{breaks}{Boundaries of newly-created periods.
+Boundaries for existing periods can be omitted.}
 
 \item{x_one}{How to interpret
 labels in \code{x} that describe one-year periods.
@@ -58,17 +56,17 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor, the same length as \code{x}.
+Factor with the same length as \code{x}.
 }
 \description{
-Fill in gaps in the levels of \code{x}.
+Fill in gaps in levels of \code{x}.
 }
 \details{
 If \code{x} is not a factor, and so does
 not have levels, convert it to
-a factor before filling in the levels.
+a factor before filling in levels.
 \itemize{
-\item \code{period_levels_fill} adds the periods
+\item \code{period_levels_fill} adds periods
 specified by \code{breaks}.
 \item \code{period_levels_fill_one} adds periods with
 width 1.

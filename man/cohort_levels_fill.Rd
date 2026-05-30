@@ -39,10 +39,8 @@ cohort_levels_fill_ten(
 \arguments{
 \item{x}{Vector of cohort labels.}
 
-\item{breaks}{Boundaries of the
-the newly-created cohorts.
-(Boundaries supplied by existing
-cohorts can be omitted.)}
+\item{breaks}{Boundaries of newly-created cohorts.
+Boundaries for existing cohorts can be omitted.}
 
 \item{x_one}{Whether labels
 for one-year cohorts are based on the
@@ -60,17 +58,17 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor, the same length as \code{x}.
+Factor with the same length as \code{x}.
 }
 \description{
-Fill in gaps in the levels of \code{x}.
+Fill in gaps in levels of \code{x}.
 }
 \details{
 If \code{x} is not a factor, and so does
 not have levels, convert it to
-a factor before filling in the levels.
+a factor before filling in levels.
 \itemize{
-\item \code{cohort_levels_fill} adds the cohorts
+\item \code{cohort_levels_fill} adds cohorts
 specified by \code{breaks}.
 \item \code{cohort_levels_fill_one} adds cohorts with
 width 1.

@@ -15,7 +15,8 @@
 #' to be added.
 #' @param include_x Should the return value
 #' include `x`? Default is `TRUE`.
-#' @return A factor if `x` is a factor; otherwise a character vector.
+#' @return Character vector or factor.
+#' Length is `n`, or `length(x) + n` when `include_x` is `TRUE`.
 #'
 #' @seealso
 #' - [age_extend()] Age equivalent of `cohort_extend()`

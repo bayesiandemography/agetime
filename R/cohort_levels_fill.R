@@ -1,12 +1,12 @@
 #' Fill in Gaps in Cohort Levels
 #'
-#' Fill in gaps in the levels of `x`.
+#' Fill in gaps in levels of `x`.
 #'
 #' If `x` is not a factor, and so does
 #' not have levels, convert it to
-#' a factor before filling in the levels.
+#' a factor before filling in levels.
 #' 
-#' - `cohort_levels_fill` adds the cohorts
+#' - `cohort_levels_fill` adds cohorts
 #'   specified by `breaks`.
 #' - `cohort_levels_fill_one` adds cohorts with
 #'   width 1.
@@ -16,11 +16,9 @@
 #'   width 10.
 #'
 #' @inheritParams cohort_lower
-#' @param breaks Boundaries of the
-#' the newly-created cohorts.
-#' (Boundaries supplied by existing
-#' cohorts can be omitted.)
-#' @return A factor, the same length as `x`.
+#' @param breaks Boundaries of newly-created cohorts.
+#' Boundaries for existing cohorts can be omitted.
+#' @return Factor with the same length as `x`.
 #'
 #' @seealso
 #' - [age_levels_fill()] Age equivalent of `cohort_levels_fill()`

@@ -40,7 +40,8 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor if \code{x} is a factor; otherwise a character vector.
+Character vector or factor.
+Length is \code{n}, or \code{length(x) + n} when \code{include_x} is \code{TRUE}.
 }
 \description{
 Add new periods at the end of \code{x}.

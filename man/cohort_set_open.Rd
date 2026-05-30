@@ -33,7 +33,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor if \code{x} is a factor; otherwise a character vector.
+Character vector or factor with the same length as \code{x}.
 }
 \description{
 Set an open cohort, i.e. a cohort with no

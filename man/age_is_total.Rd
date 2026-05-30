@@ -14,7 +14,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Logical vector the same length as \code{x}.
+Logical vector with the same length as \code{x}.
 }
 \description{
 Find age group labels that \pkg{agetime} interprets as totals.

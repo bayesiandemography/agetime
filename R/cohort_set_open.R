@@ -7,7 +7,7 @@
 #' 
 #' @inheritParams cohort_lower
 #' @param open Upper limit of open cohort.
-#' @return A factor if `x` is a factor; otherwise a character vector.
+#' @return Character vector or factor with the same length as `x`.
 #'
 #' @seealso
 #' - [age_set_open()] Age equivalent of `cohort_set_open()`

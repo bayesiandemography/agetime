@@ -16,7 +16,8 @@
 #' `"Total"` category.
 #' @param include_na Whether to include
 #' an `NA` category.
-#' @returns A character vector.
+#' @return Character vector.
+#' Length depends on the function arguments.
 #'
 #' @seealso
 #' - [age_labels()] Age equivalent of `cohort_labels()`

@@ -18,7 +18,8 @@
 #' has no upper limit.
 #' @param valid_life All labels valid for
 #' (abridged) life table.
-#' @return A list (`age_check()`) or `x` invisibly (`age_assert()`).
+#' @return For `age_check()`, a list with logical `ok` and data frame
+#' `details`; for `age_assert()`, `x` invisibly or an error.
 #'
 #' @seealso
 #' - [period_check()] Period equivalent of `age_check()`

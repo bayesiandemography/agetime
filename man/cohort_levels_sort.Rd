@@ -35,7 +35,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor, the same length as \code{x}.
+Factor with the same length as \code{x}.
 }
 \description{
 Sort the levels of \code{x}.

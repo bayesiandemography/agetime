@@ -7,7 +7,7 @@
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
-#' @return A vector the same length as `x` with modified labels.
+#' @return Character vector or factor with the same length as `x`.
 #'
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")

@@ -32,7 +32,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A data.frame or matrix.
+Data frame or matrix, depending on \code{return_val}.
 }
 \description{
 Create a mapping between age group labels. The mapping is

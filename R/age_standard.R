@@ -6,7 +6,7 @@
 #'
 #' @inheritParams age_lower
 #'
-#' @return A vector the same length as `x` with standardized labels.
+#' @return Character vector or factor with the same length as `x`.
 #'
 #' @seealso
 #' - [period_standard()] Period equivalent of `age_standard()`

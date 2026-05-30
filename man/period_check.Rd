@@ -54,7 +54,8 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A list (\code{period_check()}) or \code{x} invisibly (\code{period_assert()}).
+For \code{period_check()}, a list with logical \code{ok} and data frame
+\code{details}; for \code{period_assert()}, \code{x} invisibly or an error.
 }
 \description{
 Collect information on period labels (\code{period_check()}),

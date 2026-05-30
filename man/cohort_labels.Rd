@@ -78,7 +78,8 @@ first cohort.}
 last cohort.}
 }
 \value{
-A character vector.
+Character vector.
+Length depends on the function arguments.
 }
 \description{
 Create a new set of cohort labels.

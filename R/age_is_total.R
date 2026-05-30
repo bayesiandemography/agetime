@@ -5,7 +5,7 @@
 #' 
 #' @inheritParams age_lower
 #'
-#' @return Logical vector the same length as `x`.
+#' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
 #' - [age_is_open()] Find open age groups
@@ -36,7 +36,7 @@ age_is_total <- function(x,
 #' 
 #' @inheritParams age_lower
 #'
-#' @return Logical vector the same length as `x`.
+#' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
 #' - [age_is_total()] Find age labels for totals

@@ -12,7 +12,8 @@
 #' to the upper limit of the latest period.
 #' @param no_total No "Total" label.
 #' @param no_na No NA label.
-#' @return A list (`period_check()`) or `x` invisibly (`period_assert()`).
+#' @return For `period_check()`, a list with logical `ok` and data frame
+#' `details`; for `period_assert()`, `x` invisibly or an error.
 #'
 #' @seealso
 #' - [age_check()] Age equivalent of `period_check()`

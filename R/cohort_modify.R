@@ -10,7 +10,7 @@
 #' @param open Whether the first cohort
 #' is "open", i.e. has no lower limit.
 #' Default is `FALSE`.
-#' @return A vector the same length as `x` with modified labels.
+#' @return Character vector or factor with the same length as `x`.
 #'
 #' @examples
 #' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")

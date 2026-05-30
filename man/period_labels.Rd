@@ -66,7 +66,8 @@ an \code{NA} category.}
 \item{lower_last}{Lower limit of last period.}
 }
 \value{
-A character vector.
+Character vector.
+Length depends on the function arguments.
 }
 \description{
 Create a new set of period labels.

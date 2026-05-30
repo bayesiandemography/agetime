@@ -24,7 +24,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Numeric vector with same length as \code{x}.
+Numeric vector with the same length as \code{x}.
 }
 \description{
 Calculate lower limits, upper limits,

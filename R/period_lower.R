@@ -54,7 +54,7 @@
 #' @param x_fail Action if element of `x`
 #' cannot be parsed: `"error"` (the default),
 #' `"warn"`, or `"silent"`.
-#' @return Numeric vector with same length as `x`.
+#' @return Numeric vector with the same length as `x`.
 #'
 #' @seealso
 #' - [age_lower()] Age equivalent of `period_lower()`

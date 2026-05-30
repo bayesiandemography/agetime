@@ -57,7 +57,8 @@ youngest age group.}
 last age group.}
 }
 \value{
-A character vector.
+Character vector.
+Length depends on the function arguments.
 }
 \description{
 Create a new set of age group labels.

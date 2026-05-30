@@ -10,7 +10,7 @@
 #' @param open Whether the oldest age group
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
-#' @return A vector the same length as `x` with modified labels.
+#' @return Character vector or factor with the same length as `x`.
 #'
 #' @examples
 #' x <- c("1-4", "87-89", "0", "50-54")

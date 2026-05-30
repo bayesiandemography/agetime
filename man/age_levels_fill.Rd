@@ -21,27 +21,25 @@ age_levels_fill_life(x, x_fail = c("error", "warn", "silent"))
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{breaks}{Boundaries of the
-the newly-created age groups.
-(Boundaries supplied by existing
-age groups can be omitted.)}
+\item{breaks}{Boundaries of newly-created age groups.
+Boundaries for existing age groups can be omitted.}
 
 \item{x_fail}{Action if element of \code{x}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A factor, the same length as \code{x}.
+Factor with the same length as \code{x}.
 }
 \description{
-Fill in gaps in the levels of \code{x}.
+Fill in gaps in levels of \code{x}.
 }
 \details{
 If \code{x} is not a factor, and so does
 not have levels, convert it to
-a factor before filling in the levels.
+a factor before filling in levels.
 \itemize{
-\item \code{age_levels_fill} adds the age groups
+\item \code{age_levels_fill} adds age groups
 specified by \code{breaks}.
 \item \code{age_levels_fill_one} adds age groups with
 width 1.

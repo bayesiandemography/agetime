@@ -16,7 +16,7 @@
 #' @param decreasing Whether sort is
 #' increasing or decreasing. Default
 #' is `FALSE`.
-#' @return A factor, the same length as `x`.
+#' @return Factor with the same length as `x`.
 #'
 #' @seealso
 #' - [age_levels_sort()] Age equivalent of `period_levels_sort()`

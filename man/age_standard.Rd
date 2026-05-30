@@ -14,7 +14,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A vector the same length as \code{x} with standardized labels.
+Character vector or factor with the same length as \code{x}.
 }
 \description{
 Convert age group labels to a 'standard' format.

@@ -5,7 +5,7 @@
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @return Logical vector the same length as `x`.
+#' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
 #' - [cohort_is_open()] Find open cohorts
@@ -38,7 +38,7 @@ cohort_is_total <- function(x,
 #' 
 #' @inheritParams cohort_lower
 #'
-#' @return Logical vector the same length as `x`.
+#' @return Logical vector with the same length as `x`.
 #'
 #' @seealso
 #' - [cohort_is_total()] Find cohort labels for totals

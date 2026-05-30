@@ -14,7 +14,8 @@
 #' @param no_na No NA label.
 #' @param include_open One or more cohorts
 #' has no lower limit.
-#' @return A list (`cohort_check()`) or `x` invisibly (`cohort_assert()`).
+#' @return For `cohort_check()`, a list with logical `ok` and data frame
+#' `details`; for `cohort_assert()`, `x` invisibly or an error.
 #'
 #' @seealso
 #' - [age_check()] Age equivalent of `cohort_check()`

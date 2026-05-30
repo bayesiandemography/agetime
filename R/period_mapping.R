@@ -32,7 +32,7 @@
 #' @param return_val The format of the
 #' return value. The choices are `"data.frame"`
 #' (the default) or `"matrix"`.
-#' @return A data.frame or matrix.
+#' @return Data frame or matrix, depending on `return_val`.
 #'
 #' @seealso
 #' - [age_mapping()] Age equivalent of `period_mapping()`

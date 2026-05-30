@@ -1,12 +1,12 @@
 #' Fill in Gaps in Period Levels
 #'
-#' Fill in gaps in the levels of `x`.
+#' Fill in gaps in levels of `x`.
 #'
 #' If `x` is not a factor, and so does
 #' not have levels, convert it to
-#' a factor before filling in the levels.
+#' a factor before filling in levels.
 #' 
-#' - `period_levels_fill` adds the periods
+#' - `period_levels_fill` adds periods
 #'   specified by `breaks`.
 #' - `period_levels_fill_one` adds periods with
 #'   width 1.
@@ -16,11 +16,9 @@
 #'   width 10.
 #'
 #' @inheritParams period_lower
-#' @param breaks Boundaries of the
-#' the newly-created periods.
-#' (Boundaries supplied by existing
-#' periods can be omitted.)
-#' @return A factor, the same length as `x`.
+#' @param breaks Boundaries of newly-created periods.
+#' Boundaries for existing periods can be omitted.
+#' @return Factor with the same length as `x`.
 #'
 #' @seealso
 #' - [age_levels_fill()] Age equivalent of `period_levels_fill()`

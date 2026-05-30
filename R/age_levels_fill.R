@@ -1,12 +1,12 @@
 #' Fill in Gaps in Age Group Levels
 #'
-#' Fill in gaps in the levels of `x`.
+#' Fill in gaps in levels of `x`.
 #'
 #' If `x` is not a factor, and so does
 #' not have levels, convert it to
-#' a factor before filling in the levels.
+#' a factor before filling in levels.
 #' 
-#' - `age_levels_fill` adds the age groups
+#' - `age_levels_fill` adds age groups
 #'   specified by `breaks`.
 #' - `age_levels_fill_one` adds age groups with
 #'   width 1.
@@ -18,11 +18,9 @@
 #'   used by a life table.
 #'
 #' @inheritParams age_lower
-#' @param breaks Boundaries of the
-#' the newly-created age groups.
-#' (Boundaries supplied by existing
-#' age groups can be omitted.)
-#' @return A factor, the same length as `x`.
+#' @param breaks Boundaries of newly-created age groups.
+#' Boundaries for existing age groups can be omitted.
+#' @return Factor with the same length as `x`.
 #'
 #' @seealso
 #' - [period_levels_fill()] Period equivalent of `age_levels_fill()`

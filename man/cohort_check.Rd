@@ -61,7 +61,8 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A list (\code{cohort_check()}) or \code{x} invisibly (\code{cohort_assert()}).
+For \code{cohort_check()}, a list with logical \code{ok} and data frame
+\code{details}; for \code{cohort_assert()}, \code{x} invisibly or an error.
 }
 \description{
 Collect information on cohort labels (\code{cohort_check()}),

@@ -56,7 +56,8 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-A list (\code{age_check()}) or \code{x} invisibly (\code{age_assert()}).
+For \code{age_check()}, a list with logical \code{ok} and data frame
+\code{details}; for \code{age_assert()}, \code{x} invisibly or an error.
 }
 \description{
 Collect information on age group labels (\code{age_check()}),
