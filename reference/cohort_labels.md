@@ -1,6 +1,6 @@
-# Create a New Set of Unique Cohort Labels
+# Create New Cohort Labels
 
-Create a New Set of Unique Cohort Labels
+Create a new set of cohort labels.
 
 ## Usage
 
@@ -53,18 +53,18 @@ cohort_labels_ten(
 
 - open:
 
-  Whether the first cohort is "open", i.e. has no lower limit. Default
-  is `FALSE`.
+  Whether first cohort is "open", i.e. has no lower limit. Default is
+  `FALSE`.
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - include_total:
 
@@ -76,15 +76,26 @@ cohort_labels_ten(
 
 - lower_first:
 
-  The lower limit of the first cohort.
+  Lower limit of first cohort.
 
 - lower_last:
 
-  The lower limit of the last cohort.
+  Lower limit of last cohort.
 
 ## Value
 
-A character vector.
+Character vector. Length depends on the function arguments.
+
+## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
+  Age equivalent of `cohort_labels()`
+
+- [`period_labels()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
+  Period equivalent of `cohort_labels()`
 
 ## Examples
 

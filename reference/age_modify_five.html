@@ -82,28 +82,18 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A vector the same length as <code>x</code> with modified labels.</p>
-<p>If <code>x</code> is a character vector, returns a character vector.
-When <code>length(x) == 0</code>, returns <code>character(0)</code>.</p>
-<p>If <code>x</code> is a factor, returns a factor with the same length and
-<code>ordered</code> attribute as <code>x</code>. Element values are mapped to the new age
-groups and <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> is the full label set defined by <code>breaks</code> (and
-<code>open</code>, where relevant).
-When <code>length(x) == 0</code>, <code>levels(x)</code> are still modified.</p>
-    </div>
-    <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>When <code>length(x) == 0</code> and <code>x</code> is a factor with no levels, <code>x</code> is
-returned unchanged (there is no range from which to infer new groups).</p>
+    <p>Character vector or factor with the same length as <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p><code><a href="age_modify.html">age_modify()</a></code> Convert to general age groups
-<code><a href="period_modify_five.html">period_modify_five()</a></code> Period equivalent of <code>age_modify_five()</code>
-<code><a href="period_modify_five.html">period_modify_ten()</a></code> Period equivalent of <code>age_modify_ten()</code>
-<code><a href="cohort_modify_five.html">cohort_modify_five()</a></code> Cohort equivalent of <code>age_modify_five()</code>
-<code><a href="cohort_modify_five.html">cohort_modify_ten()</a></code> Cohort equivalent of <code>age_modify_ten()</code>
-age_levels_fill()] Add levels for intermediate age groups</p></div>
+    <div class="dont-index">
+<ul><li><p><code><a href="age_modify.html">age_modify()</a></code> Convert to general age groups</p></li>
+<li><p><code><a href="period_modify_five.html">period_modify_five()</a></code> Period equivalent of <code>age_modify_five()</code></p></li>
+<li><p><code><a href="period_modify_five.html">period_modify_ten()</a></code> Period equivalent of <code>age_modify_ten()</code></p></li>
+<li><p><code><a href="cohort_modify_five.html">cohort_modify_five()</a></code> Cohort equivalent of <code>age_modify_five()</code></p></li>
+<li><p><code><a href="cohort_modify_five.html">cohort_modify_ten()</a></code> Cohort equivalent of <code>age_modify_ten()</code></p></li>
+<li><p><code><a href="age_levels_fill.html">age_levels_fill()</a></code> Add levels for intermediate age groups</p></li>
+</ul></div>
     </div>
 
     <div class="section level2">

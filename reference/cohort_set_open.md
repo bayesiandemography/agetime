@@ -19,7 +19,7 @@ cohort_set_open(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - open:
 
@@ -27,13 +27,13 @@ cohort_set_open(
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -42,12 +42,15 @@ cohort_set_open(
 
 ## Value
 
-A factor if `x` is a factor; otherwise a character vector.
+Character vector or factor with the same length as `x`.
 
-If no labels qualify for the open group (including when `x` is
-`character(0)` or a factor with no levels), `x` is returned unchanged.
-When `x` is a factor with levels but no element values, qualifying
-levels are still relabelled.
+## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_set_open.md)
+  Age equivalent of `cohort_set_open()`
 
 ## Examples
 

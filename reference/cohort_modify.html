@@ -59,7 +59,7 @@ contain the old ones.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A vector of cohort labels.</p></dd>
+<dd><p>Vector of cohort labels.</p></dd>
 
 
 <dt id="arg-breaks">breaks<a class="anchor" aria-label="anchor" href="#arg-breaks"></a></dt>
@@ -75,16 +75,16 @@ Default is <code>FALSE</code>.</p></dd>
 
 <dt id="arg-x-one">x_one<a class="anchor" aria-label="anchor" href="#arg-x-one"></a></dt>
 <dd><p>Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is <code>"lower"</code>.</p></dd>
 
 
 <dt id="arg-x-multi">x_multi<a class="anchor" aria-label="anchor" href="#arg-x-multi"></a></dt>
 <dd><p>Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is <code>"include"</code>.</p></dd>
 
 
@@ -96,19 +96,13 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A vector the same length as <code>x</code> with modified labels.</p>
-<p>If <code>x</code> is a character vector, returns a character vector.
-When <code>length(x) == 0</code>, returns <code>character(0)</code>.</p>
-<p>If <code>x</code> is a factor, returns a factor with the same length and
-<code>ordered</code> attribute as <code>x</code>. Element values are mapped to the new
-cohorts and <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> is the full label set defined by <code>breaks</code>
-(and <code>open</code>, where relevant).
-When <code>length(x) == 0</code>, <code>levels(x)</code> are still modified.</p>
+    <p>Character vector or factor with the same length as <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
-<ul><li><p><code><a href="cohort_modify_five.html">cohort_modify_five()</a></code> Convert to 5-year cohorts</p></li>
+<ul><li><p><code><a href="parsing_cohort_labels.html">parsing_cohort_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="cohort_modify_five.html">cohort_modify_five()</a></code> Convert to 5-year cohorts</p></li>
 <li><p><code><a href="cohort_modify_five.html">cohort_modify_ten()</a></code> Convert to 10-year cohorts</p></li>
 <li><p><code><a href="age_modify.html">age_modify()</a></code> Age group equivalent of <code>cohort_modify()</code></p></li>
 <li><p><code><a href="period_modify.html">period_modify()</a></code> Period equivalent of <code>cohort_modify()</code></p></li>

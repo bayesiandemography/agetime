@@ -39,11 +39,8 @@ age_extend(
 
 ## Value
 
-A factor if `x` is a factor; otherwise a character vector.
-
-When `length(x) == 0`, throws an error (there is no interval to extend
-from). If `width` is `NULL`, the error suggests supplying `width`
-explicitly.
+Character vector or factor. Length is `n`, or `length(x) + n` when
+`include_x` is `TRUE`.
 
 ## Details
 

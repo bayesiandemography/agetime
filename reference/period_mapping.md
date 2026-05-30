@@ -56,11 +56,7 @@ period_mapping(
 
 ## Value
 
-A data.frame or matrix.
-
-When `x` or `y` is `character(0)`, or a factor with no levels, returns
-an empty mapping (a zero-row data frame or zero-by-zero matrix,
-according to `return_val`).
+Data frame or matrix, depending on `return_val`.
 
 ## Details
 
@@ -75,6 +71,17 @@ If no value for `y` is supplied, `x` is mapped onto itself.
 | `"contains"` | `period_lower(x) <= period_lower(y) & period_upper(y) <= period_upper(x)` |
 | `"contained"` | `period_lower(y) <= period_lower(x) & period_upper(x) <= period_upper(y)` |
 | `"overlaps"` | `(period_lower(y) <= period_lower(x) < period_upper(y))` \| `(period_lower(y) <= period_upper(x) < period_upper(y))` |
+
+## See also
+
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
+  Age equivalent of `period_mapping()`
+
+- [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
+  Cohort equivalent of `period_mapping()`
 
 ## Examples
 

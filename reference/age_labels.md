@@ -1,6 +1,6 @@
-# Create a New Set of Unique Age Labels
+# Create New Age Group Labels
 
-Create a New Set of Unique Age Labels
+Create a new set of age group labels.
 
 ## Usage
 
@@ -55,15 +55,23 @@ age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
 
 - lower_first:
 
-  The lower limit of the youngest age group.
+  Lower limit of youngest age group.
 
 - lower_last:
 
-  The lower limit of the last age group.
+  Lower limit of last age group.
 
 ## Value
 
-A character vector.
+Character vector. Length depends on the function arguments.
+
+## See also
+
+- [`period_labels()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
+  Period equivalent of `age_labels()`
+
+- [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
+  Cohort equivalent of `age_labels()`
 
 ## Examples
 

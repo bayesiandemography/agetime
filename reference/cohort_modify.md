@@ -20,7 +20,7 @@ cohort_modify(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - breaks:
 
@@ -33,13 +33,13 @@ cohort_modify(
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -48,18 +48,12 @@ cohort_modify(
 
 ## Value
 
-A vector the same length as `x` with modified labels.
-
-If `x` is a character vector, returns a character vector. When
-`length(x) == 0`, returns `character(0)`.
-
-If `x` is a factor, returns a factor with the same length and `ordered`
-attribute as `x`. Element values are mapped to the new cohorts and
-[`levels()`](https://rdrr.io/r/base/levels.html) is the full label set
-defined by `breaks` (and `open`, where relevant). When `length(x) == 0`,
-`levels(x)` are still modified.
+Character vector or factor with the same length as `x`.
 
 ## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   Convert to 5-year cohorts

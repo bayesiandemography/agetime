@@ -42,18 +42,12 @@ period_modify(
 
 ## Value
 
-A vector the same length as `x` with modified labels.
-
-If `x` is a character vector, returns a character vector. When
-`length(x) == 0`, returns `character(0)`.
-
-If `x` is a factor, returns a factor with the same length and `ordered`
-attribute as `x`. Element values are mapped to the new periods and
-[`levels()`](https://rdrr.io/r/base/levels.html) is the full label set
-defined by `breaks`. When `length(x) == 0`, `levels(x)` are still
-modified.
+Character vector or factor with the same length as `x`.
 
 ## See also
+
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`period_modify_five()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
   Convert to 5-year periods

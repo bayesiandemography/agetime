@@ -84,10 +84,7 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data.frame or matrix.</p>
-<p>When <code>x</code> or <code>y</code> is <code>character(0)</code>, or a factor with no levels, returns an
-empty mapping (a zero-row data frame or zero-by-zero matrix, according to
-<code>return_val</code>).</p>
+    <p>Data frame or matrix, depending on <code>return_val</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -98,6 +95,13 @@ empty mapping (a zero-row data frame or zero-by-zero matrix, according to
     <h2 id="the-relation-argument">The <code>relation</code> argument<a class="anchor" aria-label="anchor" href="#the-relation-argument"></a></h2>
 
 <table class="table table"><tr><td><code>relation</code></td><td>Endpoints of <code>x</code> and <code>y</code></td></tr><tr><td><code>"equals"</code></td><td><code>age_lower(x) == age_lower(y) &amp; age_upper(x) == age_upper(y)</code></td></tr><tr><td><code>"contains"</code></td><td><code>age_lower(x) &lt;= age_lower(y) &amp; age_upper(y) &lt;= age_upper(x)</code></td></tr><tr><td><code>"contained"</code></td><td><code>age_lower(y) &lt;= age_lower(x) &amp; age_upper(x) &lt;= age_upper(y)</code></td></tr><tr><td><code>"overlaps"</code></td><td><code>(age_lower(y) &lt;= age_lower(x) &lt; age_upper(y))</code> | <code>(age_lower(y) &lt;= age_upper(x) &lt; age_upper(y))</code></td></tr></table></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="period_mapping.html">period_mapping()</a></code> Period equivalent of <code>age_mapping()</code></p></li>
+<li><p><code><a href="cohort_mapping.html">cohort_mapping()</a></code> Cohort equivalent of <code>age_mapping()</code></p></li>
+</ul></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

@@ -36,19 +36,18 @@ period_standard(
 
 ## Value
 
-A vector the same length as `x` with standardized labels.
+Character vector or factor with the same length as `x`.
 
-If `x` is a character vector, returns a character vector. If `x` is a
-factor, returns a factor with the same length and `ordered` attribute as
-`x`. Element values and `levels(x)` are standardized; level order is
-unchanged except where two or more levels collapse to the same string
-after standardization (the first occurrence in `levels(x)` is kept).
-When `length(x) == 0`, returns `character(0)` for character input; for
-factors, standardized `levels(x)` are still applied.
+## See also
 
-With `x_fail = "silent"`, labels that cannot be parsed are mapped to
-`NA` (including in [`levels()`](https://rdrr.io/r/base/levels.html) for
-factors).
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
+  Age equivalent of `period_standard()`
+
+- [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
+  Cohort equivalent of `period_standard()`
 
 ## Examples
 

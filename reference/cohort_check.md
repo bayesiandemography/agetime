@@ -35,24 +35,24 @@ cohort_assert(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - no_overlap:
 
-  No cohorts overlap
+  No cohorts overlap.
 
 - no_gap:
 
   The cohorts span the entire range from the lower limit of the earliest
-  cohort to the upper limit of the latest cohort
+  cohort to the upper limit of the latest cohort.
 
 - no_total:
 
-  No "Total" label
+  No "Total" label.
 
 - no_na:
 
-  No NA label
+  No NA label.
 
 - include_open:
 
@@ -60,13 +60,13 @@ cohort_assert(
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -75,14 +75,19 @@ cohort_assert(
 
 ## Value
 
-- `cohort_check()` returns a list with components `ok` (a logical flag)
-  and `details` (a data frame).
+For `cohort_check()`, a list with logical `ok` and data frame `details`;
+for `cohort_assert()`, `x` invisibly or an error.
 
-- `cohort_assert()` returns `x` invisibly, or throws an error.
+## See also
 
-When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
-vacuously satisfied (`observed = TRUE`). Checks that require at least
-one interval (`include_open`) fail (`observed = FALSE`).
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_check()`](https://bayesiandemography.github.io/agetime/reference/age_check.md)
+  Age equivalent of `cohort_check()`
+
+- [`period_check()`](https://bayesiandemography.github.io/agetime/reference/period_check.md)
+  Period equivalent of `cohort_check()`
 
 ## Examples
 

@@ -1,6 +1,6 @@
 # Fill in Gaps in Age Group Levels
 
-Fill in gaps in the levels of `x`.
+Fill in gaps in levels of `x`.
 
 ## Usage
 
@@ -24,8 +24,8 @@ age_levels_fill_life(x, x_fail = c("error", "warn", "silent"))
 
 - breaks:
 
-  Boundaries of the the newly-created age groups. (Boundaries supplied
-  by existing age groups can be omitted.)
+  Boundaries of newly-created age groups. Boundaries for existing age
+  groups can be omitted.
 
 - x_fail:
 
@@ -34,20 +34,14 @@ age_levels_fill_life(x, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-A factor, the same length as `x`.
-
-When `length(x) == 0` and there are no levels to fill, returns an empty
-factor. If `breaks` is supplied to `age_levels_fill()`, levels are built
-from `breaks`. When `length(x) == 0` but `x` is a factor with levels,
-[`levels()`](https://rdrr.io/r/base/levels.html) are still filled in.
-The `ordered` attribute is preserved when `x` is an ordered factor.
+Factor with the same length as `x`.
 
 ## Details
 
 If `x` is not a factor, and so does not have levels, convert it to a
-factor before filling in the levels.
+factor before filling in levels.
 
-- `age_levels_fill` adds the age groups specified by `breaks`.
+- `age_levels_fill` adds age groups specified by `breaks`.
 
 - `age_levels_fill_one` adds age groups with width 1.
 
@@ -56,6 +50,14 @@ factor before filling in the levels.
 - `age_levels_fill_ten` adds age groups with width 10.
 
 - `age_levels_fill_life` adds age groups used by a life table.
+
+## See also
+
+- [`period_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
+  Period equivalent of `age_levels_fill()`
+
+- [`cohort_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
+  Cohort equivalent of `age_levels_fill()`
 
 ## Examples
 

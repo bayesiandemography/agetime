@@ -1,6 +1,6 @@
 # Fill in Gaps in Period Levels
 
-Fill in gaps in the levels of `x`.
+Fill in gaps in levels of `x`.
 
 ## Usage
 
@@ -43,8 +43,8 @@ period_levels_fill_ten(
 
 - breaks:
 
-  Boundaries of the the newly-created periods. (Boundaries supplied by
-  existing periods can be omitted.)
+  Boundaries of newly-created periods. Boundaries for existing periods
+  can be omitted.
 
 - x_one:
 
@@ -63,27 +63,31 @@ period_levels_fill_ten(
 
 ## Value
 
-A factor, the same length as `x`.
-
-When `length(x) == 0` and there are no levels to fill, returns an empty
-factor. If `breaks` is supplied to `period_levels_fill()`, levels are
-built from `breaks`. When `length(x) == 0` but `x` is a factor with
-levels, [`levels()`](https://rdrr.io/r/base/levels.html) are still
-filled in. The `ordered` attribute is preserved when `x` is an ordered
-factor.
+Factor with the same length as `x`.
 
 ## Details
 
 If `x` is not a factor, and so does not have levels, convert it to a
-factor before filling in the levels.
+factor before filling in levels.
 
-- `period_levels_fill` adds the periods specified by `breaks`.
+- `period_levels_fill` adds periods specified by `breaks`.
 
 - `period_levels_fill_one` adds periods with width 1.
 
 - `period_levels_fill_five` adds periods with width 5.
 
 - `period_levels_fill_ten` adds periods with width 10.
+
+## See also
+
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
+  Age equivalent of `period_levels_fill()`
+
+- [`cohort_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
+  Cohort equivalent of `period_levels_fill()`
 
 ## Examples
 

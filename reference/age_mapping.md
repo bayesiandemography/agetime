@@ -44,11 +44,7 @@ age_mapping(
 
 ## Value
 
-A data.frame or matrix.
-
-When `x` or `y` is `character(0)`, or a factor with no levels, returns
-an empty mapping (a zero-row data frame or zero-by-zero matrix,
-according to `return_val`).
+Data frame or matrix, depending on `return_val`.
 
 ## Details
 
@@ -63,6 +59,14 @@ If no value for `y` is supplied, `x` is mapped onto itself.
 | `"contains"` | `age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)` |
 | `"contained"` | `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)` |
 | `"overlaps"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` \| `(age_lower(y) <= age_upper(x) < age_upper(y))` |
+
+## See also
+
+- [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md)
+  Period equivalent of `age_mapping()`
+
+- [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
+  Cohort equivalent of `age_mapping()`
 
 ## Examples
 

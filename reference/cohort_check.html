@@ -74,25 +74,25 @@ conform to expectations (<code>cohort_assert</code>).</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A vector of cohort labels.</p></dd>
+<dd><p>Vector of cohort labels.</p></dd>
 
 
 <dt id="arg-no-overlap">no_overlap<a class="anchor" aria-label="anchor" href="#arg-no-overlap"></a></dt>
-<dd><p>No cohorts overlap</p></dd>
+<dd><p>No cohorts overlap.</p></dd>
 
 
 <dt id="arg-no-gap">no_gap<a class="anchor" aria-label="anchor" href="#arg-no-gap"></a></dt>
 <dd><p>The cohorts span the entire
 range from the lower limit of the earliest cohort
-to the upper limit of the latest cohort</p></dd>
+to the upper limit of the latest cohort.</p></dd>
 
 
 <dt id="arg-no-total">no_total<a class="anchor" aria-label="anchor" href="#arg-no-total"></a></dt>
-<dd><p>No "Total" label</p></dd>
+<dd><p>No "Total" label.</p></dd>
 
 
 <dt id="arg-no-na">no_na<a class="anchor" aria-label="anchor" href="#arg-no-na"></a></dt>
-<dd><p>No NA label</p></dd>
+<dd><p>No NA label.</p></dd>
 
 
 <dt id="arg-include-open">include_open<a class="anchor" aria-label="anchor" href="#arg-include-open"></a></dt>
@@ -102,16 +102,16 @@ has no lower limit.</p></dd>
 
 <dt id="arg-x-one">x_one<a class="anchor" aria-label="anchor" href="#arg-x-one"></a></dt>
 <dd><p>Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is <code>"lower"</code>.</p></dd>
 
 
 <dt id="arg-x-multi">x_multi<a class="anchor" aria-label="anchor" href="#arg-x-multi"></a></dt>
 <dd><p>Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is <code>"include"</code>.</p></dd>
 
 
@@ -123,15 +123,16 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-
-<ul><li><p><code>cohort_check()</code> returns a list with
-components <code>ok</code> (a logical flag)
-and <code>details</code> (a data frame).</p></li>
-<li><p><code>cohort_assert()</code> returns <code>x</code> invisibly,
-or throws an error.</p></li>
-</ul><p>When <code>length(x) == 0</code>, checks on overlap, gaps, totals, and NA are
-vacuously satisfied (<code>observed = TRUE</code>). Checks that require at least one
-interval (<code>include_open</code>) fail (<code>observed = FALSE</code>).</p>
+    <p>For <code>cohort_check()</code>, a list with logical <code>ok</code> and data frame
+<code>details</code>; for <code>cohort_assert()</code>, <code>x</code> invisibly or an error.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="parsing_cohort_labels.html">parsing_cohort_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="age_check.html">age_check()</a></code> Age equivalent of <code>cohort_check()</code></p></li>
+<li><p><code><a href="period_check.html">period_check()</a></code> Period equivalent of <code>cohort_check()</code></p></li>
+</ul></div>
     </div>
 
     <div class="section level2">

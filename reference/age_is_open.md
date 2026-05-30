@@ -22,16 +22,15 @@ age_is_open(x, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Logical vector the same length as `x`.
-
-When `length(x) == 0`, returns `logical(0)`.
+Logical vector with the same length as `x`.
 
 ## See also
 
-[`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
-Find age labels for totals
-[`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
-Cohort equivalent of `age_is_open()`
+- [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
+  Find age labels for totals
+
+- [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
+  Cohort equivalent of `age_is_open()`
 
 ## Examples
 

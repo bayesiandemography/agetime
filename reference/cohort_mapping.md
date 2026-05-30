@@ -41,13 +41,13 @@ cohort_mapping(
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -56,11 +56,7 @@ cohort_mapping(
 
 ## Value
 
-A data.frame or matrix.
-
-When `x` or `y` is `character(0)`, or a factor with no levels, returns
-an empty mapping (a zero-row data frame or zero-by-zero matrix,
-according to `return_val`).
+Data frame or matrix, depending on `return_val`.
 
 ## Details
 
@@ -75,6 +71,17 @@ If no value for `y` is supplied, `x` is mapped onto itself.
 | `"contains"` | `cohort_lower(x) <= cohort_lower(y) & cohort_upper(y) <= cohort_upper(x)` |
 | `"contained"` | `cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)` |
 | `"overlaps"` | `(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))` \| `(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))` |
+
+## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
+  Age equivalent of `cohort_mapping()`
+
+- [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md)
+  Period equivalent of `cohort_mapping()`
 
 ## Examples
 

@@ -21,18 +21,18 @@ age_is_total(x, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Logical vector the same length as `x`.
-
-When `length(x) == 0`, returns `logical(0)`.
+Logical vector with the same length as `x`.
 
 ## See also
 
-[`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
-Find open age groups
-[`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
-Period equivalent of `age_is_total()`
-[`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
-Cohort equivalent of `age_is_total()`
+- [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
+  Find open age groups
+
+- [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
+  Period equivalent of `age_is_total()`
+
+- [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
+  Cohort equivalent of `age_is_total()`
 
 ## Examples
 

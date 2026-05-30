@@ -36,16 +36,18 @@ period_is_total(
 
 ## Value
 
-Logical vector the same length as `x`.
-
-When `length(x) == 0`, returns `logical(0)`.
+Logical vector with the same length as `x`.
 
 ## See also
 
-[`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
-Age equivalent of `[period_is_total()`
-[`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
-Cohort equivalent of `period_is_total()`
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
+  Age equivalent of `period_is_total()`
+
+- [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
+  Cohort equivalent of `period_is_total()`
 
 ## Examples
 

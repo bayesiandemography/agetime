@@ -26,12 +26,12 @@ age_set_open(x, open, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-A factor if `x` is a factor; otherwise a character vector.
+Character vector or factor with the same length as `x`.
 
-If no labels qualify for the open group (including when `x` is
-`character(0)` or a factor with no levels), `x` is returned unchanged.
-When `x` is a factor with levels but no element values, qualifying
-levels are still relabelled.
+## See also
+
+- [`cohort_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open.md)
+  Cohort equivalent of `age_set_open()`
 
 ## Examples
 

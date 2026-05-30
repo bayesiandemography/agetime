@@ -1,6 +1,6 @@
-# Create a New Set of Unique Period Labels
+# Create New Period Labels
 
-Create a New Set of Unique Period Labels
+Create a new set of period labels.
 
 ## Usage
 
@@ -67,15 +67,26 @@ period_labels_ten(
 
 - lower_first:
 
-  The lower limit of the first period.
+  Lower limit of first period.
 
 - lower_last:
 
-  The lower limit of the last period.
+  Lower limit of last period.
 
 ## Value
 
-A character vector.
+Character vector. Length depends on the function arguments.
+
+## See also
+
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
+  Age equivalent of `period_labels()`
+
+- [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
+  Cohort equivalent of `period_labels()`
 
 ## Examples
 

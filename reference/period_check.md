@@ -37,20 +37,20 @@ period_assert(
 
 - no_overlap:
 
-  No periods overlap
+  No periods overlap.
 
 - no_gap:
 
   The periods span the entire range from the lower limit of the earliest
-  period to the upper limit of the latest period
+  period to the upper limit of the latest period.
 
 - no_total:
 
-  No "Total" label
+  No "Total" label.
 
 - no_na:
 
-  No NA label
+  No NA label.
 
 - x_one:
 
@@ -69,13 +69,19 @@ period_assert(
 
 ## Value
 
-- `period_check()` returns a list with components `ok` (a logical flag)
-  and `details` (a data frame).
+For `period_check()`, a list with logical `ok` and data frame `details`;
+for `period_assert()`, `x` invisibly or an error.
 
-- `period_assert()` returns `x` invisibly, or throws an error.
+## See also
 
-When `length(x) == 0`, checks on overlap, gaps, totals, and NA are
-vacuously satisfied (`observed = TRUE`).
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_check()`](https://bayesiandemography.github.io/agetime/reference/age_check.md)
+  Age equivalent of `period_check()`
+
+- [`cohort_check()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md)
+  Cohort equivalent of `period_check()`
 
 ## Examples
 

@@ -41,12 +41,7 @@ period_levels_sort(
 
 ## Value
 
-A factor, the same length as `x`.
-
-When `length(x) == 0` and there are no levels to sort, returns an empty
-factor. When `length(x) == 0` but `x` is a factor with levels,
-[`levels()`](https://rdrr.io/r/base/levels.html) are still sorted. The
-`ordered` attribute is preserved when `x` is an ordered factor.
+Factor with the same length as `x`.
 
 ## Details
 
@@ -55,6 +50,17 @@ factor first.
 
 Levels are sorted on their lower limits. When there are ties, upper
 limits are used. `NA`s come second-to-last, and totals come last.
+
+## See also
+
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md)
+  Age equivalent of `period_levels_sort()`
+
+- [`cohort_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_sort.md)
+  Cohort equivalent of `period_levels_sort()`
 
 ## Examples
 

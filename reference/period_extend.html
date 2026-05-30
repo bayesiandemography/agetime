@@ -93,9 +93,8 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A factor if <code>x</code> is a factor; otherwise a character vector.</p>
-<p>When <code>length(x) == 0</code>, throws an error (there is no interval to extend from).
-If <code>width</code> is <code>NULL</code>, the error suggests supplying <code>width</code> explicitly.</p>
+    <p>Character vector or factor.
+Length is <code>n</code>, or <code>length(x) + n</code> when <code>include_x</code> is <code>TRUE</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -107,7 +106,8 @@ but a value can be specified through the
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
-<ul><li><p><code><a href="age_extend.html">age_extend()</a></code> Age equivalent of <code>period_extend()</code></p></li>
+<ul><li><p><code><a href="parsing_period_labels.html">parsing_period_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="age_extend.html">age_extend()</a></code> Age equivalent of <code>period_extend()</code></p></li>
 <li><p><code><a href="cohort_extend.html">cohort_extend()</a></code> Cohort equivalent of <code>period_extend()</code></p></li>
 </ul></div>
     </div>

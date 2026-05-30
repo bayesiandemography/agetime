@@ -99,8 +99,7 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Numeric vector the same length as <code>x</code>.</p>
-<p>When <code>length(x) == 0</code>, returns <code>numeric(0)</code>.</p>
+    <p>Numeric vector with the same length as <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -109,39 +108,13 @@ to filter on periods.
 See below for examples.</p>
     </div>
     <div class="section level2">
-    <h2 id="interpretation-parameters">Interpretation parameters<a class="anchor" aria-label="anchor" href="#interpretation-parameters"></a></h2>
-
-
-
-<p><code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code>
-control how <span class="pkg">agetime</span> understands and processes
-values in <code>x</code>.</p><ul><li><p><code>x_one</code>. How to interpret a one-year period
-label such as <code>"2030"</code>. When <code>x_one</code> is <code>"lower"</code>,
-<span class="pkg">agetime</span> assumes that the label
-is based on the lower limit, so that
-<code>"2030"</code> refers to a period such as
-1 January 2030 to 1 January 2031.
-When <code>x_one</code> is <code>"upper"</code>,
-<span class="pkg">agetime</span> assumes that the label is based on the
-upper limit, so that <code>"2030"</code> refers to a period
-such as 30 June 2029 to 30 June 2030.</p></li>
-<li><p><code>x_multi</code>. How to interpret a multi-year period
-label such as <code>"2030-2035"</code>.
-When <code>x_multi</code> is <code>"include"</code>,
-<span class="pkg">agetime</span> assumes that the label includes the upper limit,
-so that <code>"2030-2035"</code> refers to a period such as
-30 June 2030 to 30 June 2035.
-When <code>x_multi</code> is <code>"exclude"</code>,
-<span class="pkg">agetime</span> assumes that the label excludes
-the upper limit, so that <code>"2030-2035"</code> refers to a
-period such as 1 January 2030 to 1 January 2036.</p></li>
-<li><p><code>x_fail</code>. Action <span class="pkg">agetime</span> should take
-if it can't interpret a label. When <code>x_fail</code> is
-<code>"error"</code>, <span class="pkg">agetime</span> throws an error.
-When <code>x_fail</code> is <code>"warn"</code>,
-<span class="pkg">agetime</span> throws a warning. When <code>interpet_fail</code>
-is <code>"silent"</code>, <span class="pkg">agetime</span> ignores the label and carries on.</p></li>
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="parsing_period_labels.html">parsing_period_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="age_lower.html">age_lower()</a></code> Age equivalent of <code>period_lower()</code></p></li>
+<li><p><code><a href="cohort_lower.html">cohort_lower()</a></code> Cohort equivalent of <code>period_lower()</code></p></li>
 </ul></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

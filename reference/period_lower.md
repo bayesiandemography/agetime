@@ -57,39 +57,23 @@ period_width(
 
 ## Value
 
-Numeric vector the same length as `x`.
-
-When `length(x) == 0`, returns `numeric(0)`.
+Numeric vector with the same length as `x`.
 
 ## Details
 
 Lower and upper limits can be used to filter on periods. See below for
 examples.
 
-## Interpretation parameters
+## See also
 
-`x_one`, `x_multi`, and `x_fail` control how agetime understands and
-processes values in `x`.
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
 
-- `x_one`. How to interpret a one-year period label such as `"2030"`.
-  When `x_one` is `"lower"`, agetime assumes that the label is based on
-  the lower limit, so that `"2030"` refers to a period such as 1 January
-  2030 to 1 January 2031. When `x_one` is `"upper"`, agetime assumes
-  that the label is based on the upper limit, so that `"2030"` refers to
-  a period such as 30 June 2029 to 30 June 2030.
+- [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
+  Age equivalent of `period_lower()`
 
-- `x_multi`. How to interpret a multi-year period label such as
-  `"2030-2035"`. When `x_multi` is `"include"`, agetime assumes that the
-  label includes the upper limit, so that `"2030-2035"` refers to a
-  period such as 30 June 2030 to 30 June 2035. When `x_multi` is
-  `"exclude"`, agetime assumes that the label excludes the upper limit,
-  so that `"2030-2035"` refers to a period such as 1 January 2030 to 1
-  January 2036.
-
-- `x_fail`. Action agetime should take if it can't interpret a label.
-  When `x_fail` is `"error"`, agetime throws an error. When `x_fail` is
-  `"warn"`, agetime throws a warning. When `interpet_fail` is
-  `"silent"`, agetime ignores the label and carries on.
+- [`cohort_lower()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
+  Cohort equivalent of `period_lower()`
 
 ## Examples
 

@@ -1,6 +1,6 @@
 # Fill in Gaps in Cohort Levels
 
-Fill in gaps in the levels of `x`.
+Fill in gaps in levels of `x`.
 
 ## Usage
 
@@ -39,22 +39,22 @@ cohort_levels_fill_ten(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - breaks:
 
-  Boundaries of the the newly-created cohorts. (Boundaries supplied by
-  existing cohorts can be omitted.)
+  Boundaries of newly-created cohorts. Boundaries for existing cohorts
+  can be omitted.
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -63,27 +63,31 @@ cohort_levels_fill_ten(
 
 ## Value
 
-A factor, the same length as `x`.
-
-When `length(x) == 0` and there are no levels to fill, returns an empty
-factor. If `breaks` is supplied to `cohort_levels_fill()`, levels are
-built from `breaks`. When `length(x) == 0` but `x` is a factor with
-levels, [`levels()`](https://rdrr.io/r/base/levels.html) are still
-filled in. The `ordered` attribute is preserved when `x` is an ordered
-factor.
+Factor with the same length as `x`.
 
 ## Details
 
 If `x` is not a factor, and so does not have levels, convert it to a
-factor before filling in the levels.
+factor before filling in levels.
 
-- `cohort_levels_fill` adds the cohorts specified by `breaks`.
+- `cohort_levels_fill` adds cohorts specified by `breaks`.
 
 - `cohort_levels_fill_one` adds cohorts with width 1.
 
 - `cohort_levels_fill_five` adds cohorts with width 5.
 
 - `cohort_levels_fill_ten` adds cohorts with width 10.
+
+## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
+  Age equivalent of `cohort_levels_fill()`
+
+- [`period_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
+  Period equivalent of `cohort_levels_fill()`
 
 ## Examples
 

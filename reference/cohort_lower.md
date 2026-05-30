@@ -38,17 +38,17 @@ cohort_width(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -57,14 +57,23 @@ cohort_width(
 
 ## Value
 
-Numeric vector the same length as `x`.
-
-When `length(x) == 0`, returns `numeric(0)`.
+Numeric vector with the same length as `x`.
 
 ## Details
 
 Lower and upper limits can be used to filter on cohorts. See below for
 examples.
+
+## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
+  Age equivalent of `cohort_lower()`
+
+- [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
+  Period equivalent of `cohort_lower()`
 
 ## Examples
 

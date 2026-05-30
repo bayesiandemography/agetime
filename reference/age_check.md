@@ -39,20 +39,20 @@ age_assert(
 
 - no_overlap:
 
-  No age groups overlap
+  No age groups overlap.
 
 - no_gap:
 
-  The age groups span the entire range from the lower limit of the
-  youngest age group to the upper limit of the oldest age group
+  Age groups span entire range from lower limit of youngest age group to
+  upper limit of oldest age group.
 
 - no_total:
 
-  No "Total" age group
+  No "Total" age group.
 
 - no_na:
 
-  No NA age group
+  No NA age group.
 
 - include_zero:
 
@@ -73,15 +73,16 @@ age_assert(
 
 ## Value
 
-- `age_check()` returns a list with components `ok` (a logical flag) and
-  `details` (a data frame).
+For `age_check()`, a list with logical `ok` and data frame `details`;
+for `age_assert()`, `x` invisibly or an error.
 
-- `age_assert()` returns `x` invisibly, or throws an error.
+## See also
 
-When `length(x) == 0`, checks on overlap, gaps, totals, NA, and
-life-table validity are vacuously satisfied (`observed = TRUE`). Checks
-that require at least one interval (`include_*`) fail
-(`observed = FALSE`).
+- [`period_check()`](https://bayesiandemography.github.io/agetime/reference/period_check.md)
+  Period equivalent of `age_check()`
+
+- [`cohort_check()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md)
+  Cohort equivalent of `age_check()`
 
 ## Examples
 

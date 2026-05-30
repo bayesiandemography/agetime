@@ -57,17 +57,14 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A vector the same length as <code>x</code> with standardized labels.</p>
-<p>If <code>x</code> is a character vector, returns a character vector.
-If <code>x</code> is a factor, returns a factor with the same length and
-<code>ordered</code> attribute as <code>x</code>. Element values and <code>levels(x)</code> are
-standardized; level order is unchanged except where two or more
-levels collapse to the same string after standardization (the first
-occurrence in <code>levels(x)</code> is kept).
-When <code>length(x) == 0</code>, returns <code>character(0)</code> for character input; for
-factors, standardized <code>levels(x)</code> are still applied.</p>
-<p>With <code>x_fail = "silent"</code>, labels that cannot be parsed are mapped to
-<code>NA</code> (including in <code><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels()</a></code> for factors).</p>
+    <p>Character vector or factor with the same length as <code>x</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="period_standard.html">period_standard()</a></code> Period equivalent of <code>age_standard()</code></p></li>
+<li><p><code><a href="cohort_standard.html">cohort_standard()</a></code> Cohort equivalent of <code>age_standard()</code></p></li>
+</ul></div>
     </div>
 
     <div class="section level2">

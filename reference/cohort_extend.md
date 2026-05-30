@@ -20,7 +20,7 @@ cohort_extend(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - n:
 
@@ -36,13 +36,13 @@ cohort_extend(
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -51,11 +51,8 @@ cohort_extend(
 
 ## Value
 
-A factor if `x` is a factor; otherwise a character vector.
-
-When `length(x) == 0`, throws an error (there is no interval to extend
-from). If `width` is `NULL`, the error suggests supplying `width`
-explicitly.
+Character vector or factor. Length is `n`, or `length(x) + n` when
+`include_x` is `TRUE`.
 
 ## Details
 
@@ -64,6 +61,9 @@ element of `x`, but a value can be specified through the `width`
 arugment.
 
 ## See also
+
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
   Age equivalent of `cohort_extend()`

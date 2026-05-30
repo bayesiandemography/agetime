@@ -80,16 +80,16 @@ return value. The choices are <code>"data.frame"</code>
 
 <dt id="arg-x-one">x_one<a class="anchor" aria-label="anchor" href="#arg-x-one"></a></dt>
 <dd><p>Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is <code>"lower"</code>.</p></dd>
 
 
 <dt id="arg-x-multi">x_multi<a class="anchor" aria-label="anchor" href="#arg-x-multi"></a></dt>
 <dd><p>Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is <code>"include"</code>.</p></dd>
 
 
@@ -101,10 +101,7 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A data.frame or matrix.</p>
-<p>When <code>x</code> or <code>y</code> is <code>character(0)</code>, or a factor with no levels, returns an
-empty mapping (a zero-row data frame or zero-by-zero matrix, according to
-<code>return_val</code>).</p>
+    <p>Data frame or matrix, depending on <code>return_val</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -115,6 +112,14 @@ empty mapping (a zero-row data frame or zero-by-zero matrix, according to
     <h2 id="the-relation-argument">The <code>relation</code> argument<a class="anchor" aria-label="anchor" href="#the-relation-argument"></a></h2>
 
 <table class="table table"><tr><td><code>relation</code></td><td>Endpoints of <code>x</code> and <code>y</code></td></tr><tr><td><code>"equals"</code></td><td><code>cohort_lower(x) == cohort_lower(y) &amp; cohort_upper(x) == cohort_upper(y)</code></td></tr><tr><td><code>"contains"</code></td><td><code>cohort_lower(x) &lt;= cohort_lower(y) &amp; cohort_upper(y) &lt;= cohort_upper(x)</code></td></tr><tr><td><code>"contained"</code></td><td><code>cohort_lower(y) &lt;= cohort_lower(x) &amp; cohort_upper(x) &lt;= cohort_upper(y)</code></td></tr><tr><td><code>"overlaps"</code></td><td><code>(cohort_lower(y) &lt;= cohort_lower(x) &lt; cohort_upper(y))</code> | <code>(cohort_lower(y) &lt;= cohort_upper(x) &lt; cohort_upper(y))</code></td></tr></table></div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="parsing_cohort_labels.html">parsing_cohort_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="age_mapping.html">age_mapping()</a></code> Age equivalent of <code>cohort_mapping()</code></p></li>
+<li><p><code><a href="period_mapping.html">period_mapping()</a></code> Period equivalent of <code>cohort_mapping()</code></p></li>
+</ul></div>
+    </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>

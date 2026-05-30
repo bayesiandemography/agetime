@@ -75,21 +75,21 @@ widths, and midpoints for cohorts.</p>
 
 
 <dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
-<dd><p>A vector of cohort labels.</p></dd>
+<dd><p>Vector of cohort labels.</p></dd>
 
 
 <dt id="arg-x-one">x_one<a class="anchor" aria-label="anchor" href="#arg-x-one"></a></dt>
 <dd><p>Whether labels
-for one-year cohorts are based on the
-lower or upper limit of the period.
+for one-year cohorts are based on
+lower or upper limit of period.
 Default is <code>"lower"</code>.</p></dd>
 
 
 <dt id="arg-x-multi">x_multi<a class="anchor" aria-label="anchor" href="#arg-x-multi"></a></dt>
 <dd><p>Whether
 labels for multi-year periods
-include or exclude the final
-year of the period.
+include or exclude final
+year of period.
 Default is <code>"include"</code>.</p></dd>
 
 
@@ -101,14 +101,21 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Numeric vector the same length as <code>x</code>.</p>
-<p>When <code>length(x) == 0</code>, returns <code>numeric(0)</code>.</p>
+    <p>Numeric vector with the same length as <code>x</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Lower and upper limits can be used
 to filter on cohorts.
 See below for examples.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="parsing_cohort_labels.html">parsing_cohort_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="age_lower.html">age_lower()</a></code> Age equivalent of <code>cohort_lower()</code></p></li>
+<li><p><code><a href="period_lower.html">period_lower()</a></code> Period equivalent of <code>cohort_lower()</code></p></li>
+</ul></div>
     </div>
 
     <div class="section level2">

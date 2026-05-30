@@ -76,21 +76,21 @@ conform to expectations (<code>period_assert</code>).</p>
 
 
 <dt id="arg-no-overlap">no_overlap<a class="anchor" aria-label="anchor" href="#arg-no-overlap"></a></dt>
-<dd><p>No periods overlap</p></dd>
+<dd><p>No periods overlap.</p></dd>
 
 
 <dt id="arg-no-gap">no_gap<a class="anchor" aria-label="anchor" href="#arg-no-gap"></a></dt>
 <dd><p>The periods span the entire
 range from the lower limit of the earliest period
-to the upper limit of the latest period</p></dd>
+to the upper limit of the latest period.</p></dd>
 
 
 <dt id="arg-no-total">no_total<a class="anchor" aria-label="anchor" href="#arg-no-total"></a></dt>
-<dd><p>No "Total" label</p></dd>
+<dd><p>No "Total" label.</p></dd>
 
 
 <dt id="arg-no-na">no_na<a class="anchor" aria-label="anchor" href="#arg-no-na"></a></dt>
-<dd><p>No NA label</p></dd>
+<dd><p>No NA label.</p></dd>
 
 
 <dt id="arg-x-one">x_one<a class="anchor" aria-label="anchor" href="#arg-x-one"></a></dt>
@@ -114,14 +114,16 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-
-<ul><li><p><code>period_check()</code> returns a list with
-components <code>ok</code> (a logical flag)
-and <code>details</code> (a data frame).</p></li>
-<li><p><code>period_assert()</code> returns <code>x</code> invisibly,
-or throws an error.</p></li>
-</ul><p>When <code>length(x) == 0</code>, checks on overlap, gaps, totals, and NA are
-vacuously satisfied (<code>observed = TRUE</code>).</p>
+    <p>For <code>period_check()</code>, a list with logical <code>ok</code> and data frame
+<code>details</code>; for <code>period_assert()</code>, <code>x</code> invisibly or an error.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="parsing_period_labels.html">parsing_period_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
+<li><p><code><a href="age_check.html">age_check()</a></code> Age equivalent of <code>period_check()</code></p></li>
+<li><p><code><a href="cohort_check.html">cohort_check()</a></code> Cohort equivalent of <code>period_check()</code></p></li>
+</ul></div>
     </div>
 
     <div class="section level2">

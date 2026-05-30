@@ -32,35 +32,27 @@ age_modify_life(x, x_fail = c("error", "warn", "silent"))
 
 ## Value
 
-A vector the same length as `x` with modified labels.
-
-If `x` is a character vector, returns a character vector. When
-`length(x) == 0`, returns `character(0)`.
-
-If `x` is a factor, returns a factor with the same length and `ordered`
-attribute as `x`. Element values are mapped to the new age groups and
-[`levels()`](https://rdrr.io/r/base/levels.html) is the full label set
-defined by `breaks` (and `open`, where relevant). When `length(x) == 0`,
-`levels(x)` are still modified.
-
-## Details
-
-When `length(x) == 0` and `x` is a factor with no levels, `x` is
-returned unchanged (there is no range from which to infer new groups).
+Character vector or factor with the same length as `x`.
 
 ## See also
 
-[`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md)
-Convert to general age groups
-[`period_modify_five()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
-Period equivalent of `age_modify_five()`
-[`period_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
-Period equivalent of `age_modify_ten()`
-[`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
-Cohort equivalent of `age_modify_five()`
-[`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
-Cohort equivalent of `age_modify_ten()` age_levels_fill()\] Add levels
-for intermediate age groups
+- [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md)
+  Convert to general age groups
+
+- [`period_modify_five()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
+  Period equivalent of `age_modify_five()`
+
+- [`period_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
+  Period equivalent of `age_modify_ten()`
+
+- [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
+  Cohort equivalent of `age_modify_five()`
+
+- [`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
+  Cohort equivalent of `age_modify_ten()`
+
+- [`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
+  Add levels for intermediate age groups
 
 ## Examples
 

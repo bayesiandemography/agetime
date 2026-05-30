@@ -51,11 +51,8 @@ period_extend(
 
 ## Value
 
-A factor if `x` is a factor; otherwise a character vector.
-
-When `length(x) == 0`, throws an error (there is no interval to extend
-from). If `width` is `NULL`, the error suggests supplying `width`
-explicitly.
+Character vector or factor. Length is `n`, or `length(x) + n` when
+`include_x` is `TRUE`.
 
 ## Details
 
@@ -64,6 +61,9 @@ element of `x`, but a value can be specified through the `width`
 arugment.
 
 ## See also
+
+- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
   Age equivalent of `period_extend()`

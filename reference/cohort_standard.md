@@ -17,17 +17,17 @@ cohort_standard(
 
 - x:
 
-  A vector of cohort labels.
+  Vector of cohort labels.
 
 - x_one:
 
-  Whether labels for one-year cohorts are based on the lower or upper
-  limit of the period. Default is `"lower"`.
+  Whether labels for one-year cohorts are based on lower or upper limit
+  of period. Default is `"lower"`.
 
 - x_multi:
 
-  Whether labels for multi-year periods include or exclude the final
-  year of the period. Default is `"include"`.
+  Whether labels for multi-year periods include or exclude final year of
+  period. Default is `"include"`.
 
 - x_fail:
 
@@ -36,19 +36,18 @@ cohort_standard(
 
 ## Value
 
-A vector the same length as `x` with standardized labels.
+Character vector or factor with the same length as `x`.
 
-If `x` is a character vector, returns a character vector. If `x` is a
-factor, returns a factor with the same length and `ordered` attribute as
-`x`. Element values and `levels(x)` are standardized; level order is
-unchanged except where two or more levels collapse to the same string
-after standardization (the first occurrence in `levels(x)` is kept).
-When `length(x) == 0`, returns `character(0)` for character input; for
-factors, standardized `levels(x)` are still applied.
+## See also
 
-With `x_fail = "silent"`, labels that cannot be parsed are mapped to
-`NA` (including in [`levels()`](https://rdrr.io/r/base/levels.html) for
-factors).
+- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
+  Details for `x_one`, `x_multi`, and `x_fail`
+
+- [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
+  Age equivalent of `cohort_standard()`
+
+- [`period_standard()`](https://bayesiandemography.github.io/agetime/reference/period_standard.md)
+  Period equivalent of `cohort_standard()`
 
 ## Examples
 

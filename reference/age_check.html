@@ -78,21 +78,21 @@ conform to expectations (<code>age_assert</code>).</p>
 
 
 <dt id="arg-no-overlap">no_overlap<a class="anchor" aria-label="anchor" href="#arg-no-overlap"></a></dt>
-<dd><p>No age groups overlap</p></dd>
+<dd><p>No age groups overlap.</p></dd>
 
 
 <dt id="arg-no-gap">no_gap<a class="anchor" aria-label="anchor" href="#arg-no-gap"></a></dt>
-<dd><p>The age groups span the entire
-range from the lower limit of the youngest age
-group to the upper limit of the oldest age group</p></dd>
+<dd><p>Age groups span entire
+range from lower limit of youngest age
+group to upper limit of oldest age group.</p></dd>
 
 
 <dt id="arg-no-total">no_total<a class="anchor" aria-label="anchor" href="#arg-no-total"></a></dt>
-<dd><p>No "Total" age group</p></dd>
+<dd><p>No "Total" age group.</p></dd>
 
 
 <dt id="arg-no-na">no_na<a class="anchor" aria-label="anchor" href="#arg-no-na"></a></dt>
-<dd><p>No NA age group</p></dd>
+<dd><p>No NA age group.</p></dd>
 
 
 <dt id="arg-include-zero">include_zero<a class="anchor" aria-label="anchor" href="#arg-include-zero"></a></dt>
@@ -118,15 +118,15 @@ cannot be parsed: <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-
-<ul><li><p><code>age_check()</code> returns a list with
-components <code>ok</code> (a logical flag)
-and <code>details</code> (a data frame).</p></li>
-<li><p><code>age_assert()</code> returns <code>x</code> invisibly,
-or throws an error.</p></li>
-</ul><p>When <code>length(x) == 0</code>, checks on overlap, gaps, totals, NA, and life-table
-validity are vacuously satisfied (<code>observed = TRUE</code>). Checks that require at
-least one interval (<code>include_*</code>) fail (<code>observed = FALSE</code>).</p>
+    <p>For <code>age_check()</code>, a list with logical <code>ok</code> and data frame
+<code>details</code>; for <code>age_assert()</code>, <code>x</code> invisibly or an error.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
+    <div class="dont-index">
+<ul><li><p><code><a href="period_check.html">period_check()</a></code> Period equivalent of <code>age_check()</code></p></li>
+<li><p><code><a href="cohort_check.html">cohort_check()</a></code> Cohort equivalent of <code>age_check()</code></p></li>
+</ul></div>
     </div>
 
     <div class="section level2">
