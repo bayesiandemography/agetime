@@ -33,7 +33,11 @@
 #' return value. The choices are `"data.frame"`
 #' (the default) or `"matrix"`.
 #'
-#' @returns A data.frame or matrix
+#' @return A data.frame or matrix.
+#'
+#' When `x` or `y` is `character(0)`, or a factor with no levels, returns an
+#' empty mapping (a zero-row data frame or zero-by-zero matrix, according to
+#' `return_val`).
 #'
 #' @examples
 #' x <- c("0-4", "10", "5-7")
@@ -49,30 +53,15 @@ age_mapping <- function(x,
                         relation = c("equals", "contains", "contained", "overlaps"),
                         return_val = c("data.frame", "matrix"),
                         x_fail = c("error", "warn", "silent")) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = FALSE)
-  if (is.null(y))
-    y <- x
-  else
-    y <- to_character_or_factor(x = y,
-                                nm_x = "y",
-                                length_zero_ok = FALSE)
+  x_fail <- match.arg(x_fail)
   relation <- match.arg(relation)
   return_val <- match.arg(return_val)
-  x_fail <- match.arg(x_fail)
-  intervals_x <- intervals(labels = x,
-                           label_type = "age",
-                           x_one = "lower",
-                           x_multi = "exclude",
-                           x_fail = x_fail)
-  intervals_y <- intervals(labels = y,
-                           label_type = "age",
-                           x_one = "lower",
-                           x_multi = "exclude",
-                           x_fail = x_fail)
-  make_mapping(intervals_x = intervals_x,
-               intervals_y = intervals_y,
-               relation = relation,
-               return_val = return_val)
+  inner_mapping(x = x,
+                y = y,
+                relation = relation,
+                return_val = return_val,
+                label_type = "age",
+                x_one = "lower",
+                x_multi = "exclude",
+                x_fail = x_fail)
 }
