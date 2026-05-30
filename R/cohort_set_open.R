@@ -8,8 +8,13 @@
 #' @inheritParams cohort_lower
 #' @param open Upper limit of open cohort.
 #'
-#' @returns
+#' @return
 #' A factor if `x` is a factor; otherwise a character vector.
+#'
+#' If no labels qualify for the open group (including when `x` is
+#' `character(0)` or a factor with no levels), `x` is returned unchanged.
+#' When `x` is a factor with levels but no element values, qualifying levels
+#' are still relabelled.
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")

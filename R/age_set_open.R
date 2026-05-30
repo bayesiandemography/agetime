@@ -8,8 +8,13 @@
 #' @inheritParams age_lower
 #' @param open Lower limit of open age group.
 #'
-#' @returns
+#' @return
 #' A factor if `x` is a factor; otherwise a character vector.
+#'
+#' If no labels qualify for the open group (including when `x` is
+#' `character(0)` or a factor with no levels), `x` is returned unchanged.
+#' When `x` is a factor with levels but no element values, qualifying levels
+#' are still relabelled.
 #'
 #' @examples
 #' x <- c("20-24", "80-84", "100+")

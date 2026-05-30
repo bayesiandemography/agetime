@@ -9,7 +9,7 @@ inner_set_open <- function(x,
                            x_fail) {
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
-                              length_zero_ok = FALSE)
+                              length_zero_ok = TRUE)
   check_n(n = open,
                     nm_n = "open",
                     min = 0L,
