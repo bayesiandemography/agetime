@@ -45,7 +45,8 @@ inner_extend <- function(x,
     cli::cli_abort("Final interval is {.val {NA}}.")
   is_total <- get_is_total(intervals_tail)
   if (is_total)
-    cli::cli_abort("Final interval {.val {tail}} is total.")
+    cli::cli_abort(c("Final interval {.val {tail}} is total.",
+                     i = "Extend ordinary {label_name(label_type)}s and then add total if needed?"))
   if (!has_width)
     width <- get_width(intervals_tail)
   upper <- get_upper(intervals_tail)

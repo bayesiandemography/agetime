@@ -75,10 +75,6 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
 
 
 check_m_contains <- function(m_contains, label_type) {
-  int_name <- switch(label_type,
-                     age = "age group",
-                     cohort = "cohort",
-                     period = "period")
   labels_old <- colnames(m_contains)
   colsum <- colSums(m_contains)
   is_not_fit <- colsum != 1L

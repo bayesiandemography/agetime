@@ -47,13 +47,8 @@ inner_levels_fill_empty <- function(levels,
 inner_levels_fill_factor <- function(x,
                                      levels,
                                      is_ordered) {
-  if (is.factor(x)) {
-    levels(x) <- levels
-    if (is_ordered && !is.ordered(x))
-      x <- ordered(x, levels = levels(x))
-    return(x)
-  }
-  factor(x = x,
+  vals <- if (is.factor(x)) as.character(x) else x
+  factor(x = vals,
          levels = levels,
          ordered = is_ordered,
          exclude = NULL)

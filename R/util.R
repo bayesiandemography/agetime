@@ -178,6 +178,23 @@ label_non_life <- function(intervals) {
   NULL
 }
 
+#' Name for a Label Type
+#'
+#' @param label_type `"age"`, `"period"`, or `"cohort"`.
+#' @returns Character scalar.
+#'
+#' @noRd
+label_name <- function(label_type) {
+  ans <- switch(label_type,
+                age = "age group",
+                period = "period",
+                cohort = "cohort",
+                NULL)
+  if (is.null(ans))
+    cli::cli_abort("Internal error: {.val {label_type}} is not a valid value for {.arg label_type}.")
+  ans
+}
+
 to_character_or_factor <- function(x, nm_x, length_zero_ok) {
   if (is.data.frame(x)) {
     cli::cli_abort("{.arg {nm_x}} is a data frame.")
