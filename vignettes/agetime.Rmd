@@ -122,7 +122,7 @@ By default, `age_mapping()` looks for intervals that are identical.
 ```{r mapping}
 x <- c("10--14", "0--9")
 y <- c("0-4", "5-9", "10-14")
-age_mapping(x, y, return_val = "matrix")
+age_mapping(x, y, format = "matrix")
 ```
 
 But it can look for other types of relationships.
@@ -130,7 +130,7 @@ But it can look for other types of relationships.
 ```{r mapping-contains}
 x <- c("10--14", "0--9")
 y <- c("0-4", "5-9", "10-14")
-age_mapping(x, y, relation = "contains", return_val = "matrix")
+age_mapping(x, y, relation = "contains", format = "matrix")
 ```
 
 

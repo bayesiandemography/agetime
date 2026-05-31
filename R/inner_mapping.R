@@ -5,8 +5,8 @@ mapping_has_no_labels <- function(x) {
     length(x) == 0L
 }
 
-mapping_empty <- function(return_val) {
-  if (return_val == "data.frame") {
+mapping_empty <- function(format) {
+  if (format == "tibble") {
     tibble::tibble(x = character(0),
                    y = character(0))
   }
@@ -22,7 +22,7 @@ mapping_empty <- function(return_val) {
 inner_mapping <- function(x,
                           y,
                           relation,
-                          return_val,
+                          format,
                           label_type,
                           x_one,
                           x_multi,
@@ -37,7 +37,7 @@ inner_mapping <- function(x,
                                 nm_x = "y",
                                 length_zero_ok = TRUE)
   if (mapping_has_no_labels(x) || mapping_has_no_labels(y))
-    return(mapping_empty(return_val = return_val))
+    return(mapping_empty(format = format))
   intervals_x <- intervals(labels = x,
                            label_type = label_type,
                            x_one = x_one,
@@ -51,5 +51,5 @@ inner_mapping <- function(x,
   make_mapping(intervals_x = intervals_x,
                intervals_y = intervals_y,
                relation = relation,
-               return_val = return_val)
+               format = format)
 }

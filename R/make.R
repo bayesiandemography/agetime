@@ -242,15 +242,15 @@ make_m_contains <- function(breaks,
 #' @param intervals_x,intervals_y Objects of class "agetime_intervals"
 #' constructed from two label vectors.
 #' @param relation `"equals"`,
-#' `"contains"`, `"contained"` or `"overlaps"`.
-#' @param return_val Type of return value.
+#' `"contains"`, `"is-contained-in"`, or `"overlaps-with"`.
+#' @param format Type of return value.
 #' @returns Tibble or matrix
 #'
 #' @noRd
 make_mapping <- function(intervals_x,
                          intervals_y,
                          relation,
-                         return_val) {
+                         format) {
   labels_x <- get_labels_unique(intervals_x)
   labels_y <- get_labels_unique(intervals_y)
   is_na_x <- get_is_na(intervals_x)
@@ -272,12 +272,12 @@ make_mapping <- function(intervals_x,
     mxy[is_total_x, ] <- TRUE
     mxy[!is_na_x & !is_total_x, is_total_y] <- FALSE
   }
-  else if (relation == "contained") {
+  else if (relation == "is-contained-in") {
     mxy <- is_m1_inside_m2(m1 = mx, m2 = my)
     mxy[is_total_x, !is_na_y] <- FALSE
     mxy[, is_total_y] <- TRUE
   }
-  else if (relation == "overlaps") {
+  else if (relation == "overlaps-with") {
     mxy <- does_m1_overlap_m2(m1 = mx, m2 = my)
     mxy[is_total_x, ] <- TRUE
     mxy[, is_total_y] <- TRUE
@@ -287,7 +287,7 @@ make_mapping <- function(intervals_x,
   mxy <- mxy[i_xun_to_xunu_x, ]
   mxy <- mxy[, i_xun_to_xunu_y]
   dimnames(mxy) <- list(x = labels_x, y = labels_y)
-  if (return_val == "data.frame") {
+  if (format == "tibble") {
     ans <- as.data.frame.table(mxy, stringsAsFactors = FALSE)
     ans <- ans[ans[[3L]], 1:2]
     ans <- tibble::tibble(ans)

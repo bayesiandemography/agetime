@@ -7,8 +7,8 @@
 age_mapping(
   x,
   y = NULL,
-  relation = c("equals", "contains", "contained", "overlaps"),
-  return_val = c("data.frame", "matrix"),
+  relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+  format = c("tibble", "matrix"),
   x_fail = c("error", "warn", "silent")
 )
 }
@@ -19,12 +19,12 @@ age_mapping(
 no value supplied, \code{x} is mapped onto itself.}
 
 \item{relation}{Relationship between
-labels. The choices are \code{"equals"} (the default),
-\code{"contains"}, \code{"contained"}, and \code{"overlaps"}.
+labels. Choices are \code{"equals"} (the default),
+\code{"contains"}, \code{"is-contained-in"}, and \code{"overlaps-with"}.
 See below for details and examples.}
 
-\item{return_val}{The format of the
-return value. The choices are \code{"data.frame"}
+\item{format}{Format of
+return value. Choices are \code{"tibble"}
 (the default) or \code{"matrix"}.}
 
 \item{x_fail}{Action if element of \code{x}
@@ -32,7 +32,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Data frame or matrix, depending on \code{return_val}.
+\link[tibble:tibble]{Tibble} or matrix, depending on \code{format}.
 }
 \description{
 Create a mapping between age group labels. The mapping is
@@ -41,14 +41,16 @@ based on one of four types of relationship:
 \details{
 If no value for \code{y} is supplied,
 \code{x} is mapped onto itself.
+
+Tibbles produced by \code{age_mapping()} are sparse, while matrices are dense. See the example below.
 }
 \section{The \code{relation} argument}{
 \tabular{ll}{
    \code{relation} \tab Endpoints of \code{x} and \code{y} \cr
    \code{"equals"} \tab \code{age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)} \cr
    \code{"contains"} \tab \code{age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)} \cr
-   \code{"contained"} \tab \code{age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)} \cr
-   \code{"overlaps"} \tab \verb{(age_lower(y) <= age_lower(x) < age_upper(y))} | \verb{(age_lower(y) <= age_upper(x) < age_upper(y))} \cr
+   \code{"is-contained-in"} \tab \code{age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)} \cr
+   \code{"overlaps-with"} \tab \verb{(age_lower(y) <= age_lower(x) < age_upper(y))} | \verb{(age_lower(y) <= age_upper(x) < age_upper(y))} \cr
 }
 }
 
@@ -56,10 +58,20 @@ If no value for \code{y} is supplied,
 x <- c("0-4", "10", "5-7")
 y <- c("5-9", "0-4", "6-14")
 age_mapping(x = x, y = y)
-age_mapping(x, return_val = "matrix")
+age_mapping(x, format = "matrix")
 age_mapping(x = x, y = y, relation = "contains")
-age_mapping(x = x, y = y, relation = "contained")
-age_mapping(x = x, y = y, relation = "overlaps")
+age_mapping(x = x, y = y, relation = "is-contained-in")
+age_mapping(x = x, y = y, relation = "overlaps-with")
+
+# sparse tibble vs dense matrix
+x <- c("0-4", "10-14")
+y <- c("0-4", "5-9")
+age_mapping(x = x, y = y) # one match
+age_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+
+# mapping 'x' on to itself 
+x <- c("0--4", "0-4", "5+")
+age_mapping(x)
 }
 \seealso{
 \itemize{

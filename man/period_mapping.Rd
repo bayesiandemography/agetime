@@ -7,8 +7,8 @@
 period_mapping(
   x,
   y = NULL,
-  relation = c("equals", "contains", "contained", "overlaps"),
-  return_val = c("data.frame", "matrix"),
+  relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+  format = c("tibble", "matrix"),
   x_one = c("lower", "upper"),
   x_multi = c("include", "exclude"),
   x_fail = c("error", "warn", "silent")
@@ -21,12 +21,12 @@ period_mapping(
 no value supplied, \code{x} is mapped onto itself.}
 
 \item{relation}{Relationship between
-labels. The choices are \code{"equals"} (the default),
-\code{"contains"}, \code{"contained"}, and \code{"overlaps"}.
+labels. Choices are \code{"equals"} (the default),
+\code{"contains"}, \code{"is-contained-in"}, and \code{"overlaps-with"}.
 See below for details and examples.}
 
-\item{return_val}{The format of the
-return value. The choices are \code{"data.frame"}
+\item{format}{Format of
+return value. Choices are \code{"tibble"}
 (the default) or \code{"matrix"}.}
 
 \item{x_one}{How to interpret
@@ -43,7 +43,7 @@ cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Data frame or matrix, depending on \code{return_val}.
+\link[tibble:tibble]{Tibble} or matrix, depending on \code{format}.
 }
 \description{
 Create a mapping between period labels. The mapping is
@@ -52,14 +52,16 @@ based on one of four types of relationship:
 \details{
 If no value for \code{y} is supplied,
 \code{x} is mapped onto itself.
+
+Tibbles produced by \code{period_mapping()} are sparse, while matrices are dense. See the example below.
 }
 \section{The \code{relation} argument}{
 \tabular{ll}{
    \code{relation} \tab Endpoints of \code{x} and \code{y} \cr
    \code{"equals"} \tab \code{period_lower(x) == period_lower(y) & period_upper(x) == period_upper(y)} \cr
    \code{"contains"} \tab \code{period_lower(x) <= period_lower(y) & period_upper(y) <= period_upper(x)} \cr
-   \code{"contained"} \tab \code{period_lower(y) <= period_lower(x) & period_upper(x) <= period_upper(y)} \cr
-   \code{"overlaps"} \tab \verb{(period_lower(y) <= period_lower(x) < period_upper(y))} | \verb{(period_lower(y) <= period_upper(x) < period_upper(y))} \cr
+   \code{"is-contained-in"} \tab \code{period_lower(y) <= period_lower(x) & period_upper(x) <= period_upper(y)} \cr
+   \code{"overlaps-with"} \tab \verb{(period_lower(y) <= period_lower(x) < period_upper(y))} | \verb{(period_lower(y) <= period_upper(x) < period_upper(y))} \cr
 }
 }
 
@@ -67,10 +69,20 @@ If no value for \code{y} is supplied,
 x <- c("2020-2025", "2030", "2025-2027")
 y <- c("2025-2030", "2020-2025", "2026-2034")
 period_mapping(x = x, y = y)
-period_mapping(x, return_val = "matrix")
+period_mapping(x, format = "matrix")
 period_mapping(x = x, y = y, relation = "contains")
-period_mapping(x = x, y = y, relation = "contained")
-period_mapping(x = x, y = y, relation = "overlaps")
+period_mapping(x = x, y = y, relation = "is-contained-in")
+period_mapping(x = x, y = y, relation = "overlaps-with")
+
+# sparse tibble vs dense matrix
+x <- c("2020-2025", "2030-2035")
+y <- c("2020-2025", "2025-2030")
+period_mapping(x = x, y = y) # one match
+period_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+
+# mapping 'x' on to itself
+x <- c("2020--2025", "2020-2025", "2030")
+period_mapping(x)
 }
 \seealso{
 \itemize{
