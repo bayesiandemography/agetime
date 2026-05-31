@@ -9,8 +9,8 @@ of four types of relationship:
 age_mapping(
   x,
   y = NULL,
-  relation = c("equals", "contains", "contained", "overlaps"),
-  return_val = c("data.frame", "matrix"),
+  relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+  format = c("tibble", "matrix"),
   x_fail = c("error", "warn", "silent")
 )
 ```
@@ -28,14 +28,14 @@ age_mapping(
 
 - relation:
 
-  Relationship between labels. The choices are `"equals"` (the default),
-  `"contains"`, `"contained"`, and `"overlaps"`. See below for details
-  and examples.
+  Relationship between labels. Choices are `"equals"` (the default),
+  `"contains"`, `"is-contained-in"`, and `"overlaps-with"`. See below
+  for details and examples.
 
-- return_val:
+- format:
 
-  The format of the return value. The choices are `"data.frame"` (the
-  default) or `"matrix"`.
+  Format of return value. Choices are `"tibble"` (the default) or
+  `"matrix"`.
 
 - x_fail:
 
@@ -44,11 +44,15 @@ age_mapping(
 
 ## Value
 
-Data frame or matrix, depending on `return_val`.
+[Tibble](https://tibble.tidyverse.org/reference/tibble.html) or matrix,
+depending on `format`.
 
 ## Details
 
 If no value for `y` is supplied, `x` is mapped onto itself.
+
+Tibbles produced by `age_mapping()` are sparse, while matrices are
+dense. See the example below.
 
 ## The `relation` argument
 
@@ -57,8 +61,8 @@ If no value for `y` is supplied, `x` is mapped onto itself.
 | `relation` | Endpoints of `x` and `y` |
 | `"equals"` | `age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)` |
 | `"contains"` | `age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)` |
-| `"contained"` | `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)` |
-| `"overlaps"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` \| `(age_lower(y) <= age_upper(x) < age_upper(y))` |
+| `"is-contained-in"` | `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)` |
+| `"overlaps-with"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` \| `(age_lower(y) <= age_upper(x) < age_upper(y))` |
 
 ## See also
 
@@ -78,7 +82,7 @@ age_mapping(x = x, y = y)
 #>   x     y    
 #>   <chr> <chr>
 #> 1 0-4   0-4  
-age_mapping(x, return_val = "matrix")
+age_mapping(x, format = "matrix")
 #>      y
 #> x     0-4 10 5-7
 #>   0-4   1  0   0
@@ -89,14 +93,14 @@ age_mapping(x = x, y = y, relation = "contains")
 #>   x     y    
 #>   <chr> <chr>
 #> 1 0-4   0-4  
-age_mapping(x = x, y = y, relation = "contained")
+age_mapping(x = x, y = y, relation = "is-contained-in")
 #> # A tibble: 3 × 2
 #>   x     y    
 #>   <chr> <chr>
 #> 1 5-7   5-9  
 #> 2 0-4   0-4  
 #> 3 10    6-14 
-age_mapping(x = x, y = y, relation = "overlaps")
+age_mapping(x = x, y = y, relation = "overlaps-with")
 #> # A tibble: 4 × 2
 #>   x     y    
 #>   <chr> <chr>
@@ -104,4 +108,30 @@ age_mapping(x = x, y = y, relation = "overlaps")
 #> 2 0-4   0-4  
 #> 3 10    6-14 
 #> 4 5-7   6-14 
+
+# sparse tibble vs dense matrix
+x <- c("0-4", "10-14")
+y <- c("0-4", "5-9")
+age_mapping(x = x, y = y) # one match
+#> # A tibble: 1 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 0-4   0-4  
+age_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+#>        y
+#> x       0-4 5-9
+#>   0-4     1   0
+#>   10-14   0   0
+
+# mapping 'x' on to itself 
+x <- c("0--4", "0-4", "5+")
+age_mapping(x)
+#> # A tibble: 5 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 0--4  0--4 
+#> 2 0-4   0--4 
+#> 3 0--4  0-4  
+#> 4 0-4   0-4  
+#> 5 5+    5+   
 ```

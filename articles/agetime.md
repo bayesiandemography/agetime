@@ -174,7 +174,7 @@ looks for intervals that are identical.
 
 x <- c("10--14", "0--9")
 y <- c("0-4", "5-9", "10-14")
-age_mapping(x, y, return_val = "matrix")
+age_mapping(x, y, format = "matrix")
 #>         y
 #> x        0-4 5-9 10-14
 #>   10--14   0   0     1
@@ -187,7 +187,7 @@ But it can look for other types of relationships.
 
 x <- c("10--14", "0--9")
 y <- c("0-4", "5-9", "10-14")
-age_mapping(x, y, relation = "contains", return_val = "matrix")
+age_mapping(x, y, relation = "contains", format = "matrix")
 #>         y
 #> x        0-4 5-9 10-14
 #>   10--14   0   0     1

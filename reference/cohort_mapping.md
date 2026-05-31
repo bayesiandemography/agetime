@@ -9,8 +9,8 @@ four types of relationship:
 cohort_mapping(
   x,
   y = NULL,
-  relation = c("equals", "contains", "contained", "overlaps"),
-  return_val = c("data.frame", "matrix"),
+  relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+  format = c("tibble", "matrix"),
   x_one = c("lower", "upper"),
   x_multi = c("include", "exclude"),
   x_fail = c("error", "warn", "silent")
@@ -30,14 +30,14 @@ cohort_mapping(
 
 - relation:
 
-  Relationship between labels. The choices are `"equals"` (the default),
-  `"contains"`, `"contained"`, and `"overlaps"`. See below for details
-  and examples.
+  Relationship between labels. Choices are `"equals"` (the default),
+  `"contains"`, `"is-contained-in"`, and `"overlaps-with"`. See below
+  for details and examples.
 
-- return_val:
+- format:
 
-  The format of the return value. The choices are `"data.frame"` (the
-  default) or `"matrix"`.
+  Format of return value. Choices are `"tibble"` (the default) or
+  `"matrix"`.
 
 - x_one:
 
@@ -56,11 +56,15 @@ cohort_mapping(
 
 ## Value
 
-Data frame or matrix, depending on `return_val`.
+[Tibble](https://tibble.tidyverse.org/reference/tibble.html) or matrix,
+depending on `format`.
 
 ## Details
 
 If no value for `y` is supplied, `x` is mapped onto itself.
+
+Tibbles produced by `cohort_mapping()` are sparse, while matrices are
+dense. See the example below.
 
 ## The `relation` argument
 
@@ -69,8 +73,8 @@ If no value for `y` is supplied, `x` is mapped onto itself.
 | `relation` | Endpoints of `x` and `y` |
 | `"equals"` | `cohort_lower(x) == cohort_lower(y) & cohort_upper(x) == cohort_upper(y)` |
 | `"contains"` | `cohort_lower(x) <= cohort_lower(y) & cohort_upper(y) <= cohort_upper(x)` |
-| `"contained"` | `cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)` |
-| `"overlaps"` | `(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))` \| `(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))` |
+| `"is-contained-in"` | `cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)` |
+| `"overlaps-with"` | `(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))` \| `(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))` |
 
 ## See also
 
@@ -93,7 +97,7 @@ cohort_mapping(x = x, y = y)
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-cohort_mapping(x, return_val = "matrix")
+cohort_mapping(x, format = "matrix")
 #>            y
 #> x           2020-2025 2030 2025-2027
 #>   2020-2025         1    0         0
@@ -104,14 +108,14 @@ cohort_mapping(x = x, y = y, relation = "contains")
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-cohort_mapping(x = x, y = y, relation = "contained")
+cohort_mapping(x = x, y = y, relation = "is-contained-in")
 #> # A tibble: 3 × 2
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2025-2027 2025-2030
 #> 2 2020-2025 2020-2025
 #> 3 2030      2026-2034
-cohort_mapping(x = x, y = y, relation = "overlaps")
+cohort_mapping(x = x, y = y, relation = "overlaps-with")
 #> # A tibble: 4 × 2
 #>   x         y        
 #>   <chr>     <chr>    
@@ -119,4 +123,30 @@ cohort_mapping(x = x, y = y, relation = "overlaps")
 #> 2 2020-2025 2020-2025
 #> 3 2030      2026-2034
 #> 4 2025-2027 2026-2034
+
+# sparse tibble vs dense matrix
+x <- c("2020-2025", "2030-2035")
+y <- c("2020-2025", "<2025")
+cohort_mapping(x = x, y = y) # one match
+#> # A tibble: 1 × 2
+#>   x         y        
+#>   <chr>     <chr>    
+#> 1 2020-2025 2020-2025
+cohort_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+#>            y
+#> x           2020-2025 <2025
+#>   2020-2025         1     0
+#>   2030-2035         0     0
+
+# mapping 'x' on to itself
+x <- c("2020--2025", "2020-2025", "<2030")
+cohort_mapping(x)
+#> # A tibble: 5 × 2
+#>   x          y         
+#>   <chr>      <chr>     
+#> 1 2020--2025 2020--2025
+#> 2 2020-2025  2020--2025
+#> 3 2020--2025 2020-2025 
+#> 4 2020-2025  2020-2025 
+#> 5 <2030      <2030     
 ```
