@@ -53,8 +53,27 @@ x_label <- function(label, label_parsers, x_fail) {
     return(na)
   for (label_parser in label_parsers) {
     val <- label_parser(label)
-    if (!is.null(val))
+    if (!is.null(val)) {
+      l <- val[[1L]]
+      u <- val[[2L]]
+      if (is.finite(l) && is.finite(u) && l >= u) {
+        msg <- c("Label {.val {label}} invalid.")
+        if (l == u) {
+          msg <- c(msg, i = "Lower limit equals upper limit.")
+        } else {
+          msg <- c(msg, i = "Lower limit greater than upper limit.")
+        }
+        msg <- c(msg,
+                 i = "Lower limit: {.val {l}}.",
+                 i = "Upper limit: {.val {u}}.")
+        if (x_fail == "error")
+          cli::cli_abort(msg)
+        if (x_fail == "warn")
+          cli::cli_warn(msg)
+        return(na)
+      }
       return(val)
+    }
   }
   msg <- "Don't know how to interpret label {.val {label}}."
   if (x_fail == "error")
@@ -62,4 +81,4 @@ x_label <- function(label, label_parsers, x_fail) {
   if (x_fail == "warn")
     cli::cli_warn(msg)
   na
-}    
+}
