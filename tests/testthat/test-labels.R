@@ -1,4 +1,25 @@
 
+test_that("age_labels_one() creates one-year age groups", {
+  expect_identical(
+    age_labels_one(lower_first = 15, lower_last = 17, open = FALSE),
+    c("15", "16", "17")
+  )
+})
+
+test_that("age_labels_ten() creates ten-year age groups", {
+  expect_identical(
+    age_labels_ten(lower_first = 0, lower_last = 20, open = FALSE),
+    c("0-9", "10-19", "20-29")
+  )
+})
+
+test_that("period_labels() creates labels from breaks", {
+  expect_identical(
+    period_labels(breaks = c(2000, 2005, 2010, 2015), include_total = TRUE),
+    c("2000-2005", "2005-2010", "2010-2015", "Total")
+  )
+})
+
 test_that("age_labels_five() creates default five-year age groups", {
   ans <- age_labels_five()
 

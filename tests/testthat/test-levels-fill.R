@@ -81,6 +81,72 @@ test_that("period_levels_fill_five() and cohort_levels_fill_five() fill gaps", {
   expect_identical(levels(cohort_levels_fill_five(x)), expected)
 })
 
+test_that("age_levels_fill_one() fills gaps with one-year groups", {
+  x <- factor(c("0-4", "20-24"))
+  expect_identical(
+    levels(age_levels_fill_one(x)),
+    c("0-4", "5", "6", "7", "8", "9", "10", "11", "12",
+      "13", "14", "15", "16", "17", "18", "19", "20-24")
+  )
+})
+
+test_that("period_levels_fill_one() and cohort_levels_fill_one() fill gaps", {
+  x <- factor(c("2000-2005", "2020-2025"))
+  expected <- c("2000-2005", "2005", "2006", "2007", "2008", "2009",
+                "2010", "2011", "2012", "2013", "2014", "2015",
+                "2016", "2017", "2018", "2019", "2020-2025")
+  expect_identical(levels(period_levels_fill_one(x)), expected)
+  expect_identical(levels(cohort_levels_fill_one(x)), expected)
+})
+
+test_that("period_levels_fill_ten() and cohort_levels_fill_ten() fill gaps", {
+  x <- c("2051-2061", "2021-2031")
+  expected <- c("2051-2061", "2021-2031", "2031-2041", "2041-2051")
+  expect_identical(levels(period_levels_fill_ten(x)), expected)
+  expect_identical(levels(cohort_levels_fill_ten(x)), expected)
+})
+
+test_that("period_levels_fill_ten() and cohort_levels_fill_ten() error when gap is not divisible by 10", {
+  x <- c("2010-2019", "2030-2039")
+  msg <- tryCatch(
+    period_levels_fill_ten(x),
+    error = function(e) conditionMessage(e)
+  )
+  expect_match(msg, "Gap between .2010-2019. and .2030-2039. is not divisible by 10")
+  expect_match(msg, "Choose a different .width.")
+  expect_error(cohort_levels_fill_ten(x), "Gap between .2010-2019. and .2030-2039. is not divisible by 10")
+})
+
+test_that("period_levels_fill_ten() and cohort_levels_fill_ten() fill gaps when x_multi is exclude", {
+  x <- c("2010-2019", "2030-2039")
+  expected <- c("2010-2019", "2020-2029", "2030-2039")
+  expect_identical(
+    levels(period_levels_fill_ten(x, x_multi = "exclude")),
+    expected
+  )
+  expect_identical(
+    levels(cohort_levels_fill_ten(x, x_multi = "exclude")),
+    expected
+  )
+})
+
+test_that("cohort_levels_fill() fills gaps using default boundaries", {
+  x <- factor(c("2020-2025", "2030-2035"))
+  ans <- cohort_levels_fill(x)
+
+  expect_s3_class(ans, "factor")
+  expect_identical(as.character(ans), c("2020-2025", "2030-2035"))
+  expect_identical(levels(ans), c("2020-2025", "2025-2030", "2030-2035"))
+})
+
+test_that("cohort_levels_fill() fills gaps using custom breaks", {
+  x <- factor(c("2020-2025", "2030-2035"))
+  expect_identical(
+    levels(cohort_levels_fill(x, breaks = 2027)),
+    c("2020-2025", "2025-2027", "2027-2030", "2030-2035")
+  )
+})
+
 test_that("age_levels_fill_five() errors when a gap is not divisible by width", {
   msg <- tryCatch(
     age_levels_fill_five(factor(c("0-4", "11-14"))),
