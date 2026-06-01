@@ -2,7 +2,7 @@
 # Build character labels from breaks or parsed intervals.
 # Used by inner_labels.R and inner_standard.R.
 
-make_labels_intervals <- function(intervals,
+construct_labels_from_intervals <- function(intervals,
                                   x_one,
                                   x_multi) {
   is_one <- get_is_one(intervals)
@@ -41,7 +41,7 @@ make_labels_intervals <- function(intervals,
   ans
 }
 
-make_levels_from_breaks <- function(breaks,
+construct_labels_from_breaks <- function(breaks,
                                     is_open_left,
                                     is_open_right,
                                     x_one,

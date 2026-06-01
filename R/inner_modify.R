@@ -19,14 +19,14 @@ inner_modify <- function(x,
                          x_fail = x_fail)
   int_has_total <- int_has_total(intervals)
   int_has_na <- int_has_na(intervals)
-  levels_breaks <- make_levels_from_breaks(breaks = breaks,
+  levels_breaks <- construct_labels_from_breaks(breaks = breaks,
                                            is_open_left = is_open_left,
                                            is_open_right = is_open_right,
                                            x_one = x_one,
                                            x_multi = x_multi,
                                            include_total = int_has_total,
                                            include_na = int_has_na)
-  m_contains <- make_m_contains(breaks = breaks,
+  m_contains <- construct_modify_mapping(breaks = breaks,
                                 levels_breaks = levels_breaks,
                                 is_open_left = is_open_left,
                                 is_open_right = is_open_right,

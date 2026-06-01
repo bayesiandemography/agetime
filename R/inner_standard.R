@@ -13,7 +13,7 @@ inner_standard <- function(x,
                          x_one = x_one,
                          x_multi = x_multi,
                          x_fail = x_fail)
-  labels <- make_labels_intervals(intervals = intervals,
+  labels <- construct_labels_from_intervals(intervals = intervals,
                                   x_one = x_one,
                                   x_multi = x_multi)
   if (is_factor) {

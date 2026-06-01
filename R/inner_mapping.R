@@ -48,7 +48,7 @@ inner_mapping <- function(x,
                            x_one = x_one,
                            x_multi = x_multi,
                            x_fail = x_fail)
-  make_mapping(intervals_x = intervals_x,
+  construct_mapping(intervals_x = intervals_x,
                intervals_y = intervals_y,
                relation = relation,
                format = format)

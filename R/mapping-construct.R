@@ -2,7 +2,7 @@
 # Build label-to-label mapping matrices and modify containment maps.
 # Used by inner_mapping.R and inner_modify.R.
 
-make_m_contains <- function(breaks,
+construct_modify_mapping <- function(breaks,
                             levels_breaks,
                             is_open_left,
                             is_open_right,
@@ -47,7 +47,7 @@ make_m_contains <- function(breaks,
   ans
 }
 
-#' Make a Mapping Between Two Sets of Labels
+#' Construct a Mapping Between Two Sets of Labels
 #'
 #' @param intervals_x,intervals_y Objects of class "agetime_intervals"
 #' constructed from two label vectors.
@@ -57,7 +57,7 @@ make_m_contains <- function(breaks,
 #' @returns Tibble or matrix
 #'
 #' @noRd
-make_mapping <- function(intervals_x,
+construct_mapping <- function(intervals_x,
                          intervals_y,
                          relation,
                          format) {
