@@ -51,5 +51,5 @@ cli::cli_abort(c("{.arg n} has length {.val {length(n)}}.",
 ## Examples in this codebase
 
 - `R/inner_extend.R` — length-0 + missing `width`
-- `R/util.R` — invalid `x` type in `to_character_or_factor()`
+- `R/label-input.R` — invalid `x` type in `to_character_or_factor()`
 - `R/check-functions.R` — argument validation helpers

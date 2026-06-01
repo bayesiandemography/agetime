@@ -34,6 +34,3 @@ test_that("'is_mx_x_in_m2' works", {
                         rep(NA, 7))
   expect_identical(ans_obtained, ans_expected)
 })
-
-         
-
