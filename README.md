@@ -12,6 +12,8 @@
 [![R-CMD-check](https://github.com/bayesiandemography/agetime/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bayesiandemography/agetime/actions/workflows/R-CMD-check.yaml)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/bayesiandemography/agetime/branch/main/graph/badge.svg)](https://app.codecov.io/gh/bayesiandemography/agetime?branch=main)
 <!-- badges: end -->
 
 Work with labels for age groups, periods, and cohorts.
