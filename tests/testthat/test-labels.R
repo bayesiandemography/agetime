@@ -96,3 +96,14 @@ test_that("cohort_labels_ten() can include Total and NA", {
     c("2000-2010", "2010-2020", "Total", NA)
   )
 })
+
+test_that("label generators error when lower_first is not less than lower_last", {
+  expect_error(
+    age_labels_five(lower_first = 50, lower_last = 20),
+    "`lower_first` is not less than `lower_last`"
+  )
+  expect_error(
+    cohort_labels_one(lower_first = 2010, lower_last = 2000),
+    "`lower_first` is not less than `lower_last`"
+  )
+})
