@@ -1,3 +1,13 @@
+#' Inner Low Mid Up Width
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns List with interval matrix `m` and index vector `i`.
+#'
+#' @noRd
 
 inner_low_mid_up_width <- function(x,
                                    label_type,
@@ -16,6 +26,16 @@ inner_low_mid_up_width <- function(x,
   i <- get_i_x_to_xunu(intervals)
   list(m = m, i = i)
 }
+#' Inner Lower
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Numeric vector of lower bounds.
+#'
+#' @noRd
 
 inner_lower <- function(x,
                         label_type,
@@ -31,6 +51,16 @@ inner_lower <- function(x,
   i <- l$i
   m[i, 1L]
 }
+#' Inner Mid
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Numeric vector of interval midpoints.
+#'
+#' @noRd
 
 
 
@@ -62,6 +92,16 @@ inner_mid <- function(x,
   }
   m[i]
 }
+#' Inner Upper
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Numeric vector of upper bounds.
+#'
+#' @noRd
 
 
 inner_upper <- function(x,
@@ -78,6 +118,16 @@ inner_upper <- function(x,
   i <- l$i
   m[i, 2L]
 }
+#' Inner Width
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Numeric vector of interval widths.
+#'
+#' @noRd
 
 
 inner_width <- function(x,

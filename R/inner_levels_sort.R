@@ -1,3 +1,14 @@
+#' Inner Levels Sort
+#'
+#' @param x Vector of labels.
+#' @param decreasing Whether to sort in decreasing order.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Factor with sorted levels.
+#'
+#' @noRd
 
 inner_levels_sort <- function(x,
                               decreasing,

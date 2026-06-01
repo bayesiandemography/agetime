@@ -1,3 +1,15 @@
+#' Inner Is Open
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @param check_open_left Whether to check left-open intervals.
+#' @param check_open_right Whether to check right-open intervals.
+#' @returns Logical vector the same length as `x`.
+#'
+#' @noRd
 
 inner_is_open <- function(x,
                           label_type,
@@ -20,6 +32,16 @@ inner_is_open <- function(x,
   i <- get_i_x_to_xunu(intervals)
   is_open[i]
 }
+#' Inner Is Total
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Logical vector the same length as `x`.
+#'
+#' @noRd
 
 inner_is_total <- function(x,
                            label_type,

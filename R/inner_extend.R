@@ -1,3 +1,18 @@
+#' Inner Extend
+#'
+#' @param x Vector of labels.
+#' @param n Number of intervals to extend by.
+#' @param width Interval width.
+#' @param include_x Whether to include original `x` in output.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Extended label vector (or factor).
+#'
+#' If `width` is `NULL`, width is inferred from the final label. The final interval cannot be open, total, or `NA`.
+#'
+#' @noRd
 
 inner_extend <- function(x,
                          n,

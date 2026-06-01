@@ -1,3 +1,11 @@
+#' Inner Levels Fill Prep
+#'
+#' @param x Vector of labels.
+#' @param breaks Increasing vector of break points.
+#' @param nm_x Argument name used in error messages.
+#' @returns List with prepared labels and factor metadata.
+#'
+#' @noRd
 inner_levels_fill_prep <- function(x,
                                      breaks,
                                      nm_x) {
@@ -15,6 +23,16 @@ inner_levels_fill_prep <- function(x,
        is_ordered = is_ordered,
        levels = levels)
 }
+#' Inner Levels Fill Empty
+#'
+#' @param levels Existing label levels.
+#' @param breaks Increasing vector of break points.
+#' @param is_ordered Whether output factor should be ordered.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @returns Empty factor when `levels` is empty, else `NULL`.
+#'
+#' @noRd
 
 inner_levels_fill_empty <- function(levels,
                                     breaks,
@@ -43,6 +61,14 @@ inner_levels_fill_empty <- function(levels,
     return(factor(levels = character(), ordered = TRUE))
   factor()
 }
+#' Inner Levels Fill Factor
+#'
+#' @param x Vector of labels.
+#' @param levels Existing label levels.
+#' @param is_ordered Whether output factor should be ordered.
+#' @returns Factor with updated levels.
+#'
+#' @noRd
 
 inner_levels_fill_factor <- function(x,
                                      levels,
@@ -53,8 +79,22 @@ inner_levels_fill_factor <- function(x,
          ordered = is_ordered,
          exclude = NULL)
 }
+#' Inner Levels Fill
+#'
+#' @param x Vector of labels.
+#' @param breaks Increasing vector of break points.
+#' @param width Interval width.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Factor with gap levels filled.
+#'
+#' Cannot supply both `breaks` and `width`; provide at most one.
+#'
+#' @noRd
 
-## Can omit 'breaks' and 'width', but cannot give values for both
+
 inner_levels_fill <- function(x,
                               breaks,
                               width,
@@ -156,6 +196,13 @@ inner_levels_fill <- function(x,
                            levels = levels,
                            is_ordered = prep$is_ordered)
 }
+#' Inner Levels Fill Life
+#'
+#' @param x Vector of labels.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Factor with life-table gap levels filled.
+#'
+#' @noRd
 
 inner_levels_fill_life <- function(x,
                                    x_fail) {

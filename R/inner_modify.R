@@ -1,3 +1,16 @@
+#' Inner Modify
+#'
+#' @param x Vector of labels.
+#' @param breaks Increasing vector of break points.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Modified labels as character vector or factor.
+#'
+#' @noRd
 inner_modify <- function(x,
                           breaks,
                           is_open_left,
@@ -46,7 +59,20 @@ inner_modify <- function(x,
   ans
 }
 
-
+#' Inner Modify Width
+#'
+#' @param x Vector of labels.
+#' @param width Interval width.
+#' @param offset Alignment offset for width-based breaks.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Modified labels as character vector or factor.
+#'
+#' Computes aligned breaks from `width` and `offset` using existing interval bounds before calling `inner_modify()`.
+#'
+#' @noRd
 inner_modify_width <- function(x,
                                 width,
                                 offset,

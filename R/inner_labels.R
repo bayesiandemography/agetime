@@ -1,3 +1,15 @@
+#' Inner Labels
+#'
+#' @param breaks Increasing vector of break points.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param include_total Whether to append `"Total"`.
+#' @param include_na Whether to append `NA`.
+#' @returns Character vector of labels.
+#'
+#' @noRd
 
 inner_labels <- function(breaks,
                          x_one,
@@ -17,6 +29,19 @@ inner_labels <- function(breaks,
                           include_total = include_total,
                           include_na = include_na)
 }
+#' Inner Labels One
+#'
+#' @param lower_first First lower bound for generated labels.
+#' @param lower_last Last lower bound for generated labels.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param include_total Whether to append `"Total"`.
+#' @param include_na Whether to append `NA`.
+#' @returns Character vector of labels.
+#'
+#' @noRd
 
 inner_labels_one <- function(lower_first,
                              lower_last,
@@ -54,6 +79,19 @@ inner_labels_one <- function(lower_first,
                           include_total = include_total,
                           include_na = include_na)
 }
+#' Inner Labels Five
+#'
+#' @param lower_first First lower bound for generated labels.
+#' @param lower_last Last lower bound for generated labels.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param include_total Whether to append `"Total"`.
+#' @param include_na Whether to append `NA`.
+#' @returns Character vector of labels.
+#'
+#' @noRd
 
 
 inner_labels_five <- function(lower_first,
@@ -92,6 +130,19 @@ inner_labels_five <- function(lower_first,
                           include_total = include_total,
                           include_na = include_na)
 }
+#' Inner Labels Ten
+#'
+#' @param lower_first First lower bound for generated labels.
+#' @param lower_last Last lower bound for generated labels.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param include_total Whether to append `"Total"`.
+#' @param include_na Whether to append `NA`.
+#' @returns Character vector of labels.
+#'
+#' @noRd
 
 inner_labels_ten <- function(lower_first,
                              lower_last,

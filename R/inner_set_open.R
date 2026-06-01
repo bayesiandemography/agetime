@@ -1,4 +1,18 @@
-
+#' Inner Set Open
+#'
+#' @param x Vector of labels.
+#' @param open Boundary used to open intervals.
+#' @param make_open_left Whether to open intervals below `open` on the left.
+#' @param make_open_right Whether to open intervals at or above `open` on the right.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Labels with selected intervals made open-ended.
+#'
+#' Errors when `open` would split an existing interval.
+#'
+#' @noRd
 inner_set_open <- function(x,
                            open,
                            make_open_left,

@@ -1,9 +1,14 @@
 # label-input.R
 # Coerce user label vectors and supply domain-specific label helpers.
 # Used at the start of inner_* functions and in life-table checks.
+#' Find First Non-Life Label
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @returns First non-life-table label, or `NULL` if all are valid.
+#'
+#' @noRd
 
-## return label of first interval that is
-## not found in an abridged life table
+
 label_non_life <- function(intervals) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
@@ -54,6 +59,14 @@ label_name <- function(label_type) {
     cli::cli_abort("Internal error: {.val {label_type}} is not a valid value for {.arg label_type}.")
   ans
 }
+#' To Character Or Factor
+#'
+#' @param x Vector of labels.
+#' @param nm_x Argument name used in error messages.
+#' @param length_zero_ok Argument `length_zero_ok`.
+#' @returns Character vector or factor.
+#'
+#' @noRd
 
 to_character_or_factor <- function(x, nm_x, length_zero_ok) {
   if (is.data.frame(x)) {

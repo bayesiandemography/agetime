@@ -1,5 +1,20 @@
-
-## Note that order of normalizers matters
+#' Make Labels Normalizers
+#'
+#' @param use_tolower Whether to apply `norm_tolower()`.
+#' @param use_wordnum Whether to apply `norm_wordnum()`.
+#' @param use_dashes Whether to apply `norm_dashes()`.
+#' @param use_leadingzeros Whether to apply `norm_leadingzeros()`.
+#' @param use_years Whether to apply `norm_years()`.
+#' @param use_whitespace Whether to apply `norm_whitespace()`.
+#' @param use_lessthan Whether to apply `norm_lessthan()`.
+#' @param use_plus Whether to apply `norm_plus()`.
+#' @param use_range Whether to apply `norm_range()`.
+#' @param use_total Whether to apply `norm_total()`.
+#' @param use_na Whether to apply `norm_na()`.
+#' @param use_infant Whether to apply `norm_infant()`.
+#' @returns List of normalizer functions in application order.
+#'
+#' @noRd
 make_labels_normalizers <- function(use_tolower,
                                     use_wordnum,
                                     use_dashes,
@@ -40,7 +55,11 @@ make_labels_normalizers <- function(use_tolower,
   ans
 }
 
-
+#' Make Labels Normalizers Age
+#'
+#' @returns List of normalizers for age labels.
+#'
+#' @noRd
 make_labels_normalizers_age <- function()
   make_labels_normalizers(use_tolower = TRUE,
                           use_wordnum = TRUE,
@@ -55,7 +74,11 @@ make_labels_normalizers_age <- function()
                           use_na = TRUE,
                           use_infant = TRUE)
 
-
+#' Make Labels Normalizers Cohort
+#'
+#' @returns List of normalizers for cohort labels.
+#'
+#' @noRd
 make_labels_normalizers_cohort <- function()
   make_labels_normalizers(use_tolower = TRUE,
                           use_wordnum = FALSE,
@@ -70,7 +93,12 @@ make_labels_normalizers_cohort <- function()
                           use_na = TRUE,
                           use_infant = FALSE)
 
-make_labels_normalizers_period <- function() 
+#' Make Labels Normalizers Period
+#'
+#' @returns List of normalizers for period labels.
+#'
+#' @noRd
+make_labels_normalizers_period <- function()
   make_labels_normalizers(use_tolower = TRUE,
                           use_wordnum = FALSE,
                           use_dashes = TRUE,
@@ -84,7 +112,15 @@ make_labels_normalizers_period <- function()
                           use_na = TRUE,
                           use_infant = FALSE)
 
-
+#' Normalize Labels
+#'
+#' @param labels Vector of labels.
+#' @param labels_normalizers List of label normalizer functions.
+#' @returns Normalized labels.
+#'
+#' The order of `labels_normalizers` matters; each normalizer runs on the output of the previous one.
+#'
+#' @noRd
 normalize_labels <- function(labels, labels_normalizers) {
   is_na <- is.na(labels)
   for (labels_normalizer in labels_normalizers)

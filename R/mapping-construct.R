@@ -1,6 +1,18 @@
 # mapping-construct.R
 # Build label-to-label mapping matrices and modify containment maps.
 # Used by inner_mapping.R and inner_modify.R.
+#' Construct Modify Mapping
+#'
+#' @param breaks Increasing vector of break points.
+#' @param levels_breaks Labels constructed from new breaks.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param include_total Whether to append `"Total"`.
+#' @param include_na Whether to append `NA`.
+#' @param intervals An `agetime_intervals` object.
+#' @returns Logical matrix mapping new labels to original labels.
+#'
+#' @noRd
 
 construct_modify_mapping <- function(breaks,
                             levels_breaks,

@@ -1,6 +1,16 @@
 # label-construct.R
 # Build character labels from breaks or parsed intervals.
 # Used by inner_labels.R and inner_standard.R.
+#' Construct Labels From Intervals
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @returns Character vector of labels for parsed intervals.
+#'
+#' When `x_multi = "exclude"`, range labels are rendered with the displayed upper bound reduced by 1 from the internal interval upper bound.
+#'
+#' @noRd
 
 construct_labels_from_intervals <- function(intervals,
                                   x_one,
@@ -40,6 +50,20 @@ construct_labels_from_intervals <- function(intervals,
   ans[is_unparseable] <- NA_character_
   ans
 }
+#' Construct Labels From Breaks
+#'
+#' @param breaks Increasing vector of break points.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param include_total Whether to append `"Total"`.
+#' @param include_na Whether to append `NA`.
+#' @returns Character vector of labels for breaks.
+#'
+#' When `x_multi = "exclude"`, range labels are rendered with the displayed upper bound reduced by 1 from the interval break upper bound.
+#'
+#' @noRd
 
 construct_labels_from_breaks <- function(breaks,
                                     is_open_left,

@@ -1,3 +1,13 @@
+#' Inner Standard
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Standardized labels as character vector or factor.
+#'
+#' @noRd
 
 inner_standard <- function(x,
                            label_type,

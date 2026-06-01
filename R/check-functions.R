@@ -1,9 +1,22 @@
+#' Check Breaks
+#'
+#' @param breaks Increasing vector of break points.
+#' @returns Return value used internally.
+#'
+#' @noRd
 
 check_breaks <- function(breaks) {
   check_incr_nonneg_integers(x = breaks,
                              nm_x = "breaks",
                              min_length = 2L)
 }
+#' Check Flag
+#'
+#' @param x Vector of labels.
+#' @param nm_x Argument name used in error messages.
+#' @returns Return value used internally.
+#'
+#' @noRd
   
 
 check_flag <- function(x, nm_x) {
@@ -17,6 +30,15 @@ check_flag <- function(x, nm_x) {
                      i = "Use {.val {TRUE}} or {.val {FALSE}}?"))
   invisible(TRUE)
 }
+#' Check In Limits Intervals
+#'
+#' @param x Vector of labels.
+#' @param nm_x Argument name used in error messages.
+#' @param intervals An `agetime_intervals` object.
+#' @param nm_intervals Argument name for interval labels in error messages.
+#' @returns Return value used internally.
+#'
+#' @noRd
  
 check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
   m <- get_m(intervals)
@@ -40,6 +62,14 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
                                "{.val {labels[[i_highest]]}}.")))
   invisible(TRUE)
 }
+#' Check Incr Nonneg Integers
+#'
+#' @param x Vector of labels.
+#' @param nm_x Argument name used in error messages.
+#' @param min_length Minimum required length.
+#' @returns Return value used internally.
+#'
+#' @noRd
 
 
 
@@ -71,6 +101,13 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
     }
     invisible(TRUE)
 }
+#' Check M Contains
+#'
+#' @param m_contains Containment matrix from modified breaks to original labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @returns Return value used internally.
+#'
+#' @noRd
     
 
 
@@ -134,6 +171,15 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
                      i = "Use a value divisible by {divisible_by}?"))
   invisible(TRUE)
 }
+#' Check Not In Intervals
+#'
+#' @param x Vector of labels.
+#' @param nm_x Argument name used in error messages.
+#' @param intervals An `agetime_intervals` object.
+#' @param nm_intervals Argument name for interval labels in error messages.
+#' @returns Return value used internally.
+#'
+#' @noRd
 
 check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
   m <- get_m(intervals)
@@ -155,6 +201,15 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
   }
   invisible(TRUE)
 }
+#' Check X Lt Y
+#'
+#' @param x Vector of labels.
+#' @param y Vector of labels to compare against `x`.
+#' @param nm_x Argument name used in error messages.
+#' @param nm_y Argument name used in error messages.
+#' @returns Return value used internally.
+#'
+#' @noRd
 
 
 

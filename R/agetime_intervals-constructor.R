@@ -1,3 +1,13 @@
+#' Intervals
+#'
+#' @param labels Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns An `agetime_intervals` object.
+#'
+#' @noRd
 
 
 intervals <- function(labels,
@@ -27,6 +37,16 @@ intervals <- function(labels,
                          x_fail = x_fail)
   ans
 }
+#' Intervals Inner
+#'
+#' @param labels Vector of labels.
+#' @param labels_normalizers List of label normalizer functions.
+#' @param label_parsers List of label parser functions.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns An `agetime_intervals` object.
+#'
+#' @noRd
   
 
 intervals_inner <- function(labels,

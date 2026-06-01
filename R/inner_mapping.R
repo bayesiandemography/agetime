@@ -1,9 +1,21 @@
+#' Mapping Has No Labels
+#'
+#' @param x Vector of labels.
+#' @returns `TRUE` when there are no labels in `x`.
+#'
+#' @noRd
 mapping_has_no_labels <- function(x) {
   if (is.factor(x))
     nlevels(x) == 0L
   else
     length(x) == 0L
 }
+#' Mapping Empty
+#'
+#' @param format Output format for mappings.
+#' @returns Empty mapping object in requested `format`.
+#'
+#' @noRd
 
 mapping_empty <- function(format) {
   if (format == "tibble") {
@@ -18,6 +30,19 @@ mapping_empty <- function(format) {
                            y = character(0)))
   }
 }
+#' Inner Mapping
+#'
+#' @param x Vector of labels.
+#' @param y Vector of labels to compare against `x`.
+#' @param relation Interval relation used to build mappings.
+#' @param format Output format for mappings.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @returns Mapping object in requested `format`.
+#'
+#' @noRd
 
 inner_mapping <- function(x,
                           y,

@@ -1,3 +1,20 @@
+#' Inner Assert
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @param no_overlap Expected overlap check result.
+#' @param no_gap Expected gap check result.
+#' @param no_total Expected total-label check result.
+#' @param no_na Expected missing-label check result.
+#' @param include_zero Expected inclusion of a zero-start interval.
+#' @param include_open Expected inclusion of an open interval.
+#' @param valid_life Expected life-table validity check result.
+#' @returns `x`, invisibly, or an error if checks fail.
+#'
+#' @noRd
 
 inner_assert <- function(x,
                          label_type,
@@ -26,6 +43,23 @@ inner_assert <- function(x,
   throw_assert_error(val)
   invisible(x)
 }
+#' Inner Check
+#'
+#' @param x Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param x_fail How to handle unparsable labels.
+#' @param no_overlap Expected overlap check result.
+#' @param no_gap Expected gap check result.
+#' @param no_total Expected total-label check result.
+#' @param no_na Expected missing-label check result.
+#' @param include_zero Expected inclusion of a zero-start interval.
+#' @param include_open Expected inclusion of an open interval.
+#' @param valid_life Expected life-table validity check result.
+#' @returns List with `ok` and check `details`.
+#'
+#' @noRd
 
 
 inner_check <- function(x,
@@ -74,6 +108,13 @@ inner_check <- function(x,
   list(ok = ok,
        details = details)
 }
+#' Inner Check No Overlap
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
 
 
 
@@ -113,6 +154,13 @@ inner_check_no_overlap <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }
+#' Inner Check No Gap
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
  
 inner_check_no_gap <- function(intervals, asserted) {
   int_is_empty <- int_is_empty(intervals)
@@ -151,6 +199,13 @@ inner_check_no_gap <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }
+#' Inner Check No Total
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
 
 
 inner_check_no_total <- function(intervals, asserted) {
@@ -181,6 +236,13 @@ inner_check_no_total <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }
+#' Inner Check No Na
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
 
 
 inner_check_no_na <- function(intervals, asserted) {
@@ -206,6 +268,13 @@ inner_check_no_na <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }
+#' Inner Check Include Zero
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
 
 
 inner_check_include_zero <- function(intervals, asserted) {
@@ -244,6 +313,13 @@ inner_check_include_zero <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }
+#' Inner Check Include Open
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
 
 inner_check_include_open <- function(intervals, asserted) {
   int_is_empty <- int_is_empty(intervals)
@@ -281,6 +357,13 @@ inner_check_include_open <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }
+#' Inner Check Valid Life
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
 
 
 
@@ -307,6 +390,12 @@ inner_check_valid_life <- function(intervals, asserted) {
                      observed = observed,
                      comment = comment)
 }  
+#' Throw Assert Error
+#'
+#' @param val Result object from `inner_check()`.
+#' @returns `NULL`, invisibly, or aborts when checks fail.
+#'
+#' @noRd
 
 
 throw_assert_error <- function(val) {
