@@ -1,15 +1,4 @@
 
-make_is_open <- function(intervals) {
-  m <- get_m(intervals)
-  i <- get_i_x_to_xunu(intervals)
-  l <- m[, 1L]
-  u <- m[, 2L]
-  o <- is.infinite(l) | is.infinite(u)
-  o[i]
-}
-
-
-
 make_labels_intervals <- function(intervals,
                                   x_one,
                                   x_multi) {
@@ -93,102 +82,6 @@ make_levels_from_breaks <- function(breaks,
     ans <- c(ans, NA)
   ans
 }
-
-
-
-make_lower_first <- function(lower_first,
-                             intervals,
-                             is_open_left,
-                             min,
-                             divisible_by) {
-  user_supplied_value <- !is.null(lower_first)
-  if (user_supplied_value) {
-    check_n(n = lower_first,
-                      nm_n = "lower_first",
-                      min = min,
-                      max = NULL,
-                      divisible_by = divisible_by)
-    lower_first <- as.integer(lower_first)
-  }
-  m <- get_m(intervals)
-  labels_unique <- get_labels_unique(intervals)
-  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  l <- m[, 1L]
-  u <- m[, 2L]
-  is_na <- is.na(l)
-  if (user_supplied_value) {
-    is_lf_inside_int <- !is_na & (l < lower_first) & (lower_first < u)
-    if (any(is_lf_inside_int)) {
-      labels_inside <- labels_unique[i_xun_to_xunu %in% which(is_lf_inside_int)]
-      n_inside <- length(labels_inside)
-      cli::cli_abort(c("{.arg lower_first} falls inside an existing interval.",
-                       i = "{.arg lower_first}: {.val {lower_first}}.",
-                       i = "Existing interval{?s}: {.val {labels_inside}}."))
-    }
-    is_high <- !is_na & (lower_first >= u)
-    is_excluded <- !open & is_high
-    if (any(is_excluded)) {
-      labels_excl <- labels_unique[i_xun_to_xunu %in% which(is_excluded)]
-      n_excl <- length(labels_excl)
-      cli::cli_abort(c("{.arg lower_first} would exclude existing interval{?s}.",
-                       i = "{.arg lower_first}: {.val {lower_first}}.",
-                       i = "Excluded interval{?s}: {.val {labels_excl}}."))
-    }
-    return(lower_first)
-  }
-  l_min <- min(l[is.finite(l)])
-  l_min - (l_min %% divisible_by)
-}
-
-
-make_lower_last <- function(lower_last,
-                            intervals,
-                            open,
-                            min,
-                            divisible_by) {
-  user_supplied_value <- !is.null(lower_last)
-  if (user_supplied_value) {
-    check_n(n = lower_last,
-                      nm_n = "lower_last",
-                      min = min,
-                      max = NULL,
-                      divisible_by = divisible_by)
-    lower_last <- as.integer(lower_last)
-  }
-  m <- get_m(intervals)
-  labels_unique <- get_labels_unique(intervals)
-  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  l <- m[, 1L]
-  u <- m[, 2L]
-  is_na <- is.na(l)
-  if (user_supplied_value) {
-    is_lf_inside_int <- !is_na & (l < lower_last) & (lower_last < u)
-    if (any(is_lf_inside_int)) {
-      labels_inside <- labels_unique[i_xun_to_xunu %in% which(is_lf_inside_int)]
-      n_inside <- length(labels_inside)
-      cli::cli_abort(c("{.arg lower_last} falls inside an existing interval.",
-                       i = "{.arg lower_last}: {.val {lower_last}}.",
-                       i = "Existing interval{?s}: {.val {labels_inside}}."))
-    }
-    is_low <- !is_na & ((lower_last + divisible_by) < u)
-    is_excluded <- !open & is_low
-    if (any(is_excluded)) {
-      labels_excl <- labels_unique[i_xun_to_xunu %in% which(is_excluded)]
-      n_excl <- length(labels_excl)
-      cli::cli_abort(c("{.arg lower_last} would exclude existing interval{?s}.",
-                       i = "{.arg lower_last}: {.val {lower_last}}.",
-                       i = "Excluded interval{?s}: {.val {labels_excl}}."))
-    }
-    return(lower_last)
-  }
-  l_max <- max(l[is.finite(u)])
-  if (l_max %% divisible_by == 0L)
-    l_max
-  else
-    ((l_max %/% divisible_by) + 1L) * divisible_by
-}
-
-
 
 make_m_contains <- function(breaks,
                             levels_breaks,

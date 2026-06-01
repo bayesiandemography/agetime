@@ -216,11 +216,3 @@ to_character_or_factor <- function(x, nm_x, length_zero_ok) {
   }
   x_char
 }
-
-
-val_length_zero <- function(x) {
-  if (is.factor(x))
-    return(x)
-  else
-    character()
-}

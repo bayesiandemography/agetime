@@ -1,35 +1,4 @@
 
-## ## 'classify_relationship' ----------------------------------------------------
-
-## test_that("classify_relationship worths with one-to-one", {
-##   m <- rbind(c(T, F, F),
-##              c(F, F, T),
-##              c(F, T, F))
-##   expect_identical(classify_relationship(m), "one-to-one")
-## })
-
-## test_that("classify_relationship worths with many-to-one", {
-##   m <- rbind(c(T, F),
-##              c(T, F),
-##              c(F, T))
-##   expect_identical(classify_relationship(m), "many-to-one")
-## })
-
-## test_that("classify_relationship worths with one-to-many", {
-##   m <- rbind(c(T, T, F),
-##              c(F, F, T))
-##   expect_identical(classify_relationship(m), "one-to-many")
-## })
-
-## test_that("classify_relationship worths with many-to-many", {
-##   m <- rbind(c(T, F, T),
-##              c(F, F, T),
-##              c(F, T, F))
-##   expect_identical(classify_relationship(m), "many-to-many")
-## })
-               
-
-
 ## 'does_int1_overlap_int2' ----------------------------------------------------------
 
 test_that("'does_int1_overlap_int2' works", {
