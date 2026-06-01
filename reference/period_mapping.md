@@ -1,7 +1,16 @@
 # Mapping Between Period Labels
 
-Create a mapping between period labels. The mapping is based on one of
-four types of relationship:
+Create a mapping between period labels. A mapping depicts a relationship
+between the labels of `x` and the labels of `y`. The types of
+relationship that can be mapped are:
+
+- "x equals y"
+
+- "x contains y"
+
+- "x is contained in y"
+
+- "x overlaps with y".
 
 ## Usage
 

@@ -31,7 +31,7 @@ Character vector or factor with the same length as `x`.
 ## See also
 
 - [`cohort_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open.md)
-  Cohort equivalent of `age_set_open()`
+  Set open cohorts (left-open)
 
 ## Examples
 

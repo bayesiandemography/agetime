@@ -50,14 +50,14 @@ Character vector or factor with the same length as `x`.
   Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`age_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_set_open.md)
-  Age equivalent of `cohort_set_open()`
+  Set open age groups (right-open)
 
 ## Examples
 
 ``` r
 x <- c("2020-2024", "<2000", "2015")
 cohort_set_open(x, open = 2020)
-#> [1] "2020+" "<2000" "2015" 
+#> [1] "2020-2024" "<2020"     "<2020"    
 cohort_set_open(x, open = 2005)
-#> [1] "2005+" "<2000" "2005+"
+#> [1] "2020-2024" "<2005"     "2015"     
 ```
