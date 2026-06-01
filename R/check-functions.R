@@ -135,53 +135,6 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
   invisible(TRUE)
 }
 
-    
-    
-check_is_integerish <- function(x) {
-  tol <- 1e-8
-  x <- as.double(x)
-  is_ok <- is.na(x) | is.infinite(x) | (abs(x - round(x)) <= tol)
-  i_not_ok <- match(FALSE, is_ok, nomatch = 0L)
-  if (i_not_ok > 0L) {
-    x_not_ok <- x[[i_not_ok]]
-    cli::cli_abort("Internal error: value {.val {x_not_ok}} is not integerish.")
-  }
-  invisible(TRUE)
-}
-
-
-
-check_mapping_constraints <- function(m_mapping,
-                                      x_complete,
-                                      y_complete,
-                                      x_unique,
-                                      y_unique,
-                                      check) {
-  rowsum <- rowSums(m_mapping, na.rm = TRUE)
-  colsum <- colSums(m_mapping, na.rm = TRUE)
-  is_x_complete <- all(rowsum > 0L)
-  is_y_complete <- all(colsum > 0L)
-  is_x_unique <- all(rowsum %in% c(0L, 1L))
-  is_y_unique <- all(colsum %in% c(0L, 1L))
-  for (nm in c("x_complete", "y_complete", "x_unique", "y_unique")) {
-    val_constr <- get(nm)
-    if (!is.null(val_constr)) {
-      if (!(val_constr %in% c(TRUE, FALSE)))
-        cli::cli_abort(c("{.arg {nm}} is {.val {val_constr}}.",
-                         i = "Use {.val {NULL}}, {.val {TRUE}}, or {.val {FALSE}}?"))
-      val_check <- get(paste0("is_", nm))
-      if (!identical(val_constr, val_check)) {
-        msg <- "Mapping constraint {.code {nm} = {val_constr}} is not satisfied."
-        if (check == "error")
-          cli::cli_abort(msg)
-        else
-          cli::cli_warn(msg)
-      }
-    }
-  }
-  invisible(TRUE)
-}
-
 check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
