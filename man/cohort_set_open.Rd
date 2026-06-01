@@ -48,6 +48,6 @@ cohort_set_open(x, open = 2005)
 \seealso{
 \itemize{
 \item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
-\item \code{\link[=age_set_open]{age_set_open()}} Age equivalent of \code{cohort_set_open()}
+\item \code{\link[=age_set_open]{age_set_open()}} Set open age groups (right-open)
 }
 }

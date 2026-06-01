@@ -33,5 +33,5 @@ test_that("cohort_set_open() with length-0 factor relabels qualifying levels", {
   out <- cohort_set_open(fx, open = 2025)
   expect_identical(out, factor(levels = levels(cohort_set_open(f_ref, open = 2025))))
   expect_identical(length(out), 0L)
-  expect_identical(levels(out), c("2010-2014", "2025+"))
+  expect_identical(levels(out), c("<2025", "2025-2029"))
 })

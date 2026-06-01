@@ -11,7 +11,7 @@
 #'
 #' @seealso
 #' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
-#' - [age_set_open()] Age equivalent of `cohort_set_open()`
+#' - [age_set_open()] Set open age groups (right-open)
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")
@@ -33,8 +33,8 @@ cohort_set_open <- function(x,
   x_multi <- match.arg(x_multi)
   inner_set_open(x = x,
                  open = open,
-                 make_open_left = FALSE,
-                 make_open_right = TRUE,
+                 make_open_left = TRUE,
+                 make_open_right = FALSE,
                  label_type = "cohort",
                  x_one = x_one,
                  x_multi = x_multi,

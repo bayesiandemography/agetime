@@ -35,8 +35,16 @@ cannot be parsed: \code{"error"} (the default),
 \link[tibble:tibble]{Tibble} or matrix, depending on \code{format}.
 }
 \description{
-Create a mapping between age group labels. The mapping is
-based on one of four types of relationship:
+Create a mapping between age group labels. A mapping
+depicts a relationship between the labels of \code{x}
+and the labels of \code{y}. The types of relationship
+that can be mapped are:
+\itemize{
+\item "x equals y"
+\item "x contains y"
+\item "x is contained in y"
+\item "x overlaps with y".
+}
 }
 \details{
 If no value for \code{y} is supplied,

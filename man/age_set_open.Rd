@@ -30,6 +30,6 @@ age_set_open(x, open = 50)
 }
 \seealso{
 \itemize{
-\item \code{\link[=cohort_set_open]{cohort_set_open()}} Cohort equivalent of \code{age_set_open()}
+\item \code{\link[=cohort_set_open]{cohort_set_open()}} Set open cohorts (left-open)
 }
 }

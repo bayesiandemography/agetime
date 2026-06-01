@@ -10,7 +10,7 @@
 #' @return Character vector or factor with the same length as `x`.
 #'
 #' @seealso
-#' - [cohort_set_open()] Cohort equivalent of `age_set_open()`
+#' - [cohort_set_open()] Set open cohorts (left-open)
 #'
 #' @examples
 #' x <- c("20-24", "80-84", "100+")
