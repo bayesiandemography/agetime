@@ -8,8 +8,6 @@
 #' @returns An `agetime_intervals` object.
 #'
 #' @noRd
-
-
 intervals <- function(labels,
                       label_type,
                       x_one,
@@ -37,6 +35,7 @@ intervals <- function(labels,
                          x_fail = x_fail)
   ans
 }
+
 #' Intervals Inner
 #'
 #' @param labels Vector of labels.
@@ -47,8 +46,6 @@ intervals <- function(labels,
 #' @returns An `agetime_intervals` object.
 #'
 #' @noRd
-  
-
 intervals_inner <- function(labels,
                             labels_normalizers,
                             label_parsers,

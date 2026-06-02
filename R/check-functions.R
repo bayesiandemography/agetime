@@ -4,12 +4,12 @@
 #' @returns Return value used internally.
 #'
 #' @noRd
-
 check_breaks <- function(breaks) {
   check_incr_nonneg_integers(x = breaks,
                              nm_x = "breaks",
                              min_length = 2L)
 }
+
 #' Check Flag
 #'
 #' @param x Vector of labels.
@@ -17,8 +17,6 @@ check_breaks <- function(breaks) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-  
-
 check_flag <- function(x, nm_x) {
   if (length(x) != 1L)
     cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
@@ -30,6 +28,7 @@ check_flag <- function(x, nm_x) {
                      i = "Use {.val {TRUE}} or {.val {FALSE}}?"))
   invisible(TRUE)
 }
+
 #' Check In Limits Intervals
 #'
 #' @param x Vector of labels.
@@ -39,7 +38,6 @@ check_flag <- function(x, nm_x) {
 #' @returns Return value used internally.
 #'
 #' @noRd
- 
 check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
@@ -54,7 +52,7 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
   is_in <- (lowest <= x) & (x < highest)
   i_not_in <- match(FALSE, is_in, nomatch = 0L)
   if (i_not_in > 0L)
-    cli::cli_abort(c("Value in {.arg {nm_x}} is outside the range of {.arg {nm_intervals}}.",
+    cli::cli_abort(c("Value in {.arg {nm_x}} outside range of {.arg {nm_intervals}}.",
                      i = "Value in {.arg {nm_x}}: {.val {x[[i_not_in]]}}.",
                      i = paste("Lowest interval in {.arg {nm_intervals}}:",
                                "{.val {labels[[i_lowest]]}}."),
@@ -62,7 +60,8 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
                                "{.val {labels[[i_highest]]}}.")))
   invisible(TRUE)
 }
-#' Check Incr Nonneg Integers
+
+#' Check 'x' Consists of Increasing Non-Negative Integers
 #'
 #' @param x Vector of labels.
 #' @param nm_x Argument name used in error messages.
@@ -70,47 +69,42 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-
-
-
 check_incr_nonneg_integers <- function(x, nm_x, min_length) {
-    eps <- 1e-8
-    if (length(x) < min_length)
-        cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
-                         i = "Use at least {min_length} value{?s}?"))
-    if (!is.numeric(x))
-        cli::cli_abort(c("{.arg {nm_x}} is non-numeric.",
-                         i = "{.arg {nm_x}} has class {.cls {class(x)}}."))
-    n_na <- sum(is.na(x))
-    if (n_na > 0L)
-        cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.")
-    is_integerish <- abs(x - round(x)) < eps
-    i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
-    if (i_not_integerish > 0L)
-        cli::cli_abort(c("{.arg {nm_x}} has a non-integer value.",
-                         i = "Value: {.val {x[[i_not_integerish]]}}."))
-    n_neg <- sum(x < 0L)
-    if (n_neg > 0L)
-        cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.")
-    is_non_incr <- diff(x) <= 0L
-    i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
-    if (i_non_incr > 0L) {
-        x_non <- x[c(i_non_incr, i_non_incr + 1L)]
-        cli::cli_abort(c("{.arg {nm_x}} is not increasing.",
-                         i = "Non-increasing values: {.val {x_non}}."))
-    }
-    invisible(TRUE)
+  eps <- 1e-8
+  if (length(x) < min_length)
+    cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
+                     i = "Use at least {min_length} value{?s}?"))
+  if (!is.numeric(x))
+    cli::cli_abort(c("{.arg {nm_x}} is non-numeric.",
+                     i = "{.arg {nm_x}} has class {.cls {class(x)}}."))
+  n_na <- sum(is.na(x))
+  if (n_na > 0L)
+    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.")
+  is_integerish <- abs(x - round(x)) < eps
+  i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
+  if (i_not_integerish > 0L)
+    cli::cli_abort(c("{.arg {nm_x}} has a non-integer value.",
+                     i = "Value: {.val {x[[i_not_integerish]]}}."))
+  n_neg <- sum(x < 0L)
+  if (n_neg > 0L)
+    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.")
+  is_non_incr <- diff(x) <= 0L
+  i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
+  if (i_non_incr > 0L) {
+    x_non <- x[c(i_non_incr, i_non_incr + 1L)]
+    cli::cli_abort(c("{.arg {nm_x}} is not increasing.",
+                     i = "Non-increasing values: {.val {x_non}}."))
+  }
+  invisible(TRUE)
 }
-#' Check M Contains
+
+#' Check if Any Labels Do Not Fit into New Set
 #'
 #' @param m_contains Containment matrix from modified breaks to original labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @returns Return value used internally.
 #'
 #' @noRd
-    
-
-
 check_m_contains <- function(m_contains, label_type) {
   labels_old <- colnames(m_contains)
   colsum <- colSums(m_contains)
@@ -124,7 +118,6 @@ check_m_contains <- function(m_contains, label_type) {
 }
   
 
-## HAS_TESTS
 #' Check Whole Number
 #'
 #' Copied from 'poputils' with 'rvec' test dropped,
@@ -171,6 +164,8 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
                      i = "Use a value divisible by {divisible_by}?"))
   invisible(TRUE)
 }
+
+
 #' Check Not In Intervals
 #'
 #' @param x Vector of labels.
@@ -180,7 +175,6 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-
 check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
@@ -201,6 +195,7 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
   }
   invisible(TRUE)
 }
+
 #' Check X Lt Y
 #'
 #' @param x Vector of labels.
@@ -210,9 +205,6 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-
-
-
 check_x_lt_y <- function(x, y, nm_x, nm_y) {
   if (x >= y)
     cli::cli_abort(c("{.arg {nm_x}} is not less than {.arg {nm_y}}.",
