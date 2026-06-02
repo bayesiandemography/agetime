@@ -13,6 +13,13 @@ test_that("check_flag fails when x is not a logical value",  {
                "`x` is \"a\"")
 })
 
+test_that("check_flag passes for valid logical flags", {
+  expect_invisible(check_flag(x = TRUE, nm_x = "open"))
+  expect_invisible(check_flag(x = FALSE, nm_x = "open"))
+  expect_invisible(check_flag(x = 1L, nm_x = "open"))
+  expect_invisible(check_flag(x = 0L, nm_x = "open"))
+})
+
 test_that("check_in_limits_intervals passes for all NA", {
   x <- "0-4"
   nm_x <- "x"
@@ -25,7 +32,8 @@ test_that("check_in_limits_intervals passes for all NA", {
   expect_true(check_in_limits_intervals(x = x,
                                         nm_x = nm_x,
                                         intervals = intervals,
-                                        nm_intervals = nm_intervals))
+                                        nm_intervals = nm_intervals,
+                                        label_type = "age"))
 })
 
 test_that("check_in_limits_intervals gives correct error when outside interval", {
@@ -40,8 +48,9 @@ test_that("check_in_limits_intervals gives correct error when outside interval",
   expect_error(check_in_limits_intervals(x = x,
                                         nm_x = nm_x,
                                         intervals = intervals,
-                                        nm_intervals = nm_intervals),
-               "Value in `x` outside range of `int`.")
+                                        nm_intervals = nm_intervals,
+                                        label_type = "age"),
+               "`x` is outside the range covered by age groups in `int`.")
 })
 
 

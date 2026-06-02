@@ -130,11 +130,13 @@ inner_levels_fill <- function(x,
     check_not_in_intervals(x = breaks,
                            nm_x = "breaks",
                            intervals = intervals,
-                           nm_intervals = "x")
+                           nm_intervals = "x",
+                           label_type = label_type)
     check_in_limits_intervals(x = breaks,
                               nm_x = "breaks",
                               intervals = intervals,
-                              nm_intervals = "x")
+                              nm_intervals = "x",
+                              label_type = label_type)
   }
   m <- get_m(intervals)
   n <- nrow(m)

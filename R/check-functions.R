@@ -5,6 +5,9 @@
 #'
 #' @noRd
 check_breaks <- function(breaks) {
+  if (length(breaks) < 2L)
+    cli::cli_abort(c("{.arg breaks} has length {.val {length(breaks)}}.",
+                     i = "Use at least two break points?"))
   check_incr_nonneg_integers(x = breaks,
                              nm_x = "breaks",
                              min_length = 2L)
@@ -12,7 +15,7 @@ check_breaks <- function(breaks) {
 
 #' Check Flag
 #'
-#' @param x Vector of labels.
+#' @param x Single logical flag (`TRUE`, `FALSE`, `1L`, or `0L`).
 #' @param nm_x Argument name used in error messages.
 #' @returns Return value used internally.
 #'
@@ -31,14 +34,15 @@ check_flag <- function(x, nm_x) {
 
 #' Check In Limits Intervals
 #'
-#' @param x Vector of labels.
+#' @param x Numeric break points.
 #' @param nm_x Argument name used in error messages.
 #' @param intervals An `agetime_intervals` object.
-#' @param nm_intervals Argument name for interval labels in error messages.
+#' @param nm_intervals Argument name for the label vector in error messages.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @returns Return value used internally.
 #'
 #' @noRd
-check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
+check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals, label_type) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
   lower <- m[, 1L]
@@ -52,18 +56,19 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals) {
   is_in <- (lowest <= x) & (x < highest)
   i_not_in <- match(FALSE, is_in, nomatch = 0L)
   if (i_not_in > 0L)
-    cli::cli_abort(c("Value in {.arg {nm_x}} outside range of {.arg {nm_intervals}}.",
-                     i = "Value in {.arg {nm_x}}: {.val {x[[i_not_in]]}}.",
-                     i = paste("Lowest interval in {.arg {nm_intervals}}:",
-                               "{.val {labels[[i_lowest]]}}."),
-                     i = paste("Highest interval in {.arg {nm_intervals}}:",
-                               "{.val {labels[[i_highest]]}}.")))
+    cli::cli_abort(c(
+      "{.arg {nm_x}} is outside the range covered by {label_name(label_type)}s in {.arg {nm_intervals}}.",
+      i = "{.arg {nm_x}} is {.val {x[[i_not_in]]}}.",
+      i = "Lowest interval: {.val {labels[[i_lowest]]}}.",
+      i = "Highest interval: {.val {labels[[i_highest]]}}.",
+      i = "Use values within the range covered by {label_name(label_type)}s in {.arg {nm_intervals}}?"
+    ))
   invisible(TRUE)
 }
 
 #' Check 'x' Consists of Increasing Non-Negative Integers
 #'
-#' @param x Vector of labels.
+#' @param x Numeric vector of non-negative whole numbers.
 #' @param nm_x Argument name used in error messages.
 #' @param min_length Minimum required length.
 #' @returns Return value used internally.
@@ -83,8 +88,7 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   is_integerish <- abs(x - round(x)) < eps
   i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
   if (i_not_integerish > 0L)
-    cli::cli_abort(c("{.arg {nm_x}} has a non-integer value.",
-                     i = "Value: {.val {x[[i_not_integerish]]}}."))
+    cli::cli_abort("{.arg {nm_x}} has value {.val {x[[i_not_integerish]]}} that is not a whole number.")
   n_neg <- sum(x < 0L)
   if (n_neg > 0L)
     cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.")
@@ -92,8 +96,7 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
   if (i_non_incr > 0L) {
     x_non <- x[c(i_non_incr, i_non_incr + 1L)]
-    cli::cli_abort(c("{.arg {nm_x}} is not increasing.",
-                     i = "Non-increasing values: {.val {x_non}}."))
+    cli::cli_abort("{.arg {nm_x}} has non-increasing values: {.val {x_non}}.")
   }
   invisible(TRUE)
 }
@@ -111,8 +114,11 @@ check_m_contains <- function(m_contains, label_type) {
   is_not_fit <- colsum != 1L
   if (any(is_not_fit)) {
     labels_not_fit <- labels_old[is_not_fit]
-    cli::cli_abort(c("Label{?s} {.val {labels_not_fit}} do not map to the new label set.",
-                     i = "Check the mapping between old and new labels?"))
+    n <- length(labels_not_fit)
+    cli::cli_abort(c(
+      "{cli::qty(n)} label{?s} {.val {labels_not_fit}} cannot each lie in exactly one new {label_name(label_type)}.",
+      i = "Make sure that every old {label_name(label_type)} lies in exactly one new {label_name(label_type)}?"
+    ))
   }
   invisible(TRUE)
 }
@@ -128,11 +134,11 @@ check_m_contains <- function(m_contains, label_type) {
 #' and optionally within a specified range
 #' and divisible by a specified number.
 #'
-#' @param n A whole number.
-#' @param nm_n Name for 'n' to be used in error messages.
-#' @param min Minimum value 'n' can take. Can be NULL.
-#' @param max Maximum values 'n' can take. Can be NULL.
-#' @param divisible_by 'n' must be divisible by this. Can be NULL.
+#' @param n Single numeric value (whole number).
+#' @param nm_n Argument name used in error messages.
+#' @param min Minimum allowed value, or `NULL`.
+#' @param max Maximum allowed value, or `NULL`.
+#' @param divisible_by Required divisor, or `NULL`.
 #' @returns
 #' If all tests pass, `check_n()` returns `TRUE` invisibly.
 #' Otherwise it throws an error.
@@ -148,34 +154,34 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
   if (is.na(n))
     cli::cli_abort("{.arg {nm_n}} is {.val {NA}}.")
   if (is.infinite(n))
-    cli::cli_abort("{.arg {nm_n}} is {.val {Inf}}.")
+    cli::cli_abort("{.arg {nm_n}} is {.val {n}}.")
   if (!isTRUE(all.equal(round(n), n)))
-    cli::cli_abort(c("{.arg {nm_n}} is not a whole number.",
-                     i = "{.arg {nm_n}} is {.val {n}}."))
+    cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
+                     i = "Use a whole number?"))
   if (!is.null(min) && (n < min))
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a value of at least {min}?"))
+                     i = "Use a value of at least {.val {min}}?"))
   if (!is.null(max) && (n > max))
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a value of at most {max}?"))
+                     i = "Use a value of at most {.val {max}}?"))
   if (!is.null(divisible_by) && (n %% divisible_by != 0L))
-    cli::cli_abort(c("{.arg {nm_n}} is not divisible by {divisible_by}.",
-                     i = "{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a value divisible by {divisible_by}?"))
+    cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
+                     i = "Use a value divisible by {.val {divisible_by}}?"))
   invisible(TRUE)
 }
 
 
 #' Check Not In Intervals
 #'
-#' @param x Vector of labels.
+#' @param x Numeric break points.
 #' @param nm_x Argument name used in error messages.
 #' @param intervals An `agetime_intervals` object.
-#' @param nm_intervals Argument name for interval labels in error messages.
+#' @param nm_intervals Argument name for the label vector in error messages.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @returns Return value used internally.
 #'
 #' @noRd
-check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
+check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals, label_type) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
   lower <- m[, 1L]
@@ -188,7 +194,7 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
       is_in <- (l < x) & (x < u)
       i_in <- match(TRUE, is_in, nomatch = 0L)
       if (i_in > 0L)
-        cli::cli_abort(c("Value in {.arg {nm_x}} falls inside an interval from {.arg {nm_intervals}}.",
+        cli::cli_abort(c("{.arg {nm_x}} lies inside an existing {label_name(label_type)}.",
                          i = "Value in {.arg {nm_x}}: {.val {x[[i_in]]}}.",
                          i = "Interval: {.val {labels[[i]]}}."))
     }
@@ -198,17 +204,20 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals) {
 
 #' Check X Lt Y
 #'
-#' @param x Vector of labels.
-#' @param y Vector of labels to compare against `x`.
+#' @param x Numeric scalar; must be less than `y`.
+#' @param y Numeric scalar.
 #' @param nm_x Argument name used in error messages.
 #' @param nm_y Argument name used in error messages.
 #' @returns Return value used internally.
 #'
 #' @noRd
 check_x_lt_y <- function(x, y, nm_x, nm_y) {
-  if (x >= y)
-    cli::cli_abort(c("{.arg {nm_x}} is not less than {.arg {nm_y}}.",
-                     i = "{.arg {nm_x}}: {.val {x}}.",
-                     i = "{.arg {nm_y}}: {.val {y}}."))
+  if (x >= y) {
+    if (x == y) {
+      cli::cli_abort("{.arg {nm_x}} equals {.arg {nm_y}} ({.val {x}}).")
+    } else {
+      cli::cli_abort("{.arg {nm_x}} ({.val {x}}) is greater than {.arg {nm_y}} ({.val {y}}).")
+    }
+  }
   invisible(TRUE)
 }

@@ -25,14 +25,18 @@ test_that("check_n() errors for invalid type, length, and missing values", {
   )
   expect_error(
     agetime:::check_n(-Inf, "open", NULL, NULL, NULL),
-    "`open` is Inf"
+    "`open` is -Inf"
   )
 })
 
 test_that("check_n() errors when n is not a whole number", {
   expect_error(
     agetime:::check_n(1.5, "n", NULL, NULL, NULL),
-    "`n` is not a whole number"
+    "`n` is 1.5"
+  )
+  expect_error(
+    agetime:::check_n(1.5, "n", NULL, NULL, NULL),
+    "Use a whole number"
   )
 })
 
@@ -50,6 +54,10 @@ test_that("check_n() errors when n is outside min or max", {
 test_that("check_n() errors when n is not divisible by divisible_by", {
   expect_error(
     agetime:::check_n(7L, "n", NULL, NULL, 5L),
-    "`n` is not divisible by 5"
+    "`n` is 7"
+  )
+  expect_error(
+    agetime:::check_n(7L, "n", NULL, NULL, 5L),
+    "Use a value divisible by 5"
   )
 })

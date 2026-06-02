@@ -91,6 +91,13 @@ test_that("period_labels_ten() can include Total and NA", {
   )
 })
 
+test_that("cohort_labels() creates labels from breaks", {
+  expect_identical(
+    cohort_labels(breaks = c(2000, 2005, 2010, 2015), include_total = TRUE),
+    c("2000-2005", "2005-2010", "2010-2015", "Total")
+  )
+})
+
 test_that("cohort_labels_five() creates five-year cohort labels", {
   expect_identical(
     cohort_labels_five(lower_first = 2000, lower_last = 2010),
@@ -118,13 +125,20 @@ test_that("cohort_labels_ten() can include Total and NA", {
   )
 })
 
-test_that("label generators error when lower_first is not less than lower_last", {
+test_that("label generators error when lower_first is greater than lower_last", {
   expect_error(
     age_labels_five(lower_first = 50, lower_last = 20),
-    "`lower_first` is not less than `lower_last`"
+    "`lower_first` \\(50\\) is greater than `lower_last` \\(20\\)"
   )
   expect_error(
     cohort_labels_one(lower_first = 2010, lower_last = 2000),
-    "`lower_first` is not less than `lower_last`"
+    "`lower_first` \\(2010\\) is greater than `lower_last` \\(2000\\)"
+  )
+})
+
+test_that("label generators error when lower_first equals lower_last", {
+  expect_error(
+    age_labels_five(lower_first = 20, lower_last = 20),
+    "`lower_first` equals `lower_last` \\(20\\)"
   )
 })
