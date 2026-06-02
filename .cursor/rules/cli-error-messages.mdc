@@ -29,11 +29,11 @@ cli::cli_abort("{.arg x} is a data frame.")
 ```r
 # BAD — suggestion ends with a period
 cli::cli_abort(c("{.arg x} has length 0.",
-                 i = "Supply {.arg width} explicitly."))
+                 i = "Supply at least one label to extend from."))
 
 # GOOD
 cli::cli_abort(c("{.arg x} has length 0.",
-                 i = "Supply {.arg width} explicitly?"))
+                 i = "Supply at least one label to extend from?"))
 ```
 
 ```r
@@ -50,6 +50,6 @@ cli::cli_abort(c("{.arg n} has length {.val {length(n)}}.",
 
 ## Examples in this codebase
 
-- `R/inner_extend.R` — length-0 + missing `width`
+- `R/inner_extend.R` — length-0 `x`
 - `R/label-input.R` — invalid `x` type in `to_character_or_factor()`
 - `R/check-functions.R` — argument validation helpers

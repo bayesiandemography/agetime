@@ -26,12 +26,10 @@ inner_extend <- function(x,
   x <- to_character_or_factor(x = x,
                               nm_x = "x",
                               length_zero_ok = TRUE)
-  if (identical(length(x), 0L) && is.null(width)) {
+  if (identical(length(x), 0L)) {
     cli::cli_abort(c("{.arg x} has length 0.",
-                     i = "Supply {.arg width} explicitly?"))
+                     i = "Supply at least one label to extend from?"))
   }
-  if (identical(length(x), 0L))
-    cli::cli_abort("{.arg x} has length 0.")
   check_n(n = n,
           nm_n = "n",
           min = 1L,

@@ -1,4 +1,13 @@
 
+## 'does_int1_equal_int2' ----------------------------------------------------------
+
+test_that("'does_int1_equal_int2' returns NA when bounds include NA", {
+  expect_identical(
+    agetime:::does_int1_equal_int2(int1 = 0, int2 = NA_real_),
+    NA
+  )
+})
+
 ## 'does_int1_overlap_int2' ----------------------------------------------------------
 
 test_that("'does_int1_overlap_int2' works", {

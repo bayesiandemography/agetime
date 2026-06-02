@@ -66,6 +66,10 @@ test_that("age_modify_life() recodes closed groups to 5-year labels, not open", 
   expect_values(age_modify_life("87-89"), "85-89")
 })
 
+test_that("age_modify_life() rounds max upper to a 5-year break", {
+  expect_values(age_modify_life("6-8"), "5-9")
+})
+
 test_that("age_modify_life() preserves 90+ on the life-table open top", {
   expect_values(age_modify_life("90+"), "90+")
 })

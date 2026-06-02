@@ -156,6 +156,14 @@ test_that("age_levels_fill_five() errors when a gap is not divisible by width", 
   expect_match(msg, "Choose a different .width.")
 })
 
+test_that("age_levels_fill_life() returns a factor when there is only one level", {
+  ans <- age_levels_fill_life("0")
+
+  expect_s3_class(ans, "factor")
+  expect_identical(as.character(ans), "0")
+  expect_identical(levels(ans), "0")
+})
+
 test_that("age_levels_fill_life() errors for non-life-table labels", {
   expect_error(
     age_levels_fill_life(c("0-4", "5-9")),

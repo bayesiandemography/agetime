@@ -30,8 +30,7 @@
 #' period_extend(x, n = 2, include_x = FALSE)
 #' @export
 
-# When length(x) == 0, throws an error (no interval to extend from). If width
-# is NULL, the error suggests supplying width explicitly.
+# When length(x) == 0, throws an error (no interval to extend from).
 period_extend <- function(x,
                           n = 1L,
                           width = NULL,

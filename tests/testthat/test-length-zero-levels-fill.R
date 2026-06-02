@@ -42,6 +42,14 @@ test_that("age_levels_fill() preserves ordered on length-0 factor", {
   expect_identical(levels(out), levels(age_levels_fill_five(f_ref)))
 })
 
+test_that("age_levels_fill_life() returns ordered empty factor with no levels", {
+  fx <- ordered(character(0))
+  out <- age_levels_fill_life(fx)
+
+  expect_true(is.ordered(out))
+  expect_identical(out, ordered())
+})
+
 test_that("age_levels_fill_life() with length-0 factor updates levels", {
   expect_identical(age_levels_fill_life(character(0)), factor())
   expect_identical(age_levels_fill_life(factor()), factor())

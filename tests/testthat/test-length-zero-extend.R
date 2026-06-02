@@ -15,11 +15,18 @@ test_that("*_extend() errors on length-0 input", {
   expect_error(age_extend(fx), "length 0")
 })
 
-test_that("*_extend() suggests width when x has length 0 and width is NULL", {
+test_that("*_extend() errors on length-0 input even when width is supplied", {
+  expect_error(
+    age_extend(character(0), width = 5),
+    "length 0"
+  )
+})
+
+test_that("*_extend() suggests a label when x has length 0", {
   msg <- tryCatch(
     age_extend(character(0)),
     error = function(e) conditionMessage(e)
   )
   expect_match(msg, "`x` has length 0\\.")
-  expect_match(msg, "Supply `width` explicitly\\?")
+  expect_match(msg, "Supply at least one label to extend from\\?")
 })
