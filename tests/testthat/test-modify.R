@@ -49,7 +49,36 @@ test_that("age_modify_life() recodes to life-table age groups", {
   x <- c("1-3", "87-89", "0")
   ans <- age_modify_life(x)
 
-  expect_values(ans, c("1-4", "85+", "0"))
+  expect_values(ans, c("1-4", "85-89", "0"))
+})
+
+test_that("age_modify_life() leaves single-year zero as 0", {
+  expect_values(age_modify_life("0"), "0")
+})
+
+test_that("age_modify_life() recodes a young multi-year group to 1-4", {
+  expect_values(age_modify_life("1-3"), "1-4")
+})
+
+test_that("age_modify_life() recodes closed groups to 5-year labels, not open", {
+  expect_values(age_modify_life("5-9"), "5-9")
+  expect_values(age_modify_life("10-14"), "10-14")
+  expect_values(age_modify_life("87-89"), "85-89")
+})
+
+test_that("age_modify_life() preserves 90+ on the life-table open top", {
+  expect_values(age_modify_life("90+"), "90+")
+})
+
+test_that("age_modify_life() recodes 86+ to 85+", {
+  expect_values(age_modify_life("86+"), "85+")
+})
+
+test_that("age_modify_life() errors for 0-4", {
+  expect_error(
+    age_modify_life("0-4"),
+    "cannot each lie in exactly one new age group"
+  )
 })
 
 test_that("age_modify_five() returns factor with filled levels for factor input", {

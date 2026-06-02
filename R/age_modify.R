@@ -125,21 +125,29 @@ age_modify_life <- function(x,
                          x_multi = "exclude",
                          x_fail = x_fail)
   l <- get_lower(intervals)
-  end <- max(l, na.rm = TRUE)
-  if (end == 1L)
-    breaks <- c(0L, 1L)
-  else if (end <= 5L)
-    breaks = c(0, 1L, 5L)
+  u <- get_upper(intervals)
+  is_open_right <- int_is_open_right(intervals)
+  if (is_open_right) {
+    is_or <- is.infinite(u)
+    top_lower <- min(l[is_or], na.rm = TRUE)
+    breaks <- c(0L, 1L, seq.int(from = 5L, to = top_lower, by = 5L))
+  }
   else {
-    remainder_end <- end  %% 5L
-    if (remainder_end > 0L)
-      end <- end - remainder_end
-    breaks <- c(0L, 1L, seq.int(from = 5L, to = end, by = 5L))
+    u_max <- max(u[is.finite(u)], na.rm = TRUE)
+    if (u_max <= 5L) {
+      breaks <- c(0L, 1L, 5L)
+    }
+    else {
+      end_break <- u_max
+      if (end_break %% 5L != 0L)
+        end_break <- end_break + (5L - end_break %% 5L)
+      breaks <- c(0L, 1L, seq.int(from = 5L, to = end_break, by = 5L))
+    }
   }
   inner_modify(x = x,
                 breaks = breaks,
                 is_open_left = FALSE,
-                is_open_right = TRUE,
+                is_open_right = is_open_right,
                 label_type = "age",
                 x_one = "lower",
                 x_multi = "exclude",
