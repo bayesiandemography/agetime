@@ -1,7 +1,9 @@
 
-#' Work with Age, Period, and Cohort Labels and Intervals
+#' Work with Age, Period, and Cohort Labels
 #'
-#' Bla bla bla
+#' Functions for cleaning, manipulating, and
+#' extracting information from labels for age groups,
+#' periods, and cohorts.
 #'
 #' @section Get information about existing labels:
 #'
