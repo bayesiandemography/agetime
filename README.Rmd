@@ -28,12 +28,28 @@ knitr::opts_chunk$set(
 
 Work with age, period, and cohort labels.
 
-**agetime** has functions for validating, manipulating, and harmonising labels, and for extracting information from them. 
+Functions for
 
-One example: filtering on age.
+- cleaning,
+- validating,
+- extracting information,
+- modifying, and
+- creating new labels.
+
+Example: standardizing labels.
+
+```{r clean}
+library(agetime)
+
+x <-  c("2003 to 2005", "2012--2015", "2000-2005")
+
+x |>
+  period_standard()
+```
+
+Example: filtering on age.
 
 ```{r filter}
-library(agetime)
 library(dplyr, warn.conflicts = FALSE)
 
 df <- data.frame(
@@ -43,20 +59,6 @@ df <- data.frame(
 
 df |>
   filter(age_lower(age) >= 15)
-```
-
-Another example: standardizing period labels, and inserting missing levels.
-
-```{r clean}
-x <-  c("2003 to 2005", "2012--2015", "2000-2005")
-
-x |>
-  period_modify_five()
-
-x |>
-  period_modify_five() |>
-  period_levels_fill() |>
-  table()
 ```
 
 See `?agetime` for a full list of functions grouped by task.
