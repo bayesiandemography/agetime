@@ -52,11 +52,26 @@
 <!-- badges: start -->
 
 <p>Work with age, period, and cohort labels.</p>
-<p><strong>agetime</strong> has functions for validating, manipulating, and harmonising labels, and for extracting information from them.</p>
-<p>One example: filtering on age.</p>
+<p>Functions for</p>
+<ul>
+<li>cleaning,</li>
+<li>validating,</li>
+<li>extracting information,</li>
+<li>modifying, and</li>
+<li>creating new labels.</li>
+</ul>
+<p>Example: standardizing labels.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bayesiandemography.github.io/agetime/">agetime</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2003 to 2005"</span>, <span class="st">"2012--2015"</span>, <span class="st">"2000-2005"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">x</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/period_standard.html">period_standard</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2003-2005" "2012-2015" "2000-2005"</span></span></code></pre></div>
+<p>Example: filtering on age.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
 <span>  age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-14"</span>, <span class="st">"100+"</span>, <span class="st">"15-39"</span><span class="op">)</span>,</span>
@@ -68,21 +83,6 @@
 <span><span class="co">#&gt;     age count</span></span>
 <span><span class="co">#&gt; 1  100+    40</span></span>
 <span><span class="co">#&gt; 2 15-39   200</span></span></code></pre></div>
-<p>Another example: standardizing period labels, and inserting missing levels.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2003 to 2005"</span>, <span class="st">"2012--2015"</span>, <span class="st">"2000-2005"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">x</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/period_modify_five.html">period_modify_five</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "2000-2005" "2010-2015" "2000-2005"</span></span>
-<span></span>
-<span><span class="va">x</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/period_modify_five.html">period_modify_five</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/period_levels_fill.html">period_levels_fill</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; 2000-2005 2005-2010 2010-2015 </span></span>
-<span><span class="co">#&gt;         2         0         1</span></span></code></pre></div>
 <p>See <code><a href="reference/agetime-package.html">?agetime</a></code> for a full list of functions grouped by task.</p>
 </div>
 

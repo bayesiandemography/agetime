@@ -4,14 +4,31 @@
 
 Work with age, period, and cohort labels.
 
-**agetime** has functions for validating, manipulating, and harmonising
-labels, and for extracting information from them.
+Functions for
 
-One example: filtering on age.
+- cleaning,
+- validating,
+- extracting information,
+- modifying, and
+- creating new labels.
+
+Example: standardizing labels.
 
 ``` r
 
 library(agetime)
+
+x <-  c("2003 to 2005", "2012--2015", "2000-2005")
+
+x |>
+  period_standard()
+#> [1] "2003-2005" "2012-2015" "2000-2005"
+```
+
+Example: filtering on age.
+
+``` r
+
 library(dplyr, warn.conflicts = FALSE)
 
 df <- data.frame(
@@ -24,26 +41,6 @@ df |>
 #>     age count
 #> 1  100+    40
 #> 2 15-39   200
-```
-
-Another example: standardizing period labels, and inserting missing
-levels.
-
-``` r
-
-x <-  c("2003 to 2005", "2012--2015", "2000-2005")
-
-x |>
-  period_modify_five()
-#> [1] "2000-2005" "2010-2015" "2000-2005"
-
-x |>
-  period_modify_five() |>
-  period_levels_fill() |>
-  table()
-#> 
-#> 2000-2005 2005-2010 2010-2015 
-#>         2         0         1
 ```
 
 See
