@@ -1,12 +1,18 @@
 # Quick start
 
-Datasets often use character labels such as `"0-14"`, `"2020-2025"`, or
-`"1980-1990"` for age groups, periods, and cohorts. **agetime** infers
-the numeric intervals underlying the labels, and provides tools for
-filtering, recoding, and validating these intervals.
+Multi-year age groups, periods, and cohorts are stored as character
+vectors or factors with labels such as `"0-14"`, `"2020-2025"`, or
+`"1980-1990"`. Working with these label vectors can be awkward.
+Identifying 5-year age groups older than 60, for instance, is harder
+than it should be.
 
-This vignette focuses on age group labels. **agetime** functions for
-periods and cohorts work like the functions for ages.
+**agetime** makes working with label vectors easy. **agetime** functions
+know how to interpret age, period, and cohort labels, and can work
+directly with label vectors. **agetime** contains functions for
+validating, manipulating, and extracting information from label vectors.
+
+**agetime** functions for age groups, periods, and cohorts follow a
+common pattern. This vignette uses age groups to illustrate the pattern.
 
 ## Read intervals from labels
 
@@ -100,6 +106,14 @@ If `x` is a factor,
 [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
 returns a factor where the levels are also standardized.
 
+``` r
+
+x <- factor(c("5to9", "10--14", "100plus"))
+age_standard(x)
+#> [1] 5-9   10-14 100+ 
+#> Levels: 10-14 100+ 5-9
+```
+
 ## Create a regular series of labels
 
 To generate labels from scratch, use the `age_labels` functions.
@@ -108,10 +122,9 @@ To generate labels from scratch, use the `age_labels` functions.
 
 age_labels_five(lower_first = 0, lower_last = 20)
 #> [1] "0-4"   "5-9"   "10-14" "15-19" "20+"
-age_labels_life()
+age_labels_life(lower_last = 60) ## life table age groups
 #>  [1] "0"     "1-4"   "5-9"   "10-14" "15-19" "20-24" "25-29" "30-34" "35-39"
-#> [10] "40-44" "45-49" "50-54" "55-59" "60-64" "65-69" "70-74" "75-79" "80-84"
-#> [19] "85-89" "90-94" "95-99" "100+"
+#> [10] "40-44" "45-49" "50-54" "55-59" "60+"
 ```
 
 ## Modify to new groupings
@@ -157,31 +170,13 @@ age_check(lab,
 #> 4 include_open TRUE     TRUE     Passed
 ```
 
-With
-[`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md),
-failed checks throw an error.
+[`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md)
+throws an error if a check fails.
 
 ## Create mappings
 
 [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
 builds a mapping between sets of labels.
-
-By default,
-[`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
-looks for intervals that are identical.
-
-``` r
-
-x <- c("10--14", "0--9")
-y <- c("0-4", "5-9", "10-14")
-age_mapping(x, y, format = "matrix")
-#>         y
-#> x        0-4 5-9 10-14
-#>   10--14   0   0     1
-#>   0--9     0   0     0
-```
-
-But it can look for other types of relationships.
 
 ``` r
 
@@ -205,7 +200,7 @@ Age group functions have period and cohort equivalents. For instance:
 | [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md) | [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md) | [`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md) |
 
-## Learn more
+## More information
 
 - [`?agetime`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
   for a full list of functions grouped by task
