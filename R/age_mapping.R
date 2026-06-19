@@ -71,7 +71,12 @@
 # mapping (zero-row tibble or zero-by-zero matrix, per format).
 age_mapping <- function(x,
                         y = NULL,
-                        relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+                        relation = c(
+                          "equals",
+                          "contains",
+                          "is-contained-in",
+                          "overlaps-with"
+                        ),
                         format = c("tibble", "matrix"),
                         x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)

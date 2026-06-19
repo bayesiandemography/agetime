@@ -63,7 +63,11 @@ that can be mapped are:
 If no value for \code{y} is supplied,
 \code{x} is mapped onto itself.
 
-Tibbles produced by \code{cohort_mapping()} are sparse, while matrices are dense. See the example below.
+Tibbles produced by \code{cohort_mapping()} are sparse
+in that they only include matches. Matrices
+produced by \code{cohort_mapping()} are dense in that
+they include matches and non-matches. See the
+example below.
 }
 \section{The \code{relation} argument}{
 \tabular{ll}{
@@ -79,7 +83,7 @@ Tibbles produced by \code{cohort_mapping()} are sparse, while matrices are dense
 x <- c("2020-2025", "2030", "2025-2027")
 y <- c("2025-2030", "2020-2025", "2026-2034")
 cohort_mapping(x = x, y = y)
-cohort_mapping(x, format = "matrix")
+cohort_mapping(x = x, y = y, format = "matrix")
 cohort_mapping(x = x, y = y, relation = "contains")
 cohort_mapping(x = x, y = y, relation = "is-contained-in")
 cohort_mapping(x = x, y = y, relation = "overlaps-with")
@@ -88,7 +92,7 @@ cohort_mapping(x = x, y = y, relation = "overlaps-with")
 x <- c("2020-2025", "2030-2035")
 y <- c("2020-2025", "<2025")
 cohort_mapping(x = x, y = y) # one match
-cohort_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+cohort_mapping(x = x, y = y, format = "matrix") # 1 match and 3 non-matches
 
 # mapping 'x' on to itself
 x <- c("2020--2025", "2020-2025", "<2030")

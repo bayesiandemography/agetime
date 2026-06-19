@@ -16,7 +16,11 @@
 #' If no value for `y` is supplied,
 #' `x` is mapped onto itself.
 #'
-#' Tibbles produced by `period_mapping()` are sparse, while matrices are dense. See the example below.
+#' Tibbles produced by `period_mapping()` are sparse
+#' in that they only include matches. Matrices
+#' produced by `period_mapping()` are dense in that
+#' they include matches and non-matches. See the
+#' example below.
 #'
 #' @section The `relation` argument:
 #'
@@ -58,7 +62,7 @@
 #' x <- c("2020-2025", "2030-2035")
 #' y <- c("2020-2025", "2025-2030")
 #' period_mapping(x = x, y = y) # one match
-#' period_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+#' period_mapping(x = x, y = y, format = "matrix") # 1 match and 3 non-matches
 #'
 #' # mapping 'x' on to itself
 #' x <- c("2020--2025", "2020-2025", "2030")
@@ -68,7 +72,12 @@
 # mapping (zero-row tibble or zero-by-zero matrix, per format).
 period_mapping <- function(x,
                            y = NULL,
-                           relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+                           relation = c(
+                             "equals",
+                             "contains",
+                             "is-contained-in",
+                             "overlaps-with"
+                           ),
                            format = c("tibble", "matrix"),
                            x_one = c("lower", "upper"),
                            x_multi = c("include", "exclude"),
