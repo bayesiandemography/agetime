@@ -25,7 +25,7 @@ that can be mapped are:
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -111,12 +111,16 @@ cannot be parsed: <code>"error"</code> (the default),
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>If no value for <code>y</code> is supplied,
 <code>x</code> is mapped onto itself.</p>
-<p>Tibbles produced by <code>age_mapping()</code> are sparse, while matrices are dense. See the example below.</p>
+<p>Tibbles produced by <code>age_mapping()</code> are sparse
+in that they only include matches. Matrices
+produced by <code>age_mapping()</code> are dense in that
+they include matches and non-matches. See the
+example below.</p>
     </div>
     <div class="section level2">
     <h2 id="the-relation-argument">The <code>relation</code> argument<a class="anchor" aria-label="anchor" href="#the-relation-argument"></a></h2>
 
-<table class="table table"><tr><td><code>relation</code></td><td>Endpoints of <code>x</code> and <code>y</code></td></tr><tr><td><code>"equals"</code></td><td><code>age_lower(x) == age_lower(y) &amp; age_upper(x) == age_upper(y)</code></td></tr><tr><td><code>"contains"</code></td><td><code>age_lower(x) &lt;= age_lower(y) &amp; age_upper(y) &lt;= age_upper(x)</code></td></tr><tr><td><code>"is-contained-in"</code></td><td><code>age_lower(y) &lt;= age_lower(x) &amp; age_upper(x) &lt;= age_upper(y)</code></td></tr><tr><td><code>"overlaps-with"</code></td><td><code>(age_lower(y) &lt;= age_lower(x) &lt; age_upper(y))</code> | <code>(age_lower(y) &lt;= age_upper(x) &lt; age_upper(y))</code></td></tr></table></div>
+<table class="table table"><tr><td><code>relation</code></td><td>Endpoints of <code>x</code> and <code>y</code></td></tr><tr><td><code>"equals"</code></td><td>Endpoints equal</td></tr><tr><td><code>"contains"</code></td><td>Endpoints of <code>y</code> inside endpoints of <code>x</code></td></tr><tr><td><code>"is-contained-in"</code></td><td>Endpoints of <code>x</code> inside endpoints of <code>y</code></td></tr><tr><td><code>"overlaps-with"</code></td><td>Endpoint of <code>x</code> in <code>y</code> or endpoint of <code>y</code> in <code>x</code></td></tr></table></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
@@ -134,7 +138,7 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x     y    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-4   0-4  </span>
-<span class="r-in"><span><span class="fu">age_mapping</span><span class="op">(</span><span class="va">x</span>, format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_mapping</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x     0-4 10 5-7</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0-4   1  0   0</span>
@@ -169,13 +173,13 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-out co"><span class="r-pr">#&gt;</span>   x     y    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0-4   0-4  </span>
-<span class="r-in"><span><span class="fu">age_mapping</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span> <span class="co"># one match and three non-matches</span></span></span>
+<span class="r-in"><span><span class="fu">age_mapping</span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, y <span class="op">=</span> <span class="va">y</span>, format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span> <span class="co"># 1 match, 3 non-matches</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        y</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> x       0-4 5-9</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   0-4     1   0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   10-14   0   0</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># mapping 'x' on to itself </span></span></span>
+<span class="r-in"><span><span class="co"># mapping 'x' on to itself</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0--4"</span>, <span class="st">"0-4"</span>, <span class="st">"5+"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">age_mapping</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 5 × 2</span></span>

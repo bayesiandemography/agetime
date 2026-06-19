@@ -94,10 +94,12 @@ cohort_mid(x)
 
 ## use 'cohort_lower()' to filter on cohort
 library(dplyr, warn.conflicts = FALSE)
-df <- tribble(    ~cohort, ~count,
-              "2025-2030",     20,
-                  "<2025",      5,
-              "2030-2035",     11 )
+df <- tribble(
+  ~cohort, ~count,
+  "2025-2030", 20,
+  "<2025", 5,
+  "2030-2035", 11
+)
 df
 #> # A tibble: 3 × 2
 #>   cohort    count
@@ -152,7 +154,8 @@ cohort_width("2025-2030", x_multi = "exclude")
 
 ## no action when 'x_fail' is "silent"
 cohort_lower(c("2000-2005", "long time ago"),
-             x_fail = "silent")
+  x_fail = "silent"
+)
 #>   2000-2005 longtimeago 
 #>        2000          NA 
 ```

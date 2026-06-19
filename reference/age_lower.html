@@ -9,7 +9,7 @@ widths, and midpoints for age groups."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,10 +105,12 @@ closed intervals.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## use 'age_lower()' to filter on age</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span>, warn.conflicts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span>   <span class="op">~</span><span class="va">age</span>, <span class="op">~</span><span class="va">count</span>,</span></span>
-<span class="r-in"><span>                <span class="st">"5-9"</span>,     <span class="fl">11</span>,</span></span>
-<span class="r-in"><span>              <span class="st">"10-14"</span>,     <span class="fl">20</span>,</span></span>
-<span class="r-in"><span>               <span class="st">"100+"</span>,      <span class="fl">7</span> <span class="op">)</span>       </span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="op">~</span><span class="va">age</span>, <span class="op">~</span><span class="va">count</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"5-9"</span>, <span class="fl">11</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"10-14"</span>, <span class="fl">20</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"100+"</span>, <span class="fl">7</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">df</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   age   count</span>
@@ -125,7 +127,8 @@ closed intervals.</p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## no action when 'x_fail' is "silent"</span></span></span>
 <span class="r-in"><span><span class="fu">age_lower</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"young people"</span>, <span class="st">"50plus"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>          x_fail <span class="op">=</span> <span class="st">"silent"</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  x_fail <span class="op">=</span> <span class="st">"silent"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>         0-4 youngpeople         50+ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           0          NA          50 </span>
 </code></pre></div>

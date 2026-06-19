@@ -92,38 +92,50 @@ Character vector. Length depends on the function arguments.
 
 ``` r
 ## 5-year periods
-period_labels_five(lower_first = 2000,
-                   lower_last = 2010)
+period_labels_five(
+  lower_first = 2000,
+  lower_last = 2010
+)
 #> [1] "2000-2005" "2005-2010" "2010-2015"
 
 ## single-year periods
-period_labels_one(lower_first = 2000,
-                  lower_last = 2010)
+period_labels_one(
+  lower_first = 2000,
+  lower_last = 2010
+)
 #>  [1] "2000" "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009"
 #> [11] "2010"
 
 ## single-year periods, 'x_one' is "upper"
-period_labels_one(lower_first = 2000,
-                  lower_last = 2010,
-                  x_one = "upper")
+period_labels_one(
+  lower_first = 2000,
+  lower_last = 2010,
+  x_one = "upper"
+)
 #>  [1] "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009" "2010"
 #> [11] "2011"
 
 ## ten-year periods
-period_labels_ten(lower_first = 2000,
-                  lower_last = 2010)
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010
+)
 #> [1] "2000-2010" "2010-2020"
 
 ## ten-year periods, 'x_multi' is "exclude",
-period_labels_ten(lower_first = 2000,
-                  lower_last = 2010,
-                  x_multi = "exclude")
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010,
+  x_multi = "exclude"
+)
 #> [1] "2000-2009" "2010-2019"
 
 ## include total and NA
-period_labels_ten(lower_first = 2000,
-                  lower_last = 2010,
-                  include_total = TRUE,
-                  include_na = TRUE)
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010,
+  include_total = TRUE,
+  include_na = TRUE
+)
 #> [1] "2000-2010" "2010-2020" "Total"     NA         
 ```

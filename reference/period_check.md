@@ -86,17 +86,21 @@ for `period_assert()`, `x` invisibly or an error.
 ## Examples
 
 ``` r
-lab <- period_labels_five(lower_first = 2020,
-                          lower_last = 2030)
+lab <- period_labels_five(
+  lower_first = 2020,
+  lower_last = 2030
+)
 lab
 #> [1] "2020-2025" "2025-2030" "2030-2035"
 
 ## get info on everything
-period_check(x = lab,
-             no_overlap = TRUE,
-             no_gap = TRUE,
-             no_total = TRUE,
-             no_na = TRUE)
+period_check(
+  x = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE,
+  no_total = TRUE,
+  no_na = TRUE
+)
 #> $ok
 #> [1] TRUE
 #> 

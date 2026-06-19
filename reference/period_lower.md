@@ -94,10 +94,12 @@ period_mid(x)
 
 ## use 'period_lower()' to filter on period
 library(dplyr, warn.conflicts = FALSE)
-df <- tribble(    ~period, ~count,
-              "2020-2025",     20,
-              "2025-2030",      5,
-              "2030-2035",     11 )
+df <- tribble(
+  ~period, ~count,
+  "2020-2025", 20,
+  "2025-2030", 5,
+  "2030-2035", 11
+)
 df
 #> # A tibble: 3 × 2
 #>   period    count
@@ -152,7 +154,8 @@ period_width("2025-2030", x_multi = "exclude")
 
 ## no action when 'x_fail' is "silent"
 period_lower(c("2000-2005", "long time ago"),
-             x_fail = "silent")
+  x_fail = "silent"
+)
 #>   2000-2005 longtimeago 
 #>        2000          NA 
 ```

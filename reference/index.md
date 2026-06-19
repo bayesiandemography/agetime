@@ -44,7 +44,7 @@
   : Standardize Age Group Labels
 - [`agetime-package`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
   [`agetime`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
-  : Work with Age, Period, and Cohort Labels and Intervals
+  : Work with Age, Period, and Cohort Labels
 - [`cohort_check()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md)
   [`cohort_assert()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md)
   : Check or Make Assertions About Cohorts

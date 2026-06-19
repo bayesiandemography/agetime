@@ -72,18 +72,19 @@ depending on `format`.
 
 If no value for `y` is supplied, `x` is mapped onto itself.
 
-Tibbles produced by `cohort_mapping()` are sparse, while matrices are
-dense. See the example below.
+Tibbles produced by `cohort_mapping()` are sparse in that they only
+include matches. Matrices produced by `cohort_mapping()` are dense in
+that they include matches and non-matches. See the example below.
 
 ## The `relation` argument
 
-|  |  |
-|----|----|
-| `relation` | Endpoints of `x` and `y` |
-| `"equals"` | `cohort_lower(x) == cohort_lower(y) & cohort_upper(x) == cohort_upper(y)` |
-| `"contains"` | `cohort_lower(x) <= cohort_lower(y) & cohort_upper(y) <= cohort_upper(x)` |
-| `"is-contained-in"` | `cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)` |
-| `"overlaps-with"` | `(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))` \| `(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))` |
+|                     |                                                  |
+|---------------------|--------------------------------------------------|
+| `relation`          | Endpoints of `x` and `y`                         |
+| `"equals"`          | Endpoints equal                                  |
+| `"contains"`        | Endpoints of `y` inside endpoints of `x`         |
+| `"is-contained-in"` | Endpoints of `x` inside endpoints of `y`         |
+| `"overlaps-with"`   | Endpoint of `x` in `y` or endpoint of `y` in `x` |
 
 ## See also
 
@@ -106,12 +107,12 @@ cohort_mapping(x = x, y = y)
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-cohort_mapping(x, format = "matrix")
+cohort_mapping(x = x, y = y, format = "matrix")
 #>            y
-#> x           2020-2025 2030 2025-2027
-#>   2020-2025         1    0         0
-#>   2030              0    1         0
-#>   2025-2027         0    0         1
+#> x           2025-2030 2020-2025 2026-2034
+#>   2020-2025         0         1         0
+#>   2030              0         0         0
+#>   2025-2027         0         0         0
 cohort_mapping(x = x, y = y, relation = "contains")
 #> # A tibble: 1 × 2
 #>   x         y        
@@ -141,7 +142,7 @@ cohort_mapping(x = x, y = y) # one match
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-cohort_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+cohort_mapping(x = x, y = y, format = "matrix") # 1 match and 3 non-matches
 #>            y
 #> x           2020-2025 <2025
 #>   2020-2025         1     0

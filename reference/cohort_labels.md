@@ -101,46 +101,60 @@ Character vector. Length depends on the function arguments.
 
 ``` r
 ## 5-year cohorts
-cohort_labels_five(lower_first = 2000,
-                   lower_last = 2010)
+cohort_labels_five(
+  lower_first = 2000,
+  lower_last = 2010
+)
 #> [1] "2000-2005" "2005-2010" "2010-2015"
 
 ## 5-year cohorts, first cohort is open
-cohort_labels_five(lower_first = 1960,
-                   lower_last = 2020,
-                   open = TRUE)
+cohort_labels_five(
+  lower_first = 1960,
+  lower_last = 2020,
+  open = TRUE
+)
 #>  [1] "<1960"     "1960-1965" "1965-1970" "1970-1975" "1975-1980" "1980-1985"
 #>  [7] "1985-1990" "1990-1995" "1995-2000" "2000-2005" "2005-2010" "2010-2015"
 #> [13] "2015-2020" "2020-2025"
 
 ## single-year cohorts
-cohort_labels_one(lower_first = 2000,
-                  lower_last = 2010)
+cohort_labels_one(
+  lower_first = 2000,
+  lower_last = 2010
+)
 #>  [1] "2000" "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009"
 #> [11] "2010"
 
 ## single-year cohorts, 'x_one' is "upper"
-cohort_labels_one(lower_first = 2000,
-                  lower_last = 2010,
-                  x_one = "upper")
+cohort_labels_one(
+  lower_first = 2000,
+  lower_last = 2010,
+  x_one = "upper"
+)
 #>  [1] "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009" "2010"
 #> [11] "2011"
 
 ## ten-year cohorts
-cohort_labels_ten(lower_first = 2000,
-                  lower_last = 2010)
+cohort_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010
+)
 #> [1] "2000-2010" "2010-2020"
 
 ## ten-year cohorts, 'x_multi' is "exclude",
-cohort_labels_ten(lower_first = 2000,
-                  lower_last = 2010,
-                  x_multi = "exclude")
+cohort_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010,
+  x_multi = "exclude"
+)
 #> [1] "2000-2009" "2010-2019"
 
 ## include total and NA
-cohort_labels_ten(lower_first = 2000,
-                  lower_last = 2010,
-                  include_total = TRUE,
-                  include_na = TRUE)
+cohort_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010,
+  include_total = TRUE,
+  include_na = TRUE
+)
 #> [1] "2000-2010" "2010-2020" "Total"     NA         
 ```

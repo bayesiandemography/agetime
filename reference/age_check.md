@@ -94,14 +94,16 @@ lab
 #> [19] "85-89" "90-94" "95-99" "100+" 
 
 ## get info on everything
-age_check(x = lab,
-          no_overlap = TRUE,
-          no_gap = TRUE,
-          no_total = TRUE,
-          no_na = TRUE,
-          include_zero = TRUE,
-          include_open = TRUE,
-          valid_life = TRUE)
+age_check(
+  x = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE,
+  no_total = TRUE,
+  no_na = TRUE,
+  include_zero = TRUE,
+  include_open = TRUE,
+  valid_life = TRUE
+)
 #> $ok
 #> [1] TRUE
 #> 

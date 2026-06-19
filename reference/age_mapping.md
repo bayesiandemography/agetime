@@ -60,18 +60,19 @@ depending on `format`.
 
 If no value for `y` is supplied, `x` is mapped onto itself.
 
-Tibbles produced by `age_mapping()` are sparse, while matrices are
-dense. See the example below.
+Tibbles produced by `age_mapping()` are sparse in that they only include
+matches. Matrices produced by `age_mapping()` are dense in that they
+include matches and non-matches. See the example below.
 
 ## The `relation` argument
 
-|  |  |
-|----|----|
-| `relation` | Endpoints of `x` and `y` |
-| `"equals"` | `age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)` |
-| `"contains"` | `age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)` |
-| `"is-contained-in"` | `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)` |
-| `"overlaps-with"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` \| `(age_lower(y) <= age_upper(x) < age_upper(y))` |
+|                     |                                                  |
+|---------------------|--------------------------------------------------|
+| `relation`          | Endpoints of `x` and `y`                         |
+| `"equals"`          | Endpoints equal                                  |
+| `"contains"`        | Endpoints of `y` inside endpoints of `x`         |
+| `"is-contained-in"` | Endpoints of `x` inside endpoints of `y`         |
+| `"overlaps-with"`   | Endpoint of `x` in `y` or endpoint of `y` in `x` |
 
 ## See also
 
@@ -91,7 +92,7 @@ age_mapping(x = x, y = y)
 #>   x     y    
 #>   <chr> <chr>
 #> 1 0-4   0-4  
-age_mapping(x, format = "matrix")
+age_mapping(x = x, format = "matrix")
 #>      y
 #> x     0-4 10 5-7
 #>   0-4   1  0   0
@@ -126,13 +127,13 @@ age_mapping(x = x, y = y) # one match
 #>   x     y    
 #>   <chr> <chr>
 #> 1 0-4   0-4  
-age_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+age_mapping(x = x, y = y, format = "matrix") # 1 match, 3 non-matches
 #>        y
 #> x       0-4 5-9
 #>   0-4     1   0
 #>   10-14   0   0
 
-# mapping 'x' on to itself 
+# mapping 'x' on to itself
 x <- c("0--4", "0-4", "5+")
 age_mapping(x)
 #> # A tibble: 5 × 2
