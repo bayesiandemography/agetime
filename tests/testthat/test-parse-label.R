@@ -1,4 +1,3 @@
-
 test_that("x_label() warns and returns NA for an uninterpretable label", {
   parsers <- agetime:::make_label_parsers_age()
 

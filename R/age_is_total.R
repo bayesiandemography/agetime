@@ -1,8 +1,7 @@
-
 #' Identify Age Group Labels for Totals
 #'
 #' Find age group labels that \pkg{agetime} interprets as totals.
-#' 
+#'
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `x`.
@@ -18,14 +17,16 @@
 #' @export
 
 # When length(x) == 0, returns logical(0).
-age_is_total <- function(x, 
+age_is_total <- function(x,
                          x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_is_total(x = x,
-                 label_type = "age",
-                 x_one = "lower",
-                 x_multi = "exclude",
-                 x_fail = x_fail)
+  inner_is_total(
+    x = x,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
 
 
@@ -33,7 +34,7 @@ age_is_total <- function(x,
 #'
 #' Find age group labels that \pkg{agetime} interprets as
 #' open, ie having no upper limit.
-#' 
+#'
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `x`.
@@ -48,15 +49,16 @@ age_is_total <- function(x,
 #' @export
 
 # When length(x) == 0, returns logical(0).
-age_is_open <- function(x, 
+age_is_open <- function(x,
                         x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_is_open(x = x,
-                label_type = "age",
-                x_one = "lower",
-                x_multi = "exclude",
-                x_fail = x_fail,
-                check_open_left = FALSE,
-                check_open_right = TRUE)
+  inner_is_open(
+    x = x,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail,
+    check_open_left = FALSE,
+    check_open_right = TRUE
+  )
 }
-

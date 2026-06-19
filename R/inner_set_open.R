@@ -21,19 +21,25 @@ inner_set_open <- function(x,
                            x_one,
                            x_multi,
                            x_fail) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = TRUE)
-  check_n(n = open,
-                    nm_n = "open",
-                    min = 0L,
-                    max = NULL,
-                    divisible_by = NULL)
-  intervals <- intervals(labels = x,
-                         label_type = label_type,
-                         x_one = x_one,
-                         x_multi = x_multi,
-                         x_fail = x_fail)
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = "x",
+    length_zero_ok = TRUE
+  )
+  check_n(
+    n = open,
+    nm_n = "open",
+    min = 0L,
+    max = NULL,
+    divisible_by = NULL
+  )
+  intervals <- intervals(
+    labels = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   m <- get_m(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   i_x_to_xunu <- get_i_x_to_xunu(intervals)
@@ -54,12 +60,14 @@ inner_set_open <- function(x,
       is_label_now_open <- i_xun_to_xunu %in% i_le_open
       levels_old <- levels(x)
       levels_new <- ifelse(is_label_now_open, label_open, levels_old)
-      x <- factor(x = x,
-                  levels = levels_old,
-                  labels = levels_new)
-    }
-    else
+      x <- factor(
+        x = x,
+        levels = levels_old,
+        labels = levels_new
+      )
+    } else {
       x[i_x_to_xunu %in% i_le_open] <- label_open
+    }
   }
   if (make_open_right) {
     is_ge_open <- !is.na(l) & (open <= l)
@@ -69,13 +77,14 @@ inner_set_open <- function(x,
       is_label_now_open <- i_xun_to_xunu %in% i_ge_open
       levels_old <- levels(x)
       levels_new <- ifelse(is_label_now_open, label_open, levels_old)
-      x <- factor(x = x,
-                  levels = levels_old,
-                  labels = levels_new)
-    }
-    else
+      x <- factor(
+        x = x,
+        levels = levels_old,
+        labels = levels_new
+      )
+    } else {
       x[i_x_to_xunu %in% i_ge_open] <- label_open
+    }
   }
   x
 }
-

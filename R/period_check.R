@@ -1,4 +1,3 @@
-
 #' Check or Make Assertions About Periods
 #'
 #' Collect information on period labels (`period_check()`),
@@ -21,16 +20,20 @@
 #' - [cohort_check()] Cohort equivalent of `period_check()`
 #'
 #' @examples
-#' lab <- period_labels_five(lower_first = 2020,
-#'                           lower_last = 2030)
+#' lab <- period_labels_five(
+#'   lower_first = 2020,
+#'   lower_last = 2030
+#' )
 #' lab
 #'
 #' ## get info on everything
-#' period_check(x = lab,
-#'              no_overlap = TRUE,
-#'              no_gap = TRUE,
-#'              no_total = TRUE,
-#'              no_na = TRUE)
+#' period_check(
+#'   x = lab,
+#'   no_overlap = TRUE,
+#'   no_gap = TRUE,
+#'   no_total = TRUE,
+#'   no_na = TRUE
+#' )
 #'
 #' ## throw error if gaps
 #' period_assert(x = lab, no_gap = TRUE)
@@ -53,18 +56,20 @@ period_check <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_check(x = x,
-              label_type = "period",
-              x_one = x_one,
-              x_multi = x_multi,
-              x_fail = x_fail,
-              no_overlap = no_overlap,
-              no_gap = no_gap,
-              no_total = no_total,
-              no_na = no_na,
-              include_zero = NA,
-              include_open = NA,
-              valid_life = NA)
+  inner_check(
+    x = x,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail,
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    include_zero = NA,
+    include_open = NA,
+    valid_life = NA
+  )
 }
 
 #' @rdname period_check
@@ -80,17 +85,18 @@ period_assert <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_assert(x = x,
-               label_type = "period",
-               x_one = x_one,
-               x_multi = x_multi,
-               x_fail = x_fail,
-               no_overlap = no_overlap,
-               no_gap = no_gap,
-               no_total = no_total,
-               no_na = no_na,
-               include_zero = NA,
-               include_open = NA,
-               valid_life = NA)
+  inner_assert(
+    x = x,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail,
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    include_zero = NA,
+    include_open = NA,
+    valid_life = NA
+  )
 }
-

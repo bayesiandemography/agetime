@@ -39,11 +39,12 @@ period_levels_sort <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_levels_sort(x = x,
-                    decreasing = decreasing,
-                    label_type = "period",
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    x_fail = x_fail)
+  inner_levels_sort(
+    x = x,
+    decreasing = decreasing,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
-

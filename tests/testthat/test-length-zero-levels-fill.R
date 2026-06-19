@@ -1,4 +1,3 @@
-
 # *_levels_fill(): empty character -> factor(). Empty factor with no levels ->
 # factor(). Empty factor with levels -> levels still filled. With breaks and no
 # levels, levels are built from breaks.

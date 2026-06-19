@@ -5,9 +5,9 @@
 #'
 #' @section `x_one`: Parsing one-year labels
 #'
-#' - `x_one` is `"lower"`. Label refers to lower limit. 
+#' - `x_one` is `"lower"`. Label refers to lower limit.
 #'    For instance, `"2030"` might be 1 January 2030 to 1 January 2031.
-#' - `x_one` is `"upper"`. Label refers to upper limit. 
+#' - `x_one` is `"upper"`. Label refers to upper limit.
 #'   For instance, `"2030"` might be 30 June 2029 to 30 June 2030.
 #'
 #' @section `x_multi`: Parsing multi-year labels

@@ -1,7 +1,7 @@
 #' Mapping Between Cohort Labels
 #'
 #' @description
-#' 
+#'
 #' Create a mapping between cohort labels. A mapping
 #' depicts a relationship between the labels of `x`
 #' and the labels of `y`. The types of relationship
@@ -17,16 +17,16 @@
 #' `x` is mapped onto itself.
 #'
 #' Tibbles produced by `cohort_mapping()` are sparse, while matrices are dense. See the example below.
-#' 
+#'
 #' @section The `relation` argument:
-#' 
+#'
 #' | `relation` | Endpoints of `x` and `y`                   |
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | `cohort_lower(x) == cohort_lower(y) & cohort_upper(x) == cohort_upper(y)`   |
 #' | `"contains"` | `cohort_lower(x) <= cohort_lower(y) & cohort_upper(y) <= cohort_upper(x)` |
 #' | `"is-contained-in"`| `cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)`  |
 #' | `"overlaps-with"` | `(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))` &#124; `(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))` |
-#' 
+#'
 #' @inheritParams cohort_lower
 #' @param x Vector of cohort labels.
 #' @param y Vector of cohort labels. If
@@ -78,12 +78,14 @@ cohort_mapping <- function(x,
   x_fail <- match.arg(x_fail)
   relation <- match.arg(relation)
   format <- match.arg(format)
-  inner_mapping(x = x,
-                y = y,
-                relation = relation,
-                format = format,
-                label_type = "cohort",
-                x_one = x_one,
-                x_multi = x_multi,
-                x_fail = x_fail)
+  inner_mapping(
+    x = x,
+    y = y,
+    relation = relation,
+    format = format,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

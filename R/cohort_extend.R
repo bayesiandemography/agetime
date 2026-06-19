@@ -1,4 +1,3 @@
-
 #' Extend a Set of Cohorts
 #'
 #' Add new cohorts at the end of `x`.
@@ -7,7 +6,7 @@
 #' is derived from the last element of `x`,
 #' but a value can be specified through the
 #' `width` arugment.
-#' 
+#'
 #' @inheritParams cohort_lower
 #' @param n Number of cohorts to add.
 #' Default is `1`.
@@ -41,15 +40,14 @@ cohort_extend <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_extend(x = x,
-               n = n,
-               width = width,
-               include_x = include_x,
-               label_type = "cohort",
-               x_one = x_one,
-               x_multi = x_multi,
-               x_fail = x_fail)
+  inner_extend(
+    x = x,
+    n = n,
+    width = width,
+    include_x = include_x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
-
-
-

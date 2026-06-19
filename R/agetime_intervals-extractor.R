@@ -122,8 +122,9 @@ get_is_total <- function(intervals) {
 #' @returns Unique labels before normalization.
 #'
 #' @noRd
-get_labels_unique <- function(intervals)
+get_labels_unique <- function(intervals) {
   intervals$labels_unique
+}
 
 #' Get Labels Unique Norm Unique
 #'
@@ -131,8 +132,9 @@ get_labels_unique <- function(intervals)
 #' @returns Unique labels after normalization.
 #'
 #' @noRd
-get_labels_unique_norm_unique <- function(intervals)
+get_labels_unique_norm_unique <- function(intervals) {
   intervals$labels_unique_norm_unique
+}
 
 #' Get Lower
 #'
@@ -151,8 +153,9 @@ get_lower <- function(intervals) {
 #' @returns Two-column interval matrix.
 #'
 #' @noRd
-get_m <- function(intervals)
+get_m <- function(intervals) {
   intervals$m
+}
 
 #' Get Upper
 #'

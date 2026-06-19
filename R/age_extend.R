@@ -1,4 +1,3 @@
-
 #' Extend a Set of Age Groups
 #'
 #' Add new age groups at the end of `x`.
@@ -36,15 +35,14 @@ age_extend <- function(x,
                        include_x = TRUE,
                        x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_extend(x = x,
-               n = n,
-               width = width,
-               include_x = include_x,
-               label_type = "age",
-               x_one = "lower",
-               x_multi = "exclude",
-               x_fail = x_fail)
+  inner_extend(
+    x = x,
+    n = n,
+    width = width,
+    include_x = include_x,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
-
-
-

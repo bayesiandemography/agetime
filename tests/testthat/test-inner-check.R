@@ -1,4 +1,3 @@
-
 test_that("inner_check_no_gap() notes contiguous intervals when asserted is FALSE", {
   intervals <- intervals(
     labels = c("0-4", "5-9"),

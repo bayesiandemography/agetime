@@ -25,21 +25,23 @@
 # length and ordered attribute. When length(x) == 0, returns character(0) or
 # still modifies factor levels().
 period_modify <- function(x,
-                           breaks,
-                           x_one = c("lower", "upper"),
-                           x_multi = c("include", "exclude"),
-                           x_fail = c("error", "warn", "silent")) {
+                          breaks,
+                          x_one = c("lower", "upper"),
+                          x_multi = c("include", "exclude"),
+                          x_fail = c("error", "warn", "silent")) {
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_modify(x = x,
-                breaks = breaks,
-                is_open_left = FALSE,
-                is_open_right = FALSE,
-                label_type = "period",
-                x_one = x_one,
-                x_multi = x_multi,
-                x_fail = x_fail)
+  inner_modify(
+    x = x,
+    breaks = breaks,
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 
@@ -51,7 +53,7 @@ period_modify <- function(x,
 #' The new periods must contain
 #' the old periods, and follow a regular
 #' pattern:
-#' 
+#'
 #' - `period_modify_five` Five-year periods
 #' - `period_modify_ten` Ten-year periods
 #'
@@ -68,7 +70,7 @@ period_modify <- function(x,
 #' - [cohort_modify_five()] Cohort equivalent of `period_modify_five()`
 #' - [cohort_modify_ten()] Cohort equivalent of `period_modify_ten()`
 #' - [period_levels_fill()] Add levels for intermediate periods
-#' 
+#'
 #' @examples
 #' x <- c("2002-2004", "1987-1989", "2000", "Total")
 #' period_modify_five(x)
@@ -81,25 +83,6 @@ period_modify <- function(x,
 
 # When length(x) == 0 and x is a factor with no levels, x is returned unchanged.
 period_modify_five <- function(x,
-                                offset = 0,
-                                x_one = c("lower", "upper"),
-                                x_multi = c("include", "exclude"),
-                                x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
-  inner_modify_width(x = x,
-                      width = 5L,
-                      offset = offset,
-                      label_type = "period",
-                      x_one = x_one,
-                      x_multi = x_multi,
-                      x_fail = x_fail)
-}
-
-#' @rdname period_modify_five
-#' @export
-period_modify_ten <- function(x,
                                offset = 0,
                                x_one = c("lower", "upper"),
                                x_multi = c("include", "exclude"),
@@ -107,11 +90,34 @@ period_modify_ten <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_modify_width(x = x,
-                      width = 10L,
-                      offset = offset,
-                      label_type = "period",
-                      x_one = x_one,
-                      x_multi = x_multi,
-                      x_fail = x_fail)
+  inner_modify_width(
+    x = x,
+    width = 5L,
+    offset = offset,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
+}
+
+#' @rdname period_modify_five
+#' @export
+period_modify_ten <- function(x,
+                              offset = 0,
+                              x_one = c("lower", "upper"),
+                              x_multi = c("include", "exclude"),
+                              x_fail = c("error", "warn", "silent")) {
+  x_one <- match.arg(x_one)
+  x_multi <- match.arg(x_multi)
+  x_fail <- match.arg(x_fail)
+  inner_modify_width(
+    x = x,
+    width = 10L,
+    offset = offset,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

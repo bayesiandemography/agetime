@@ -77,7 +77,7 @@ y <- c("0-4", "5-9")
 age_mapping(x = x, y = y) # one match
 age_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
 
-# mapping 'x' on to itself 
+# mapping 'x' on to itself
 x <- c("0--4", "0-4", "5+")
 age_mapping(x)
 }

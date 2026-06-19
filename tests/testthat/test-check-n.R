@@ -1,4 +1,3 @@
-
 test_that("check_n() returns TRUE invisibly for valid input", {
   expect_invisible(agetime:::check_n(10L, "n", NULL, NULL, NULL))
   expect_invisible(agetime:::check_n(10.0, "n", NULL, NULL, NULL))

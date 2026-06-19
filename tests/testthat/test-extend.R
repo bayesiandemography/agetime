@@ -1,4 +1,3 @@
-
 test_that("age_extend() appends groups using inferred width", {
   x <- c("0-4", "5-9")
   ans <- age_extend(x, n = 2)

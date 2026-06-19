@@ -111,10 +111,11 @@ Check whether age labels conform to expectations:
 ```{r check}
 lab <- age_labels_five(lower_first = 0, lower_last = 85, open = TRUE)
 age_check(lab,
-          no_overlap = TRUE,
-          no_gap = TRUE,
-          include_zero = TRUE,
-          include_open = TRUE)
+  no_overlap = TRUE,
+  no_gap = TRUE,
+  include_zero = TRUE,
+  include_open = TRUE
+)
 ```
 
 `age_assert()` throws an error if a check fails.

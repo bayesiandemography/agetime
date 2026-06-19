@@ -1,21 +1,25 @@
-
 # *_mapping(): empty x or y (character(0) or factor with no levels) -> empty
 # mapping. Empty factor with levels still maps normally.
 
 test_that("age_mapping() with length-0 input returns empty tibble", {
-  expect_identical(age_mapping(character(0)),
-                   tibble::tibble(x = character(0), y = character(0)))
-  expect_identical(age_mapping(factor()),
-                   tibble::tibble(x = character(0), y = character(0)))
+  expect_identical(
+    age_mapping(character(0)),
+    tibble::tibble(x = character(0), y = character(0))
+  )
+  expect_identical(
+    age_mapping(factor()),
+    tibble::tibble(x = character(0), y = character(0))
+  )
 })
 
 test_that("age_mapping() with length-0 input returns empty matrix", {
   expect_identical(
     age_mapping(character(0), format = "matrix"),
     matrix(integer(0),
-           nrow = 0L,
-           ncol = 0L,
-           dimnames = list(x = character(0), y = character(0)))
+      nrow = 0L,
+      ncol = 0L,
+      dimnames = list(x = character(0), y = character(0))
+    )
   )
 })
 

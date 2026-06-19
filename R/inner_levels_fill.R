@@ -7,21 +7,26 @@
 #'
 #' @noRd
 inner_levels_fill_prep <- function(x,
-                                     breaks,
-                                     nm_x) {
+                                   breaks,
+                                   nm_x) {
   is_factor <- is.factor(x)
   is_ordered <- is_factor && is.ordered(x)
-  x <- to_character_or_factor(x = x,
-                              nm_x = nm_x,
-                              length_zero_ok = TRUE)
-  if (is.factor(x))
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = nm_x,
+    length_zero_ok = TRUE
+  )
+  if (is.factor(x)) {
     levels <- levels(x)
-  else
+  } else {
     levels <- unique(x)
-  list(x = x,
-       is_factor = is_factor,
-       is_ordered = is_ordered,
-       levels = levels)
+  }
+  list(
+    x = x,
+    is_factor = is_factor,
+    is_ordered = is_ordered,
+    levels = levels
+  )
 }
 #' Inner Levels Fill Empty
 #'
@@ -39,26 +44,34 @@ inner_levels_fill_empty <- function(levels,
                                     is_ordered,
                                     x_one,
                                     x_multi) {
-  if (length(levels) > 0L)
+  if (length(levels) > 0L) {
     return(NULL)
-  if (length(breaks) > 0L) {
-    check_incr_nonneg_integers(x = breaks,
-                               nm_x = "breaks",
-                               min_length = 1L)
-    labels_new <- inner_labels(breaks = breaks,
-                               x_one = x_one,
-                               x_multi = x_multi,
-                               is_open_left = FALSE,
-                               is_open_right = FALSE,
-                               include_total = FALSE,
-                               include_na = FALSE)
-    return(factor(x = character(0),
-                  levels = labels_new,
-                  ordered = is_ordered,
-                  exclude = NULL))
   }
-  if (is_ordered)
+  if (length(breaks) > 0L) {
+    check_incr_nonneg_integers(
+      x = breaks,
+      nm_x = "breaks",
+      min_length = 1L
+    )
+    labels_new <- inner_labels(
+      breaks = breaks,
+      x_one = x_one,
+      x_multi = x_multi,
+      is_open_left = FALSE,
+      is_open_right = FALSE,
+      include_total = FALSE,
+      include_na = FALSE
+    )
+    return(factor(
+      x = character(0),
+      levels = labels_new,
+      ordered = is_ordered,
+      exclude = NULL
+    ))
+  }
+  if (is_ordered) {
     return(factor(levels = character(), ordered = TRUE))
+  }
   factor()
 }
 #' Inner Levels Fill Factor
@@ -74,10 +87,12 @@ inner_levels_fill_factor <- function(x,
                                      levels,
                                      is_ordered) {
   vals <- if (is.factor(x)) as.character(x) else x
-  factor(x = vals,
-         levels = levels,
-         ordered = is_ordered,
-         exclude = NULL)
+  factor(
+    x = vals,
+    levels = levels,
+    ordered = is_ordered,
+    exclude = NULL
+  )
 }
 #' Inner Levels Fill
 #'
@@ -102,48 +117,63 @@ inner_levels_fill <- function(x,
                               x_one,
                               x_multi,
                               x_fail) {
-  prep <- inner_levels_fill_prep(x = x,
-                                 breaks = breaks,
-                                 nm_x = "x")
-  empty <- inner_levels_fill_empty(levels = prep$levels,
-                                   breaks = breaks,
-                                   is_ordered = prep$is_ordered,
-                                   x_one = x_one,
-                                   x_multi = x_multi)
-  if (!is.null(empty))
+  prep <- inner_levels_fill_prep(
+    x = x,
+    breaks = breaks,
+    nm_x = "x"
+  )
+  empty <- inner_levels_fill_empty(
+    levels = prep$levels,
+    breaks = breaks,
+    is_ordered = prep$is_ordered,
+    x_one = x_one,
+    x_multi = x_multi
+  )
+  if (!is.null(empty)) {
     return(empty)
+  }
   x <- prep$x
   levels <- prep$levels
-  intervals <- intervals(labels = levels,
-                         label_type = label_type,
-                         x_one = x_one,
-                         x_multi = x_multi,
-                         x_fail = x_fail)
+  intervals <- intervals(
+    labels = levels,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   has_breaks <- length(breaks) > 0L
   has_width <- length(width) > 0L
-  if (has_breaks && has_width)
+  if (has_breaks && has_width) {
     cli::cli_abort("Internal error: 'breaks' and 'width' both supplied.")
+  }
   if (has_breaks) {
-    check_incr_nonneg_integers(x = breaks,
-                               nm_x = "breaks",
-                               min_length = 1L)
-    check_not_in_intervals(x = breaks,
-                           nm_x = "breaks",
-                           intervals = intervals,
-                           nm_intervals = "x",
-                           label_type = label_type)
-    check_in_limits_intervals(x = breaks,
-                              nm_x = "breaks",
-                              intervals = intervals,
-                              nm_intervals = "x",
-                              label_type = label_type)
+    check_incr_nonneg_integers(
+      x = breaks,
+      nm_x = "breaks",
+      min_length = 1L
+    )
+    check_not_in_intervals(
+      x = breaks,
+      nm_x = "breaks",
+      intervals = intervals,
+      nm_intervals = "x",
+      label_type = label_type
+    )
+    check_in_limits_intervals(
+      x = breaks,
+      nm_x = "breaks",
+      intervals = intervals,
+      nm_intervals = "x",
+      label_type = label_type
+    )
   }
   m <- get_m(intervals)
   n <- nrow(m)
   can_have_gaps <- n >= 2L
   if (!can_have_gaps) {
-    if (!is.factor(x))
+    if (!is.factor(x)) {
       x <- factor(x)
+    }
     return(x)
   }
   labels <- get_labels_unique_norm_unique(intervals)
@@ -162,27 +192,31 @@ inner_levels_fill <- function(x,
       if (has_breaks) {
         breaks_internal <- breaks[(u_prev < breaks) & (breaks < l_curr)]
         breaks_gap <- c(u_prev, breaks_internal, l_curr)
-      }
-      else if (has_width) {
+      } else if (has_width) {
         if (diff %% width != 0L) {
           label_curr <- labels[[i]]
           label_prev <- labels[[i - 1L]]
           cli::cli_abort(c("Gap between {.val {label_prev}} and {.val {label_curr}} is not divisible by {.val {width}}.",
-                           i = "Choose a different {.arg width}?"))
+            i = "Choose a different {.arg width}?"
+          ))
         }
-        breaks_gap <- seq.int(from = u_prev,
-                              to = l_curr,
-                              by = width)
-      }
-      else
+        breaks_gap <- seq.int(
+          from = u_prev,
+          to = l_curr,
+          by = width
+        )
+      } else {
         breaks_gap <- c(u_prev, l_curr)
-      labels_gap <-  inner_labels(breaks = breaks_gap,
-                                  x_one = x_one,
-                                  x_multi = x_multi,
-                                  is_open_left = FALSE,
-                                  is_open_right = FALSE,
-                                  include_total = FALSE,
-                                  include_na = FALSE)
+      }
+      labels_gap <- inner_labels(
+        breaks = breaks_gap,
+        x_one = x_one,
+        x_multi = x_multi,
+        is_open_left = FALSE,
+        is_open_right = FALSE,
+        include_total = FALSE,
+        include_na = FALSE
+      )
       levels_extra[[i - 1L]] <- labels_gap
     }
   }
@@ -194,9 +228,11 @@ inner_levels_fill <- function(x,
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
   levels <- unique(levels)
-  inner_levels_fill_factor(x = x,
-                           levels = levels,
-                           is_ordered = prep$is_ordered)
+  inner_levels_fill_factor(
+    x = x,
+    levels = levels,
+    is_ordered = prep$is_ordered
+  )
 }
 #' Inner Levels Fill Life
 #'
@@ -208,32 +244,41 @@ inner_levels_fill <- function(x,
 
 inner_levels_fill_life <- function(x,
                                    x_fail) {
-  prep <- inner_levels_fill_prep(x = x,
-                                 breaks = NULL,
-                                 nm_x = "x")
-  empty <- inner_levels_fill_empty(levels = prep$levels,
-                                   breaks = NULL,
-                                   is_ordered = prep$is_ordered,
-                                   x_one = "lower",
-                                   x_multi = "exclude")
-  if (!is.null(empty))
+  prep <- inner_levels_fill_prep(
+    x = x,
+    breaks = NULL,
+    nm_x = "x"
+  )
+  empty <- inner_levels_fill_empty(
+    levels = prep$levels,
+    breaks = NULL,
+    is_ordered = prep$is_ordered,
+    x_one = "lower",
+    x_multi = "exclude"
+  )
+  if (!is.null(empty)) {
     return(empty)
+  }
   x <- prep$x
   levels <- prep$levels
-  intervals <- intervals(labels = levels,
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
-                         x_fail = x_fail)
+  intervals <- intervals(
+    labels = levels,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
   val <- label_non_life(intervals)
-  if (!is.null(val))
+  if (!is.null(val)) {
     cli::cli_abort("Label {.val {val}} is not valid for a life table.")
+  }
   m <- get_m(intervals)
   n <- nrow(m)
   can_have_gaps <- n >= 2L
   if (!can_have_gaps) {
-    if (!is.factor(x))
+    if (!is.factor(x)) {
       x <- factor(x)
+    }
     return(x)
   }
   labels <- get_labels_unique_norm_unique(intervals)
@@ -249,17 +294,20 @@ inner_levels_fill_life <- function(x,
     diff <- l_curr - u_prev
     is_gap <- is.finite(diff) && (diff > 0L)
     if (is_gap) {
-      if ((u_prev == 1L) && (l_curr == 5L))
+      if ((u_prev == 1L) && (l_curr == 5L)) {
         breaks_gap <- c(u_prev, l_curr)
-      else
+      } else {
         breaks_gap <- c(u_prev, seq(from = 5L, to = l_curr, by = 5L))
-      labels_gap <-  inner_labels(breaks = breaks_gap,
-                                  x_one = "lower",
-                                  x_multi = "exclude",
-                                  is_open_left = FALSE,
-                                  is_open_right = FALSE,
-                                  include_total = FALSE,
-                                  include_na = FALSE)
+      }
+      labels_gap <- inner_labels(
+        breaks = breaks_gap,
+        x_one = "lower",
+        x_multi = "exclude",
+        is_open_left = FALSE,
+        is_open_right = FALSE,
+        include_total = FALSE,
+        include_na = FALSE
+      )
       levels_extra[[i - 1L]] <- labels_gap
     }
   }
@@ -271,7 +319,9 @@ inner_levels_fill_life <- function(x,
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
   levels <- unique(levels)
-  inner_levels_fill_factor(x = x,
-                           levels = levels,
-                           is_ordered = prep$is_ordered)
+  inner_levels_fill_factor(
+    x = x,
+    levels = levels,
+    is_ordered = prep$is_ordered
+  )
 }

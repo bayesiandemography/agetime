@@ -71,23 +71,31 @@ age_labels_five()
 age_labels_five(lower_last = 80)
 
 ## reproductive ages: 5-year
-age_labels_five(lower_first = 15,
-                lower_last = 45,
-                open = FALSE)
+age_labels_five(
+  lower_first = 15,
+  lower_last = 45,
+  open = FALSE
+)
 
 ## reproductive ages: 1-year
-age_labels_one(lower_first = 15,
-               lower_last = 49,
-               open = FALSE)
+age_labels_one(
+  lower_first = 15,
+  lower_last = 49,
+  open = FALSE
+)
 
 ## include total and NA
-age_labels_five(lower_last = 20,
-                include_total = TRUE,
-                include_na = TRUE)
+age_labels_five(
+  lower_last = 20,
+  include_total = TRUE,
+  include_na = TRUE
+)
 
 ## arbitrary age groups
-age_labels(breaks = c(0, 5, 10, 14, 18),
-           open = FALSE)
+age_labels(
+  breaks = c(0, 5, 10, 14, 18),
+  open = FALSE
+)
 
 ## life table age groups with
 ## open age group of 75+

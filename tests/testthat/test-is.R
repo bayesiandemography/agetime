@@ -1,4 +1,3 @@
-
 expect_is_logical <- function(x, ans) {
   expect_identical(length(ans), length(x))
   expect_type(ans, "logical")

@@ -70,17 +70,21 @@ or throw an error if cohort labels do not
 conform to expectations (\code{cohort_assert}).
 }
 \examples{
-lab <- cohort_labels_five(lower_first = 2020,
-                          lower_last = 2030)
+lab <- cohort_labels_five(
+  lower_first = 2020,
+  lower_last = 2030
+)
 lab
 
 ## get info on everything
-cohort_check(x = lab,
-             no_overlap = TRUE,
-             no_gap = TRUE,
-             no_total = TRUE,
-             no_na = TRUE,
-             include_open = TRUE)
+cohort_check(
+  x = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE,
+  no_total = TRUE,
+  no_na = TRUE,
+  include_open = TRUE
+)
 
 ## throw error if gaps
 cohort_assert(x = lab, no_gap = TRUE)

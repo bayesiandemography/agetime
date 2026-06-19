@@ -1,7 +1,7 @@
 #' Mapping Between Age Group Labels
 #'
 #' @description
-#' 
+#'
 #' Create a mapping between age group labels. A mapping
 #' depicts a relationship between the labels of `x`
 #' and the labels of `y`. The types of relationship
@@ -17,16 +17,16 @@
 #' `x` is mapped onto itself.
 #'
 #' Tibbles produced by `age_mapping()` are sparse, while matrices are dense. See the example below.
-#' 
+#'
 #' @section The `relation` argument:
-#' 
+#'
 #' | `relation` | Endpoints of `x` and `y`                   |
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | `age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)`   |
 #' | `"contains"` | `age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)` |
 #' | `"is-contained-in"`| `age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)`  |
 #' | `"overlaps-with"` | `(age_lower(y) <= age_lower(x) < age_upper(y))` &#124; `(age_lower(y) <= age_upper(x) < age_upper(y))` |
-#' 
+#'
 #' @inheritParams age_lower
 #' @param x Vector of age group labels.
 #' @param y Vector of age group labels. If
@@ -52,14 +52,14 @@
 #' age_mapping(x = x, y = y, relation = "contains")
 #' age_mapping(x = x, y = y, relation = "is-contained-in")
 #' age_mapping(x = x, y = y, relation = "overlaps-with")
-#' 
+#'
 #' # sparse tibble vs dense matrix
 #' x <- c("0-4", "10-14")
 #' y <- c("0-4", "5-9")
 #' age_mapping(x = x, y = y) # one match
 #' age_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
-#' 
-#' # mapping 'x' on to itself 
+#'
+#' # mapping 'x' on to itself
 #' x <- c("0--4", "0-4", "5+")
 #' age_mapping(x)
 #' @export
@@ -73,12 +73,14 @@ age_mapping <- function(x,
   x_fail <- match.arg(x_fail)
   relation <- match.arg(relation)
   format <- match.arg(format)
-  inner_mapping(x = x,
-                y = y,
-                relation = relation,
-                format = format,
-                label_type = "age",
-                x_one = "lower",
-                x_multi = "exclude",
-                x_fail = x_fail)
+  inner_mapping(
+    x = x,
+    y = y,
+    relation = relation,
+    format = format,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }

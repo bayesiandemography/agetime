@@ -5,12 +5,16 @@
 #'
 #' @noRd
 check_breaks <- function(breaks) {
-  if (length(breaks) < 2L)
+  if (length(breaks) < 2L) {
     cli::cli_abort(c("{.arg breaks} has length {.val {length(breaks)}}.",
-                     i = "Use at least two break points?"))
-  check_incr_nonneg_integers(x = breaks,
-                             nm_x = "breaks",
-                             min_length = 2L)
+      i = "Use at least two break points?"
+    ))
+  }
+  check_incr_nonneg_integers(
+    x = breaks,
+    nm_x = "breaks",
+    min_length = 2L
+  )
 }
 
 #' Check Flag
@@ -21,14 +25,19 @@ check_breaks <- function(breaks) {
 #'
 #' @noRd
 check_flag <- function(x, nm_x) {
-  if (length(x) != 1L)
+  if (length(x) != 1L) {
     cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
-                     i = "Supply a single value?"))
-  if (is.na(x))
+      i = "Supply a single value?"
+    ))
+  }
+  if (is.na(x)) {
     cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.")
-  if (!(x %in% c(TRUE, FALSE, 1L, 0L)))
+  }
+  if (!(x %in% c(TRUE, FALSE, 1L, 0L))) {
     cli::cli_abort(c("{.arg {nm_x}} is {.val {x}}.",
-                     i = "Use {.val {TRUE}} or {.val {FALSE}}?"))
+      i = "Use {.val {TRUE}} or {.val {FALSE}}?"
+    ))
+  }
   invisible(TRUE)
 }
 
@@ -47,15 +56,16 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals, label_ty
   labels <- get_labels_unique(intervals)
   lower <- m[, 1L]
   upper <- m[, 2L]
-  if (all(is.na(lower)) || all(is.na(upper)))
+  if (all(is.na(lower)) || all(is.na(upper))) {
     return(invisible(TRUE))
+  }
   i_lowest <- which.min(lower)
   i_highest <- which.max(upper)
   lowest <- lower[[i_lowest]]
   highest <- upper[[i_highest]]
   is_in <- (lowest <= x) & (x < highest)
   i_not_in <- match(FALSE, is_in, nomatch = 0L)
-  if (i_not_in > 0L)
+  if (i_not_in > 0L) {
     cli::cli_abort(c(
       "{.arg {nm_x}} is outside the range covered by {label_name(label_type)}s in {.arg {nm_intervals}}.",
       i = "{.arg {nm_x}} is {.val {x[[i_not_in]]}}.",
@@ -63,6 +73,7 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals, label_ty
       i = "Highest interval: {.val {labels[[i_highest]]}}.",
       i = "Use values within the range covered by {label_name(label_type)}s in {.arg {nm_intervals}}?"
     ))
+  }
   invisible(TRUE)
 }
 
@@ -76,22 +87,29 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals, label_ty
 #' @noRd
 check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   eps <- 1e-8
-  if (length(x) < min_length)
+  if (length(x) < min_length) {
     cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
-                     i = "Use at least {min_length} value{?s}?"))
-  if (!is.numeric(x))
+      i = "Use at least {min_length} value{?s}?"
+    ))
+  }
+  if (!is.numeric(x)) {
     cli::cli_abort(c("{.arg {nm_x}} is non-numeric.",
-                     i = "{.arg {nm_x}} has class {.cls {class(x)}}."))
+      i = "{.arg {nm_x}} has class {.cls {class(x)}}."
+    ))
+  }
   n_na <- sum(is.na(x))
-  if (n_na > 0L)
+  if (n_na > 0L) {
     cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.")
+  }
   is_integerish <- abs(x - round(x)) < eps
   i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
-  if (i_not_integerish > 0L)
+  if (i_not_integerish > 0L) {
     cli::cli_abort("{.arg {nm_x}} has value {.val {x[[i_not_integerish]]}} that is not a whole number.")
+  }
   n_neg <- sum(x < 0L)
-  if (n_neg > 0L)
+  if (n_neg > 0L) {
     cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.")
+  }
   is_non_incr <- diff(x) <= 0L
   i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
   if (i_non_incr > 0L) {
@@ -122,7 +140,7 @@ check_m_contains <- function(m_contains, label_type) {
   }
   invisible(TRUE)
 }
-  
+
 
 #' Check Whole Number
 #'
@@ -145,28 +163,42 @@ check_m_contains <- function(m_contains, label_type) {
 #'
 #' @noRd
 check_n <- function(n, nm_n, min, max, divisible_by) {
-  if (!is.numeric(n))
+  if (!is.numeric(n)) {
     cli::cli_abort(c("{.arg {nm_n}} is non-numeric.",
-                     i = "{.arg {nm_n}} has class {.cls {class(n)}}."))
-  if (length(n) != 1L)
+      i = "{.arg {nm_n}} has class {.cls {class(n)}}."
+    ))
+  }
+  if (length(n) != 1L) {
     cli::cli_abort(c("{.arg {nm_n}} has length {.val {length(n)}}.",
-                     i = "Supply a single value?"))
-  if (is.na(n))
+      i = "Supply a single value?"
+    ))
+  }
+  if (is.na(n)) {
     cli::cli_abort("{.arg {nm_n}} is {.val {NA}}.")
-  if (is.infinite(n))
+  }
+  if (is.infinite(n)) {
     cli::cli_abort("{.arg {nm_n}} is {.val {n}}.")
-  if (!isTRUE(all.equal(round(n), n)))
+  }
+  if (!isTRUE(all.equal(round(n), n))) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a whole number?"))
-  if (!is.null(min) && (n < min))
+      i = "Use a whole number?"
+    ))
+  }
+  if (!is.null(min) && (n < min)) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a value of at least {.val {min}}?"))
-  if (!is.null(max) && (n > max))
+      i = "Use a value of at least {.val {min}}?"
+    ))
+  }
+  if (!is.null(max) && (n > max)) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a value of at most {.val {max}}?"))
-  if (!is.null(divisible_by) && (n %% divisible_by != 0L))
+      i = "Use a value of at most {.val {max}}?"
+    ))
+  }
+  if (!is.null(divisible_by) && (n %% divisible_by != 0L)) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-                     i = "Use a value divisible by {.val {divisible_by}}?"))
+      i = "Use a value divisible by {.val {divisible_by}}?"
+    ))
+  }
   invisible(TRUE)
 }
 
@@ -193,10 +225,12 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals, label_type)
     if (is_finite) {
       is_in <- (l < x) & (x < u)
       i_in <- match(TRUE, is_in, nomatch = 0L)
-      if (i_in > 0L)
+      if (i_in > 0L) {
         cli::cli_abort(c("{.arg {nm_x}} lies inside an existing {label_name(label_type)}.",
-                         i = "Value in {.arg {nm_x}}: {.val {x[[i_in]]}}.",
-                         i = "Interval: {.val {labels[[i]]}}."))
+          i = "Value in {.arg {nm_x}}: {.val {x[[i_in]]}}.",
+          i = "Interval: {.val {labels[[i]]}}."
+        ))
+      }
     }
   }
   invisible(TRUE)

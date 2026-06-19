@@ -1,4 +1,3 @@
-
 test_that("age_levels_fill() fills gaps using default boundaries", {
   x <- factor(c("0-4", "20-24"))
   ans <- age_levels_fill(x)
@@ -50,8 +49,10 @@ test_that("age_levels_fill_life() fills life-table gaps", {
   )
   expect_identical(
     levels(age_levels_fill_life(c("60+", "0"))),
-    c("60+", "0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-      "30-34", "35-39", "40-44", "45-49", "50-54", "55-59")
+    c(
+      "60+", "0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+      "30-34", "35-39", "40-44", "45-49", "50-54", "55-59"
+    )
   )
 })
 
@@ -85,16 +86,20 @@ test_that("age_levels_fill_one() fills gaps with one-year groups", {
   x <- factor(c("0-4", "20-24"))
   expect_identical(
     levels(age_levels_fill_one(x)),
-    c("0-4", "5", "6", "7", "8", "9", "10", "11", "12",
-      "13", "14", "15", "16", "17", "18", "19", "20-24")
+    c(
+      "0-4", "5", "6", "7", "8", "9", "10", "11", "12",
+      "13", "14", "15", "16", "17", "18", "19", "20-24"
+    )
   )
 })
 
 test_that("period_levels_fill_one() and cohort_levels_fill_one() fill gaps", {
   x <- factor(c("2000-2005", "2020-2025"))
-  expected <- c("2000-2005", "2005", "2006", "2007", "2008", "2009",
-                "2010", "2011", "2012", "2013", "2014", "2015",
-                "2016", "2017", "2018", "2019", "2020-2025")
+  expected <- c(
+    "2000-2005", "2005", "2006", "2007", "2008", "2009",
+    "2010", "2011", "2012", "2013", "2014", "2015",
+    "2016", "2017", "2018", "2019", "2020-2025"
+  )
   expect_identical(levels(period_levels_fill_one(x)), expected)
   expect_identical(levels(cohort_levels_fill_one(x)), expected)
 })

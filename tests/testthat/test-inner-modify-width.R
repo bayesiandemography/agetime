@@ -1,4 +1,3 @@
-
 test_that("inner_modify_width() uses upper bounds for start when open on the left (lines 104-105)", {
   x <- c("<2020", "2020-2024")
   ans <- agetime:::inner_modify_width(

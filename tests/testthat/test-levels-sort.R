@@ -1,4 +1,3 @@
-
 test_that("age_levels_sort() sorts levels without changing observed values", {
   x <- factor(c("20-24", "0-4", "5-9"), levels = c("20-24", "0-4", "5-9"))
   ans <- age_levels_sort(x)

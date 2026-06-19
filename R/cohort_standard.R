@@ -1,4 +1,3 @@
-
 ## HAS_TESTS
 #' Standardize Cohort Labels
 #'
@@ -23,11 +22,11 @@ cohort_standard <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_standard(x = x,
-                 label_type = "cohort",
-                 x_one = x_one,
-                 x_multi = x_multi,
-                 x_fail = x_fail)
+  inner_standard(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
-
-

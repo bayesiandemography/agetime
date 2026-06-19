@@ -5,7 +5,7 @@
 #' If `x` is not a factor, and so does
 #' not have levels, convert it to
 #' a factor before filling in levels.
-#' 
+#'
 #' - `period_levels_fill` adds periods
 #'   specified by `breaks`.
 #' - `period_levels_fill_one` adds periods with
@@ -62,13 +62,15 @@ period_levels_fill <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = breaks,
-                    width = NULL,
-                    label_type = "period",
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = breaks,
+    width = NULL,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 #' @rdname period_levels_fill
@@ -80,13 +82,15 @@ period_levels_fill_one <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = NULL,
-                    width = 1L,
-                    label_type = "period",
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = NULL,
+    width = 1L,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 #' @rdname period_levels_fill
@@ -98,13 +102,15 @@ period_levels_fill_five <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = NULL,
-                    width = 5L,
-                    label_type = "period",
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = NULL,
+    width = 5L,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 #' @rdname period_levels_fill
@@ -116,11 +122,13 @@ period_levels_fill_ten <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = NULL,
-                    width = 10L,
-                    label_type = "period",
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = NULL,
+    width = 10L,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

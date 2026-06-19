@@ -1,4 +1,3 @@
-
 # *_check() / *_assert(): empty input is valid. Universal checks like no_overlap
 # are TRUE on empty input; include_* checks are FALSE on empty input (like any()).
 
@@ -43,12 +42,18 @@ test_that("universal checks pass on empty factor input", {
 })
 
 test_that("include_* asserts fail cleanly on length-0 input", {
-  expect_error(age_assert(character(0), include_zero = TRUE),
-               "Check failed\\.")
-  expect_error(age_assert(character(0), include_open = TRUE),
-               "Check failed\\.")
-  expect_error(cohort_assert(character(0), include_open = TRUE),
-               "Check failed\\.")
+  expect_error(
+    age_assert(character(0), include_zero = TRUE),
+    "Check failed\\."
+  )
+  expect_error(
+    age_assert(character(0), include_open = TRUE),
+    "Check failed\\."
+  )
+  expect_error(
+    cohort_assert(character(0), include_open = TRUE),
+    "Check failed\\."
+  )
 })
 
 test_that("universal asserts succeed on length-0 input", {
@@ -58,8 +63,7 @@ test_that("universal asserts succeed on length-0 input", {
   expect_invisible(cohort_assert(character(0), no_na = TRUE))
 })
 
-test_that("universal asserts fail when asserted condition is false on length-0 input",
-          {
+test_that("universal asserts fail when asserted condition is false on length-0 input", {
   expect_error(age_assert(character(0), no_overlap = FALSE), "Check failed\\.")
   expect_false(age_check(character(0), no_total = FALSE)$ok)
 })

@@ -1,4 +1,3 @@
-
 test_that("age_labels_one() creates one-year age groups", {
   expect_identical(
     age_labels_one(lower_first = 15, lower_last = 17, open = FALSE),
@@ -54,16 +53,20 @@ test_that("age_labels() creates labels from breaks", {
 test_that("age_labels_life() creates life-table age groups", {
   expect_identical(
     age_labels_life(lower_last = 75),
-    c("0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+    c(
+      "0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
       "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
-      "70-74", "75+")
+      "70-74", "75+"
+    )
   )
 })
 
 test_that("age_labels_five() can include Total and NA", {
-  ans <- age_labels_five(lower_last = 20,
-                         include_total = TRUE,
-                         include_na = TRUE)
+  ans <- age_labels_five(
+    lower_last = 20,
+    include_total = TRUE,
+    include_na = TRUE
+  )
   expect_identical(ans, c("0-4", "5-9", "10-14", "15-19", "20+", "Total", NA))
 })
 
@@ -83,10 +86,12 @@ test_that("period_labels_one() respects x_one = upper", {
 
 test_that("period_labels_ten() can include Total and NA", {
   expect_identical(
-    period_labels_ten(lower_first = 2000,
-                      lower_last = 2010,
-                      include_total = TRUE,
-                      include_na = TRUE),
+    period_labels_ten(
+      lower_first = 2000,
+      lower_last = 2010,
+      include_total = TRUE,
+      include_na = TRUE
+    ),
     c("2000-2010", "2010-2020", "Total", NA)
   )
 })
@@ -107,20 +112,26 @@ test_that("cohort_labels_five() creates five-year cohort labels", {
 
 test_that("cohort_labels_five() with open = TRUE starts with a left-open cohort", {
   expect_identical(
-    head(cohort_labels_five(lower_first = 1960,
-                            lower_last = 1970,
-                            open = TRUE),
-         2L),
+    head(
+      cohort_labels_five(
+        lower_first = 1960,
+        lower_last = 1970,
+        open = TRUE
+      ),
+      2L
+    ),
     c("<1960", "1960-1965")
   )
 })
 
 test_that("cohort_labels_ten() can include Total and NA", {
   expect_identical(
-    cohort_labels_ten(lower_first = 2000,
-                      lower_last = 2010,
-                      include_total = TRUE,
-                      include_na = TRUE),
+    cohort_labels_ten(
+      lower_first = 2000,
+      lower_last = 2010,
+      include_total = TRUE,
+      include_na = TRUE
+    ),
     c("2000-2010", "2010-2020", "Total", NA)
   )
 })

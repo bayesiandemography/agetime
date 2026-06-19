@@ -1,4 +1,3 @@
-
 #' Work with Age, Period, and Cohort Labels
 #'
 #' Functions for cleaning, manipulating, and
@@ -17,31 +16,31 @@
 #' | [age_mid()]   | [period_mid()]   | [cohort_mid()]   |
 #'
 #' **Identify open intervals and totals**
-#' 
+#'
 #' |                  |                     |                     |
 #' |------------------|---------------------|---------------------|
 #' | [age_is_open()]  | -                   | [cohort_is_open()]  |
 #' | [age_is_total()] | [period_is_total()] | [cohort_is_total()] |
 #'
 #' **Characterise or make assertions**
-#' 
+#'
 #' |                |                   |                   |
 #' |----------------|-------------------|-------------------|
 #' | [age_check()]  | [period_check()]  | [cohort_check()]  |
 #' | [age_assert()] | [period_assert()] | [cohort_assert()] |
 #'
 #' **Create mappings between intervals**
-#' 
+#'
 #' |                 |                    |                    |
 #' |-----------------|--------------------|--------------------|
 #' | [age_mapping()] | [period_mapping()] | [cohort_mapping()] |
 #'
-#' 
+#'
 #' @section Clean or modify existing labels:
 #'
 #' **Use standard format**
 #'
-#' |                  |                     |                     | 
+#' |                  |                     |                     |
 #' |------------------|---------------------|---------------------|
 #' | [age_standard()] | [period_standard()] | [cohort_standard()] |
 #'
@@ -55,7 +54,7 @@
 #' |[age_modify_life()] |-                     |-                     |
 #'
 #' **Continue series**
-#' 
+#'
 #' |                     |                  |                  |
 #' |---------------------|------------------|------------------|
 #' |[age_extend()]       |[period_extend()] |[cohort_extend()] |
@@ -71,17 +70,17 @@
 #' |[age_levels_fill_life()]|-                          |-                          |
 #'
 #' **Put levels in order**
-#' 
+#'
 #' |                    |                       |                       |
 #' |--------------------|-----------------------|-----------------------|
 #' |[age_levels_sort()] |[period_levels_sort()] |[cohort_levels_sort()] |
 #'
-#' 
+#'
 #' @section Make new labels:
 #'
 #' **New labels with standard format**
 #'
-#' |                      |                         |                         | 
+#' |                      |                         |                         |
 #' |----------------------|-------------------------|-------------------------|
 #' | [age_labels()]       | [period_labels()]       | [cohort_labels()]       |
 #' | [age_labels_one()]   | [period_labels_one()]   | [cohort_labels_one()]   |
@@ -89,8 +88,8 @@
 #' | [age_labels_ten()]   | [period_labels_ten()]   | [cohort_labels_ten()]   |
 #' | [age_labels_life()]  | -                       | -                       |
 #'
-#' 
-#' 
+#'
+#'
 #' @docType package
 #' @name agetime-package
 #' @aliases agetime

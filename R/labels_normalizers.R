@@ -2,33 +2,39 @@
 
 ## Tokens for whole label (whitespace, tolower) -------------------------------
 
-NA_TOKENS <- c("unknown",
-               "unk",
-               "unspecified",
-               "notknown",
-               "missing",
-               "notstated",
-               "na",
-               "n/a")
+NA_TOKENS <- c(
+  "unknown",
+  "unk",
+  "unspecified",
+  "notknown",
+  "missing",
+  "notstated",
+  "na",
+  "n/a"
+)
 
-TOTAL_TOKENS <- c("total",
-                  "all",
-                  "overall",
-                  "allage",
-                  "allages",
-                  "allcohort",
-                  "allcohorts",
-                  "allperiod",
-                  "allperiods")
+TOTAL_TOKENS <- c(
+  "total",
+  "all",
+  "overall",
+  "allage",
+  "allages",
+  "allcohort",
+  "allcohorts",
+  "allperiod",
+  "allperiods"
+)
 
-INFANT_TOKENS <- c("infant",
-                   "infants",
-                   "in1st",
-                   "lessthan1",
-                   "under1",
-                   "lessthanone",
-                   "in1styear",
-                   "0-0")
+INFANT_TOKENS <- c(
+  "infant",
+  "infants",
+  "in1st",
+  "lessthan1",
+  "under1",
+  "lessthanone",
+  "in1styear",
+  "0-0"
+)
 
 
 ## Translate, remove elements within label ------------------------------------

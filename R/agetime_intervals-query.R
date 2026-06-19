@@ -19,7 +19,7 @@ int_is_empty <- function(intervals) {
 int_is_open_left <- function(intervals) {
   is_open_left <- get_is_open_left(intervals)
   any(is_open_left)
-}    
+}
 #' Int Is Open Right
 #'
 #' @param intervals An `agetime_intervals` object.
@@ -30,7 +30,7 @@ int_is_open_left <- function(intervals) {
 int_is_open_right <- function(intervals) {
   is_open_right <- get_is_open_right(intervals)
   any(is_open_right)
-}    
+}
 #' Int Has Na
 #'
 #' @param intervals An `agetime_intervals` object.

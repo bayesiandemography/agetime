@@ -1,4 +1,3 @@
-
 # *_levels_sort(): same length-0 behaviour as *_levels_fill() (without breaks).
 
 test_that("age_levels_sort() with length-0 input returns empty factor", {

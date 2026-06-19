@@ -1,4 +1,3 @@
-
 #' Check or Make Assertions About Age Groups
 #'
 #' Collect information on age group labels (`age_check()`),
@@ -30,14 +29,16 @@
 #' lab
 #'
 #' ## get info on everything
-#' age_check(x = lab,
-#'           no_overlap = TRUE,
-#'           no_gap = TRUE,
-#'           no_total = TRUE,
-#'           no_na = TRUE,
-#'           include_zero = TRUE,
-#'           include_open = TRUE,
-#'           valid_life = TRUE)
+#' age_check(
+#'   x = lab,
+#'   no_overlap = TRUE,
+#'   no_gap = TRUE,
+#'   no_total = TRUE,
+#'   no_na = TRUE,
+#'   include_zero = TRUE,
+#'   include_open = TRUE,
+#'   valid_life = TRUE
+#' )
 #'
 #' ## throw error if gaps
 #' age_assert(x = lab, no_gap = TRUE)
@@ -60,18 +61,20 @@ age_check <- function(x,
                       valid_life = NA,
                       x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_check(x = x,
-              label_type = "age",
-              x_one = "lower",
-              x_multi = "exclude",
-              x_fail = x_fail,
-              no_overlap = no_overlap,
-              no_gap = no_gap,
-              no_total = no_total,
-              no_na = no_na,
-              include_zero = include_zero,
-              include_open = include_open,
-              valid_life = valid_life)
+  inner_check(
+    x = x,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail,
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    include_zero = include_zero,
+    include_open = include_open,
+    valid_life = valid_life
+  )
 }
 
 #' @rdname age_check
@@ -86,17 +89,18 @@ age_assert <- function(x,
                        valid_life = NA,
                        x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_assert(x = x,
-               label_type = "age",
-               x_one = "lower",
-               x_multi = "exclude",
-               x_fail = x_fail,
-               no_overlap = no_overlap,
-               no_gap = no_gap,
-               no_total = no_total,
-               no_na = no_na,
-               include_zero = include_zero,
-               include_open = include_open,
-               valid_life = valid_life)
+  inner_assert(
+    x = x,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail,
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    include_zero = include_zero,
+    include_open = include_open,
+    valid_life = valid_life
+  )
 }
-

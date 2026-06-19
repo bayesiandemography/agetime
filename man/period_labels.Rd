@@ -74,32 +74,44 @@ Create a new set of period labels.
 }
 \examples{
 ## 5-year periods
-period_labels_five(lower_first = 2000,
-                   lower_last = 2010)
+period_labels_five(
+  lower_first = 2000,
+  lower_last = 2010
+)
 
 ## single-year periods
-period_labels_one(lower_first = 2000,
-                  lower_last = 2010)
+period_labels_one(
+  lower_first = 2000,
+  lower_last = 2010
+)
 
 ## single-year periods, 'x_one' is "upper"
-period_labels_one(lower_first = 2000,
-                  lower_last = 2010,
-                  x_one = "upper")
+period_labels_one(
+  lower_first = 2000,
+  lower_last = 2010,
+  x_one = "upper"
+)
 
 ## ten-year periods
-period_labels_ten(lower_first = 2000,
-                  lower_last = 2010)
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010
+)
 
 ## ten-year periods, 'x_multi' is "exclude",
-period_labels_ten(lower_first = 2000,
-                  lower_last = 2010,
-                  x_multi = "exclude")
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010,
+  x_multi = "exclude"
+)
 
 ## include total and NA
-period_labels_ten(lower_first = 2000,
-                  lower_last = 2010,
-                  include_total = TRUE,
-                  include_na = TRUE)
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2010,
+  include_total = TRUE,
+  include_na = TRUE
+)
 }
 \seealso{
 \itemize{

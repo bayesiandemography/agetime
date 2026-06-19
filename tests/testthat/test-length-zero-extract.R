@@ -1,4 +1,3 @@
-
 test_that("age_lower() with length-0 input returns numeric(0)", {
   expect_identical(age_lower(character(0)), numeric(0))
   expect_identical(age_lower(factor()), numeric(0))

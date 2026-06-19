@@ -1,4 +1,3 @@
-
 test_that("age_standard() preserves factor for non-empty x", {
   x <- factor(c("5to9", "10--14"), levels = c("5to9", "10--14", "100plus"))
   ans <- age_standard(x)

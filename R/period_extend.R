@@ -1,4 +1,3 @@
-
 #' Extend a Set of Periods
 #'
 #' Add new periods at the end of `x`.
@@ -41,15 +40,14 @@ period_extend <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_extend(x = x,
-               n = n,
-               width = width,
-               include_x = include_x,
-               label_type = "period",
-               x_one = x_one,
-               x_multi = x_multi,
-               x_fail = x_fail)
+  inner_extend(
+    x = x,
+    n = n,
+    width = width,
+    include_x = include_x,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
-
-
-

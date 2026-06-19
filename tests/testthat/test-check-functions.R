@@ -1,4 +1,3 @@
-
 test_that("check_breaks() returns TRUE invisibly for valid breaks", {
   expect_invisible(agetime:::check_breaks(c(0, 10, 90)))
   expect_invisible(agetime:::check_breaks(c(0L, 5L, 10L)))
@@ -43,11 +42,13 @@ test_that("check_incr_nonneg_integers() errors for invalid input", {
 })
 
 test_that("check_in_limits_intervals() passes when breaks lie within interval bounds", {
-  intervals <- intervals(labels = c("5-9", "10-14"),
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
-                         x_fail = "error")
+  intervals <- intervals(
+    labels = c("5-9", "10-14"),
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = "error"
+  )
   expect_invisible(agetime:::check_in_limits_intervals(
     7,
     "breaks",
@@ -58,11 +59,13 @@ test_that("check_in_limits_intervals() passes when breaks lie within interval bo
 })
 
 test_that("check_not_in_intervals() passes when breaks are not inside intervals", {
-  intervals <- intervals(labels = c("0-4", "20-24"),
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
-                         x_fail = "error")
+  intervals <- intervals(
+    labels = c("0-4", "20-24"),
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = "error"
+  )
   expect_invisible(agetime:::check_not_in_intervals(
     7,
     "breaks",
@@ -73,11 +76,13 @@ test_that("check_not_in_intervals() passes when breaks are not inside intervals"
 })
 
 test_that("check_not_in_intervals() errors when a break falls inside an interval", {
-  intervals <- intervals(labels = c("0-4", "20-24"),
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
-                         x_fail = "error")
+  intervals <- intervals(
+    labels = c("0-4", "20-24"),
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = "error"
+  )
   expect_error(
     agetime:::check_not_in_intervals(3, "breaks", intervals, "x", "age"),
     "`breaks` lies inside an existing age group"

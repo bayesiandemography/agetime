@@ -1,4 +1,3 @@
-
 intervals_with_m <- function(label, lower, upper) {
   m <- matrix(
     c(lower, upper),
@@ -28,8 +27,9 @@ test_that("construct_labels_from_intervals() uses upper bounds for one-year labe
   )
   expect_identical(
     agetime:::construct_labels_from_intervals(intervals,
-                                             labels_one = "upper",
-                                             labels_multi = "exclude"),
+      labels_one = "upper",
+      labels_multi = "exclude"
+    ),
     "16"
   )
 })
@@ -38,8 +38,9 @@ test_that("construct_labels_from_intervals() errors for an invalid interval", {
   intervals <- intervals_with_m("bad", lower = 0, upper = 1.2)
   expect_error(
     agetime:::construct_labels_from_intervals(intervals,
-                                             labels_one = "lower",
-                                             labels_multi = "exclude"),
+      labels_one = "lower",
+      labels_multi = "exclude"
+    ),
     "Internal error: Invalid interval."
   )
 })
@@ -54,8 +55,9 @@ test_that("construct_labels_from_intervals() errors for an invalid labels_one", 
   )
   expect_error(
     agetime:::construct_labels_from_intervals(intervals,
-                                             labels_one = "bogus",
-                                             labels_multi = "exclude"),
+      labels_one = "bogus",
+      labels_multi = "exclude"
+    ),
     "Internal error: 'labels_one' invalid."
   )
 })
@@ -70,8 +72,9 @@ test_that("construct_labels_from_intervals() errors for an invalid labels_multi"
   )
   expect_error(
     agetime:::construct_labels_from_intervals(intervals,
-                                             labels_one = "lower",
-                                             labels_multi = "bogus"),
+      labels_one = "lower",
+      labels_multi = "bogus"
+    ),
     "Internal error: 'labels_multi' invalid."
   )
 })

@@ -1,8 +1,7 @@
-
 #' Identify Period Labels for Totals
 #'
 #' Find period labels that \pkg{agetime} interprets as totals.
-#' 
+#'
 #' @inheritParams period_lower
 #'
 #' @return Logical vector with the same length as `x`.
@@ -25,9 +24,11 @@ period_is_total <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_is_total(x = x,
-                 label_type = "period",
-                 x_one = x_one,
-                 x_multi = x_multi,
-                 x_fail = x_fail)
+  inner_is_total(
+    x = x,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

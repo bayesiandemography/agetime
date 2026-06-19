@@ -1,4 +1,3 @@
-
 # *_is_open() / *_is_total() return logical vectors (not numeric). There is no
 # period_is_open() — periods are not open-ended in this package.
 

@@ -1,4 +1,3 @@
-
 intervals_with_bounds <- function(label, lower, upper) {
   m <- matrix(
     c(lower, upper),

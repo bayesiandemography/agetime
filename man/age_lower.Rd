@@ -50,16 +50,19 @@ age_mid(x)
 
 ## use 'age_lower()' to filter on age
 library(dplyr, warn.conflicts = FALSE)
-df <- tribble(   ~age, ~count,
-                "5-9",     11,
-              "10-14",     20,
-               "100+",      7 )       
+df <- tribble(
+  ~age, ~count,
+  "5-9", 11,
+  "10-14", 20,
+  "100+", 7
+)
 df
 df |> filter(age_lower(age) >= 10)
 
 ## no action when 'x_fail' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
-          x_fail = "silent")
+  x_fail = "silent"
+)
 }
 \seealso{
 \itemize{

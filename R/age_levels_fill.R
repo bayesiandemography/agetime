@@ -5,7 +5,7 @@
 #' If `x` is not a factor, and so does
 #' not have levels, convert it to
 #' a factor before filling in levels.
-#' 
+#'
 #' - `age_levels_fill` adds age groups
 #'   specified by `breaks`.
 #' - `age_levels_fill_one` adds age groups with
@@ -63,13 +63,15 @@ age_levels_fill <- function(x,
                             breaks = NULL,
                             x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = breaks,
-                    width = NULL,
-                    label_type = "age",
-                    x_one = "lower",
-                    x_multi = "exclude",
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = breaks,
+    width = NULL,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
 
 #' @rdname age_levels_fill
@@ -77,13 +79,15 @@ age_levels_fill <- function(x,
 age_levels_fill_one <- function(x,
                                 x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = NULL,
-                    width = 1L,
-                    label_type = "age",
-                    x_one = "lower",
-                    x_multi = "exclude",
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = NULL,
+    width = 1L,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
 
 #' @rdname age_levels_fill
@@ -91,13 +95,15 @@ age_levels_fill_one <- function(x,
 age_levels_fill_five <- function(x,
                                  x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = NULL,
-                    width = 5L,
-                    label_type = "age",
-                    x_one = "lower",
-                    x_multi = "exclude",
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = NULL,
+    width = 5L,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
 
 #' @rdname age_levels_fill
@@ -105,13 +111,15 @@ age_levels_fill_five <- function(x,
 age_levels_fill_ten <- function(x,
                                 x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_levels_fill(x = x,
-                    breaks = NULL,
-                    width = 10L,
-                    label_type = "age",
-                    x_one = "lower",
-                    x_multi = "exclude",
-                    x_fail = x_fail)
+  inner_levels_fill(
+    x = x,
+    breaks = NULL,
+    width = 10L,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
 
 
@@ -120,8 +128,8 @@ age_levels_fill_ten <- function(x,
 age_levels_fill_life <- function(x,
                                  x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_levels_fill_life(x = x,
-                         x_fail = x_fail)
+  inner_levels_fill_life(
+    x = x,
+    x_fail = x_fail
+  )
 }
-  
-   

@@ -1,4 +1,3 @@
-
 test_that("age_set_open() relabels groups with lower limit at or above open", {
   x <- c("20-24", "80-84", "100+")
 

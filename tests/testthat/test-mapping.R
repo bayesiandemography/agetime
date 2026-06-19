@@ -1,4 +1,3 @@
-
 expect_mapping_tibble <- function(object, x, y) {
   expect_identical(object, tibble::tibble(x = x, y = y))
 }
@@ -32,13 +31,17 @@ test_that("age_mapping() with equals finds identical intervals", {
   expect_mapping_tibble(age_mapping(x, y), "0-4", "0-4")
   expect_mapping_matrix(
     age_mapping(x, y, format = "matrix"),
-    matrix(c(0L, 1L, 0L,
-             0L, 0L, 0L,
-             0L, 0L, 0L),
-           nrow = 3L,
-           ncol = 3L,
-           byrow = TRUE,
-           dimnames = list(x = x, y = y))
+    matrix(
+      c(
+        0L, 1L, 0L,
+        0L, 0L, 0L,
+        0L, 0L, 0L
+      ),
+      nrow = 3L,
+      ncol = 3L,
+      byrow = TRUE,
+      dimnames = list(x = x, y = y)
+    )
   )
   expect_same_mapping_formats(x, y)
 })
@@ -49,12 +52,16 @@ test_that("age_mapping() with contains finds intervals in x that contain y", {
 
   expect_mapping_matrix(
     age_mapping(x, y, relation = "contains", format = "matrix"),
-    matrix(c(0L, 0L, 1L,
-             1L, 1L, 0L),
-           nrow = 2L,
-           ncol = 3L,
-           byrow = TRUE,
-           dimnames = list(x = x, y = y))
+    matrix(
+      c(
+        0L, 0L, 1L,
+        1L, 1L, 0L
+      ),
+      nrow = 2L,
+      ncol = 3L,
+      byrow = TRUE,
+      dimnames = list(x = x, y = y)
+    )
   )
   expect_same_mapping_formats(x, y, relation = "contains")
 })
@@ -93,13 +100,17 @@ test_that("age_mapping() maps x onto itself when y is NULL", {
   )
   expect_mapping_matrix(
     age_mapping(x, format = "matrix"),
-    matrix(c(1L, 1L, 0L,
-             1L, 1L, 0L,
-             0L, 0L, 1L),
-           nrow = 3L,
-           ncol = 3L,
-           byrow = TRUE,
-           dimnames = list(x = x, y = x))
+    matrix(
+      c(
+        1L, 1L, 0L,
+        1L, 1L, 0L,
+        0L, 0L, 1L
+      ),
+      nrow = 3L,
+      ncol = 3L,
+      byrow = TRUE,
+      dimnames = list(x = x, y = x)
+    )
   )
 })
 

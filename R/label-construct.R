@@ -13,8 +13,8 @@
 #' @noRd
 
 construct_labels_from_intervals <- function(intervals,
-                                  labels_one,
-                                  labels_multi) {
+                                            labels_one,
+                                            labels_multi) {
   is_one <- get_is_one(intervals)
   is_multi <- get_is_multi(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -25,24 +25,27 @@ construct_labels_from_intervals <- function(intervals,
   l <- m[, 1L]
   u <- m[, 2L]
   is_unparseable <- is.na(l) & is.na(u) & !is_na & !is_total
-  is_valid <- (is_one | is_multi
-    | is_open_left | is_open_right
-    | is_total | is_na | is_unparseable)
-  if (any(!is_valid))
+  is_valid <- (is_one | is_multi |
+    is_open_left | is_open_right |
+    is_total | is_na | is_unparseable)
+  if (any(!is_valid)) {
     cli::cli_abort("Internal error: Invalid interval.")
+  }
   ans <- character(length = length(l))
-  if (labels_one == "lower")
+  if (labels_one == "lower") {
     ans[is_one] <- as.character(l[is_one])
-  else if (labels_one == "upper")
+  } else if (labels_one == "upper") {
     ans[is_one] <- as.character(u[is_one])
-  else
+  } else {
     cli::cli_abort("Internal error: 'labels_one' invalid.")
-  if (labels_multi == "include")
+  }
+  if (labels_multi == "include") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
-  else if (labels_multi == "exclude")
+  } else if (labels_multi == "exclude") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
-  else
+  } else {
     cli::cli_abort("Internal error: 'labels_multi' invalid.")
+  }
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"
@@ -66,12 +69,12 @@ construct_labels_from_intervals <- function(intervals,
 #' @noRd
 
 construct_labels_from_breaks <- function(breaks,
-                                    is_open_left,
-                                    is_open_right,
-                                    x_one,
-                                    x_multi,
-                                    include_total,
-                                    include_na) {
+                                         is_open_left,
+                                         is_open_right,
+                                         x_one,
+                                         x_multi,
+                                         include_total,
+                                         include_na) {
   lower <- breaks[-length(breaks)]
   upper <- breaks[-1L]
   if (is_open_left) {
@@ -90,21 +93,27 @@ construct_labels_from_breaks <- function(breaks,
   ans <- character(length = length(lower))
   ans[is_open_left] <- paste0("<", upper[is_open_left])
   ans[is_open_right] <- paste0(lower[is_open_right], "+")
-  if (x_one == "lower")
+  if (x_one == "lower") {
     ans[is_one] <- lower[is_one]
-  else
+  } else {
     ans[is_one] <- upper[is_one]
-  if (x_multi == "exclude")
+  }
+  if (x_multi == "exclude") {
     ans[is_multi] <- paste(lower[is_multi],
-                           upper[is_multi] - 1L,
-                           sep = "-")
-  else
+      upper[is_multi] - 1L,
+      sep = "-"
+    )
+  } else {
     ans[is_multi] <- paste(lower[is_multi],
-                           upper[is_multi],
-                           sep = "-")
-  if (include_total)
+      upper[is_multi],
+      sep = "-"
+    )
+  }
+  if (include_total) {
     ans <- c(ans, "Total")
-  if (include_na)
+  }
+  if (include_na) {
     ans <- c(ans, NA)
+  }
   ans
 }

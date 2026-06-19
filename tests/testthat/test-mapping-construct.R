@@ -1,4 +1,3 @@
-
 test_that("construct_modify_mapping() adds an open-left row when is_open_left is TRUE", {
   x <- c("<2020", "2020-2025", "2025-2030")
   intervals <- intervals(

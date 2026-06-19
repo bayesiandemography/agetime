@@ -1,4 +1,3 @@
-
 # *_standard(): character(0) -> character(0). Factor in -> factor out; empty x
 # still standardizes the levels attribute (see test-standard-factor.R).
 

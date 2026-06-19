@@ -18,15 +18,19 @@ inner_standard <- function(x,
                            x_one,
                            x_multi,
                            x_fail) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = TRUE)
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = "x",
+    length_zero_ok = TRUE
+  )
   is_factor <- is.factor(x)
-  intervals <- intervals(labels = x,
-                         label_type = label_type,
-                         x_one = x_one,
-                         x_multi = x_multi,
-                         x_fail = x_fail)
+  intervals <- intervals(
+    labels = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   labels_multi <- if (label_type == "age") "exclude" else "include"
   labels <- construct_labels_from_intervals(
     intervals = intervals,
@@ -41,19 +45,19 @@ inner_standard <- function(x,
       i <- get_i_x_to_xunu(intervals)
       values_std <- labels[i]
       ans <- factor(values_std,
-                    levels = levels_std,
-                    ordered = is.ordered(x),
-                    exclude = NULL)
-    }
-    else {
-      ans <- factor(levels = levels_std,
-                    ordered = is.ordered(x),
-                    exclude = NULL)
+        levels = levels_std,
+        ordered = is.ordered(x),
+        exclude = NULL
+      )
+    } else {
+      ans <- factor(
+        levels = levels_std,
+        ordered = is.ordered(x),
+        exclude = NULL
+      )
     }
     return(ans)
   }
   i <- get_i_x_to_xunu(intervals)
   labels[i]
 }
-
-

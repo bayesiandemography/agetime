@@ -6,7 +6,7 @@
 #' does not have levels,
 #' convert it to a factor before
 #' sorting the levels.
-#' 
+#'
 #' Levels are sorted on their lower
 #' limits. Upper limits are used
 #' to resolve times. `NA`s come
@@ -34,11 +34,12 @@ age_levels_sort <- function(x,
                             decreasing = FALSE,
                             x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_levels_sort(x = x,
-                    decreasing = decreasing,
-                    label_type = "age",
-                    x_one = "lower",
-                    x_multi = "exclude",
-                    x_fail = x_fail)
+  inner_levels_sort(
+    x = x,
+    decreasing = decreasing,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = x_fail
+  )
 }
-

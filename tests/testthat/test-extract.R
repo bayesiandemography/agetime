@@ -1,4 +1,3 @@
-
 test_that("age extract functions return expected values for mixed labels", {
   lo <- age_lower(age_mixed)
   hi <- age_upper(age_mixed)

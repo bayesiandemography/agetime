@@ -1,8 +1,7 @@
-
 #' Identify Cohort Labels for Totals
 #'
 #' Find cohort labels that \pkg{agetime} interprets as totals.
-#' 
+#'
 #' @inheritParams cohort_lower
 #'
 #' @return Logical vector with the same length as `x`.
@@ -19,16 +18,18 @@
 #' @export
 
 # When length(x) == 0, returns logical(0).
-cohort_is_total <- function(x, 
+cohort_is_total <- function(x,
                             x_one = c("lower", "upper"),
                             x_multi = c("include", "exclude"),
                             x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_is_total(x = x,
-                 label_type = "cohort",
-                 x_one = x_one,
-                 x_multi = x_multi,
-                 x_fail = x_fail)
+  inner_is_total(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 
@@ -36,7 +37,7 @@ cohort_is_total <- function(x,
 #'
 #' Find cohort labels that \pkg{agetime} interprets as
 #' open, ie  having no lower limit.
-#' 
+#'
 #' @inheritParams cohort_lower
 #'
 #' @return Logical vector with the same length as `x`.
@@ -52,17 +53,18 @@ cohort_is_total <- function(x,
 #' @export
 
 # When length(x) == 0, returns logical(0).
-cohort_is_open <- function(x, 
+cohort_is_open <- function(x,
                            x_one = c("lower", "upper"),
                            x_multi = c("include", "exclude"),
                            x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
-  inner_is_open(x = x,
-                label_type = "cohort",
-                x_one = x_one,
-                x_multi = x_multi,
-                x_fail = x_fail,
-                check_open_left = TRUE,
-                check_open_right = FALSE)
+  inner_is_open(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail,
+    check_open_left = TRUE,
+    check_open_right = FALSE
+  )
 }
-

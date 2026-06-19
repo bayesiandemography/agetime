@@ -1,4 +1,3 @@
-
 ## HAS_TESTS
 #' Lower Limits, Upper Limits, Widths,
 #' and Midpoints of Cohorts
@@ -39,10 +38,12 @@
 #'
 #' ## use 'cohort_lower()' to filter on cohort
 #' library(dplyr, warn.conflicts = FALSE)
-#' df <- tribble(    ~cohort, ~count,
-#'               "2025-2030",     20,
-#'                   "<2025",      5,
-#'               "2030-2035",     11 )
+#' df <- tribble(
+#'   ~cohort, ~count,
+#'   "2025-2030", 20,
+#'   "<2025", 5,
+#'   "2030-2035", 11
+#' )
 #' df
 #' df |> filter(cohort_lower(cohort) >= 2025)
 #'
@@ -55,7 +56,7 @@
 #' cohort_lower("2025", x_one = "upper")
 #' cohort_upper("2025", x_one = "upper")
 #' cohort_width("2025", x_one = "upper")
-#' 
+#'
 #' ## 'x_multi' is "include" (the default)
 #' cohort_upper("2025-2030")
 #' cohort_width("2025-2030")
@@ -66,7 +67,8 @@
 #'
 #' ## no action when 'x_fail' is "silent"
 #' cohort_lower(c("2000-2005", "long time ago"),
-#'              x_fail = "silent")
+#'   x_fail = "silent"
+#' )
 #' @export
 
 # When length(x) == 0, returns numeric(0).
@@ -77,11 +79,13 @@ cohort_lower <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_lower(x = x,
-              label_type = "cohort",
-              x_one = x_one,
-              x_multi = x_multi,
-              x_fail = x_fail)
+  inner_lower(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 
@@ -94,11 +98,13 @@ cohort_mid <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_mid(x = x,
-            label_type = "cohort",
-            x_one = x_one,
-            x_multi = x_multi,
-            x_fail = x_fail)
+  inner_mid(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 
@@ -111,11 +117,13 @@ cohort_upper <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_upper(x = x,
-              label_type = "cohort",
-              x_one = x_one,
-              x_multi = x_multi,
-              x_fail = x_fail)
+  inner_upper(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }
 
 
@@ -128,9 +136,11 @@ cohort_width <- function(x,
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
   x_fail <- match.arg(x_fail)
-  inner_width(x = x,
-              label_type = "cohort",
-              x_one = x_one,
-              x_multi = x_multi,
-              x_fail = x_fail)
+  inner_width(
+    x = x,
+    label_type = "cohort",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

@@ -22,32 +22,44 @@
 #'
 #' @examples
 #' ## 5-year periods
-#' period_labels_five(lower_first = 2000,
-#'                    lower_last = 2010)
+#' period_labels_five(
+#'   lower_first = 2000,
+#'   lower_last = 2010
+#' )
 #'
 #' ## single-year periods
-#' period_labels_one(lower_first = 2000,
-#'                   lower_last = 2010)
+#' period_labels_one(
+#'   lower_first = 2000,
+#'   lower_last = 2010
+#' )
 #'
 #' ## single-year periods, 'x_one' is "upper"
-#' period_labels_one(lower_first = 2000,
-#'                   lower_last = 2010,
-#'                   x_one = "upper")
-#' 
+#' period_labels_one(
+#'   lower_first = 2000,
+#'   lower_last = 2010,
+#'   x_one = "upper"
+#' )
+#'
 #' ## ten-year periods
-#' period_labels_ten(lower_first = 2000,
-#'                   lower_last = 2010)
+#' period_labels_ten(
+#'   lower_first = 2000,
+#'   lower_last = 2010
+#' )
 #'
 #' ## ten-year periods, 'x_multi' is "exclude",
-#' period_labels_ten(lower_first = 2000,
-#'                   lower_last = 2010,
-#'                   x_multi = "exclude")
+#' period_labels_ten(
+#'   lower_first = 2000,
+#'   lower_last = 2010,
+#'   x_multi = "exclude"
+#' )
 #'
 #' ## include total and NA
-#' period_labels_ten(lower_first = 2000,
-#'                   lower_last = 2010,
-#'                   include_total = TRUE,
-#'                   include_na = TRUE)
+#' period_labels_ten(
+#'   lower_first = 2000,
+#'   lower_last = 2010,
+#'   include_total = TRUE,
+#'   include_na = TRUE
+#' )
 #' @export
 period_labels <- function(breaks,
                           x_one = c("lower", "upper"),
@@ -56,13 +68,15 @@ period_labels <- function(breaks,
                           include_na = FALSE) {
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels(breaks = breaks,
-               x_one = x_one,
-               x_multi = x_multi,
-               is_open_left = FALSE,
-               is_open_right = FALSE,
-               include_total = include_total,
-               include_na = include_na)
+  inner_labels(
+    breaks = breaks,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
 
 #' @rdname period_labels
@@ -75,14 +89,16 @@ period_labels_one <- function(lower_first,
                               include_na = FALSE) {
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels_one(lower_first = lower_first,
-                   lower_last = lower_last,
-                   x_one = x_one,
-                   x_multi = x_multi,
-                   is_open_left = FALSE,
-                   is_open_right = FALSE,
-                   include_total = include_total,
-                   include_na = include_na)
+  inner_labels_one(
+    lower_first = lower_first,
+    lower_last = lower_last,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
 
 
@@ -96,14 +112,16 @@ period_labels_five <- function(lower_first,
                                include_na = FALSE) {
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels_five(lower_first = lower_first,
-                    lower_last = lower_last,
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    is_open_left = FALSE,
-                    is_open_right = FALSE,
-                    include_total = include_total,
-                    include_na = include_na)
+  inner_labels_five(
+    lower_first = lower_first,
+    lower_last = lower_last,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
 
 #' @rdname period_labels
@@ -116,14 +134,14 @@ period_labels_ten <- function(lower_first,
                               include_na = FALSE) {
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels_ten(lower_first = lower_first,
-                   lower_last = lower_last,
-                   x_one = x_one,
-                   x_multi = x_multi,
-                   is_open_left = FALSE,
-                   is_open_right = FALSE,
-                   include_total = include_total,
-                   include_na = include_na)
+  inner_labels_ten(
+    lower_first = lower_first,
+    lower_last = lower_last,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
-
-

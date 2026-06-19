@@ -1,4 +1,3 @@
-
 test_that("age_modify() recodes to wider age groups", {
   x <- c("1-4", "87-89", "0", "50-54")
   ans <- age_modify(x, breaks = c(0, 10, 40, 90))
@@ -93,8 +92,10 @@ test_that("age_modify_five() returns factor with filled levels for factor input"
   expect_identical(as.character(ans), c("0-4", "50-54"))
   expect_identical(
     levels(ans),
-    c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-      "30-34", "35-39", "40-44", "45-49", "50-54")
+    c(
+      "0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+      "30-34", "35-39", "40-44", "45-49", "50-54"
+    )
   )
 })
 

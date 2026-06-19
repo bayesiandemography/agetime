@@ -23,8 +23,9 @@ does_int1_contain_int2 <- function(int1, int2) {
 #'
 #' @noRd
 does_int1_equal_int2 <- function(int1, int2) {
-  if (anyNA(c(int1, int2)))
+  if (anyNA(c(int1, int2))) {
     return(NA)
+  }
   l1 <- int1[[1L]]
   u1 <- int1[[2L]]
   l2 <- int2[[1L]]

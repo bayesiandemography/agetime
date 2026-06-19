@@ -69,14 +69,16 @@ lab <- age_labels_life()
 lab
 
 ## get info on everything
-age_check(x = lab,
-          no_overlap = TRUE,
-          no_gap = TRUE,
-          no_total = TRUE,
-          no_na = TRUE,
-          include_zero = TRUE,
-          include_open = TRUE,
-          valid_life = TRUE)
+age_check(
+  x = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE,
+  no_total = TRUE,
+  no_na = TRUE,
+  include_zero = TRUE,
+  include_open = TRUE,
+  valid_life = TRUE
+)
 
 ## throw error if gaps
 age_assert(x = lab, no_gap = TRUE)

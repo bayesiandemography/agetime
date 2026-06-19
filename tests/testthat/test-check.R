@@ -1,16 +1,22 @@
-test_that("check_flag fails when x is not a single value",  {
-    expect_error(check_flag(x = 1:2, nm_x = "x"),
-                 "`x` has length 2")
+test_that("check_flag fails when x is not a single value", {
+  expect_error(
+    check_flag(x = 1:2, nm_x = "x"),
+    "`x` has length 2"
+  )
 })
 
 test_that("check_flag fails when x is NA", {
-  expect_error(check_flag(x = NA, nm_x = "x"),
-               "`x` is NA")
+  expect_error(
+    check_flag(x = NA, nm_x = "x"),
+    "`x` is NA"
+  )
 })
 
-test_that("check_flag fails when x is not a logical value",  {
-  expect_error(check_flag(x = "a", nm_x = "x"),
-               "`x` is \"a\"")
+test_that("check_flag fails when x is not a logical value", {
+  expect_error(
+    check_flag(x = "a", nm_x = "x"),
+    "`x` is \"a\""
+  )
 })
 
 test_that("check_flag passes for valid logical flags", {
@@ -23,40 +29,51 @@ test_that("check_flag passes for valid logical flags", {
 test_that("check_in_limits_intervals passes for all NA", {
   x <- "0-4"
   nm_x <- "x"
-  intervals <- intervals(labels = NA,
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
-                         x_fail = "error")
+  intervals <- intervals(
+    labels = NA,
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = "error"
+  )
   nm_intervals <- "int"
-  expect_true(check_in_limits_intervals(x = x,
-                                        nm_x = nm_x,
-                                        intervals = intervals,
-                                        nm_intervals = nm_intervals,
-                                        label_type = "age"))
+  expect_true(check_in_limits_intervals(
+    x = x,
+    nm_x = nm_x,
+    intervals = intervals,
+    nm_intervals = nm_intervals,
+    label_type = "age"
+  ))
 })
 
 test_that("check_in_limits_intervals gives correct error when outside interval", {
   x <- "0-4"
   nm_x <- "x"
-  intervals <- intervals(labels = "5-9",
-                         label_type = "age",
-                         x_one = "lower",
-                         x_multi = "exclude",
-                         x_fail = "error")
+  intervals <- intervals(
+    labels = "5-9",
+    label_type = "age",
+    x_one = "lower",
+    x_multi = "exclude",
+    x_fail = "error"
+  )
   nm_intervals <- "int"
-  expect_error(check_in_limits_intervals(x = x,
-                                        nm_x = nm_x,
-                                        intervals = intervals,
-                                        nm_intervals = nm_intervals,
-                                        label_type = "age"),
-               "`x` is outside the range covered by age groups in `int`.")
+  expect_error(
+    check_in_limits_intervals(
+      x = x,
+      nm_x = nm_x,
+      intervals = intervals,
+      nm_intervals = nm_intervals,
+      label_type = "age"
+    ),
+    "`x` is outside the range covered by age groups in `int`."
+  )
 })
 
 
 expect_check <- function(val, check, asserted, observed, ok = NULL) {
-  if (is.null(ok))
+  if (is.null(ok)) {
     ok <- isTRUE(asserted == observed)
+  }
   expect_identical(val$ok, ok)
   expect_identical(nrow(val$details), 1L)
   expect_identical(val$details$check, check)
@@ -126,14 +143,22 @@ test_that("valid_life check fails for non-life-table age groups", {
 })
 
 test_that("period checks pass for contiguous non-overlapping periods", {
-  expect_check(period_check(period_multi, no_overlap = TRUE),
-               "no_overlap", TRUE, TRUE)
-  expect_check(period_check(period_multi, no_gap = TRUE),
-               "no_gap", TRUE, TRUE)
-  expect_check(period_check(period_multi, no_total = TRUE),
-               "no_total", TRUE, TRUE)
-  expect_check(period_check(period_multi, no_na = TRUE),
-               "no_na", TRUE, TRUE)
+  expect_check(
+    period_check(period_multi, no_overlap = TRUE),
+    "no_overlap", TRUE, TRUE
+  )
+  expect_check(
+    period_check(period_multi, no_gap = TRUE),
+    "no_gap", TRUE, TRUE
+  )
+  expect_check(
+    period_check(period_multi, no_total = TRUE),
+    "no_total", TRUE, TRUE
+  )
+  expect_check(
+    period_check(period_multi, no_na = TRUE),
+    "no_na", TRUE, TRUE
+  )
 })
 
 test_that("period no_gap check fails when there is a gap", {
@@ -147,21 +172,33 @@ test_that("period no_overlap check fails for overlapping periods", {
 })
 
 test_that("period no_total and no_na checks fail for special labels", {
-  expect_check(period_check(period_with_total, no_total = TRUE),
-               "no_total", TRUE, FALSE)
-  expect_check(period_check(period_with_na, no_na = TRUE),
-               "no_na", TRUE, FALSE)
+  expect_check(
+    period_check(period_with_total, no_total = TRUE),
+    "no_total", TRUE, FALSE
+  )
+  expect_check(
+    period_check(period_with_na, no_na = TRUE),
+    "no_na", TRUE, FALSE
+  )
 })
 
 test_that("cohort checks pass for contiguous non-overlapping cohorts", {
-  expect_check(cohort_check(cohort_multi, no_overlap = TRUE),
-               "no_overlap", TRUE, TRUE)
-  expect_check(cohort_check(cohort_multi, no_gap = TRUE),
-               "no_gap", TRUE, TRUE)
-  expect_check(cohort_check(cohort_multi, no_total = TRUE),
-               "no_total", TRUE, TRUE)
-  expect_check(cohort_check(cohort_multi, no_na = TRUE),
-               "no_na", TRUE, TRUE)
+  expect_check(
+    cohort_check(cohort_multi, no_overlap = TRUE),
+    "no_overlap", TRUE, TRUE
+  )
+  expect_check(
+    cohort_check(cohort_multi, no_gap = TRUE),
+    "no_gap", TRUE, TRUE
+  )
+  expect_check(
+    cohort_check(cohort_multi, no_total = TRUE),
+    "no_total", TRUE, TRUE
+  )
+  expect_check(
+    cohort_check(cohort_multi, no_na = TRUE),
+    "no_na", TRUE, TRUE
+  )
 })
 
 test_that("cohort no_gap check fails when there is a gap", {

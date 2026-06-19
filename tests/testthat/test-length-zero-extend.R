@@ -1,4 +1,3 @@
-
 # *_extend() needs at least one interval to extend from (the final element of x),
 # so length-0 input is an error even if a factor has non-empty levels.
 

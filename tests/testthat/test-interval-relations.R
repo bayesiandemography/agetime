@@ -1,4 +1,3 @@
-
 ## 'does_int1_equal_int2' ----------------------------------------------------------
 
 test_that("'does_int1_equal_int2' returns NA when bounds include NA", {
@@ -27,19 +26,25 @@ test_that("'does_int1_overlap_int2' works", {
 ## 'does_m1_overlap_m2' --------------------------------------------------------------
 
 test_that("'is_mx_x_in_m2' works", {
-  m1 <- rbind(c(1, 2),
-              c(-Inf, 0),
-              c(NA, NA))
-  m2 <- rbind(c(0, 3),
-              c(1, 2),
-              c(1, Inf),
-              c(-Inf, 2),
-              c(-1, 2),
-              c(-Inf, 2),
-              c(NA_real_, NA_real_))
+  m1 <- rbind(
+    c(1, 2),
+    c(-Inf, 0),
+    c(NA, NA)
+  )
+  m2 <- rbind(
+    c(0, 3),
+    c(1, 2),
+    c(1, Inf),
+    c(-Inf, 2),
+    c(-1, 2),
+    c(-Inf, 2),
+    c(NA_real_, NA_real_)
+  )
   ans_obtained <- does_m1_overlap_m2(m1 = m1, m2 = m2)
-  ans_expected <- rbind(c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, NA),
-                        c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, NA),
-                        rep(NA, 7))
+  ans_expected <- rbind(
+    c(TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, NA),
+    c(FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, NA),
+    rep(NA, 7)
+  )
   expect_identical(ans_obtained, ans_expected)
 })

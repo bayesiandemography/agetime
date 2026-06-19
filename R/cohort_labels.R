@@ -26,37 +26,51 @@
 #'
 #' @examples
 #' ## 5-year cohorts
-#' cohort_labels_five(lower_first = 2000,
-#'                    lower_last = 2010)
+#' cohort_labels_five(
+#'   lower_first = 2000,
+#'   lower_last = 2010
+#' )
 #'
 #' ## 5-year cohorts, first cohort is open
-#' cohort_labels_five(lower_first = 1960,
-#'                    lower_last = 2020,
-#'                    open = TRUE)
+#' cohort_labels_five(
+#'   lower_first = 1960,
+#'   lower_last = 2020,
+#'   open = TRUE
+#' )
 #'
 #' ## single-year cohorts
-#' cohort_labels_one(lower_first = 2000,
-#'                   lower_last = 2010)
+#' cohort_labels_one(
+#'   lower_first = 2000,
+#'   lower_last = 2010
+#' )
 #'
 #' ## single-year cohorts, 'x_one' is "upper"
-#' cohort_labels_one(lower_first = 2000,
-#'                   lower_last = 2010,
-#'                   x_one = "upper")
-#' 
+#' cohort_labels_one(
+#'   lower_first = 2000,
+#'   lower_last = 2010,
+#'   x_one = "upper"
+#' )
+#'
 #' ## ten-year cohorts
-#' cohort_labels_ten(lower_first = 2000,
-#'                   lower_last = 2010)
+#' cohort_labels_ten(
+#'   lower_first = 2000,
+#'   lower_last = 2010
+#' )
 #'
 #' ## ten-year cohorts, 'x_multi' is "exclude",
-#' cohort_labels_ten(lower_first = 2000,
-#'                   lower_last = 2010,
-#'                   x_multi = "exclude")
+#' cohort_labels_ten(
+#'   lower_first = 2000,
+#'   lower_last = 2010,
+#'   x_multi = "exclude"
+#' )
 #'
 #' ## include total and NA
-#' cohort_labels_ten(lower_first = 2000,
-#'                   lower_last = 2010,
-#'                   include_total = TRUE,
-#'                   include_na = TRUE)
+#' cohort_labels_ten(
+#'   lower_first = 2000,
+#'   lower_last = 2010,
+#'   include_total = TRUE,
+#'   include_na = TRUE
+#' )
 #' @export
 cohort_labels <- function(breaks,
                           open = FALSE,
@@ -67,13 +81,15 @@ cohort_labels <- function(breaks,
   check_flag(x = open, nm_x = "open")
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels(breaks = breaks,
-               x_one = x_one,
-               x_multi = x_multi,
-               is_open_left = open,
-               is_open_right = FALSE,
-               include_total = include_total,
-               include_na = include_na)
+  inner_labels(
+    breaks = breaks,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = open,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
 
 #' @rdname cohort_labels
@@ -88,14 +104,16 @@ cohort_labels_one <- function(lower_first,
   check_flag(x = open, nm_x = "open")
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels_one(lower_first = lower_first,
-                   lower_last = lower_last,
-                   x_one = x_one,
-                   x_multi = x_multi,
-                   is_open_left = open,
-                   is_open_right = FALSE,
-                   include_total = include_total,
-                   include_na = include_na)
+  inner_labels_one(
+    lower_first = lower_first,
+    lower_last = lower_last,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = open,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
 
 
@@ -111,14 +129,16 @@ cohort_labels_five <- function(lower_first,
   check_flag(x = open, nm_x = "open")
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels_five(lower_first = lower_first,
-                    lower_last = lower_last,
-                    x_one = x_one,
-                    x_multi = x_multi,
-                    is_open_left = open,
-                    is_open_right = FALSE,
-                    include_total = include_total,
-                    include_na = include_na)
+  inner_labels_five(
+    lower_first = lower_first,
+    lower_last = lower_last,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = open,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
 
 #' @rdname cohort_labels
@@ -133,14 +153,14 @@ cohort_labels_ten <- function(lower_first,
   check_flag(x = open, nm_x = "open")
   x_one <- match.arg(x_one)
   x_multi <- match.arg(x_multi)
-  inner_labels_ten(lower_first = lower_first,
-                   lower_last = lower_last,
-                   x_one = x_one,
-                   x_multi = x_multi,
-                   is_open_left = open,
-                   is_open_right = FALSE,
-                   include_total = include_total,
-                   include_na = include_na)
+  inner_labels_ten(
+    lower_first = lower_first,
+    lower_last = lower_last,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = open,
+    is_open_right = FALSE,
+    include_total = include_total,
+    include_na = include_na
+  )
 }
-
-

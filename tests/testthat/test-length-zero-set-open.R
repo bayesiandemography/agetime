@@ -1,4 +1,3 @@
-
 # *_set_open(): empty character or factor with no levels -> x unchanged.
 # No qualifying labels -> x unchanged. Empty factor with levels -> levels act.
 

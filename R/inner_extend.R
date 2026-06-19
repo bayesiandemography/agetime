@@ -23,68 +23,89 @@ inner_extend <- function(x,
                          x_multi,
                          x_fail) {
   is_factor <- is.factor(x)
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = TRUE)
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = "x",
+    length_zero_ok = TRUE
+  )
   if (identical(length(x), 0L)) {
     cli::cli_abort(c("{.arg x} has length 0.",
-                     i = "Supply at least one label to extend from?"))
+      i = "Supply at least one label to extend from?"
+    ))
   }
-  check_n(n = n,
-          nm_n = "n",
-          min = 1L,
-          max = NULL,
-          divisible_by = NULL)
+  check_n(
+    n = n,
+    nm_n = "n",
+    min = 1L,
+    max = NULL,
+    divisible_by = NULL
+  )
   has_width <- !is.null(width)
-  if (has_width)
-    check_n(n = width,
-            nm_n = "width",
-            min = 1L,
-            max = NULL,
-            divisible_by = 1L)
-  check_flag(x = include_x,
-             nm_x = "include_x")
+  if (has_width) {
+    check_n(
+      n = width,
+      nm_n = "width",
+      min = 1L,
+      max = NULL,
+      divisible_by = 1L
+    )
+  }
+  check_flag(
+    x = include_x,
+    nm_x = "include_x"
+  )
   tail <- as.character(x[[length(x)]])
-  intervals_tail <- intervals(labels = tail,
-                              label_type = label_type,
-                              x_one = x_one,
-                              x_multi = x_multi,
-                              x_fail = x_fail)
+  intervals_tail <- intervals(
+    labels = tail,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   is_open <- get_is_open(intervals_tail)
-  if (is_open)
+  if (is_open) {
     cli::cli_abort("Final interval {.val {tail}} is open.")
+  }
   is_na <- get_is_na(intervals_tail)
-  if (is_na)
+  if (is_na) {
     cli::cli_abort("Final interval is {.val {NA}}.")
+  }
   is_total <- get_is_total(intervals_tail)
-  if (is_total)
+  if (is_total) {
     cli::cli_abort(c("Final interval {.val {tail}} is total.",
-                     i = "Extend ordinary {label_name(label_type)}s and then add total if needed?"))
-  if (!has_width)
+      i = "Extend ordinary {label_name(label_type)}s and then add total if needed?"
+    ))
+  }
+  if (!has_width) {
     width <- get_width(intervals_tail)
+  }
   upper <- get_upper(intervals_tail)
-  breaks <- seq.int(from = upper,
-                    by = width,
-                    length.out = n + 1L)
-  ans <- inner_labels(breaks = breaks,
-                      x_one = x_one,
-                      x_multi = x_multi,
-                      is_open_left = FALSE,
-                      is_open_right = FALSE,
-                      include_total = FALSE,
-                      include_na = FALSE)
+  breaks <- seq.int(
+    from = upper,
+    by = width,
+    length.out = n + 1L
+  )
+  ans <- inner_labels(
+    breaks = breaks,
+    x_one = x_one,
+    x_multi = x_multi,
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    include_total = FALSE,
+    include_na = FALSE
+  )
   if (is_factor) {
     if (include_x) {
       ans <- c(as.character(x), ans)
       levels <- unique(c(levels(x), ans))
       ans <- factor(ans, levels = levels)
-    }
-    else
+    } else {
       ans <- factor(ans)
-  }
-  else {
-    if (include_x)
+    }
+  } else {
+    if (include_x) {
       ans <- c(x, ans)
+    }
   }
   ans
 }

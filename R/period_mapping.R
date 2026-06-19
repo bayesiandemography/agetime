@@ -1,7 +1,7 @@
 #' Mapping Between Period Labels
 #'
 #' @description
-#' 
+#'
 #' Create a mapping between period labels. A mapping
 #' depicts a relationship between the labels of `x`
 #' and the labels of `y`. The types of relationship
@@ -17,16 +17,16 @@
 #' `x` is mapped onto itself.
 #'
 #' Tibbles produced by `period_mapping()` are sparse, while matrices are dense. See the example below.
-#' 
+#'
 #' @section The `relation` argument:
-#' 
+#'
 #' | `relation` | Endpoints of `x` and `y`                   |
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | `period_lower(x) == period_lower(y) & period_upper(x) == period_upper(y)`   |
 #' | `"contains"` | `period_lower(x) <= period_lower(y) & period_upper(y) <= period_upper(x)` |
 #' | `"is-contained-in"`| `period_lower(y) <= period_lower(x) & period_upper(x) <= period_upper(y)`  |
 #' | `"overlaps-with"` | `(period_lower(y) <= period_lower(x) < period_upper(y))` &#124; `(period_lower(y) <= period_upper(x) < period_upper(y))` |
-#' 
+#'
 #' @inheritParams period_lower
 #' @param x Vector of period labels.
 #' @param y Vector of period labels. If
@@ -78,12 +78,14 @@ period_mapping <- function(x,
   x_fail <- match.arg(x_fail)
   relation <- match.arg(relation)
   format <- match.arg(format)
-  inner_mapping(x = x,
-                y = y,
-                relation = relation,
-                format = format,
-                label_type = "period",
-                x_one = x_one,
-                x_multi = x_multi,
-                x_fail = x_fail)
+  inner_mapping(
+    x = x,
+    y = y,
+    relation = relation,
+    format = format,
+    label_type = "period",
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

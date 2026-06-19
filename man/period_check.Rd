@@ -63,16 +63,20 @@ or throw an error if period labels do not
 conform to expectations (\code{period_assert}).
 }
 \examples{
-lab <- period_labels_five(lower_first = 2020,
-                          lower_last = 2030)
+lab <- period_labels_five(
+  lower_first = 2020,
+  lower_last = 2030
+)
 lab
 
 ## get info on everything
-period_check(x = lab,
-             no_overlap = TRUE,
-             no_gap = TRUE,
-             no_total = TRUE,
-             no_na = TRUE)
+period_check(
+  x = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE,
+  no_total = TRUE,
+  no_na = TRUE
+)
 
 ## throw error if gaps
 period_assert(x = lab, no_gap = TRUE)

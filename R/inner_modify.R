@@ -12,50 +12,64 @@
 #'
 #' @noRd
 inner_modify <- function(x,
-                          breaks,
-                          is_open_left,
-                          is_open_right,
-                          label_type,
-                          x_one,
-                          x_multi,
-                          x_fail) {
+                         breaks,
+                         is_open_left,
+                         is_open_right,
+                         label_type,
+                         x_one,
+                         x_multi,
+                         x_fail) {
   is_factor <- is.factor(x)
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = TRUE)
-  if (identical(length(x), 0L) && !is_factor)
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = "x",
+    length_zero_ok = TRUE
+  )
+  if (identical(length(x), 0L) && !is_factor) {
     return(character(0))
-  intervals <- intervals(labels = x,
-                         label_type = label_type,
-                         x_one = x_one,
-                         x_multi = x_multi,
-                         x_fail = x_fail)
+  }
+  intervals <- intervals(
+    labels = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   int_has_total <- int_has_total(intervals)
   int_has_na <- int_has_na(intervals)
-  levels_breaks <- construct_labels_from_breaks(breaks = breaks,
-                                           is_open_left = is_open_left,
-                                           is_open_right = is_open_right,
-                                           x_one = x_one,
-                                           x_multi = x_multi,
-                                           include_total = int_has_total,
-                                           include_na = int_has_na)
-  m_contains <- construct_modify_mapping(breaks = breaks,
-                                levels_breaks = levels_breaks,
-                                is_open_left = is_open_left,
-                                is_open_right = is_open_right,
-                                include_total = int_has_total,
-                                include_na = int_has_na,
-                                intervals = intervals)
-  check_m_contains(m_contains = m_contains,
-                   label_type = label_type)
+  levels_breaks <- construct_labels_from_breaks(
+    breaks = breaks,
+    is_open_left = is_open_left,
+    is_open_right = is_open_right,
+    x_one = x_one,
+    x_multi = x_multi,
+    include_total = int_has_total,
+    include_na = int_has_na
+  )
+  m_contains <- construct_modify_mapping(
+    breaks = breaks,
+    levels_breaks = levels_breaks,
+    is_open_left = is_open_left,
+    is_open_right = is_open_right,
+    include_total = int_has_total,
+    include_na = int_has_na,
+    intervals = intervals
+  )
+  check_m_contains(
+    m_contains = m_contains,
+    label_type = label_type
+  )
   i_new <- apply(m_contains, 2L, which)
   i_x_to_xu <- get_i_x_to_xu(intervals)
   ans <- levels_breaks[i_new][i_x_to_xu]
-  if (is_factor)
-    ans <- factor(x = ans,
-                  levels = levels_breaks,
-                  ordered = is.ordered(x),
-                  exclude = NULL)
+  if (is_factor) {
+    ans <- factor(
+      x = ans,
+      levels = levels_breaks,
+      ordered = is.ordered(x),
+      exclude = NULL
+    )
+  }
   ans
 }
 
@@ -74,69 +88,79 @@ inner_modify <- function(x,
 #'
 #' @noRd
 inner_modify_width <- function(x,
-                                width,
-                                offset,
-                                label_type,
-                                x_one,
-                                x_multi,
-                                x_fail) {
+                               width,
+                               offset,
+                               label_type,
+                               x_one,
+                               x_multi,
+                               x_fail) {
   is_factor <- is.factor(x)
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = TRUE)
-  if (identical(length(x), 0L) && !is_factor)
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = "x",
+    length_zero_ok = TRUE
+  )
+  if (identical(length(x), 0L) && !is_factor) {
     return(character(0))
-  if (identical(length(x), 0L) && is_factor && nlevels(x) == 0L)
+  }
+  if (identical(length(x), 0L) && is_factor && nlevels(x) == 0L) {
     return(factor(levels = character(), ordered = is.ordered(x)))
-  check_n(n = offset,
-          nm_n = "offset",
-          min = 0L,
-          max = width - 1L,
-          divisible_by = 1L)
-  intervals <- intervals(labels = x,
-                         label_type = label_type,
-                         x_one = x_one,
-                         x_multi = x_multi,
-                         x_fail = x_fail)
+  }
+  check_n(
+    n = offset,
+    nm_n = "offset",
+    min = 0L,
+    max = width - 1L,
+    divisible_by = 1L
+  )
+  intervals <- intervals(
+    labels = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   is_open_left <- int_is_open_left(intervals)
   is_open_right <- int_is_open_right(intervals)
   if (is_open_left) {
     u <- get_upper(intervals)
     start <- min(u, na.rm = TRUE)
-  }
-  else {
+  } else {
     l <- get_lower(intervals)
     start <- min(l, na.rm = TRUE)
   }
   remainder_start <- (start - offset) %% width
   if (remainder_start > 0L) {
-    if (is_open_left)
+    if (is_open_left) {
       start <- start + width - remainder_start
-    else
+    } else {
       start <- start - remainder_start
+    }
   }
   if (is_open_right) {
     l <- get_lower(intervals)
     end <- max(l, na.rm = TRUE)
-  }
-  else {
+  } else {
     u <- get_upper(intervals)
     end <- max(u, na.rm = TRUE)
   }
   remainder_end <- (end - offset) %% width
   if (remainder_end > 0L) {
-    if (is_open_right)
+    if (is_open_right) {
       end <- end - remainder_end
-    else
+    } else {
       end <- end + width - remainder_end
+    }
   }
   breaks <- seq.int(from = start, to = end, by = width)
-  inner_modify(x = x,
-                breaks = breaks,
-                is_open_left = is_open_left,
-                is_open_right = is_open_right,
-                label_type = label_type,
-                x_one = x_one,
-                x_multi = x_multi,
-                x_fail = x_fail)
+  inner_modify(
+    x = x,
+    breaks = breaks,
+    is_open_left = is_open_left,
+    is_open_right = is_open_right,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
 }

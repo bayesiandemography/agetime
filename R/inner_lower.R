@@ -14,14 +14,18 @@ inner_low_mid_up_width <- function(x,
                                    x_one,
                                    x_multi,
                                    x_fail) {
-  x <- to_character_or_factor(x = x,
-                              nm_x = "x",
-                              length_zero_ok = TRUE)
-  intervals <- intervals(labels = x,
-                         label_type = label_type,
-                         x_one = x_one,
-                         x_multi = x_multi,
-                         x_fail = x_fail)
+  x <- to_character_or_factor(
+    x = x,
+    nm_x = "x",
+    length_zero_ok = TRUE
+  )
+  intervals <- intervals(
+    labels = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   m <- get_m(intervals)
   i <- get_i_x_to_xunu(intervals)
   list(m = m, i = i)
@@ -42,11 +46,13 @@ inner_lower <- function(x,
                         x_one,
                         x_multi,
                         x_fail) {
-  l <- inner_low_mid_up_width(x = x,
-                              label_type = label_type,
-                              x_one = x_one,
-                              x_multi = x_multi,
-                              x_fail = x_fail)
+  l <- inner_low_mid_up_width(
+    x = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   m <- l$m
   i <- l$i
   m[i, 1L]
@@ -63,17 +69,18 @@ inner_lower <- function(x,
 #' @noRd
 
 
-
 inner_mid <- function(x,
                       label_type,
                       x_one,
                       x_multi,
                       x_fail) {
-  l <- inner_low_mid_up_width(x = x,
-                              label_type = label_type,
-                              x_one = x_one,
-                              x_multi = x_multi,
-                              x_fail = x_fail)
+  l <- inner_low_mid_up_width(
+    x = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   m <- l$m
   i <- l$i
   l <- m[, 1L]
@@ -109,11 +116,13 @@ inner_upper <- function(x,
                         x_one,
                         x_multi,
                         x_fail) {
-  l <- inner_low_mid_up_width(x = x,
-                              label_type = label_type,
-                              x_one = x_one,
-                              x_multi = x_multi,
-                              x_fail = x_fail)
+  l <- inner_low_mid_up_width(
+    x = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   m <- l$m
   i <- l$i
   m[i, 2L]
@@ -135,11 +144,13 @@ inner_width <- function(x,
                         x_one,
                         x_multi,
                         x_fail) {
-  l <- inner_low_mid_up_width(x = x,
-                              label_type = label_type,
-                              x_one = x_one,
-                              x_multi = x_multi,
-                              x_fail = x_fail)
+  l <- inner_low_mid_up_width(
+    x = x,
+    label_type = label_type,
+    x_one = x_one,
+    x_multi = x_multi,
+    x_fail = x_fail
+  )
   m <- l$m
   i <- l$i
   l <- m[, 1L]
@@ -147,13 +158,3 @@ inner_width <- function(x,
   w <- u - l
   w[i]
 }
-
-
-
-
-
-
-
-
-
-  
