@@ -79,3 +79,36 @@ test_that("cohort_standard() with x_fail = silent returns NA for invalid labels"
                                    x_fail = "silent"),
                    c("2025-2030", NA))
 })
+
+
+test_that("period_standard() interprets x_one and x_multi correctly", {
+  x <- c("2025to2030", "1910--1914", " 2022 ")
+  expect_identical(period_standard(x, x_one = "upper", x_multi="exclude"),
+                   c("2025-2031", "1910-1915", "2021"))
+  expect_identical(period_standard(x, x_one = "upper", x_multi="exclude"),
+                   c("2025-2031", "1910-1915", "2021"))
+  expect_identical(period_standard(x, x_one = "lower", x_multi = "include"),
+                   c( "2025-2030", "1910-1914", "2022"))
+  expect_identical(period_standard(x, x_one = "lower", x_multi = "exclude"),
+                   c("2025-2031", "1910-1915", "2022"))
+  expect_identical(period_standard(x, x_one = "upper", x_multi = "include"),
+                   c("2025-2030", "1910-1914", "2021"))
+  expect_identical(period_standard(x, x_one = "upper", x_multi = "exclude"),
+                   c("2025-2031", "1910-1915", "2021"))
+})
+
+test_that("cohort_standard() interprets x_one and x_multi correctly", {
+  x <- c("2025to2030", "1910--1914", " 2022 ")
+  expect_identical(cohort_standard(x, x_one = "upper", x_multi="exclude"),
+                   c("2025-2031", "1910-1915", "2021"))
+  expect_identical(cohort_standard(x, x_one = "upper", x_multi="exclude"),
+                   c("2025-2031", "1910-1915", "2021"))
+  expect_identical(cohort_standard(x, x_one = "lower", x_multi = "include"),
+                   c( "2025-2030", "1910-1914", "2022"))
+  expect_identical(cohort_standard(x, x_one = "lower", x_multi = "exclude"),
+                   c("2025-2031", "1910-1915", "2022"))
+  expect_identical(cohort_standard(x, x_one = "upper", x_multi = "include"),
+                   c("2025-2030", "1910-1914", "2021"))
+  expect_identical(cohort_standard(x, x_one = "upper", x_multi = "exclude"),
+                   c("2025-2031", "1910-1915", "2021"))
+})

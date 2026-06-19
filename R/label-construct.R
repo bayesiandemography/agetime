@@ -4,19 +4,19 @@
 #' Construct Labels From Intervals
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param labels_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param labels_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @returns Character vector of labels for parsed intervals.
 #'
-#' When `x_multi = "exclude"`, range labels are rendered with the displayed upper bound reduced by 1 from the internal interval upper bound.
+#' When `labels_multi = "exclude"`, range labels are rendered with the displayed upper bound reduced by 1 from the internal interval upper bound.
 #'
 #' @noRd
 
 construct_labels_from_intervals <- function(intervals,
-                                  x_one,
-                                  x_multi) {
+                                  labels_one,
+                                  labels_multi) {
   is_one <- get_is_one(intervals)
-  is_range <- get_is_range(intervals)
+  is_multi <- get_is_multi(intervals)
   is_open_left <- get_is_open_left(intervals)
   is_open_right <- get_is_open_right(intervals)
   is_total <- get_is_total(intervals)
@@ -25,24 +25,24 @@ construct_labels_from_intervals <- function(intervals,
   l <- m[, 1L]
   u <- m[, 2L]
   is_unparseable <- is.na(l) & is.na(u) & !is_na & !is_total
-  is_valid <- (is_one | is_range
+  is_valid <- (is_one | is_multi
     | is_open_left | is_open_right
     | is_total | is_na | is_unparseable)
   if (any(!is_valid))
     cli::cli_abort("Internal error: Invalid interval.")
   ans <- character(length = length(l))
-  if (x_one == "lower")
+  if (labels_one == "lower")
     ans[is_one] <- as.character(l[is_one])
-  else if (x_one == "upper")
+  else if (labels_one == "upper")
     ans[is_one] <- as.character(u[is_one])
   else
-    cli::cli_abort("Internal error: 'x_one' invalid.")
-  if (x_multi == "include")
-    ans[is_range] <- paste(l[is_range], u[is_range], sep = "-")
-  else if (x_multi == "exclude")
-    ans[is_range] <- paste(l[is_range], u[is_range] - 1, sep = "-")
+    cli::cli_abort("Internal error: 'labels_one' invalid.")
+  if (labels_multi == "include")
+    ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
+  else if (labels_multi == "exclude")
+    ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
   else
-    cli::cli_abort("Internal error: 'x_multi' invalid.")
+    cli::cli_abort("Internal error: 'labels_multi' invalid.")
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"

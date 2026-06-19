@@ -92,13 +92,13 @@ get_is_open_right <- function(intervals) {
   is.finite(l) & is.infinite(u)
 }
 
-#' Get Is Range
+#' Get Is Multi
 #'
 #' @param intervals An `agetime_intervals` object.
 #' @returns Logical vector indicating finite multi-year intervals.
 #'
 #' @noRd
-get_is_range <- function(intervals) {
+get_is_multi <- function(intervals) {
   m <- get_m(intervals)
   l <- m[, 1L]
   u <- m[, 2L]

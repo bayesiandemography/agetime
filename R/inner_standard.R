@@ -1,5 +1,10 @@
 #' Inner Standard
 #'
+#' Construct standard labels from intervals.
+#' Note that arguments 'x_one' and 'x_multi' control
+#' the way that `x` is parsed into intervals. They
+#' do not control the way that the intervals are rendered.
+#'
 #' @param x Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
@@ -8,7 +13,6 @@
 #' @returns Standardized labels as character vector or factor.
 #'
 #' @noRd
-
 inner_standard <- function(x,
                            label_type,
                            x_one,
@@ -23,9 +27,12 @@ inner_standard <- function(x,
                          x_one = x_one,
                          x_multi = x_multi,
                          x_fail = x_fail)
-  labels <- construct_labels_from_intervals(intervals = intervals,
-                                  x_one = x_one,
-                                  x_multi = x_multi)
+  labels_multi <- if (label_type == "age") "exclude" else "include"
+  labels <- construct_labels_from_intervals(
+    intervals = intervals,
+    "lower",
+    labels_multi
+  )
   if (is_factor) {
     i_xun <- get_i_xun_to_xunu(intervals)
     levels_std <- labels[i_xun]
