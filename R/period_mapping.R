@@ -22,10 +22,10 @@
 #'
 #' | `relation` | Endpoints of `x` and `y`                   |
 #' |:--------|-----------------------------------------------|
-#' | `"equals"` | `period_lower(x) == period_lower(y) & period_upper(x) == period_upper(y)`   |
-#' | `"contains"` | `period_lower(x) <= period_lower(y) & period_upper(y) <= period_upper(x)` |
-#' | `"is-contained-in"`| `period_lower(y) <= period_lower(x) & period_upper(x) <= period_upper(y)`  |
-#' | `"overlaps-with"` | `(period_lower(y) <= period_lower(x) < period_upper(y))` &#124; `(period_lower(y) <= period_upper(x) < period_upper(y))` |
+#' | `"equals"` | Endpoints equal  |
+#' | `"contains"` | Endpoints of `y` inside endpoints of `x`  |
+#' | `"is-contained-in"`| Endpoints of `x` inside endpoints of `y`  |
+#' | `"overlaps-with"` | Endpoint of `x` in `y` or endpoint of `y` in `x` |
 #'
 #' @inheritParams period_lower
 #' @param x Vector of period labels.
@@ -49,7 +49,7 @@
 #' x <- c("2020-2025", "2030", "2025-2027")
 #' y <- c("2025-2030", "2020-2025", "2026-2034")
 #' period_mapping(x = x, y = y)
-#' period_mapping(x, format = "matrix")
+#' period_mapping(x = x, y = y, format = "matrix")
 #' period_mapping(x = x, y = y, relation = "contains")
 #' period_mapping(x = x, y = y, relation = "is-contained-in")
 #' period_mapping(x = x, y = y, relation = "overlaps-with")

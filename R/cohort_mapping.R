@@ -22,10 +22,10 @@
 #'
 #' | `relation` | Endpoints of `x` and `y`                   |
 #' |:--------|-----------------------------------------------|
-#' | `"equals"` | `cohort_lower(x) == cohort_lower(y) & cohort_upper(x) == cohort_upper(y)`   |
-#' | `"contains"` | `cohort_lower(x) <= cohort_lower(y) & cohort_upper(y) <= cohort_upper(x)` |
-#' | `"is-contained-in"`| `cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)`  |
-#' | `"overlaps-with"` | `(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))` &#124; `(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))` |
+#' | `"equals"` | Endpoints equal  |
+#' | `"contains"` | Endpoints of `y` inside endpoints of `x`  |
+#' | `"is-contained-in"`| Endpoints of `x` inside endpoints of `y`  |
+#' | `"overlaps-with"` | Endpoint of `x` in `y` or endpoint of `y` in `x` |
 #'
 #' @inheritParams cohort_lower
 #' @param x Vector of cohort labels.
@@ -49,7 +49,7 @@
 #' x <- c("2020-2025", "2030", "2025-2027")
 #' y <- c("2025-2030", "2020-2025", "2026-2034")
 #' cohort_mapping(x = x, y = y)
-#' cohort_mapping(x, format = "matrix")
+#' cohort_mapping(x = x, y = y, format = "matrix")
 #' cohort_mapping(x = x, y = y, relation = "contains")
 #' cohort_mapping(x = x, y = y, relation = "is-contained-in")
 #' cohort_mapping(x = x, y = y, relation = "overlaps-with")

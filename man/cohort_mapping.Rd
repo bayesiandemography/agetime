@@ -68,10 +68,10 @@ Tibbles produced by \code{cohort_mapping()} are sparse, while matrices are dense
 \section{The \code{relation} argument}{
 \tabular{ll}{
    \code{relation} \tab Endpoints of \code{x} and \code{y} \cr
-   \code{"equals"} \tab \code{cohort_lower(x) == cohort_lower(y) & cohort_upper(x) == cohort_upper(y)} \cr
-   \code{"contains"} \tab \code{cohort_lower(x) <= cohort_lower(y) & cohort_upper(y) <= cohort_upper(x)} \cr
-   \code{"is-contained-in"} \tab \code{cohort_lower(y) <= cohort_lower(x) & cohort_upper(x) <= cohort_upper(y)} \cr
-   \code{"overlaps-with"} \tab \verb{(cohort_lower(y) <= cohort_lower(x) < cohort_upper(y))} | \verb{(cohort_lower(y) <= cohort_upper(x) < cohort_upper(y))} \cr
+   \code{"equals"} \tab Endpoints equal \cr
+   \code{"contains"} \tab Endpoints of \code{y} inside endpoints of \code{x} \cr
+   \code{"is-contained-in"} \tab Endpoints of \code{x} inside endpoints of \code{y} \cr
+   \code{"overlaps-with"} \tab Endpoint of \code{x} in \code{y} or endpoint of \code{y} in \code{x} \cr
 }
 }
 

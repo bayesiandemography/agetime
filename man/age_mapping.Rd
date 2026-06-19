@@ -50,15 +50,19 @@ that can be mapped are:
 If no value for \code{y} is supplied,
 \code{x} is mapped onto itself.
 
-Tibbles produced by \code{age_mapping()} are sparse, while matrices are dense. See the example below.
+Tibbles produced by \code{age_mapping()} are sparse
+in that they only include matches. Matrices
+produced by \code{age_mapping()} are dense in that
+they include matches and non-matches. See the
+example below.
 }
 \section{The \code{relation} argument}{
 \tabular{ll}{
    \code{relation} \tab Endpoints of \code{x} and \code{y} \cr
-   \code{"equals"} \tab \code{age_lower(x) == age_lower(y) & age_upper(x) == age_upper(y)} \cr
-   \code{"contains"} \tab \code{age_lower(x) <= age_lower(y) & age_upper(y) <= age_upper(x)} \cr
-   \code{"is-contained-in"} \tab \code{age_lower(y) <= age_lower(x) & age_upper(x) <= age_upper(y)} \cr
-   \code{"overlaps-with"} \tab \verb{(age_lower(y) <= age_lower(x) < age_upper(y))} | \verb{(age_lower(y) <= age_upper(x) < age_upper(y))} \cr
+   \code{"equals"} \tab Endpoints equal \cr
+   \code{"contains"} \tab Endpoints of \code{y} inside endpoints of \code{x} \cr
+   \code{"is-contained-in"} \tab Endpoints of \code{x} inside endpoints of \code{y} \cr
+   \code{"overlaps-with"} \tab Endpoint of \code{x} in \code{y} or endpoint of \code{y} in \code{x} \cr
 }
 }
 
@@ -66,7 +70,7 @@ Tibbles produced by \code{age_mapping()} are sparse, while matrices are dense. S
 x <- c("0-4", "10", "5-7")
 y <- c("5-9", "0-4", "6-14")
 age_mapping(x = x, y = y)
-age_mapping(x, format = "matrix")
+age_mapping(x = x, format = "matrix")
 age_mapping(x = x, y = y, relation = "contains")
 age_mapping(x = x, y = y, relation = "is-contained-in")
 age_mapping(x = x, y = y, relation = "overlaps-with")
@@ -75,7 +79,7 @@ age_mapping(x = x, y = y, relation = "overlaps-with")
 x <- c("0-4", "10-14")
 y <- c("0-4", "5-9")
 age_mapping(x = x, y = y) # one match
-age_mapping(x = x, y = y, format = "matrix") # one match and three non-matches
+age_mapping(x = x, y = y, format = "matrix") # 1 match, 3 non-matches
 
 # mapping 'x' on to itself
 x <- c("0--4", "0-4", "5+")
