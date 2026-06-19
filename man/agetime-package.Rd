@@ -4,9 +4,11 @@
 \name{agetime-package}
 \alias{agetime-package}
 \alias{agetime}
-\title{Work with Age, Period, and Cohort Labels and Intervals}
+\title{Work with Age, Period, and Cohort Labels}
 \description{
-Bla bla bla
+Functions for cleaning, manipulating, and
+extracting information from labels for age groups,
+periods, and cohorts.
 }
 \section{Get information about existing labels}{
 
