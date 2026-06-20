@@ -8,8 +8,8 @@ Create a new set of cohort labels.
 cohort_labels(
   breaks,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -18,8 +18,8 @@ cohort_labels_one(
   lower_first,
   lower_last,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -28,8 +28,8 @@ cohort_labels_five(
   lower_first,
   lower_last,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -38,8 +38,8 @@ cohort_labels_ten(
   lower_first,
   lower_last,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -56,15 +56,13 @@ cohort_labels_ten(
   Whether first cohort is "open", i.e. has no lower limit. Default is
   `FALSE`.
 
-- x_one:
+- label_one:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  Rule for one-year labels: `"lower"` or `"upper"`.
 
-- x_multi:
+- label_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  Rule for multi-year labels: `"include"` or `"exclude"`.
 
 - include_total:
 
@@ -87,9 +85,6 @@ cohort_labels_ten(
 Character vector. Length depends on the function arguments.
 
 ## See also
-
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   Age equivalent of `cohort_labels()`
@@ -125,11 +120,11 @@ cohort_labels_one(
 #>  [1] "2000" "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009"
 #> [11] "2010"
 
-## single-year cohorts, 'x_one' is "upper"
+## single-year cohorts, 'label_one' is "upper"
 cohort_labels_one(
   lower_first = 2000,
   lower_last = 2010,
-  x_one = "upper"
+  label_one = "upper"
 )
 #>  [1] "2001" "2002" "2003" "2004" "2005" "2006" "2007" "2008" "2009" "2010"
 #> [11] "2011"
@@ -141,11 +136,11 @@ cohort_labels_ten(
 )
 #> [1] "2000-2010" "2010-2020"
 
-## ten-year cohorts, 'x_multi' is "exclude",
+## ten-year cohorts, 'label_multi' is "exclude",
 cohort_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  x_multi = "exclude"
+  label_multi = "exclude"
 )
 #> [1] "2000-2009" "2010-2019"
 
