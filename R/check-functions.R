@@ -51,7 +51,11 @@ check_flag <- function(x, nm_x) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals, label_type) {
+check_in_limits_intervals <- function(x,
+                                      nm_x,
+                                      intervals,
+                                      nm_intervals,
+                                      label_type) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
   lower <- m[, 1L]
@@ -66,12 +70,42 @@ check_in_limits_intervals <- function(x, nm_x, intervals, nm_intervals, label_ty
   is_in <- (lowest <= x) & (x < highest)
   i_not_in <- match(FALSE, is_in, nomatch = 0L)
   if (i_not_in > 0L) {
+    x_not_in <- x[[i_not_in]]
+    label_lowest <- labels[[i_lowest]]
+    label_highest <- labels[[i_highest]]
+    msg_envir <- list2env(
+      list(
+        nm_x = nm_x,
+        x_not_in = x_not_in,
+        label_lowest = label_lowest,
+        label_highest = label_highest
+      ),
+      parent = environment()
+    )
+    x_msg <- cli::format_inline(
+      "{.arg {nm_x}} is {.val {x_not_in}}.",
+      .envir = msg_envir
+    )
+    label_lowest_msg <- cli::format_inline(
+      "Lowest interval: {.val {label_lowest}}.",
+      .envir = msg_envir
+    )
+    label_highest_msg <- cli::format_inline(
+      "Highest interval: {.val {label_highest}}.",
+      .envir = msg_envir
+    )
     cli::cli_abort(c(
-      "{.arg {nm_x}} is outside the range covered by {label_name(label_type)}s in {.arg {nm_intervals}}.",
-      i = "{.arg {nm_x}} is {.val {x[[i_not_in]]}}.",
-      i = "Lowest interval: {.val {labels[[i_lowest]]}}.",
-      i = "Highest interval: {.val {labels[[i_highest]]}}.",
-      i = "Use values within the range covered by {label_name(label_type)}s in {.arg {nm_intervals}}?"
+      paste0(
+        "{.arg {nm_x}} is outside the range covered by ",
+        "{label_name(label_type)}s in {.arg {nm_intervals}}."
+      ),
+      i = x_msg,
+      i = label_lowest_msg,
+      i = label_highest_msg,
+      i = paste0(
+        "Use values within the range covered by ",
+        "{label_name(label_type)}s in {.arg {nm_intervals}}?"
+      )
     ))
   }
   invisible(TRUE)
@@ -104,7 +138,10 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   is_integerish <- abs(x - round(x)) < eps
   i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
   if (i_not_integerish > 0L) {
-    cli::cli_abort("{.arg {nm_x}} has value {.val {x[[i_not_integerish]]}} that is not a whole number.")
+    cli::cli_abort(paste0(
+      "{.arg {nm_x}} has value {.val {x[[i_not_integerish]]}} ",
+      "that is not a whole number."
+    ))
   }
   n_neg <- sum(x < 0L)
   if (n_neg > 0L) {
@@ -114,7 +151,15 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
   if (i_non_incr > 0L) {
     x_non <- x[c(i_non_incr, i_non_incr + 1L)]
-    cli::cli_abort("{.arg {nm_x}} has non-increasing values: {.val {x_non}}.")
+    msg_envir <- list2env(
+      list(nm_x = nm_x, x_non = x_non),
+      parent = environment()
+    )
+    msg <- cli::format_inline(
+      "{.arg {nm_x}} has non-increasing values: {.val {x_non}}.",
+      .envir = msg_envir
+    )
+    cli::cli_abort(msg)
   }
   invisible(TRUE)
 }
@@ -133,9 +178,27 @@ check_m_contains <- function(m_contains, label_type) {
   if (any(is_not_fit)) {
     labels_not_fit <- labels_old[is_not_fit]
     n <- length(labels_not_fit)
+    msg_envir <- list2env(
+      list(
+        n = n,
+        labels_not_fit = labels_not_fit,
+        label_type = label_type
+      ),
+      parent = environment()
+    )
+    msg <- cli::format_inline(
+      paste0(
+        "{cli::qty(n)} label{?s} {.val {labels_not_fit}} ",
+        "cannot each lie in exactly one new {label_name(label_type)}."
+      ),
+      .envir = msg_envir
+    )
     cli::cli_abort(c(
-      "{cli::qty(n)} label{?s} {.val {labels_not_fit}} cannot each lie in exactly one new {label_name(label_type)}.",
-      i = "Make sure that every old {label_name(label_type)} lies in exactly one new {label_name(label_type)}?"
+      msg,
+      i = paste0(
+        "Make sure that every old {label_name(label_type)} ",
+        "lies in exactly one new {label_name(label_type)}?"
+      )
     ))
   }
   invisible(TRUE)
@@ -213,7 +276,11 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals, label_type) {
+check_not_in_intervals <- function(x,
+                                   nm_x,
+                                   intervals,
+                                   nm_intervals,
+                                   label_type) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
   lower <- m[, 1L]
@@ -226,9 +293,27 @@ check_not_in_intervals <- function(x, nm_x, intervals, nm_intervals, label_type)
       is_in <- (l < x) & (x < u)
       i_in <- match(TRUE, is_in, nomatch = 0L)
       if (i_in > 0L) {
-        cli::cli_abort(c("{.arg {nm_x}} lies inside an existing {label_name(label_type)}.",
-          i = "Value in {.arg {nm_x}}: {.val {x[[i_in]]}}.",
-          i = "Interval: {.val {labels[[i]]}}."
+        x_in <- x[[i_in]]
+        label <- labels[[i]]
+        msg_envir <- list2env(
+          list(nm_x = nm_x, x_in = x_in, label = label),
+          parent = environment()
+        )
+        value_msg <- cli::format_inline(
+          "Value in {.arg {nm_x}}: {.val {x_in}}.",
+          .envir = msg_envir
+        )
+        interval_msg <- cli::format_inline(
+          "Interval: {.val {label}}.",
+          .envir = msg_envir
+        )
+        cli::cli_abort(c(
+          paste0(
+            "{.arg {nm_x}} lies inside an existing ",
+            "{label_name(label_type)}."
+          ),
+          i = value_msg,
+          i = interval_msg
         ))
       }
     }
@@ -250,7 +335,10 @@ check_x_lt_y <- function(x, y, nm_x, nm_y) {
     if (x == y) {
       cli::cli_abort("{.arg {nm_x}} equals {.arg {nm_y}} ({.val {x}}).")
     } else {
-      cli::cli_abort("{.arg {nm_x}} ({.val {x}}) is greater than {.arg {nm_y}} ({.val {y}}).")
+      cli::cli_abort(paste0(
+        "{.arg {nm_x}} ({.val {x}}) is greater than ",
+        "{.arg {nm_y}} ({.val {y}})."
+      ))
     }
   }
   invisible(TRUE)

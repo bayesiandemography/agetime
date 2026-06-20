@@ -21,8 +21,9 @@
 
 # Character input returns character; factor input returns factor with the same
 # length and ordered attribute. Element values and levels(x) are standardized.
-# When length(x) == 0, returns character(0); for factors, standardized levels are
-# still applied. With x_fail = "silent", unparseable labels become NA.
+# When length(x) == 0, returns character(0); for factors, standardized
+# levels are still applied. With x_fail = "silent", unparseable labels
+# become NA.
 age_standard <- function(x,
                          x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)

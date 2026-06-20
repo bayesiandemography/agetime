@@ -53,14 +53,17 @@ test_that("period_standard() preserves NA and Total", {
   )
 })
 
-test_that("period_standard() with x_fail = silent returns NA for invalid labels", {
+test_that("period_standard() silently converts invalid labels to NA", {
   expect_identical(
     period_standard(c("2020-2025", "long time ago"),
       x_fail = "silent"
     ),
     c("2020-2025", NA)
   )
-  expect_identical(period_standard("2030-2020", x_fail = "silent"), NA_character_)
+  expect_identical(
+    period_standard("2030-2020", x_fail = "silent"),
+    NA_character_
+  )
 })
 
 test_that("cohort_standard() standardizes messy character labels", {
@@ -86,7 +89,7 @@ test_that("cohort_standard() preserves NA and Total", {
   )
 })
 
-test_that("cohort_standard() with x_fail = silent returns NA for invalid labels", {
+test_that("cohort_standard() silently converts invalid labels to NA", {
   expect_identical(
     cohort_standard(c("2025-2030", "long time ago"),
       x_fail = "silent"

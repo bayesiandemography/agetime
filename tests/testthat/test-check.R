@@ -46,7 +46,7 @@ test_that("check_in_limits_intervals passes for all NA", {
   ))
 })
 
-test_that("check_in_limits_intervals gives correct error when outside interval", {
+test_that("check_in_limits_intervals errors when outside interval", {
   x <- "0-4"
   nm_x <- "x"
   intervals <- intervals(

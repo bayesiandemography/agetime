@@ -1,5 +1,5 @@
-# *_check() / *_assert(): empty input is valid. Universal checks like no_overlap
-# are TRUE on empty input; include_* checks are FALSE on empty input (like any()).
+# *_check() / *_assert(): empty input is valid. Universal checks like
+# no_overlap are TRUE on empty input; include_* checks are FALSE, like any().
 
 test_that("include_* checks work on length-0 input", {
   val <- age_check(character(0), include_zero = TRUE)
@@ -63,7 +63,7 @@ test_that("universal asserts succeed on length-0 input", {
   expect_invisible(cohort_assert(character(0), no_na = TRUE))
 })
 
-test_that("universal asserts fail when asserted condition is false on length-0 input", {
+test_that("universal asserts fail for false length-0 conditions", {
   expect_error(age_assert(character(0), no_overlap = FALSE), "Check failed\\.")
   expect_false(age_check(character(0), no_total = FALSE)$ok)
 })

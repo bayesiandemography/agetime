@@ -54,10 +54,18 @@ norm_tolower <- function(x) tolower(x)
 #'
 #' @noRd
 norm_wordnum <- function(x) {
-  num <- c("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine")
+  num <- c(
+    "zero", "one", "two", "three", "four",
+    "five", "six", "seven", "eight", "nine"
+  )
   out <- x
   for (k in seq_along(num)) {
-    out <- gsub(paste0("\\b", num[[k]], "\\b"), as.character(k - 1L), out, perl = TRUE)
+    out <- gsub(
+      paste0("\\b", num[[k]], "\\b"),
+      as.character(k - 1L),
+      out,
+      perl = TRUE
+    )
   }
   out
 }

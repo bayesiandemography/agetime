@@ -10,8 +10,8 @@
 cohort_labels(
   breaks,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -20,8 +20,8 @@ cohort_labels_one(
   lower_first,
   lower_last,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -30,8 +30,8 @@ cohort_labels_five(
   lower_first,
   lower_last,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -40,8 +40,8 @@ cohort_labels_ten(
   lower_first,
   lower_last,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -54,16 +54,9 @@ A numeric vector.}
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
-\item{x_one}{Whether labels
-for one-year cohorts are based on
-lower or upper limit of period.
-Default is \code{"lower"}.}
+\item{label_one}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
 
-\item{x_multi}{Whether
-labels for multi-year periods
-include or exclude final
-year of period.
-Default is \code{"include"}.}
+\item{label_multi}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
 
 \item{include_total}{Whether to include a
 \code{"Total"} category.}
@@ -104,11 +97,11 @@ cohort_labels_one(
   lower_last = 2010
 )
 
-## single-year cohorts, 'x_one' is "upper"
+## single-year cohorts, 'label_one' is "upper"
 cohort_labels_one(
   lower_first = 2000,
   lower_last = 2010,
-  x_one = "upper"
+  label_one = "upper"
 )
 
 ## ten-year cohorts
@@ -117,11 +110,11 @@ cohort_labels_ten(
   lower_last = 2010
 )
 
-## ten-year cohorts, 'x_multi' is "exclude",
+## ten-year cohorts, 'label_multi' is "exclude",
 cohort_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  x_multi = "exclude"
+  label_multi = "exclude"
 )
 
 ## include total and NA
@@ -134,7 +127,6 @@ cohort_labels_ten(
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{cohort_labels()}
 \item \code{\link[=period_labels]{period_labels()}} Period equivalent of \code{cohort_labels()}
 }

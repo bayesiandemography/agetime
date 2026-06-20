@@ -25,8 +25,8 @@ inner_levels_sort <- function(x,
     levels = prep$levels,
     breaks = NULL,
     is_ordered = prep$is_ordered,
-    x_one = x_one,
-    x_multi = x_multi
+    label_one = x_one,
+    label_multi = x_multi
   )
   if (!is.null(empty)) {
     return(empty)

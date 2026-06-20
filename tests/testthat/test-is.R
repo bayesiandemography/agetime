@@ -10,7 +10,7 @@ test_that("age_is_total() identifies Total and ALL labels", {
   expect_values(ans, c(FALSE, TRUE, FALSE, TRUE))
 })
 
-test_that("age_is_total() returns FALSE for ordinary labels, NA, and Total in mixed vectors", {
+test_that("age_is_total() handles ordinary, NA, and Total labels", {
   expect_values(age_is_total(age_closed), c(FALSE, FALSE, FALSE))
   expect_values(age_is_total(age_with_na), c(FALSE, FALSE, FALSE))
   expect_values(age_is_total(age_with_total), c(FALSE, TRUE, FALSE))

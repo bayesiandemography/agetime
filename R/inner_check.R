@@ -170,7 +170,7 @@ inner_check_no_overlap <- function(intervals, asserted) {
       "Example of overlap: '%s' and '%s'",
       lab1, lab2
     )
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     comment <- "No intervals overlap"
   }
   tibble::tibble_row(
@@ -216,7 +216,7 @@ inner_check_no_gap <- function(intervals, asserted) {
     i_xu <- match(i_xunu, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
     comment <- sprintf("Example: gap below '%s'", lab)
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     comment <- "No gaps between intervals"
   }
   tibble::tibble_row(
@@ -254,7 +254,7 @@ inner_check_no_total <- function(intervals, asserted) {
     i_xu <- match(i_total, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
     comment <- sprintf("Example: '%s'", lab)
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     comment <- "No 'Total' age groups"
   }
   tibble::tibble_row(
@@ -287,7 +287,7 @@ inner_check_no_na <- function(intervals, asserted) {
     comment <- "Passed"
   } else if (asserted && !observed) {
     comment <- "Labels include NA."
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     comment <- "No NA labels"
   }
   tibble::tibble_row(
@@ -330,7 +330,7 @@ inner_check_include_zero <- function(intervals, asserted) {
       lab <- labels_unique[[i_xu]]
       comment <- sprintf("Lowest interval: '%s'", lab)
     }
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     i_zero <- match(0, lower)
     i_xu <- match(i_zero, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
@@ -375,7 +375,7 @@ inner_check_include_open <- function(intervals, asserted) {
       lab <- labels_unique[[i_xu]]
       comment <- sprintf("Highest interval: '%s'", lab)
     }
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     i_open <- match(TRUE, is.infinite(upper))
     i_xu <- match(i_open, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
@@ -411,7 +411,7 @@ inner_check_valid_life <- function(intervals, asserted) {
     comment <- "Passed"
   } else if (asserted && !observed) {
     comment <- sprintf("Not valid for life table: '%s'", val)
-  } else { ## !asserted && observed
+  } else { ## not asserted, is observed
     comment <- "All labels valid for life table."
   }
   tibble::tibble_row(

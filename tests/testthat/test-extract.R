@@ -47,7 +47,7 @@ test_that("age_lower() with x_fail = silent returns NA for invalid labels", {
   expect_values(age_lower(x, x_fail = "silent"), c(0, NA, 50))
 })
 
-test_that("period extract functions return expected values for multi-year labels", {
+test_that("period extract functions handle multi-year labels", {
   lo <- period_lower(period_multi)
   hi <- period_upper(period_multi)
   wd <- period_width(period_multi)
@@ -121,7 +121,7 @@ test_that("cohort extract functions return expected values for mixed labels", {
   expect_values(md, c(2027.5, 2022.5, 2032.5))
 })
 
-test_that("cohort extract functions are consistent on closed multi-year labels", {
+test_that("cohort extract functions are consistent on closed labels", {
   x <- c("2025-2030", "2030-2035")
   lo <- cohort_lower(x)
   hi <- cohort_upper(x)
@@ -178,7 +178,7 @@ test_that("cohort_lower() with x_fail = silent returns NA for invalid labels", {
   expect_values(cohort_lower(x, x_fail = "silent"), c(2000, NA))
 })
 
-test_that("extract functions accept factor input with the same numeric results", {
+test_that("extract functions accept factor input", {
   x_age <- factor(age_mixed, levels = age_mixed)
   expect_values(age_lower(x_age), age_lower(age_mixed))
 

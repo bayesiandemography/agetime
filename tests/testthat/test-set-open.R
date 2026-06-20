@@ -12,7 +12,7 @@ test_that("age_set_open() leaves groups below open unchanged", {
   )
 })
 
-test_that("age_set_open() returns factor with relabelled levels for factor input", {
+test_that("age_set_open() relabels factor levels", {
   fx <- factor(c("80-84", "20-24"), levels = c("20-24", "80-84", "100+"))
   ans <- age_set_open(fx, open = 80)
 

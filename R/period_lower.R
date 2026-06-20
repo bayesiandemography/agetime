@@ -128,7 +128,8 @@ period_upper <- function(x,
 #' @export
 #' @rdname period_lower
 period_width <- function(x,
-                         x_one = c("lower", "upper"), ## redundant, but keep so interface constant
+                         ## redundant, but keep so interface constant
+                         x_one = c("lower", "upper"),
                          x_multi = c("include", "exclude"),
                          x_fail = c("error", "warn", "silent")) {
   x_one <- match.arg(x_one)

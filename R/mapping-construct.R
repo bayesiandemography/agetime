@@ -111,7 +111,10 @@ construct_mapping <- function(intervals_x,
     mxy[is_total_x, ] <- TRUE
     mxy[, is_total_y] <- TRUE
   } else {
-    cli::cli_abort("Internal error: {.val {relation}} is not a valid value for {.arg relation}.")
+    cli::cli_abort(paste0(
+      "Internal error: {.val {relation}} is not a valid value for ",
+      "{.arg relation}."
+    ))
   }
   mxy <- mxy[i_xun_to_xunu_x, ]
   mxy <- mxy[, i_xun_to_xunu_y]

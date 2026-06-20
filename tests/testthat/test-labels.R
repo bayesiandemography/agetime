@@ -77,9 +77,13 @@ test_that("period_labels_five() creates five-year period labels", {
   )
 })
 
-test_that("period_labels_one() respects x_one = upper", {
+test_that("period_labels_one() respects label_one = upper", {
   expect_identical(
-    period_labels_one(lower_first = 2000, lower_last = 2002, x_one = "upper"),
+    period_labels_one(
+      lower_first = 2000,
+      lower_last = 2002,
+      label_one = "upper"
+    ),
     c("2001", "2002", "2003")
   )
 })
@@ -110,7 +114,7 @@ test_that("cohort_labels_five() creates five-year cohort labels", {
   )
 })
 
-test_that("cohort_labels_five() with open = TRUE starts with a left-open cohort", {
+test_that("cohort_labels_five() can start with a left-open cohort", {
   expect_identical(
     head(
       cohort_labels_five(
@@ -136,7 +140,7 @@ test_that("cohort_labels_ten() can include Total and NA", {
   )
 })
 
-test_that("label generators error when lower_first is greater than lower_last", {
+test_that("label generators error when lower_first exceeds lower_last", {
   expect_error(
     age_labels_five(lower_first = 50, lower_last = 20),
     "`lower_first` \\(50\\) is greater than `lower_last` \\(20\\)"

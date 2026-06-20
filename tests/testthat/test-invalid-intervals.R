@@ -1,7 +1,13 @@
 test_that("reversed range labels error by default", {
   expect_error(age_lower("50-40"), "Lower limit greater than upper limit")
-  expect_error(period_lower("2030-2020"), "Lower limit greater than upper limit")
-  expect_error(cohort_lower("2030-2020"), "Lower limit greater than upper limit")
+  expect_error(
+    period_lower("2030-2020"),
+    "Lower limit greater than upper limit"
+  )
+  expect_error(
+    cohort_lower("2030-2020"),
+    "Lower limit greater than upper limit"
+  )
 })
 
 test_that("reversed range labels warn or return NA with x_fail", {

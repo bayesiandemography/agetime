@@ -51,7 +51,7 @@ test_that("to_character_or_factor() returns factors unchanged", {
   expect_identical(agetime:::to_character_or_factor(x, "x", TRUE), x)
 })
 
-test_that("to_character_or_factor() allows length-0 input when length_zero_ok is TRUE", {
+test_that("to_character_or_factor() allows length-0 input", {
   expect_identical(
     agetime:::to_character_or_factor(character(0), "x", TRUE),
     character(0)

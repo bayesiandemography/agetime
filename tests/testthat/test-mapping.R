@@ -126,7 +126,7 @@ test_that("age_mapping() maps unique labels only", {
   )
 })
 
-test_that("period_mapping() and cohort_mapping() match equals on shared fixtures", {
+test_that("period/cohort mappings match equals on shared fixtures", {
   expect_mapping_tibble(
     period_mapping(period_multi, y = c("2020-2025", "2025-2030")),
     c("2020-2025", "2025-2030"),

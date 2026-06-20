@@ -9,8 +9,8 @@
 \usage{
 period_labels(
   breaks,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -18,8 +18,8 @@ period_labels(
 period_labels_one(
   lower_first,
   lower_last,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -27,8 +27,8 @@ period_labels_one(
 period_labels_five(
   lower_first,
   lower_last,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -36,8 +36,8 @@ period_labels_five(
 period_labels_ten(
   lower_first,
   lower_last,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
+  label_one = c("lower", "upper"),
+  label_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -46,14 +46,9 @@ period_labels_ten(
 \item{breaks}{Boundaries between periods
 A numeric vector.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
-Choices are \code{"lower"} (the default) and \code{"upper"}.}
+\item{label_one}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
-Choices are \code{"include"} (the default) and
-\code{"exclude"}.}
+\item{label_multi}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
 
 \item{include_total}{Whether to include a
 \code{"Total"} category.}
@@ -85,11 +80,11 @@ period_labels_one(
   lower_last = 2010
 )
 
-## single-year periods, 'x_one' is "upper"
+## single-year periods, 'label_one' is "upper"
 period_labels_one(
   lower_first = 2000,
   lower_last = 2010,
-  x_one = "upper"
+  label_one = "upper"
 )
 
 ## ten-year periods
@@ -98,11 +93,11 @@ period_labels_ten(
   lower_last = 2010
 )
 
-## ten-year periods, 'x_multi' is "exclude",
+## ten-year periods, 'label_multi' is "exclude",
 period_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  x_multi = "exclude"
+  label_multi = "exclude"
 )
 
 ## include total and NA
@@ -115,7 +110,6 @@ period_labels_ten(
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
 \item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{period_labels()}
 \item \code{\link[=cohort_labels]{cohort_labels()}} Cohort equivalent of \code{period_labels()}
 }

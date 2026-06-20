@@ -31,11 +31,11 @@ inner_standard <- function(x,
     x_multi = x_multi,
     x_fail = x_fail
   )
-  labels_multi <- if (label_type == "age") "exclude" else "include"
+  label_multi <- if (label_type == "age") "exclude" else "include"
   labels <- construct_labels_from_intervals(
     intervals = intervals,
     "lower",
-    labels_multi
+    label_multi
   )
   if (is_factor) {
     i_xun <- get_i_xun_to_xunu(intervals)

@@ -41,8 +41,8 @@ inner_modify <- function(x,
     breaks = breaks,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
-    x_one = x_one,
-    x_multi = x_multi,
+    label_one = x_one,
+    label_multi = x_multi,
     include_total = int_has_total,
     include_na = int_has_na
   )
@@ -84,7 +84,8 @@ inner_modify <- function(x,
 #' @param x_fail How to handle unparsable labels.
 #' @returns Modified labels as character vector or factor.
 #'
-#' Computes aligned breaks from `width` and `offset` using existing interval bounds before calling `inner_modify()`.
+#' Computes aligned breaks from `width` and `offset` using existing interval
+#' bounds before calling `inner_modify()`.
 #'
 #' @noRd
 inner_modify_width <- function(x,

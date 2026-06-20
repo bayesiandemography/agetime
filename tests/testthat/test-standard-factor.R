@@ -14,7 +14,7 @@ test_that("age_standard() preserves ordered factor", {
   expect_identical(levels(ans), c("5-9", "10-14"))
 })
 
-test_that("age_standard() collapses levels that standardize to the same label", {
+test_that("age_standard() collapses equivalent levels", {
   x <- factor(character(0), levels = c("5to9", "5-9"))
   ans <- age_standard(x)
   expect_identical(levels(ans), "5-9")

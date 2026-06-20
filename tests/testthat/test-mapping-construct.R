@@ -1,4 +1,4 @@
-test_that("construct_modify_mapping() adds an open-left row when is_open_left is TRUE", {
+test_that("construct_modify_mapping() adds an open-left row", {
   x <- c("<2020", "2020-2025", "2025-2030")
   intervals <- intervals(
     labels = x,
@@ -12,8 +12,8 @@ test_that("construct_modify_mapping() adds an open-left row when is_open_left is
     breaks = breaks,
     is_open_left = TRUE,
     is_open_right = FALSE,
-    x_one = "lower",
-    x_multi = "exclude",
+    label_one = "lower",
+    label_multi = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -30,8 +30,8 @@ test_that("construct_modify_mapping() adds an open-left row when is_open_left is
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
-    x_one = "lower",
-    x_multi = "exclude",
+    label_one = "lower",
+    label_multi = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -66,8 +66,8 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
-    x_one = "lower",
-    x_multi = "exclude",
+    label_one = "lower",
+    label_multi = "exclude",
     include_total = FALSE,
     include_na = TRUE
   )
@@ -106,8 +106,8 @@ test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
-    x_one = "lower",
-    x_multi = "exclude",
+    label_one = "lower",
+    label_multi = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )

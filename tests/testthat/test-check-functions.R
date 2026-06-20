@@ -41,7 +41,7 @@ test_that("check_incr_nonneg_integers() errors for invalid input", {
   )
 })
 
-test_that("check_in_limits_intervals() passes when breaks lie within interval bounds", {
+test_that("check_in_limits_intervals() passes for in-bound breaks", {
   intervals <- intervals(
     labels = c("5-9", "10-14"),
     label_type = "age",
@@ -58,7 +58,7 @@ test_that("check_in_limits_intervals() passes when breaks lie within interval bo
   ))
 })
 
-test_that("check_not_in_intervals() passes when breaks are not inside intervals", {
+test_that("check_not_in_intervals() passes for out-of-interval breaks", {
   intervals <- intervals(
     labels = c("0-4", "20-24"),
     label_type = "age",
@@ -75,7 +75,7 @@ test_that("check_not_in_intervals() passes when breaks are not inside intervals"
   ))
 })
 
-test_that("check_not_in_intervals() errors when a break falls inside an interval", {
+test_that("check_not_in_intervals() errors for internal breaks", {
   intervals <- intervals(
     labels = c("0-4", "20-24"),
     label_type = "age",
@@ -89,7 +89,7 @@ test_that("check_not_in_intervals() errors when a break falls inside an interval
   )
 })
 
-test_that("check_m_contains() passes when each old label maps to one new label", {
+test_that("check_m_contains() passes when old labels map uniquely", {
   m_contains <- matrix(
     c(1L, 0L, 0L, 1L),
     nrow = 2L,

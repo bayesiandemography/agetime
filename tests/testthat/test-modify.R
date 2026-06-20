@@ -59,7 +59,7 @@ test_that("age_modify_life() recodes a young multi-year group to 1-4", {
   expect_values(age_modify_life("1-3"), "1-4")
 })
 
-test_that("age_modify_life() recodes closed groups to 5-year labels, not open", {
+test_that("age_modify_life() recodes closed groups to 5-year labels", {
   expect_values(age_modify_life("5-9"), "5-9")
   expect_values(age_modify_life("10-14"), "10-14")
   expect_values(age_modify_life("87-89"), "85-89")
@@ -84,7 +84,7 @@ test_that("age_modify_life() errors for 0-4", {
   )
 })
 
-test_that("age_modify_five() returns factor with filled levels for factor input", {
+test_that("age_modify_five() fills factor levels", {
   fx <- factor(c("1-3", "52"), levels = c("1-3", "52"))
   ans <- age_modify_five(fx)
 
@@ -99,7 +99,7 @@ test_that("age_modify_five() returns factor with filled levels for factor input"
   )
 })
 
-test_that("period_modify_five() and cohort_modify_five() recode to five-year groups", {
+test_that("period/cohort modify-five recode to five-year groups", {
   x <- c("2021", "2026-2028")
   expect_values(period_modify_five(x), c("2020-2025", "2025-2030"))
   expect_values(cohort_modify_five(x), c("2020-2025", "2025-2030"))

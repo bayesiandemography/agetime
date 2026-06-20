@@ -139,7 +139,8 @@ make_labels_normalizers_period <- function() {
 #' @param labels_normalizers List of label normalizer functions.
 #' @returns Normalized labels.
 #'
-#' The order of `labels_normalizers` matters; each normalizer runs on the output of the previous one.
+#' The order of `labels_normalizers` matters; each normalizer runs on the output
+#' of the previous one.
 #'
 #' @noRd
 normalize_labels <- function(labels, labels_normalizers) {

@@ -3,7 +3,8 @@
 #' @param x Vector of labels.
 #' @param open Boundary used to open intervals.
 #' @param make_open_left Whether to open intervals below `open` on the left.
-#' @param make_open_right Whether to open intervals at or above `open` on the right.
+#' @param make_open_right Whether to open intervals at or above `open`
+#' on the right.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
@@ -50,7 +51,15 @@ inner_set_open <- function(x,
   i_splits_interval <- match(TRUE, is_splits_interval, nomatch = 0L)
   if (i_splits_interval > 0L) {
     lab_split <- labels_unique[[i_splits_interval]]
-    cli::cli_abort("Interval {.val {lab_split}} would be split.")
+    msg_envir <- list2env(
+      list(lab_split = lab_split),
+      parent = environment()
+    )
+    msg <- cli::format_inline(
+      "Interval {.val {lab_split}} would be split.",
+      .envir = msg_envir
+    )
+    cli::cli_abort(msg)
   }
   if (make_open_left) {
     is_le_open <- !is.na(u) & (u <= open)

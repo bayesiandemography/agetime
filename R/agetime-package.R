@@ -61,6 +61,7 @@
 #'
 #' **Fill in gaps in levels**
 #'
+# nolint start: line_length_linter
 #' |                        |                           |                           |
 #' |------------------------|---------------------------|---------------------------|
 #' |[age_levels_fill()]     |[period_levels_fill()]     |[cohort_levels_fill()]     |
@@ -68,6 +69,7 @@
 #' |[age_levels_fill_five()]|[period_levels_fill_five()]|[cohort_levels_fill_five()]|
 #' |[age_levels_fill_ten()] |[period_levels_fill_ten()] |[cohort_levels_fill_ten()] |
 #' |[age_levels_fill_life()]|-                          |-                          |
+# nolint end
 #'
 #' **Put levels in order**
 #'

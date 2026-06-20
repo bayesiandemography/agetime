@@ -18,7 +18,7 @@ test_that("period_is_total() with length-0 input returns logical(0)", {
   expect_identical(period_is_total(factor()), logical(0))
 })
 
-# cohort_is_open() / cohort_is_total() have x_one and x_multi; same as period_*().
+# cohort_is_open() and cohort_is_total() have x_one and x_multi.
 
 test_that("cohort_is_open() with length-0 input returns logical(0)", {
   expect_identical(cohort_is_open(character(0)), logical(0))

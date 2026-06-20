@@ -58,7 +58,10 @@ label_name <- function(label_type) {
     NULL
   )
   if (is.null(ans)) {
-    cli::cli_abort("Internal error: {.val {label_type}} is not a valid value for {.arg label_type}.")
+    cli::cli_abort(paste0(
+      "Internal error: {.val {label_type}} is not a valid value for ",
+      "{.arg label_type}."
+    ))
   }
   ans
 }

@@ -111,18 +111,24 @@ test_that("period_levels_fill_ten() and cohort_levels_fill_ten() fill gaps", {
   expect_identical(levels(cohort_levels_fill_ten(x)), expected)
 })
 
-test_that("period_levels_fill_ten() and cohort_levels_fill_ten() error when gap is not divisible by 10", {
+test_that("period/cohort fill-ten errors for indivisible gaps", {
   x <- c("2010-2019", "2030-2039")
   msg <- tryCatch(
     period_levels_fill_ten(x),
     error = function(e) conditionMessage(e)
   )
-  expect_match(msg, "Gap between .2010-2019. and .2030-2039. is not divisible by 10")
+  expect_match(
+    msg,
+    "Gap between .2010-2019. and .2030-2039. is not divisible by 10"
+  )
   expect_match(msg, "Choose a different .width.")
-  expect_error(cohort_levels_fill_ten(x), "Gap between .2010-2019. and .2030-2039. is not divisible by 10")
+  expect_error(
+    cohort_levels_fill_ten(x),
+    "Gap between .2010-2019. and .2030-2039. is not divisible by 10"
+  )
 })
 
-test_that("period_levels_fill_ten() and cohort_levels_fill_ten() fill gaps when x_multi is exclude", {
+test_that("period/cohort fill-ten respect x_multi exclude", {
   x <- c("2010-2019", "2030-2039")
   expected <- c("2010-2019", "2020-2029", "2030-2039")
   expect_identical(
@@ -152,7 +158,7 @@ test_that("cohort_levels_fill() fills gaps using custom breaks", {
   )
 })
 
-test_that("age_levels_fill_five() errors when a gap is not divisible by width", {
+test_that("age_levels_fill_five() errors for indivisible gaps", {
   msg <- tryCatch(
     age_levels_fill_five(factor(c("0-4", "11-14"))),
     error = function(e) conditionMessage(e)
@@ -161,7 +167,7 @@ test_that("age_levels_fill_five() errors when a gap is not divisible by width", 
   expect_match(msg, "Choose a different .width.")
 })
 
-test_that("age_levels_fill_life() returns a factor when there is only one level", {
+test_that("age_levels_fill_life() returns a factor for one level", {
   ans <- age_levels_fill_life("0")
 
   expect_s3_class(ans, "factor")

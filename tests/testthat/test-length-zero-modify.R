@@ -1,5 +1,5 @@
-# *_modify(): character(0) -> character(0). Factor in -> factor out; empty x still
-# updates the levels attribute from breaks (see test-modify-factor.R for non-empty).
+# *_modify(): character(0) -> character(0). Factor in -> factor out.
+# Empty x still updates levels from breaks.
 
 test_that("age_modify() with length-0 input returns character(0)", {
   expect_identical(
@@ -47,8 +47,7 @@ test_that("age_modify_life() with length-0 factor updates levels", {
   )
 })
 
-# period_modify() / cohort_modify() have x_one and x_multi; defaults suffice when
-# length(x) == 0.
+# period_modify() / cohort_modify() have x_one and x_multi; defaults suffice.
 
 test_that("period_modify() with length-0 input returns character(0)", {
   expect_identical(

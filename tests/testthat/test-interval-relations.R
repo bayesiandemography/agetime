@@ -1,4 +1,4 @@
-## 'does_int1_equal_int2' ----------------------------------------------------------
+## 'does_int1_equal_int2' ------------------------------------------------------
 
 test_that("'does_int1_equal_int2' returns NA when bounds include NA", {
   expect_identical(
@@ -7,7 +7,7 @@ test_that("'does_int1_equal_int2' returns NA when bounds include NA", {
   )
 })
 
-## 'does_int1_overlap_int2' ----------------------------------------------------------
+## 'does_int1_overlap_int2' ----------------------------------------------------
 
 test_that("'does_int1_overlap_int2' works", {
   expect_true(does_int1_overlap_int2(int1 = c(1, 2), int2 = c(0, 3)))
@@ -18,12 +18,18 @@ test_that("'does_int1_overlap_int2' works", {
   expect_true(does_int1_overlap_int2(int1 = c(-Inf, 2), int2 = c(-Inf, 2)))
   expect_false(does_int1_overlap_int2(int1 = c(-Inf, 2), int2 = c(2, 100)))
   expect_false(does_int1_overlap_int2(int1 = c(1, 2), int2 = c(0, 1)))
-  expect_identical(does_int1_overlap_int2(int1 = c(-Inf, 2), int2 = c(NA_real_, NA_real_)), NA)
-  expect_identical(does_int1_overlap_int2(int1 = c(NA_real_, NA_real_), int2 = c(3, 10)), NA)
+  expect_identical(
+    does_int1_overlap_int2(int1 = c(-Inf, 2), int2 = c(NA_real_, NA_real_)),
+    NA
+  )
+  expect_identical(
+    does_int1_overlap_int2(int1 = c(NA_real_, NA_real_), int2 = c(3, 10)),
+    NA
+  )
 })
 
 
-## 'does_m1_overlap_m2' --------------------------------------------------------------
+## 'does_m1_overlap_m2' --------------------------------------------------------
 
 test_that("'is_mx_x_in_m2' works", {
   m1 <- rbind(

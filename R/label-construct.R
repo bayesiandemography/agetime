@@ -4,17 +4,18 @@
 #' Construct Labels From Intervals
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param labels_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param labels_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @returns Character vector of labels for parsed intervals.
 #'
-#' When `labels_multi = "exclude"`, range labels are rendered with the displayed upper bound reduced by 1 from the internal interval upper bound.
+#' When `label_multi = "exclude"`, range labels are rendered with the displayed
+#' upper bound reduced by 1 from the internal interval upper bound.
 #'
 #' @noRd
 
 construct_labels_from_intervals <- function(intervals,
-                                            labels_one,
-                                            labels_multi) {
+                                            label_one,
+                                            label_multi) {
   is_one <- get_is_one(intervals)
   is_multi <- get_is_multi(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -25,26 +26,28 @@ construct_labels_from_intervals <- function(intervals,
   l <- m[, 1L]
   u <- m[, 2L]
   is_unparseable <- is.na(l) & is.na(u) & !is_na & !is_total
-  is_valid <- (is_one | is_multi |
-    is_open_left | is_open_right |
-    is_total | is_na | is_unparseable)
+  is_valid <- (
+    is_one | is_multi |
+      is_open_left | is_open_right |
+      is_total | is_na | is_unparseable
+  )
   if (any(!is_valid)) {
     cli::cli_abort("Internal error: Invalid interval.")
   }
   ans <- character(length = length(l))
-  if (labels_one == "lower") {
+  if (label_one == "lower") {
     ans[is_one] <- as.character(l[is_one])
-  } else if (labels_one == "upper") {
+  } else if (label_one == "upper") {
     ans[is_one] <- as.character(u[is_one])
   } else {
-    cli::cli_abort("Internal error: 'labels_one' invalid.")
+    cli::cli_abort("Internal error: 'label_one' invalid.")
   }
-  if (labels_multi == "include") {
+  if (label_multi == "include") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
-  } else if (labels_multi == "exclude") {
+  } else if (label_multi == "exclude") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
   } else {
-    cli::cli_abort("Internal error: 'labels_multi' invalid.")
+    cli::cli_abort("Internal error: 'label_multi' invalid.")
   }
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
@@ -58,21 +61,21 @@ construct_labels_from_intervals <- function(intervals,
 #' @param breaks Increasing vector of break points.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
 #' @returns Character vector of labels for breaks.
 #'
-#' When `x_multi = "exclude"`, range labels are rendered with the displayed upper bound reduced by 1 from the interval break upper bound.
+#' When `label_multi = "exclude"`, range labels are rendered with the displayed
+#' upper bound reduced by 1 from the interval break upper bound.
 #'
 #' @noRd
-
 construct_labels_from_breaks <- function(breaks,
                                          is_open_left,
                                          is_open_right,
-                                         x_one,
-                                         x_multi,
+                                         label_one,
+                                         label_multi,
                                          include_total,
                                          include_na) {
   lower <- breaks[-length(breaks)]
@@ -93,12 +96,12 @@ construct_labels_from_breaks <- function(breaks,
   ans <- character(length = length(lower))
   ans[is_open_left] <- paste0("<", upper[is_open_left])
   ans[is_open_right] <- paste0(lower[is_open_right], "+")
-  if (x_one == "lower") {
+  if (label_one == "lower") {
     ans[is_one] <- lower[is_one]
   } else {
     ans[is_one] <- upper[is_one]
   }
-  if (x_multi == "exclude") {
+  if (label_multi == "exclude") {
     ans[is_multi] <- paste(lower[is_multi],
       upper[is_multi] - 1L,
       sep = "-"

@@ -1,4 +1,4 @@
-test_that("inner_levels_fill() errors when breaks and width are both supplied", {
+test_that("inner_levels_fill() errors with breaks and width", {
   expect_error(
     agetime:::inner_levels_fill(
       x = "0-4",

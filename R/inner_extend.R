@@ -10,7 +10,8 @@
 #' @param x_fail How to handle unparsable labels.
 #' @returns Extended label vector (or factor).
 #'
-#' If `width` is `NULL`, width is inferred from the final label. The final interval cannot be open, total, or `NA`.
+#' If `width` is `NULL`, width is inferred from the final label.
+#' The final interval cannot be open, total, or `NA`.
 #'
 #' @noRd
 
@@ -73,7 +74,10 @@ inner_extend <- function(x,
   is_total <- get_is_total(intervals_tail)
   if (is_total) {
     cli::cli_abort(c("Final interval {.val {tail}} is total.",
-      i = "Extend ordinary {label_name(label_type)}s and then add total if needed?"
+      i = paste0(
+        "Extend ordinary {label_name(label_type)}s ",
+        "and then add total if needed?"
+      )
     ))
   }
   if (!has_width) {
@@ -87,8 +91,8 @@ inner_extend <- function(x,
   )
   ans <- inner_labels(
     breaks = breaks,
-    x_one = x_one,
-    x_multi = x_multi,
+    label_one = x_one,
+    label_multi = x_multi,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,

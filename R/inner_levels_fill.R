@@ -33,8 +33,8 @@ inner_levels_fill_prep <- function(x,
 #' @param levels Existing label levels.
 #' @param breaks Increasing vector of break points.
 #' @param is_ordered Whether output factor should be ordered.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @returns Empty factor when `levels` is empty, else `NULL`.
 #'
 #' @noRd
@@ -42,8 +42,8 @@ inner_levels_fill_prep <- function(x,
 inner_levels_fill_empty <- function(levels,
                                     breaks,
                                     is_ordered,
-                                    x_one,
-                                    x_multi) {
+                                    label_one,
+                                    label_multi) {
   if (length(levels) > 0L) {
     return(NULL)
   }
@@ -55,8 +55,8 @@ inner_levels_fill_empty <- function(levels,
     )
     labels_new <- inner_labels(
       breaks = breaks,
-      x_one = x_one,
-      x_multi = x_multi,
+      label_one = label_one,
+      label_multi = label_multi,
       is_open_left = FALSE,
       is_open_right = FALSE,
       include_total = FALSE,
@@ -126,8 +126,8 @@ inner_levels_fill <- function(x,
     levels = prep$levels,
     breaks = breaks,
     is_ordered = prep$is_ordered,
-    x_one = x_one,
-    x_multi = x_multi
+    label_one = x_one,
+    label_multi = x_multi
   )
   if (!is.null(empty)) {
     return(empty)
@@ -196,7 +196,23 @@ inner_levels_fill <- function(x,
         if (diff %% width != 0L) {
           label_curr <- labels[[i]]
           label_prev <- labels[[i - 1L]]
-          cli::cli_abort(c("Gap between {.val {label_prev}} and {.val {label_curr}} is not divisible by {.val {width}}.",
+          msg_envir <- list2env(
+            list(
+              label_prev = label_prev,
+              label_curr = label_curr,
+              width = width
+            ),
+            parent = environment()
+          )
+          msg <- cli::format_inline(
+            paste0(
+              "Gap between {.val {label_prev}} and {.val {label_curr}} ",
+              "is not divisible by {.val {width}}."
+            ),
+            .envir = msg_envir
+          )
+          cli::cli_abort(c(
+            msg,
             i = "Choose a different {.arg width}?"
           ))
         }
@@ -210,8 +226,8 @@ inner_levels_fill <- function(x,
       }
       labels_gap <- inner_labels(
         breaks = breaks_gap,
-        x_one = x_one,
-        x_multi = x_multi,
+        label_one = x_one,
+        label_multi = x_multi,
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,
@@ -253,8 +269,8 @@ inner_levels_fill_life <- function(x,
     levels = prep$levels,
     breaks = NULL,
     is_ordered = prep$is_ordered,
-    x_one = "lower",
-    x_multi = "exclude"
+    label_one = "lower",
+    label_multi = "exclude"
   )
   if (!is.null(empty)) {
     return(empty)
@@ -301,8 +317,8 @@ inner_levels_fill_life <- function(x,
       }
       labels_gap <- inner_labels(
         breaks = breaks_gap,
-        x_one = "lower",
-        x_multi = "exclude",
+        label_one = "lower",
+        label_multi = "exclude",
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,

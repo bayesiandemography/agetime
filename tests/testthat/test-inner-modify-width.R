@@ -1,4 +1,4 @@
-test_that("inner_modify_width() uses upper bounds for start when open on the left (lines 104-105)", {
+test_that("inner_modify_width() uses upper bounds for open-left start", {
   x <- c("<2020", "2020-2024")
   ans <- agetime:::inner_modify_width(
     x,
@@ -13,7 +13,7 @@ test_that("inner_modify_width() uses upper bounds for start when open on the lef
   expect_identical(ans, c("<2020", "2020-2024"))
 })
 
-test_that("inner_modify_width() aligns open-left start when offset leaves a remainder (line 114)", {
+test_that("inner_modify_width() aligns open-left start with offset", {
   x <- c("<2020", "2020-2024")
   intervals <- intervals(
     labels = x,

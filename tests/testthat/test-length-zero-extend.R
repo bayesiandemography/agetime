@@ -1,5 +1,5 @@
-# *_extend() needs at least one interval to extend from (the final element of x),
-# so length-0 input is an error even if a factor has non-empty levels.
+# *_extend() needs at least one interval to extend from the final element of x.
+# Length-0 input is an error even if a factor has non-empty levels.
 
 test_that("*_extend() errors on length-0 input", {
   expect_error(age_extend(character(0)), "length 0")

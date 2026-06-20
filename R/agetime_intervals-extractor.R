@@ -9,7 +9,8 @@ get_i_x_to_xu <- function(intervals) intervals$i_x_to_xu
 #' Get I Xun To Xunu
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns Integer index vector from normalized labels to unique normalized labels.
+#' @returns Integer index vector from normalized
+#' labels to unique normalized labels.
 #'
 #' @noRd
 get_i_xun_to_xunu <- function(intervals) intervals$i_xun_to_xunu
@@ -56,7 +57,9 @@ get_is_one <- function(intervals) {
 #' @param intervals An `agetime_intervals` object.
 #' @returns `TRUE` if any interval has an infinite bound, otherwise `FALSE`.
 #'
-#' Returns `TRUE` when any interval bound is infinite. This is used in extension logic on single-label interval objects.
+#' Returns `TRUE` when any interval bound is infinite.
+#' This is used in extension logic on single-label
+#' interval objects.
 #'
 #' @noRd
 get_is_open <- function(intervals) {
