@@ -8,7 +8,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     x_fail = "error"
   )
   breaks <- c(2020, 2025, 2030)
-  levels_breaks <- agetime:::construct_labels_from_breaks(
+  levels_breaks <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = TRUE,
     is_open_right = FALSE,
@@ -26,7 +26,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     include_na = FALSE,
     intervals = intervals
   )
-  levels_closed <- agetime:::construct_labels_from_breaks(
+  levels_closed <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
@@ -62,7 +62,7 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
     x_fail = "error"
   )
   breaks <- c(0, 10)
-  levels_with_na <- agetime:::construct_labels_from_breaks(
+  levels_with_na <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
@@ -102,7 +102,7 @@ test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
     x_fail = "error"
   )
   breaks <- c(0, 10)
-  levels_breaks <- agetime:::construct_labels_from_breaks(
+  levels_breaks <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,

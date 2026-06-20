@@ -32,7 +32,7 @@ inner_standard <- function(x,
     x_fail = x_fail
   )
   label_multi <- if (label_type == "age") "exclude" else "include"
-  labels <- construct_labels_from_intervals(
+  labels <- construct_labels_intervals(
     intervals = intervals,
     "lower",
     label_multi

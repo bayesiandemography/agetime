@@ -12,10 +12,9 @@
 #' upper bound reduced by 1 from the internal interval upper bound.
 #'
 #' @noRd
-
-construct_labels_from_intervals <- function(intervals,
-                                            label_one,
-                                            label_multi) {
+construct_labels_intervals <- function(intervals,
+                                       label_one,
+                                       label_multi) {
   is_one <- get_is_one(intervals)
   is_multi <- get_is_multi(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -71,13 +70,13 @@ construct_labels_from_intervals <- function(intervals,
 #' upper bound reduced by 1 from the interval break upper bound.
 #'
 #' @noRd
-construct_labels_from_breaks <- function(breaks,
-                                         is_open_left,
-                                         is_open_right,
-                                         label_one,
-                                         label_multi,
-                                         include_total,
-                                         include_na) {
+construct_labels_breaks <- function(breaks,
+                                    is_open_left,
+                                    is_open_right,
+                                    label_one,
+                                    label_multi,
+                                    include_total,
+                                    include_na) {
   lower <- breaks[-length(breaks)]
   upper <- breaks[-1L]
   if (is_open_left) {

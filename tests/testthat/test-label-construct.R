@@ -17,7 +17,7 @@ intervals_with_m <- function(label, lower, upper) {
   out
 }
 
-test_that("construct_labels_from_intervals() can use upper bounds", {
+test_that("construct_labels_intervals() can use upper bounds", {
   intervals <- intervals(
     labels = "15",
     label_type = "age",
@@ -26,7 +26,7 @@ test_that("construct_labels_from_intervals() can use upper bounds", {
     x_fail = "error"
   )
   expect_identical(
-    agetime:::construct_labels_from_intervals(intervals,
+    agetime:::construct_labels_intervals(intervals,
       label_one = "upper",
       label_multi = "exclude"
     ),
@@ -34,10 +34,10 @@ test_that("construct_labels_from_intervals() can use upper bounds", {
   )
 })
 
-test_that("construct_labels_from_intervals() errors for an invalid interval", {
+test_that("construct_labels_intervals() errors for an invalid interval", {
   intervals <- intervals_with_m("bad", lower = 0, upper = 1.2)
   expect_error(
-    agetime:::construct_labels_from_intervals(intervals,
+    agetime:::construct_labels_intervals(intervals,
       label_one = "lower",
       label_multi = "exclude"
     ),
@@ -45,7 +45,7 @@ test_that("construct_labels_from_intervals() errors for an invalid interval", {
   )
 })
 
-test_that("construct_labels_from_intervals() errors for invalid label_one", {
+test_that("construct_labels_intervals() errors for invalid label_one", {
   intervals <- intervals(
     labels = "15",
     label_type = "age",
@@ -54,7 +54,7 @@ test_that("construct_labels_from_intervals() errors for invalid label_one", {
     x_fail = "error"
   )
   expect_error(
-    agetime:::construct_labels_from_intervals(intervals,
+    agetime:::construct_labels_intervals(intervals,
       label_one = "bogus",
       label_multi = "exclude"
     ),
@@ -62,7 +62,7 @@ test_that("construct_labels_from_intervals() errors for invalid label_one", {
   )
 })
 
-test_that("construct_labels_from_intervals() errors for invalid label_multi", {
+test_that("construct_labels_intervals() errors for invalid label_multi", {
   intervals <- intervals(
     labels = "15",
     label_type = "age",
@@ -71,7 +71,7 @@ test_that("construct_labels_from_intervals() errors for invalid label_multi", {
     x_fail = "error"
   )
   expect_error(
-    agetime:::construct_labels_from_intervals(intervals,
+    agetime:::construct_labels_intervals(intervals,
       label_one = "lower",
       label_multi = "bogus"
     ),

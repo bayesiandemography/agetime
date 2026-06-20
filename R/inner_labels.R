@@ -21,7 +21,7 @@ inner_labels <- function(breaks,
   check_breaks(breaks)
   check_flag(x = include_total, nm_x = "include_total")
   check_flag(x = include_na, nm_x = "include_na")
-  construct_labels_from_breaks(
+  construct_labels_breaks(
     breaks = breaks,
     label_one = label_one,
     label_multi = label_multi,
@@ -81,7 +81,7 @@ inner_labels_one <- function(lower_first,
     to = to,
     by = 1L
   )
-  construct_labels_from_breaks(
+  construct_labels_breaks(
     breaks = breaks,
     label_one = label_one,
     label_multi = label_multi,
@@ -142,7 +142,7 @@ inner_labels_five <- function(lower_first,
     to = to,
     by = 5L
   )
-  construct_labels_from_breaks(
+  construct_labels_breaks(
     breaks = breaks,
     label_one = label_one,
     label_multi = label_multi,
@@ -202,7 +202,7 @@ inner_labels_ten <- function(lower_first,
     to = to,
     by = 10L
   )
-  construct_labels_from_breaks(
+  construct_labels_breaks(
     breaks = breaks,
     label_one = label_one,
     label_multi = label_multi,

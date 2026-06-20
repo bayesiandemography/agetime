@@ -37,7 +37,7 @@ inner_modify <- function(x,
   )
   int_has_total <- int_has_total(intervals)
   int_has_na <- int_has_na(intervals)
-  levels_breaks <- construct_labels_from_breaks(
+  levels_breaks <- construct_labels_breaks(
     breaks = breaks,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
