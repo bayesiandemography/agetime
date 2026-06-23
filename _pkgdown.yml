@@ -7,3 +7,4 @@ articles:
     navbar: ~
     contents:
       - agetime
+      - api-principles

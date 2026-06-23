@@ -1,0 +1,143 @@
+---
+title: "API principles"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{API principles}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+**agetime** functions are designed around label vectors. A label such as
+`"5-9"`, `"2020-2025"`, or `"<1990"` is a character value, but it also
+implies an interval. The API tries to make this distinction explicit:
+some functions read intervals from existing labels, some functions create
+new labels, and some functions work with factor levels.
+
+## Domain prefixes
+
+Most functions start with a domain:
+
+- `age_*()` for age groups.
+- `period_*()` for time periods.
+- `cohort_*()` for birth cohorts.
+
+The three domains usually share the same operation names. For example,
+`age_lower()`, `period_lower()`, and `cohort_lower()` all extract lower
+limits from labels.
+
+```{r domains}
+library(agetime)
+
+age_lower(c("0-4", "5-9"))
+period_lower(c("2020-2025", "2025-2030"))
+cohort_lower(c("<1990", "1990-1995"))
+```
+
+## Operation families
+
+Function names use the domain prefix plus an operation family.
+
+| Family | Purpose | Return type |
+|---|---|---|
+| `*_lower()`, `*_upper()`, `*_width()`, `*_mid()` | Extract interval properties | Numeric vector |
+| `*_is_open()`, `*_is_total()` | Identify special labels | Logical vector |
+| `*_check()`, `*_assert()` | Validate labels | Diagnostics or error |
+| `*_standard()` | Convert labels to standard format | Same shape as `x` |
+| `*_modify()` | Regroup labels into new intervals | Same shape as `x` |
+| `*_extend()` | Continue a label series | Character vector or factor |
+| `*_levels_*()` | Work with factor levels | Factor |
+| `*_labels_*()` | Create new labels | Character vector |
+| `*_mapping()` | Map between interval sets | Matrix or tibble |
+
+The most important return-type distinction is between labels and levels:
+
+- `*_labels_*()` functions create character vectors of labels.
+- `*_levels_*()` functions return factors, because their purpose is to
+  create or reorder factor levels.
+
+```{r labels-vs-levels}
+age_labels_five(lower_last = 20)
+
+age_levels_fill_five(c("10-14", "0-4"))
+```
+
+## Input parsing and output rendering
+
+Arguments beginning with `x_` describe how input labels in `x` should be
+parsed. They do not describe how newly generated output labels should be
+rendered.
+
+For example, `period_standard()` uses `x_multi` to interpret the input:
+
+```{r input-parsing}
+period_standard("2020-2025", x_multi = "exclude")
+```
+
+Arguments beginning with `label_` describe how new output labels should be
+rendered. For example, `period_labels_ten()` uses `label_multi` to decide
+whether the displayed upper limit is included or excluded:
+
+```{r output-rendering}
+period_labels_ten(
+  lower_first = 2000,
+  lower_last = 2020,
+  label_multi = "exclude"
+)
+```
+
+This convention is intended to keep input interpretation separate from
+output formatting.
+
+## Boundary names
+
+Boundary arguments name the boundary they represent.
+
+- `breaks` are boundaries between intervals.
+- `lower_first` is the lower bound of the first generated interval.
+- `lower_last` is the lower bound of the last generated interval.
+- `lower_open` is the lower bound of a right-open age group such as `70+`.
+- `upper_open` is the upper bound of a left-open cohort such as `<1990`.
+
+```{r boundaries}
+age_labels_five(lower_first = 0, lower_last = 20, open = FALSE)
+
+age_levels_set_open(c("0-4", "60-64"), lower_open = 70)
+
+cohort_levels_set_open(
+  c("2000-2004", "2010-2014"),
+  upper_open = 1990,
+  x_multi = "exclude"
+)
+```
+
+The boolean argument `open` is used where the question is whether to include
+an open interval at all. Boundary names such as `lower_open` and
+`upper_open` are used where the question is where the open interval starts
+or ends.
+
+## Values and levels
+
+Functions that modify values, such as `age_modify()`, return values with the
+same length as `x`. If `x` is a factor, they also update levels.
+
+Functions in the `*_levels_*()` family always return a factor. They preserve
+observed values where possible, and change or add levels. This is why
+`age_levels_set_open()` can add a `70+` level even when no value in `x`
+currently belongs to that open group.
+
+```{r level-contract}
+x <- c("0-4", "60-64")
+age_levels_set_open(x, lower_open = 70)
+```
+
+## More information
+
+- See `vignette("agetime")` for a quick start.
+- See `?agetime` for a complete function list grouped by task.
