@@ -69,6 +69,7 @@
 #' |[age_levels_fill_five()]|[period_levels_fill_five()]|[cohort_levels_fill_five()]|
 #' |[age_levels_fill_ten()] |[period_levels_fill_ten()] |[cohort_levels_fill_ten()] |
 #' |[age_levels_fill_life()]|-                          |-                          |
+#' |[age_levels_set_open()] |-                          |[cohort_levels_set_open()] |
 # nolint end
 #'
 #' **Put levels in order**

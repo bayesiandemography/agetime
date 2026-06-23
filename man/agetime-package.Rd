@@ -73,6 +73,7 @@ periods, and cohorts.
    \code{\link[=age_levels_fill_five]{age_levels_fill_five()}} \tab \code{\link[=period_levels_fill_five]{period_levels_fill_five()}} \tab \code{\link[=cohort_levels_fill_five]{cohort_levels_fill_five()}} \cr
    \code{\link[=age_levels_fill_ten]{age_levels_fill_ten()}} \tab \code{\link[=period_levels_fill_ten]{period_levels_fill_ten()}} \tab \code{\link[=cohort_levels_fill_ten]{cohort_levels_fill_ten()}} \cr
    \code{\link[=age_levels_fill_life]{age_levels_fill_life()}} \tab - \tab - \cr
+   \code{\link[=age_levels_set_open]{age_levels_set_open()}} \tab - \tab \code{\link[=cohort_levels_set_open]{cohort_levels_set_open()}} \cr
 }
 
 
