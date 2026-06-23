@@ -5,7 +5,7 @@
 #' age groups where necessary.
 #'
 #' @inheritParams age_lower
-#' @param open Lower limit of open age group.
+#' @param lower_open Lower limit of open age group.
 #' @return Character vector or factor with the same length as `x`.
 #'
 #' @seealso
@@ -13,8 +13,8 @@
 #'
 #' @examples
 #' x <- c("20-24", "80-84", "100+")
-#' age_set_open(x, open = 80)
-#' age_set_open(x, open = 50)
+#' age_set_open(x, lower_open = 80)
+#' age_set_open(x, lower_open = 50)
 #' @export
 
 # If no labels qualify for the open group (including when `x` is
@@ -22,12 +22,13 @@
 # When `x` is a factor with levels but no element values, qualifying levels
 # are still relabelled.
 age_set_open <- function(x,
-                         open,
+                         lower_open,
                          x_fail = c("error", "warn", "silent")) {
   x_fail <- match.arg(x_fail)
   inner_set_open(
     x = x,
-    open = open,
+    open_boundary = lower_open,
+    nm_open_boundary = "lower_open",
     make_open_left = FALSE,
     make_open_right = TRUE,
     label_type = "age",

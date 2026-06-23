@@ -176,11 +176,15 @@ inner_levels_fill <- function(x,
     return(x)
   }
   labels <- get_labels_unique_norm_unique(intervals)
+  labels_unique <- get_labels_unique(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  labels_display <- labels_unique[match(seq_along(labels), i_xun_to_xunu)]
   ord <- order(m[, 1L], m[, 2L])
   m <- m[ord, , drop = FALSE]
   lower <- m[, 1L]
   uppermax <- cummax(m[, 2L])
   labels <- labels[ord]
+  labels_display <- labels_display[ord]
   levels_extra <- vector(mode = "list", length = n)
   for (i in seq.int(from = 2L, to = n)) {
     l_curr <- lower[[i]]
@@ -235,11 +239,7 @@ inner_levels_fill <- function(x,
       levels_extra[[i - 1L]] <- labels_gap
     }
   }
-  unord <- match(seq_len(n), ord)
-  levels_extra <- levels_extra[unord]
-  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  levels_extra <- levels_extra[i_xun_to_xunu]
-  levels_old <- as.list(levels)
+  levels_old <- as.list(labels_display)
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
   levels <- unique(levels)
@@ -297,11 +297,15 @@ inner_levels_fill_life <- function(x,
     return(x)
   }
   labels <- get_labels_unique_norm_unique(intervals)
+  labels_unique <- get_labels_unique(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  labels_display <- labels_unique[match(seq_along(labels), i_xun_to_xunu)]
   ord <- order(m[, 1L], m[, 2L])
   m <- m[ord, , drop = FALSE]
   lower <- m[, 1L]
   uppermax <- cummax(m[, 2L])
   labels <- labels[ord]
+  labels_display <- labels_display[ord]
   levels_extra <- vector(mode = "list", length = n)
   for (i in seq.int(from = 2L, to = n)) {
     l_curr <- lower[[i]]
@@ -328,11 +332,7 @@ inner_levels_fill_life <- function(x,
       levels_extra[[i - 1L]] <- labels_gap
     }
   }
-  unord <- match(seq_len(n), ord)
-  levels_extra <- levels_extra[unord]
-  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  levels_extra <- levels_extra[i_xun_to_xunu]
-  levels_old <- as.list(levels)
+  levels_old <- as.list(labels_display)
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
   levels <- unique(levels)

@@ -6,7 +6,7 @@
 \usage{
 cohort_set_open(
   x,
-  open,
+  upper_open,
   x_one = c("lower", "upper"),
   x_multi = c("include", "exclude"),
   x_fail = c("error", "warn", "silent")
@@ -15,7 +15,7 @@ cohort_set_open(
 \arguments{
 \item{x}{Vector of cohort labels.}
 
-\item{open}{Upper limit of open cohort.}
+\item{upper_open}{Upper limit of open cohort.}
 
 \item{x_one}{Whether labels
 for one-year cohorts are based on
@@ -42,8 +42,8 @@ cohorts where necessary.
 }
 \examples{
 x <- c("2020-2024", "<2000", "2015")
-cohort_set_open(x, open = 2020)
-cohort_set_open(x, open = 2005)
+cohort_set_open(x, upper_open = 2020)
+cohort_set_open(x, upper_open = 2005)
 }
 \seealso{
 \itemize{

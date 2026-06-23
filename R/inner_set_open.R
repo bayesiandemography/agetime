@@ -1,9 +1,11 @@
 #' Inner Set Open
 #'
 #' @param x Vector of labels.
-#' @param open Boundary used to open intervals.
-#' @param make_open_left Whether to open intervals below `open` on the left.
-#' @param make_open_right Whether to open intervals at or above `open`
+#' @param open_boundary Boundary used to open intervals.
+#' @param nm_open_boundary Argument name used in boundary error messages.
+#' @param make_open_left Whether to open intervals below `open_boundary` on
+#' the left.
+#' @param make_open_right Whether to open intervals at or above `open_boundary`
 #' on the right.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
@@ -11,11 +13,12 @@
 #' @param x_fail How to handle unparsable labels.
 #' @returns Labels with selected intervals made open-ended.
 #'
-#' Errors when `open` would split an existing interval.
+#' Errors when `open_boundary` would split an existing interval.
 #'
 #' @noRd
 inner_set_open <- function(x,
-                           open,
+                           open_boundary,
+                           nm_open_boundary,
                            make_open_left,
                            make_open_right,
                            label_type,
@@ -28,8 +31,8 @@ inner_set_open <- function(x,
     length_zero_ok = TRUE
   )
   check_n(
-    n = open,
-    nm_n = "open",
+    n = open_boundary,
+    nm_n = nm_open_boundary,
     min = 0L,
     max = NULL,
     divisible_by = NULL
@@ -47,7 +50,8 @@ inner_set_open <- function(x,
   labels_unique <- get_labels_unique(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
-  is_splits_interval <- (!is.na(l) & (l < open)) & (!is.na(u) & (open < u))
+  is_splits_interval <- (!is.na(l) & (l < open_boundary)) &
+    (!is.na(u) & (open_boundary < u))
   i_splits_interval <- match(TRUE, is_splits_interval, nomatch = 0L)
   if (i_splits_interval > 0L) {
     lab_split <- labels_unique[[i_splits_interval]]
@@ -62,9 +66,9 @@ inner_set_open <- function(x,
     cli::cli_abort(msg)
   }
   if (make_open_left) {
-    is_le_open <- !is.na(u) & (u <= open)
+    is_le_open <- !is.na(u) & (u <= open_boundary)
     i_le_open <- which(is_le_open)
-    label_open <- paste0("<", open)
+    label_open <- paste0("<", open_boundary)
     if (is.factor(x)) {
       is_label_now_open <- i_xun_to_xunu %in% i_le_open
       levels_old <- levels(x)
@@ -79,9 +83,9 @@ inner_set_open <- function(x,
     }
   }
   if (make_open_right) {
-    is_ge_open <- !is.na(l) & (open <= l)
+    is_ge_open <- !is.na(l) & (open_boundary <= l)
     i_ge_open <- which(is_ge_open)
-    label_open <- paste0(open, "+")
+    label_open <- paste0(open_boundary, "+")
     if (is.factor(x)) {
       is_label_now_open <- i_xun_to_xunu %in% i_ge_open
       levels_old <- levels(x)

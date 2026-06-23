@@ -47,7 +47,40 @@ test_that("age_levels_fill_ten() fills gaps with ten-year groups", {
   x <- c("25-29", "0-4")
   expect_identical(
     levels(age_levels_fill_ten(x)),
-    c("25-29", "0-4", "5-14", "15-24")
+    c("0-4", "5-14", "15-24", "25-29")
+  )
+})
+
+test_that("levels-fill functions sort out-of-order input levels", {
+  expect_identical(
+    levels(age_levels_fill_five(c("10-14", "0-4"))),
+    c("0-4", "5-9", "10-14")
+  )
+  expect_identical(
+    levels(period_levels_fill_five(c("2030-2035", "2020-2025"))),
+    c("2020-2025", "2025-2030", "2030-2035")
+  )
+  expect_identical(
+    levels(cohort_levels_fill_five(c("2030-2035", "2020-2025"))),
+    c("2020-2025", "2025-2030", "2030-2035")
+  )
+})
+
+test_that("cohort_levels_fill() preserves original open-left values", {
+  ans <- cohort_levels_fill_five(
+    c("2010-2014", "2000-2004", "less than 1990"),
+    x_multi = "ex"
+  )
+  expect_identical(
+    as.character(ans),
+    c("2010-2014", "2000-2004", "less than 1990")
+  )
+  expect_identical(
+    levels(ans),
+    c(
+      "less than 1990", "1990-1994", "1995-1999", "2000-2004",
+      "2005-2009", "2010-2014"
+    )
   )
 })
 
@@ -59,8 +92,8 @@ test_that("age_levels_fill_life() fills life-table gaps", {
   expect_identical(
     levels(age_levels_fill_life(c("60+", "0"))),
     c(
-      "60+", "0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-      "30-34", "35-39", "40-44", "45-49", "50-54", "55-59"
+      "0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+      "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60+"
     )
   )
 })
@@ -115,7 +148,7 @@ test_that("period_levels_fill_one() and cohort_levels_fill_one() fill gaps", {
 
 test_that("period_levels_fill_ten() and cohort_levels_fill_ten() fill gaps", {
   x <- c("2051-2061", "2021-2031")
-  expected <- c("2051-2061", "2021-2031", "2031-2041", "2041-2051")
+  expected <- c("2021-2031", "2031-2041", "2041-2051", "2051-2061")
   expect_identical(levels(period_levels_fill_ten(x)), expected)
   expect_identical(levels(cohort_levels_fill_ten(x)), expected)
 })

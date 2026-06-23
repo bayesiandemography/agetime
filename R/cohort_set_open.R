@@ -5,7 +5,7 @@
 #' cohorts where necessary.
 #'
 #' @inheritParams cohort_lower
-#' @param open Upper limit of open cohort.
+#' @param upper_open Upper limit of open cohort.
 #' @return Character vector or factor with the same length as `x`.
 #'
 #' @seealso
@@ -14,8 +14,8 @@
 #'
 #' @examples
 #' x <- c("2020-2024", "<2000", "2015")
-#' cohort_set_open(x, open = 2020)
-#' cohort_set_open(x, open = 2005)
+#' cohort_set_open(x, upper_open = 2020)
+#' cohort_set_open(x, upper_open = 2005)
 #' @export
 
 # If no labels qualify for the open group (including when `x` is
@@ -23,7 +23,7 @@
 # When `x` is a factor with levels but no element values, qualifying levels
 # are still relabelled.
 cohort_set_open <- function(x,
-                            open,
+                            upper_open,
                             x_one = c("lower", "upper"),
                             x_multi = c("include", "exclude"),
                             x_fail = c("error", "warn", "silent")) {
@@ -32,7 +32,8 @@ cohort_set_open <- function(x,
   x_multi <- match.arg(x_multi)
   inner_set_open(
     x = x,
-    open = open,
+    open_boundary = upper_open,
+    nm_open_boundary = "upper_open",
     make_open_left = TRUE,
     make_open_right = FALSE,
     label_type = "cohort",

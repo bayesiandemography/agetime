@@ -4,12 +4,12 @@
 \alias{age_set_open}
 \title{Define Open Age Group}
 \usage{
-age_set_open(x, open, x_fail = c("error", "warn", "silent"))
+age_set_open(x, lower_open, x_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{x}{Vector of age group labels.}
 
-\item{open}{Lower limit of open age group.}
+\item{lower_open}{Lower limit of open age group.}
 
 \item{x_fail}{Action if element of \code{x}
 cannot be parsed: \code{"error"} (the default),
@@ -25,8 +25,8 @@ age groups where necessary.
 }
 \examples{
 x <- c("20-24", "80-84", "100+")
-age_set_open(x, open = 80)
-age_set_open(x, open = 50)
+age_set_open(x, lower_open = 80)
+age_set_open(x, lower_open = 50)
 }
 \seealso{
 \itemize{
