@@ -74,6 +74,7 @@ labels for age groups, periods, and cohorts.
 | [`age_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
 | [`age_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
 | [`age_levels_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | \- | \- |
+| [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md) | \- | [`cohort_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.md) |
 
 **Put levels in order**
 

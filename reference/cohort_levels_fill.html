@@ -17,6 +17,10 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/agetime.html">Get started</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -150,7 +154,7 @@ width 10.</p></li>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2051-2061"</span>, <span class="st">"2021-2031"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">cohort_levels_fill_ten</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 2051-2061 2021-2031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 2051-2061 2021-2031 2031-2041 2041-2051</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 2021-2031 2031-2041 2041-2051 2051-2061</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## levels are used by functions</span></span></span>
 <span class="r-in"><span><span class="co">## such as 'table()'</span></span></span>
@@ -162,8 +166,8 @@ width 10.</p></li>
 <span class="r-in"><span>  <span class="fu">cohort_levels_fill_ten</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2051-2061 2021-2031 2031-2041 2041-2051 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         1         1         0         0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2021-2031 2031-2041 2041-2051 2051-2061 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         1         0         0         1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## sort after filling</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span></span></span>

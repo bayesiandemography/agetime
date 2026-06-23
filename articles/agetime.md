@@ -205,4 +205,6 @@ Age group functions have period and cohort equivalents. For instance:
 
 - [`?agetime`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
   for a full list of functions grouped by task
+- [`vignette("api-principles")`](https://bayesiandemography.github.io/agetime/articles/api-principles.md)
+  for naming and return-type conventions
 - Package website: <https://bayesiandemography.github.io/agetime/>

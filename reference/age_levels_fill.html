@@ -17,6 +17,10 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../articles/agetime.html">Get started</a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+  </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -117,12 +121,12 @@ used by a life table.</p></li>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"25-29"</span>, <span class="st">"0-4"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">age_levels_fill_ten</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 25-29 0-4  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 25-29 0-4 5-14 15-24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 0-4 5-14 15-24 25-29</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"60+"</span>, <span class="st">"0"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">age_levels_fill_life</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 60+ 0  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Levels: 60+ 0 1-4 5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 ... 55-59</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 14 Levels: 0 1-4 5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 ... 60+</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## levels are used by functions</span></span></span>
 <span class="r-in"><span><span class="co">## such as 'table()'</span></span></span>
@@ -135,8 +139,8 @@ used by a life table.</p></li>
 <span class="r-in"><span>  <span class="fu">age_levels_fill</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 30-39   0-9 10-29 </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     1     1     0 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   0-9 10-29 30-39 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     1     0     1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## sort after filling</span></span></span>
 <span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span></span></span>

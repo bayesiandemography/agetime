@@ -3,6 +3,7 @@
 <url><loc>https://bayesiandemography.github.io/agetime/LICENSE-text.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/LICENSE.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/articles/agetime.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/articles/api-principles.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/articles/index.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/authors.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/index.html</loc></url>
@@ -12,12 +13,12 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_is_total.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_labels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_levels_fill.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_levels_sort.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_lower.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_mapping.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_modify.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_modify_five.html</loc></url>
-<url><loc>https://bayesiandemography.github.io/agetime/reference/age_set_open.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_standard.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/agetime-package.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_check.html</loc></url>
@@ -26,12 +27,12 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_is_total.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_labels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_levels_sort.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_lower.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_mapping.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_modify.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.html</loc></url>
-<url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_set_open.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_standard.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/index.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.html</loc></url>

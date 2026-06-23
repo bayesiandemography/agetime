@@ -23,6 +23,8 @@
   [`age_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
   [`age_levels_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
   : Fill in Gaps in Age Group Levels
+- [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md)
+  : Set Open Age Group Level
 - [`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md)
   : Sort Age Group Levels
 - [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
@@ -38,8 +40,6 @@
   [`age_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
   [`age_modify_life()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
   : Convert to Specialised Age Groups
-- [`age_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_set_open.md)
-  : Define Open Age Group
 - [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
   : Standardize Age Group Labels
 - [`agetime-package`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
@@ -64,6 +64,8 @@
   [`cohort_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
   [`cohort_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
   : Fill in Gaps in Cohort Levels
+- [`cohort_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.md)
+  : Set Open Cohort Level
 - [`cohort_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_sort.md)
   : Sort Cohort Levels
 - [`cohort_lower()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
@@ -78,8 +80,6 @@
 - [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   [`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   : Convert to Equal-Length Cohorts
-- [`cohort_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open.md)
-  : Define Open Cohort
 - [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
   : Standardize Cohort Labels
 - [`parsing_cohort_labels`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)

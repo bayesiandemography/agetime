@@ -82,12 +82,12 @@ age_levels_fill_five(x)
 x <- c("25-29", "0-4")
 age_levels_fill_ten(x)
 #> [1] 25-29 0-4  
-#> Levels: 25-29 0-4 5-14 15-24
+#> Levels: 0-4 5-14 15-24 25-29
 
 x <- c("60+", "0")
 age_levels_fill_life(x)
 #> [1] 60+ 0  
-#> 14 Levels: 60+ 0 1-4 5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 ... 55-59
+#> 14 Levels: 0 1-4 5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 ... 60+
 
 ## levels are used by functions
 ## such as 'table()'
@@ -100,8 +100,8 @@ x |>
   age_levels_fill() |>
   table()
 #> 
-#> 30-39   0-9 10-29 
-#>     1     1     0 
+#>   0-9 10-29 30-39 
+#>     1     0     1 
 
 ## sort after filling
 x |>

@@ -112,7 +112,7 @@ period_levels_fill_five(x)
 x <- c("2051-2061", "2021-2031")
 period_levels_fill_ten(x)
 #> [1] 2051-2061 2021-2031
-#> Levels: 2051-2061 2021-2031 2031-2041 2041-2051
+#> Levels: 2021-2031 2031-2041 2041-2051 2051-2061
 
 ## levels are used by functions
 ## such as 'table()'
@@ -124,8 +124,8 @@ x |>
   period_levels_fill_ten() |>
   table()
 #> 
-#> 2051-2061 2021-2031 2031-2041 2041-2051 
-#>         1         1         0         0 
+#> 2021-2031 2031-2041 2041-2051 2051-2061 
+#>         1         0         0         1 
 
 ## sort after filling
 x |>
