@@ -38,7 +38,6 @@ inner_levels_fill_prep <- function(x,
 #' @returns Empty factor when `levels` is empty, else `NULL`.
 #'
 #' @noRd
-
 inner_levels_fill_empty <- function(levels,
                                     breaks,
                                     is_ordered,
@@ -312,8 +311,10 @@ inner_levels_fill_life <- function(x,
     if (is_gap) {
       if ((u_prev == 1L) && (l_curr == 5L)) {
         breaks_gap <- c(u_prev, l_curr)
+      } else if ((u_prev == 1L) && (l_curr > 5L)) {
+        breaks_gap <- c(1L, seq.int(from = 5L, to = l_curr, by = 5L))
       } else {
-        breaks_gap <- c(u_prev, seq(from = 5L, to = l_curr, by = 5L))
+        breaks_gap <- seq.int(from = u_prev, to = l_curr, by = 5L)
       }
       labels_gap <- inner_labels(
         breaks = breaks_gap,

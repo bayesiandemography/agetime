@@ -7,6 +7,15 @@ test_that("age_levels_fill() fills gaps using default boundaries", {
   expect_identical(levels(ans), c("0-4", "5-19", "20-24"))
 })
 
+test_that("age_levels_fill_life() fills gaps using default boundaries", {
+  x <- factor(c("0", "1-4", "10-14"))
+  expect_identical(
+    levels(age_levels_fill_life(x)),
+    c("0", "1-4", "5-9", "10-14")
+  )
+})
+
+
 test_that("age_levels_fill() fills gaps using custom breaks", {
   x <- factor(c("0-4", "20-24"))
   expect_identical(
