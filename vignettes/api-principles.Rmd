@@ -74,6 +74,12 @@ Arguments beginning with `x_` describe how input labels in `x` should be
 parsed. They do not describe how newly generated output labels should be
 rendered.
 
+Age labels follow a strong demographic convention: one-year labels use the
+lower boundary, and multi-year labels exclude the upper boundary. Age
+functions therefore do not expose `x_one` or `x_multi` arguments. Period and
+cohort labels do not have the same universal convention, so period and cohort
+functions let you specify how input labels should be parsed.
+
 For example, `period_standard()` uses `x_multi` to interpret the input:
 
 ```{r input-parsing}
