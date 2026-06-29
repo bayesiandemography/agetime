@@ -5,41 +5,41 @@
 \title{Standardize Period Labels}
 \usage{
 period_standard(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
 Convert period labels to a 'standard' format.
 }
 \examples{
-x <- c("2025to2030", "1910--1914", " 2022 ")
-period_standard(x)
+labels <- c("2025to2030", "1910--1914", " 2022 ")
+period_standard(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_standard]{age_standard()}} Age equivalent of \code{period_standard()}
 \item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{period_standard()}
 }

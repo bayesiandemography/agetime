@@ -4,31 +4,31 @@
 #'
 #' @inheritParams cohort_lower
 #'
-#' @return Logical vector with the same length as `x`.
+#' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [cohort_is_open()] Find open cohorts
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
 #'
 #' @examples
-#' x <- c("2020-2025", "Total", "1999", "ALL")
-#' cohort_is_total(x)
+#' labels <- c("2020-2025", "Total", "1999", "ALL")
+#' cohort_is_total(labels)
 #' @export
 
-# When length(x) == 0, returns logical(0).
-cohort_is_total <- function(x,
-                            x_one = c("lower", "upper"),
-                            x_multi = c("include", "exclude"),
-                            x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+# When length(labels) == 0, returns logical(0).
+cohort_is_total <- function(labels,
+                            interpret_single = c("lower", "upper"),
+                            interpret_range = c("include", "exclude"),
+                            interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
-    x = x,
+    labels = labels,
     label_type = "cohort",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }
 
@@ -40,30 +40,30 @@ cohort_is_total <- function(x,
 #'
 #' @inheritParams cohort_lower
 #'
-#' @return Logical vector with the same length as `x`.
+#' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [cohort_is_total()] Find cohort labels for totals
 #' - [age_is_open()] Age equivalent of `cohort_is_open()`
 #'
 #' @examples
-#' x <- c("2020", "<1900", "2040-2050", "<2022")
-#' cohort_is_open(x)
+#' labels <- c("2020", "<1900", "2040-2050", "<2022")
+#' cohort_is_open(labels)
 #' @export
 
-# When length(x) == 0, returns logical(0).
-cohort_is_open <- function(x,
-                           x_one = c("lower", "upper"),
-                           x_multi = c("include", "exclude"),
-                           x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+# When length(labels) == 0, returns logical(0).
+cohort_is_open <- function(labels,
+                           interpret_single = c("lower", "upper"),
+                           interpret_range = c("include", "exclude"),
+                           interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
-    x = x,
+    labels = labels,
     label_type = "cohort",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail,
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail,
     check_open_left = TRUE,
     check_open_right = FALSE
   )

@@ -18,7 +18,7 @@
 #' @param valid_life All labels valid for
 #' (abridged) life table.
 #' @return For `age_check()`, a list with logical `ok` and data frame
-#' `details`; for `age_assert()`, `x` invisibly or an error.
+#' `details`; for `age_assert()`, `labels` invisibly or an error.
 #'
 #' @seealso
 #' - [period_check()] Period equivalent of `age_check()`
@@ -30,7 +30,7 @@
 #'
 #' ## get info on everything
 #' age_check(
-#'   x = lab,
+#'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
@@ -41,17 +41,17 @@
 #' )
 #'
 #' ## throw error if gaps
-#' age_assert(x = lab, no_gap = TRUE)
+#' age_assert(labels = lab, no_gap = TRUE)
 #'
 #' lab_gap <- lab[c(1, 3)]
 #' ## throw error if no gaps
-#' age_assert(x = lab_gap, no_gap = FALSE)
+#' age_assert(labels = lab_gap, no_gap = FALSE)
 #' @export
 
-# When length(x) == 0, checks on overlap, gaps, totals, NA, and life-table
+# When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
 # validity are vacuously satisfied (observed = TRUE). Checks that require at
 # least one interval (include_*) fail (observed = FALSE).
-age_check <- function(x,
+age_check <- function(labels,
                       no_overlap = NA,
                       no_gap = NA,
                       no_total = NA,
@@ -59,14 +59,14 @@ age_check <- function(x,
                       include_zero = NA,
                       include_open = NA,
                       valid_life = NA,
-                      x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+                      interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_check(
-    x = x,
+    labels = labels,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail,
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
@@ -79,7 +79,7 @@ age_check <- function(x,
 
 #' @rdname age_check
 #' @export
-age_assert <- function(x,
+age_assert <- function(labels,
                        no_overlap = NA,
                        no_gap = NA,
                        no_total = NA,
@@ -87,14 +87,14 @@ age_assert <- function(x,
                        include_zero = NA,
                        include_open = NA,
                        valid_life = NA,
-                       x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+                       interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_assert(
-    x = x,
+    labels = labels,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail,
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,

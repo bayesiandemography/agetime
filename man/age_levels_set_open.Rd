@@ -4,28 +4,32 @@
 \alias{age_levels_set_open}
 \title{Set Open Age Group Level}
 \usage{
-age_levels_set_open(x, lower_open, x_fail = c("error", "warn", "silent"))
+age_levels_set_open(
+  labels,
+  lower_open,
+  interpret_fail = c("error", "warn", "silent")
+)
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{lower_open}{Lower limit of open age group.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Add an open age group level, i.e. an age group with no upper limit.
 Replace existing age groups where necessary.
 }
 \examples{
-x <- c("20-24", "80-84", "100+")
-age_levels_set_open(x, lower_open = 80)
-age_levels_set_open(x, lower_open = 50)
+labels <- c("20-24", "80-84", "100+")
+age_levels_set_open(labels, lower_open = 80)
+age_levels_set_open(labels, lower_open = 50)
 age_levels_set_open(c("0-4", "60-64"), lower_open = 70)
 }
 \seealso{

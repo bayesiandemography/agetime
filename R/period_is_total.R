@@ -4,31 +4,31 @@
 #'
 #' @inheritParams period_lower
 #'
-#' @return Logical vector with the same length as `x`.
+#' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_is_total()] Age equivalent of `period_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `period_is_total()`
 #'
 #' @examples
-#' x <- c("2020-2025", "Total", "1999", "ALL")
-#' period_is_total(x)
+#' labels <- c("2020-2025", "Total", "1999", "ALL")
+#' period_is_total(labels)
 #' @export
 
-# When length(x) == 0, returns logical(0).
-period_is_total <- function(x,
-                            x_one = c("lower", "upper"),
-                            x_multi = c("include", "exclude"),
-                            x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+# When length(labels) == 0, returns logical(0).
+period_is_total <- function(labels,
+                            interpret_single = c("lower", "upper"),
+                            interpret_range = c("include", "exclude"),
+                            interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

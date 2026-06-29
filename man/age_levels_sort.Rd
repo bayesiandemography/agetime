@@ -4,27 +4,31 @@
 \alias{age_levels_sort}
 \title{Sort Age Group Levels}
 \usage{
-age_levels_sort(x, decreasing = FALSE, x_fail = c("error", "warn", "silent"))
+age_levels_sort(
+  labels,
+  decreasing = FALSE,
+  interpret_fail = c("error", "warn", "silent")
+)
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{decreasing}{Whether sort is
 increasing or decreasing. Default
 is \code{FALSE}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
-Sort the levels of \code{x}.
+Sort the levels of \code{labels}.
 }
 \details{
-If \code{x} is not a factor, and so
+If \code{labels} is not a factor, and so
 does not have levels,
 convert it to a factor before
 sorting the levels.
@@ -35,8 +39,8 @@ to resolve times. \code{NA}s come
 second-to-last and totals come last.
 }
 \examples{
-x <- c("0-4", "50+", "Total", NA, "20-24")
-age_levels_sort(x)
+labels <- c("0-4", "50+", "Total", NA, "20-24")
+age_levels_sort(labels)
 }
 \seealso{
 \itemize{

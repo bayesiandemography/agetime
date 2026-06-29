@@ -1,28 +1,28 @@
 #' Inner Levels Fill Prep
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param breaks Increasing vector of break points.
-#' @param nm_x Argument name used in error messages.
+#' @param nm_labels Argument name used in error messages.
 #' @returns List with prepared labels and factor metadata.
 #'
 #' @noRd
-inner_levels_fill_prep <- function(x,
+inner_levels_fill_prep <- function(labels,
                                    breaks,
-                                   nm_x) {
-  is_factor <- is.factor(x)
-  is_ordered <- is_factor && is.ordered(x)
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = nm_x,
+                                   nm_labels) {
+  is_factor <- is.factor(labels)
+  is_ordered <- is_factor && is.ordered(labels)
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = nm_labels,
     length_zero_ok = TRUE
   )
-  if (is.factor(x)) {
-    levels <- levels(x)
+  if (is.factor(labels)) {
+    levels <- levels(labels)
   } else {
-    levels <- unique(x)
+    levels <- unique(labels)
   }
   list(
-    x = x,
+    labels = labels,
     is_factor = is_factor,
     is_ordered = is_ordered,
     levels = levels
@@ -33,16 +33,16 @@ inner_levels_fill_prep <- function(x,
 #' @param levels Existing label levels.
 #' @param breaks Increasing vector of break points.
 #' @param is_ordered Whether output factor should be ordered.
-#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @returns Empty factor when `levels` is empty, else `NULL`.
 #'
 #' @noRd
 inner_levels_fill_empty <- function(levels,
                                     breaks,
                                     is_ordered,
-                                    label_one,
-                                    label_multi) {
+                                    format_single,
+                                    format_range) {
   if (length(levels) > 0L) {
     return(NULL)
   }
@@ -54,8 +54,8 @@ inner_levels_fill_empty <- function(levels,
     )
     labels_new <- inner_labels(
       breaks = breaks,
-      label_one = label_one,
-      label_multi = label_multi,
+      format_single = format_single,
+      format_range = format_range,
       is_open_left = FALSE,
       is_open_right = FALSE,
       include_total = FALSE,
@@ -75,17 +75,17 @@ inner_levels_fill_empty <- function(levels,
 }
 #' Inner Levels Fill Factor
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param levels Existing label levels.
 #' @param is_ordered Whether output factor should be ordered.
 #' @returns Factor with updated levels.
 #'
 #' @noRd
 
-inner_levels_fill_factor <- function(x,
+inner_levels_fill_factor <- function(labels,
                                      levels,
                                      is_ordered) {
-  vals <- if (is.factor(x)) as.character(x) else x
+  vals <- if (is.factor(labels)) as.character(labels) else labels
   factor(
     x = vals,
     levels = levels,
@@ -95,13 +95,14 @@ inner_levels_fill_factor <- function(x,
 }
 #' Inner Levels Fill
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param breaks Increasing vector of break points.
 #' @param width Interval width.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with gap levels filled.
 #'
 #' Cannot supply both `breaks` and `width`; provide at most one.
@@ -109,36 +110,36 @@ inner_levels_fill_factor <- function(x,
 #' @noRd
 
 
-inner_levels_fill <- function(x,
+inner_levels_fill <- function(labels,
                               breaks,
                               width,
                               label_type,
-                              x_one,
-                              x_multi,
-                              x_fail) {
+                              interpret_single,
+                              interpret_range,
+                              interpret_fail) {
   prep <- inner_levels_fill_prep(
-    x = x,
+    labels = labels,
     breaks = breaks,
-    nm_x = "x"
+    nm_labels = "labels"
   )
   empty <- inner_levels_fill_empty(
     levels = prep$levels,
     breaks = breaks,
     is_ordered = prep$is_ordered,
-    label_one = x_one,
-    label_multi = x_multi
+    format_single = interpret_single,
+    format_range = interpret_range
   )
   if (!is.null(empty)) {
     return(empty)
   }
-  x <- prep$x
+  labels_input <- prep$labels
   levels <- prep$levels
   intervals <- intervals(
     labels = levels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   has_breaks <- length(breaks) > 0L
   has_width <- length(width) > 0L
@@ -155,14 +156,14 @@ inner_levels_fill <- function(x,
       x = breaks,
       nm_x = "breaks",
       intervals = intervals,
-      nm_intervals = "x",
+      nm_intervals = "labels",
       label_type = label_type
     )
     check_in_limits_intervals(
       x = breaks,
       nm_x = "breaks",
       intervals = intervals,
-      nm_intervals = "x",
+      nm_intervals = "labels",
       label_type = label_type
     )
   }
@@ -170,20 +171,20 @@ inner_levels_fill <- function(x,
   n <- nrow(m)
   can_have_gaps <- n >= 2L
   if (!can_have_gaps) {
-    if (!is.factor(x)) {
-      x <- factor(x)
+    if (!is.factor(labels_input)) {
+      labels_input <- factor(labels_input)
     }
-    return(x)
+    return(labels_input)
   }
-  labels <- get_labels_unique_norm_unique(intervals)
+  labels_norm <- get_labels_unique_norm_unique(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  labels_display <- labels_unique[match(seq_along(labels), i_xun_to_xunu)]
+  labels_display <- labels_unique[match(seq_along(labels_norm), i_xun_to_xunu)]
   ord <- order(m[, 1L], m[, 2L])
   m <- m[ord, , drop = FALSE]
   lower <- m[, 1L]
   uppermax <- cummax(m[, 2L])
-  labels <- labels[ord]
+  labels_norm <- labels_norm[ord]
   labels_display <- labels_display[ord]
   levels_extra <- vector(mode = "list", length = n)
   for (i in seq.int(from = 2L, to = n)) {
@@ -197,8 +198,8 @@ inner_levels_fill <- function(x,
         breaks_gap <- c(u_prev, breaks_internal, l_curr)
       } else if (has_width) {
         if (diff %% width != 0L) {
-          label_curr <- labels[[i]]
-          label_prev <- labels[[i - 1L]]
+          label_curr <- labels_norm[[i]]
+          label_prev <- labels_norm[[i - 1L]]
           msg_envir <- list2env(
             list(
               label_prev = label_prev,
@@ -229,8 +230,8 @@ inner_levels_fill <- function(x,
       }
       labels_gap <- inner_labels(
         breaks = breaks_gap,
-        label_one = x_one,
-        label_multi = x_multi,
+        format_single = interpret_single,
+        format_range = interpret_range,
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,
@@ -244,44 +245,44 @@ inner_levels_fill <- function(x,
   levels <- unlist(levels)
   levels <- unique(levels)
   inner_levels_fill_factor(
-    x = x,
+    labels = labels_input,
     levels = levels,
     is_ordered = prep$is_ordered
   )
 }
 #' Inner Levels Fill Life
 #'
-#' @param x Vector of labels.
-#' @param x_fail How to handle unparsable labels.
+#' @param labels Vector of labels.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with life-table gap levels filled.
 #'
 #' @noRd
 
-inner_levels_fill_life <- function(x,
-                                   x_fail) {
+inner_levels_fill_life <- function(labels,
+                                   interpret_fail) {
   prep <- inner_levels_fill_prep(
-    x = x,
+    labels = labels,
     breaks = NULL,
-    nm_x = "x"
+    nm_labels = "labels"
   )
   empty <- inner_levels_fill_empty(
     levels = prep$levels,
     breaks = NULL,
     is_ordered = prep$is_ordered,
-    label_one = "lower",
-    label_multi = "exclude"
+    format_single = "lower",
+    format_range = "exclude"
   )
   if (!is.null(empty)) {
     return(empty)
   }
-  x <- prep$x
+  labels_input <- prep$labels
   levels <- prep$levels
   intervals <- intervals(
     labels = levels,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail
   )
   val <- label_non_life(intervals)
   if (!is.null(val)) {
@@ -291,20 +292,20 @@ inner_levels_fill_life <- function(x,
   n <- nrow(m)
   can_have_gaps <- n >= 2L
   if (!can_have_gaps) {
-    if (!is.factor(x)) {
-      x <- factor(x)
+    if (!is.factor(labels_input)) {
+      labels_input <- factor(labels_input)
     }
-    return(x)
+    return(labels_input)
   }
-  labels <- get_labels_unique_norm_unique(intervals)
+  labels_norm <- get_labels_unique_norm_unique(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
-  labels_display <- labels_unique[match(seq_along(labels), i_xun_to_xunu)]
+  labels_display <- labels_unique[match(seq_along(labels_norm), i_xun_to_xunu)]
   ord <- order(m[, 1L], m[, 2L])
   m <- m[ord, , drop = FALSE]
   lower <- m[, 1L]
   uppermax <- cummax(m[, 2L])
-  labels <- labels[ord]
+  labels_norm <- labels_norm[ord]
   labels_display <- labels_display[ord]
   levels_extra <- vector(mode = "list", length = n)
   for (i in seq.int(from = 2L, to = n)) {
@@ -322,8 +323,8 @@ inner_levels_fill_life <- function(x,
       }
       labels_gap <- inner_labels(
         breaks = breaks_gap,
-        label_one = "lower",
-        label_multi = "exclude",
+        format_single = "lower",
+        format_range = "exclude",
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,
@@ -337,7 +338,7 @@ inner_levels_fill_life <- function(x,
   levels <- unlist(levels)
   levels <- unique(levels)
   inner_levels_fill_factor(
-    x = x,
+    labels = labels_input,
     levels = levels,
     is_ordered = prep$is_ordered
   )

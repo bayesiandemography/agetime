@@ -7,9 +7,12 @@ expect_mapping_matrix <- function(object, expected) {
 }
 
 expect_same_mapping_formats <- function(x, y, relation = "equals", ...) {
-  tb <- do.call(age_mapping, c(list(x = x, y = y, relation = relation), ...))
+  tb <- do.call(age_mapping, c(
+    list(labels = x, y = y, relation = relation),
+    ...
+  ))
   mx <- do.call(age_mapping, c(
-    list(x = x, y = y, relation = relation, format = "matrix"),
+    list(labels = x, y = y, relation = relation, format = "matrix"),
     ...
   ))
   idx <- which(mx == 1L, arr.ind = TRUE)

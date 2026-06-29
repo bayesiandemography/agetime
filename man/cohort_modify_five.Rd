@@ -6,47 +6,47 @@
 \title{Convert to Equal-Length Cohorts}
 \usage{
 cohort_modify_five(
-  x,
+  labels,
   offset = 0,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_modify_ten(
-  x,
+  labels,
   offset = 0,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
 \item{offset}{Parameter controlling
 alignment of cohorts. Default is \code{0}.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Modify the cohorts used by \code{x}.
+Modify the cohorts used by \code{labels}.
 The new cohorts must contain
 the old cohorts, and follow a regular
 pattern:
@@ -56,17 +56,17 @@ pattern:
 }
 }
 \examples{
-x <- c("2002-2004", "1987-1989", "2000", "Total")
-cohort_modify_five(x)
-cohort_modify_five(x, offset = 1)
-cohort_modify_five(x, offset = 2)
-cohort_modify_ten(x)
-cohort_modify_ten(x, offset = 1)
-cohort_modify_ten(x, offset = 2)
+labels <- c("2002-2004", "1987-1989", "2000", "Total")
+cohort_modify_five(labels)
+cohort_modify_five(labels, offset = 1)
+cohort_modify_five(labels, offset = 2)
+cohort_modify_ten(labels)
+cohort_modify_ten(labels, offset = 1)
+cohort_modify_ten(labels, offset = 2)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=cohort_modify]{cohort_modify()}} Convert to general cohorts
 \item \code{\link[=age_modify_five]{age_modify_five()}} Age equivalent of \code{cohort_modify_five()}
 \item \code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{cohort_modify_ten()}

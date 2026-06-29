@@ -1,20 +1,20 @@
 #' Convert to New Periods
 #'
-#' Modify the periods used by `x`. The
+#' Modify the periods used by `labels`. The
 #' the new periods must
 #' contain the old ones.
 #'
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
-#' @return Character vector or factor with the same length as `x`.
+#' @return Character vector or factor with the same length as `labels`.
 #'
 #' @examples
-#' x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-#' period_modify(x, breaks = c(1970, 2000, 2005, 2015))
+#' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
+#' period_modify(labels, breaks = c(1970, 2000, 2005, 2015))
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [period_modify_five()] Convert to 5-year periods
 #' - [period_modify_ten()] Convert to 10-year periods
 #' - [age_modify()] Age group equivalent of `period_modify()`
@@ -22,25 +22,26 @@
 #' @export
 
 # Character input returns character; factor input returns factor with the same
-# length and ordered attribute. When length(x) == 0, returns character(0) or
+# length and ordered attribute. When length(labels) == 0, returns
+# character(0) or
 # still modifies factor levels().
-period_modify <- function(x,
+period_modify <- function(labels,
                           breaks,
-                          x_one = c("lower", "upper"),
-                          x_multi = c("include", "exclude"),
-                          x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                          interpret_single = c("lower", "upper"),
+                          interpret_range = c("include", "exclude"),
+                          interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_modify(
-    x = x,
+    labels = labels,
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }
 
@@ -49,7 +50,7 @@ period_modify <- function(x,
 #'
 #' @description
 #'
-#' Modify the periods used by `x`.
+#' Modify the periods used by `labels`.
 #' The new periods must contain
 #' the old periods, and follow a regular
 #' pattern:
@@ -63,7 +64,7 @@ period_modify <- function(x,
 #' @inherit period_modify return
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [period_modify()] Convert to general periods
 #' - [age_modify_five()] Age equivalent of `period_modify_five()`
 #' - [age_modify_ten()] Age equivalent of `period_modify_ten()`
@@ -72,52 +73,53 @@ period_modify <- function(x,
 #' - [period_levels_fill()] Add levels for intermediate periods
 #'
 #' @examples
-#' x <- c("2002-2004", "1987-1989", "2000", "Total")
-#' period_modify_five(x)
-#' period_modify_five(x, offset = 1)
-#' period_modify_five(x, offset = 2)
-#' period_modify_ten(x)
-#' period_modify_ten(x, offset = 1)
-#' period_modify_ten(x, offset = 2)
+#' labels <- c("2002-2004", "1987-1989", "2000", "Total")
+#' period_modify_five(labels)
+#' period_modify_five(labels, offset = 1)
+#' period_modify_five(labels, offset = 2)
+#' period_modify_ten(labels)
+#' period_modify_ten(labels, offset = 1)
+#' period_modify_ten(labels, offset = 2)
 #' @export
 
-# When length(x) == 0 and x is a factor with no levels, x is returned unchanged.
-period_modify_five <- function(x,
+# When length(labels) == 0 and labels is a factor with no levels,
+# labels is returned unchanged.
+period_modify_five <- function(labels,
                                offset = 0,
-                               x_one = c("lower", "upper"),
-                               x_multi = c("include", "exclude"),
-                               x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                               interpret_single = c("lower", "upper"),
+                               interpret_range = c("include", "exclude"),
+                               interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_modify_width(
-    x = x,
+    labels = labels,
     width = 5L,
     offset = offset,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }
 
 #' @rdname period_modify_five
 #' @export
-period_modify_ten <- function(x,
+period_modify_ten <- function(labels,
                               offset = 0,
-                              x_one = c("lower", "upper"),
-                              x_multi = c("include", "exclude"),
-                              x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                              interpret_single = c("lower", "upper"),
+                              interpret_range = c("include", "exclude"),
+                              interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_modify_width(
-    x = x,
+    labels = labels,
     width = 10L,
     offset = offset,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

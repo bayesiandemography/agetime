@@ -5,15 +5,15 @@
 \title{Extend a Set of Age Groups}
 \usage{
 age_extend(
-  x,
+  labels,
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{n}{Number of age groups to add.
 Default is \code{1}.}
@@ -22,30 +22,30 @@ Default is \code{1}.}
 to be added.}
 
 \item{include_x}{Should the return value
-include \code{x}? Default is \code{TRUE}.}
+include \code{labels}? Default is \code{TRUE}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 Character vector or factor.
-Length is \code{n}, or \code{length(x) + n} when \code{include_x} is \code{TRUE}.
+Length is \code{n}, or \code{length(labels) + n} when \code{include_x} is \code{TRUE}.
 }
 \description{
-Add new age groups at the end of \code{x}.
+Add new age groups at the end of \code{labels}.
 }
 \details{
 By default, the width of the new age groups
-is derived from the last element of \code{x},
+is derived from the last element of \code{labels},
 but a value can be specified through the
 \code{width} arugment.
 }
 \examples{
-x <- c("0-4", "5-9")
-age_extend(x, n = 2)
-age_extend(x, n = 2, width = 10)
-age_extend(x, n = 2, include_x = FALSE)
+labels <- c("0-4", "5-9")
+age_extend(labels, n = 2)
+age_extend(labels, n = 2, width = 10)
+age_extend(labels, n = 2, include_x = FALSE)
 }
 \seealso{
 \itemize{

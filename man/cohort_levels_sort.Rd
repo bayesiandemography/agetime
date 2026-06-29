@@ -5,43 +5,43 @@
 \title{Sort Cohort Levels}
 \usage{
 cohort_levels_sort(
-  x,
+  labels,
   decreasing = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
 \item{decreasing}{Whether sort is
 increasing or decreasing. Default
 is \code{FALSE}.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
-Sort the levels of \code{x}.
+Sort the levels of \code{labels}.
 }
 \details{
-If \code{x} is not a factor, and so
+If \code{labels} is not a factor, and so
 does not have levels,
 convert it to a factor first.
 
@@ -52,12 +52,12 @@ second-to-last, and
 totals come last.
 }
 \examples{
-x <- c("2020-2025", "<1990", "Total", NA, "2025-2050")
-cohort_levels_sort(x)
+labels <- c("2020-2025", "<1990", "Total", NA, "2025-2050")
+cohort_levels_sort(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=age_levels_sort]{age_levels_sort()}} Age equivalent of \code{cohort_levels_sort()}
 \item \code{\link[=period_levels_sort]{period_levels_sort()}} Period equivalent of \code{cohort_levels_sort()}
 }

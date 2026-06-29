@@ -1,30 +1,31 @@
 #' Inner Low Mid Up Width
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns List with interval matrix `m` and index vector `i`.
 #'
 #' @noRd
 
-inner_low_mid_up_width <- function(x,
+inner_low_mid_up_width <- function(labels,
                                    label_type,
-                                   x_one,
-                                   x_multi,
-                                   x_fail) {
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+                                   interpret_single,
+                                   interpret_range,
+                                   interpret_fail) {
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
   intervals <- intervals(
-    labels = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   m <- get_m(intervals)
   i <- get_i_x_to_xunu(intervals)
@@ -32,26 +33,27 @@ inner_low_mid_up_width <- function(x,
 }
 #' Inner Lower
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of lower bounds.
 #'
 #' @noRd
 
-inner_lower <- function(x,
+inner_lower <- function(labels,
                         label_type,
-                        x_one,
-                        x_multi,
-                        x_fail) {
+                        interpret_single,
+                        interpret_range,
+                        interpret_fail) {
   l <- inner_low_mid_up_width(
-    x = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   m <- l$m
   i <- l$i
@@ -59,27 +61,28 @@ inner_lower <- function(x,
 }
 #' Inner Mid
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of interval midpoints.
 #'
 #' @noRd
 
 
-inner_mid <- function(x,
+inner_mid <- function(labels,
                       label_type,
-                      x_one,
-                      x_multi,
-                      x_fail) {
+                      interpret_single,
+                      interpret_range,
+                      interpret_fail) {
   l <- inner_low_mid_up_width(
-    x = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   m <- l$m
   i <- l$i
@@ -101,27 +104,28 @@ inner_mid <- function(x,
 }
 #' Inner Upper
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of upper bounds.
 #'
 #' @noRd
 
 
-inner_upper <- function(x,
+inner_upper <- function(labels,
                         label_type,
-                        x_one,
-                        x_multi,
-                        x_fail) {
+                        interpret_single,
+                        interpret_range,
+                        interpret_fail) {
   l <- inner_low_mid_up_width(
-    x = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   m <- l$m
   i <- l$i
@@ -129,27 +133,28 @@ inner_upper <- function(x,
 }
 #' Inner Width
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of interval widths.
 #'
 #' @noRd
 
 
-inner_width <- function(x,
+inner_width <- function(labels,
                         label_type,
-                        x_one,
-                        x_multi,
-                        x_fail) {
+                        interpret_single,
+                        interpret_range,
+                        interpret_fail) {
   l <- inner_low_mid_up_width(
-    x = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   m <- l$m
   i <- l$i

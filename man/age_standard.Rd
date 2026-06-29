@@ -4,24 +4,24 @@
 \alias{age_standard}
 \title{Standardize Age Group Labels}
 \usage{
-age_standard(x, x_fail = c("error", "warn", "silent"))
+age_standard(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
 Convert age group labels to a 'standard' format.
 }
 \examples{
-x <- c("5to9", "10--14", "100plus")
-age_standard(x)
+labels <- c("5to9", "10--14", "100plus")
+age_standard(labels)
 
 ## factor input: factor in, factor out
 age_standard(factor(c("5to9", "10--14")))

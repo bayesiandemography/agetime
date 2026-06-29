@@ -19,9 +19,9 @@ test_that("age_standard() errors on unparseable labels by default", {
   expect_error(age_standard("young people"), "Don't know how to interpret")
 })
 
-test_that("age_standard() with x_fail = silent returns NA for invalid labels", {
+test_that("age_standard() returns NA silently for invalid labels", {
   expect_identical(
-    age_standard(c("0-4", "young people"), x_fail = "silent"),
+    age_standard(c("0-4", "young people"), interpret_fail = "silent"),
     c("0-4", NA)
   )
 })
@@ -56,12 +56,12 @@ test_that("period_standard() preserves NA and Total", {
 test_that("period_standard() silently converts invalid labels to NA", {
   expect_identical(
     period_standard(c("2020-2025", "long time ago"),
-      x_fail = "silent"
+      interpret_fail = "silent"
     ),
     c("2020-2025", NA)
   )
   expect_identical(
-    period_standard("2030-2020", x_fail = "silent"),
+    period_standard("2030-2020", interpret_fail = "silent"),
     NA_character_
   )
 })
@@ -92,65 +92,65 @@ test_that("cohort_standard() preserves NA and Total", {
 test_that("cohort_standard() silently converts invalid labels to NA", {
   expect_identical(
     cohort_standard(c("2025-2030", "long time ago"),
-      x_fail = "silent"
+      interpret_fail = "silent"
     ),
     c("2025-2030", NA)
   )
 })
 
 
-test_that("period_standard() interprets x_one and x_multi correctly", {
+test_that("period_standard() respects interpretation rules", {
   x <- c("2025to2030", "1910--1914", " 2022 ")
   expect_identical(
-    period_standard(x, x_one = "upper", x_multi = "exclude"),
+    period_standard(x, interpret_single = "upper", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2021")
   )
   expect_identical(
-    period_standard(x, x_one = "upper", x_multi = "exclude"),
+    period_standard(x, interpret_single = "upper", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2021")
   )
   expect_identical(
-    period_standard(x, x_one = "lower", x_multi = "include"),
+    period_standard(x, interpret_single = "lower", interpret_range = "include"),
     c("2025-2030", "1910-1914", "2022")
   )
   expect_identical(
-    period_standard(x, x_one = "lower", x_multi = "exclude"),
+    period_standard(x, interpret_single = "lower", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2022")
   )
   expect_identical(
-    period_standard(x, x_one = "upper", x_multi = "include"),
+    period_standard(x, interpret_single = "upper", interpret_range = "include"),
     c("2025-2030", "1910-1914", "2021")
   )
   expect_identical(
-    period_standard(x, x_one = "upper", x_multi = "exclude"),
+    period_standard(x, interpret_single = "upper", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2021")
   )
 })
 
-test_that("cohort_standard() interprets x_one and x_multi correctly", {
+test_that("cohort_standard() respects interpretation rules", {
   x <- c("2025to2030", "1910--1914", " 2022 ")
   expect_identical(
-    cohort_standard(x, x_one = "upper", x_multi = "exclude"),
+    cohort_standard(x, interpret_single = "upper", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2021")
   )
   expect_identical(
-    cohort_standard(x, x_one = "upper", x_multi = "exclude"),
+    cohort_standard(x, interpret_single = "upper", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2021")
   )
   expect_identical(
-    cohort_standard(x, x_one = "lower", x_multi = "include"),
+    cohort_standard(x, interpret_single = "lower", interpret_range = "include"),
     c("2025-2030", "1910-1914", "2022")
   )
   expect_identical(
-    cohort_standard(x, x_one = "lower", x_multi = "exclude"),
+    cohort_standard(x, interpret_single = "lower", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2022")
   )
   expect_identical(
-    cohort_standard(x, x_one = "upper", x_multi = "include"),
+    cohort_standard(x, interpret_single = "upper", interpret_range = "include"),
     c("2025-2030", "1910-1914", "2021")
   )
   expect_identical(
-    cohort_standard(x, x_one = "upper", x_multi = "exclude"),
+    cohort_standard(x, interpret_single = "upper", interpret_range = "exclude"),
     c("2025-2031", "1910-1915", "2021")
   )
 })

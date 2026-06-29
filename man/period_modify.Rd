@@ -5,48 +5,48 @@
 \title{Convert to New Periods}
 \usage{
 period_modify(
-  x,
+  labels,
   breaks,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
 \item{breaks}{Boundaries between periods.
 A numeric vector.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Modify the periods used by \code{x}. The
+Modify the periods used by \code{labels}. The
 the new periods must
 contain the old ones.
 }
 \examples{
-x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-period_modify(x, breaks = c(1970, 2000, 2005, 2015))
+labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
+period_modify(labels, breaks = c(1970, 2000, 2005, 2015))
 
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=period_modify_five]{period_modify_five()}} Convert to 5-year periods
 \item \code{\link[=period_modify_ten]{period_modify_ten()}} Convert to 10-year periods
 \item \code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{period_modify()}

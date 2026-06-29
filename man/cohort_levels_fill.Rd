@@ -8,63 +8,63 @@
 \title{Fill in Gaps in Cohort Levels}
 \usage{
 cohort_levels_fill(
-  x,
+  labels,
   breaks = NULL,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_levels_fill_one(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_levels_fill_five(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_levels_fill_ten(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
 \item{breaks}{Boundaries of newly-created cohorts.
 Boundaries for existing cohorts can be omitted.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
-Fill in gaps in levels of \code{x}.
+Fill in gaps in levels of \code{labels}.
 }
 \details{
-If \code{x} is not a factor, and so does
+If \code{labels} is not a factor, and so does
 not have levels, convert it to
 a factor before filling in levels.
 \itemize{
@@ -79,32 +79,32 @@ width 10.
 }
 }
 \examples{
-x <- factor(c("2020-2025", "2030-2035"))
-x
-cohort_levels_fill(x) ## uses existing boundaries
-cohort_levels_fill(x, breaks = 2028)
-cohort_levels_fill_one(x)
-cohort_levels_fill_five(x)
+labels <- factor(c("2020-2025", "2030-2035"))
+labels
+cohort_levels_fill(labels) ## uses existing boundaries
+cohort_levels_fill(labels, breaks = 2028)
+cohort_levels_fill_one(labels)
+cohort_levels_fill_five(labels)
 
-x <- c("2051-2061", "2021-2031")
-cohort_levels_fill_ten(x)
+labels <- c("2051-2061", "2021-2031")
+cohort_levels_fill_ten(labels)
 
 ## levels are used by functions
 ## such as 'table()'
-x |> table()
-x |>
+labels |> table()
+labels |>
   cohort_levels_fill_ten() |>
   table()
 
 ## sort after filling
-x |>
+labels |>
   cohort_levels_fill_ten() |>
   cohort_levels_sort() |>
   table()
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=age_levels_fill]{age_levels_fill()}} Age equivalent of \code{cohort_levels_fill()}
 \item \code{\link[=period_levels_fill]{period_levels_fill()}} Period equivalent of \code{cohort_levels_fill()}
 }

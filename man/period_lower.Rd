@@ -9,51 +9,51 @@
 and Midpoints of Periods}
 \usage{
 period_lower(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_mid(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_upper(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_width(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Numeric vector with the same length as \code{x}.
+Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -65,11 +65,11 @@ to filter on periods.
 See below for examples.
 }
 \examples{
-x <- c("2025-2030", "2020-2025", "2030-2035")
-period_lower(x)
-period_upper(x)
-period_width(x)
-period_mid(x)
+labels <- c("2025-2030", "2020-2025", "2030-2035")
+period_lower(labels)
+period_upper(labels)
+period_width(labels)
+period_mid(labels)
 
 ## use 'period_lower()' to filter on period
 library(dplyr, warn.conflicts = FALSE)
@@ -82,32 +82,32 @@ df <- tribble(
 df
 df |> filter(period_lower(period) >= 2025)
 
-## 'x_one' is "lower" (the default)
+## 'interpret_single' is "lower" (the default)
 period_lower("2025")
 period_upper("2025")
 period_width("2025")
 
-## 'x_one' is "upper"
-period_lower("2025", x_one = "upper")
-period_upper("2025", x_one = "upper")
-period_width("2025", x_one = "upper")
+## 'interpret_single' is "upper"
+period_lower("2025", interpret_single = "upper")
+period_upper("2025", interpret_single = "upper")
+period_width("2025", interpret_single = "upper")
 
-## 'x_multi' is "include" (the default)
+## 'interpret_range' is "include" (the default)
 period_upper("2025-2030")
 period_width("2025-2030")
 
-## 'x_multi' is "exclude"
-period_upper("2025-2030", x_multi = "exclude")
-period_width("2025-2030", x_multi = "exclude")
+## 'interpret_range' is "exclude"
+period_upper("2025-2030", interpret_range = "exclude")
+period_width("2025-2030", interpret_range = "exclude")
 
-## no action when 'x_fail' is "silent"
+## no action when 'interpret_fail' is "silent"
 period_lower(c("2000-2005", "long time ago"),
-  x_fail = "silent"
+  interpret_fail = "silent"
 )
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
 \item \code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
 }

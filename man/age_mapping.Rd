@@ -5,18 +5,18 @@
 \title{Mapping Between Age Group Labels}
 \usage{
 age_mapping(
-  x,
+  labels,
   y = NULL,
   relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
   format = c("tibble", "matrix"),
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{y}{Vector of age group labels. If
-no value supplied, \code{x} is mapped onto itself.}
+no value supplied, \code{labels} is mapped onto itself.}
 
 \item{relation}{Relationship between
 labels. Choices are \code{"equals"} (the default),
@@ -27,7 +27,7 @@ See below for details and examples.}
 return value. Choices are \code{"tibble"}
 (the default) or \code{"matrix"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
@@ -36,19 +36,19 @@ cannot be parsed: \code{"error"} (the default),
 }
 \description{
 Create a mapping between age group labels. A mapping
-depicts a relationship between the labels of \code{x}
+depicts a relationship between the labels of \code{labels}
 and the labels of \code{y}. The types of relationship
 that can be mapped are:
 \itemize{
-\item "x equals y"
-\item "x contains y"
-\item "x is contained in y"
-\item "x overlaps with y".
+\item "labels equals y"
+\item "labels contains y"
+\item "labels is contained in y"
+\item "labels overlaps with y".
 }
 }
 \details{
 If no value for \code{y} is supplied,
-\code{x} is mapped onto itself.
+\code{labels} is mapped onto itself.
 
 Tibbles produced by \code{age_mapping()} are sparse
 in that they only include matches. Matrices
@@ -58,32 +58,32 @@ example below.
 }
 \section{The \code{relation} argument}{
 \tabular{ll}{
-   \code{relation} \tab Endpoints of \code{x} and \code{y} \cr
+   \code{relation} \tab Endpoints of \code{labels} and \code{y} \cr
    \code{"equals"} \tab Endpoints equal \cr
-   \code{"contains"} \tab Endpoints of \code{y} inside endpoints of \code{x} \cr
-   \code{"is-contained-in"} \tab Endpoints of \code{x} inside endpoints of \code{y} \cr
-   \code{"overlaps-with"} \tab Endpoint of \code{x} in \code{y} or endpoint of \code{y} in \code{x} \cr
+   \code{"contains"} \tab Endpoints of \code{y} inside endpoints of \code{labels} \cr
+   \code{"is-contained-in"} \tab Endpoints of \code{labels} inside endpoints of \code{y} \cr
+   \code{"overlaps-with"} \tab Endpoint of \code{labels} in \code{y}, or reverse \cr
 }
 }
 
 \examples{
-x <- c("0-4", "10", "5-7")
+labels <- c("0-4", "10", "5-7")
 y <- c("5-9", "0-4", "6-14")
-age_mapping(x = x, y = y)
-age_mapping(x = x, format = "matrix")
-age_mapping(x = x, y = y, relation = "contains")
-age_mapping(x = x, y = y, relation = "is-contained-in")
-age_mapping(x = x, y = y, relation = "overlaps-with")
+age_mapping(labels = labels, y = y)
+age_mapping(labels = labels, format = "matrix")
+age_mapping(labels = labels, y = y, relation = "contains")
+age_mapping(labels = labels, y = y, relation = "is-contained-in")
+age_mapping(labels = labels, y = y, relation = "overlaps-with")
 
 # sparse tibble vs dense matrix
-x <- c("0-4", "10-14")
+labels <- c("0-4", "10-14")
 y <- c("0-4", "5-9")
-age_mapping(x = x, y = y) # one match
-age_mapping(x = x, y = y, format = "matrix") # 1 match, 3 non-matches
+age_mapping(labels = labels, y = y) # one match
+age_mapping(labels = labels, y = y, format = "matrix")
 
-# mapping 'x' on to itself
-x <- c("0--4", "0-4", "5+")
-age_mapping(x)
+# mapping 'labels' on to itself
+labels <- c("0--4", "0-4", "5+")
+age_mapping(labels)
 }
 \seealso{
 \itemize{

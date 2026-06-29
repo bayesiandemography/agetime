@@ -5,7 +5,7 @@ test_that("x_label() warns and returns NA for an uninterpretable label", {
     ans <- agetime:::x_label(
       label = "young people",
       label_parsers = parsers,
-      x_fail = "warn"
+      interpret_fail = "warn"
     ),
     "Don't know how to interpret label"
   )

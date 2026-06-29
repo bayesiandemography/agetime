@@ -47,7 +47,8 @@ test_that("age_modify_life() with length-0 factor updates levels", {
   )
 })
 
-# period_modify() / cohort_modify() have x_one and x_multi; defaults suffice.
+# period_modify() / cohort_modify() have interpret_single and
+# interpret_range; defaults suffice.
 
 test_that("period_modify() with length-0 input returns character(0)", {
   expect_identical(

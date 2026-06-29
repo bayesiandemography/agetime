@@ -6,31 +6,31 @@
 \title{Check or Make Assertions About Cohorts}
 \usage{
 cohort_check(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
   no_na = NA,
   include_open = NA,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_assert(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
   no_na = NA,
   include_open = NA,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
 \item{no_overlap}{No cohorts overlap.}
 
@@ -45,24 +45,24 @@ to the upper limit of the latest cohort.}
 \item{include_open}{One or more cohorts
 has no lower limit.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 For \code{cohort_check()}, a list with logical \code{ok} and data frame
-\code{details}; for \code{cohort_assert()}, \code{x} invisibly or an error.
+\code{details}; for \code{cohort_assert()}, \code{labels} invisibly or an error.
 }
 \description{
 Collect information on cohort labels (\code{cohort_check()}),
@@ -78,7 +78,7 @@ lab
 
 ## get info on everything
 cohort_check(
-  x = lab,
+  labels = lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
@@ -87,7 +87,7 @@ cohort_check(
 )
 
 ## throw error if gaps
-cohort_assert(x = lab, no_gap = TRUE)
+cohort_assert(labels = lab, no_gap = TRUE)
 
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
@@ -95,7 +95,7 @@ cohort_assert(lab_gap, no_gap = FALSE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=age_check]{age_check()}} Age equivalent of \code{cohort_check()}
 \item \code{\link[=period_check]{period_check()}} Period equivalent of \code{cohort_check()}
 }

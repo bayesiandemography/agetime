@@ -8,34 +8,38 @@
 \alias{age_levels_fill_life}
 \title{Fill in Gaps in Age Group Levels}
 \usage{
-age_levels_fill(x, breaks = NULL, x_fail = c("error", "warn", "silent"))
+age_levels_fill(
+  labels,
+  breaks = NULL,
+  interpret_fail = c("error", "warn", "silent")
+)
 
-age_levels_fill_one(x, x_fail = c("error", "warn", "silent"))
+age_levels_fill_one(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_levels_fill_five(x, x_fail = c("error", "warn", "silent"))
+age_levels_fill_five(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_levels_fill_ten(x, x_fail = c("error", "warn", "silent"))
+age_levels_fill_ten(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_levels_fill_life(x, x_fail = c("error", "warn", "silent"))
+age_levels_fill_life(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{breaks}{Boundaries of newly-created age groups.
 Boundaries for existing age groups can be omitted.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
-Fill in gaps in levels of \code{x}.
+Fill in gaps in levels of \code{labels}.
 }
 \details{
-If \code{x} is not a factor, and so does
+If \code{labels} is not a factor, and so does
 not have levels, convert it to
 a factor before filling in levels.
 \itemize{
@@ -52,29 +56,29 @@ used by a life table.
 }
 }
 \examples{
-x <- factor(c("0-4", "20-24"))
-x
-age_levels_fill(x) ## uses existing boundaries
-age_levels_fill(x, breaks = c(8, 12))
-age_levels_fill_one(x)
-age_levels_fill_five(x)
+labels <- factor(c("0-4", "20-24"))
+labels
+age_levels_fill(labels) ## uses existing boundaries
+age_levels_fill(labels, breaks = c(8, 12))
+age_levels_fill_one(labels)
+age_levels_fill_five(labels)
 
-x <- c("25-29", "0-4")
-age_levels_fill_ten(x)
+labels <- c("25-29", "0-4")
+age_levels_fill_ten(labels)
 
-x <- c("60+", "0")
-age_levels_fill_life(x)
+labels <- c("60+", "0")
+age_levels_fill_life(labels)
 
 ## levels are used by functions
 ## such as 'table()'
-x <- c("30-39", "0-9")
-x |> table()
-x |>
+labels <- c("30-39", "0-9")
+labels |> table()
+labels |>
   age_levels_fill() |>
   table()
 
 ## sort after filling
-x |>
+labels |>
   age_levels_fill() |>
   age_levels_sort() |>
   table()

@@ -1,39 +1,40 @@
 #' Inner Modify
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param breaks Increasing vector of break points.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Modified labels as character vector or factor.
 #'
 #' @noRd
-inner_modify <- function(x,
+inner_modify <- function(labels,
                          breaks,
                          is_open_left,
                          is_open_right,
                          label_type,
-                         x_one,
-                         x_multi,
-                         x_fail) {
-  is_factor <- is.factor(x)
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+                         interpret_single,
+                         interpret_range,
+                         interpret_fail) {
+  is_factor <- is.factor(labels)
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
-  if (identical(length(x), 0L) && !is_factor) {
+  if (identical(length(labels), 0L) && !is_factor) {
     return(character(0))
   }
   intervals <- intervals(
-    labels = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   int_has_total <- int_has_total(intervals)
   int_has_na <- int_has_na(intervals)
@@ -41,8 +42,8 @@ inner_modify <- function(x,
     breaks = breaks,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
-    label_one = x_one,
-    label_multi = x_multi,
+    format_single = interpret_single,
+    format_range = interpret_range,
     include_total = int_has_total,
     include_na = int_has_na
   )
@@ -66,7 +67,7 @@ inner_modify <- function(x,
     ans <- factor(
       x = ans,
       levels = levels_breaks,
-      ordered = is.ordered(x),
+      ordered = is.ordered(labels),
       exclude = NULL
     )
   }
@@ -75,37 +76,38 @@ inner_modify <- function(x,
 
 #' Inner Modify Width
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param width Interval width.
 #' @param offset Alignment offset for width-based breaks.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Modified labels as character vector or factor.
 #'
 #' Computes aligned breaks from `width` and `offset` using existing interval
 #' bounds before calling `inner_modify()`.
 #'
 #' @noRd
-inner_modify_width <- function(x,
+inner_modify_width <- function(labels,
                                width,
                                offset,
                                label_type,
-                               x_one,
-                               x_multi,
-                               x_fail) {
-  is_factor <- is.factor(x)
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+                               interpret_single,
+                               interpret_range,
+                               interpret_fail) {
+  is_factor <- is.factor(labels)
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
-  if (identical(length(x), 0L) && !is_factor) {
+  if (identical(length(labels), 0L) && !is_factor) {
     return(character(0))
   }
-  if (identical(length(x), 0L) && is_factor && nlevels(x) == 0L) {
-    return(factor(levels = character(), ordered = is.ordered(x)))
+  if (identical(length(labels), 0L) && is_factor && nlevels(labels) == 0L) {
+    return(factor(levels = character(), ordered = is.ordered(labels)))
   }
   check_n(
     n = offset,
@@ -115,11 +117,11 @@ inner_modify_width <- function(x,
     divisible_by = 1L
   )
   intervals <- intervals(
-    labels = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   is_open_left <- int_is_open_left(intervals)
   is_open_right <- int_is_open_right(intervals)
@@ -155,13 +157,13 @@ inner_modify_width <- function(x,
   }
   breaks <- seq.int(from = start, to = end, by = width)
   inner_modify(
-    x = x,
+    labels = labels,
     breaks = breaks,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

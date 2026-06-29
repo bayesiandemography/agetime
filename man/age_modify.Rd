@@ -4,10 +4,15 @@
 \alias{age_modify}
 \title{Convert to New Age Groups}
 \usage{
-age_modify(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
+age_modify(
+  labels,
+  breaks,
+  open = TRUE,
+  interpret_fail = c("error", "warn", "silent")
+)
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{breaks}{Boundaries between age groups.
 A numeric vector.}
@@ -16,22 +21,22 @@ A numeric vector.}
 is "open", i.e. has no upper limit.
 Default is \code{TRUE}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Modify the age groups used by \code{x}. The
+Modify the age groups used by \code{labels}. The
 the new age groups must
 contain the old ones.
 }
 \examples{
-x <- c("1-4", "87-89", "0", "50-54")
-age_modify(x, breaks = c(0, 10, 40, 90))
-age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
+labels <- c("1-4", "87-89", "0", "50-54")
+age_modify(labels, breaks = c(0, 10, 40, 90))
+age_modify(labels, breaks = c(0, 10, 40, 90), open = FALSE)
 
 ## factor input: factor in, factor out
 age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))

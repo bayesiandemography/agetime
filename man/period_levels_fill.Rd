@@ -8,61 +8,61 @@
 \title{Fill in Gaps in Period Levels}
 \usage{
 period_levels_fill(
-  x,
+  labels,
   breaks = NULL,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_levels_fill_one(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_levels_fill_five(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_levels_fill_ten(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
 \item{breaks}{Boundaries of newly-created periods.
 Boundaries for existing periods can be omitted.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
-Fill in gaps in levels of \code{x}.
+Fill in gaps in levels of \code{labels}.
 }
 \details{
-If \code{x} is not a factor, and so does
+If \code{labels} is not a factor, and so does
 not have levels, convert it to
 a factor before filling in levels.
 \itemize{
@@ -77,32 +77,32 @@ width 10.
 }
 }
 \examples{
-x <- factor(c("2020-2025", "2030-2035"))
-x
-period_levels_fill(x) ## uses existing boundaries
-period_levels_fill(x, breaks = 2028)
-period_levels_fill_one(x)
-period_levels_fill_five(x)
+labels <- factor(c("2020-2025", "2030-2035"))
+labels
+period_levels_fill(labels) ## uses existing boundaries
+period_levels_fill(labels, breaks = 2028)
+period_levels_fill_one(labels)
+period_levels_fill_five(labels)
 
-x <- c("2051-2061", "2021-2031")
-period_levels_fill_ten(x)
+labels <- c("2051-2061", "2021-2031")
+period_levels_fill_ten(labels)
 
 ## levels are used by functions
 ## such as 'table()'
-x |> table()
-x |>
+labels |> table()
+labels |>
   period_levels_fill_ten() |>
   table()
 
 ## sort after filling
-x |>
+labels |>
   period_levels_fill_ten() |>
   period_levels_sort() |>
   table()
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_levels_fill]{age_levels_fill()}} Age equivalent of \code{period_levels_fill()}
 \item \code{\link[=cohort_levels_fill]{cohort_levels_fill()}} Cohort equivalent of \code{period_levels_fill()}
 }

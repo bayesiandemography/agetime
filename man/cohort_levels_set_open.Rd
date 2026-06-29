@@ -5,49 +5,49 @@
 \title{Set Open Cohort Level}
 \usage{
 cohort_levels_set_open(
-  x,
+  labels,
   upper_open,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
 \item{upper_open}{Upper limit of open cohort.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Add an open cohort level, i.e. a cohort with no lower limit.
 Replace existing cohorts where necessary.
 }
 \examples{
-x <- c("2020-2024", "<2000", "2015")
-cohort_levels_set_open(x, upper_open = 2020)
-cohort_levels_set_open(x, upper_open = 2005)
+labels <- c("2020-2024", "<2000", "2015")
+cohort_levels_set_open(labels, upper_open = 2020)
+cohort_levels_set_open(labels, upper_open = 2005)
 cohort_levels_set_open(c("2000-2004", "2010-2014"), upper_open = 1990)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=age_levels_set_open]{age_levels_set_open()}} Set open age group levels (right-open)
 }
 }

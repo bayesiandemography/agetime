@@ -5,16 +5,16 @@
 \title{Convert to New Cohorts}
 \usage{
 cohort_modify(
-  x,
+  labels,
   breaks,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
 \item{breaks}{Boundaries between cohorts.
 A numeric vector.}
@@ -23,38 +23,38 @@ A numeric vector.}
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Modify the cohorts used by \code{x}. The
+Modify the cohorts used by \code{labels}. The
 the new cohorts must
 contain the old ones.
 }
 \examples{
-x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-cohort_modify(x, breaks = c(1970, 2000, 2005, 2015))
-cohort_modify(x, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
+labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
+cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015))
+cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
 
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=cohort_modify_five]{cohort_modify_five()}} Convert to 5-year cohorts
 \item \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Convert to 10-year cohorts
 \item \code{\link[=age_modify]{age_modify()}} Age group equivalent of \code{cohort_modify()}

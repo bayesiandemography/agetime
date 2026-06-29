@@ -10,18 +10,18 @@ test_that("reversed range labels error by default", {
   )
 })
 
-test_that("reversed range labels warn or return NA with x_fail", {
+test_that("reversed range labels warn or return NA with interpret_fail", {
   expect_warning(
-    age_lower("50-40", x_fail = "warn"),
+    age_lower("50-40", interpret_fail = "warn"),
     "Lower limit greater than upper limit"
   )
-  expect_values(age_lower("50-40", x_fail = "silent"), NA_real_)
+  expect_values(age_lower("50-40", interpret_fail = "silent"), NA_real_)
 
   expect_warning(
-    period_lower("2030-2020", x_fail = "warn"),
+    period_lower("2030-2020", interpret_fail = "warn"),
     "Lower limit greater than upper limit"
   )
-  expect_values(period_lower("2030-2020", x_fail = "silent"), NA_real_)
+  expect_values(period_lower("2030-2020", interpret_fail = "silent"), NA_real_)
 })
 
 test_that("zero-width range labels are rejected", {

@@ -69,7 +69,7 @@ test_that("levels-fill functions sort out-of-order input levels", {
 test_that("cohort_levels_fill() preserves original open-left values", {
   ans <- cohort_levels_fill_five(
     c("2010-2014", "2000-2004", "less than 1990"),
-    x_multi = "ex"
+    interpret_range = "ex"
   )
   expect_identical(
     as.character(ans),
@@ -170,15 +170,15 @@ test_that("period/cohort fill-ten errors for indivisible gaps", {
   )
 })
 
-test_that("period/cohort fill-ten respect x_multi exclude", {
+test_that("period/cohort fill-ten respect interpret_range exclude", {
   x <- c("2010-2019", "2030-2039")
   expected <- c("2010-2019", "2020-2029", "2030-2039")
   expect_identical(
-    levels(period_levels_fill_ten(x, x_multi = "exclude")),
+    levels(period_levels_fill_ten(x, interpret_range = "exclude")),
     expected
   )
   expect_identical(
-    levels(cohort_levels_fill_ten(x, x_multi = "exclude")),
+    levels(cohort_levels_fill_ten(x, interpret_range = "exclude")),
     expected
   )
 })

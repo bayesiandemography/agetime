@@ -5,17 +5,17 @@
 \title{Extend a Set of Periods}
 \usage{
 period_extend(
-  x,
+  labels,
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
 \item{n}{Number of periods to add.
 Default is \code{1}.}
@@ -24,43 +24,43 @@ Default is \code{1}.}
 to be added.}
 
 \item{include_x}{Should the return value
-include \code{x}? Default is \code{TRUE}.}
+include \code{labels}? Default is \code{TRUE}.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 Character vector or factor.
-Length is \code{n}, or \code{length(x) + n} when \code{include_x} is \code{TRUE}.
+Length is \code{n}, or \code{length(labels) + n} when \code{include_x} is \code{TRUE}.
 }
 \description{
-Add new periods at the end of \code{x}.
+Add new periods at the end of \code{labels}.
 }
 \details{
 By default, the width of the new periods
-is derived from the last element of \code{x},
+is derived from the last element of \code{labels},
 but a value can be specified through the
 \code{width} arugment.
 }
 \examples{
-x <- c("2020-2025", "2025-2030")
-period_extend(x, n = 2)
-period_extend(x, n = 2, width = 10)
-period_extend(x, n = 2, include_x = FALSE)
+labels <- c("2020-2025", "2025-2030")
+period_extend(labels, n = 2)
+period_extend(labels, n = 2, width = 10)
+period_extend(labels, n = 2, include_x = FALSE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_extend]{age_extend()}} Age equivalent of \code{period_extend()}
 \item \code{\link[=cohort_extend]{cohort_extend()}} Cohort equivalent of \code{period_extend()}
 }

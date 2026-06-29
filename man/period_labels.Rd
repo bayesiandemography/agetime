@@ -9,8 +9,8 @@
 \usage{
 period_labels(
   breaks,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -18,8 +18,8 @@ period_labels(
 period_labels_one(
   lower_first,
   lower_last,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -27,8 +27,8 @@ period_labels_one(
 period_labels_five(
   lower_first,
   lower_last,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -36,8 +36,8 @@ period_labels_five(
 period_labels_ten(
   lower_first,
   lower_last,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -46,9 +46,9 @@ period_labels_ten(
 \item{breaks}{Boundaries between periods
 A numeric vector.}
 
-\item{label_one}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
+\item{format_single}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
 
-\item{label_multi}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
+\item{format_range}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
 
 \item{include_total}{Whether to include a
 \code{"Total"} category.}
@@ -80,11 +80,11 @@ period_labels_one(
   lower_last = 2010
 )
 
-## single-year periods, 'label_one' is "upper"
+## single-year periods, 'format_single' is "upper"
 period_labels_one(
   lower_first = 2000,
   lower_last = 2010,
-  label_one = "upper"
+  format_single = "upper"
 )
 
 ## ten-year periods
@@ -93,11 +93,11 @@ period_labels_ten(
   lower_last = 2010
 )
 
-## ten-year periods, 'label_multi' is "exclude",
+## ten-year periods, 'format_range' is "exclude",
 period_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  label_multi = "exclude"
+  format_range = "exclude"
 )
 
 ## include total and NA

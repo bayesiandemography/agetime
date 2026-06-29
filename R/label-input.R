@@ -67,34 +67,34 @@ label_name <- function(label_type) {
 }
 #' To Character Or Factor
 #'
-#' @param x Vector of labels.
-#' @param nm_x Argument name used in error messages.
+#' @param labels Vector of labels.
+#' @param nm_labels Argument name used in error messages.
 #' @param length_zero_ok Argument `length_zero_ok`.
 #' @returns Character vector or factor.
 #'
 #' @noRd
 
-to_character_or_factor <- function(x, nm_x, length_zero_ok) {
-  if (is.data.frame(x)) {
-    cli::cli_abort("{.arg {nm_x}} is a data frame.")
+to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
+  if (is.data.frame(labels)) {
+    cli::cli_abort("{.arg {nm_labels}} is a data frame.")
   }
-  if (is.list(x)) {
-    cli::cli_abort("{.arg {nm_x}} is a list.")
+  if (is.list(labels)) {
+    cli::cli_abort("{.arg {nm_labels}} is a list.")
   }
-  if (!is.null(dim(x))) {
-    cli::cli_abort("{.arg {nm_x}} is not a vector.")
+  if (!is.null(dim(labels))) {
+    cli::cli_abort("{.arg {nm_labels}} is not a vector.")
   }
-  if (identical(length(x), 0L) && !length_zero_ok) {
-    cli::cli_abort("{.arg {nm_x}} has length 0.")
+  if (identical(length(labels), 0L) && !length_zero_ok) {
+    cli::cli_abort("{.arg {nm_labels}} has length 0.")
   }
-  if (is.factor(x)) {
-    return(x)
+  if (is.factor(labels)) {
+    return(labels)
   }
-  x_char <- tryCatch(as.character(x), error = function(e) NULL)
-  if (is.null(x_char)) {
-    cli::cli_abort(c("{.arg {nm_x}} is not a vector of labels.",
-      i = "{.arg {nm_x}} has class {.cls {class(x)}}."
+  labels_char <- tryCatch(as.character(labels), error = function(e) NULL)
+  if (is.null(labels_char)) {
+    cli::cli_abort(c("{.arg {nm_labels}} is not a vector of labels.",
+      i = "{.arg {nm_labels}} has class {.cls {class(labels)}}."
     ))
   }
-  x_char
+  labels_char
 }

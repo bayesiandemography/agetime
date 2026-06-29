@@ -9,30 +9,30 @@
 #' to filter on periods.
 #' See below for examples.
 #'
-#' @param x Vector of period labels.
-#' @param x_one How to interpret
-#' labels in `x` that describe one-year periods.
+#' @param labels Vector of period labels.
+#' @param interpret_single How to interpret
+#' labels in `labels` that describe one-year periods.
 #' Choices are `"lower"` (the default) and `"upper"`.
-#' @param x_multi How to interpret
-#' labels in `x` that describe multi-year periods.
+#' @param interpret_range How to interpret
+#' labels in `labels` that describe multi-year periods.
 #' Choices are `"include"` (the default) and
 #' `"exclude"`.
-#' @param x_fail Action if element of `x`
+#' @param interpret_fail Action if element of `labels`
 #' cannot be parsed: `"error"` (the default),
 #' `"warn"`, or `"silent"`.
-#' @return Numeric vector with the same length as `x`.
+#' @return Numeric vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_lower()] Age equivalent of `period_lower()`
 #' - [cohort_lower()] Cohort equivalent of `period_lower()`
 #'
 #' @examples
-#' x <- c("2025-2030", "2020-2025", "2030-2035")
-#' period_lower(x)
-#' period_upper(x)
-#' period_width(x)
-#' period_mid(x)
+#' labels <- c("2025-2030", "2020-2025", "2030-2035")
+#' period_lower(labels)
+#' period_upper(labels)
+#' period_width(labels)
+#' period_mid(labels)
 #'
 #' ## use 'period_lower()' to filter on period
 #' library(dplyr, warn.conflicts = FALSE)
@@ -45,101 +45,101 @@
 #' df
 #' df |> filter(period_lower(period) >= 2025)
 #'
-#' ## 'x_one' is "lower" (the default)
+#' ## 'interpret_single' is "lower" (the default)
 #' period_lower("2025")
 #' period_upper("2025")
 #' period_width("2025")
 #'
-#' ## 'x_one' is "upper"
-#' period_lower("2025", x_one = "upper")
-#' period_upper("2025", x_one = "upper")
-#' period_width("2025", x_one = "upper")
+#' ## 'interpret_single' is "upper"
+#' period_lower("2025", interpret_single = "upper")
+#' period_upper("2025", interpret_single = "upper")
+#' period_width("2025", interpret_single = "upper")
 #'
-#' ## 'x_multi' is "include" (the default)
+#' ## 'interpret_range' is "include" (the default)
 #' period_upper("2025-2030")
 #' period_width("2025-2030")
 #'
-#' ## 'x_multi' is "exclude"
-#' period_upper("2025-2030", x_multi = "exclude")
-#' period_width("2025-2030", x_multi = "exclude")
+#' ## 'interpret_range' is "exclude"
+#' period_upper("2025-2030", interpret_range = "exclude")
+#' period_width("2025-2030", interpret_range = "exclude")
 #'
-#' ## no action when 'x_fail' is "silent"
+#' ## no action when 'interpret_fail' is "silent"
 #' period_lower(c("2000-2005", "long time ago"),
-#'   x_fail = "silent"
+#'   interpret_fail = "silent"
 #' )
 #' @export
 
-# When length(x) == 0, returns numeric(0).
-period_lower <- function(x,
-                         x_one = c("lower", "upper"),
-                         x_multi = c("include", "exclude"),
-                         x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+# When length(labels) == 0, returns numeric(0).
+period_lower <- function(labels,
+                         interpret_single = c("lower", "upper"),
+                         interpret_range = c("include", "exclude"),
+                         interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_lower(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }
 
 
 #' @export
 #' @rdname period_lower
-period_mid <- function(x,
-                       x_one = c("lower", "upper"),
-                       x_multi = c("include", "exclude"),
-                       x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+period_mid <- function(labels,
+                       interpret_single = c("lower", "upper"),
+                       interpret_range = c("include", "exclude"),
+                       interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_mid(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }
 
 
 #' @export
 #' @rdname period_lower
-period_upper <- function(x,
-                         x_one = c("lower", "upper"),
-                         x_multi = c("include", "exclude"),
-                         x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+period_upper <- function(labels,
+                         interpret_single = c("lower", "upper"),
+                         interpret_range = c("include", "exclude"),
+                         interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_upper(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }
 
 
 #' @export
 #' @rdname period_lower
-period_width <- function(x,
+period_width <- function(labels,
                          ## redundant, but keep so interface constant
-                         x_one = c("lower", "upper"),
-                         x_multi = c("include", "exclude"),
-                         x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                         interpret_single = c("lower", "upper"),
+                         interpret_range = c("include", "exclude"),
+                         interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_width(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

@@ -1,8 +1,8 @@
 #' Fill in Gaps in Age Group Levels
 #'
-#' Fill in gaps in levels of `x`.
+#' Fill in gaps in levels of `labels`.
 #'
-#' If `x` is not a factor, and so does
+#' If `labels` is not a factor, and so does
 #' not have levels, convert it to
 #' a factor before filling in levels.
 #'
@@ -20,116 +20,122 @@
 #' @inheritParams age_lower
 #' @param breaks Boundaries of newly-created age groups.
 #' Boundaries for existing age groups can be omitted.
-#' @return Factor with the same length as `x`.
+#' @return Factor with the same length as `labels`.
 #'
 #' @seealso
 #' - [period_levels_fill()] Period equivalent of `age_levels_fill()`
 #' - [cohort_levels_fill()] Cohort equivalent of `age_levels_fill()`
 #'
 #' @examples
-#' x <- factor(c("0-4", "20-24"))
-#' x
-#' age_levels_fill(x) ## uses existing boundaries
-#' age_levels_fill(x, breaks = c(8, 12))
-#' age_levels_fill_one(x)
-#' age_levels_fill_five(x)
+#' labels <- factor(c("0-4", "20-24"))
+#' labels
+#' age_levels_fill(labels) ## uses existing boundaries
+#' age_levels_fill(labels, breaks = c(8, 12))
+#' age_levels_fill_one(labels)
+#' age_levels_fill_five(labels)
 #'
-#' x <- c("25-29", "0-4")
-#' age_levels_fill_ten(x)
+#' labels <- c("25-29", "0-4")
+#' age_levels_fill_ten(labels)
 #'
-#' x <- c("60+", "0")
-#' age_levels_fill_life(x)
+#' labels <- c("60+", "0")
+#' age_levels_fill_life(labels)
 #'
 #' ## levels are used by functions
 #' ## such as 'table()'
-#' x <- c("30-39", "0-9")
-#' x |> table()
-#' x |>
+#' labels <- c("30-39", "0-9")
+#' labels |> table()
+#' labels |>
 #'   age_levels_fill() |>
 #'   table()
 #'
 #' ## sort after filling
-#' x |>
+#' labels |>
 #'   age_levels_fill() |>
 #'   age_levels_sort() |>
 #'   table()
 #' @export
 
-# When length(x) == 0 and there are no levels to fill, returns an empty factor.
-# If breaks is supplied, levels are built from breaks. When length(x) == 0 but x
+# When length(labels) == 0 and there are no levels to fill,
+# returns an empty factor.
+# If breaks is supplied, levels are built from breaks. When
+# length(labels) == 0 but labels
 # is a factor with levels, levels() are still filled in. The ordered attribute
-# is preserved when x is an ordered factor.
-age_levels_fill <- function(x,
+# is preserved when labels is an ordered factor.
+age_levels_fill <- function(labels,
                             breaks = NULL,
-                            x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+                            interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
-    x = x,
+    labels = labels,
     breaks = breaks,
     width = NULL,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail
   )
 }
 
 #' @rdname age_levels_fill
 #' @export
-age_levels_fill_one <- function(x,
-                                x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+age_levels_fill_one <- function(labels,
+                                interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
-    x = x,
+    labels = labels,
     breaks = NULL,
     width = 1L,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail
   )
 }
 
 #' @rdname age_levels_fill
 #' @export
-age_levels_fill_five <- function(x,
-                                 x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+age_levels_fill_five <- function(labels,
+                                 interpret_fail = c(
+                                   "error", "warn", "silent"
+                                 )) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
-    x = x,
+    labels = labels,
     breaks = NULL,
     width = 5L,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail
   )
 }
 
 #' @rdname age_levels_fill
 #' @export
-age_levels_fill_ten <- function(x,
-                                x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+age_levels_fill_ten <- function(labels,
+                                interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
-    x = x,
+    labels = labels,
     breaks = NULL,
     width = 10L,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail
   )
 }
 
 
 #' @rdname age_levels_fill
 #' @export
-age_levels_fill_life <- function(x,
-                                 x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+age_levels_fill_life <- function(labels,
+                                 interpret_fail = c(
+                                   "error", "warn", "silent"
+                                 )) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill_life(
-    x = x,
-    x_fail = x_fail
+    labels = labels,
+    interpret_fail = interpret_fail
   )
 }

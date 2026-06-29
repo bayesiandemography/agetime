@@ -42,9 +42,9 @@ test_that("age extract functions return NA for NA and Total labels", {
   }
 })
 
-test_that("age_lower() with x_fail = silent returns NA for invalid labels", {
+test_that("age_lower() returns NA silently for invalid labels", {
   x <- c("0-4", "young people", "50plus")
-  expect_values(age_lower(x, x_fail = "silent"), c(0, NA, 50))
+  expect_values(age_lower(x, interpret_fail = "silent"), c(0, NA, 50))
 })
 
 test_that("period extract functions handle multi-year labels", {
@@ -83,29 +83,29 @@ test_that("period extract functions return NA for NA and Total labels", {
   }
 })
 
-test_that("period extract functions respect x_one for one-year labels", {
+test_that("period extractors respect interpret_single", {
   expect_values(period_lower(period_one), 2025)
   expect_values(period_upper(period_one), 2026)
   expect_values(period_width(period_one), 1)
 
-  expect_values(period_lower(period_one, x_one = "upper"), 2024)
-  expect_values(period_upper(period_one, x_one = "upper"), 2025)
-  expect_values(period_width(period_one, x_one = "upper"), 1)
+  expect_values(period_lower(period_one, interpret_single = "upper"), 2024)
+  expect_values(period_upper(period_one, interpret_single = "upper"), 2025)
+  expect_values(period_width(period_one, interpret_single = "upper"), 1)
 })
 
-test_that("period extract functions respect x_multi for multi-year labels", {
+test_that("period extractors respect interpret_range", {
   x <- "2025-2030"
 
   expect_values(period_upper(x), 2030)
   expect_values(period_width(x), 5)
 
-  expect_values(period_upper(x, x_multi = "exclude"), 2031)
-  expect_values(period_width(x, x_multi = "exclude"), 6)
+  expect_values(period_upper(x, interpret_range = "exclude"), 2031)
+  expect_values(period_width(x, interpret_range = "exclude"), 6)
 })
 
-test_that("period_lower() with x_fail = silent returns NA for invalid labels", {
+test_that("period_lower() returns NA silently for invalid labels", {
   x <- c("2000-2005", "long time ago")
-  expect_values(period_lower(x, x_fail = "silent"), c(2000, NA))
+  expect_values(period_lower(x, interpret_fail = "silent"), c(2000, NA))
 })
 
 test_that("cohort extract functions return expected values for mixed labels", {
@@ -153,29 +153,29 @@ test_that("cohort extract functions return NA for NA and Total labels", {
   }
 })
 
-test_that("cohort extract functions respect x_one for one-year labels", {
+test_that("cohort extractors respect interpret_single", {
   expect_values(cohort_lower(cohort_one), 2025)
   expect_values(cohort_upper(cohort_one), 2026)
   expect_values(cohort_width(cohort_one), 1)
 
-  expect_values(cohort_lower(cohort_one, x_one = "upper"), 2024)
-  expect_values(cohort_upper(cohort_one, x_one = "upper"), 2025)
-  expect_values(cohort_width(cohort_one, x_one = "upper"), 1)
+  expect_values(cohort_lower(cohort_one, interpret_single = "upper"), 2024)
+  expect_values(cohort_upper(cohort_one, interpret_single = "upper"), 2025)
+  expect_values(cohort_width(cohort_one, interpret_single = "upper"), 1)
 })
 
-test_that("cohort extract functions respect x_multi for multi-year labels", {
+test_that("cohort extractors respect interpret_range", {
   x <- "2025-2030"
 
   expect_values(cohort_upper(x), 2030)
   expect_values(cohort_width(x), 5)
 
-  expect_values(cohort_upper(x, x_multi = "exclude"), 2031)
-  expect_values(cohort_width(x, x_multi = "exclude"), 6)
+  expect_values(cohort_upper(x, interpret_range = "exclude"), 2031)
+  expect_values(cohort_width(x, interpret_range = "exclude"), 6)
 })
 
-test_that("cohort_lower() with x_fail = silent returns NA for invalid labels", {
+test_that("cohort_lower() returns NA silently for invalid labels", {
   x <- c("2000-2005", "long time ago")
-  expect_values(cohort_lower(x, x_fail = "silent"), c(2000, NA))
+  expect_values(cohort_lower(x, interpret_fail = "silent"), c(2000, NA))
 })
 
 test_that("extract functions accept factor input", {

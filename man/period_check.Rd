@@ -6,29 +6,29 @@
 \title{Check or Make Assertions About Periods}
 \usage{
 period_check(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
   no_na = NA,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_assert(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
   no_na = NA,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
 \item{no_overlap}{No periods overlap.}
 
@@ -40,22 +40,22 @@ to the upper limit of the latest period.}
 
 \item{no_na}{No NA label.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 For \code{period_check()}, a list with logical \code{ok} and data frame
-\code{details}; for \code{period_assert()}, \code{x} invisibly or an error.
+\code{details}; for \code{period_assert()}, \code{labels} invisibly or an error.
 }
 \description{
 Collect information on period labels (\code{period_check()}),
@@ -71,7 +71,7 @@ lab
 
 ## get info on everything
 period_check(
-  x = lab,
+  labels = lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
@@ -79,7 +79,7 @@ period_check(
 )
 
 ## throw error if gaps
-period_assert(x = lab, no_gap = TRUE)
+period_assert(labels = lab, no_gap = TRUE)
 
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
@@ -87,7 +87,7 @@ period_assert(lab_gap, no_gap = FALSE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_check]{age_check()}} Age equivalent of \code{period_check()}
 \item \code{\link[=cohort_check]{cohort_check()}} Cohort equivalent of \code{period_check()}
 }

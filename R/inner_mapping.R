@@ -1,14 +1,14 @@
 #' Mapping Has No Labels
 #'
-#' @param x Vector of labels.
-#' @returns `TRUE` when there are no labels in `x`.
+#' @param labels Vector of labels.
+#' @returns `TRUE` when there are no labels in `labels`.
 #'
 #' @noRd
-mapping_has_no_labels <- function(x) {
-  if (is.factor(x)) {
-    nlevels(x) == 0L
+mapping_has_no_labels <- function(labels) {
+  if (is.factor(labels)) {
+    nlevels(labels) == 0L
   } else {
-    length(x) == 0L
+    length(labels) == 0L
   }
 }
 #' Mapping Empty
@@ -37,56 +37,57 @@ mapping_empty <- function(format) {
 }
 #' Inner Mapping
 #'
-#' @param x Vector of labels.
-#' @param y Vector of labels to compare against `x`.
+#' @param labels Vector of labels.
+#' @param y Vector of labels to compare against `labels`.
 #' @param relation Interval relation used to build mappings.
 #' @param format Output format for mappings.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Mapping object in requested `format`.
 #'
 #' @noRd
 
-inner_mapping <- function(x,
+inner_mapping <- function(labels,
                           y,
                           relation,
                           format,
                           label_type,
-                          x_one,
-                          x_multi,
-                          x_fail) {
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+                          interpret_single,
+                          interpret_range,
+                          interpret_fail) {
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
   if (is.null(y)) {
-    y <- x
+    y <- labels
   } else {
     y <- to_character_or_factor(
-      x = y,
-      nm_x = "y",
+      labels = y,
+      nm_labels = "y",
       length_zero_ok = TRUE
     )
   }
-  if (mapping_has_no_labels(x) || mapping_has_no_labels(y)) {
+  if (mapping_has_no_labels(labels) || mapping_has_no_labels(y)) {
     return(mapping_empty(format = format))
   }
   intervals_x <- intervals(
-    labels = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   intervals_y <- intervals(
     labels = y,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   construct_mapping(
     intervals_x = intervals_x,

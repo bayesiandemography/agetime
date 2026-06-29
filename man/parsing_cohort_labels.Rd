@@ -4,35 +4,36 @@
 \alias{parsing_cohort_labels}
 \title{Parsing Cohort Labels}
 \description{
-Parameters \code{x_one}, \code{x_multi}, and \code{x_fail} control how \pkg{agetime}
+Parameters \code{interpret_single}, \code{interpret_range}, and \code{interpret_fail}
+control how \pkg{agetime}
 interprets cohort labels.
 }
-\section{\code{x_one}}{
+\section{\code{interpret_single}}{
  Parsing one-year labels
 \itemize{
-\item \code{x_one} is \code{"lower"}. Label refers to lower limit.
+\item \code{interpret_single} is \code{"lower"}. Label refers to lower limit.
 For instance, \code{"2030"} might be 1 January 2030 to 1 January 2031.
-\item \code{x_one} is \code{"upper"}. Label refers to upper limit.
+\item \code{interpret_single} is \code{"upper"}. Label refers to upper limit.
 For instance, \code{"2030"} might be 30 June 2029 to 30 June 2030.
 }
 }
 
-\section{\code{x_multi}}{
+\section{\code{interpret_range}}{
  Parsing multi-year labels
 \itemize{
-\item \code{x_multi} is \code{"include"}. Label includes upper limit.
+\item \code{interpret_range} is \code{"include"}. Label includes upper limit.
 For instance, \code{"2030-2035"} might be 30 June 2030 to 30 June 2035.
-\item \code{x_multi} is \code{"exclude"}. Label excludes upper limit.
+\item \code{interpret_range} is \code{"exclude"}. Label excludes upper limit.
 For instance, \code{"2030-2035"} might be 1 January 2030 to 1 January 2036.
 }
 }
 
-\section{\code{x_fail}}{
+\section{\code{interpret_fail}}{
  Action if label cannot be parsed
 \itemize{
-\item \code{x_fail} is \code{"error"}. Throw an error.
-\item \code{x_fail} is \code{"warn"}. Throw a warning.
-\item \code{x_fail} is \code{"silent"}. Ignore the label and carry on.
+\item \code{interpret_fail} is \code{"error"}. Throw an error.
+\item \code{interpret_fail} is \code{"warn"}. Throw a warning.
+\item \code{interpret_fail} is \code{"silent"}. Ignore the label and carry on.
 }
 }
 

@@ -29,15 +29,19 @@ label_parser_na <- function(label) {
 #' Label Parser Range
 #'
 #' @param label Single label string.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
 #' @returns Length-2 numeric vector for range labels, or `NULL`.
 #'
-#' With `x_multi = "exclude"`, the parsed upper bound is incremented by 1.
+#' With `interpret_range = "exclude"`, the parsed upper bound is
+#' incremented by 1.
 #'
 #' @noRd
 
-label_parser_range <- function(label, x_multi) {
-  x_multi <- match.arg(x_multi, choices = c("include", "exclude"))
+label_parser_range <- function(label, interpret_range) {
+  interpret_range <- match.arg(interpret_range,
+    choices = c("include", "exclude")
+  )
   m <- regexec("^(\\d+)-(\\d+)$", label, perl = TRUE)
   mm <- regmatches(label, m)[[1L]]
   if (length(mm) == 0L) {
@@ -45,7 +49,7 @@ label_parser_range <- function(label, x_multi) {
   }
   l <- as.double(mm[[2L]])
   u <- as.double(mm[[3L]])
-  if (x_multi == "exclude") {
+  if (interpret_range == "exclude") {
     u <- u + 1
   }
   c(l, u)
@@ -53,19 +57,19 @@ label_parser_range <- function(label, x_multi) {
 #' Label Parser One
 #'
 #' @param label Single label string.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @returns Length-2 numeric vector for one-year labels, or `NULL`.
 #'
 #' @noRd
 
-label_parser_one <- function(label, x_one) {
-  x_one <- match.arg(x_one, choices = c("lower", "upper"))
+label_parser_one <- function(label, interpret_single) {
+  interpret_single <- match.arg(interpret_single, choices = c("lower", "upper"))
   m <- regexec("^(\\d+)$", label, perl = TRUE)
   mm <- regmatches(label, m)[[1L]]
   if (length(mm) == 0L) {
     return(NULL)
   }
-  if (x_one == "lower") {
+  if (interpret_single == "lower") {
     l <- as.double(mm[[2L]])
     u <- l + 1
   } else {

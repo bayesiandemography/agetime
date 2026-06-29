@@ -6,24 +6,24 @@
 \alias{age_modify_life}
 \title{Convert to Specialised Age Groups}
 \usage{
-age_modify_five(x, x_fail = c("error", "warn", "silent"))
+age_modify_five(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_modify_ten(x, x_fail = c("error", "warn", "silent"))
+age_modify_ten(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_modify_life(x, x_fail = c("error", "warn", "silent"))
+age_modify_life(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Modify the age groups used by \code{x}.
+Modify the age groups used by \code{labels}.
 The new age groups must contain
 the old age groups, and follow a regular
 pattern:
@@ -34,10 +34,10 @@ pattern:
 }
 }
 \examples{
-x <- c("1-3", "87-89", "0", "91+", "total", "52")
-age_modify_five(x)
-age_modify_ten(x)
-age_modify_life(x)
+labels <- c("1-3", "87-89", "0", "91+", "total", "52")
+age_modify_five(labels)
+age_modify_ten(labels)
+age_modify_life(labels)
 }
 \seealso{
 \itemize{

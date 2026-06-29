@@ -4,25 +4,25 @@
 \alias{age_is_open}
 \title{Identify Age Labels for Open Age Groups}
 \usage{
-age_is_open(x, x_fail = c("error", "warn", "silent"))
+age_is_open(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Logical vector with the same length as \code{x}.
+Logical vector with the same length as \code{labels}.
 }
 \description{
 Find age group labels that \pkg{agetime} interprets as
 open, ie having no upper limit.
 }
 \examples{
-x <- c("20+", "infant", "100+", "60to79")
-age_is_open(x)
+labels <- c("20+", "infant", "100+", "60to79")
+age_is_open(labels)
 }
 \seealso{
 \itemize{

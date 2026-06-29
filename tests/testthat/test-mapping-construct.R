@@ -3,17 +3,17 @@ test_that("construct_modify_mapping() adds an open-left row", {
   intervals <- intervals(
     labels = x,
     label_type = "cohort",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = "error"
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = "error"
   )
   breaks <- c(2020, 2025, 2030)
   levels_breaks <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = TRUE,
     is_open_right = FALSE,
-    label_one = "lower",
-    label_multi = "exclude",
+    format_single = "lower",
+    format_range = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -30,8 +30,8 @@ test_that("construct_modify_mapping() adds an open-left row", {
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
-    label_one = "lower",
-    label_multi = "exclude",
+    format_single = "lower",
+    format_range = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -57,17 +57,17 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
   intervals <- intervals(
     labels = x,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = "error"
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = "error"
   )
   breaks <- c(0, 10)
   levels_with_na <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
-    label_one = "lower",
-    label_multi = "exclude",
+    format_single = "lower",
+    format_range = "exclude",
     include_total = FALSE,
     include_na = TRUE
   )
@@ -97,17 +97,17 @@ test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
   intervals <- intervals(
     labels = x,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = "error"
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = "error"
   )
   breaks <- c(0, 10)
   levels_breaks <- agetime:::construct_labels_breaks(
     breaks = breaks,
     is_open_left = FALSE,
     is_open_right = FALSE,
-    label_one = "lower",
-    label_multi = "exclude",
+    format_single = "lower",
+    format_range = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -133,16 +133,16 @@ test_that("construct_mapping() errors for an invalid relation", {
   intervals_x <- intervals(
     labels = "0-4",
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = "error"
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = "error"
   )
   intervals_y <- intervals(
     labels = "5-9",
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = "error"
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = "error"
   )
   expect_error(
     agetime:::construct_mapping(

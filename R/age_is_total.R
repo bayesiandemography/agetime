@@ -4,7 +4,7 @@
 #'
 #' @inheritParams age_lower
 #'
-#' @return Logical vector with the same length as `x`.
+#' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
 #' - [age_is_open()] Find open age groups
@@ -12,20 +12,20 @@
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
 #'
 #' @examples
-#' x <- c("20-24", "Total", "100+", "ALL")
-#' age_is_total(x)
+#' labels <- c("20-24", "Total", "100+", "ALL")
+#' age_is_total(labels)
 #' @export
 
-# When length(x) == 0, returns logical(0).
-age_is_total <- function(x,
-                         x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+# When length(labels) == 0, returns logical(0).
+age_is_total <- function(labels,
+                         interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
-    x = x,
+    labels = labels,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail
   )
 }
 
@@ -37,27 +37,27 @@ age_is_total <- function(x,
 #'
 #' @inheritParams age_lower
 #'
-#' @return Logical vector with the same length as `x`.
+#' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
 #' - [age_is_total()] Find age labels for totals
 #' - [cohort_is_open()] Cohort equivalent of `age_is_open()`
 #'
 #' @examples
-#' x <- c("20+", "infant", "100+", "60to79")
-#' age_is_open(x)
+#' labels <- c("20+", "infant", "100+", "60to79")
+#' age_is_open(labels)
 #' @export
 
-# When length(x) == 0, returns logical(0).
-age_is_open <- function(x,
-                        x_fail = c("error", "warn", "silent")) {
-  x_fail <- match.arg(x_fail)
+# When length(labels) == 0, returns logical(0).
+age_is_open <- function(labels,
+                        interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
-    x = x,
+    labels = labels,
     label_type = "age",
-    x_one = "lower",
-    x_multi = "exclude",
-    x_fail = x_fail,
+    interpret_single = "lower",
+    interpret_range = "exclude",
+    interpret_fail = interpret_fail,
     check_open_left = FALSE,
     check_open_right = TRUE
   )

@@ -4,17 +4,17 @@
 #' Construct Labels From Intervals
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @returns Character vector of labels for parsed intervals.
 #'
-#' When `label_multi = "exclude"`, range labels are rendered with the displayed
+#' When `format_range = "exclude"`, range labels are rendered with the displayed
 #' upper bound reduced by 1 from the internal interval upper bound.
 #'
 #' @noRd
 construct_labels_intervals <- function(intervals,
-                                       label_one,
-                                       label_multi) {
+                                       format_single,
+                                       format_range) {
   is_one <- get_is_one(intervals)
   is_multi <- get_is_multi(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -34,19 +34,19 @@ construct_labels_intervals <- function(intervals,
     cli::cli_abort("Internal error: Invalid interval.")
   }
   ans <- character(length = length(l))
-  if (label_one == "lower") {
+  if (format_single == "lower") {
     ans[is_one] <- as.character(l[is_one])
-  } else if (label_one == "upper") {
+  } else if (format_single == "upper") {
     ans[is_one] <- as.character(u[is_one])
   } else {
-    cli::cli_abort("Internal error: 'label_one' invalid.")
+    cli::cli_abort("Internal error: 'format_single' invalid.")
   }
-  if (label_multi == "include") {
+  if (format_range == "include") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
-  } else if (label_multi == "exclude") {
+  } else if (format_range == "exclude") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
   } else {
-    cli::cli_abort("Internal error: 'label_multi' invalid.")
+    cli::cli_abort("Internal error: 'format_range' invalid.")
   }
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
@@ -60,21 +60,21 @@ construct_labels_intervals <- function(intervals,
 #' @param breaks Increasing vector of break points.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
-#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
 #' @returns Character vector of labels for breaks.
 #'
-#' When `label_multi = "exclude"`, range labels are rendered with the displayed
+#' When `format_range = "exclude"`, range labels are rendered with the displayed
 #' upper bound reduced by 1 from the interval break upper bound.
 #'
 #' @noRd
 construct_labels_breaks <- function(breaks,
                                     is_open_left,
                                     is_open_right,
-                                    label_one,
-                                    label_multi,
+                                    format_single,
+                                    format_range,
                                     include_total,
                                     include_na) {
   lower <- breaks[-length(breaks)]
@@ -95,12 +95,12 @@ construct_labels_breaks <- function(breaks,
   ans <- character(length = length(lower))
   ans[is_open_left] <- paste0("<", upper[is_open_left])
   ans[is_open_right] <- paste0(lower[is_open_right], "+")
-  if (label_one == "lower") {
+  if (format_single == "lower") {
     ans[is_one] <- lower[is_one]
   } else {
     ans[is_one] <- upper[is_one]
   }
-  if (label_multi == "exclude") {
+  if (format_range == "exclude") {
     ans[is_multi] <- paste(lower[is_multi],
       upper[is_multi] - 1L,
       sep = "-"

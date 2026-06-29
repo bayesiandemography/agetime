@@ -4,24 +4,24 @@
 \alias{age_is_total}
 \title{Identify Age Group Labels for Totals}
 \usage{
-age_is_total(x, x_fail = c("error", "warn", "silent"))
+age_is_total(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Logical vector with the same length as \code{x}.
+Logical vector with the same length as \code{labels}.
 }
 \description{
 Find age group labels that \pkg{agetime} interprets as totals.
 }
 \examples{
-x <- c("20-24", "Total", "100+", "ALL")
-age_is_total(x)
+labels <- c("20-24", "Total", "100+", "ALL")
+age_is_total(labels)
 }
 \seealso{
 \itemize{

@@ -6,7 +6,7 @@
 \title{Check or Make Assertions About Age Groups}
 \usage{
 age_check(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
@@ -14,11 +14,11 @@ age_check(
   include_zero = NA,
   include_open = NA,
   valid_life = NA,
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 
 age_assert(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
@@ -26,11 +26,11 @@ age_assert(
   include_zero = NA,
   include_open = NA,
   valid_life = NA,
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
 \item{no_overlap}{No age groups overlap.}
 
@@ -51,13 +51,13 @@ has no upper limit.}
 \item{valid_life}{All labels valid for
 (abridged) life table.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 For \code{age_check()}, a list with logical \code{ok} and data frame
-\code{details}; for \code{age_assert()}, \code{x} invisibly or an error.
+\code{details}; for \code{age_assert()}, \code{labels} invisibly or an error.
 }
 \description{
 Collect information on age group labels (\code{age_check()}),
@@ -70,7 +70,7 @@ lab
 
 ## get info on everything
 age_check(
-  x = lab,
+  labels = lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
@@ -81,11 +81,11 @@ age_check(
 )
 
 ## throw error if gaps
-age_assert(x = lab, no_gap = TRUE)
+age_assert(labels = lab, no_gap = TRUE)
 
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
-age_assert(x = lab_gap, no_gap = FALSE)
+age_assert(labels = lab_gap, no_gap = FALSE)
 }
 \seealso{
 \itemize{

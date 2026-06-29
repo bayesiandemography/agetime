@@ -20,9 +20,9 @@ test_that("age_standard() collapses equivalent levels", {
   expect_identical(levels(ans), "5-9")
 })
 
-test_that("age_standard() maps invalid levels to NA with x_fail = silent", {
+test_that("age_standard() maps invalid levels to NA silently", {
   x <- factor(character(0), levels = c("0-4", "not a label"))
-  ans <- age_standard(x, x_fail = "silent")
+  ans <- age_standard(x, interpret_fail = "silent")
   expect_identical(levels(ans), c("0-4", NA))
 })
 

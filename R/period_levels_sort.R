@@ -1,8 +1,8 @@
 #' Sort Period Levels
 #'
-#' Sort the levels of `x`.
+#' Sort the levels of `labels`.
 #'
-#' If `x` is not a factor, and so
+#' If `labels` is not a factor, and so
 #' does not have  levels,
 #' convert it to a factor first.
 #'
@@ -16,35 +16,37 @@
 #' @param decreasing Whether sort is
 #' increasing or decreasing. Default
 #' is `FALSE`.
-#' @return Factor with the same length as `x`.
+#' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_levels_sort()] Age equivalent of `period_levels_sort()`
 #' - [cohort_levels_sort()] Cohort equivalent of `period_levels_sort()`
 #'
 #' @examples
-#' x <- c("2020-2025", "2050", "Total", NA, "2025-2050")
-#' period_levels_sort(x)
+#' labels <- c("2020-2025", "2050", "Total", NA, "2025-2050")
+#' period_levels_sort(labels)
 #' @export
 
-# When length(x) == 0 and there are no levels to sort, returns an empty factor.
-# When length(x) == 0 but x is a factor with levels, levels() are still sorted.
-# The ordered attribute is preserved when x is an ordered factor.
-period_levels_sort <- function(x,
+# When length(labels) == 0 and there are no levels to sort,
+# returns an empty factor.
+# When length(labels) == 0 but labels is a factor with levels,
+# levels() are still sorted.
+# The ordered attribute is preserved when labels is an ordered factor.
+period_levels_sort <- function(labels,
                                decreasing = FALSE,
-                               x_one = c("lower", "upper"),
-                               x_multi = c("include", "exclude"),
-                               x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                               interpret_single = c("lower", "upper"),
+                               interpret_range = c("include", "exclude"),
+                               interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_levels_sort(
-    x = x,
+    labels = labels,
     decreasing = decreasing,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

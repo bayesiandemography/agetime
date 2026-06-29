@@ -5,41 +5,41 @@
 \title{Sort Period Levels}
 \usage{
 period_levels_sort(
-  x,
+  labels,
   decreasing = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
 \item{decreasing}{Whether sort is
 increasing or decreasing. Default
 is \code{FALSE}.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Factor with the same length as \code{x}.
+Factor with the same length as \code{labels}.
 }
 \description{
-Sort the levels of \code{x}.
+Sort the levels of \code{labels}.
 }
 \details{
-If \code{x} is not a factor, and so
+If \code{labels} is not a factor, and so
 does not have  levels,
 convert it to a factor first.
 
@@ -50,12 +50,12 @@ second-to-last, and
 totals come last.
 }
 \examples{
-x <- c("2020-2025", "2050", "Total", NA, "2025-2050")
-period_levels_sort(x)
+labels <- c("2020-2025", "2050", "Total", NA, "2025-2050")
+period_levels_sort(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_levels_sort]{age_levels_sort()}} Age equivalent of \code{period_levels_sort()}
 \item \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{period_levels_sort()}
 }

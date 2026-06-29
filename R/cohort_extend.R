@@ -1,9 +1,9 @@
 #' Extend a Set of Cohorts
 #'
-#' Add new cohorts at the end of `x`.
+#' Add new cohorts at the end of `labels`.
 #'
 #' By default, the width of the new cohorts
-#' is derived from the last element of `x`,
+#' is derived from the last element of `labels`,
 #' but a value can be specified through the
 #' `width` arugment.
 #'
@@ -13,41 +13,41 @@
 #' @param width Width of the cohorts
 #' to be added.
 #' @param include_x Should the return value
-#' include `x`? Default is `TRUE`.
+#' include `labels`? Default is `TRUE`.
 #' @return Character vector or factor.
-#' Length is `n`, or `length(x) + n` when `include_x` is `TRUE`.
+#' Length is `n`, or `length(labels) + n` when `include_x` is `TRUE`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [age_extend()] Age equivalent of `cohort_extend()`
 #' - [period_extend()] Period equivalent of `cohort_extend()`
 #'
 #' @examples
-#' x <- c("2020-2025", "2025-2030")
-#' cohort_extend(x, n = 2)
-#' cohort_extend(x, n = 2, width = 10)
-#' cohort_extend(x, n = 2, include_x = FALSE)
+#' labels <- c("2020-2025", "2025-2030")
+#' cohort_extend(labels, n = 2)
+#' cohort_extend(labels, n = 2, width = 10)
+#' cohort_extend(labels, n = 2, include_x = FALSE)
 #' @export
 
-# When length(x) == 0, throws an error (no interval to extend from).
-cohort_extend <- function(x,
+# When length(labels) == 0, throws an error (no interval to extend from).
+cohort_extend <- function(labels,
                           n = 1L,
                           width = NULL,
                           include_x = TRUE,
-                          x_one = c("lower", "upper"),
-                          x_multi = c("include", "exclude"),
-                          x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                          interpret_single = c("lower", "upper"),
+                          interpret_range = c("include", "exclude"),
+                          interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_extend(
-    x = x,
+    labels = labels,
     n = n,
     width = width,
     include_x = include_x,
     label_type = "cohort",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

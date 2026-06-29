@@ -9,53 +9,53 @@
 and Midpoints of Cohorts}
 \usage{
 cohort_lower(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_mid(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_upper(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_width(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Numeric vector with the same length as \code{x}.
+Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -67,11 +67,11 @@ to filter on cohorts.
 See below for examples.
 }
 \examples{
-x <- c("2025-2030", "<2025", "2030-2035")
-cohort_lower(x)
-cohort_upper(x)
-cohort_width(x)
-cohort_mid(x)
+labels <- c("2025-2030", "<2025", "2030-2035")
+cohort_lower(labels)
+cohort_upper(labels)
+cohort_width(labels)
+cohort_mid(labels)
 
 ## use 'cohort_lower()' to filter on cohort
 library(dplyr, warn.conflicts = FALSE)
@@ -84,32 +84,32 @@ df <- tribble(
 df
 df |> filter(cohort_lower(cohort) >= 2025)
 
-## 'x_one' is "lower" (the default)
+## 'interpret_single' is "lower" (the default)
 cohort_lower("2025")
 cohort_upper("2025")
 cohort_width("2025")
 
-## 'x_one' is "upper"
-cohort_lower("2025", x_one = "upper")
-cohort_upper("2025", x_one = "upper")
-cohort_width("2025", x_one = "upper")
+## 'interpret_single' is "upper"
+cohort_lower("2025", interpret_single = "upper")
+cohort_upper("2025", interpret_single = "upper")
+cohort_width("2025", interpret_single = "upper")
 
-## 'x_multi' is "include" (the default)
+## 'interpret_range' is "include" (the default)
 cohort_upper("2025-2030")
 cohort_width("2025-2030")
 
-## 'x_multi' is "exclude"
-cohort_upper("2025-2030", x_multi = "exclude")
-cohort_width("2025-2030", x_multi = "exclude")
+## 'interpret_range' is "exclude"
+cohort_upper("2025-2030", interpret_range = "exclude")
+cohort_width("2025-2030", interpret_range = "exclude")
 
-## no action when 'x_fail' is "silent"
+## no action when 'interpret_fail' is "silent"
 cohort_lower(c("2000-2005", "long time ago"),
-  x_fail = "silent"
+  interpret_fail = "silent"
 )
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{cohort_lower()}
 \item \code{\link[=period_lower]{period_lower()}} Period equivalent of \code{cohort_lower()}
 }

@@ -3,18 +3,18 @@
 #' @description
 #'
 #' Create a mapping between period labels. A mapping
-#' depicts a relationship between the labels of `x`
+#' depicts a relationship between the labels of `labels`
 #' and the labels of `y`. The types of relationship
 #' that can be mapped are:
-#' - "x equals y"
-#' - "x contains y"
-#' - "x is contained in y"
-#' - "x overlaps with y".
+#' - "labels equals y"
+#' - "labels contains y"
+#' - "labels is contained in y"
+#' - "labels overlaps with y".
 #'
 #' @details
 #'
 #' If no value for `y` is supplied,
-#' `x` is mapped onto itself.
+#' `labels` is mapped onto itself.
 #'
 #' Tibbles produced by `period_mapping()` are sparse
 #' in that they only include matches. Matrices
@@ -24,17 +24,17 @@
 #'
 #' @section The `relation` argument:
 #'
-#' | `relation` | Endpoints of `x` and `y`                   |
+#' | `relation` | Endpoints of `labels` and `y`                   |
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | Endpoints equal  |
-#' | `"contains"` | Endpoints of `y` inside endpoints of `x`  |
-#' | `"is-contained-in"`| Endpoints of `x` inside endpoints of `y`  |
-#' | `"overlaps-with"` | Endpoint of `x` in `y` or endpoint of `y` in `x` |
+#' | `"contains"` | Endpoints of `y` inside endpoints of `labels`  |
+#' | `"is-contained-in"`| Endpoints of `labels` inside endpoints of `y`  |
+#' | `"overlaps-with"` | Endpoint of `labels` in `y`, or reverse |
 #'
 #' @inheritParams period_lower
-#' @param x Vector of period labels.
+#' @param labels Vector of period labels.
 #' @param y Vector of period labels. If
-#' no value supplied, `x` is mapped onto itself.
+#' no value supplied, `labels` is mapped onto itself.
 #' @param relation Relationship between
 #' labels. Choices are `"equals"` (the default),
 #' `"contains"`, `"is-contained-in"`, and `"overlaps-with"`.
@@ -45,32 +45,32 @@
 #' @return [Tibble][tibble::tibble()] or matrix, depending on `format`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_mapping()] Age equivalent of `period_mapping()`
 #' - [cohort_mapping()] Cohort equivalent of `period_mapping()`
 #'
 #' @examples
-#' x <- c("2020-2025", "2030", "2025-2027")
+#' labels <- c("2020-2025", "2030", "2025-2027")
 #' y <- c("2025-2030", "2020-2025", "2026-2034")
-#' period_mapping(x = x, y = y)
-#' period_mapping(x = x, y = y, format = "matrix")
-#' period_mapping(x = x, y = y, relation = "contains")
-#' period_mapping(x = x, y = y, relation = "is-contained-in")
-#' period_mapping(x = x, y = y, relation = "overlaps-with")
+#' period_mapping(labels = labels, y = y)
+#' period_mapping(labels = labels, y = y, format = "matrix")
+#' period_mapping(labels = labels, y = y, relation = "contains")
+#' period_mapping(labels = labels, y = y, relation = "is-contained-in")
+#' period_mapping(labels = labels, y = y, relation = "overlaps-with")
 #'
 #' # sparse tibble vs dense matrix
-#' x <- c("2020-2025", "2030-2035")
+#' labels <- c("2020-2025", "2030-2035")
 #' y <- c("2020-2025", "2025-2030")
-#' period_mapping(x = x, y = y) # one match
-#' period_mapping(x = x, y = y, format = "matrix") # 1 match and 3 non-matches
+#' period_mapping(labels = labels, y = y) # one match
+#' period_mapping(labels = labels, y = y, format = "matrix")
 #'
-#' # mapping 'x' on to itself
-#' x <- c("2020--2025", "2020-2025", "2030")
-#' period_mapping(x)
+#' # mapping 'labels' on to itself
+#' labels <- c("2020--2025", "2020-2025", "2030")
+#' period_mapping(labels)
 #' @export
-# When x or y is character(0), or a factor with no levels, returns an empty
+# When labels or y is character(0), or a factor with no levels, returns an empty
 # mapping (zero-row tibble or zero-by-zero matrix, per format).
-period_mapping <- function(x,
+period_mapping <- function(labels,
                            y = NULL,
                            relation = c(
                              "equals",
@@ -79,22 +79,22 @@ period_mapping <- function(x,
                              "overlaps-with"
                            ),
                            format = c("tibble", "matrix"),
-                           x_one = c("lower", "upper"),
-                           x_multi = c("include", "exclude"),
-                           x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                           interpret_single = c("lower", "upper"),
+                           interpret_range = c("include", "exclude"),
+                           interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   relation <- match.arg(relation)
   format <- match.arg(format)
   inner_mapping(
-    x = x,
+    labels = labels,
     y = y,
     relation = relation,
     format = format,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
 }

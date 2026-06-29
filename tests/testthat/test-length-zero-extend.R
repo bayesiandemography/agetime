@@ -26,6 +26,6 @@ test_that("*_extend() suggests a label when x has length 0", {
     age_extend(character(0)),
     error = function(e) conditionMessage(e)
   )
-  expect_match(msg, "`x` has length 0\\.")
+  expect_match(msg, "`labels` has length 0\\.")
   expect_match(msg, "Supply at least one label to extend from\\?")
 })

@@ -61,7 +61,8 @@ test_that("age_levels_fill_life() with length-0 factor updates levels", {
   )
 })
 
-# period_levels_fill() / cohort_levels_fill() have x_one and x_multi; defaults
+# period_levels_fill() / cohort_levels_fill() have interpret_single
+# and interpret_range; defaults
 # suffice when length(x) == 0.
 
 test_that("period_levels_fill() with length-0 input and breaks builds levels", {

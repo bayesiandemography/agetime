@@ -1,10 +1,11 @@
 #' Inner Assert
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @param no_overlap Expected overlap check result.
 #' @param no_gap Expected gap check result.
 #' @param no_total Expected total-label check result.
@@ -12,15 +13,15 @@
 #' @param include_zero Expected inclusion of a zero-start interval.
 #' @param include_open Expected inclusion of an open interval.
 #' @param valid_life Expected life-table validity check result.
-#' @returns `x`, invisibly, or an error if checks fail.
+#' @returns `labels`, invisibly, or an error if checks fail.
 #'
 #' @noRd
 
-inner_assert <- function(x,
+inner_assert <- function(labels,
                          label_type,
-                         x_one,
-                         x_multi,
-                         x_fail,
+                         interpret_single,
+                         interpret_range,
+                         interpret_fail,
                          no_overlap,
                          no_gap,
                          no_total,
@@ -29,11 +30,11 @@ inner_assert <- function(x,
                          include_open,
                          valid_life) {
   val <- inner_check(
-    x = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail,
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
@@ -43,15 +44,16 @@ inner_assert <- function(x,
     valid_life = valid_life
   )
   throw_assert_error(val)
-  invisible(x)
+  invisible(labels)
 }
 #' Inner Check
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @param no_overlap Expected overlap check result.
 #' @param no_gap Expected gap check result.
 #' @param no_total Expected total-label check result.
@@ -64,11 +66,11 @@ inner_assert <- function(x,
 #' @noRd
 
 
-inner_check <- function(x,
+inner_check <- function(labels,
                         label_type,
-                        x_one,
-                        x_multi,
-                        x_fail,
+                        interpret_single,
+                        interpret_range,
+                        interpret_fail,
                         no_overlap,
                         no_gap,
                         no_total,
@@ -76,17 +78,17 @@ inner_check <- function(x,
                         include_zero,
                         include_open,
                         valid_life) {
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
   intervals <- intervals(
-    labels = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   val_no_overlap <- inner_check_no_overlap(
     intervals = intervals,

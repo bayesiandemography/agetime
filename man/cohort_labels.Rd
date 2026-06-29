@@ -10,8 +10,8 @@
 cohort_labels(
   breaks,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -20,8 +20,8 @@ cohort_labels_one(
   lower_first,
   lower_last,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -30,8 +30,8 @@ cohort_labels_five(
   lower_first,
   lower_last,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -40,8 +40,8 @@ cohort_labels_ten(
   lower_first,
   lower_last,
   open = FALSE,
-  label_one = c("lower", "upper"),
-  label_multi = c("include", "exclude"),
+  format_single = c("lower", "upper"),
+  format_range = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -54,9 +54,9 @@ A numeric vector.}
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
-\item{label_one}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
+\item{format_single}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
 
-\item{label_multi}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
+\item{format_range}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
 
 \item{include_total}{Whether to include a
 \code{"Total"} category.}
@@ -97,11 +97,11 @@ cohort_labels_one(
   lower_last = 2010
 )
 
-## single-year cohorts, 'label_one' is "upper"
+## single-year cohorts, 'format_single' is "upper"
 cohort_labels_one(
   lower_first = 2000,
   lower_last = 2010,
-  label_one = "upper"
+  format_single = "upper"
 )
 
 ## ten-year cohorts
@@ -110,11 +110,11 @@ cohort_labels_ten(
   lower_last = 2010
 )
 
-## ten-year cohorts, 'label_multi' is "exclude",
+## ten-year cohorts, 'format_range' is "exclude",
 cohort_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  label_multi = "exclude"
+  format_range = "exclude"
 )
 
 ## include total and NA

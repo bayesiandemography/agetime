@@ -11,8 +11,8 @@
 #' `"Total"` category.
 #' @param include_na Whether to include
 #' an `NA` category.
-#' @param label_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param label_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @return Character vector.
 #' Length depends on the function arguments.
 #'
@@ -33,11 +33,11 @@
 #'   lower_last = 2010
 #' )
 #'
-#' ## single-year periods, 'label_one' is "upper"
+#' ## single-year periods, 'format_single' is "upper"
 #' period_labels_one(
 #'   lower_first = 2000,
 #'   lower_last = 2010,
-#'   label_one = "upper"
+#'   format_single = "upper"
 #' )
 #'
 #' ## ten-year periods
@@ -46,11 +46,11 @@
 #'   lower_last = 2010
 #' )
 #'
-#' ## ten-year periods, 'label_multi' is "exclude",
+#' ## ten-year periods, 'format_range' is "exclude",
 #' period_labels_ten(
 #'   lower_first = 2000,
 #'   lower_last = 2010,
-#'   label_multi = "exclude"
+#'   format_range = "exclude"
 #' )
 #'
 #' ## include total and NA
@@ -62,16 +62,16 @@
 #' )
 #' @export
 period_labels <- function(breaks,
-                          label_one = c("lower", "upper"),
-                          label_multi = c("include", "exclude"),
+                          format_single = c("lower", "upper"),
+                          format_range = c("include", "exclude"),
                           include_total = FALSE,
                           include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  format_single <- match.arg(format_single)
+  format_range <- match.arg(format_range)
   inner_labels(
     breaks = breaks,
-    label_one = label_one,
-    label_multi = label_multi,
+    format_single = format_single,
+    format_range = format_range,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = include_total,
@@ -83,17 +83,17 @@ period_labels <- function(breaks,
 #' @export
 period_labels_one <- function(lower_first,
                               lower_last,
-                              label_one = c("lower", "upper"),
-                              label_multi = c("include", "exclude"),
+                              format_single = c("lower", "upper"),
+                              format_range = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  format_single <- match.arg(format_single)
+  format_range <- match.arg(format_range)
   inner_labels_one(
     lower_first = lower_first,
     lower_last = lower_last,
-    label_one = label_one,
-    label_multi = label_multi,
+    format_single = format_single,
+    format_range = format_range,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = include_total,
@@ -106,17 +106,17 @@ period_labels_one <- function(lower_first,
 #' @export
 period_labels_five <- function(lower_first,
                                lower_last,
-                               label_one = c("lower", "upper"),
-                               label_multi = c("include", "exclude"),
+                               format_single = c("lower", "upper"),
+                               format_range = c("include", "exclude"),
                                include_total = FALSE,
                                include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  format_single <- match.arg(format_single)
+  format_range <- match.arg(format_range)
   inner_labels_five(
     lower_first = lower_first,
     lower_last = lower_last,
-    label_one = label_one,
-    label_multi = label_multi,
+    format_single = format_single,
+    format_range = format_range,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = include_total,
@@ -128,17 +128,17 @@ period_labels_five <- function(lower_first,
 #' @export
 period_labels_ten <- function(lower_first,
                               lower_last,
-                              label_one = c("lower", "upper"),
-                              label_multi = c("include", "exclude"),
+                              format_single = c("lower", "upper"),
+                              format_range = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
-  label_one <- match.arg(label_one)
-  label_multi <- match.arg(label_multi)
+  format_single <- match.arg(format_single)
+  format_range <- match.arg(format_range)
   inner_labels_ten(
     lower_first = lower_first,
     lower_last = lower_last,
-    label_one = label_one,
-    label_multi = label_multi,
+    format_single = format_single,
+    format_range = format_range,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = include_total,

@@ -1,6 +1,6 @@
 #' Inner Levels Set Open
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param open_boundary Boundary used to open intervals.
 #' @param nm_open_boundary Argument name used in boundary error messages.
 #' @param make_open_left Whether to open intervals below `open_boundary` on
@@ -8,34 +8,35 @@
 #' @param make_open_right Whether to open intervals at or above `open_boundary`
 #' on the right.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with selected intervals made open-ended in values and levels.
 #'
 #' Errors when `open_boundary` would split an existing interval.
 #'
 #' @noRd
-inner_levels_set_open <- function(x,
+inner_levels_set_open <- function(labels,
                                   open_boundary,
                                   nm_open_boundary,
                                   make_open_left,
                                   make_open_right,
                                   label_type,
-                                  x_one,
-                                  x_multi,
-                                  x_fail) {
-  is_ordered <- is.factor(x) && is.ordered(x)
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+                                  interpret_single,
+                                  interpret_range,
+                                  interpret_fail) {
+  is_ordered <- is.factor(labels) && is.ordered(labels)
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
-  vals <- if (is.factor(x)) as.character(x) else x
-  if (is.factor(x)) {
-    labels <- levels(x)
+  vals <- if (is.factor(labels)) as.character(labels) else labels
+  if (is.factor(labels)) {
+    labels <- levels(labels)
   } else {
-    labels <- unique(x)
+    labels <- unique(labels)
   }
   check_n(
     n = open_boundary,
@@ -47,9 +48,9 @@ inner_levels_set_open <- function(x,
   intervals <- intervals(
     labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   m <- get_m(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
@@ -92,12 +93,12 @@ inner_levels_set_open <- function(x,
   vals_new <- ifelse(is_val_now_open, label_open, vals)
   levels_new <- unique(c(labels_new, label_open))
   levels_new <- levels(inner_levels_sort(
-    x = factor(levels_new, levels = levels_new, exclude = NULL),
+    labels = factor(levels_new, levels = levels_new, exclude = NULL),
     decreasing = FALSE,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   ))
   factor(
     x = vals_new,

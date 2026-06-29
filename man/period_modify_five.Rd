@@ -6,45 +6,45 @@
 \title{Convert to Equal-Length Periods}
 \usage{
 period_modify_five(
-  x,
+  labels,
   offset = 0,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_modify_ten(
-  x,
+  labels,
   offset = 0,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of period labels.}
+\item{labels}{Vector of period labels.}
 
 \item{offset}{Parameter controlling
 alignment of periods. Default is \code{0}.}
 
-\item{x_one}{How to interpret
-labels in \code{x} that describe one-year periods.
+\item{interpret_single}{How to interpret
+labels in \code{labels} that describe one-year periods.
 Choices are \code{"lower"} (the default) and \code{"upper"}.}
 
-\item{x_multi}{How to interpret
-labels in \code{x} that describe multi-year periods.
+\item{interpret_range}{How to interpret
+labels in \code{labels} that describe multi-year periods.
 Choices are \code{"include"} (the default) and
 \code{"exclude"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{x}.
+Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Modify the periods used by \code{x}.
+Modify the periods used by \code{labels}.
 The new periods must contain
 the old periods, and follow a regular
 pattern:
@@ -54,17 +54,17 @@ pattern:
 }
 }
 \examples{
-x <- c("2002-2004", "1987-1989", "2000", "Total")
-period_modify_five(x)
-period_modify_five(x, offset = 1)
-period_modify_five(x, offset = 2)
-period_modify_ten(x)
-period_modify_ten(x, offset = 1)
-period_modify_ten(x, offset = 2)
+labels <- c("2002-2004", "1987-1989", "2000", "Total")
+period_modify_five(labels)
+period_modify_five(labels, offset = 1)
+period_modify_five(labels, offset = 2)
+period_modify_ten(labels)
+period_modify_ten(labels, offset = 1)
+period_modify_ten(labels, offset = 2)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=period_modify]{period_modify()}} Convert to general periods
 \item \code{\link[=age_modify_five]{age_modify_five()}} Age equivalent of \code{period_modify_five()}
 \item \code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{period_modify_ten()}

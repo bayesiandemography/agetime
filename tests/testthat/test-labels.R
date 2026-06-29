@@ -77,12 +77,12 @@ test_that("period_labels_five() creates five-year period labels", {
   )
 })
 
-test_that("period_labels_one() respects label_one = upper", {
+test_that("period_labels_one() respects format_single = upper", {
   expect_identical(
     period_labels_one(
       lower_first = 2000,
       lower_last = 2002,
-      label_one = "upper"
+      format_single = "upper"
     ),
     c("2001", "2002", "2003")
   )

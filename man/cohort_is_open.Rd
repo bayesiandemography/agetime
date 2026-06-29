@@ -5,44 +5,44 @@
 \title{Identify Cohort Labels for Open Cohorts}
 \usage{
 cohort_is_open(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_range = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{x}{Vector of cohort labels.}
+\item{labels}{Vector of cohort labels.}
 
-\item{x_one}{Whether labels
+\item{interpret_single}{Whether labels
 for one-year cohorts are based on
 lower or upper limit of period.
 Default is \code{"lower"}.}
 
-\item{x_multi}{Whether
+\item{interpret_range}{Whether
 labels for multi-year periods
 include or exclude final
 year of period.
 Default is \code{"include"}.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Logical vector with the same length as \code{x}.
+Logical vector with the same length as \code{labels}.
 }
 \description{
 Find cohort labels that \pkg{agetime} interprets as
 open, ie  having no lower limit.
 }
 \examples{
-x <- c("2020", "<1900", "2040-2050", "<2022")
-cohort_is_open(x)
+labels <- c("2020", "<1900", "2040-2050", "<2022")
+cohort_is_open(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Details for \code{x_one}, \code{x_multi}, and \code{x_fail}
+\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Find cohort labels for totals
 \item \code{\link[=age_is_open]{age_is_open()}} Age equivalent of \code{cohort_is_open()}
 }

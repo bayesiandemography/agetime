@@ -1,13 +1,14 @@
 #' Inner Extend
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param n Number of intervals to extend by.
 #' @param width Interval width.
-#' @param include_x Whether to include original `x` in output.
+#' @param include_x Whether to include original `labels` in output.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Extended label vector (or factor).
 #'
 #' If `width` is `NULL`, width is inferred from the final label.
@@ -15,22 +16,22 @@
 #'
 #' @noRd
 
-inner_extend <- function(x,
+inner_extend <- function(labels,
                          n,
                          width,
                          include_x,
                          label_type,
-                         x_one,
-                         x_multi,
-                         x_fail) {
-  is_factor <- is.factor(x)
-  x <- to_character_or_factor(
-    x = x,
-    nm_x = "x",
+                         interpret_single,
+                         interpret_range,
+                         interpret_fail) {
+  is_factor <- is.factor(labels)
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
     length_zero_ok = TRUE
   )
-  if (identical(length(x), 0L)) {
-    cli::cli_abort(c("{.arg x} has length 0.",
+  if (identical(length(labels), 0L)) {
+    cli::cli_abort(c("{.arg labels} has length 0.",
       i = "Supply at least one label to extend from?"
     ))
   }
@@ -55,13 +56,13 @@ inner_extend <- function(x,
     x = include_x,
     nm_x = "include_x"
   )
-  tail <- as.character(x[[length(x)]])
+  tail <- as.character(labels[[length(labels)]])
   intervals_tail <- intervals(
     labels = tail,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   is_open <- get_is_open(intervals_tail)
   if (is_open) {
@@ -91,8 +92,8 @@ inner_extend <- function(x,
   )
   ans <- inner_labels(
     breaks = breaks,
-    label_one = x_one,
-    label_multi = x_multi,
+    format_single = interpret_single,
+    format_range = interpret_range,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,
@@ -100,15 +101,15 @@ inner_extend <- function(x,
   )
   if (is_factor) {
     if (include_x) {
-      ans <- c(as.character(x), ans)
-      levels <- unique(c(levels(x), ans))
+      ans <- c(as.character(labels), ans)
+      levels <- unique(c(levels(labels), ans))
       ans <- factor(ans, levels = levels)
     } else {
       ans <- factor(ans)
     }
   } else {
     if (include_x) {
-      ans <- c(x, ans)
+      ans <- c(labels, ans)
     }
   }
   ans

@@ -1,44 +1,45 @@
 #' Inner Levels Sort
 #'
-#' @param x Vector of labels.
+#' @param labels Vector of labels.
 #' @param decreasing Whether to sort in decreasing order.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param x_one Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param x_multi Rule for multi-year labels: `"include"` or `"exclude"`.
-#' @param x_fail How to handle unparsable labels.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_range Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with sorted levels.
 #'
 #' @noRd
 
-inner_levels_sort <- function(x,
+inner_levels_sort <- function(labels,
                               decreasing,
                               label_type,
-                              x_one,
-                              x_multi,
-                              x_fail) {
+                              interpret_single,
+                              interpret_range,
+                              interpret_fail) {
   prep <- inner_levels_fill_prep(
-    x = x,
+    labels = labels,
     breaks = NULL,
-    nm_x = "x"
+    nm_labels = "labels"
   )
   empty <- inner_levels_fill_empty(
     levels = prep$levels,
     breaks = NULL,
     is_ordered = prep$is_ordered,
-    label_one = x_one,
-    label_multi = x_multi
+    format_single = interpret_single,
+    format_range = interpret_range
   )
   if (!is.null(empty)) {
     return(empty)
   }
-  x <- prep$x
+  labels <- prep$labels
   check_flag(x = decreasing, nm_x = "decreasing")
   intervals <- intervals(
-    labels = x,
+    labels = labels,
     label_type = label_type,
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail
   )
   lower <- get_lower(intervals)
   upper <- get_upper(intervals)
@@ -59,7 +60,7 @@ inner_levels_sort <- function(x,
   )
   levels_new <- labels_unique[ord_unique]
   inner_levels_fill_factor(
-    x = x,
+    labels = labels,
     levels = levels_new,
     is_ordered = prep$is_ordered
   )

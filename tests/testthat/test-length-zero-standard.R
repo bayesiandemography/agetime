@@ -13,7 +13,8 @@ test_that("age_standard() with length-0 factor preserves factor and levels", {
   )
 })
 
-# period_standard() has x_one and x_multi; defaults suffice when length(x) == 0.
+# period_standard() has interpret_single and interpret_range;
+# defaults suffice when length(labels) == 0.
 
 test_that("period_standard() with length-0 input returns character(0)", {
   expect_identical(period_standard(character(0)), character(0))
@@ -27,7 +28,8 @@ test_that("period_standard() preserves length-0 factor levels", {
   )
 })
 
-# cohort_standard() has x_one and x_multi; same reasoning as period_standard().
+# cohort_standard() has interpret_single and interpret_range;
+# same reasoning as period_standard().
 
 test_that("cohort_standard() with length-0 input returns character(0)", {
   expect_identical(cohort_standard(character(0)), character(0))

@@ -8,23 +8,23 @@
 \title{Lower Limits, Upper Limits, Widths,
 and Midpoints of Age Groups}
 \usage{
-age_lower(x, x_fail = c("error", "warn", "silent"))
+age_lower(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_mid(x, x_fail = c("error", "warn", "silent"))
+age_mid(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_upper(x, x_fail = c("error", "warn", "silent"))
+age_upper(labels, interpret_fail = c("error", "warn", "silent"))
 
-age_width(x, x_fail = c("error", "warn", "silent"))
+age_width(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
-\item{x}{Vector of age group labels.}
+\item{labels}{Vector of age group labels.}
 
-\item{x_fail}{Action if element of \code{x}
+\item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-Numeric vector with the same length as \code{x}.
+Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -35,18 +35,18 @@ Lower and upper limits can be used
 to filter on age. See below for examples.
 
 \code{age_mid()} uses the formula
-\code{age_mid(x) = age_lower(x) + 0.5 * age_width(x)},
+\code{age_mid(labels) = age_lower(labels) + 0.5 * age_width(labels)},
 except for open age groups, such as \code{"100+"},
-where it uses \code{age_mid(x) = age_lower(x) + 0.5 * median_width}
+where it uses \code{age_mid(labels) = age_lower(labels) + 0.5 * median_width}
 where \code{median_width} is the median over
 closed intervals.
 }
 \examples{
-x <- c("5-9", "10-14", "100+")
-age_lower(x)
-age_upper(x)
-age_width(x)
-age_mid(x)
+labels <- c("5-9", "10-14", "100+")
+age_lower(labels)
+age_upper(labels)
+age_width(labels)
+age_mid(labels)
 
 ## use 'age_lower()' to filter on age
 library(dplyr, warn.conflicts = FALSE)
@@ -59,9 +59,9 @@ df <- tribble(
 df
 df |> filter(age_lower(age) >= 10)
 
-## no action when 'x_fail' is "silent"
+## no action when 'interpret_fail' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
-  x_fail = "silent"
+  interpret_fail = "silent"
 )
 }
 \seealso{

@@ -12,10 +12,10 @@
 #' @param no_total No "Total" label.
 #' @param no_na No NA label.
 #' @return For `period_check()`, a list with logical `ok` and data frame
-#' `details`; for `period_assert()`, `x` invisibly or an error.
+#' `details`; for `period_assert()`, `labels` invisibly or an error.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Details for `x_one`, `x_multi`, and `x_fail`
+#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_check()] Age equivalent of `period_check()`
 #' - [cohort_check()] Cohort equivalent of `period_check()`
 #'
@@ -28,7 +28,7 @@
 #'
 #' ## get info on everything
 #' period_check(
-#'   x = lab,
+#'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
@@ -36,32 +36,33 @@
 #' )
 #'
 #' ## throw error if gaps
-#' period_assert(x = lab, no_gap = TRUE)
+#' period_assert(labels = lab, no_gap = TRUE)
 #'
 #' lab_gap <- lab[c(1, 3)]
 #' ## throw error if no gaps
 #' period_assert(lab_gap, no_gap = FALSE)
 #' @export
 
-# When length(x) == 0, checks on overlap, gaps, totals, and NA are vacuously
+# When length(labels) == 0, checks on overlap, gaps, totals,
+# and NA are vacuously
 # satisfied (observed = TRUE).
-period_check <- function(x,
+period_check <- function(labels,
                          no_overlap = NA,
                          no_gap = NA,
                          no_total = NA,
                          no_na = NA,
-                         x_one = c("lower", "upper"),
-                         x_multi = c("include", "exclude"),
-                         x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                         interpret_single = c("lower", "upper"),
+                         interpret_range = c("include", "exclude"),
+                         interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_check(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail,
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
@@ -74,23 +75,23 @@ period_check <- function(x,
 
 #' @rdname period_check
 #' @export
-period_assert <- function(x,
+period_assert <- function(labels,
                           no_overlap = NA,
                           no_gap = NA,
                           no_total = NA,
                           no_na = NA,
-                          x_one = c("lower", "upper"),
-                          x_multi = c("include", "exclude"),
-                          x_fail = c("error", "warn", "silent")) {
-  x_one <- match.arg(x_one)
-  x_multi <- match.arg(x_multi)
-  x_fail <- match.arg(x_fail)
+                          interpret_single = c("lower", "upper"),
+                          interpret_range = c("include", "exclude"),
+                          interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_range <- match.arg(interpret_range)
+  interpret_fail <- match.arg(interpret_fail)
   inner_assert(
-    x = x,
+    labels = labels,
     label_type = "period",
-    x_one = x_one,
-    x_multi = x_multi,
-    x_fail = x_fail,
+    interpret_single = interpret_single,
+    interpret_range = interpret_range,
+    interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
