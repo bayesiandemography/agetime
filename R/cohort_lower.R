@@ -10,33 +10,27 @@
 #' See below for examples.
 #'
 #' @param labels Vector of cohort labels.
-#' @param interpret_single Whether labels
-#' for one-year cohorts are based on
-#' lower or upper limit of period.
-#' Default is `"lower"`.
-#' @param interpret_range Whether
-#' labels for multi-year periods
-#' include or exclude final
-#' year of period.
-#' Default is `"include"`.
-#' @param interpret_fail Action if element of `labels`
-#' cannot be parsed: `"error"` (the default),
-#' `"warn"`, or `"silent"`.
+#' @param interpret_single How to interpret a single-year label.
+#' If `"lower"` (the default), the label is assumed to
+#' give the lower bound, so that `"2025"` means`[2025,2026)`.
+#' If `"upper"`, the label is assumed to give the upper bound,
+#' so that `"2025"` means `[2024,2025)`.
+#' @param interpret_range How to interpret a label describing a range.
+#' If `"include"` (the default), the label is assumed to give
+#' the lower and upper bounds, so that `"2025-2030"`
+#' means `[2025, 2030)`.
+#' If `"exclude"`, the label is assumed to give the lower
+#' bound and the upper bound minus 1, so that `"2025-2030"`
+#'  means `[2025, 2031)`.
+#' @param interpret_fail What to do if an attempt to interpret a
+#' label fails: `"error"` (the default), `"warn"`, or `"silent"`.
 #' @return Numeric vector with the same length as `labels`.
-#'
-#' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
-#' - [age_lower()] Age equivalent of `cohort_lower()`
-#' - [period_lower()] Period equivalent of `cohort_lower()`
-#'
 #' @examples
 #' labels <- c("2025-2030", "<2025", "2030-2035")
-#' cohort_lower(labels)
-#' cohort_upper(labels)
-#' cohort_width(labels)
-#' cohort_mid(labels)
-#'
-#' ## use 'cohort_lower()' to filter on cohort
+#' cohort_lower(labels) # [2025, 2030)
+#' cohort_upper(labels) # [2024, 2030)
+#' cohort_width(labels) # 5
+#' cohort_mid(labels) # 2027.5
 #' library(dplyr, warn.conflicts = FALSE)
 #' df <- tribble(
 #'   ~cohort, ~count,

@@ -1,13 +1,13 @@
 ## HAS_TESTS
 #' Standardize Cohort Labels
 #'
-#' Convert cohort labels to a 'standard' format.
+#' Convert cohort labels to the default \pkg{agetime} format.
 #'
 #' @inheritParams cohort_lower
 #' @inherit age_standard return
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
+#' - [cohort_labels()] Default \pkg{agetime} format
 #' - [age_standard()] Age equivalent of `cohort_standard()`
 #' - [period_standard()] Period equivalent of `cohort_standard()`
 #'

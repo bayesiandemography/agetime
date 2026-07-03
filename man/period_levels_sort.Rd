@@ -55,7 +55,6 @@ period_levels_sort(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_levels_sort]{age_levels_sort()}} Age equivalent of \code{period_levels_sort()}
 \item \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} Cohort equivalent of \code{period_levels_sort()}
 }

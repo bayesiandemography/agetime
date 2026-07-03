@@ -45,7 +45,6 @@
 #' @return [Tibble][tibble::tibble()] or matrix, depending on `format`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_mapping()] Age equivalent of `period_mapping()`
 #' - [cohort_mapping()] Cohort equivalent of `period_mapping()`
 #'

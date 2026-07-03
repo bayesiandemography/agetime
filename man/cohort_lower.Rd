@@ -39,20 +39,22 @@ cohort_width(
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{interpret_single}{Whether labels
-for one-year cohorts are based on
-lower or upper limit of period.
-Default is \code{"lower"}.}
+\item{interpret_single}{How to interpret a single-year label.
+If \code{"lower"} (the default), the label is assumed to
+give the lower bound, so that \code{"2025"} means\verb{[2025,2026)}.
+If \code{"upper"}, the label is assumed to give the upper bound,
+so that \code{"2025"} means \verb{[2024,2025)}.}
 
-\item{interpret_range}{Whether
-labels for multi-year periods
-include or exclude final
-year of period.
-Default is \code{"include"}.}
+\item{interpret_range}{How to interpret a label describing a range.
+If \code{"include"} (the default), the label is assumed to give
+the lower and upper bounds, so that \code{"2025-2030"}
+means \verb{[2025, 2030)}.
+If \code{"exclude"}, the label is assumed to give the lower
+bound and the upper bound minus 1, so that \code{"2025-2030"}
+means \verb{[2025, 2031)}.}
 
-\item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+\item{interpret_fail}{What to do if an attempt to interpret a
+label fails: \code{"error"} (the default), \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 Numeric vector with the same length as \code{labels}.
@@ -68,12 +70,10 @@ See below for examples.
 }
 \examples{
 labels <- c("2025-2030", "<2025", "2030-2035")
-cohort_lower(labels)
-cohort_upper(labels)
-cohort_width(labels)
-cohort_mid(labels)
-
-## use 'cohort_lower()' to filter on cohort
+cohort_lower(labels) # [2025, 2030)
+cohort_upper(labels) # [2024, 2030)
+cohort_width(labels) # 5
+cohort_mid(labels) # 2027.5
 library(dplyr, warn.conflicts = FALSE)
 df <- tribble(
   ~cohort, ~count,
@@ -106,11 +106,4 @@ cohort_width("2025-2030", interpret_range = "exclude")
 cohort_lower(c("2000-2005", "long time ago"),
   interpret_fail = "silent"
 )
-}
-\seealso{
-\itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
-\item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{cohort_lower()}
-\item \code{\link[=period_lower]{period_lower()}} Period equivalent of \code{cohort_lower()}
-}
 }

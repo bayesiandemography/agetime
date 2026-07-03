@@ -14,7 +14,6 @@
 #' period_modify(labels, breaks = c(1970, 2000, 2005, 2015))
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [period_modify_five()] Convert to 5-year periods
 #' - [period_modify_ten()] Convert to 10-year periods
 #' - [age_modify()] Age group equivalent of `period_modify()`
@@ -64,7 +63,6 @@ period_modify <- function(labels,
 #' @inherit period_modify return
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [period_modify()] Convert to general periods
 #' - [age_modify_five()] Age equivalent of `period_modify_five()`
 #' - [age_modify_ten()] Age equivalent of `period_modify_ten()`

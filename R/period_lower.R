@@ -23,7 +23,6 @@
 #' @return Numeric vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_lower()] Age equivalent of `period_lower()`
 #' - [cohort_lower()] Cohort equivalent of `period_lower()`
 #'

@@ -7,7 +7,6 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_is_total()] Age equivalent of `period_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `period_is_total()`
 #'

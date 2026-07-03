@@ -8,7 +8,6 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [age_levels_set_open()] Set open age group levels (right-open)
 #'
 #' @examples

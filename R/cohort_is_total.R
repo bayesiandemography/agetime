@@ -7,7 +7,6 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [cohort_is_open()] Find open cohorts
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
@@ -43,7 +42,6 @@ cohort_is_total <- function(labels,
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [cohort_is_total()] Find cohort labels for totals
 #' - [age_is_open()] Age equivalent of `cohort_is_open()`
 #'

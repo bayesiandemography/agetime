@@ -1,7 +1,7 @@
 ## HAS_TESTS
 #' Standardize Age Group Labels
 #'
-#' Convert age group labels to a 'standard' format.
+#' Convert age group labels to the default \pkg{agetime} format.
 #'
 #' @inheritParams age_lower
 #'

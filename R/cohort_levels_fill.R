@@ -21,7 +21,6 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [age_levels_fill()] Age equivalent of `cohort_levels_fill()`
 #' - [period_levels_fill()] Period equivalent of `cohort_levels_fill()`
 #'

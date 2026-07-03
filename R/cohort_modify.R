@@ -18,7 +18,6 @@
 #' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [cohort_modify_five()] Convert to 5-year cohorts
 #' - [cohort_modify_ten()] Convert to 10-year cohorts
 #' - [age_modify()] Age group equivalent of `cohort_modify()`
@@ -70,7 +69,6 @@ cohort_modify <- function(labels,
 #' @inherit cohort_modify return
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [cohort_modify()] Convert to general cohorts
 #' - [age_modify_five()] Age equivalent of `cohort_modify_five()`
 #' - [age_modify_ten()] Age equivalent of `cohort_modify_ten()`

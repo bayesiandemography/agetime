@@ -107,7 +107,6 @@ period_lower(c("2000-2005", "long time ago"),
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
 \item \code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
 }

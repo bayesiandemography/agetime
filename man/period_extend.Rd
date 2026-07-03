@@ -60,7 +60,6 @@ period_extend(labels, n = 2, include_x = FALSE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_extend]{age_extend()}} Age equivalent of \code{period_extend()}
 \item \code{\link[=cohort_extend]{cohort_extend()}} Cohort equivalent of \code{period_extend()}
 }

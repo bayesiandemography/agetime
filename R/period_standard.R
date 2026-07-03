@@ -1,13 +1,12 @@
 ## HAS_TESTS
 #' Standardize Period Labels
 #'
-#' Convert period labels to a 'standard' format.
+#' Convert period labels to the default \pkg{agetime} format.
 #'
 #' @inheritParams period_lower
 #' @inherit age_standard return
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_standard()] Age equivalent of `period_standard()`
 #' - [cohort_standard()] Cohort equivalent of `period_standard()`
 #'

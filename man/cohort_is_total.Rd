@@ -14,20 +14,22 @@ cohort_is_total(
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{interpret_single}{Whether labels
-for one-year cohorts are based on
-lower or upper limit of period.
-Default is \code{"lower"}.}
+\item{interpret_single}{How to interpret a single-year label.
+If \code{"lower"} (the default), the label is assumed to
+give the lower bound, so that \code{"2025"} means\verb{[2025,2026)}.
+If \code{"upper"}, the label is assumed to give the upper bound,
+so that \code{"2025"} means \verb{[2024,2025)}.}
 
-\item{interpret_range}{Whether
-labels for multi-year periods
-include or exclude final
-year of period.
-Default is \code{"include"}.}
+\item{interpret_range}{How to interpret a label describing a range.
+If \code{"include"} (the default), the label is assumed to give
+the lower and upper bounds, so that \code{"2025-2030"}
+means \verb{[2025, 2030)}.
+If \code{"exclude"}, the label is assumed to give the lower
+bound and the upper bound minus 1, so that \code{"2025-2030"}
+means \verb{[2025, 2031)}.}
 
-\item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+\item{interpret_fail}{What to do if an attempt to interpret a
+label fails: \code{"error"} (the default), \code{"warn"}, or \code{"silent"}.}
 }
 \value{
 Logical vector with the same length as \code{labels}.
@@ -41,7 +43,6 @@ cohort_is_total(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_cohort_labels]{parsing_cohort_labels()}} Interpretation details for cohort labels
 \item \code{\link[=cohort_is_open]{cohort_is_open()}} Find open cohorts
 \item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{cohort_is_total()}
 \item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{cohort_is_total()}

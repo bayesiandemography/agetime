@@ -98,7 +98,6 @@ period_mapping(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{period_mapping()}
 \item \code{\link[=cohort_mapping]{cohort_mapping()}} Cohort equivalent of \code{period_mapping()}
 }

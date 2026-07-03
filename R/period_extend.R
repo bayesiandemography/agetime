@@ -18,7 +18,6 @@
 #' Length is `n`, or `length(labels) + n` when `include_x` is `TRUE`.
 #'
 #' @seealso
-#' - [parsing_period_labels()] Interpretation details for period labels
 #' - [age_extend()] Age equivalent of `period_extend()`
 #' - [cohort_extend()] Cohort equivalent of `period_extend()`
 #'

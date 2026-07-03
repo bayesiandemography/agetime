@@ -17,7 +17,6 @@
 #' `details`; for `cohort_assert()`, `labels` invisibly or an error.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [age_check()] Age equivalent of `cohort_check()`
 #' - [period_check()] Period equivalent of `cohort_check()`
 #'

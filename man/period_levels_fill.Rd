@@ -102,7 +102,6 @@ labels |>
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_levels_fill]{age_levels_fill()}} Age equivalent of \code{period_levels_fill()}
 \item \code{\link[=cohort_levels_fill]{cohort_levels_fill()}} Cohort equivalent of \code{period_levels_fill()}
 }

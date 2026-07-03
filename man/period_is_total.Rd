@@ -39,7 +39,6 @@ period_is_total(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{period_is_total()}
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{period_is_total()}
 }

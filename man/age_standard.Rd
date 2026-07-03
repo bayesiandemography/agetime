@@ -17,7 +17,7 @@ cannot be parsed: \code{"error"} (the default),
 Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Convert age group labels to a 'standard' format.
+Convert age group labels to the default \pkg{agetime} format.
 }
 \examples{
 labels <- c("5to9", "10--14", "100plus")

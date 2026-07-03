@@ -31,7 +31,7 @@ cannot be parsed: \code{"error"} (the default),
 Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Convert period labels to a 'standard' format.
+Convert period labels to the default \pkg{agetime} format.
 }
 \examples{
 labels <- c("2025to2030", "1910--1914", " 2022 ")
@@ -39,7 +39,6 @@ period_standard(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=parsing_period_labels]{parsing_period_labels()}} Interpretation details for period labels
 \item \code{\link[=age_standard]{age_standard()}} Age equivalent of \code{period_standard()}
 \item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{period_standard()}
 }

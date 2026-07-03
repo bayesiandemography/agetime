@@ -19,7 +19,6 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [parsing_cohort_labels()] Interpretation details for cohort labels
 #' - [age_levels_sort()] Age equivalent of `cohort_levels_sort()`
 #' - [period_levels_sort()] Period equivalent of `cohort_levels_sort()`
 #'
