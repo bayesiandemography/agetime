@@ -53,6 +53,35 @@ is derived from the last element of \code{labels},
 but a value can be specified through the
 \code{width} arugment.
 }
+\section{Controlling how cohort labels are interpreted}{
+
+
+If \code{interpret_single} is \code{"lower"} (the default),
+then labels for single-year cohorts
+are assumed to refer to lower limits,
+so that \code{"2025"} means \verb{[2025,2026)}.
+This is the convention that data providers
+typically use for calendar years.
+
+If \code{interpret_single} is \code{"upper"},
+then labels for single-year cohorts
+are assumed to refer to upper limits,
+so that \code{"2025"} means \verb{[2024,2025)}.
+This is the convention that data providers
+typically use for non-calendar years,
+such as 1 July to 30 June.
+
+If \code{interpret_multi} is \code{"include"} (the default),
+then labels for multi-year cohorts
+are assumed to include upper limits,
+so that \code{"2025-2030"} means \verb{[2025,2030)}.
+
+If \code{interpret_multi} is \code{"exclude"},
+then labels for multi-year cohorts
+are assumed to exclude the upper limits
+so that \code{"2025-2030"} means \verb{[2025,2031)}.
+}
+
 \examples{
 labels <- c("2020-2025", "2025-2030")
 cohort_extend(labels, n = 2)

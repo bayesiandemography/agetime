@@ -4,6 +4,8 @@
 #' the new cohorts must
 #' contain the old ones.
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries between cohorts.
 #' A numeric vector.
@@ -62,6 +64,8 @@ cohort_modify <- function(labels,
 #'
 #' - `cohort_modify_five` Five-year cohorts
 #' - `cohort_modify_ten` Ten-year cohorts
+#'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
 #' @inheritParams cohort_lower
 #' @param offset Parameter controlling

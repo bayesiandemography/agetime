@@ -31,6 +31,8 @@
 #' | `"is-contained-in"`| Endpoints of `labels` inside endpoints of `y`  |
 #' | `"overlaps-with"` | Endpoint of `labels` in `y`, or reverse |
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #' @param labels Vector of cohort labels.
 #' @param y Vector of cohort labels. If

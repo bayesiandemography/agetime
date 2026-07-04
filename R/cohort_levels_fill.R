@@ -15,6 +15,8 @@
 #' - `cohort_levels_fill_ten` adds cohorts with
 #'   width 10.
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries of newly-created cohorts.
 #' Boundaries for existing cohorts can be omitted.

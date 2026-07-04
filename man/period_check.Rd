@@ -89,8 +89,7 @@ so that \code{"2025-2030"} means \verb{[2025,2030)}.
 
 If \code{interpret_multi} is \code{"exclude"},
 then labels for multi-year periods
-are assumed to exclude the upper limits
-and use upper - 1 instead,
+are assumed to exclude the upper limits,
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 

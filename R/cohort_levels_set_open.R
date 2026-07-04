@@ -3,6 +3,8 @@
 #' Add an open cohort level, i.e. a cohort with no lower limit.
 #' Replace existing cohorts where necessary.
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #' @param upper_open Upper limit of open cohort.
 #' @return Factor with the same length as `labels`.

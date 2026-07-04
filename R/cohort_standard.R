@@ -3,6 +3,8 @@
 #'
 #' Convert cohort labels to the default \pkg{agetime} format.
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #' @inherit age_standard return
 #'

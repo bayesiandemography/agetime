@@ -2,6 +2,8 @@
 #'
 #' Find cohort labels that \pkg{agetime} interprets as totals.
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #'
 #' @return Logical vector with the same length as `labels`.
@@ -36,6 +38,8 @@ cohort_is_total <- function(labels,
 #'
 #' Find cohort labels that \pkg{agetime} interprets as
 #' open, ie  having no lower limit.
+#'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
 #' @inheritParams cohort_lower
 #'

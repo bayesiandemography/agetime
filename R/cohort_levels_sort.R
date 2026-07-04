@@ -12,6 +12,8 @@
 #' second-to-last, and
 #' totals come last.
 #'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
 #' @inheritParams cohort_lower
 #' @param decreasing Whether sort is
 #' increasing or decreasing. Default
