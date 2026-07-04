@@ -4,6 +4,8 @@
 #' the new periods must
 #' contain the old ones.
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
@@ -56,6 +58,8 @@ period_modify <- function(labels,
 #'
 #' - `period_modify_five` Five-year periods
 #' - `period_modify_ten` Ten-year periods
+#'
+#' @inheritSection period_lower Controlling how period labels are interpreted
 #'
 #' @inheritParams period_lower
 #' @param offset Parameter controlling

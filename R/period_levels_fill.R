@@ -15,6 +15,8 @@
 #' - `period_levels_fill_ten` adds periods with
 #'   width 10.
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #' @param breaks Boundaries of newly-created periods.
 #' Boundaries for existing periods can be omitted.

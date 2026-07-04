@@ -12,6 +12,8 @@
 #' second-to-last, and
 #' totals come last.
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #' @param decreasing Whether sort is
 #' increasing or decreasing. Default

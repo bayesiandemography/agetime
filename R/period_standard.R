@@ -3,6 +3,8 @@
 #'
 #' Convert period labels to the default \pkg{agetime} format.
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #' @inherit age_standard return
 #'

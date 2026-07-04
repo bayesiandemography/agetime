@@ -7,6 +7,8 @@
 #' but a value can be specified through the
 #' `width` arugment.
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #' @param n Number of periods to add.
 #' Default is `1`.

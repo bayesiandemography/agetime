@@ -2,6 +2,8 @@
 #'
 #' Find period labels that \pkg{agetime} interprets as totals.
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #'
 #' @return Logical vector with the same length as `labels`.

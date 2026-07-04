@@ -31,6 +31,8 @@
 #' | `"is-contained-in"`| Endpoints of `labels` inside endpoints of `y`  |
 #' | `"overlaps-with"` | Endpoint of `labels` in `y`, or reverse |
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
 #' @inheritParams period_lower
 #' @param labels Vector of period labels.
 #' @param y Vector of period labels. If
