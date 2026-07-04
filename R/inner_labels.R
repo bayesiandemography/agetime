@@ -2,7 +2,7 @@
 #'
 #' @param breaks Increasing vector of break points.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
@@ -13,7 +13,7 @@
 
 inner_labels <- function(breaks,
                          format_single,
-                         format_range,
+                         format_multi,
                          is_open_left,
                          is_open_right,
                          include_total,
@@ -24,7 +24,7 @@ inner_labels <- function(breaks,
   construct_labels_breaks(
     breaks = breaks,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
@@ -36,7 +36,7 @@ inner_labels <- function(breaks,
 #' @param lower_first First lower bound for generated labels.
 #' @param lower_last Last lower bound for generated labels.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
@@ -48,7 +48,7 @@ inner_labels <- function(breaks,
 inner_labels_one <- function(lower_first,
                              lower_last,
                              format_single,
-                             format_range,
+                             format_multi,
                              is_open_left,
                              is_open_right,
                              include_total,
@@ -84,7 +84,7 @@ inner_labels_one <- function(lower_first,
   construct_labels_breaks(
     breaks = breaks,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
@@ -96,7 +96,7 @@ inner_labels_one <- function(lower_first,
 #' @param lower_first First lower bound for generated labels.
 #' @param lower_last Last lower bound for generated labels.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
@@ -109,7 +109,7 @@ inner_labels_one <- function(lower_first,
 inner_labels_five <- function(lower_first,
                               lower_last,
                               format_single,
-                              format_range,
+                              format_multi,
                               is_open_left,
                               is_open_right,
                               include_total,
@@ -145,7 +145,7 @@ inner_labels_five <- function(lower_first,
   construct_labels_breaks(
     breaks = breaks,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
@@ -157,7 +157,7 @@ inner_labels_five <- function(lower_first,
 #' @param lower_first First lower bound for generated labels.
 #' @param lower_last Last lower bound for generated labels.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
@@ -169,7 +169,7 @@ inner_labels_five <- function(lower_first,
 inner_labels_ten <- function(lower_first,
                              lower_last,
                              format_single,
-                             format_range,
+                             format_multi,
                              is_open_left,
                              is_open_right,
                              include_total,
@@ -205,7 +205,7 @@ inner_labels_ten <- function(lower_first,
   construct_labels_breaks(
     breaks = breaks,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,

@@ -3,7 +3,7 @@
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns An `agetime_intervals` object.
@@ -12,7 +12,7 @@
 intervals <- function(labels,
                       label_type,
                       interpret_single,
-                      interpret_range,
+                      interpret_multi,
                       interpret_fail) {
   label_type <- match.arg(label_type, choices = c("age", "cohort", "period"))
   if (label_type == "age") {
@@ -22,13 +22,13 @@ intervals <- function(labels,
     labels_normalizers <- make_labels_normalizers_cohort()
     label_parsers <- make_label_parsers_cohort(
       interpret_single = interpret_single,
-      interpret_range = interpret_range
+      interpret_multi = interpret_multi
     )
   } else {
     labels_normalizers <- make_labels_normalizers_period()
     label_parsers <- make_label_parsers_period(
       interpret_single = interpret_single,
-      interpret_range = interpret_range
+      interpret_multi = interpret_multi
     )
   }
   ans <- intervals_inner(

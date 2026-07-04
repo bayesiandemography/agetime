@@ -4,7 +4,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     labels = x,
     label_type = "cohort",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   breaks <- c(2020, 2025, 2030)
@@ -13,7 +13,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     is_open_left = TRUE,
     is_open_right = FALSE,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -31,7 +31,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     is_open_left = FALSE,
     is_open_right = FALSE,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -58,7 +58,7 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
     labels = x,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   breaks <- c(0, 10)
@@ -67,7 +67,7 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
     is_open_left = FALSE,
     is_open_right = FALSE,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     include_total = FALSE,
     include_na = TRUE
   )
@@ -98,7 +98,7 @@ test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
     labels = x,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   breaks <- c(0, 10)
@@ -107,7 +107,7 @@ test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
     is_open_left = FALSE,
     is_open_right = FALSE,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     include_total = FALSE,
     include_na = FALSE
   )
@@ -134,14 +134,14 @@ test_that("construct_mapping() errors for an invalid relation", {
     labels = "0-4",
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   intervals_y <- intervals(
     labels = "5-9",
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_error(

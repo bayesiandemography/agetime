@@ -42,7 +42,7 @@ age_extend <- function(labels,
     include_x = include_x,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }

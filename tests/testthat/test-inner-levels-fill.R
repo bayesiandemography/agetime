@@ -6,7 +6,7 @@ test_that("inner_levels_fill() errors with breaks and width", {
       width = 5L,
       label_type = "age",
       interpret_single = "lower",
-      interpret_range = "exclude",
+      interpret_multi = "exclude",
       interpret_fail = "error"
     ),
     "Internal error: 'breaks' and 'width' both supplied"
@@ -20,7 +20,7 @@ test_that("inner_levels_fill() coerces character input with one level", {
     width = NULL,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
 

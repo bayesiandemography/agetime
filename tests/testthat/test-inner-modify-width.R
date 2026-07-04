@@ -6,7 +6,7 @@ test_that("inner_modify_width() uses upper bounds for open-left start", {
     offset = 0L,
     label_type = "cohort",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
 
@@ -19,7 +19,7 @@ test_that("inner_modify_width() aligns open-left start with offset", {
     labels = x,
     label_type = "cohort",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_true(agetime:::int_is_open_left(intervals))
@@ -39,7 +39,7 @@ test_that("inner_modify_width() aligns open-left start with offset", {
       offset = offset,
       label_type = "cohort",
       interpret_single = "lower",
-      interpret_range = "exclude",
+      interpret_multi = "exclude",
       interpret_fail = "error"
     ),
     "cannot each lie in exactly one new cohort"

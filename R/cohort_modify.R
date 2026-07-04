@@ -32,11 +32,11 @@ cohort_modify <- function(labels,
                           breaks,
                           open = FALSE,
                           interpret_single = c("lower", "upper"),
-                          interpret_range = c("include", "exclude"),
+                          interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
   check_flag(x = open, nm_x = "open")
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_modify(
     labels = labels,
@@ -45,7 +45,7 @@ cohort_modify <- function(labels,
     is_open_right = FALSE,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -91,10 +91,10 @@ cohort_modify <- function(labels,
 cohort_modify_five <- function(labels,
                                offset = 0,
                                interpret_single = c("lower", "upper"),
-                               interpret_range = c("include", "exclude"),
+                               interpret_multi = c("include", "exclude"),
                                interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_modify_width(
     labels = labels,
@@ -102,7 +102,7 @@ cohort_modify_five <- function(labels,
     offset = offset,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -112,10 +112,10 @@ cohort_modify_five <- function(labels,
 cohort_modify_ten <- function(labels,
                               offset = 0,
                               interpret_single = c("lower", "upper"),
-                              interpret_range = c("include", "exclude"),
+                              interpret_multi = c("include", "exclude"),
                               interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_modify_width(
     labels = labels,
@@ -123,7 +123,7 @@ cohort_modify_ten <- function(labels,
     offset = offset,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }

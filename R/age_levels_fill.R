@@ -71,7 +71,7 @@ age_levels_fill <- function(labels,
     width = NULL,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -87,7 +87,7 @@ age_levels_fill_one <- function(labels,
     width = 1L,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -105,7 +105,7 @@ age_levels_fill_five <- function(labels,
     width = 5L,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -121,7 +121,7 @@ age_levels_fill_ten <- function(labels,
     width = 10L,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }

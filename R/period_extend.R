@@ -34,10 +34,10 @@ period_extend <- function(labels,
                           width = NULL,
                           include_x = TRUE,
                           interpret_single = c("lower", "upper"),
-                          interpret_range = c("include", "exclude"),
+                          interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_extend(
     labels = labels,
@@ -46,7 +46,7 @@ period_extend <- function(labels,
     include_x = include_x,
     label_type = "period",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }

@@ -1,7 +1,8 @@
 #' Create New Age Group Labels
 #'
-#' Create a new set of age group labels.
-
+#' Create a new set of age group labels
+#' based on \pkg{agetime} conventions.
+#'
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
 #' @param open Whether the oldest age group
@@ -16,7 +17,6 @@
 #' @param include_na Whether to include
 #' an `NA` category.
 #' @return Character vector.
-#' Length depends on the function arguments.
 #'
 #' @seealso
 #' - [period_labels()] Period equivalent of `age_labels()`
@@ -68,7 +68,7 @@ age_labels <- function(breaks,
   inner_labels(
     breaks = breaks,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     is_open_left = FALSE,
     is_open_right = open,
     include_total = include_total,
@@ -88,7 +88,7 @@ age_labels_one <- function(lower_first = 0,
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     is_open_left = FALSE,
     is_open_right = open,
     include_total = include_total,
@@ -109,7 +109,7 @@ age_labels_five <- function(lower_first = 0,
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     is_open_left = FALSE,
     is_open_right = open,
     include_total = include_total,
@@ -129,7 +129,7 @@ age_labels_ten <- function(lower_first = 0,
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = "lower",
-    format_range = "exclude",
+    format_multi = "exclude",
     is_open_left = FALSE,
     is_open_right = open,
     include_total = include_total,

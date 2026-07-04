@@ -10,7 +10,7 @@
 period_labels(
   breaks,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -19,7 +19,7 @@ period_labels_one(
   lower_first,
   lower_last,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -28,7 +28,7 @@ period_labels_five(
   lower_first,
   lower_last,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -37,67 +37,97 @@ period_labels_ten(
   lower_first,
   lower_last,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
 }
 \arguments{
-\item{breaks}{Boundaries between periods
+\item{breaks}{Boundaries between periods.
 A numeric vector.}
 
-\item{format_single}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
+\item{format_single}{How to format label for
+single-year period. Choices are \code{"lower"}
+(the default) and \code{"upper"}. See below for
+details.}
 
-\item{format_range}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
+\item{format_multi}{How to format label for
+multi-year cohort. Choices are \code{"include"}
+(the default) and \code{"exclude"}. See below for details.}
 
 \item{include_total}{Whether to include a
-\code{"Total"} category.}
+\code{"Total"} category. Default is \code{FALSE}.}
 
 \item{include_na}{Whether to include
-an \code{NA} category.}
+an \code{NA} category. Default is \code{FALSE}.}
 
-\item{lower_first}{Lower limit of first period.}
+\item{lower_first}{Lower limit of first period.
+Non-negative number.}
 
-\item{lower_last}{Lower limit of last period.}
+\item{lower_last}{Lower limit of last period.
+Non-negative number.}
 }
 \value{
 Character vector.
-Length depends on the function arguments.
 }
 \description{
-Create a new set of period labels.
+Create a new set of period labels
+based on \pkg{agetime} conventions.
+}
+\details{
+The label for a period depends on the
+lower and upper limits of that cohort.
+
+\code{format_single} controls whether the label
+for a single-year periods is based on the
+lower or upper limit.
+For instance, the period \verb{[2025,2026)}
+has label \code{"2025"} if \code{format_single}
+is \code{"lower"} and \code{"2026"} if
+\code{format_single} is \code{"upper"}.
+
+\code{format_multi} controls whether the label
+for a multi-year period includes the upper limit.
+For instance, the period \verb{[2025,2030)}
+has label \code{"2025-2035"} if
+\code{format_multi} is \code{"include"} and
+\code{"2025-2029"} if \code{format_multi} is
+\code{"exclude"}.
+
+There are also two special cohort labels:
+\code{NA} and \code{"Total"}.
 }
 \examples{
 ## 5-year periods
 period_labels_five(
   lower_first = 2000,
-  lower_last = 2010
+  lower_last = 2015
 )
 
 ## single-year periods
 period_labels_one(
   lower_first = 2000,
-  lower_last = 2010
+  lower_last = 2004
 )
 
 ## single-year periods, 'format_single' is "upper"
 period_labels_one(
   lower_first = 2000,
-  lower_last = 2010,
+  lower_last = 2004,
   format_single = "upper"
 )
 
 ## ten-year periods
 period_labels_ten(
-  lower_first = 2000,
-  lower_last = 2010
+  lower_first = 2001,
+  lower_last = 2021
 )
 
-## ten-year periods, 'format_range' is "exclude",
+## ten-year periods, 'format_multi' is "exclude",
 period_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  format_range = "exclude"
+  format_multi = "exclude"
 )
 
 ## include total and NA

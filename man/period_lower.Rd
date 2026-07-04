@@ -11,28 +11,28 @@ and Midpoints of Periods}
 period_lower(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 period_mid(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 period_upper(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 period_width(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -40,17 +40,18 @@ period_width(
 \item{labels}{Vector of period labels.}
 
 \item{interpret_single}{How to interpret
-labels in \code{labels} that describe one-year periods.
-Choices are \code{"lower"} (the default) and \code{"upper"}.}
+labels for single-year periods.
+Choices are \code{"lower"} (the default) and \code{"upper"}.
+See below for details.}
 
-\item{interpret_range}{How to interpret
-labels in \code{labels} that describe multi-year periods.
+\item{interpret_multi}{How to interpret
+labels for multi-year periods.
 Choices are \code{"include"} (the default) and
-\code{"exclude"}.}
+\code{"exclude"}. See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Numeric vector with the same length as \code{labels}.
@@ -64,6 +65,48 @@ Lower and upper limits can be used
 to filter on periods.
 See below for examples.
 }
+\section{\code{interpret_single}}{
+
+
+\code{interpret_single} controls the interpretation
+of labels for single-year periods.
+
+If \code{interpret_single} is \code{"lower"} (the default),
+then labels for single-year periods
+are assumed to refer to lower limits,
+so that \code{"2025"} means \verb{[2025,2026)}.
+This is the convention typically used for
+calendar years. It also matches the
+convention for single-year age groups.
+
+If \code{interpret_single} is \code{"upper"},
+then labels for single-year periods
+are assumed to refer to upper limits,
+so that \code{"2025"} means \verb{[2024,2025)}.
+This is the convention typically used for
+non-calendar years, eg 1 July to 30 June.
+}
+
+\section{\code{interpret_multi}}{
+
+
+\code{interpret_multi} controls the interpretation
+of labels for multi-year periods.
+
+If \code{interpret_multi} is \code{"include"} (the default),
+then labels for multi-year periods
+are assumed to include upper limits,
+so that \code{"2025-2030"} means \verb{[2025,2030)}.
+
+If \code{interpret_multi} is \code{"exclude"},
+then labels for multi-year periods
+are assumed to exclude the upper limits
+and use upper - 1 instead,
+so that \code{"2025-2030"} means \verb{[2025,2031)}.
+This matches the convention used for
+multi-year age groups.
+}
+
 \examples{
 labels <- c("2025-2030", "2020-2025", "2030-2035")
 period_lower(labels)
@@ -92,13 +135,13 @@ period_lower("2025", interpret_single = "upper")
 period_upper("2025", interpret_single = "upper")
 period_width("2025", interpret_single = "upper")
 
-## 'interpret_range' is "include" (the default)
+## 'interpret_multi' is "include" (the default)
 period_upper("2025-2030")
 period_width("2025-2030")
 
-## 'interpret_range' is "exclude"
-period_upper("2025-2030", interpret_range = "exclude")
-period_width("2025-2030", interpret_range = "exclude")
+## 'interpret_multi' is "exclude"
+period_upper("2025-2030", interpret_multi = "exclude")
+period_width("2025-2030", interpret_multi = "exclude")
 
 ## no action when 'interpret_fail' is "silent"
 period_lower(c("2000-2005", "long time ago"),

@@ -58,10 +58,10 @@ last age group.}
 }
 \value{
 Character vector.
-Length depends on the function arguments.
 }
 \description{
-Create a new set of age group labels.
+Create a new set of age group labels
+based on \pkg{agetime} conventions.
 }
 \examples{
 ## default 5-year age groups

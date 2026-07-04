@@ -8,7 +8,7 @@ period_levels_sort(
   labels,
   decreasing = FALSE,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -20,17 +20,18 @@ increasing or decreasing. Default
 is \code{FALSE}.}
 
 \item{interpret_single}{How to interpret
-labels in \code{labels} that describe one-year periods.
-Choices are \code{"lower"} (the default) and \code{"upper"}.}
+labels for single-year periods.
+Choices are \code{"lower"} (the default) and \code{"upper"}.
+See below for details.}
 
-\item{interpret_range}{How to interpret
-labels in \code{labels} that describe multi-year periods.
+\item{interpret_multi}{How to interpret
+labels for multi-year periods.
 Choices are \code{"include"} (the default) and
-\code{"exclude"}.}
+\code{"exclude"}. See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Factor with the same length as \code{labels}.

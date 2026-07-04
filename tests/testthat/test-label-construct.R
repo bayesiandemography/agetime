@@ -22,13 +22,13 @@ test_that("construct_labels_intervals() can use upper bounds", {
     labels = "15",
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_identical(
     agetime:::construct_labels_intervals(intervals,
       format_single = "upper",
-      format_range = "exclude"
+      format_multi = "exclude"
     ),
     "16"
   )
@@ -39,7 +39,7 @@ test_that("construct_labels_intervals() errors for an invalid interval", {
   expect_error(
     agetime:::construct_labels_intervals(intervals,
       format_single = "lower",
-      format_range = "exclude"
+      format_multi = "exclude"
     ),
     "Internal error: Invalid interval."
   )
@@ -50,31 +50,31 @@ test_that("construct_labels_intervals() errors for invalid format_single", {
     labels = "15",
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_error(
     agetime:::construct_labels_intervals(intervals,
       format_single = "bogus",
-      format_range = "exclude"
+      format_multi = "exclude"
     ),
     "Internal error: 'format_single' invalid."
   )
 })
 
-test_that("construct_labels_intervals() errors for invalid format_range", {
+test_that("construct_labels_intervals() errors for invalid format_multi", {
   intervals <- intervals(
     labels = "15",
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_error(
     agetime:::construct_labels_intervals(intervals,
       format_single = "lower",
-      format_range = "bogus"
+      format_multi = "bogus"
     ),
-    "Internal error: 'format_range' invalid."
+    "Internal error: 'format_multi' invalid."
   )
 })

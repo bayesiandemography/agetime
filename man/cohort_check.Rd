@@ -13,7 +13,7 @@ cohort_check(
   no_na = NA,
   include_open = NA,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
@@ -25,7 +25,7 @@ cohort_assert(
   no_na = NA,
   include_open = NA,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -45,22 +45,19 @@ to the upper limit of the latest cohort.}
 \item{include_open}{One or more cohorts
 has no lower limit.}
 
-\item{interpret_single}{How to interpret a single-year label.
-If \code{"lower"} (the default), the label is assumed to
-give the lower bound, so that \code{"2025"} means\verb{[2025,2026)}.
-If \code{"upper"}, the label is assumed to give the upper bound,
-so that \code{"2025"} means \verb{[2024,2025)}.}
+\item{interpret_single}{How to interpret
+labels for single-year cohorts.
+Choices are \code{"lower"} (the default) and \code{"upper"}.
+See below for details.}
 
-\item{interpret_range}{How to interpret a label describing a range.
-If \code{"include"} (the default), the label is assumed to give
-the lower and upper bounds, so that \code{"2025-2030"}
-means \verb{[2025, 2030)}.
-If \code{"exclude"}, the label is assumed to give the lower
-bound and the upper bound minus 1, so that \code{"2025-2030"}
-means \verb{[2025, 2031)}.}
+\item{interpret_multi}{How to interpret
+labels for multi-year cohorts.
+Choices are \code{"include"} (the default) and
+\code{"exclude"}. See below for details.}
 
-\item{interpret_fail}{What to do if an attempt to interpret a
-label fails: \code{"error"} (the default), \code{"warn"}, or \code{"silent"}.}
+\item{interpret_fail}{Action if element of \code{labels}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 For \code{cohort_check()}, a list with logical \code{ok} and data frame
@@ -70,6 +67,17 @@ For \code{cohort_check()}, a list with logical \code{ok} and data frame
 Collect information on cohort labels (\code{cohort_check()}),
 or throw an error if cohort labels do not
 conform to expectations (\code{cohort_assert}).
+}
+\details{
+\tabular{llll}{
+   Type \tab Interval \tab \code{format} argument \tab Label \cr
+   single \tab \verb{[a, a+1)} \tab \code{format_single = "lower"} \tab \code{"year(a)"} \cr
+   single \tab \verb{[a, a+1)} \tab \code{format_single = "upper"} \tab \code{"year(a+1)"} \cr
+   range \tab \verb{[a, b)} \tab `format_multi = "include" \tab \code{"year(b)"} \cr
+   range \tab \verb{[a, b)} \tab `format_multi = "exclude" \tab `"year(b)-1" \cr
+   total \tab `(-Inf, Inf) \tab \if{html}{\out{<none>}} \tab \code{"Total"} \cr
+   na \tab \verb{(NA, NA)} \tab \if{html}{\out{<none>}} \tab \code{NA} \cr
+}
 }
 \examples{
 lab <- cohort_labels_five(

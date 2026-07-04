@@ -7,29 +7,26 @@
 cohort_standard(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{interpret_single}{How to interpret a single-year label.
-If \code{"lower"} (the default), the label is assumed to
-give the lower bound, so that \code{"2025"} means\verb{[2025,2026)}.
-If \code{"upper"}, the label is assumed to give the upper bound,
-so that \code{"2025"} means \verb{[2024,2025)}.}
+\item{interpret_single}{How to interpret
+labels for single-year cohorts.
+Choices are \code{"lower"} (the default) and \code{"upper"}.
+See below for details.}
 
-\item{interpret_range}{How to interpret a label describing a range.
-If \code{"include"} (the default), the label is assumed to give
-the lower and upper bounds, so that \code{"2025-2030"}
-means \verb{[2025, 2030)}.
-If \code{"exclude"}, the label is assumed to give the lower
-bound and the upper bound minus 1, so that \code{"2025-2030"}
-means \verb{[2025, 2031)}.}
+\item{interpret_multi}{How to interpret
+labels for multi-year cohorts.
+Choices are \code{"include"} (the default) and
+\code{"exclude"}. See below for details.}
 
-\item{interpret_fail}{What to do if an attempt to interpret a
-label fails: \code{"error"} (the default), \code{"warn"}, or \code{"silent"}.}
+\item{interpret_fail}{Action if element of \code{labels}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Character vector or factor with the same length as \code{labels}.

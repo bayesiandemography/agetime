@@ -29,7 +29,7 @@ age_levels_set_open <- function(labels,
     make_open_right = TRUE,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }

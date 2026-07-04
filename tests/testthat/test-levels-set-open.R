@@ -61,7 +61,7 @@ test_that("cohort_levels_set_open() can add an unobserved open level", {
   ans <- cohort_levels_set_open(
     c("2000-2004", "2010-2014"),
     upper_open = 1990,
-    interpret_range = "ex"
+    interpret_multi = "ex"
   )
   expect_identical(as.character(ans), c("2000-2004", "2010-2014"))
   expect_identical(levels(ans), c("<1990", "2000-2004", "2010-2014"))

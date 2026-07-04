@@ -1,14 +1,14 @@
 #' Inner Standard
 #'
 #' Construct standard labels from intervals.
-#' Note that arguments 'interpret_single' and 'interpret_range' control
+#' Note that arguments 'interpret_single' and 'interpret_multi' control
 #' the way that `labels` is parsed into intervals. They
 #' do not control the way that the intervals are rendered.
 #'
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Standardized labels as character vector or factor.
@@ -17,7 +17,7 @@
 inner_standard <- function(labels,
                            label_type,
                            interpret_single,
-                           interpret_range,
+                           interpret_multi,
                            interpret_fail) {
   labels <- to_character_or_factor(
     labels = labels,
@@ -30,14 +30,14 @@ inner_standard <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
-  format_range <- if (label_type == "age") "exclude" else "include"
+  format_multi <- if (label_type == "age") "exclude" else "include"
   labels_std <- construct_labels_intervals(
     intervals = intervals,
     "lower",
-    format_range
+    format_multi
   )
   if (is_factor) {
     i_xun <- get_i_xun_to_xunu(intervals)

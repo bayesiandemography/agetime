@@ -3,7 +3,7 @@ test_that("inner_check_no_gap() notes contiguous intervals", {
     labels = c("0-4", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   val <- agetime:::inner_check_no_gap(intervals, asserted = FALSE)
@@ -19,7 +19,7 @@ test_that("inner_check_no_na() notes absence of NA when asserted is FALSE", {
     labels = c("0-4", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   val <- agetime:::inner_check_no_na(intervals, asserted = FALSE)
@@ -35,7 +35,7 @@ test_that("inner_check_include_zero() gives an example", {
     labels = c("5-9", "0-4"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   val <- agetime:::inner_check_include_zero(intervals, asserted = FALSE)
@@ -51,7 +51,7 @@ test_that("inner_check_include_open() gives an example", {
     labels = c("5-9", "60+"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   val <- agetime:::inner_check_include_open(intervals, asserted = FALSE)
@@ -67,7 +67,7 @@ test_that("inner_check_valid_life() notes valid labels", {
     labels = c("0", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   val <- agetime:::inner_check_valid_life(intervals, asserted = FALSE)

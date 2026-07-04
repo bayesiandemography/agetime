@@ -6,7 +6,7 @@
 #' @param include_x Whether to include original `labels` in output.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Extended label vector (or factor).
@@ -22,7 +22,7 @@ inner_extend <- function(labels,
                          include_x,
                          label_type,
                          interpret_single,
-                         interpret_range,
+                         interpret_multi,
                          interpret_fail) {
   is_factor <- is.factor(labels)
   labels <- to_character_or_factor(
@@ -61,7 +61,7 @@ inner_extend <- function(labels,
     labels = tail,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   is_open <- get_is_open(intervals_tail)
@@ -93,7 +93,7 @@ inner_extend <- function(labels,
   ans <- inner_labels(
     breaks = breaks,
     format_single = interpret_single,
-    format_range = interpret_range,
+    format_multi = interpret_multi,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,

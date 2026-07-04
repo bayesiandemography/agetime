@@ -32,7 +32,7 @@ age_standard <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }

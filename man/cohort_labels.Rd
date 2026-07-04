@@ -11,7 +11,7 @@ cohort_labels(
   breaks,
   open = FALSE,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -21,7 +21,7 @@ cohort_labels_one(
   lower_last,
   open = FALSE,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -31,7 +31,7 @@ cohort_labels_five(
   lower_last,
   open = FALSE,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -41,86 +41,118 @@ cohort_labels_ten(
   lower_last,
   open = FALSE,
   format_single = c("lower", "upper"),
-  format_range = c("include", "exclude"),
+  format_multi = c("include", "exclude"),
   include_total = FALSE,
   include_na = FALSE
 )
 }
 \arguments{
-\item{breaks}{Boundaries between cohorts
-A numeric vector.}
+\item{breaks}{Boundaries between cohorts.
+Numeric vector.}
 
 \item{open}{Whether first cohort
 is "open", i.e. has no lower limit.
 Default is \code{FALSE}.}
 
-\item{format_single}{Rule for one-year labels: \code{"lower"} or \code{"upper"}.}
+\item{format_single}{How to format label for
+single-year cohort. Choices are \code{"lower"}
+(the default) and \code{"upper"}. See below for
+details.}
 
-\item{format_range}{Rule for multi-year labels: \code{"include"} or \code{"exclude"}.}
+\item{format_multi}{How to format label for
+multi-year cohort. Choices are \code{"include"}
+(the default) and \code{"exclude"}. See below for details.}
 
 \item{include_total}{Whether to include a
-\code{"Total"} category.}
+\code{"Total"} category. Default is \code{FALSE}.}
 
 \item{include_na}{Whether to include
-an \code{NA} category.}
+an \code{NA} category. Default is \code{FALSE}.}
 
 \item{lower_first}{Lower limit of
-first cohort.}
+first cohort. Non-negative number.}
 
 \item{lower_last}{Lower limit of
-last cohort.}
+last cohort. Non-negative number.}
 }
 \value{
 Character vector.
-Length depends on the function arguments.
 }
 \description{
-Create a new set of cohort labels.
+Create a new set of cohort labels
+based on \pkg{agetime} conventions.
+}
+\details{
+The label for a cohort depends on the
+lower and upper limits of that cohort.
+
+\code{format_single} controls whether the label
+for a single-year cohort is based on the
+lower or upper limit.
+For instance, the cohort \verb{[2025,2026)}
+has label \code{"2025"} if \code{format_single}
+is \code{"lower"} and \code{"2026"} if
+\code{format_single} is \code{"upper"}.
+
+\code{format_multi} controls whether the label
+for a multi-year cohort includes
+the upper limit.
+For instance, the cohort \verb{[2025,2030)}
+has label \code{"2025-2035"} if
+\code{format_multi} is \code{"include"} and
+\code{"2025-2029"} if \code{format_multi} is
+\code{"exclude"}.
+
+Cohorts, unlike periods, can be open
+on the left, i.e. have no lower limit.
+
+There are also two special cohort labels:
+\code{NA} and \code{"Total"}.
 }
 \examples{
 ## 5-year cohorts
 cohort_labels_five(
   lower_first = 2000,
-  lower_last = 2010
+  lower_last = 2015
 )
 
 ## 5-year cohorts, first cohort is open
 cohort_labels_five(
-  lower_first = 1960,
-  lower_last = 2020,
+  lower_first = 2001,
+  lower_last = 2016,
   open = TRUE
 )
 
 ## single-year cohorts
 cohort_labels_one(
   lower_first = 2000,
-  lower_last = 2010
+  lower_last = 2004,
 )
 
 ## single-year cohorts, 'format_single' is "upper"
 cohort_labels_one(
   lower_first = 2000,
-  lower_last = 2010,
+  lower_last = 2004,
   format_single = "upper"
 )
 
 ## ten-year cohorts
 cohort_labels_ten(
   lower_first = 2000,
-  lower_last = 2010
+  lower_last = 2020
 )
 
-## ten-year cohorts, 'format_range' is "exclude",
+## ten-year cohorts, 'format_multi' is "exclude",
 cohort_labels_ten(
   lower_first = 2000,
-  lower_last = 2010,
-  format_range = "exclude"
+  lower_last = 2020,
+  format_multi = "exclude"
 )
 
 ## include total and NA
 cohort_labels_ten(
   lower_first = 2000,
-  lower_last = 2010,
+  lower_last = 2020,
   include_total = TRUE,
   include_na = TRUE
 )

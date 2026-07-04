@@ -89,7 +89,7 @@ age_mapping <- function(labels,
     format = format,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }

@@ -1,7 +1,20 @@
 #' Create New Cohort Labels
 #'
 #' Create a new set of cohort labels.
-
+#'
+#'
+#' @section agetime format for cohorts:
+#' 
+#' | Type | Format argument | Interval | Label |
+#' |---------------|---------------|---------------|-------|
+#' | Single | `format_single="lower"` | [a, a+1) | `"year(a)"` |
+#' | Single | `format_single="upper"` | (a, a+1] | `"year(a+1)"` | 
+#' | Range | `format_range="include"` | [a, b) | `"year(a) - year(b)"` |
+#' | Range | `format_range="exclude"` | [a, b) | `"year(a) - year(b-1)"|
+#' | Open | [none] | (-Inf, a) | `"<year(a)"` | `"<2025"` |
+#' | Total | [none](-Inf, Inf) | `"Total"` | `"Total"` |
+#' | NA | [none] (-Inf, Inf) | `NA` | `NA` |
+#'
 #' @param breaks Boundaries between cohorts
 #' A numeric vector.
 #' @param lower_first Lower limit of

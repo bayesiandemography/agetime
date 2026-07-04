@@ -43,7 +43,7 @@ mapping_empty <- function(format) {
 #' @param format Output format for mappings.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Mapping object in requested `format`.
@@ -56,7 +56,7 @@ inner_mapping <- function(labels,
                           format,
                           label_type,
                           interpret_single,
-                          interpret_range,
+                          interpret_multi,
                           interpret_fail) {
   labels <- to_character_or_factor(
     labels = labels,
@@ -79,14 +79,14 @@ inner_mapping <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   intervals_y <- intervals(
     labels = y,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   construct_mapping(

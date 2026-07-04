@@ -3,7 +3,7 @@
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param no_overlap Expected overlap check result.
@@ -20,7 +20,7 @@
 inner_assert <- function(labels,
                          label_type,
                          interpret_single,
-                         interpret_range,
+                         interpret_multi,
                          interpret_fail,
                          no_overlap,
                          no_gap,
@@ -33,7 +33,7 @@ inner_assert <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
@@ -51,7 +51,7 @@ inner_assert <- function(labels,
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param no_overlap Expected overlap check result.
@@ -69,7 +69,7 @@ inner_assert <- function(labels,
 inner_check <- function(labels,
                         label_type,
                         interpret_single,
-                        interpret_range,
+                        interpret_multi,
                         interpret_fail,
                         no_overlap,
                         no_gap,
@@ -87,7 +87,7 @@ inner_check <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   val_no_overlap <- inner_check_no_overlap(

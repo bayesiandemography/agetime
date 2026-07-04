@@ -1,7 +1,7 @@
 #' Make Label Parsers
 #'
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param allow_openleft Whether to allow open-left labels in parsing.
 #' @param allow_openright Whether to allow open-right labels in parsing.
@@ -11,7 +11,7 @@
 
 
 make_label_parsers <- function(interpret_single,
-                               interpret_range,
+                               interpret_multi,
                                allow_openleft,
                                allow_openright) {
   ans <- list(
@@ -28,7 +28,7 @@ make_label_parsers <- function(interpret_single,
   label_parser_range_inner <- function(label) {
     label_parser_range(
       label = label,
-      interpret_range = interpret_range
+      interpret_multi = interpret_multi
     )
   }
   ans <- append(ans, label_parser_range_inner)
@@ -50,7 +50,7 @@ make_label_parsers <- function(interpret_single,
 make_label_parsers_age <- function() {
   make_label_parsers(
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     allow_openleft = FALSE,
     allow_openright = TRUE
   )
@@ -58,17 +58,17 @@ make_label_parsers_age <- function() {
 #' Make Label Parsers Cohort
 #'
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @returns List of parser functions for cohort labels.
 #'
 #' @noRd
 
 make_label_parsers_cohort <- function(interpret_single,
-                                      interpret_range) {
+                                      interpret_multi) {
   make_label_parsers(
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     allow_openleft = TRUE,
     allow_openright = FALSE
   )
@@ -76,7 +76,7 @@ make_label_parsers_cohort <- function(interpret_single,
 #' Make Label Parsers Period
 #'
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @returns List of parser functions for period labels.
 #'
@@ -84,10 +84,10 @@ make_label_parsers_cohort <- function(interpret_single,
 
 
 make_label_parsers_period <- function(interpret_single,
-                                      interpret_range) {
+                                      interpret_multi) {
   make_label_parsers(
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     allow_openleft = FALSE,
     allow_openright = FALSE
   )

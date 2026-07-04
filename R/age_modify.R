@@ -45,7 +45,7 @@ age_modify <- function(labels,
     is_open_right = open,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -93,7 +93,7 @@ age_modify_five <- function(labels,
     offset = 0L,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -109,7 +109,7 @@ age_modify_ten <- function(labels,
     offset = 0L,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -135,7 +135,7 @@ age_modify_life <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
   l <- get_lower(intervals)
@@ -164,7 +164,7 @@ age_modify_life <- function(labels,
     is_open_right = is_open_right,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }

@@ -6,7 +6,7 @@
 #' @param is_open_right Whether to include an open-right interval.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Modified labels as character vector or factor.
@@ -18,7 +18,7 @@ inner_modify <- function(labels,
                          is_open_right,
                          label_type,
                          interpret_single,
-                         interpret_range,
+                         interpret_multi,
                          interpret_fail) {
   is_factor <- is.factor(labels)
   labels <- to_character_or_factor(
@@ -33,7 +33,7 @@ inner_modify <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   int_has_total <- int_has_total(intervals)
@@ -43,7 +43,7 @@ inner_modify <- function(labels,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     format_single = interpret_single,
-    format_range = interpret_range,
+    format_multi = interpret_multi,
     include_total = int_has_total,
     include_na = int_has_na
   )
@@ -81,7 +81,7 @@ inner_modify <- function(labels,
 #' @param offset Alignment offset for width-based breaks.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Modified labels as character vector or factor.
@@ -95,7 +95,7 @@ inner_modify_width <- function(labels,
                                offset,
                                label_type,
                                interpret_single,
-                               interpret_range,
+                               interpret_multi,
                                interpret_fail) {
   is_factor <- is.factor(labels)
   labels <- to_character_or_factor(
@@ -120,7 +120,7 @@ inner_modify_width <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   is_open_left <- int_is_open_left(intervals)
@@ -163,7 +163,7 @@ inner_modify_width <- function(labels,
     is_open_right = is_open_right,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }

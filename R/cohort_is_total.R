@@ -19,14 +19,14 @@
 # When length(labels) == 0, returns logical(0).
 cohort_is_total <- function(labels,
                             interpret_single = c("lower", "upper"),
-                            interpret_range = c("include", "exclude"),
+                            interpret_multi = c("include", "exclude"),
                             interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -53,14 +53,14 @@ cohort_is_total <- function(labels,
 # When length(labels) == 0, returns logical(0).
 cohort_is_open <- function(labels,
                            interpret_single = c("lower", "upper"),
-                           interpret_range = c("include", "exclude"),
+                           interpret_multi = c("include", "exclude"),
                            interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     check_open_left = TRUE,
     check_open_right = FALSE

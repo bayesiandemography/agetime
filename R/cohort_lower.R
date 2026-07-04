@@ -9,21 +9,56 @@
 #' to filter on cohorts.
 #' See below for examples.
 #'
-#' @param labels Vector of cohort labels.
-#' @param interpret_single How to interpret a single-year label.
-#' If `"lower"` (the default), the label is assumed to
-#' give the lower bound, so that `"2025"` means`[2025,2026)`.
-#' If `"upper"`, the label is assumed to give the upper bound,
+#' @section `interpret_single`:
+#'
+#' `interpret_single` controls the interpretation
+#' of labels for single-year cohorts.
+#'
+#' If `interpret_single` is `"lower"` (the default),
+#' then labels for single-year cohorts
+#' are assumed to refer to lower limits,
+#' so that `"2025"` means `[2025,2026)`.
+#' This is the convention typically used for
+#' calendar years. It also matches the
+#' convention for single-year age groups.
+#'
+#' If `interpret_single` is `"upper"`,
+#' then labels for single-year cohorts
+#' are assumed to refer to upper limits,
 #' so that `"2025"` means `[2024,2025)`.
-#' @param interpret_range How to interpret a label describing a range.
-#' If `"include"` (the default), the label is assumed to give
-#' the lower and upper bounds, so that `"2025-2030"`
-#' means `[2025, 2030)`.
-#' If `"exclude"`, the label is assumed to give the lower
-#' bound and the upper bound minus 1, so that `"2025-2030"`
-#'  means `[2025, 2031)`.
-#' @param interpret_fail What to do if an attempt to interpret a
-#' label fails: `"error"` (the default), `"warn"`, or `"silent"`.
+#' This is the convention typically used for
+#' non-calendar years, eg 1 July to 30 June.
+#'
+#' @section `interpret_multi`:
+#'
+#' `interpret_multi` controls the interpretation
+#' of labels for multi-year cohorts.
+#'
+#' If `interpret_multi` is `"include"` (the default),
+#' then labels for multi-year cohorts
+#' are assumed to include upper limits,
+#' so that `"2025-2030"` means `[2025,2030)`.
+#'
+#' If `interpret_multi` is `"exclude"`,
+#' then labels for multi-year cohorts
+#' are assumed to exclude the upper limits
+#' and use upper - 1 instead,
+#' so that `"2025-2030"` means `[2025,2031)`.
+#' This matches the convention used for
+#' multi-year age groups.
+#'
+#' @param labels Vector of cohort labels.
+#' @param interpret_single How to interpret
+#' labels for single-year cohorts.
+#' Choices are `"lower"` (the default) and `"upper"`.
+#' See below for details.
+#' @param interpret_multi How to interpret
+#' labels for multi-year cohorts.
+#' Choices are `"include"` (the default) and
+#' `"exclude"`. See below for details.
+#' @param interpret_fail Action if element of `labels`
+#' cannot be interpreted. Choices are `"error"` (the default),
+#' `"warn"`, and `"silent"`.
 #' @return Numeric vector with the same length as `labels`.
 #' @examples
 #' labels <- c("2025-2030", "<2025", "2030-2035")
@@ -51,13 +86,13 @@
 #' cohort_upper("2025", interpret_single = "upper")
 #' cohort_width("2025", interpret_single = "upper")
 #'
-#' ## 'interpret_range' is "include" (the default)
+#' ## 'interpret_multi' is "include" (the default)
 #' cohort_upper("2025-2030")
 #' cohort_width("2025-2030")
 #'
-#' ## 'interpret_range' is "exclude"
-#' cohort_upper("2025-2030", interpret_range = "exclude")
-#' cohort_width("2025-2030", interpret_range = "exclude")
+#' ## 'interpret_multi' is "exclude"
+#' cohort_upper("2025-2030", interpret_multi = "exclude")
+#' cohort_width("2025-2030", interpret_multi = "exclude")
 #'
 #' ## no action when 'interpret_fail' is "silent"
 #' cohort_lower(c("2000-2005", "long time ago"),
@@ -68,16 +103,16 @@
 # When length(labels) == 0, returns numeric(0).
 cohort_lower <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_range = c("include", "exclude"),
+                         interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_lower(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -87,16 +122,16 @@ cohort_lower <- function(labels,
 #' @rdname cohort_lower
 cohort_mid <- function(labels,
                        interpret_single = c("lower", "upper"),
-                       interpret_range = c("include", "exclude"),
+                       interpret_multi = c("include", "exclude"),
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_mid(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -106,16 +141,16 @@ cohort_mid <- function(labels,
 #' @rdname cohort_lower
 cohort_upper <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_range = c("include", "exclude"),
+                         interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_upper(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -126,16 +161,16 @@ cohort_upper <- function(labels,
 cohort_width <- function(labels,
                          ## redundant, but keep so interface constant
                          interpret_single = c("lower", "upper"),
-                         interpret_range = c("include", "exclude"),
+                         interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }

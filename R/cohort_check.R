@@ -4,6 +4,17 @@
 #' or throw an error if cohort labels do not
 #' conform to expectations (`cohort_assert`).
 #'
+#'  | Type | Interval | `format` argument |  Label |
+#' |------|-------------------|----------|-------|
+#' | single | `[a, a+1)` | `format_single = "lower"` | `"year(a)"` |
+#' | single | `[a, a+1)` | `format_single = "upper"` | `"year(a+1)"` |
+#' | range  | `[a, b)`   | `format_multi = "include" | `"year(b)"` |
+#' | range  | `[a, b)`   | `format_multi = "exclude" | `"year(b)-1" |
+#' | total  | `(-Inf, Inf) | <none>    | `"Total"` |
+#' | na     | `(NA, NA)` | <none>    | `NA`      |
+#'
+#'
+#'
 #' @inheritParams cohort_lower
 #' @param no_overlap No cohorts overlap.
 #' @param no_gap The cohorts span the entire
@@ -55,16 +66,16 @@ cohort_check <- function(labels,
                          no_na = NA,
                          include_open = NA,
                          interpret_single = c("lower", "upper"),
-                         interpret_range = c("include", "exclude"),
+                         interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_check(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,
@@ -85,16 +96,16 @@ cohort_assert <- function(labels,
                           no_na = NA,
                           include_open = NA,
                           interpret_single = c("lower", "upper"),
-                          interpret_range = c("include", "exclude"),
+                          interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_assert(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     no_overlap = no_overlap,
     no_gap = no_gap,

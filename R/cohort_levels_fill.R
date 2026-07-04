@@ -58,10 +58,10 @@
 cohort_levels_fill <- function(labels,
                                breaks = NULL,
                                interpret_single = c("lower", "upper"),
-                               interpret_range = c("include", "exclude"),
+                               interpret_multi = c("include", "exclude"),
                                interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -69,7 +69,7 @@ cohort_levels_fill <- function(labels,
     width = NULL,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -78,12 +78,12 @@ cohort_levels_fill <- function(labels,
 #' @export
 cohort_levels_fill_one <- function(labels,
                                    interpret_single = c("lower", "upper"),
-                                   interpret_range = c("include", "exclude"),
+                                   interpret_multi = c("include", "exclude"),
                                    interpret_fail = c(
                                      "error", "warn", "silent"
                                    )) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -91,7 +91,7 @@ cohort_levels_fill_one <- function(labels,
     width = 1L,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -100,12 +100,12 @@ cohort_levels_fill_one <- function(labels,
 #' @export
 cohort_levels_fill_five <- function(labels,
                                     interpret_single = c("lower", "upper"),
-                                    interpret_range = c("include", "exclude"),
+                                    interpret_multi = c("include", "exclude"),
                                     interpret_fail = c(
                                       "error", "warn", "silent"
                                     )) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -113,7 +113,7 @@ cohort_levels_fill_five <- function(labels,
     width = 5L,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
@@ -122,12 +122,12 @@ cohort_levels_fill_five <- function(labels,
 #' @export
 cohort_levels_fill_ten <- function(labels,
                                    interpret_single = c("lower", "upper"),
-                                   interpret_range = c("include", "exclude"),
+                                   interpret_multi = c("include", "exclude"),
                                    interpret_fail = c(
                                      "error", "warn", "silent"
                                    )) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -135,7 +135,7 @@ cohort_levels_fill_ten <- function(labels,
     width = 10L,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }

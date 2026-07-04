@@ -11,50 +11,47 @@ and Midpoints of Cohorts}
 cohort_lower(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_mid(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_upper(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_width(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_range = c("include", "exclude"),
+  interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{interpret_single}{How to interpret a single-year label.
-If \code{"lower"} (the default), the label is assumed to
-give the lower bound, so that \code{"2025"} means\verb{[2025,2026)}.
-If \code{"upper"}, the label is assumed to give the upper bound,
-so that \code{"2025"} means \verb{[2024,2025)}.}
+\item{interpret_single}{How to interpret
+labels for single-year cohorts.
+Choices are \code{"lower"} (the default) and \code{"upper"}.
+See below for details.}
 
-\item{interpret_range}{How to interpret a label describing a range.
-If \code{"include"} (the default), the label is assumed to give
-the lower and upper bounds, so that \code{"2025-2030"}
-means \verb{[2025, 2030)}.
-If \code{"exclude"}, the label is assumed to give the lower
-bound and the upper bound minus 1, so that \code{"2025-2030"}
-means \verb{[2025, 2031)}.}
+\item{interpret_multi}{How to interpret
+labels for multi-year cohorts.
+Choices are \code{"include"} (the default) and
+\code{"exclude"}. See below for details.}
 
-\item{interpret_fail}{What to do if an attempt to interpret a
-label fails: \code{"error"} (the default), \code{"warn"}, or \code{"silent"}.}
+\item{interpret_fail}{Action if element of \code{labels}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Numeric vector with the same length as \code{labels}.
@@ -68,6 +65,48 @@ Lower and upper limits can be used
 to filter on cohorts.
 See below for examples.
 }
+\section{\code{interpret_single}}{
+
+
+\code{interpret_single} controls the interpretation
+of labels for single-year cohorts.
+
+If \code{interpret_single} is \code{"lower"} (the default),
+then labels for single-year cohorts
+are assumed to refer to lower limits,
+so that \code{"2025"} means \verb{[2025,2026)}.
+This is the convention typically used for
+calendar years. It also matches the
+convention for single-year age groups.
+
+If \code{interpret_single} is \code{"upper"},
+then labels for single-year cohorts
+are assumed to refer to upper limits,
+so that \code{"2025"} means \verb{[2024,2025)}.
+This is the convention typically used for
+non-calendar years, eg 1 July to 30 June.
+}
+
+\section{\code{interpret_multi}}{
+
+
+\code{interpret_multi} controls the interpretation
+of labels for multi-year cohorts.
+
+If \code{interpret_multi} is \code{"include"} (the default),
+then labels for multi-year cohorts
+are assumed to include upper limits,
+so that \code{"2025-2030"} means \verb{[2025,2030)}.
+
+If \code{interpret_multi} is \code{"exclude"},
+then labels for multi-year cohorts
+are assumed to exclude the upper limits
+and use upper - 1 instead,
+so that \code{"2025-2030"} means \verb{[2025,2031)}.
+This matches the convention used for
+multi-year age groups.
+}
+
 \examples{
 labels <- c("2025-2030", "<2025", "2030-2035")
 cohort_lower(labels) # [2025, 2030)
@@ -94,13 +133,13 @@ cohort_lower("2025", interpret_single = "upper")
 cohort_upper("2025", interpret_single = "upper")
 cohort_width("2025", interpret_single = "upper")
 
-## 'interpret_range' is "include" (the default)
+## 'interpret_multi' is "include" (the default)
 cohort_upper("2025-2030")
 cohort_width("2025-2030")
 
-## 'interpret_range' is "exclude"
-cohort_upper("2025-2030", interpret_range = "exclude")
-cohort_width("2025-2030", interpret_range = "exclude")
+## 'interpret_multi' is "exclude"
+cohort_upper("2025-2030", interpret_multi = "exclude")
+cohort_width("2025-2030", interpret_multi = "exclude")
 
 ## no action when 'interpret_fail' is "silent"
 cohort_lower(c("2000-2005", "long time ago"),

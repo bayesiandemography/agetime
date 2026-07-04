@@ -79,10 +79,10 @@ period_mapping <- function(labels,
                            ),
                            format = c("tibble", "matrix"),
                            interpret_single = c("lower", "upper"),
-                           interpret_range = c("include", "exclude"),
+                           interpret_multi = c("include", "exclude"),
                            interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   relation <- match.arg(relation)
   format <- match.arg(format)
@@ -93,7 +93,7 @@ period_mapping <- function(labels,
     format = format,
     label_type = "period",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }

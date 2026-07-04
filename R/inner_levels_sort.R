@@ -4,7 +4,7 @@
 #' @param decreasing Whether to sort in decreasing order.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with sorted levels.
@@ -15,7 +15,7 @@ inner_levels_sort <- function(labels,
                               decreasing,
                               label_type,
                               interpret_single,
-                              interpret_range,
+                              interpret_multi,
                               interpret_fail) {
   prep <- inner_levels_fill_prep(
     labels = labels,
@@ -27,7 +27,7 @@ inner_levels_sort <- function(labels,
     breaks = NULL,
     is_ordered = prep$is_ordered,
     format_single = interpret_single,
-    format_range = interpret_range
+    format_multi = interpret_multi
   )
   if (!is.null(empty)) {
     return(empty)
@@ -38,7 +38,7 @@ inner_levels_sort <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   lower <- get_lower(intervals)

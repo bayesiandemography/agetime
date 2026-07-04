@@ -24,7 +24,7 @@ age_is_total <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail
   )
 }
@@ -56,7 +56,7 @@ age_is_open <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = interpret_fail,
     check_open_left = FALSE,
     check_open_right = TRUE

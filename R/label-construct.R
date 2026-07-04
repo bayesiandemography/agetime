@@ -5,16 +5,16 @@
 #'
 #' @param intervals An `agetime_intervals` object.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @returns Character vector of labels for parsed intervals.
 #'
-#' When `format_range = "exclude"`, range labels are rendered with the displayed
+#' When `format_multi = "exclude"`, range labels are rendered with the displayed
 #' upper bound reduced by 1 from the internal interval upper bound.
 #'
 #' @noRd
 construct_labels_intervals <- function(intervals,
                                        format_single,
-                                       format_range) {
+                                       format_multi) {
   is_one <- get_is_one(intervals)
   is_multi <- get_is_multi(intervals)
   is_open_left <- get_is_open_left(intervals)
@@ -41,12 +41,12 @@ construct_labels_intervals <- function(intervals,
   } else {
     cli::cli_abort("Internal error: 'format_single' invalid.")
   }
-  if (format_range == "include") {
+  if (format_multi == "include") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
-  } else if (format_range == "exclude") {
+  } else if (format_multi == "exclude") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
   } else {
-    cli::cli_abort("Internal error: 'format_range' invalid.")
+    cli::cli_abort("Internal error: 'format_multi' invalid.")
   }
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
@@ -61,12 +61,12 @@ construct_labels_intervals <- function(intervals,
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
 #' @returns Character vector of labels for breaks.
 #'
-#' When `format_range = "exclude"`, range labels are rendered with the displayed
+#' When `format_multi = "exclude"`, range labels are rendered with the displayed
 #' upper bound reduced by 1 from the interval break upper bound.
 #'
 #' @noRd
@@ -74,7 +74,7 @@ construct_labels_breaks <- function(breaks,
                                     is_open_left,
                                     is_open_right,
                                     format_single,
-                                    format_range,
+                                    format_multi,
                                     include_total,
                                     include_na) {
   lower <- breaks[-length(breaks)]
@@ -100,7 +100,7 @@ construct_labels_breaks <- function(breaks,
   } else {
     ans[is_one] <- upper[is_one]
   }
-  if (format_range == "exclude") {
+  if (format_multi == "exclude") {
     ans[is_multi] <- paste(lower[is_multi],
       upper[is_multi] - 1L,
       sep = "-"

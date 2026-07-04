@@ -9,7 +9,7 @@
 #' on the right.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_range Rule for multi-year labels: `"include"`
+#' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with selected intervals made open-ended in values and levels.
@@ -24,7 +24,7 @@ inner_levels_set_open <- function(labels,
                                   make_open_right,
                                   label_type,
                                   interpret_single,
-                                  interpret_range,
+                                  interpret_multi,
                                   interpret_fail) {
   is_ordered <- is.factor(labels) && is.ordered(labels)
   labels <- to_character_or_factor(
@@ -49,7 +49,7 @@ inner_levels_set_open <- function(labels,
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   m <- get_m(intervals)
@@ -97,7 +97,7 @@ inner_levels_set_open <- function(labels,
     decreasing = FALSE,
     label_type = label_type,
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   ))
   factor(

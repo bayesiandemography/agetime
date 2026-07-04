@@ -46,7 +46,7 @@ test_that("check_in_limits_intervals() passes for in-bound breaks", {
     labels = c("5-9", "10-14"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_invisible(agetime:::check_in_limits_intervals(
@@ -63,7 +63,7 @@ test_that("check_not_in_intervals() passes for out-of-interval breaks", {
     labels = c("0-4", "20-24"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_invisible(agetime:::check_not_in_intervals(
@@ -80,7 +80,7 @@ test_that("check_not_in_intervals() errors for internal breaks", {
     labels = c("0-4", "20-24"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   expect_error(

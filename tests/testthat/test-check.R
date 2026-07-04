@@ -33,7 +33,7 @@ test_that("check_in_limits_intervals passes for all NA", {
     labels = NA,
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   nm_intervals <- "int"
@@ -53,7 +53,7 @@ test_that("check_in_limits_intervals errors when outside interval", {
     labels = "5-9",
     label_type = "age",
     interpret_single = "lower",
-    interpret_range = "exclude",
+    interpret_multi = "exclude",
     interpret_fail = "error"
   )
   nm_intervals <- "int"

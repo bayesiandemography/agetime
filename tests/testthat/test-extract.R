@@ -93,14 +93,14 @@ test_that("period extractors respect interpret_single", {
   expect_values(period_width(period_one, interpret_single = "upper"), 1)
 })
 
-test_that("period extractors respect interpret_range", {
+test_that("period extractors respect interpret_multi", {
   x <- "2025-2030"
 
   expect_values(period_upper(x), 2030)
   expect_values(period_width(x), 5)
 
-  expect_values(period_upper(x, interpret_range = "exclude"), 2031)
-  expect_values(period_width(x, interpret_range = "exclude"), 6)
+  expect_values(period_upper(x, interpret_multi = "exclude"), 2031)
+  expect_values(period_width(x, interpret_multi = "exclude"), 6)
 })
 
 test_that("period_lower() returns NA silently for invalid labels", {
@@ -163,14 +163,14 @@ test_that("cohort extractors respect interpret_single", {
   expect_values(cohort_width(cohort_one, interpret_single = "upper"), 1)
 })
 
-test_that("cohort extractors respect interpret_range", {
+test_that("cohort extractors respect interpret_multi", {
   x <- "2025-2030"
 
   expect_values(cohort_upper(x), 2030)
   expect_values(cohort_width(x), 5)
 
-  expect_values(cohort_upper(x, interpret_range = "exclude"), 2031)
-  expect_values(cohort_width(x, interpret_range = "exclude"), 6)
+  expect_values(cohort_upper(x, interpret_multi = "exclude"), 2031)
+  expect_values(cohort_width(x, interpret_multi = "exclude"), 6)
 })
 
 test_that("cohort_lower() returns NA silently for invalid labels", {

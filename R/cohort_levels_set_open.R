@@ -20,13 +20,13 @@
 cohort_levels_set_open <- function(labels,
                                    upper_open,
                                    interpret_single = c("lower", "upper"),
-                                   interpret_range = c("include", "exclude"),
+                                   interpret_multi = c("include", "exclude"),
                                    interpret_fail = c(
                                      "error", "warn", "silent"
                                    )) {
   interpret_fail <- match.arg(interpret_fail)
   interpret_single <- match.arg(interpret_single)
-  interpret_range <- match.arg(interpret_range)
+  interpret_multi <- match.arg(interpret_multi)
   inner_levels_set_open(
     labels = labels,
     open_boundary = upper_open,
@@ -35,7 +35,7 @@ cohort_levels_set_open <- function(labels,
     make_open_right = FALSE,
     label_type = "cohort",
     interpret_single = interpret_single,
-    interpret_range = interpret_range,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
