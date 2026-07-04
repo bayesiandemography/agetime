@@ -1,22 +1,22 @@
 # Extend a Set of Age Groups
 
-Add new age groups at the end of `x`.
+Add new age groups at the end of `labels`.
 
 ## Usage
 
 ``` r
 age_extend(
-  x,
+  labels,
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
@@ -30,22 +30,22 @@ age_extend(
 
 - include_x:
 
-  Should the return value include `x`? Default is `TRUE`.
+  Should the return value include `labels`? Default is `TRUE`.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Character vector or factor. Length is `n`, or `length(x) + n` when
+Character vector or factor. Length is `n`, or `length(labels) + n` when
 `include_x` is `TRUE`.
 
 ## Details
 
 By default, the width of the new age groups is derived from the last
-element of `x`, but a value can be specified through the `width`
+element of `labels`, but a value can be specified through the `width`
 arugment.
 
 ## See also
@@ -59,11 +59,11 @@ arugment.
 ## Examples
 
 ``` r
-x <- c("0-4", "5-9")
-age_extend(x, n = 2)
+labels <- c("0-4", "5-9")
+age_extend(labels, n = 2)
 #> [1] "0-4"   "5-9"   "10-14" "15-19"
-age_extend(x, n = 2, width = 10)
+age_extend(labels, n = 2, width = 10)
 #> [1] "0-4"   "5-9"   "10-19" "20-29"
-age_extend(x, n = 2, include_x = FALSE)
+age_extend(labels, n = 2, include_x = FALSE)
 #> [1] "10-14" "15-19"
 ```

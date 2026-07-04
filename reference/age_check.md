@@ -7,7 +7,7 @@ error if age group labels do not conform to expectations (`age_assert`).
 
 ``` r
 age_check(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
@@ -15,11 +15,11 @@ age_check(
   include_zero = NA,
   include_open = NA,
   valid_life = NA,
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 
 age_assert(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
@@ -27,13 +27,13 @@ age_assert(
   include_zero = NA,
   include_open = NA,
   valid_life = NA,
-  x_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
@@ -66,15 +66,15 @@ age_assert(
 
   All labels valid for (abridged) life table.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
 For `age_check()`, a list with logical `ok` and data frame `details`;
-for `age_assert()`, `x` invisibly or an error.
+for `age_assert()`, `labels` invisibly or an error.
 
 ## See also
 
@@ -95,7 +95,7 @@ lab
 
 ## get info on everything
 age_check(
-  x = lab,
+  labels = lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
@@ -121,9 +121,9 @@ age_check(
 #> 
 
 ## throw error if gaps
-age_assert(x = lab, no_gap = TRUE)
+age_assert(labels = lab, no_gap = TRUE)
 
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps
-age_assert(x = lab_gap, no_gap = FALSE)
+age_assert(labels = lab_gap, no_gap = FALSE)
 ```

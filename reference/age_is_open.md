@@ -6,23 +6,23 @@ upper limit.
 ## Usage
 
 ``` r
-age_is_open(x, x_fail = c("error", "warn", "silent"))
+age_is_open(labels, interpret_fail = c("error", "warn", "silent"))
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Logical vector with the same length as `x`.
+Logical vector with the same length as `labels`.
 
 ## See also
 
@@ -35,8 +35,8 @@ Logical vector with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("20+", "infant", "100+", "60to79")
-age_is_open(x)
+labels <- c("20+", "infant", "100+", "60to79")
+age_is_open(labels)
 #>   20+     0  100+ 60-79 
 #>  TRUE FALSE  TRUE FALSE 
 ```

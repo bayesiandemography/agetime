@@ -49,7 +49,7 @@ conform to expectations (<code>age_assert</code>).</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">age_check</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">labels</span>,</span>
 <span>  no_overlap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -57,11 +57,11 @@ conform to expectations (<code>age_assert</code>).</p>
 <span>  include_zero <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  include_open <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  valid_life <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  x_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">age_assert</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">labels</span>,</span>
 <span>  no_overlap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">NA</span>,</span>
@@ -69,7 +69,7 @@ conform to expectations (<code>age_assert</code>).</p>
 <span>  include_zero <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  include_open <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  valid_life <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  x_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -77,7 +77,7 @@ conform to expectations (<code>age_assert</code>).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dl><dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
 <dd><p>Vector of age group labels.</p></dd>
 
 
@@ -114,8 +114,8 @@ has no upper limit.</p></dd>
 (abridged) life table.</p></dd>
 
 
-<dt id="arg-x-fail">x_fail<a class="anchor" aria-label="anchor" href="#arg-x-fail"></a></dt>
-<dd><p>Action if element of <code>x</code>
+<dt id="arg-interpret-fail">interpret_fail<a class="anchor" aria-label="anchor" href="#arg-interpret-fail"></a></dt>
+<dd><p>Action if element of <code>labels</code>
 cannot be parsed: <code>"error"</code> (the default),
 <code>"warn"</code>, or <code>"silent"</code>.</p></dd>
 
@@ -123,7 +123,7 @@ cannot be parsed: <code>"error"</code> (the default),
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>For <code>age_check()</code>, a list with logical <code>ok</code> and data frame
-<code>details</code>; for <code>age_assert()</code>, <code>x</code> invisibly or an error.</p>
+<code>details</code>; for <code>age_assert()</code>, <code>labels</code> invisibly or an error.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -143,7 +143,7 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## get info on everything</span></span></span>
 <span class="r-in"><span><span class="fu">age_check</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  x <span class="op">=</span> <span class="va">lab</span>,</span></span>
+<span class="r-in"><span>  labels <span class="op">=</span> <span class="va">lab</span>,</span></span>
 <span class="r-in"><span>  no_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  no_gap <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  no_total <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
@@ -169,11 +169,11 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## throw error if gaps</span></span></span>
-<span class="r-in"><span><span class="fu">age_assert</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lab</span>, no_gap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_assert</span><span class="op">(</span>labels <span class="op">=</span> <span class="va">lab</span>, no_gap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">lab_gap</span> <span class="op">&lt;-</span> <span class="va">lab</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="co">## throw error if no gaps</span></span></span>
-<span class="r-in"><span><span class="fu">age_assert</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lab_gap</span>, no_gap <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_assert</span><span class="op">(</span>labels <span class="op">=</span> <span class="va">lab_gap</span>, no_gap <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

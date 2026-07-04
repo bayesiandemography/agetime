@@ -1,4 +1,4 @@
-# Lower Limits, Upper Limits, Widths, and Midpoints of Cohorts
+# Limits, Widths, and Midpoints from Cohort Labels
 
 Calculate lower limits, upper limits, widths, and midpoints for cohorts.
 
@@ -6,93 +6,100 @@ Calculate lower limits, upper limits, widths, and midpoints for cohorts.
 
 ``` r
 cohort_lower(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_mid(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_upper(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_width(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of cohort labels.
 
-- x_one:
+- interpret_single:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  How to interpret labels for single-year cohorts. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  How to interpret labels for multi-year cohorts. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Numeric vector with the same length as `x`.
+Numeric vector with the same length as `labels`.
 
 ## Details
 
 Lower and upper limits can be used to filter on cohorts. See below for
 examples.
 
-## See also
+## Controlling how cohort labels are interpreted
 
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year cohorts are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
 
-- [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
-  Age equivalent of `cohort_lower()`
+If `interpret_single` is `"upper"`, then labels for single-year cohorts
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
 
-- [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
-  Period equivalent of `cohort_lower()`
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year cohorts are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
+are assumed to exclude the upper limits so that `"2025-2030"` means
+`[2025,2031)`.
 
 ## Examples
 
 ``` r
-x <- c("2025-2030", "<2025", "2030-2035")
-cohort_lower(x)
+labels <- c("2025-2030", "<2025", "2030-2035")
+cohort_lower(labels) # [2025, 2030)
 #> 2025-2030     <2025 2030-2035 
 #>      2025      -Inf      2030 
-cohort_upper(x)
+cohort_upper(labels) # [2024, 2030)
 #> 2025-2030     <2025 2030-2035 
 #>      2030      2025      2035 
-cohort_width(x)
+cohort_width(labels) # 5
 #> 2025-2030     <2025 2030-2035 
 #>         5       Inf         5 
-cohort_mid(x)
+cohort_mid(labels) # 2027.5
 #> 2025-2030     <2025 2030-2035 
 #>    2027.5    2022.5    2032.5 
-
-## use 'cohort_lower()' to filter on cohort
 library(dplyr, warn.conflicts = FALSE)
 df <- tribble(
   ~cohort, ~count,
@@ -114,7 +121,7 @@ df |> filter(cohort_lower(cohort) >= 2025)
 #> 1 2025-2030    20
 #> 2 2030-2035    11
 
-## 'x_one' is "lower" (the default)
+## 'interpret_single' is "lower" (the default)
 cohort_lower("2025")
 #> 2025 
 #> 2025 
@@ -125,18 +132,18 @@ cohort_width("2025")
 #> 2025 
 #>    1 
 
-## 'x_one' is "upper"
-cohort_lower("2025", x_one = "upper")
+## 'interpret_single' is "upper"
+cohort_lower("2025", interpret_single = "upper")
 #> 2025 
 #> 2024 
-cohort_upper("2025", x_one = "upper")
+cohort_upper("2025", interpret_single = "upper")
 #> 2025 
 #> 2025 
-cohort_width("2025", x_one = "upper")
+cohort_width("2025", interpret_single = "upper")
 #> 2025 
 #>    1 
 
-## 'x_multi' is "include" (the default)
+## 'interpret_multi' is "include" (the default)
 cohort_upper("2025-2030")
 #> 2025-2030 
 #>      2030 
@@ -144,17 +151,17 @@ cohort_width("2025-2030")
 #> 2025-2030 
 #>         5 
 
-## 'x_multi' is "exclude"
-cohort_upper("2025-2030", x_multi = "exclude")
+## 'interpret_multi' is "exclude"
+cohort_upper("2025-2030", interpret_multi = "exclude")
 #> 2025-2030 
 #>      2031 
-cohort_width("2025-2030", x_multi = "exclude")
+cohort_width("2025-2030", interpret_multi = "exclude")
 #> 2025-2030 
 #>         6 
 
-## no action when 'x_fail' is "silent"
+## no action when 'interpret_fail' is "silent"
 cohort_lower(c("2000-2005", "long time ago"),
-  x_fail = "silent"
+  interpret_fail = "silent"
 )
 #>   2000-2005 longtimeago 
 #>        2000          NA 

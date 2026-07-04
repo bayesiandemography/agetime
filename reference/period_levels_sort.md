@@ -1,22 +1,22 @@
 # Sort Period Levels
 
-Sort the levels of `x`.
+Sort the levels of `labels`.
 
 ## Usage
 
 ``` r
 period_levels_sort(
-  x,
+  labels,
   decreasing = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of period labels.
 
@@ -24,37 +24,54 @@ period_levels_sort(
 
   Whether sort is increasing or decreasing. Default is `FALSE`.
 
-- x_one:
+- interpret_single:
 
-  How to interpret labels in `x` that describe one-year periods. Choices
-  are `"lower"` (the default) and `"upper"`.
+  How to interpret labels for single-year periods. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  How to interpret labels in `x` that describe multi-year periods.
-  Choices are `"include"` (the default) and `"exclude"`.
+  How to interpret labels for multi-year periods. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Factor with the same length as `x`.
+Factor with the same length as `labels`.
 
 ## Details
 
-If `x` is not a factor, and so does not have levels, convert it to a
-factor first.
+If `labels` is not a factor, and so does not have levels, convert it to
+a factor first.
 
 Levels are sorted on their lower limits. When there are ties, upper
 limits are used. `NA`s come second-to-last, and totals come last.
 
-## See also
+## Controlling how period labels are interpreted
 
-- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year periods are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year periods
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year periods are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year periods
+are assumed to exclude the upper limits, so that `"2025-2030"` means
+`[2025,2031)`.
+
+## See also
 
 - [`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md)
   Age equivalent of `period_levels_sort()`
@@ -65,8 +82,8 @@ limits are used. `NA`s come second-to-last, and totals come last.
 ## Examples
 
 ``` r
-x <- c("2020-2025", "2050", "Total", NA, "2025-2050")
-period_levels_sort(x)
+labels <- c("2020-2025", "2050", "Total", NA, "2025-2050")
+period_levels_sort(labels)
 #> [1] 2020-2025 2050      Total     <NA>      2025-2050
 #> Levels: 2020-2025 2025-2050 2050 <NA> Total
 ```

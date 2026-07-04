@@ -63,7 +63,7 @@ age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
 
 ## Value
 
-Character vector. Length depends on the function arguments.
+Character vector.
 
 ## See also
 

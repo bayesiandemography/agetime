@@ -139,13 +139,13 @@ example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <co
 <tr class="even">
 <td><code>*_standard()</code></td>
 <td>Convert labels to standard format</td>
-<td>Same shape as <code>x</code>
+<td>Same shape as <code>labels</code>
 </td>
 </tr>
 <tr class="odd">
 <td><code>*_modify()</code></td>
 <td>Regroup labels into new intervals</td>
-<td>Same shape as <code>x</code>
+<td>Same shape as <code>labels</code>
 </td>
 </tr>
 <tr class="even">
@@ -191,23 +191,32 @@ purpose is to create or reorder factor levels.</li>
 <div class="section level2">
 <h2 id="input-parsing-and-output-rendering">Input parsing and output rendering<a class="anchor" aria-label="anchor" href="#input-parsing-and-output-rendering"></a>
 </h2>
-<p>Arguments beginning with <code>x_</code> describe how input labels in
-<code>x</code> should be parsed. They do not describe how newly
-generated output labels should be rendered.</p>
-<p>For example, <code><a href="../reference/period_standard.html">period_standard()</a></code> uses <code>x_multi</code>
-to interpret the input:</p>
+<p>The main input argument is called <code>labels</code> when it is a
+vector of age, period, or cohort labels. Arguments beginning with
+<code>interpret_</code> describe how existing input labels should be
+parsed. They do not describe how newly generated output labels should be
+rendered.</p>
+<p>Age labels follow a strong demographic convention: one-year labels
+use the lower boundary, and multi-year labels exclude the upper
+boundary. Age functions therefore do not expose
+<code>interpret_single</code> or <code>interpret_multi</code> arguments.
+Period and cohort labels do not have the same universal convention, so
+period and cohort functions let you specify how input labels should be
+parsed.</p>
+<p>For example, <code><a href="../reference/period_standard.html">period_standard()</a></code> uses
+<code>interpret_multi</code> to interpret the input:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/period_standard.html">period_standard</a></span><span class="op">(</span><span class="st">"2020-2025"</span>, x_multi <span class="op">=</span> <span class="st">"exclude"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/period_standard.html">period_standard</a></span><span class="op">(</span><span class="st">"2020-2025"</span>, interpret_multi <span class="op">=</span> <span class="st">"exclude"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2020-2026"</span></span></code></pre></div>
-<p>Arguments beginning with <code>label_</code> describe how new output
+<p>Arguments beginning with <code>format_</code> describe how new output
 labels should be rendered. For example, <code><a href="../reference/period_labels.html">period_labels_ten()</a></code>
-uses <code>label_multi</code> to decide whether the displayed upper
+uses <code>format_multi</code> to decide whether the displayed upper
 limit is included or excluded:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/period_labels.html">period_labels_ten</a></span><span class="op">(</span></span>
 <span>  lower_first <span class="op">=</span> <span class="fl">2000</span>,</span>
 <span>  lower_last <span class="op">=</span> <span class="fl">2020</span>,</span>
-<span>  label_multi <span class="op">=</span> <span class="st">"exclude"</span></span>
+<span>  format_multi <span class="op">=</span> <span class="st">"exclude"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2000-2009" "2010-2019" "2020-2029"</span></span></code></pre></div>
 <p>This convention is intended to keep input interpretation separate
@@ -244,7 +253,7 @@ such as <code>&lt;1990</code>.</li>
 <span><span class="fu"><a href="../reference/cohort_levels_set_open.html">cohort_levels_set_open</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2000-2004"</span>, <span class="st">"2010-2014"</span><span class="op">)</span>,</span>
 <span>  upper_open <span class="op">=</span> <span class="fl">1990</span>,</span>
-<span>  x_multi <span class="op">=</span> <span class="st">"exclude"</span></span>
+<span>  interpret_multi <span class="op">=</span> <span class="st">"exclude"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2000-2004 2010-2014</span></span>
 <span><span class="co">#&gt; Levels: &lt;1990 2000-2004 2010-2014</span></span></code></pre></div>
@@ -257,16 +266,16 @@ question is where the open interval starts or ends.</p>
 <h2 id="values-and-levels">Values and levels<a class="anchor" aria-label="anchor" href="#values-and-levels"></a>
 </h2>
 <p>Functions that modify values, such as <code><a href="../reference/age_modify.html">age_modify()</a></code>,
-return values with the same length as <code>x</code>. If <code>x</code>
-is a factor, they also update levels.</p>
+return values with the same length as <code>labels</code>. If
+<code>labels</code> is a factor, they also update levels.</p>
 <p>Functions in the <code>*_levels_*()</code> family always return a
 factor. They preserve observed values where possible, and change or add
 levels. This is why <code><a href="../reference/age_levels_set_open.html">age_levels_set_open()</a></code> can add a
-<code>70+</code> level even when no value in <code>x</code> currently
-belongs to that open group.</p>
+<code>70+</code> level even when no value in <code>labels</code>
+currently belongs to that open group.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"60-64"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_levels_set_open.html">age_levels_set_open</a></span><span class="op">(</span><span class="va">x</span>, lower_open <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"60-64"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_levels_set_open.html">age_levels_set_open</a></span><span class="op">(</span><span class="va">labels</span>, lower_open <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0-4   60-64</span></span>
 <span><span class="co">#&gt; Levels: 0-4 60-64 70+</span></span></code></pre></div>
 </div>

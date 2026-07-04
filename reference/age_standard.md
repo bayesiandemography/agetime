@@ -1,27 +1,27 @@
 # Standardize Age Group Labels
 
-Convert age group labels to a 'standard' format.
+Convert age group labels to the default agetime format.
 
 ## Usage
 
 ``` r
-age_standard(x, x_fail = c("error", "warn", "silent"))
+age_standard(labels, interpret_fail = c("error", "warn", "silent"))
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Character vector or factor with the same length as `x`.
+Character vector or factor with the same length as `labels`.
 
 ## See also
 
@@ -34,8 +34,8 @@ Character vector or factor with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("5to9", "10--14", "100plus")
-age_standard(x)
+labels <- c("5to9", "10--14", "100plus")
+age_standard(labels)
 #> [1] "5-9"   "10-14" "100+" 
 
 ## factor input: factor in, factor out

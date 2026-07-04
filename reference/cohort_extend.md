@@ -1,24 +1,24 @@
 # Extend a Set of Cohorts
 
-Add new cohorts at the end of `x`.
+Add new cohorts at the end of `labels`.
 
 ## Usage
 
 ``` r
 cohort_extend(
-  x,
+  labels,
   n = 1L,
   width = NULL,
   include_x = TRUE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of cohort labels.
 
@@ -32,38 +32,55 @@ cohort_extend(
 
 - include_x:
 
-  Should the return value include `x`? Default is `TRUE`.
+  Should the return value include `labels`? Default is `TRUE`.
 
-- x_one:
+- interpret_single:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  How to interpret labels for single-year cohorts. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  How to interpret labels for multi-year cohorts. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Character vector or factor. Length is `n`, or `length(x) + n` when
+Character vector or factor. Length is `n`, or `length(labels) + n` when
 `include_x` is `TRUE`.
 
 ## Details
 
 By default, the width of the new cohorts is derived from the last
-element of `x`, but a value can be specified through the `width`
+element of `labels`, but a value can be specified through the `width`
 arugment.
 
-## See also
+## Controlling how cohort labels are interpreted
 
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year cohorts are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year cohorts
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year cohorts are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
+are assumed to exclude the upper limits so that `"2025-2030"` means
+`[2025,2031)`.
+
+## See also
 
 - [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
   Age equivalent of `cohort_extend()`
@@ -74,11 +91,11 @@ arugment.
 ## Examples
 
 ``` r
-x <- c("2020-2025", "2025-2030")
-cohort_extend(x, n = 2)
+labels <- c("2020-2025", "2025-2030")
+cohort_extend(labels, n = 2)
 #> [1] "2020-2025" "2025-2030" "2030-2035" "2035-2040"
-cohort_extend(x, n = 2, width = 10)
+cohort_extend(labels, n = 2, width = 10)
 #> [1] "2020-2025" "2025-2030" "2030-2040" "2040-2050"
-cohort_extend(x, n = 2, include_x = FALSE)
+cohort_extend(labels, n = 2, include_x = FALSE)
 #> [1] "2030-2035" "2035-2040"
 ```

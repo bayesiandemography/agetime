@@ -6,12 +6,16 @@ Replace existing age groups where necessary.
 ## Usage
 
 ``` r
-age_levels_set_open(x, lower_open, x_fail = c("error", "warn", "silent"))
+age_levels_set_open(
+  labels,
+  lower_open,
+  interpret_fail = c("error", "warn", "silent")
+)
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
@@ -19,14 +23,14 @@ age_levels_set_open(x, lower_open, x_fail = c("error", "warn", "silent"))
 
   Lower limit of open age group.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Factor with the same length as `x`.
+Factor with the same length as `labels`.
 
 ## See also
 
@@ -36,11 +40,11 @@ Factor with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("20-24", "80-84", "100+")
-age_levels_set_open(x, lower_open = 80)
+labels <- c("20-24", "80-84", "100+")
+age_levels_set_open(labels, lower_open = 80)
 #> [1] 20-24 80+   80+  
 #> Levels: 20-24 80+
-age_levels_set_open(x, lower_open = 50)
+age_levels_set_open(labels, lower_open = 50)
 #> [1] 20-24 50+   50+  
 #> Levels: 20-24 50+
 age_levels_set_open(c("0-4", "60-64"), lower_open = 70)

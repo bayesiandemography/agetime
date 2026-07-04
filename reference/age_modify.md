@@ -1,17 +1,22 @@
 # Convert to New Age Groups
 
-Modify the age groups used by `x`. The the new age groups must contain
-the old ones.
+Modify the age groups used by `labels`. The the new age groups must
+contain the old ones.
 
 ## Usage
 
 ``` r
-age_modify(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
+age_modify(
+  labels,
+  breaks,
+  open = TRUE,
+  interpret_fail = c("error", "warn", "silent")
+)
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
@@ -24,14 +29,14 @@ age_modify(x, breaks, open = TRUE, x_fail = c("error", "warn", "silent"))
   Whether the oldest age group is "open", i.e. has no upper limit.
   Default is `TRUE`.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Character vector or factor with the same length as `x`.
+Character vector or factor with the same length as `labels`.
 
 ## See also
 
@@ -53,10 +58,10 @@ Character vector or factor with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("1-4", "87-89", "0", "50-54")
-age_modify(x, breaks = c(0, 10, 40, 90))
+labels <- c("1-4", "87-89", "0", "50-54")
+age_modify(labels, breaks = c(0, 10, 40, 90))
 #> [1] "0-9"   "40-89" "0-9"   "40-89"
-age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE)
+age_modify(labels, breaks = c(0, 10, 40, 90), open = FALSE)
 #> [1] "0-9"   "40-89" "0-9"   "40-89"
 
 ## factor input: factor in, factor out

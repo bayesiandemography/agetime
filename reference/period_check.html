@@ -49,25 +49,25 @@ conform to expectations (<code>period_assert</code>).</p>
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">period_check</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">labels</span>,</span>
 <span>  no_overlap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_na <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  x_one <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
-<span>  x_multi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"include"</span>, <span class="st">"exclude"</span><span class="op">)</span>,</span>
-<span>  x_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
+<span>  interpret_multi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"include"</span>, <span class="st">"exclude"</span><span class="op">)</span>,</span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">period_assert</span><span class="op">(</span></span>
-<span>  <span class="va">x</span>,</span>
+<span>  <span class="va">labels</span>,</span>
 <span>  no_overlap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">NA</span>,</span>
 <span>  no_na <span class="op">=</span> <span class="cn">NA</span>,</span>
-<span>  x_one <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
-<span>  x_multi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"include"</span>, <span class="st">"exclude"</span><span class="op">)</span>,</span>
-<span>  x_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
+<span>  interpret_multi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"include"</span>, <span class="st">"exclude"</span><span class="op">)</span>,</span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -75,7 +75,7 @@ conform to expectations (<code>period_assert</code>).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
 
 
-<dl><dt id="arg-x">x<a class="anchor" aria-label="anchor" href="#arg-x"></a></dt>
+<dl><dt id="arg-labels">labels<a class="anchor" aria-label="anchor" href="#arg-labels"></a></dt>
 <dd><p>Vector of period labels.</p></dd>
 
 
@@ -97,35 +97,63 @@ to the upper limit of the latest period.</p></dd>
 <dd><p>No NA label.</p></dd>
 
 
-<dt id="arg-x-one">x_one<a class="anchor" aria-label="anchor" href="#arg-x-one"></a></dt>
+<dt id="arg-interpret-single">interpret_single<a class="anchor" aria-label="anchor" href="#arg-interpret-single"></a></dt>
 <dd><p>How to interpret
-labels in <code>x</code> that describe one-year periods.
-Choices are <code>"lower"</code> (the default) and <code>"upper"</code>.</p></dd>
+labels for single-year periods.
+Choices are <code>"lower"</code> (the default) and <code>"upper"</code>.
+See below for details.</p></dd>
 
 
-<dt id="arg-x-multi">x_multi<a class="anchor" aria-label="anchor" href="#arg-x-multi"></a></dt>
+<dt id="arg-interpret-multi">interpret_multi<a class="anchor" aria-label="anchor" href="#arg-interpret-multi"></a></dt>
 <dd><p>How to interpret
-labels in <code>x</code> that describe multi-year periods.
+labels for multi-year periods.
 Choices are <code>"include"</code> (the default) and
-<code>"exclude"</code>.</p></dd>
+<code>"exclude"</code>. See below for details.</p></dd>
 
 
-<dt id="arg-x-fail">x_fail<a class="anchor" aria-label="anchor" href="#arg-x-fail"></a></dt>
-<dd><p>Action if element of <code>x</code>
-cannot be parsed: <code>"error"</code> (the default),
-<code>"warn"</code>, or <code>"silent"</code>.</p></dd>
+<dt id="arg-interpret-fail">interpret_fail<a class="anchor" aria-label="anchor" href="#arg-interpret-fail"></a></dt>
+<dd><p>Action if element of <code>labels</code>
+cannot be interpreted. Choices are <code>"error"</code> (the default),
+<code>"warn"</code>, and <code>"silent"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     <p>For <code>period_check()</code>, a list with logical <code>ok</code> and data frame
-<code>details</code>; for <code>period_assert()</code>, <code>x</code> invisibly or an error.</p>
+<code>details</code>; for <code>period_assert()</code>, <code>labels</code> invisibly or an error.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="controlling-how-period-labels-are-interpreted">Controlling how period labels are interpreted<a class="anchor" aria-label="anchor" href="#controlling-how-period-labels-are-interpreted"></a></h2>
+
+
+
+<p>If <code>interpret_single</code> is <code>"lower"</code> (the default),
+then labels for single-year periods
+are assumed to refer to lower limits,
+so that <code>"2025"</code> means <code>[2025,2026)</code>.
+This is the convention that data
+providers typically use
+for calendar years.</p>
+<p>If <code>interpret_single</code> is <code>"upper"</code>,
+then labels for single-year periods
+are assumed to refer to upper limits,
+so that <code>"2025"</code> means <code>[2024,2025)</code>.
+This is the convention that data providers
+typically use for non-calendar years,
+such as 1 July to 30 June.</p>
+<p>If <code>interpret_multi</code> is <code>"include"</code> (the default),
+then labels for multi-year periods
+are assumed to include upper limits,
+so that <code>"2025-2030"</code> means <code>[2025,2030)</code>.</p>
+<p>If <code>interpret_multi</code> is <code>"exclude"</code>,
+then labels for multi-year periods
+are assumed to exclude the upper limits,
+so that <code>"2025-2030"</code> means <code>[2025,2031)</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
-<ul><li><p><code><a href="parsing_period_labels.html">parsing_period_labels()</a></code> Details for <code>x_one</code>, <code>x_multi</code>, and <code>x_fail</code></p></li>
-<li><p><code><a href="age_check.html">age_check()</a></code> Age equivalent of <code>period_check()</code></p></li>
+<ul><li><p><code><a href="age_check.html">age_check()</a></code> Age equivalent of <code>period_check()</code></p></li>
 <li><p><code><a href="cohort_check.html">cohort_check()</a></code> Cohort equivalent of <code>period_check()</code></p></li>
 </ul></div>
     </div>
@@ -141,7 +169,7 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## get info on everything</span></span></span>
 <span class="r-in"><span><span class="fu">period_check</span><span class="op">(</span></span></span>
-<span class="r-in"><span>  x <span class="op">=</span> <span class="va">lab</span>,</span></span>
+<span class="r-in"><span>  labels <span class="op">=</span> <span class="va">lab</span>,</span></span>
 <span class="r-in"><span>  no_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  no_gap <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  no_total <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
@@ -161,7 +189,7 @@ cannot be parsed: <code>"error"</code> (the default),
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## throw error if gaps</span></span></span>
-<span class="r-in"><span><span class="fu">period_assert</span><span class="op">(</span>x <span class="op">=</span> <span class="va">lab</span>, no_gap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">period_assert</span><span class="op">(</span>labels <span class="op">=</span> <span class="va">lab</span>, no_gap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">lab_gap</span> <span class="op">&lt;-</span> <span class="va">lab</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></span>
 <span class="r-in"><span><span class="co">## throw error if no gaps</span></span></span>

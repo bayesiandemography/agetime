@@ -7,17 +7,17 @@ existing cohorts where necessary.
 
 ``` r
 cohort_levels_set_open(
-  x,
+  labels,
   upper_open,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of cohort labels.
 
@@ -25,29 +25,46 @@ cohort_levels_set_open(
 
   Upper limit of open cohort.
 
-- x_one:
+- interpret_single:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  How to interpret labels for single-year cohorts. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  How to interpret labels for multi-year cohorts. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Factor with the same length as `x`.
+Factor with the same length as `labels`.
+
+## Controlling how cohort labels are interpreted
+
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year cohorts are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year cohorts
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year cohorts are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
+are assumed to exclude the upper limits so that `"2025-2030"` means
+`[2025,2031)`.
 
 ## See also
-
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md)
   Set open age group levels (right-open)
@@ -55,11 +72,11 @@ Factor with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("2020-2024", "<2000", "2015")
-cohort_levels_set_open(x, upper_open = 2020)
+labels <- c("2020-2024", "<2000", "2015")
+cohort_levels_set_open(labels, upper_open = 2020)
 #> [1] 2020-2024 <2020     <2020    
 #> Levels: <2020 2020-2024
-cohort_levels_set_open(x, upper_open = 2005)
+cohort_levels_set_open(labels, upper_open = 2005)
 #> [1] 2020-2024 <2005     2015     
 #> Levels: <2005 2015 2020-2024
 cohort_levels_set_open(c("2000-2004", "2010-2014"), upper_open = 1990)

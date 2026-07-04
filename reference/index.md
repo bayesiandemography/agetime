@@ -31,7 +31,7 @@
   [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_upper()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_width()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
-  : Lower Limits, Upper Limits, Widths, and Midpoints of Age Groups
+  : Limits, Widths, and Midpoints from Age Group Labels
 - [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
   : Mapping Between Age Group Labels
 - [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md)
@@ -72,7 +72,7 @@
   [`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_upper()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_width()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
-  : Lower Limits, Upper Limits, Widths, and Midpoints of Cohorts
+  : Limits, Widths, and Midpoints from Cohort Labels
 - [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
   : Mapping Between Cohort Labels
 - [`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md)
@@ -82,10 +82,6 @@
   : Convert to Equal-Length Cohorts
 - [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
   : Standardize Cohort Labels
-- [`parsing_cohort_labels`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  : Parsing Cohort Labels
-- [`parsing_period_labels`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
-  : Parsing Period Labels
 - [`period_check()`](https://bayesiandemography.github.io/agetime/reference/period_check.md)
   [`period_assert()`](https://bayesiandemography.github.io/agetime/reference/period_check.md)
   : Check or Make Assertions About Periods
@@ -109,7 +105,7 @@
   [`period_mid()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_upper()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_width()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
-  : Lower Limits, Upper Limits, Widths, and Midpoints of Periods
+  : Limits, Widths, and Midpoints from Period Labels
 - [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md)
   : Mapping Between Period Labels
 - [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md)

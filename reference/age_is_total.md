@@ -5,23 +5,23 @@ Find age group labels that agetime interprets as totals.
 ## Usage
 
 ``` r
-age_is_total(x, x_fail = c("error", "warn", "silent"))
+age_is_total(labels, interpret_fail = c("error", "warn", "silent"))
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Logical vector with the same length as `x`.
+Logical vector with the same length as `labels`.
 
 ## See also
 
@@ -37,7 +37,7 @@ Logical vector with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("20-24", "Total", "100+", "ALL")
-age_is_total(x)
+labels <- c("20-24", "Total", "100+", "ALL")
+age_is_total(labels)
 #> [1] FALSE  TRUE FALSE  TRUE
 ```

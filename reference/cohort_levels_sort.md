@@ -1,22 +1,22 @@
 # Sort Cohort Levels
 
-Sort the levels of `x`.
+Sort the levels of `labels`.
 
 ## Usage
 
 ``` r
 cohort_levels_sort(
-  x,
+  labels,
   decreasing = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of cohort labels.
 
@@ -24,37 +24,54 @@ cohort_levels_sort(
 
   Whether sort is increasing or decreasing. Default is `FALSE`.
 
-- x_one:
+- interpret_single:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  How to interpret labels for single-year cohorts. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  How to interpret labels for multi-year cohorts. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Factor with the same length as `x`.
+Factor with the same length as `labels`.
 
 ## Details
 
-If `x` is not a factor, and so does not have levels, convert it to a
-factor first.
+If `labels` is not a factor, and so does not have levels, convert it to
+a factor first.
 
 Levels are sorted on their lower limits. When there are ties, upper
 limits are used. `NA`s come second-to-last, and totals come last.
 
-## See also
+## Controlling how cohort labels are interpreted
 
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year cohorts are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year cohorts
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year cohorts are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
+are assumed to exclude the upper limits so that `"2025-2030"` means
+`[2025,2031)`.
+
+## See also
 
 - [`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md)
   Age equivalent of `cohort_levels_sort()`
@@ -65,8 +82,8 @@ limits are used. `NA`s come second-to-last, and totals come last.
 ## Examples
 
 ``` r
-x <- c("2020-2025", "<1990", "Total", NA, "2025-2050")
-cohort_levels_sort(x)
+labels <- c("2020-2025", "<1990", "Total", NA, "2025-2050")
+cohort_levels_sort(labels)
 #> [1] 2020-2025 <1990     Total     <NA>      2025-2050
 #> Levels: <1990 2020-2025 2025-2050 <NA> Total
 ```

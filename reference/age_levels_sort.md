@@ -1,16 +1,20 @@
 # Sort Age Group Levels
 
-Sort the levels of `x`.
+Sort the levels of `labels`.
 
 ## Usage
 
 ``` r
-age_levels_sort(x, decreasing = FALSE, x_fail = c("error", "warn", "silent"))
+age_levels_sort(
+  labels,
+  decreasing = FALSE,
+  interpret_fail = c("error", "warn", "silent")
+)
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of age group labels.
 
@@ -18,19 +22,19 @@ age_levels_sort(x, decreasing = FALSE, x_fail = c("error", "warn", "silent"))
 
   Whether sort is increasing or decreasing. Default is `FALSE`.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be parsed: `"error"` (the
+  default), `"warn"`, or `"silent"`.
 
 ## Value
 
-Factor with the same length as `x`.
+Factor with the same length as `labels`.
 
 ## Details
 
-If `x` is not a factor, and so does not have levels, convert it to a
-factor before sorting the levels.
+If `labels` is not a factor, and so does not have levels, convert it to
+a factor before sorting the levels.
 
 Levels are sorted on their lower limits. Upper limits are used to
 resolve times. `NA`s come second-to-last and totals come last.
@@ -46,8 +50,8 @@ resolve times. `NA`s come second-to-last and totals come last.
 ## Examples
 
 ``` r
-x <- c("0-4", "50+", "Total", NA, "20-24")
-age_levels_sort(x)
+labels <- c("0-4", "50+", "Total", NA, "20-24")
+age_levels_sort(labels)
 #> [1] 0-4   50+   Total <NA>  20-24
 #> Levels: 0-4 20-24 50+ <NA> Total
 ```

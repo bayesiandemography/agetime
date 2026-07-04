@@ -7,31 +7,31 @@ error if period labels do not conform to expectations (`period_assert`).
 
 ``` r
 period_check(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
   no_na = NA,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_assert(
-  x,
+  labels,
   no_overlap = NA,
   no_gap = NA,
   no_total = NA,
   no_na = NA,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of period labels.
 
@@ -52,30 +52,47 @@ period_assert(
 
   No NA label.
 
-- x_one:
+- interpret_single:
 
-  How to interpret labels in `x` that describe one-year periods. Choices
-  are `"lower"` (the default) and `"upper"`.
+  How to interpret labels for single-year periods. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  How to interpret labels in `x` that describe multi-year periods.
-  Choices are `"include"` (the default) and `"exclude"`.
+  How to interpret labels for multi-year periods. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
 For `period_check()`, a list with logical `ok` and data frame `details`;
-for `period_assert()`, `x` invisibly or an error.
+for `period_assert()`, `labels` invisibly or an error.
+
+## Controlling how period labels are interpreted
+
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year periods are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year periods
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year periods are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year periods
+are assumed to exclude the upper limits, so that `"2025-2030"` means
+`[2025,2031)`.
 
 ## See also
-
-- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`age_check()`](https://bayesiandemography.github.io/agetime/reference/age_check.md)
   Age equivalent of `period_check()`
@@ -95,7 +112,7 @@ lab
 
 ## get info on everything
 period_check(
-  x = lab,
+  labels = lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
@@ -115,7 +132,7 @@ period_check(
 #> 
 
 ## throw error if gaps
-period_assert(x = lab, no_gap = TRUE)
+period_assert(labels = lab, no_gap = TRUE)
 
 lab_gap <- lab[c(1, 3)]
 ## throw error if no gaps

@@ -1,7 +1,7 @@
 # Convert to Equal-Length Periods
 
-Modify the periods used by `x`. The new periods must contain the old
-periods, and follow a regular pattern:
+Modify the periods used by `labels`. The new periods must contain the
+old periods, and follow a regular pattern:
 
 - `period_modify_five` Five-year periods
 
@@ -11,25 +11,25 @@ periods, and follow a regular pattern:
 
 ``` r
 period_modify_five(
-  x,
+  labels,
   offset = 0,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 period_modify_ten(
-  x,
+  labels,
   offset = 0,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of period labels.
 
@@ -37,29 +37,46 @@ period_modify_ten(
 
   Parameter controlling alignment of periods. Default is `0`.
 
-- x_one:
+- interpret_single:
 
-  How to interpret labels in `x` that describe one-year periods. Choices
-  are `"lower"` (the default) and `"upper"`.
+  How to interpret labels for single-year periods. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  How to interpret labels in `x` that describe multi-year periods.
-  Choices are `"include"` (the default) and `"exclude"`.
+  How to interpret labels for multi-year periods. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Character vector or factor with the same length as `x`.
+Character vector or factor with the same length as `labels`.
+
+## Controlling how period labels are interpreted
+
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year periods are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year periods
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year periods are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year periods
+are assumed to exclude the upper limits, so that `"2025-2030"` means
+`[2025,2031)`.
 
 ## See also
-
-- [`parsing_period_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_period_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md)
   Convert to general periods
@@ -82,17 +99,17 @@ Character vector or factor with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("2002-2004", "1987-1989", "2000", "Total")
-period_modify_five(x)
+labels <- c("2002-2004", "1987-1989", "2000", "Total")
+period_modify_five(labels)
 #> [1] "2000-2005" "1985-1990" "2000-2005" "Total"    
-period_modify_five(x, offset = 1)
+period_modify_five(labels, offset = 1)
 #> [1] "2001-2006" "1986-1991" "1996-2001" "Total"    
-period_modify_five(x, offset = 2)
+period_modify_five(labels, offset = 2)
 #> [1] "2002-2007" "1987-1992" "1997-2002" "Total"    
-period_modify_ten(x)
+period_modify_ten(labels)
 #> [1] "2000-2010" "1980-1990" "2000-2010" "Total"    
-period_modify_ten(x, offset = 1)
+period_modify_ten(labels, offset = 1)
 #> [1] "2001-2011" "1981-1991" "1991-2001" "Total"    
-period_modify_ten(x, offset = 2)
+period_modify_ten(labels, offset = 2)
 #> [1] "2002-2012" "1982-1992" "1992-2002" "Total"    
 ```

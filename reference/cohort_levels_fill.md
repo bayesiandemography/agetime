@@ -1,43 +1,43 @@
 # Fill in Gaps in Cohort Levels
 
-Fill in gaps in levels of `x`.
+Fill in gaps in levels of `labels`.
 
 ## Usage
 
 ``` r
 cohort_levels_fill(
-  x,
+  labels,
   breaks = NULL,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_levels_fill_one(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_levels_fill_five(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 
 cohort_levels_fill_ten(
-  x,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of cohort labels.
 
@@ -46,29 +46,29 @@ cohort_levels_fill_ten(
   Boundaries of newly-created cohorts. Boundaries for existing cohorts
   can be omitted.
 
-- x_one:
+- interpret_single:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  How to interpret labels for single-year cohorts. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  How to interpret labels for multi-year cohorts. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Factor with the same length as `x`.
+Factor with the same length as `labels`.
 
 ## Details
 
-If `x` is not a factor, and so does not have levels, convert it to a
-factor before filling in levels.
+If `labels` is not a factor, and so does not have levels, convert it to
+a factor before filling in levels.
 
 - `cohort_levels_fill` adds cohorts specified by `breaks`.
 
@@ -78,10 +78,27 @@ factor before filling in levels.
 
 - `cohort_levels_fill_ten` adds cohorts with width 10.
 
-## See also
+## Controlling how cohort labels are interpreted
 
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year cohorts are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year cohorts
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year cohorts are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
+are assumed to exclude the upper limits so that `"2025-2030"` means
+`[2025,2031)`.
+
+## See also
 
 - [`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
   Age equivalent of `cohort_levels_fill()`
@@ -92,35 +109,35 @@ factor before filling in levels.
 ## Examples
 
 ``` r
-x <- factor(c("2020-2025", "2030-2035"))
-x
+labels <- factor(c("2020-2025", "2030-2035"))
+labels
 #> [1] 2020-2025 2030-2035
 #> Levels: 2020-2025 2030-2035
-cohort_levels_fill(x) ## uses existing boundaries
+cohort_levels_fill(labels) ## uses existing boundaries
 #> [1] 2020-2025 2030-2035
 #> Levels: 2020-2025 2025-2030 2030-2035
-cohort_levels_fill(x, breaks = 2028)
+cohort_levels_fill(labels, breaks = 2028)
 #> [1] 2020-2025 2030-2035
 #> Levels: 2020-2025 2025-2028 2028-2030 2030-2035
-cohort_levels_fill_one(x)
+cohort_levels_fill_one(labels)
 #> [1] 2020-2025 2030-2035
 #> Levels: 2020-2025 2025 2026 2027 2028 2029 2030-2035
-cohort_levels_fill_five(x)
+cohort_levels_fill_five(labels)
 #> [1] 2020-2025 2030-2035
 #> Levels: 2020-2025 2025-2030 2030-2035
 
-x <- c("2051-2061", "2021-2031")
-cohort_levels_fill_ten(x)
+labels <- c("2051-2061", "2021-2031")
+cohort_levels_fill_ten(labels)
 #> [1] 2051-2061 2021-2031
 #> Levels: 2021-2031 2031-2041 2041-2051 2051-2061
 
 ## levels are used by functions
 ## such as 'table()'
-x |> table()
-#> x
+labels |> table()
+#> labels
 #> 2021-2031 2051-2061 
 #>         1         1 
-x |>
+labels |>
   cohort_levels_fill_ten() |>
   table()
 #> 
@@ -128,7 +145,7 @@ x |>
 #>         1         0         0         1 
 
 ## sort after filling
-x |>
+labels |>
   cohort_levels_fill_ten() |>
   cohort_levels_sort() |>
   table()

@@ -1,24 +1,24 @@
 # Convert to New Cohorts
 
-Modify the cohorts used by `x`. The the new cohorts must contain the old
-ones.
+Modify the cohorts used by `labels`. The the new cohorts must contain
+the old ones.
 
 ## Usage
 
 ``` r
 cohort_modify(
-  x,
+  labels,
   breaks,
   open = FALSE,
-  x_one = c("lower", "upper"),
-  x_multi = c("include", "exclude"),
-  x_fail = c("error", "warn", "silent")
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
 )
 ```
 
 ## Arguments
 
-- x:
+- labels:
 
   Vector of cohort labels.
 
@@ -31,29 +31,46 @@ cohort_modify(
   Whether the first cohort is "open", i.e. has no lower limit. Default
   is `FALSE`.
 
-- x_one:
+- interpret_single:
 
-  Whether labels for one-year cohorts are based on lower or upper limit
-  of period. Default is `"lower"`.
+  How to interpret labels for single-year cohorts. Choices are `"lower"`
+  (the default) and `"upper"`. See below for details.
 
-- x_multi:
+- interpret_multi:
 
-  Whether labels for multi-year periods include or exclude final year of
-  period. Default is `"include"`.
+  How to interpret labels for multi-year cohorts. Choices are
+  `"include"` (the default) and `"exclude"`. See below for details.
 
-- x_fail:
+- interpret_fail:
 
-  Action if element of `x` cannot be parsed: `"error"` (the default),
-  `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-Character vector or factor with the same length as `x`.
+Character vector or factor with the same length as `labels`.
+
+## Controlling how cohort labels are interpreted
+
+If `interpret_single` is `"lower"` (the default), then labels for
+single-year cohorts are assumed to refer to lower limits, so that
+`"2025"` means `[2025,2026)`. This is the convention that data providers
+typically use for calendar years.
+
+If `interpret_single` is `"upper"`, then labels for single-year cohorts
+are assumed to refer to upper limits, so that `"2025"` means
+`[2024,2025)`. This is the convention that data providers typically use
+for non-calendar years, such as 1 July to 30 June.
+
+If `interpret_multi` is `"include"` (the default), then labels for
+multi-year cohorts are assumed to include upper limits, so that
+`"2025-2030"` means `[2025,2030)`.
+
+If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
+are assumed to exclude the upper limits so that `"2025-2030"` means
+`[2025,2031)`.
 
 ## See also
-
-- [`parsing_cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/parsing_cohort_labels.md)
-  Details for `x_one`, `x_multi`, and `x_fail`
 
 - [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   Convert to 5-year cohorts
@@ -70,9 +87,9 @@ Character vector or factor with the same length as `x`.
 ## Examples
 
 ``` r
-x <- c("2001-2004", "1987-1989", "2000", "2005-2010")
-cohort_modify(x, breaks = c(1970, 2000, 2005, 2015))
+labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
+cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015))
 #> [1] "2000-2005" "1970-2000" "2000-2005" "2005-2015"
-cohort_modify(x, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
+cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
 #> [1] "2000-2005" "1970-2000" "2000-2005" "2005-2015"
 ```
