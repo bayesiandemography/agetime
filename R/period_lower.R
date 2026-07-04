@@ -1,6 +1,5 @@
 ## HAS_TESTS
-#' Lower Limits, Upper Limits, Widths,
-#' and Midpoints of Periods
+#' Limits, Widths, and Midpoints from Period Labels
 #'
 #' Calculate lower limits, upper limits,
 #' widths, and midpoints for periods.
@@ -9,30 +8,23 @@
 #' to filter on periods.
 #' See below for examples.
 #'
-#' @section `interpret_single`:
-#'
-#' `interpret_single` controls the interpretation
-#' of labels for single-year periods.
+#' @section Controlling how period labels are interpreted:
 #'
 #' If `interpret_single` is `"lower"` (the default),
 #' then labels for single-year periods
 #' are assumed to refer to lower limits,
 #' so that `"2025"` means `[2025,2026)`.
-#' This is the convention typically used for
-#' calendar years. It also matches the
-#' convention for single-year age groups.
+#' This is the convention that data
+#' providers typically use
+#' for calendar years.
 #'
 #' If `interpret_single` is `"upper"`,
 #' then labels for single-year periods
 #' are assumed to refer to upper limits,
 #' so that `"2025"` means `[2024,2025)`.
-#' This is the convention typically used for
-#' non-calendar years, eg 1 July to 30 June.
-#'
-#' @section `interpret_multi`:
-#'
-#' `interpret_multi` controls the interpretation
-#' of labels for multi-year periods.
+#' This is the convention that data providers
+#' typically use for non-calendar years,
+#' such as 1 July to 30 June.
 #'
 #' If `interpret_multi` is `"include"` (the default),
 #' then labels for multi-year periods
@@ -41,11 +33,8 @@
 #'
 #' If `interpret_multi` is `"exclude"`,
 #' then labels for multi-year periods
-#' are assumed to exclude the upper limits
-#' and use upper - 1 instead,
+#' are assumed to exclude the upper limits,
 #' so that `"2025-2030"` means `[2025,2031)`.
-#' This matches the convention used for
-#' multi-year age groups.
 #'
 #' @param labels Vector of period labels.
 #' @param interpret_single How to interpret

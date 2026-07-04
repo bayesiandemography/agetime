@@ -1,7 +1,6 @@
 #' Create New Age Group Labels
 #'
-#' Create a new set of age group labels
-#' based on \pkg{agetime} conventions.
+#' Create a new set of age group labels.
 #'
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.

@@ -52,7 +52,7 @@ single-year period. Choices are \code{"lower"}
 details.}
 
 \item{format_multi}{How to format label for
-multi-year cohort. Choices are \code{"include"}
+multi-year period. Choices are \code{"include"}
 (the default) and \code{"exclude"}. See below for details.}
 
 \item{include_total}{Whether to include a
@@ -71,12 +71,10 @@ Non-negative number.}
 Character vector.
 }
 \description{
-Create a new set of period labels
-based on \pkg{agetime} conventions.
+Create a new set of period labels.
 }
-\details{
-The label for a period depends on the
-lower and upper limits of that cohort.
+\section{Controlling the formatting of period labels}{
+
 
 \code{format_single} controls whether the label
 for a single-year periods is based on the
@@ -93,10 +91,8 @@ has label \code{"2025-2035"} if
 \code{format_multi} is \code{"include"} and
 \code{"2025-2029"} if \code{format_multi} is
 \code{"exclude"}.
-
-There are also two special cohort labels:
-\code{NA} and \code{"Total"}.
 }
+
 \examples{
 ## 5-year periods
 period_labels_five(

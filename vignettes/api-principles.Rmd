@@ -77,26 +77,26 @@ labels should be rendered.
 
 Age labels follow a strong demographic convention: one-year labels use the
 lower boundary, and multi-year labels exclude the upper boundary. Age
-functions therefore do not expose `interpret_single` or `interpret_range`
+functions therefore do not expose `interpret_single` or `interpret_multi`
 arguments. Period and cohort labels do not have the same universal convention,
 so period and cohort functions let you specify how input labels should be
 parsed.
 
-For example, `period_standard()` uses `interpret_range` to interpret the input:
+For example, `period_standard()` uses `interpret_multi` to interpret the input:
 
 ```{r input-parsing}
-period_standard("2020-2025", interpret_range = "exclude")
+period_standard("2020-2025", interpret_multi = "exclude")
 ```
 
 Arguments beginning with `format_` describe how new output labels should be
-rendered. For example, `period_labels_ten()` uses `format_range` to decide
+rendered. For example, `period_labels_ten()` uses `format_multi` to decide
 whether the displayed upper limit is included or excluded:
 
 ```{r output-rendering}
 period_labels_ten(
   lower_first = 2000,
   lower_last = 2020,
-  format_range = "exclude"
+  format_multi = "exclude"
 )
 ```
 
@@ -121,7 +121,7 @@ age_levels_set_open(c("0-4", "60-64"), lower_open = 70)
 cohort_levels_set_open(
   c("2000-2004", "2010-2014"),
   upper_open = 1990,
-  interpret_range = "exclude"
+  interpret_multi = "exclude"
 )
 ```
 

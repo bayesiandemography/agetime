@@ -1,9 +1,8 @@
 ## HAS_TESTS
-#' Lower Limits, Upper Limits, Widths,
-#' and Midpoints of Age Groups
+#' Limits, Widths, and Midpoints from Age Group Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints for age groups.
+#' widths, and midpoints of age groups.
 #'
 #' Lower and upper limits can be used
 #' to filter on age. See below for examples.

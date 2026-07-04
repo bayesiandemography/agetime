@@ -68,17 +68,36 @@ Collect information on cohort labels (\code{cohort_check()}),
 or throw an error if cohort labels do not
 conform to expectations (\code{cohort_assert}).
 }
-\details{
-\tabular{llll}{
-   Type \tab Interval \tab \code{format} argument \tab Label \cr
-   single \tab \verb{[a, a+1)} \tab \code{format_single = "lower"} \tab \code{"year(a)"} \cr
-   single \tab \verb{[a, a+1)} \tab \code{format_single = "upper"} \tab \code{"year(a+1)"} \cr
-   range \tab \verb{[a, b)} \tab `format_multi = "include" \tab \code{"year(b)"} \cr
-   range \tab \verb{[a, b)} \tab `format_multi = "exclude" \tab `"year(b)-1" \cr
-   total \tab `(-Inf, Inf) \tab \if{html}{\out{<none>}} \tab \code{"Total"} \cr
-   na \tab \verb{(NA, NA)} \tab \if{html}{\out{<none>}} \tab \code{NA} \cr
+\section{Controlling how cohort labels are interpreted}{
+
+
+If \code{interpret_single} is \code{"lower"} (the default),
+then labels for single-year cohorts
+are assumed to refer to lower limits,
+so that \code{"2025"} means \verb{[2025,2026)}.
+This is the convention that data providers
+typically use for calendar years.
+
+If \code{interpret_single} is \code{"upper"},
+then labels for single-year cohorts
+are assumed to refer to upper limits,
+so that \code{"2025"} means \verb{[2024,2025)}.
+This is the convention that data providers
+typically use for non-calendar years,
+such as 1 July to 30 June.
+
+If \code{interpret_multi} is \code{"include"} (the default),
+then labels for multi-year cohorts
+are assumed to include upper limits,
+so that \code{"2025-2030"} means \verb{[2025,2030)}.
+
+If \code{interpret_multi} is \code{"exclude"},
+then labels for multi-year cohorts
+are assumed to exclude the upper limits
+and use upper - 1 instead,
+so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
-}
+
 \examples{
 lab <- cohort_labels_five(
   lower_first = 2020,

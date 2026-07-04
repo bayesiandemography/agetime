@@ -5,8 +5,7 @@
 \alias{age_mid}
 \alias{age_upper}
 \alias{age_width}
-\title{Lower Limits, Upper Limits, Widths,
-and Midpoints of Age Groups}
+\title{Limits, Widths, and Midpoints from Age Group Labels}
 \usage{
 age_lower(labels, interpret_fail = c("error", "warn", "silent"))
 
@@ -28,7 +27,7 @@ Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints for age groups.
+widths, and midpoints of age groups.
 }
 \details{
 Lower and upper limits can be used

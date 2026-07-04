@@ -4,16 +4,7 @@
 #' or throw an error if cohort labels do not
 #' conform to expectations (`cohort_assert`).
 #'
-#'  | Type | Interval | `format` argument |  Label |
-#' |------|-------------------|----------|-------|
-#' | single | `[a, a+1)` | `format_single = "lower"` | `"year(a)"` |
-#' | single | `[a, a+1)` | `format_single = "upper"` | `"year(a+1)"` |
-#' | range  | `[a, b)`   | `format_multi = "include" | `"year(b)"` |
-#' | range  | `[a, b)`   | `format_multi = "exclude" | `"year(b)-1" |
-#' | total  | `(-Inf, Inf) | <none>    | `"Total"` |
-#' | na     | `(NA, NA)` | <none>    | `NA`      |
-#'
-#'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
 #' @inheritParams cohort_lower
 #' @param no_overlap No cohorts overlap.

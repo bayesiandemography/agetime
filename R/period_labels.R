@@ -1,10 +1,8 @@
 #' Create New Period Labels
 #'
-#' Create a new set of period labels
-#' based on \pkg{agetime} conventions.
+#' Create a new set of period labels.
 #'
-#' The label for a period depends on the
-#' lower and upper limits of that cohort.
+#' @section Controlling the formatting of period labels:
 #'
 #'  `format_single` controls whether the label
 #' for a single-year periods is based on the
@@ -22,9 +20,6 @@
 #' `"2025-2029"` if `format_multi` is
 #' `"exclude"`.
 #'
-#' There are also two special cohort labels:
-#' `NA` and `"Total"`.
-#'
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
 #' @param lower_first Lower limit of first period.
@@ -40,7 +35,7 @@
 #' (the default) and `"upper"`. See below for
 #' details.
 #' @param format_multi How to format label for
-#' multi-year cohort. Choices are `"include"`
+#' multi-year period. Choices are `"include"`
 #' (the default) and `"exclude"`. See below for details.
 #'
 #' @return Character vector.

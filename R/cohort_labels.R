@@ -2,36 +2,46 @@
 #'
 #' Create a new set of cohort labels.
 #'
+#' @section Controlling the formatting of cohort labels:
 #'
-#' @section agetime format for cohorts:
-#' 
-#' | Type | Format argument | Interval | Label |
-#' |---------------|---------------|---------------|-------|
-#' | Single | `format_single="lower"` | [a, a+1) | `"year(a)"` |
-#' | Single | `format_single="upper"` | (a, a+1] | `"year(a+1)"` | 
-#' | Range | `format_range="include"` | [a, b) | `"year(a) - year(b)"` |
-#' | Range | `format_range="exclude"` | [a, b) | `"year(a) - year(b-1)"|
-#' | Open | [none] | (-Inf, a) | `"<year(a)"` | `"<2025"` |
-#' | Total | [none](-Inf, Inf) | `"Total"` | `"Total"` |
-#' | NA | [none] (-Inf, Inf) | `NA` | `NA` |
+#'  `format_single` controls whether the label
+#' for a single-year cohorts is based on the
+#' lower or upper limit.
+#' For instance, the cohort `[2025,2026)`
+#' has label `"2025"` if `format_single`
+#' is `"lower"` and `"2026"` if
+#' `format_single` is `"upper"`.
+#'
+#' `format_multi` controls whether the label
+#' for a multi-year cohort includes the upper limit.
+#' For instance, the cohort `[2025,2030)`
+#' has label `"2025-2035"` if
+#' `format_multi` is `"include"` and
+#' `"2025-2029"` if `format_multi` is
+#' `"exclude"`.
 #'
 #' @param breaks Boundaries between cohorts
 #' A numeric vector.
 #' @param lower_first Lower limit of
-#' first cohort.
+#' first cohort. Non-negative number.
 #' @param lower_last Lower limit of
-#' last cohort.
+#' last cohort. Non-negative number.
 #' @param open Whether first cohort
 #' is "open", i.e. has no lower limit.
 #' Default is `FALSE`.
 #' @param include_total Whether to include a
-#' `"Total"` category.
+#' `"Total"` category. Default is `FALSE`.
 #' @param include_na Whether to include
-#' an `NA` category.
-#' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_range Rule for multi-year labels: `"include"` or `"exclude"`.
+#' an `NA` category. Default is `FALSE`.
+#' @param format_single How to format label for
+#' single-year cohort. Choices are `"lower"`
+#' (the default) and `"upper"`. See below for
+#' details.
+#' @param format_multi How to format label for
+#' multi-year cohort. Choices are `"include"`
+#' (the default) and `"exclude"`. See below for details.
+#'
 #' @return Character vector.
-#' Length depends on the function arguments.
 #'
 #' @seealso
 #' - [age_labels()] Age equivalent of `cohort_labels()`
@@ -70,11 +80,11 @@
 #'   lower_last = 2010
 #' )
 #'
-#' ## ten-year cohorts, 'format_range' is "exclude",
+#' ## ten-year cohorts, 'format_multi' is "exclude",
 #' cohort_labels_ten(
 #'   lower_first = 2000,
 #'   lower_last = 2010,
-#'   format_range = "exclude"
+#'   format_multi = "exclude"
 #' )
 #'
 #' ## include total and NA
@@ -88,16 +98,16 @@
 cohort_labels <- function(breaks,
                           open = FALSE,
                           format_single = c("lower", "upper"),
-                          format_range = c("include", "exclude"),
+                          format_multi = c("include", "exclude"),
                           include_total = FALSE,
                           include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
   format_single <- match.arg(format_single)
-  format_range <- match.arg(format_range)
+  format_multi <- match.arg(format_multi)
   inner_labels(
     breaks = breaks,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = open,
     is_open_right = FALSE,
     include_total = include_total,
@@ -111,17 +121,17 @@ cohort_labels_one <- function(lower_first,
                               lower_last,
                               open = FALSE,
                               format_single = c("lower", "upper"),
-                              format_range = c("include", "exclude"),
+                              format_multi = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
   format_single <- match.arg(format_single)
-  format_range <- match.arg(format_range)
+  format_multi <- match.arg(format_multi)
   inner_labels_one(
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = open,
     is_open_right = FALSE,
     include_total = include_total,
@@ -136,17 +146,17 @@ cohort_labels_five <- function(lower_first,
                                lower_last,
                                open = FALSE,
                                format_single = c("lower", "upper"),
-                               format_range = c("include", "exclude"),
+                               format_multi = c("include", "exclude"),
                                include_total = FALSE,
                                include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
   format_single <- match.arg(format_single)
-  format_range <- match.arg(format_range)
+  format_multi <- match.arg(format_multi)
   inner_labels_five(
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = open,
     is_open_right = FALSE,
     include_total = include_total,
@@ -160,17 +170,17 @@ cohort_labels_ten <- function(lower_first,
                               lower_last,
                               open = FALSE,
                               format_single = c("lower", "upper"),
-                              format_range = c("include", "exclude"),
+                              format_multi = c("include", "exclude"),
                               include_total = FALSE,
                               include_na = FALSE) {
   check_flag(x = open, nm_x = "open")
   format_single <- match.arg(format_single)
-  format_range <- match.arg(format_range)
+  format_multi <- match.arg(format_multi)
   inner_labels_ten(
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = format_single,
-    format_range = format_range,
+    format_multi = format_multi,
     is_open_left = open,
     is_open_right = FALSE,
     include_total = include_total,

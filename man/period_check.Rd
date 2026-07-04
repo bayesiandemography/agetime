@@ -63,6 +63,37 @@ Collect information on period labels (\code{period_check()}),
 or throw an error if period labels do not
 conform to expectations (\code{period_assert}).
 }
+\section{Controlling how period labels are interpreted}{
+
+
+If \code{interpret_single} is \code{"lower"} (the default),
+then labels for single-year periods
+are assumed to refer to lower limits,
+so that \code{"2025"} means \verb{[2025,2026)}.
+This is the convention that data
+providers typically use
+for calendar years.
+
+If \code{interpret_single} is \code{"upper"},
+then labels for single-year periods
+are assumed to refer to upper limits,
+so that \code{"2025"} means \verb{[2024,2025)}.
+This is the convention that data providers
+typically use for non-calendar years,
+such as 1 July to 30 June.
+
+If \code{interpret_multi} is \code{"include"} (the default),
+then labels for multi-year periods
+are assumed to include upper limits,
+so that \code{"2025-2030"} means \verb{[2025,2030)}.
+
+If \code{interpret_multi} is \code{"exclude"},
+then labels for multi-year periods
+are assumed to exclude the upper limits
+and use upper - 1 instead,
+so that \code{"2025-2030"} means \verb{[2025,2031)}.
+}
+
 \examples{
 lab <- period_labels_five(
   lower_first = 2020,

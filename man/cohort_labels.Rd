@@ -47,8 +47,8 @@ cohort_labels_ten(
 )
 }
 \arguments{
-\item{breaks}{Boundaries between cohorts.
-Numeric vector.}
+\item{breaks}{Boundaries between cohorts
+A numeric vector.}
 
 \item{open}{Whether first cohort
 is "open", i.e. has no lower limit.
@@ -79,15 +79,13 @@ last cohort. Non-negative number.}
 Character vector.
 }
 \description{
-Create a new set of cohort labels
-based on \pkg{agetime} conventions.
+Create a new set of cohort labels.
 }
-\details{
-The label for a cohort depends on the
-lower and upper limits of that cohort.
+\section{Controlling the formatting of cohort labels}{
+
 
 \code{format_single} controls whether the label
-for a single-year cohort is based on the
+for a single-year cohorts is based on the
 lower or upper limit.
 For instance, the cohort \verb{[2025,2026)}
 has label \code{"2025"} if \code{format_single}
@@ -95,64 +93,58 @@ is \code{"lower"} and \code{"2026"} if
 \code{format_single} is \code{"upper"}.
 
 \code{format_multi} controls whether the label
-for a multi-year cohort includes
-the upper limit.
+for a multi-year cohort includes the upper limit.
 For instance, the cohort \verb{[2025,2030)}
 has label \code{"2025-2035"} if
 \code{format_multi} is \code{"include"} and
 \code{"2025-2029"} if \code{format_multi} is
 \code{"exclude"}.
-
-Cohorts, unlike periods, can be open
-on the left, i.e. have no lower limit.
-
-There are also two special cohort labels:
-\code{NA} and \code{"Total"}.
 }
+
 \examples{
 ## 5-year cohorts
 cohort_labels_five(
   lower_first = 2000,
-  lower_last = 2015
+  lower_last = 2010
 )
 
 ## 5-year cohorts, first cohort is open
 cohort_labels_five(
-  lower_first = 2001,
-  lower_last = 2016,
+  lower_first = 1960,
+  lower_last = 2020,
   open = TRUE
 )
 
 ## single-year cohorts
 cohort_labels_one(
   lower_first = 2000,
-  lower_last = 2004,
+  lower_last = 2010
 )
 
 ## single-year cohorts, 'format_single' is "upper"
 cohort_labels_one(
   lower_first = 2000,
-  lower_last = 2004,
+  lower_last = 2010,
   format_single = "upper"
 )
 
 ## ten-year cohorts
 cohort_labels_ten(
   lower_first = 2000,
-  lower_last = 2020
+  lower_last = 2010
 )
 
 ## ten-year cohorts, 'format_multi' is "exclude",
 cohort_labels_ten(
   lower_first = 2000,
-  lower_last = 2020,
+  lower_last = 2010,
   format_multi = "exclude"
 )
 
 ## include total and NA
 cohort_labels_ten(
   lower_first = 2000,
-  lower_last = 2020,
+  lower_last = 2010,
   include_total = TRUE,
   include_na = TRUE
 )

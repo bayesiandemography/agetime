@@ -4,6 +4,8 @@
 #' or throw an error if period labels do not
 #' conform to expectations (`period_assert`).
 #'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#' 
 #' @inheritParams period_lower
 #' @param no_overlap No periods overlap.
 #' @param no_gap The periods span the entire

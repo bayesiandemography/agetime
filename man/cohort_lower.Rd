@@ -5,8 +5,7 @@
 \alias{cohort_mid}
 \alias{cohort_upper}
 \alias{cohort_width}
-\title{Lower Limits, Upper Limits, Widths,
-and Midpoints of Cohorts}
+\title{Limits, Widths, and Midpoints from  Cohort Labels}
 \usage{
 cohort_lower(
   labels,
@@ -65,33 +64,23 @@ Lower and upper limits can be used
 to filter on cohorts.
 See below for examples.
 }
-\section{\code{interpret_single}}{
+\section{Controlling how cohort labels are interpreted}{
 
-
-\code{interpret_single} controls the interpretation
-of labels for single-year cohorts.
 
 If \code{interpret_single} is \code{"lower"} (the default),
 then labels for single-year cohorts
 are assumed to refer to lower limits,
 so that \code{"2025"} means \verb{[2025,2026)}.
-This is the convention typically used for
-calendar years. It also matches the
-convention for single-year age groups.
+This is the convention that data providers
+typically use for calendar years.
 
 If \code{interpret_single} is \code{"upper"},
 then labels for single-year cohorts
 are assumed to refer to upper limits,
 so that \code{"2025"} means \verb{[2024,2025)}.
-This is the convention typically used for
-non-calendar years, eg 1 July to 30 June.
-}
-
-\section{\code{interpret_multi}}{
-
-
-\code{interpret_multi} controls the interpretation
-of labels for multi-year cohorts.
+This is the convention that data providers
+typically use for non-calendar years,
+such as 1 July to 30 June.
 
 If \code{interpret_multi} is \code{"include"} (the default),
 then labels for multi-year cohorts
@@ -103,8 +92,6 @@ then labels for multi-year cohorts
 are assumed to exclude the upper limits
 and use upper - 1 instead,
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
-This matches the convention used for
-multi-year age groups.
 }
 
 \examples{
