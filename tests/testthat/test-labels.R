@@ -77,6 +77,13 @@ test_that("period_labels_five() creates five-year period labels", {
   )
 })
 
+test_that("period_labels_five() only requires a five-year span", {
+  expect_identical(
+    period_labels_five(lower_first = 2001, lower_last = 2011),
+    c("2001-2006", "2006-2011", "2011-2016")
+  )
+})
+
 test_that("period_labels_one() respects format_single = upper", {
   expect_identical(
     period_labels_one(
@@ -100,6 +107,13 @@ test_that("period_labels_ten() can include Total and NA", {
   )
 })
 
+test_that("period_labels_ten() only requires a ten-year span", {
+  expect_identical(
+    period_labels_ten(lower_first = 2001, lower_last = 2011),
+    c("2001-2011", "2011-2021")
+  )
+})
+
 test_that("cohort_labels() creates labels from breaks", {
   expect_identical(
     cohort_labels(breaks = c(2000, 2005, 2010, 2015), include_total = TRUE),
@@ -111,6 +125,13 @@ test_that("cohort_labels_five() creates five-year cohort labels", {
   expect_identical(
     cohort_labels_five(lower_first = 2000, lower_last = 2010),
     c("2000-2005", "2005-2010", "2010-2015")
+  )
+})
+
+test_that("cohort_labels_five() only requires a five-year span", {
+  expect_identical(
+    cohort_labels_five(lower_first = 2001, lower_last = 2011),
+    c("2001-2006", "2006-2011", "2011-2016")
   )
 })
 
@@ -137,6 +158,24 @@ test_that("cohort_labels_ten() can include Total and NA", {
       include_na = TRUE
     ),
     c("2000-2010", "2010-2020", "Total", NA)
+  )
+})
+
+test_that("cohort_labels_ten() only requires a ten-year span", {
+  expect_identical(
+    cohort_labels_ten(lower_first = 2001, lower_last = 2011),
+    c("2001-2011", "2011-2021")
+  )
+})
+
+test_that("age label generators still require divisible endpoints", {
+  expect_error(
+    age_labels_five(lower_first = 1, lower_last = 11),
+    "Use a value divisible by 5"
+  )
+  expect_error(
+    age_labels_ten(lower_first = 1, lower_last = 11),
+    "Use a value divisible by 10"
   )
 })
 

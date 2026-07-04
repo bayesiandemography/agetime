@@ -1,0 +1,20 @@
+---
+description: Internal R functions should not use default arguments
+globs: R/*.R
+alwaysApply: false
+---
+
+# Internal R Function Signatures
+
+For internal R functions, do not use default argument values.
+
+Guidelines:
+- Treat internal functions as explicit helpers, not user-facing APIs.
+- Every argument in an internal function signature should be supplied explicitly at each call site.
+- If an internal helper needs a new parameter, update all call sites rather than adding a default.
+- Put defaults on exported or otherwise user-facing functions when they improve the public API.
+- Do not add wrapper helpers solely to hide internal arguments unless the user explicitly asks for that abstraction.
+
+Examples:
+- Preferred: `inner_labels_ten(..., require_divisible_bounds = FALSE)`
+- Avoid: `inner_labels_ten(..., require_divisible_bounds = TRUE)` with a default in the function definition

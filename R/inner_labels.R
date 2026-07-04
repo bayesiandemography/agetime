@@ -7,6 +7,8 @@
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
+#' @param require_divisible_bounds Whether `lower_first` and `lower_last`
+#' must themselves be divisible by 5.
 #' @returns Character vector of labels.
 #'
 #' @noRd
@@ -41,6 +43,8 @@ inner_labels <- function(breaks,
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
+#' @param require_divisible_bounds Whether `lower_first` and `lower_last`
+#' must themselves be divisible by 5.
 #' @returns Character vector of labels.
 #'
 #' @noRd
@@ -113,26 +117,34 @@ inner_labels_five <- function(lower_first,
                               is_open_left,
                               is_open_right,
                               include_total,
-                              include_na) {
+                              include_na,
+                              require_divisible_bounds) {
   check_n(
     n = lower_first,
     nm_n = "lower_first",
     min = 0L,
     max = NULL,
-    divisible_by = 5L
+    divisible_by = if (require_divisible_bounds) 5L else NULL
   )
   check_n(
     n = lower_last,
     nm_n = "lower_last",
     min = 5L,
     max = NULL,
-    divisible_by = 5L
+    divisible_by = if (require_divisible_bounds) 5L else NULL
   )
   check_x_lt_y(
     x = lower_first,
     y = lower_last,
     nm_x = "lower_first",
     nm_y = "lower_last"
+  )
+  check_diff_divisible(
+    x = lower_first,
+    y = lower_last,
+    nm_x = "lower_first",
+    nm_y = "lower_last",
+    divisible_by = 5L
   )
   check_flag(x = include_total, nm_x = "include_total")
   check_flag(x = include_na, nm_x = "include_na")
@@ -162,6 +174,8 @@ inner_labels_five <- function(lower_first,
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
+#' @param require_divisible_bounds Whether `lower_first` and `lower_last`
+#' must themselves be divisible by 10.
 #' @returns Character vector of labels.
 #'
 #' @noRd
@@ -173,26 +187,34 @@ inner_labels_ten <- function(lower_first,
                              is_open_left,
                              is_open_right,
                              include_total,
-                             include_na) {
+                             include_na,
+                             require_divisible_bounds) {
   check_n(
     n = lower_first,
     nm_n = "lower_first",
     min = 0L,
     max = NULL,
-    divisible_by = 10L
+    divisible_by = if (require_divisible_bounds) 10L else NULL
   )
   check_n(
     n = lower_last,
     nm_n = "lower_last",
     min = 10L,
     max = NULL,
-    divisible_by = 10L
+    divisible_by = if (require_divisible_bounds) 10L else NULL
   )
   check_x_lt_y(
     x = lower_first,
     y = lower_last,
     nm_x = "lower_first",
     nm_y = "lower_last"
+  )
+  check_diff_divisible(
+    x = lower_first,
+    y = lower_last,
+    nm_x = "lower_first",
+    nm_y = "lower_last",
+    divisible_by = 10L
   )
   check_flag(x = include_total, nm_x = "include_total")
   check_flag(x = include_na, nm_x = "include_na")

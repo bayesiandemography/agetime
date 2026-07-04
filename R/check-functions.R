@@ -266,6 +266,31 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
 }
 
 
+#' Check Difference Is Divisible
+#'
+#' @param x First numeric value.
+#' @param y Second numeric value.
+#' @param nm_x Argument name used in error messages.
+#' @param nm_y Argument name used in error messages.
+#' @param divisible_by Required divisor.
+#' @returns Return value used internally.
+#'
+#' @noRd
+check_diff_divisible <- function(x, y, nm_x, nm_y, divisible_by) {
+  diff <- y - x
+  if (diff %% divisible_by != 0L) {
+    cli::cli_abort(c(
+      "Difference between {.arg {nm_x}} and {.arg {nm_y}} is {.val {diff}}.",
+      i = paste0(
+        "Use values whose difference is divisible by ",
+        "{.val {divisible_by}}?"
+      )
+    ))
+  }
+  invisible(TRUE)
+}
+
+
 #' Check Not In Intervals
 #'
 #' @param x Numeric break points.

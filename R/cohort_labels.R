@@ -160,7 +160,8 @@ cohort_labels_five <- function(lower_first,
     is_open_left = open,
     is_open_right = FALSE,
     include_total = include_total,
-    include_na = include_na
+    include_na = include_na,
+    require_divisible_bounds = FALSE
   )
 }
 
@@ -184,6 +185,7 @@ cohort_labels_ten <- function(lower_first,
     is_open_left = open,
     is_open_right = FALSE,
     include_total = include_total,
-    include_na = include_na
+    include_na = include_na,
+    require_divisible_bounds = FALSE
   )
 }

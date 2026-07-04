@@ -112,7 +112,8 @@ age_labels_five <- function(lower_first = 0,
     is_open_left = FALSE,
     is_open_right = open,
     include_total = include_total,
-    include_na = include_na
+    include_na = include_na,
+    require_divisible_bounds = TRUE
   )
 }
 
@@ -132,7 +133,8 @@ age_labels_ten <- function(lower_first = 0,
     is_open_left = FALSE,
     is_open_right = open,
     include_total = include_total,
-    include_na = include_na
+    include_na = include_na,
+    require_divisible_bounds = TRUE
   )
 }
 
