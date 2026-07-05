@@ -64,6 +64,7 @@ age_modify <- function(labels,
 #' - `age_modify_ten` Ten-year age groups
 #' - `age_modify_life` Age groups used in 'abridged' life tables
 #'
+#' @inheritSection age_check Abridged and complete life tables
 #' @inheritParams age_lower
 #' @inherit age_modify return
 #'

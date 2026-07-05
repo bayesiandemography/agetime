@@ -30,15 +30,18 @@ period_assert(
 \arguments{
 \item{labels}{Vector of period labels.}
 
-\item{no_overlap}{No periods overlap.}
+\item{no_overlap}{Check that no periods overlap.
+Default is \code{FALSE} (don't check).}
 
-\item{no_gap}{The periods span the entire
-range from the lower limit of the earliest period
-to the upper limit of the latest period.}
+\item{no_gap}{Check that all periods between
+the earliest and latest periods are included.
+Default is \code{FALSE} (don't check).}
 
-\item{no_total}{No "Total" label.}
+\item{no_total}{Check that there is no "Total" label.
+Default is \code{FALSE} (don't check).}
 
-\item{no_na}{No NA label.}
+\item{no_na}{Check that there is no \code{NA} label.
+Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret
 labels for single-year periods.
@@ -55,13 +58,25 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-For \code{period_check()}, a list with logical \code{ok} and data frame
-\code{details}; for \code{period_assert()}, \code{labels} invisibly or an error.
+\itemize{
+\item \code{period_check()} returns a containing a logical flag
+called \code{ok} and a tibble][tibble::tibble()]
+called \code{details}.
+\item \code{period_assert()} returns \code{labels} invisibly,
+or raises an error.
+}
 }
 \description{
-Collect information on period labels (\code{period_check()}),
-or throw an error if period labels do not
-conform to expectations (\code{period_assert}).
+\code{period_check()} creates reports comparing
+period labels against expectations.
+
+\code{period_assert()} throws an error if
+period labels do not conform to expectations.
+
+If \code{labels} is a factor, then the tests are applied
+to the \code{levels} attribute of \code{labels}.
+Otherwise the tests are applied to the
+elements of \code{labels}.
 }
 \section{Controlling how period labels are interpreted}{
 

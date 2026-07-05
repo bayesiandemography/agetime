@@ -2,6 +2,8 @@
 #'
 #' Create a new set of age group labels.
 #'
+#' @inheritSection age_check Abridged and complete life tables
+#'
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
 #' @param open Whether the oldest age group

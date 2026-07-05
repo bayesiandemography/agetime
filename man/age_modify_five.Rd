@@ -33,6 +33,12 @@ pattern:
 \item \code{age_modify_life} Age groups used in 'abridged' life tables
 }
 }
+\section{Abridged and complete life tables}{
+
+
+An \verb{abridged' life table uses age groups }"0"\verb{, }"1-4"\verb{, }"5-9"\verb{, }"10-14"\verb{, and so on up to the oldest age group, which is open on the right. A }complete' life table uses single-year age groups.
+}
+
 \examples{
 labels <- c("1-3", "87-89", "0", "91+", "total", "52")
 age_modify_five(labels)

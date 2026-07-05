@@ -1,24 +1,50 @@
 #' Check or Make Assertions About Age Groups
 #'
-#' Collect information on age group labels (`age_check()`),
-#' or throw an error if age group labels do not
-#' conform to expectations (`age_assert`).
+#' @description
+#' `age_check()` creates reports comparing
+#' age group labels against expectations.
+#'
+#' `age_assert()` throws an error if
+#' age group labels do not conform to expectations.
+#'
+#' If `labels` is a factor, then the tests are applied
+#' to the `levels` attribute of `labels`.
+#' Otherwise the tests are applied to the
+#' elements of `labels`.
+#'
+#' @section Abridged and complete life tables:
+#' 
+#' An `abridged' life table uses age groups `"0"`,
+#' `"1-4"`, `"5-9"`, `"10-14"`, and so on
+#' up to the oldest age group, which is open on the right.
+#' A `complete' life table uses single-year age groups.
 #'
 #' @inheritParams age_lower
-#' @param no_overlap No age groups overlap.
-#' @param no_gap Age groups span entire
-#' range from lower limit of youngest age
-#' group to upper limit of oldest age group.
-#' @param no_total No "Total" age group.
-#' @param no_na No NA age group.
-#' @param include_zero One or more age groups
-#' have a lower limit of zero.
-#' @param include_open One or more age groups
-#' has no upper limit.
-#' @param valid_life All labels valid for
-#' (abridged) life table.
-#' @return For `age_check()`, a list with logical `ok` and data frame
-#' `details`; for `age_assert()`, `labels` invisibly or an error.
+#' @param no_overlap Check that no age groups overlap.
+#' Default is `FALSE` (don't check).
+#' @param no_gap Check that all ages between the
+#' youngest and old oldest age groups are included.
+#' Default is `FALSE` (don't check).
+#' @param no_total Check that there is no "Total" label.
+#' Default is `FALSE` (don't check).
+#' @param no_na Check that there is no `NA` label.
+#' Default is `FALSE` (don't check).
+#' @param include_zero Check that at least one
+#' age group has a lower limit of zero.
+#' Default is `FALSE` (don't check).
+#' @param include_open Check that at least one age
+#' group has no upper limit.
+#' Default is `FALSE` (don't check).
+#' @param valid_life Check that all labels are
+#' valid for an abridged life table.
+#' Default is `FALSE` (don't check).
+#'
+#' @return
+#' - `age_check()` returns a containing a logical flag
+#'   called `ok` and a tibble][tibble::tibble()]
+#'   called `details`.
+#' - `age_assert()` returns `labels` invisibly,
+#'   or raises an error.
 #'
 #' @seealso
 #' - [period_check()] Period equivalent of `age_check()`
@@ -40,25 +66,25 @@
 #'   valid_life = TRUE
 #' )
 #'
-#' ## throw error if gaps
-#' age_assert(labels = lab, no_gap = TRUE)
-#'
-#' lab_gap <- lab[c(1, 3)]
-#' ## throw error if no gaps
-#' age_assert(labels = lab_gap, no_gap = FALSE)
+#' ## throw error if overlap or gap
+#' age_assert(
+#'   labels = lab,
+#'   no_overlap = TRUE
+#'   no_gap = TRUE
+#' )
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
-# validity are vacuously satisfied (observed = TRUE). Checks that require at
-# least one interval (include_*) fail (observed = FALSE).
+# validity are vacuously satisfied. Checks that require at
+# least one interval (include_*) fail.
 age_check <- function(labels,
-                      no_overlap = NA,
-                      no_gap = NA,
-                      no_total = NA,
-                      no_na = NA,
-                      include_zero = NA,
-                      include_open = NA,
-                      valid_life = NA,
+                      no_overlap = FALSE,
+                      no_gap = FALSE,
+                      no_total = FALSE,
+                      no_na = FALSE,
+                      include_zero = FALSE,
+                      include_open = FALSE,
+                      valid_life = FALSE,
                       interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_check(
@@ -80,13 +106,13 @@ age_check <- function(labels,
 #' @rdname age_check
 #' @export
 age_assert <- function(labels,
-                       no_overlap = NA,
-                       no_gap = NA,
-                       no_total = NA,
-                       no_na = NA,
-                       include_zero = NA,
-                       include_open = NA,
-                       valid_life = NA,
+                       no_overlap = FALSE,
+                       no_gap = FALSE,
+                       no_total = FALSE,
+                       no_na = FALSE,
+                       include_zero = FALSE,
+                       include_open = FALSE,
+                       valid_life = FALSE,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_assert(

@@ -15,7 +15,9 @@
 #' - `age_levels_fill_ten` adds age groups with
 #'   width 10.
 #' - `age_levels_fill_life` adds age groups
-#'   used by a life table.
+#'   used by an abridged life table.
+#'
+#' @inheritSection age_check Abridged and complete life tables
 #'
 #' @inheritParams age_lower
 #' @param breaks Boundaries of newly-created age groups.

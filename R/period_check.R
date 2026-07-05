@@ -1,20 +1,36 @@
 #' Check or Make Assertions About Periods
 #'
-#' Collect information on period labels (`period_check()`),
-#' or throw an error if period labels do not
-#' conform to expectations (`period_assert`).
+#' @description
+#' `period_check()` creates reports comparing
+#' period labels against expectations.
+#'
+#' `period_assert()` throws an error if
+#' period labels do not conform to expectations.
+#'
+#' If `labels` is a factor, then the tests are applied
+#' to the `levels` attribute of `labels`.
+#' Otherwise the tests are applied to the
+#' elements of `labels`.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #' 
 #' @inheritParams period_lower
-#' @param no_overlap No periods overlap.
-#' @param no_gap The periods span the entire
-#' range from the lower limit of the earliest period
-#' to the upper limit of the latest period.
-#' @param no_total No "Total" label.
-#' @param no_na No NA label.
-#' @return For `period_check()`, a list with logical `ok` and data frame
-#' `details`; for `period_assert()`, `labels` invisibly or an error.
+#' @param no_overlap Check that no periods overlap.
+#' Default is `FALSE` (don't check).
+#' @param no_gap Check that all periods between
+#' the earliest and latest periods are included.
+#' Default is `FALSE` (don't check).
+#' @param no_total Check that there is no "Total" label.
+#' Default is `FALSE` (don't check).
+#' @param no_na Check that there is no `NA` label.
+#' Default is `FALSE` (don't check).
+#'
+#' @return
+#' - `period_check()` returns a containing a logical flag
+#'   called `ok` and a tibble][tibble::tibble()]
+#'   called `details`.
+#' - `period_assert()` returns `labels` invisibly,
+#'   or raises an error.
 #'
 #' @seealso
 #' - [age_check()] Age equivalent of `period_check()`
@@ -36,8 +52,12 @@
 #'   no_na = TRUE
 #' )
 #'
-#' ## throw error if gaps
-#' period_assert(labels = lab, no_gap = TRUE)
+#' ## throw error if overlap or gap
+#' period_assert(
+#'   labels = lab,
+#'   no_overlap = TRUE,
+#'   no_gap = TRUE
+#' )
 #'
 #' lab_gap <- lab[c(1, 3)]
 #' ## throw error if no gaps

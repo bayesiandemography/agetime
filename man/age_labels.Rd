@@ -62,6 +62,12 @@ Character vector.
 \description{
 Create a new set of age group labels.
 }
+\section{Abridged and complete life tables}{
+
+
+An \verb{abridged' life table uses age groups }"0"\verb{, }"1-4"\verb{, }"5-9"\verb{, }"10-14"\verb{, and so on up to the oldest age group, which is open on the right. A }complete' life table uses single-year age groups.
+}
+
 \examples{
 ## default 5-year age groups
 age_labels_five()

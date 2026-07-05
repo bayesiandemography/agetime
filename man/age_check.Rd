@@ -32,38 +32,62 @@ age_assert(
 \arguments{
 \item{labels}{Vector of age group labels.}
 
-\item{no_overlap}{No age groups overlap.}
+\item{no_overlap}{Check that no age groups overlap.
+Default is \code{FALSE} (don't check).}
 
-\item{no_gap}{Age groups span entire
-range from lower limit of youngest age
-group to upper limit of oldest age group.}
+\item{no_gap}{Check that all ages between the
+youngest and old oldest age groups are included.
+Default is \code{FALSE} (don't check).}
 
-\item{no_total}{No "Total" age group.}
+\item{no_total}{Check that there is no "Total" label.
+Default is \code{FALSE} (don't check).}
 
-\item{no_na}{No NA age group.}
+\item{no_na}{Check that there is no \code{NA} label.
+Default is \code{FALSE} (don't check).}
 
-\item{include_zero}{One or more age groups
-have a lower limit of zero.}
+\item{include_zero}{Check that at least one
+age group has a lower limit of zero.
+Default is \code{FALSE} (don't check).}
 
-\item{include_open}{One or more age groups
-has no upper limit.}
+\item{include_open}{Check that at least one age
+group has no upper limit.
+Default is \code{FALSE} (don't check).}
 
-\item{valid_life}{All labels valid for
-(abridged) life table.}
+\item{valid_life}{Check that all labels are
+valid for an abridged life table.
+Default is \code{FALSE} (don't check).}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be parsed: \code{"error"} (the default),
 \code{"warn"}, or \code{"silent"}.}
 }
 \value{
-For \code{age_check()}, a list with logical \code{ok} and data frame
-\code{details}; for \code{age_assert()}, \code{labels} invisibly or an error.
+\itemize{
+\item \code{age_check()} returns a containing a logical flag
+called \code{ok} and a tibble][tibble::tibble()]
+called \code{details}.
+\item \code{age_assert()} returns \code{labels} invisibly,
+or raises an error.
+}
 }
 \description{
-Collect information on age group labels (\code{age_check()}),
-or throw an error if age group labels do not
-conform to expectations (\code{age_assert}).
+\code{age_check()} creates reports comparing
+age group labels against expectations.
+
+\code{age_assert()} throws an error if
+age group labels do not conform to expectations.
+
+If \code{labels} is a factor, then the tests are applied
+to the \code{levels} attribute of \code{labels}.
+Otherwise the tests are applied to the
+elements of \code{labels}.
 }
+\section{Abridged and complete life tables}{
+
+
+An \verb{abridged' life table uses age groups }"0"\verb{, }"1-4"\verb{, }"5-9"\verb{, }"10-14"\verb{, and so on up to the oldest age group, which is open on the right. A }complete' life table uses single-year age groups.
+}
+
 \examples{
 lab <- age_labels_life()
 lab

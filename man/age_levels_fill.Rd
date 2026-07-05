@@ -52,9 +52,15 @@ width 5.
 \item \code{age_levels_fill_ten} adds age groups with
 width 10.
 \item \code{age_levels_fill_life} adds age groups
-used by a life table.
+used by an abridged life table.
 }
 }
+\section{Abridged and complete life tables}{
+
+
+An \verb{abridged' life table uses age groups }"0"\verb{, }"1-4"\verb{, }"5-9"\verb{, }"10-14"\verb{, and so on up to the oldest age group, which is open on the right. A }complete' life table uses single-year age groups.
+}
+
 \examples{
 labels <- factor(c("0-4", "20-24"))
 labels

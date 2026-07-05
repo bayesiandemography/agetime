@@ -32,18 +32,23 @@ cohort_assert(
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{no_overlap}{No cohorts overlap.}
+\item{no_overlap}{Check that no cohorts overlap.
+Default is \code{FALSE} (don't check).}
 
-\item{no_gap}{The cohorts span the entire
-range from the lower limit of the earliest cohort
-to the upper limit of the latest cohort.}
+\item{no_gap}{Check that all cohorts between
+the earliest and latest cohort are
+included.
+Default is \code{FALSE} (don't check).}
 
-\item{no_total}{No "Total" label.}
+\item{no_total}{Check that there is no "Total" label.
+Default is \code{FALSE} (don't check).}
 
-\item{no_na}{No NA label.}
+\item{no_na}{Check that there is no \code{NA} label.
+Default is \code{FALSE} (don't check).}
 
-\item{include_open}{One or more cohorts
-has no lower limit.}
+\item{include_open}{Check that at least
+one cohort has no lower limit.
+Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret
 labels for single-year cohorts.
@@ -60,13 +65,25 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-For \code{cohort_check()}, a list with logical \code{ok} and data frame
-\code{details}; for \code{cohort_assert()}, \code{labels} invisibly or an error.
+\itemize{
+\item \code{cohort_check()} returns a containing a logical flag
+called \code{ok} and a tibble][tibble::tibble()]
+called \code{details}.
+\item \code{cohort_assert()} returns \code{labels} invisibly,
+or raises an error.
+}
 }
 \description{
-Collect information on cohort labels (\code{cohort_check()}),
-or throw an error if cohort labels do not
-conform to expectations (\code{cohort_assert}).
+\code{cohort_check()} creates reports comparing
+cohort labels against expectations.
+
+\code{cohort_assert()} throws an error if
+cohort labels do not conform to expectations.
+
+If \code{labels} is a factor, then the tests are applied
+to the \code{levels} attribute of \code{labels}.
+Otherwise the tests are applied to the
+elements of \code{labels}.
 }
 \section{Controlling how cohort labels are interpreted}{
 
