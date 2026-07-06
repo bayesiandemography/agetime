@@ -36,7 +36,7 @@ cohort_is_total <- function(labels,
 
 #' Identify Cohort Labels for Open Cohorts
 #'
-#' Find open cohorts, ie cohorts with no lower limit.
+#' Find open cohorts, i.e., cohorts with no lower limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'

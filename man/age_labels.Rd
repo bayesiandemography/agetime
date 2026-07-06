@@ -65,10 +65,10 @@ Create a new set of age group labels.
 \section{Abridged and complete life tables}{
 
 
-An abridged life table uses age groups \code{"0"},
+An 'abridged' life table uses age groups \code{"0"},
 \code{"1-4"}, \code{"5-9"}, \code{"10-14"}, and so on
 up to the oldest age group, which is open on the right.
-A complete life table uses single-year age groups.
+A 'complete' life table uses single-year age groups.
 }
 
 \examples{

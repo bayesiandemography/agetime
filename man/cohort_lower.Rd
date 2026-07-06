@@ -64,7 +64,7 @@ Lower and upper limits can be used
 to filter on cohorts.
 See below for examples.
 
-Pretending that open cohorts (eg \code{"<2000"})
+Pretending that open cohorts (e.g., \code{"<2000"})
 have midpoints can be useful for plotting.
 \code{cohort_mid()} assigns open cohorts
 midpoints based on half the median width of

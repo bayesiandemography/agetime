@@ -32,7 +32,7 @@ age_is_total <- function(labels,
 
 #' Identify Age Labels for Open Age Groups
 #'
-#' Find open age groups, ie age groups with no upper limit.
+#' Find open age groups, i.e., age groups with no upper limit.
 #'
 #' @inheritParams age_lower
 #'

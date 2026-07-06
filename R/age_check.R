@@ -14,10 +14,10 @@
 #'
 #' @section Abridged and complete life tables:
 #'
-#' An abridged life table uses age groups `"0"`,
+#' An 'abridged' life table uses age groups `"0"`,
 #' `"1-4"`, `"5-9"`, `"10-14"`, and so on
 #' up to the oldest age group, which is open on the right.
-#' A complete life table uses single-year age groups.
+#' A 'complete' life table uses single-year age groups.
 #'
 #' @inheritParams age_lower
 #' @param no_overlap Check that no age groups overlap.

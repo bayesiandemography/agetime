@@ -211,7 +211,7 @@ check_m_contains <- function(m_contains, label_type) {
 #' to avoid depending on 'poputils' or 'rvec'.
 #'
 #' Check that `n` is  finite, non-NA scalar that
-#' is an integer or integerish (ie is equal to `round(n)`),
+#' is an integer or integerish (i.e., is equal to `round(n)`),
 #' and optionally within a specified range
 #' and divisible by a specified number.
 #'

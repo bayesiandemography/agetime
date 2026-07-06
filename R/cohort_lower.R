@@ -8,7 +8,7 @@
 #' to filter on cohorts.
 #' See below for examples.
 #'
-#' Pretending that open cohorts (eg `"<2000"`)
+#' Pretending that open cohorts (e.g., `"<2000"`)
 #' have midpoints can be useful for plotting.
 #' `cohort_mid()` assigns open cohorts
 #' midpoints based on half the median width of

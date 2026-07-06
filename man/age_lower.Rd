@@ -33,7 +33,7 @@ widths, and midpoints of age groups.
 Lower and upper limits can be used
 to filter on age. See below for examples.
 
-Pretending that open age groups (eg \code{"100+"})
+Pretending that open age groups (e.g., \code{"100+"})
 have midpoints can be useful for plotting.
 \code{age_mid()} assigns open age groups
 midpoints based on half the median width of

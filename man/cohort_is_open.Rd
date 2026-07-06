@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find open cohorts, ie cohorts with no lower limit.
+Find open cohorts, i.e., cohorts with no lower limit.
 }
 \section{Controlling how cohort labels are interpreted}{
 

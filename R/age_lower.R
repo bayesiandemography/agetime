@@ -7,7 +7,7 @@
 #' Lower and upper limits can be used
 #' to filter on age. See below for examples.
 #'
-#' Pretending that open age groups (eg `"100+"`)
+#' Pretending that open age groups (e.g., `"100+"`)
 #' have midpoints can be useful for plotting.
 #' `age_mid()` assigns open age groups
 #' midpoints based on half the median width of
