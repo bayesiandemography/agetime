@@ -71,8 +71,8 @@
 #' df |> filter(cohort_lower(cohort) >= 2025)
 #'
 #' ## 'midpoint' of open cohorts
-#' age_mid(c("<2000", "2000-2010", "2010-2020"))
-#' age_mid(c("<2000", "2000-2005", "2005-2010"))
+#' cohort_mid(c("<2000", "2000-2010", "2010-2020"))
+#' cohort_mid(c("<2000", "2000-2005", "2005-2010"))
 #' 
 #' ## 'interpret_single' is "lower" (the default)
 #' cohort_lower("2025")
