@@ -10,8 +10,8 @@ age_is_total(labels, interpret_fail = c("error", "warn", "silent"))
 \item{labels}{Vector of age group labels.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Logical vector with the same length as \code{labels}.

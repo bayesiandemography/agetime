@@ -7,11 +7,11 @@
 \usage{
 cohort_check(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_open = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -19,11 +19,11 @@ cohort_check(
 
 cohort_assert(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_open = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -46,7 +46,7 @@ Default is \code{FALSE} (don't check).}
 \item{no_na}{Check that there is no \code{NA} label.
 Default is \code{FALSE} (don't check).}
 
-\item{include_open}{Check that at least
+\item{has_open}{Check that at least
 one cohort has no lower limit.
 Default is \code{FALSE} (don't check).}
 
@@ -66,9 +66,9 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 \itemize{
-\item \code{cohort_check()} returns a containing a logical flag
-called \code{ok} and a tibble][tibble::tibble()]
-called \code{details}.
+\item \code{cohort_check()} returns a list with a logical flag
+called \code{ok} and a \link[tibble:tibble]{tibble}
+called \code{details} with columns \code{check}, \code{passed}, and \code{comment}.
 \item \code{cohort_assert()} returns \code{labels} invisibly,
 or raises an error.
 }
@@ -128,15 +128,15 @@ cohort_check(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  include_open = TRUE
+  has_open = TRUE
 )
 
-## throw error if gaps
-cohort_assert(labels = lab, no_gap = TRUE)
-
-lab_gap <- lab[c(1, 3)]
-## throw error if no gaps
-cohort_assert(lab_gap, no_gap = FALSE)
+## throw error if overlap or gap
+cohort_assert(
+  labels = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE
+)
 }
 \seealso{
 \itemize{

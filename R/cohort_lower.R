@@ -8,6 +8,12 @@
 #' to filter on cohorts.
 #' See below for examples.
 #'
+#' Pretending that open cohorts (eg `"<2000"`)
+#' have midpoints can be useful for plotting.
+#' `cohort_mid()` assigns open cohorts
+#' midpoints based on half the median width of
+#' the closed intervals in `labels`. See below for examples.
+#'
 #' @section Controlling how cohort labels are interpreted:
 #'
 #' If `interpret_single` is `"lower"` (the default),
@@ -64,6 +70,10 @@
 #' df
 #' df |> filter(cohort_lower(cohort) >= 2025)
 #'
+#' ## 'midpoint' of open cohorts
+#' age_mid(c("<2000", "2000-2010", "2010-2020"))
+#' age_mid(c("<2000", "2000-2005", "2005-2010"))
+#' 
 #' ## 'interpret_single' is "lower" (the default)
 #' cohort_lower("2025")
 #' cohort_upper("2025")

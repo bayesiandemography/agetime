@@ -29,8 +29,8 @@ age_levels_fill_life(labels, interpret_fail = c("error", "warn", "silent"))
 Boundaries for existing age groups can be omitted.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Factor with the same length as \code{labels}.
@@ -58,7 +58,10 @@ used by an abridged life table.
 \section{Abridged and complete life tables}{
 
 
-An \verb{abridged' life table uses age groups }"0"\verb{, }"1-4"\verb{, }"5-9"\verb{, }"10-14"\verb{, and so on up to the oldest age group, which is open on the right. A }complete' life table uses single-year age groups.
+An abridged life table uses age groups \code{"0"},
+\code{"1-4"}, \code{"5-9"}, \code{"10-14"}, and so on
+up to the oldest age group, which is open on the right.
+A complete life table uses single-year age groups.
 }
 
 \examples{

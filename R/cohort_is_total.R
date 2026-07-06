@@ -1,6 +1,6 @@
 #' Identify Cohort Labels for Totals
 #'
-#' Find cohort labels that \pkg{agetime} interprets as totals.
+#' Find "total" categories in  cohort labels.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -36,8 +36,7 @@ cohort_is_total <- function(labels,
 
 #' Identify Cohort Labels for Open Cohorts
 #'
-#' Find cohort labels that \pkg{agetime} interprets as
-#' open, ie  having no lower limit.
+#' Find open cohorts, ie cohorts with no lower limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'

@@ -6,13 +6,13 @@
 #' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
-#' @param no_overlap Expected overlap check result.
-#' @param no_gap Expected gap check result.
-#' @param no_total Expected total-label check result.
-#' @param no_na Expected missing-label check result.
-#' @param include_zero Expected inclusion of a zero-start interval.
-#' @param include_open Expected inclusion of an open interval.
-#' @param valid_life Expected life-table validity check result.
+#' @param no_overlap Run the no-overlap check?
+#' @param no_gap Run the no-gap check?
+#' @param no_total Run the no-total check?
+#' @param no_na Run the no-NA check?
+#' @param has_zero Run the has-zero check?
+#' @param has_open Run the has-open check?
+#' @param valid_life Run the valid-life check?
 #' @returns `labels`, invisibly, or an error if checks fail.
 #'
 #' @noRd
@@ -26,8 +26,8 @@ inner_assert <- function(labels,
                          no_gap,
                          no_total,
                          no_na,
-                         include_zero,
-                         include_open,
+                         has_zero,
+                         has_open,
                          valid_life) {
   val <- inner_check(
     labels = labels,
@@ -39,8 +39,8 @@ inner_assert <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
-    include_zero = include_zero,
-    include_open = include_open,
+    has_zero = has_zero,
+    has_open = has_open,
     valid_life = valid_life
   )
   throw_assert_error(val)
@@ -54,13 +54,13 @@ inner_assert <- function(labels,
 #' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
-#' @param no_overlap Expected overlap check result.
-#' @param no_gap Expected gap check result.
-#' @param no_total Expected total-label check result.
-#' @param no_na Expected missing-label check result.
-#' @param include_zero Expected inclusion of a zero-start interval.
-#' @param include_open Expected inclusion of an open interval.
-#' @param valid_life Expected life-table validity check result.
+#' @param no_overlap Run the no-overlap check?
+#' @param no_gap Run the no-gap check?
+#' @param no_total Run the no-total check?
+#' @param no_na Run the no-NA check?
+#' @param has_zero Run the has-zero check?
+#' @param has_open Run the has-open check?
+#' @param valid_life Run the valid-life check?
 #' @returns List with `ok` and check `details`.
 #'
 #' @noRd
@@ -75,8 +75,8 @@ inner_check <- function(labels,
                         no_gap,
                         no_total,
                         no_na,
-                        include_zero,
-                        include_open,
+                        has_zero,
+                        has_open,
                         valid_life) {
   labels <- to_character_or_factor(
     labels = labels,
@@ -90,45 +90,63 @@ inner_check <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
-  val_no_overlap <- inner_check_no_overlap(
-    intervals = intervals,
-    asserted = no_overlap
-  )
-  val_no_gap <- inner_check_no_gap(
-    intervals = intervals,
-    asserted = no_gap
-  )
-  val_no_total <- inner_check_no_total(
-    intervals = intervals,
-    asserted = no_total
-  )
-  val_no_na <- inner_check_no_na(
-    intervals = intervals,
-    asserted = no_na
-  )
-  val_include_zero <- inner_check_include_zero(
-    intervals = intervals,
-    asserted = include_zero
-  )
-  val_include_open <- inner_check_include_open(
-    intervals = intervals,
-    asserted = include_open
-  )
-  val_valid_life <- inner_check_valid_life(
-    intervals = intervals,
-    asserted = valid_life
-  )
-  details <- rbind(
-    val_no_overlap,
-    val_no_gap,
-    val_no_total,
-    val_no_na,
-    val_include_zero,
-    val_include_open,
-    val_valid_life
-  )
-  details <- details[!is.na(details$asserted), ]
-  ok <- all(details$asserted == details$observed)
+  details_list <- list()
+  if (isTRUE(no_overlap)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_no_overlap(intervals = intervals))
+    )
+  }
+  if (isTRUE(no_gap)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_no_gap(intervals = intervals))
+    )
+  }
+  if (isTRUE(no_total)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_no_total(intervals = intervals))
+    )
+  }
+  if (isTRUE(no_na)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_no_na(intervals = intervals))
+    )
+  }
+  if (isTRUE(has_zero)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_has_zero(intervals = intervals))
+    )
+  }
+  if (isTRUE(has_open)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_has_open(intervals = intervals))
+    )
+  }
+  if (isTRUE(valid_life)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_valid_life(intervals = intervals))
+    )
+  }
+  details <- if (length(details_list) == 0L) {
+    tibble::tibble(
+      check = character(),
+      passed = logical(),
+      comment = character()
+    )
+  } else {
+    dplyr::bind_rows(details_list)
+  }
+  ok <- if (nrow(details) == 0L) {
+    TRUE
+  } else {
+    all(details$passed)
+  }
   list(
     ok = ok,
     details = details
@@ -137,16 +155,15 @@ inner_check <- function(labels,
 #' Inner Check No Overlap
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
 
-inner_check_no_overlap <- function(intervals, asserted) {
+inner_check_no_overlap <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
-    observed <- TRUE
+    passed <- TRUE
   } else {
     m <- get_m(intervals)
     is_total <- get_is_total(intervals)
@@ -154,13 +171,11 @@ inner_check_no_overlap <- function(intervals, asserted) {
     m_overlap[is_total, ] <- TRUE
     m_overlap[, is_total] <- TRUE
     m_overlap[row(m_overlap) >= col(m_overlap)] <- FALSE
-    observed <- !any(m_overlap, na.rm = TRUE)
+    passed <- !any(m_overlap, na.rm = TRUE)
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (identical(asserted, observed)) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
     labels_unique <- get_labels_unique(intervals)
     i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
     i_overlap <- match(TRUE, m_overlap)
@@ -172,29 +187,25 @@ inner_check_no_overlap <- function(intervals, asserted) {
       "Example of overlap: '%s' and '%s'",
       lab1, lab2
     )
-  } else { ## not asserted, is observed
-    comment <- "No intervals overlap"
   }
   tibble::tibble_row(
     check = "no_overlap",
-    asserted = asserted,
-    observed = observed,
+    passed = passed,
     comment = comment
   )
 }
 #' Inner Check No Gap
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
-inner_check_no_gap <- function(intervals, asserted) {
+inner_check_no_gap <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   int_has_total <- int_has_total(intervals)
   if (int_is_empty || int_has_total) {
-    observed <- TRUE
+    passed <- TRUE
   } else {
     m <- get_m(intervals)
     ord <- order(m[, 1L], m[, 2L])
@@ -204,13 +215,11 @@ inner_check_no_gap <- function(intervals, asserted) {
     uppermax <- cummax(upper)
     n <- length(upper)
     is_gap <- !is.na(lower[-1L]) & (lower[-1L] > uppermax[-n])
-    observed <- !any(is_gap)
+    passed <- !any(is_gap)
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (asserted == observed) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
     i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
     labels_unique <- get_labels_unique(intervals)
     i_gap <- match(TRUE, is_gap)
@@ -218,208 +227,165 @@ inner_check_no_gap <- function(intervals, asserted) {
     i_xu <- match(i_xunu, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
     comment <- sprintf("Example: gap below '%s'", lab)
-  } else { ## not asserted, is observed
-    comment <- "No gaps between intervals"
   }
   tibble::tibble_row(
     check = "no_gap",
-    asserted = asserted,
-    observed = observed,
+    passed = passed,
     comment = comment
   )
 }
 #' Inner Check No Total
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
 
-inner_check_no_total <- function(intervals, asserted) {
+inner_check_no_total <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
-    observed <- TRUE
+    passed <- TRUE
   } else {
     is_total <- get_is_total(intervals)
-    observed <- !any(is_total)
+    passed <- !any(is_total)
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (identical(asserted, observed)) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
     labels_unique <- get_labels_unique(intervals)
     i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
     i_total <- match(TRUE, is_total)
     i_xu <- match(i_total, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
     comment <- sprintf("Example: '%s'", lab)
-  } else { ## not asserted, is observed
-    comment <- "No 'Total' age groups"
   }
   tibble::tibble_row(
     check = "no_total",
-    asserted = asserted,
-    observed = observed,
+    passed = passed,
     comment = comment
   )
 }
 #' Inner Check No Na
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
 
-inner_check_no_na <- function(intervals, asserted) {
+inner_check_no_na <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
-    observed <- TRUE
+    passed <- TRUE
   } else {
     is_na <- get_is_na(intervals)
-    observed <- !any(is_na)
+    passed <- !any(is_na)
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (identical(asserted, observed)) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
     comment <- "Labels include NA."
-  } else { ## not asserted, is observed
-    comment <- "No NA labels"
   }
   tibble::tibble_row(
     check = "no_na",
-    asserted = asserted,
-    observed = observed,
+    passed = passed,
     comment = comment
   )
 }
-#' Inner Check Include Zero
+#' Inner Check Has Zero
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
 
-inner_check_include_zero <- function(intervals, asserted) {
+inner_check_has_zero <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   lower <- m[, 1L]
   if (int_is_empty) {
-    observed <- FALSE
+    passed <- FALSE
   } else {
-    observed <- any(lower == 0, na.rm = TRUE)
+    passed <- any(lower == 0, na.rm = TRUE)
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (identical(asserted, observed)) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
-    if (int_is_empty) {
-      comment <- "No intervals."
-    } else {
-      i_min <- which.min(lower)
-      i_xu <- match(i_min, i_xun_to_xunu)
-      lab <- labels_unique[[i_xu]]
-      comment <- sprintf("Lowest interval: '%s'", lab)
-    }
-  } else { ## not asserted, is observed
-    i_zero <- match(0, lower)
-    i_xu <- match(i_zero, i_xun_to_xunu)
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else if (int_is_empty) {
+    comment <- "No intervals."
+  } else {
+    i_min <- which.min(lower)
+    i_xu <- match(i_min, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Example: '%s'", lab)
+    comment <- sprintf("Lowest interval: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "include_zero",
-    asserted = asserted,
-    observed = observed,
+    check = "has_zero",
+    passed = passed,
     comment = comment
   )
 }
-#' Inner Check Include Open
+#' Inner Check Has Open
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
-inner_check_include_open <- function(intervals, asserted) {
+inner_check_has_open <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   upper <- m[, 2L]
   if (int_is_empty) {
-    observed <- FALSE
+    passed <- FALSE
   } else {
-    observed <- any(is.infinite(upper))
+    passed <- any(is.infinite(upper))
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (asserted == observed) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
-    if (int_is_empty) {
-      comment <- "No intervals."
-    } else {
-      i_max <- which.max(upper)
-      i_xu <- match(i_max, i_xun_to_xunu)
-      lab <- labels_unique[[i_xu]]
-      comment <- sprintf("Highest interval: '%s'", lab)
-    }
-  } else { ## not asserted, is observed
-    i_open <- match(TRUE, is.infinite(upper))
-    i_xu <- match(i_open, i_xun_to_xunu)
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else if (int_is_empty) {
+    comment <- "No intervals."
+  } else {
+    i_max <- which.max(upper)
+    i_xu <- match(i_max, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Example: '%s'", lab)
+    comment <- sprintf("Highest interval: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "include_open",
-    asserted = asserted,
-    observed = observed,
+    check = "has_open",
+    passed = passed,
     comment = comment
   )
 }
 #' Inner Check Valid Life
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @param asserted Expected result for this check (`TRUE`, `FALSE`, or `NA`).
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
 
-inner_check_valid_life <- function(intervals, asserted) {
+inner_check_valid_life <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
-    observed <- TRUE
+    passed <- TRUE
   } else {
     val <- label_non_life(intervals)
-    observed <- is.null(val)
+    passed <- is.null(val)
   }
-  if (is.na(asserted)) {
-    comment <- "No test done"
-  } else if (asserted == observed) {
-    comment <- "Passed"
-  } else if (asserted && !observed) {
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
     comment <- sprintf("Not valid for life table: '%s'", val)
-  } else { ## not asserted, is observed
-    comment <- "All labels valid for life table."
   }
   tibble::tibble_row(
     check = "valid_life",
-    asserted = asserted,
-    observed = observed,
+    passed = passed,
     comment = comment
   )
 }
@@ -433,7 +399,7 @@ inner_check_valid_life <- function(intervals, asserted) {
 
 throw_assert_error <- function(val) {
   if (!val$ok) {
-    details <- val$details
+    details <- val$details[!val$details$passed, , drop = FALSE]
     details <- pillar::pillar(details)
     details <- paste(utils::capture.output(print(details)),
       collapse = "\n"

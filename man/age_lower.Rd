@@ -19,8 +19,8 @@ age_width(labels, interpret_fail = c("error", "warn", "silent"))
 \item{labels}{Vector of age group labels.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Numeric vector with the same length as \code{labels}.
@@ -33,12 +33,11 @@ widths, and midpoints of age groups.
 Lower and upper limits can be used
 to filter on age. See below for examples.
 
-\code{age_mid()} uses the formula
-\code{age_mid(labels) = age_lower(labels) + 0.5 * age_width(labels)},
-except for open age groups, such as \code{"100+"},
-where it uses \code{age_mid(labels) = age_lower(labels) + 0.5 * median_width}
-where \code{median_width} is the median over
-closed intervals.
+Pretending that open age groups (eg \code{"100+"})
+have midpoints can be useful for plotting.
+\code{age_mid()} assigns open age groups
+midpoints based on half the median width of
+the closed intervals in \code{labels}. See below for examples.
 }
 \examples{
 labels <- c("5-9", "10-14", "100+")
@@ -57,6 +56,10 @@ df <- tribble(
 )
 df
 df |> filter(age_lower(age) >= 10)
+
+## 'midpoint' of open intervals
+age_mid(c("80-89", "90-99", "100+"))
+age_mid(c("90-94", "95-99", "100+"))
 
 ## no action when 'interpret_fail' is "silent"
 age_lower(c("0-4", "young people", "50plus"),

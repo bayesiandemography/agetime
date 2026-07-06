@@ -7,10 +7,10 @@
 \usage{
 period_check(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -18,10 +18,10 @@ period_check(
 
 period_assert(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -59,9 +59,9 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 \itemize{
-\item \code{period_check()} returns a containing a logical flag
-called \code{ok} and a tibble][tibble::tibble()]
-called \code{details}.
+\item \code{period_check()} returns a list with a logical flag
+called \code{ok} and a \link[tibble:tibble]{tibble}
+called \code{details} with columns \code{check}, \code{passed}, and \code{comment}.
 \item \code{period_assert()} returns \code{labels} invisibly,
 or raises an error.
 }
@@ -124,12 +124,12 @@ period_check(
   no_na = TRUE
 )
 
-## throw error if gaps
-period_assert(labels = lab, no_gap = TRUE)
-
-lab_gap <- lab[c(1, 3)]
-## throw error if no gaps
-period_assert(lab_gap, no_gap = FALSE)
+## throw error if overlap or gap
+period_assert(
+  labels = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE
+)
 }
 \seealso{
 \itemize{

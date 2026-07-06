@@ -22,8 +22,8 @@ is "open", i.e. has no upper limit.
 Default is \code{TRUE}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Character vector or factor with the same length as \code{labels}.

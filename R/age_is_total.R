@@ -1,6 +1,6 @@
 #' Identify Age Group Labels for Totals
 #'
-#' Find age group labels that \pkg{agetime} interprets as totals.
+#' Find "total" categories in age group labels.
 #'
 #' @inheritParams age_lower
 #'
@@ -32,8 +32,7 @@ age_is_total <- function(labels,
 
 #' Identify Age Labels for Open Age Groups
 #'
-#' Find age group labels that \pkg{agetime} interprets as
-#' open, ie having no upper limit.
+#' Find open age groups, ie age groups with no upper limit.
 #'
 #' @inheritParams age_lower
 #'

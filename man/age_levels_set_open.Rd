@@ -16,8 +16,8 @@ age_levels_set_open(
 \item{lower_open}{Lower limit of open age group.}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 Factor with the same length as \code{labels}.

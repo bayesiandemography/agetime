@@ -1,6 +1,6 @@
 #' Identify Period Labels for Totals
 #'
-#' Find period labels that \pkg{agetime} interprets as totals.
+#' Find "total" categories in period labels.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'

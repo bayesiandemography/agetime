@@ -7,25 +7,25 @@
 \usage{
 age_check(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_zero = NA,
-  include_open = NA,
-  valid_life = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_zero = FALSE,
+  has_open = FALSE,
+  valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
 
 age_assert(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_zero = NA,
-  include_open = NA,
-  valid_life = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_zero = FALSE,
+  has_open = FALSE,
+  valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -36,7 +36,7 @@ age_assert(
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all ages between the
-youngest and old oldest age groups are included.
+youngest and oldest age groups are included.
 Default is \code{FALSE} (don't check).}
 
 \item{no_total}{Check that there is no "Total" label.
@@ -45,11 +45,11 @@ Default is \code{FALSE} (don't check).}
 \item{no_na}{Check that there is no \code{NA} label.
 Default is \code{FALSE} (don't check).}
 
-\item{include_zero}{Check that at least one
+\item{has_zero}{Check that at least one
 age group has a lower limit of zero.
 Default is \code{FALSE} (don't check).}
 
-\item{include_open}{Check that at least one age
+\item{has_open}{Check that at least one age
 group has no upper limit.
 Default is \code{FALSE} (don't check).}
 
@@ -58,14 +58,14 @@ valid for an abridged life table.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_fail}{Action if element of \code{labels}
-cannot be parsed: \code{"error"} (the default),
-\code{"warn"}, or \code{"silent"}.}
+cannot be interpreted. Choices are \code{"error"} (the default),
+\code{"warn"}, and \code{"silent"}.}
 }
 \value{
 \itemize{
-\item \code{age_check()} returns a containing a logical flag
-called \code{ok} and a tibble][tibble::tibble()]
-called \code{details}.
+\item \code{age_check()} returns a list with a logical flag
+called \code{ok} and a \link[tibble:tibble]{tibble}
+called \code{details} with columns \code{check}, \code{passed}, and \code{comment}.
 \item \code{age_assert()} returns \code{labels} invisibly,
 or raises an error.
 }
@@ -85,7 +85,10 @@ elements of \code{labels}.
 \section{Abridged and complete life tables}{
 
 
-An \verb{abridged' life table uses age groups }"0"\verb{, }"1-4"\verb{, }"5-9"\verb{, }"10-14"\verb{, and so on up to the oldest age group, which is open on the right. A }complete' life table uses single-year age groups.
+An abridged life table uses age groups \code{"0"},
+\code{"1-4"}, \code{"5-9"}, \code{"10-14"}, and so on
+up to the oldest age group, which is open on the right.
+A complete life table uses single-year age groups.
 }
 
 \examples{
@@ -99,17 +102,17 @@ age_check(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  include_zero = TRUE,
-  include_open = TRUE,
+  has_zero = TRUE,
+  has_open = TRUE,
   valid_life = TRUE
 )
 
-## throw error if gaps
-age_assert(labels = lab, no_gap = TRUE)
-
-lab_gap <- lab[c(1, 3)]
-## throw error if no gaps
-age_assert(labels = lab_gap, no_gap = FALSE)
+## throw error if overlap or gap
+age_assert(
+  labels = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE
+)
 }
 \seealso{
 \itemize{

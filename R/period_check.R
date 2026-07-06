@@ -26,9 +26,9 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `period_check()` returns a containing a logical flag
-#'   called `ok` and a tibble][tibble::tibble()]
-#'   called `details`.
+#' - `period_check()` returns a list with a logical flag
+#'   called `ok` and a [tibble][tibble::tibble()]
+#'   called `details` with columns `check`, `passed`, and `comment`.
 #' - `period_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'
@@ -58,20 +58,15 @@
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE
 #' )
-#'
-#' lab_gap <- lab[c(1, 3)]
-#' ## throw error if no gaps
-#' period_assert(lab_gap, no_gap = FALSE)
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals,
-# and NA are vacuously
-# satisfied (observed = TRUE).
+# and NA are vacuously satisfied.
 period_check <- function(labels,
-                         no_overlap = NA,
-                         no_gap = NA,
-                         no_total = NA,
-                         no_na = NA,
+                         no_overlap = FALSE,
+                         no_gap = FALSE,
+                         no_total = FALSE,
+                         no_na = FALSE,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
@@ -88,19 +83,19 @@ period_check <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
-    include_zero = NA,
-    include_open = NA,
-    valid_life = NA
+    has_zero = FALSE,
+    has_open = FALSE,
+    valid_life = FALSE
   )
 }
 
 #' @rdname period_check
 #' @export
 period_assert <- function(labels,
-                          no_overlap = NA,
-                          no_gap = NA,
-                          no_total = NA,
-                          no_na = NA,
+                          no_overlap = FALSE,
+                          no_gap = FALSE,
+                          no_total = FALSE,
+                          no_na = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
@@ -117,8 +112,8 @@ period_assert <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
-    include_zero = NA,
-    include_open = NA,
-    valid_life = NA
+    has_zero = FALSE,
+    has_open = FALSE,
+    valid_life = FALSE
   )
 }

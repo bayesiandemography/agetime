@@ -13,26 +13,26 @@
 #' elements of `labels`.
 #'
 #' @section Abridged and complete life tables:
-#' 
-#' An `abridged' life table uses age groups `"0"`,
+#'
+#' An abridged life table uses age groups `"0"`,
 #' `"1-4"`, `"5-9"`, `"10-14"`, and so on
 #' up to the oldest age group, which is open on the right.
-#' A `complete' life table uses single-year age groups.
+#' A complete life table uses single-year age groups.
 #'
 #' @inheritParams age_lower
 #' @param no_overlap Check that no age groups overlap.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all ages between the
-#' youngest and old oldest age groups are included.
+#' youngest and oldest age groups are included.
 #' Default is `FALSE` (don't check).
 #' @param no_total Check that there is no "Total" label.
 #' Default is `FALSE` (don't check).
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
-#' @param include_zero Check that at least one
+#' @param has_zero Check that at least one
 #' age group has a lower limit of zero.
 #' Default is `FALSE` (don't check).
-#' @param include_open Check that at least one age
+#' @param has_open Check that at least one age
 #' group has no upper limit.
 #' Default is `FALSE` (don't check).
 #' @param valid_life Check that all labels are
@@ -40,9 +40,9 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `age_check()` returns a containing a logical flag
-#'   called `ok` and a tibble][tibble::tibble()]
-#'   called `details`.
+#' - `age_check()` returns a list with a logical flag
+#'   called `ok` and a [tibble][tibble::tibble()]
+#'   called `details` with columns `check`, `passed`, and `comment`.
 #' - `age_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'
@@ -61,29 +61,29 @@
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
 #'   no_na = TRUE,
-#'   include_zero = TRUE,
-#'   include_open = TRUE,
+#'   has_zero = TRUE,
+#'   has_open = TRUE,
 #'   valid_life = TRUE
 #' )
 #'
 #' ## throw error if overlap or gap
 #' age_assert(
 #'   labels = lab,
-#'   no_overlap = TRUE
+#'   no_overlap = TRUE,
 #'   no_gap = TRUE
 #' )
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
 # validity are vacuously satisfied. Checks that require at
-# least one interval (include_*) fail.
+# least one interval (has_*) fail.
 age_check <- function(labels,
                       no_overlap = FALSE,
                       no_gap = FALSE,
                       no_total = FALSE,
                       no_na = FALSE,
-                      include_zero = FALSE,
-                      include_open = FALSE,
+                      has_zero = FALSE,
+                      has_open = FALSE,
                       valid_life = FALSE,
                       interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -97,8 +97,8 @@ age_check <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
-    include_zero = include_zero,
-    include_open = include_open,
+    has_zero = has_zero,
+    has_open = has_open,
     valid_life = valid_life
   )
 }
@@ -110,8 +110,8 @@ age_assert <- function(labels,
                        no_gap = FALSE,
                        no_total = FALSE,
                        no_na = FALSE,
-                       include_zero = FALSE,
-                       include_open = FALSE,
+                       has_zero = FALSE,
+                       has_open = FALSE,
                        valid_life = FALSE,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -125,8 +125,8 @@ age_assert <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
-    include_zero = include_zero,
-    include_open = include_open,
+    has_zero = has_zero,
+    has_open = has_open,
     valid_life = valid_life
   )
 }
