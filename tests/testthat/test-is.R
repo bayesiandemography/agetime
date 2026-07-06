@@ -57,3 +57,20 @@ test_that("is functions accept factor input with the same results", {
   x <- factor(cohort_multi, levels = cohort_multi)
   expect_values(cohort_is_open(x), cohort_is_open(cohort_multi))
 })
+
+test_that("is_total() names match is_open() and extractors", {
+  x <- c(a = "0-4", b = "5-9", c = "0-4", d = "Total")
+  expect_identical(names(age_is_total(x)), names(age_is_open(x)))
+  expect_identical(names(age_is_total(x)), names(age_lower(x)))
+
+  x <- c("5to9", "10--14", "5to9")
+  expect_identical(names(age_is_total(x)), names(age_is_open(x)))
+  expect_identical(names(age_is_total(x)), names(age_lower(x)))
+
+  period <- c(a = "2020-2025", b = "Total", c = "2025-2030")
+  expect_identical(names(period_is_total(period)), names(period_lower(period)))
+
+  cohort <- c(a = "2020-2025", b = "<2025", c = "Total")
+  expect_identical(names(cohort_is_total(cohort)), names(cohort_is_open(cohort)))
+  expect_identical(names(cohort_is_total(cohort)), names(cohort_lower(cohort)))
+})

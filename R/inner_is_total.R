@@ -67,6 +67,10 @@ inner_is_total <- function(labels,
     interpret_fail = interpret_fail
   )
   is_total <- get_is_total(intervals)
+  labels_unique <- get_labels_unique_norm_unique(intervals)
+  if (length(labels_unique) > 0L) {
+    names(is_total) <- labels_unique
+  }
   i <- get_i_x_to_xunu(intervals)
   is_total[i]
 }
