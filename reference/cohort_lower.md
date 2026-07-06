@@ -127,10 +127,12 @@ df |> filter(cohort_lower(cohort) >= 2025)
 #> 2 2030-2035    11
 
 ## 'midpoint' of open cohorts
-age_mid(c("<2000", "2000-2010", "2010-2020"))
-#> Error in FUN(X[[i]], ...): Don't know how to interpret label "<2000".
-age_mid(c("<2000", "2000-2005", "2005-2010"))
-#> Error in FUN(X[[i]], ...): Don't know how to interpret label "<2000".
+cohort_mid(c("<2000", "2000-2010", "2010-2020"))
+#>     <2000 2000-2010 2010-2020 
+#>      1995      2005      2015 
+cohort_mid(c("<2000", "2000-2005", "2005-2010"))
+#>     <2000 2000-2005 2005-2010 
+#>    1997.5    2002.5    2007.5 
 
 ## 'interpret_single' is "lower" (the default)
 cohort_lower("2025")

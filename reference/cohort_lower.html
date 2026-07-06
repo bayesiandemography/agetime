@@ -182,10 +182,12 @@ so that <code>"2025-2030"</code> means <code>[2025,2031)</code>.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 2030-2035    11</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## 'midpoint' of open cohorts</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="age_lower.html">age_mid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;2000"</span>, <span class="st">"2000-2010"</span>, <span class="st">"2010-2020"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in FUN(X[[i]], ...):</span> Don't know how to interpret label <span style="color: #0000BB;">"&lt;2000"</span>.</span>
-<span class="r-in"><span><span class="fu"><a href="age_lower.html">age_mid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;2000"</span>, <span class="st">"2000-2005"</span>, <span class="st">"2005-2010"</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in FUN(X[[i]], ...):</span> Don't know how to interpret label <span style="color: #0000BB;">"&lt;2000"</span>.</span>
+<span class="r-in"><span><span class="fu">cohort_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;2000"</span>, <span class="st">"2000-2010"</span>, <span class="st">"2010-2020"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;2000 2000-2010 2010-2020 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      1995      2005      2015 </span>
+<span class="r-in"><span><span class="fu">cohort_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;2000"</span>, <span class="st">"2000-2005"</span>, <span class="st">"2005-2010"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     &lt;2000 2000-2005 2005-2010 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    1997.5    2002.5    2007.5 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## 'interpret_single' is "lower" (the default)</span></span></span>
 <span class="r-in"><span><span class="fu">cohort_lower</span><span class="op">(</span><span class="st">"2025"</span><span class="op">)</span></span></span>
