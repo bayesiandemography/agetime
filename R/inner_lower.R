@@ -57,7 +57,7 @@ inner_lower <- function(labels,
   )
   m <- l$m
   i <- l$i
-  m[i, 1L]
+  set_labels_names(m[i, 1L], labels)
 }
 #' Inner Mid
 #'
@@ -100,7 +100,7 @@ inner_mid <- function(labels,
       m[is_open_right] <- l[is_open_right] + 0.5 * median_w
     }
   }
-  m[i]
+  set_labels_names(m[i], labels)
 }
 #' Inner Upper
 #'
@@ -129,7 +129,7 @@ inner_upper <- function(labels,
   )
   m <- l$m
   i <- l$i
-  m[i, 2L]
+  set_labels_names(m[i, 2L], labels)
 }
 #' Inner Width
 #'
@@ -161,5 +161,5 @@ inner_width <- function(labels,
   l <- m[, 1L]
   u <- m[, 2L]
   w <- u - l
-  w[i]
+  set_labels_names(w[i], labels)
 }

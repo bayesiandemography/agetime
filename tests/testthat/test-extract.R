@@ -188,3 +188,19 @@ test_that("extract functions accept factor input", {
   x_cohort <- factor(cohort_multi, levels = cohort_multi)
   expect_values(cohort_lower(x_cohort), cohort_lower(cohort_multi))
 })
+
+test_that("extract functions name results with original label strings", {
+  x <- age_messy
+  expect_identical(names(age_lower(x)), x)
+  expect_identical(names(age_upper(x)), x)
+  expect_identical(names(age_width(x)), x)
+  expect_identical(names(age_mid(x)), x)
+
+  x <- period_messy
+  expect_identical(names(period_lower(x)), x)
+  expect_identical(names(period_upper(x)), x)
+
+  x <- cohort_messy
+  expect_identical(names(cohort_lower(x)), x)
+  expect_identical(names(cohort_upper(x)), x)
+})

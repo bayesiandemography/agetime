@@ -98,3 +98,17 @@ to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
   }
   labels_char
 }
+
+#' Set Labels Names
+#'
+#' @param x Vector with one value per element of `labels`.
+#' @param labels Vector of labels.
+#' @returns `x` with names set to the original label strings.
+#'
+#' @noRd
+set_labels_names <- function(x, labels) {
+  if (length(x) > 0L) {
+    names(x) <- as.character(labels)
+  }
+  x
+}

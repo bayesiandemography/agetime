@@ -64,8 +64,9 @@ test_that("is_total() names match is_open() and extractors", {
   expect_identical(names(age_is_total(x)), names(age_lower(x)))
 
   x <- c("5to9", "10--14", "5to9")
-  expect_identical(names(age_is_total(x)), names(age_is_open(x)))
-  expect_identical(names(age_is_total(x)), names(age_lower(x)))
+  expect_identical(names(age_is_total(x)), x)
+  expect_identical(names(age_is_open(x)), x)
+  expect_identical(names(age_lower(x)), x)
 
   period <- c(a = "2020-2025", b = "Total", c = "2025-2030")
   expect_identical(names(period_is_total(period)), names(period_lower(period)))

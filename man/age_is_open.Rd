@@ -17,8 +17,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find age group labels that \pkg{agetime} interprets as
-open, ie having no upper limit.
+Find open age groups, ie age groups with no upper limit.
 }
 \examples{
 labels <- c("20+", "infant", "100+", "60to79")

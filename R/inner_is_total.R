@@ -35,7 +35,7 @@ inner_is_open <- function(labels,
   is_open_right <- check_open_right & get_is_open_right(intervals)
   is_open <- is_open_left | is_open_right
   i <- get_i_x_to_xunu(intervals)
-  is_open[i]
+  set_labels_names(is_open[i], labels)
 }
 #' Inner Is Total
 #'
@@ -67,10 +67,6 @@ inner_is_total <- function(labels,
     interpret_fail = interpret_fail
   )
   is_total <- get_is_total(intervals)
-  labels_unique <- get_labels_unique_norm_unique(intervals)
-  if (length(labels_unique) > 0L) {
-    names(is_total) <- labels_unique
-  }
   i <- get_i_x_to_xunu(intervals)
-  is_total[i]
+  set_labels_names(is_total[i], labels)
 }

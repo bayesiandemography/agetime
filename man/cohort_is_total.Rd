@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find cohort labels that \pkg{agetime} interprets as totals.
+Find "total" categories in  cohort labels.
 }
 \section{Controlling how cohort labels are interpreted}{
 
