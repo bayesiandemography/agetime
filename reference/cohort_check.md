@@ -1,18 +1,25 @@
 # Check or Make Assertions About Cohorts
 
-Collect information on cohort labels (`cohort_check()`), or throw an
-error if cohort labels do not conform to expectations (`cohort_assert`).
+`cohort_check()` creates reports comparing cohort labels against
+expectations.
+
+`cohort_assert()` throws an error if cohort labels do not conform to
+expectations.
+
+If `labels` is a factor, then the tests are applied to the `levels`
+attribute of `labels`. Otherwise the tests are applied to the elements
+of `labels`.
 
 ## Usage
 
 ``` r
 cohort_check(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_open = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -20,11 +27,11 @@ cohort_check(
 
 cohort_assert(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_open = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -39,24 +46,26 @@ cohort_assert(
 
 - no_overlap:
 
-  No cohorts overlap.
+  Check that no cohorts overlap. Default is `FALSE` (don't check).
 
 - no_gap:
 
-  The cohorts span the entire range from the lower limit of the earliest
-  cohort to the upper limit of the latest cohort.
+  Check that all cohorts between the earliest and latest cohort are
+  included. Default is `FALSE` (don't check).
 
 - no_total:
 
-  No "Total" label.
+  Check that there is no "Total" label. Default is `FALSE` (don't
+  check).
 
 - no_na:
 
-  No NA label.
+  Check that there is no `NA` label. Default is `FALSE` (don't check).
 
-- include_open:
+- has_open:
 
-  One or more cohorts has no lower limit.
+  Check that at least one cohort has no lower limit. Default is `FALSE`
+  (don't check).
 
 - interpret_single:
 
@@ -75,8 +84,11 @@ cohort_assert(
 
 ## Value
 
-For `cohort_check()`, a list with logical `ok` and data frame `details`;
-for `cohort_assert()`, `labels` invisibly or an error.
+- `cohort_check()` returns a list with a logical flag called `ok` and a
+  [tibble](https://tibble.tidyverse.org/reference/tibble.html) called
+  `details` with columns `check`, `passed`, and `comment`.
+
+- `cohort_assert()` returns `labels` invisibly, or raises an error.
 
 ## Controlling how cohort labels are interpreted
 
@@ -123,26 +135,26 @@ cohort_check(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  include_open = TRUE
+  has_open = TRUE
 )
 #> $ok
 #> [1] FALSE
 #> 
 #> $details
-#> # A tibble: 5 × 4
-#>   check        asserted observed comment                      
-#>   <chr>        <lgl>    <lgl>    <chr>                        
-#> 1 no_overlap   TRUE     TRUE     Passed                       
-#> 2 no_gap       TRUE     TRUE     Passed                       
-#> 3 no_total     TRUE     TRUE     Passed                       
-#> 4 no_na        TRUE     TRUE     Passed                       
-#> 5 include_open TRUE     FALSE    Highest interval: '2030-2035'
+#> # A tibble: 5 × 3
+#>   check      passed comment                      
+#>   <chr>      <lgl>  <chr>                        
+#> 1 no_overlap TRUE   NA                           
+#> 2 no_gap     TRUE   NA                           
+#> 3 no_total   TRUE   NA                           
+#> 4 no_na      TRUE   NA                           
+#> 5 has_open   FALSE  Highest interval: '2030-2035'
 #> 
 
-## throw error if gaps
-cohort_assert(labels = lab, no_gap = TRUE)
-
-lab_gap <- lab[c(1, 3)]
-## throw error if no gaps
-cohort_assert(lab_gap, no_gap = FALSE)
+## throw error if overlap or gap
+cohort_assert(
+  labels = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE
+)
 ```

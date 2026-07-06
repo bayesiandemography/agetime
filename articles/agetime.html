@@ -194,20 +194,20 @@ levels, and <code><a href="../reference/age_levels_sort.html">age_levels_sort()<
 <span><span class="fu"><a href="../reference/age_check.html">age_check</a></span><span class="op">(</span><span class="va">lab</span>,</span>
 <span>  no_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  include_open <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  has_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  has_open <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; $ok</span></span>
 <span><span class="co">#&gt; [1] TRUE</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $details</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 4</span></span></span>
-<span><span class="co">#&gt;   check        asserted observed comment</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> no_overlap   TRUE     TRUE     Passed </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> no_gap       TRUE     TRUE     Passed </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> include_zero TRUE     TRUE     Passed </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> include_open TRUE     TRUE     Passed</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
+<span><span class="co">#&gt;   check      passed comment</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> no_overlap TRUE   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> no_gap     TRUE   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> has_zero   TRUE   <span style="color: #BB0000;">NA</span>     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> has_open   TRUE   <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
 <p><code><a href="../reference/age_check.html">age_assert()</a></code> throws an error if a check fails.</p>
 </div>
 <div class="section level2">

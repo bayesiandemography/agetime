@@ -23,8 +23,8 @@ age_width(labels, interpret_fail = c("error", "warn", "silent"))
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
@@ -35,11 +35,10 @@ Numeric vector with the same length as `labels`.
 Lower and upper limits can be used to filter on age. See below for
 examples.
 
-`age_mid()` uses the formula
-`age_mid(labels) = age_lower(labels) + 0.5 * age_width(labels)`, except
-for open age groups, such as `"100+"`, where it uses
-`age_mid(labels) = age_lower(labels) + 0.5 * median_width` where
-`median_width` is the median over closed intervals.
+Pretending that open age groups (e.g., `"100+"`) have midpoints can be
+useful for plotting. `age_mid()` assigns open age groups midpoints based
+on half the median width of the closed intervals in `labels`. See below
+for examples.
 
 ## See also
 
@@ -88,10 +87,18 @@ df |> filter(age_lower(age) >= 10)
 #> 1 10-14    20
 #> 2 100+      7
 
+## 'midpoint' of open intervals
+age_mid(c("80-89", "90-99", "100+"))
+#> 80-89 90-99  100+ 
+#>    85    95   105 
+age_mid(c("90-94", "95-99", "100+"))
+#> 90-94 95-99  100+ 
+#>  92.5  97.5 102.5 
+
 ## no action when 'interpret_fail' is "silent"
 age_lower(c("0-4", "young people", "50plus"),
   interpret_fail = "silent"
 )
-#>         0-4 youngpeople         50+ 
-#>           0          NA          50 
+#>          0-4 young people       50plus 
+#>            0           NA           50 
 ```

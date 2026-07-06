@@ -1,32 +1,39 @@
 # Check or Make Assertions About Age Groups
 
-Collect information on age group labels (`age_check()`), or throw an
-error if age group labels do not conform to expectations (`age_assert`).
+`age_check()` creates reports comparing age group labels against
+expectations.
+
+`age_assert()` throws an error if age group labels do not conform to
+expectations.
+
+If `labels` is a factor, then the tests are applied to the `levels`
+attribute of `labels`. Otherwise the tests are applied to the elements
+of `labels`.
 
 ## Usage
 
 ``` r
 age_check(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_zero = NA,
-  include_open = NA,
-  valid_life = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_zero = FALSE,
+  has_open = FALSE,
+  valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
 
 age_assert(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
-  include_zero = NA,
-  include_open = NA,
-  valid_life = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_zero = FALSE,
+  has_open = FALSE,
+  valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
 ```
@@ -39,42 +46,55 @@ age_assert(
 
 - no_overlap:
 
-  No age groups overlap.
+  Check that no age groups overlap. Default is `FALSE` (don't check).
 
 - no_gap:
 
-  Age groups span entire range from lower limit of youngest age group to
-  upper limit of oldest age group.
+  Check that all ages between the youngest and oldest age groups are
+  included. Default is `FALSE` (don't check).
 
 - no_total:
 
-  No "Total" age group.
+  Check that there is no "Total" label. Default is `FALSE` (don't
+  check).
 
 - no_na:
 
-  No NA age group.
+  Check that there is no `NA` label. Default is `FALSE` (don't check).
 
-- include_zero:
+- has_zero:
 
-  One or more age groups have a lower limit of zero.
+  Check that at least one age group has a lower limit of zero. Default
+  is `FALSE` (don't check).
 
-- include_open:
+- has_open:
 
-  One or more age groups has no upper limit.
+  Check that at least one age group has no upper limit. Default is
+  `FALSE` (don't check).
 
 - valid_life:
 
-  All labels valid for (abridged) life table.
+  Check that all labels are valid for an abridged life table. Default is
+  `FALSE` (don't check).
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
-For `age_check()`, a list with logical `ok` and data frame `details`;
-for `age_assert()`, `labels` invisibly or an error.
+- `age_check()` returns a list with a logical flag called `ok` and a
+  [tibble](https://tibble.tidyverse.org/reference/tibble.html) called
+  `details` with columns `check`, `passed`, and `comment`.
+
+- `age_assert()` returns `labels` invisibly, or raises an error.
+
+## Abridged and complete life tables
+
+An 'abridged' life table uses age groups `"0"`, `"1-4"`, `"5-9"`,
+`"10-14"`, and so on up to the oldest age group, which is open on the
+right. A 'complete' life table uses single-year age groups.
 
 ## See also
 
@@ -100,30 +120,30 @@ age_check(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  include_zero = TRUE,
-  include_open = TRUE,
+  has_zero = TRUE,
+  has_open = TRUE,
   valid_life = TRUE
 )
 #> $ok
 #> [1] TRUE
 #> 
 #> $details
-#> # A tibble: 7 × 4
-#>   check        asserted observed comment
-#>   <chr>        <lgl>    <lgl>    <chr>  
-#> 1 no_overlap   TRUE     TRUE     Passed 
-#> 2 no_gap       TRUE     TRUE     Passed 
-#> 3 no_total     TRUE     TRUE     Passed 
-#> 4 no_na        TRUE     TRUE     Passed 
-#> 5 include_zero TRUE     TRUE     Passed 
-#> 6 include_open TRUE     TRUE     Passed 
-#> 7 valid_life   TRUE     TRUE     Passed 
+#> # A tibble: 7 × 3
+#>   check      passed comment
+#>   <chr>      <lgl>  <chr>  
+#> 1 no_overlap TRUE   NA     
+#> 2 no_gap     TRUE   NA     
+#> 3 no_total   TRUE   NA     
+#> 4 no_na      TRUE   NA     
+#> 5 has_zero   TRUE   NA     
+#> 6 has_open   TRUE   NA     
+#> 7 valid_life TRUE   NA     
 #> 
 
-## throw error if gaps
-age_assert(labels = lab, no_gap = TRUE)
-
-lab_gap <- lab[c(1, 3)]
-## throw error if no gaps
-age_assert(labels = lab_gap, no_gap = FALSE)
+## throw error if overlap or gap
+age_assert(
+  labels = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE
+)
 ```

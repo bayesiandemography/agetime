@@ -1,6 +1,6 @@
 # Identify Period Labels for Totals
 
-Find period labels that agetime interprets as totals.
+Find "total" categories in period labels.
 
 ## Usage
 
@@ -71,5 +71,6 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 ``` r
 labels <- c("2020-2025", "Total", "1999", "ALL")
 period_is_total(labels)
-#> [1] FALSE  TRUE FALSE  TRUE
+#> 2020-2025     Total      1999       ALL 
+#>     FALSE      TRUE     FALSE      TRUE 
 ```

@@ -72,8 +72,8 @@ Boundaries for existing age groups can be omitted.</p></dd>
 
 <dt id="arg-interpret-fail">interpret_fail<a class="anchor" aria-label="anchor" href="#arg-interpret-fail"></a></dt>
 <dd><p>Action if element of <code>labels</code>
-cannot be parsed: <code>"error"</code> (the default),
-<code>"warn"</code>, or <code>"silent"</code>.</p></dd>
+cannot be interpreted. Choices are <code>"error"</code> (the default),
+<code>"warn"</code>, and <code>"silent"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -93,8 +93,18 @@ width 5.</p></li>
 <li><p><code>age_levels_fill_ten</code> adds age groups with
 width 10.</p></li>
 <li><p><code>age_levels_fill_life</code> adds age groups
-used by a life table.</p></li>
+used by an abridged life table.</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="abridged-and-complete-life-tables">Abridged and complete life tables<a class="anchor" aria-label="anchor" href="#abridged-and-complete-life-tables"></a></h2>
+
+
+
+<p>An 'abridged' life table uses age groups <code>"0"</code>,
+<code>"1-4"</code>, <code>"5-9"</code>, <code>"10-14"</code>, and so on
+up to the oldest age group, which is open on the right.
+A 'complete' life table uses single-year age groups.</p>
+    </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">

@@ -20,7 +20,7 @@ labels for age groups, periods, and cohorts.
 |  |  |  |
 |----|----|----|
 |  |  |  |
-| [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md) | \- | [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md) |
+| [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md) |  | [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md) |
 | [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md) | [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md) | [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md) |
 
 **Characterise or make assertions**
@@ -55,7 +55,7 @@ labels for age groups, periods, and cohorts.
 | [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md) | [`period_modify()`](https://bayesiandemography.github.io/agetime/reference/period_modify.md) | [`cohort_modify()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify.md) |
 | [`age_modify_five()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md) | [`period_modify_five()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md) | [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md) |
 | [`age_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md) | [`period_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md) | [`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md) |
-| [`age_modify_life()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md) | \- | \- |
+| [`age_modify_life()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md) |  |  |
 
 **Continue series**
 
@@ -73,8 +73,8 @@ labels for age groups, periods, and cohorts.
 | [`age_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
 | [`age_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
 | [`age_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
-| [`age_levels_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | \- | \- |
-| [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md) | \- | [`cohort_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.md) |
+| [`age_levels_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) |  |  |
+| [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md) |  | [`cohort_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.md) |
 
 **Put levels in order**
 
@@ -94,7 +94,7 @@ labels for age groups, periods, and cohorts.
 | [`age_labels_one()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_one()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
-| [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | \- | \- |
+| [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) |  |  |
 
 ## See also
 

@@ -34,8 +34,8 @@ age_extend(
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 

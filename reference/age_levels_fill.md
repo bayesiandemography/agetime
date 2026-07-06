@@ -33,8 +33,8 @@ age_levels_fill_life(labels, interpret_fail = c("error", "warn", "silent"))
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
@@ -53,7 +53,13 @@ a factor before filling in levels.
 
 - `age_levels_fill_ten` adds age groups with width 10.
 
-- `age_levels_fill_life` adds age groups used by a life table.
+- `age_levels_fill_life` adds age groups used by an abridged life table.
+
+## Abridged and complete life tables
+
+An 'abridged' life table uses age groups `"0"`, `"1-4"`, `"5-9"`,
+`"10-14"`, and so on up to the oldest age group, which is open on the
+right. A 'complete' life table uses single-year age groups.
 
 ## See also
 

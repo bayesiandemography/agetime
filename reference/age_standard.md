@@ -16,8 +16,8 @@ age_standard(labels, interpret_fail = c("error", "warn", "silent"))
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 

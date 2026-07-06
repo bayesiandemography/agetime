@@ -27,12 +27,18 @@ age_modify_life(labels, interpret_fail = c("error", "warn", "silent"))
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
 Character vector or factor with the same length as `labels`.
+
+## Abridged and complete life tables
+
+An 'abridged' life table uses age groups `"0"`, `"1-4"`, `"5-9"`,
+`"10-14"`, and so on up to the oldest age group, which is open on the
+right. A 'complete' life table uses single-year age groups.
 
 ## See also
 

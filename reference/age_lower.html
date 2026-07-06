@@ -64,8 +64,8 @@ widths, and midpoints of age groups.</p>
 
 <dt id="arg-interpret-fail">interpret_fail<a class="anchor" aria-label="anchor" href="#arg-interpret-fail"></a></dt>
 <dd><p>Action if element of <code>labels</code>
-cannot be parsed: <code>"error"</code> (the default),
-<code>"warn"</code>, or <code>"silent"</code>.</p></dd>
+cannot be interpreted. Choices are <code>"error"</code> (the default),
+<code>"warn"</code>, and <code>"silent"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -76,12 +76,11 @@ cannot be parsed: <code>"error"</code> (the default),
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Lower and upper limits can be used
 to filter on age. See below for examples.</p>
-<p><code>age_mid()</code> uses the formula
-<code>age_mid(labels) = age_lower(labels) + 0.5 * age_width(labels)</code>,
-except for open age groups, such as <code>"100+"</code>,
-where it uses <code>age_mid(labels) = age_lower(labels) + 0.5 * median_width</code>
-where <code>median_width</code> is the median over
-closed intervals.</p>
+<p>Pretending that open age groups (e.g., <code>"100+"</code>)
+have midpoints can be useful for plotting.
+<code>age_mid()</code> assigns open age groups
+midpoints based on half the median width of
+the closed intervals in <code>labels</code>. See below for examples.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -129,12 +128,20 @@ closed intervals.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10-14    20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 100+      7</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## 'midpoint' of open intervals</span></span></span>
+<span class="r-in"><span><span class="fu">age_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"80-89"</span>, <span class="st">"90-99"</span>, <span class="st">"100+"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 80-89 90-99  100+ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    85    95   105 </span>
+<span class="r-in"><span><span class="fu">age_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"90-94"</span>, <span class="st">"95-99"</span>, <span class="st">"100+"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 90-94 95-99  100+ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  92.5  97.5 102.5 </span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## no action when 'interpret_fail' is "silent"</span></span></span>
 <span class="r-in"><span><span class="fu">age_lower</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"young people"</span>, <span class="st">"50plus"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  interpret_fail <span class="op">=</span> <span class="st">"silent"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         0-4 youngpeople         50+ </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           0          NA          50 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>          0-4 young people       50plus </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            0           NA           50 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

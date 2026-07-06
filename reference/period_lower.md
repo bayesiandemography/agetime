@@ -173,6 +173,6 @@ period_width("2025-2030", interpret_multi = "exclude")
 period_lower(c("2000-2005", "long time ago"),
   interpret_fail = "silent"
 )
-#>   2000-2005 longtimeago 
-#>        2000          NA 
+#>     2000-2005 long time ago 
+#>          2000            NA 
 ```

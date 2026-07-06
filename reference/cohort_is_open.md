@@ -1,7 +1,6 @@
 # Identify Cohort Labels for Open Cohorts
 
-Find cohort labels that agetime interprets as open, ie having no lower
-limit.
+Find open cohorts, i.e., cohorts with no lower limit.
 
 ## Usage
 

@@ -155,20 +155,20 @@ lab <- age_labels_five(lower_first = 0, lower_last = 85, open = TRUE)
 age_check(lab,
   no_overlap = TRUE,
   no_gap = TRUE,
-  include_zero = TRUE,
-  include_open = TRUE
+  has_zero = TRUE,
+  has_open = TRUE
 )
 #> $ok
 #> [1] TRUE
 #> 
 #> $details
-#> # A tibble: 4 × 4
-#>   check        asserted observed comment
-#>   <chr>        <lgl>    <lgl>    <chr>  
-#> 1 no_overlap   TRUE     TRUE     Passed 
-#> 2 no_gap       TRUE     TRUE     Passed 
-#> 3 include_zero TRUE     TRUE     Passed 
-#> 4 include_open TRUE     TRUE     Passed
+#> # A tibble: 4 × 3
+#>   check      passed comment
+#>   <chr>      <lgl>  <chr>  
+#> 1 no_overlap TRUE   NA     
+#> 2 no_gap     TRUE   NA     
+#> 3 has_zero   TRUE   NA     
+#> 4 has_open   TRUE   NA
 ```
 
 [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md)

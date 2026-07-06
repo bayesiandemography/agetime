@@ -1,7 +1,6 @@
 # Identify Age Labels for Open Age Groups
 
-Find age group labels that agetime interprets as open, ie having no
-upper limit.
+Find open age groups, i.e., age groups with no upper limit.
 
 ## Usage
 
@@ -17,8 +16,8 @@ age_is_open(labels, interpret_fail = c("error", "warn", "silent"))
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
@@ -37,6 +36,6 @@ Logical vector with the same length as `labels`.
 ``` r
 labels <- c("20+", "infant", "100+", "60to79")
 age_is_open(labels)
-#>   20+     0  100+ 60-79 
-#>  TRUE FALSE  TRUE FALSE 
+#>    20+ infant   100+ 60to79 
+#>   TRUE  FALSE   TRUE  FALSE 
 ```

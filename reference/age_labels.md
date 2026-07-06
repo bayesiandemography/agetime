@@ -65,6 +65,12 @@ age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
 
 Character vector.
 
+## Abridged and complete life tables
+
+An 'abridged' life table uses age groups `"0"`, `"1-4"`, `"5-9"`,
+`"10-14"`, and so on up to the oldest age group, which is open on the
+right. A 'complete' life table uses single-year age groups.
+
 ## See also
 
 - [`period_labels()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)

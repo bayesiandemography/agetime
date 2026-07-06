@@ -1,6 +1,6 @@
 # Identify Age Group Labels for Totals
 
-Find age group labels that agetime interprets as totals.
+Find "total" categories in age group labels.
 
 ## Usage
 
@@ -16,8 +16,8 @@ age_is_total(labels, interpret_fail = c("error", "warn", "silent"))
 
 - interpret_fail:
 
-  Action if element of `labels` cannot be parsed: `"error"` (the
-  default), `"warn"`, or `"silent"`.
+  Action if element of `labels` cannot be interpreted. Choices are
+  `"error"` (the default), `"warn"`, and `"silent"`.
 
 ## Value
 
@@ -39,5 +39,6 @@ Logical vector with the same length as `labels`.
 ``` r
 labels <- c("20-24", "Total", "100+", "ALL")
 age_is_total(labels)
-#> [1] FALSE  TRUE FALSE  TRUE
+#> 20-24 Total  100+   ALL 
+#> FALSE  TRUE FALSE  TRUE 
 ```

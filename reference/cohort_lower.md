@@ -64,6 +64,11 @@ Numeric vector with the same length as `labels`.
 Lower and upper limits can be used to filter on cohorts. See below for
 examples.
 
+Pretending that open cohorts (e.g., `"<2000"`) have midpoints can be
+useful for plotting. `cohort_mid()` assigns open cohorts midpoints based
+on half the median width of the closed intervals in `labels`. See below
+for examples.
+
 ## Controlling how cohort labels are interpreted
 
 If `interpret_single` is `"lower"` (the default), then labels for
@@ -121,6 +126,12 @@ df |> filter(cohort_lower(cohort) >= 2025)
 #> 1 2025-2030    20
 #> 2 2030-2035    11
 
+## 'midpoint' of open cohorts
+age_mid(c("<2000", "2000-2010", "2010-2020"))
+#> Error in FUN(X[[i]], ...): Don't know how to interpret label "<2000".
+age_mid(c("<2000", "2000-2005", "2005-2010"))
+#> Error in FUN(X[[i]], ...): Don't know how to interpret label "<2000".
+
 ## 'interpret_single' is "lower" (the default)
 cohort_lower("2025")
 #> 2025 
@@ -163,6 +174,6 @@ cohort_width("2025-2030", interpret_multi = "exclude")
 cohort_lower(c("2000-2005", "long time ago"),
   interpret_fail = "silent"
 )
-#>   2000-2005 longtimeago 
-#>        2000          NA 
+#>     2000-2005 long time ago 
+#>          2000            NA 
 ```

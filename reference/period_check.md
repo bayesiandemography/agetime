@@ -1,17 +1,24 @@
 # Check or Make Assertions About Periods
 
-Collect information on period labels (`period_check()`), or throw an
-error if period labels do not conform to expectations (`period_assert`).
+`period_check()` creates reports comparing period labels against
+expectations.
+
+`period_assert()` throws an error if period labels do not conform to
+expectations.
+
+If `labels` is a factor, then the tests are applied to the `levels`
+attribute of `labels`. Otherwise the tests are applied to the elements
+of `labels`.
 
 ## Usage
 
 ``` r
 period_check(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -19,10 +26,10 @@ period_check(
 
 period_assert(
   labels,
-  no_overlap = NA,
-  no_gap = NA,
-  no_total = NA,
-  no_na = NA,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -37,20 +44,21 @@ period_assert(
 
 - no_overlap:
 
-  No periods overlap.
+  Check that no periods overlap. Default is `FALSE` (don't check).
 
 - no_gap:
 
-  The periods span the entire range from the lower limit of the earliest
-  period to the upper limit of the latest period.
+  Check that all periods between the earliest and latest periods are
+  included. Default is `FALSE` (don't check).
 
 - no_total:
 
-  No "Total" label.
+  Check that there is no "Total" label. Default is `FALSE` (don't
+  check).
 
 - no_na:
 
-  No NA label.
+  Check that there is no `NA` label. Default is `FALSE` (don't check).
 
 - interpret_single:
 
@@ -69,8 +77,11 @@ period_assert(
 
 ## Value
 
-For `period_check()`, a list with logical `ok` and data frame `details`;
-for `period_assert()`, `labels` invisibly or an error.
+- `period_check()` returns a list with a logical flag called `ok` and a
+  [tibble](https://tibble.tidyverse.org/reference/tibble.html) called
+  `details` with columns `check`, `passed`, and `comment`.
+
+- `period_assert()` returns `labels` invisibly, or raises an error.
 
 ## Controlling how period labels are interpreted
 
@@ -122,19 +133,19 @@ period_check(
 #> [1] TRUE
 #> 
 #> $details
-#> # A tibble: 4 × 4
-#>   check      asserted observed comment
-#>   <chr>      <lgl>    <lgl>    <chr>  
-#> 1 no_overlap TRUE     TRUE     Passed 
-#> 2 no_gap     TRUE     TRUE     Passed 
-#> 3 no_total   TRUE     TRUE     Passed 
-#> 4 no_na      TRUE     TRUE     Passed 
+#> # A tibble: 4 × 3
+#>   check      passed comment
+#>   <chr>      <lgl>  <chr>  
+#> 1 no_overlap TRUE   NA     
+#> 2 no_gap     TRUE   NA     
+#> 3 no_total   TRUE   NA     
+#> 4 no_na      TRUE   NA     
 #> 
 
-## throw error if gaps
-period_assert(labels = lab, no_gap = TRUE)
-
-lab_gap <- lab[c(1, 3)]
-## throw error if no gaps
-period_assert(lab_gap, no_gap = FALSE)
+## throw error if overlap or gap
+period_assert(
+  labels = lab,
+  no_overlap = TRUE,
+  no_gap = TRUE
+)
 ```
