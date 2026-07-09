@@ -64,11 +64,14 @@ Create a new set of age group labels.
 }
 \section{Abridged and complete life tables}{
 
-
-An 'abridged' life table uses age groups \code{"0"},
-\code{"1-4"}, \code{"5-9"}, \code{"10-14"}, and so on
-up to the oldest age group, which is open on the right.
-A 'complete' life table uses single-year age groups.
+\itemize{
+\item An 'abridged' life table uses age groups \code{"0"}
+and \code{"1-4"}, followed by 5-year age groups \code{"5-9"}, \code{"10-14"}, ...
+\item A 'complete' life table uses single-year age groups
+\code{"0"}, \code{"1"}, \code{"2"}, ...
+\item Both types of life table have an open interval
+such as \code{"85+"} or \code{"100+"}.
+}
 }
 
 \examples{

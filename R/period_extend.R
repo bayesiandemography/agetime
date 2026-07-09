@@ -1,6 +1,6 @@
 #' Extend a Set of Periods
 #'
-#' Add new periods at the end of `labels`.
+#' Continue an existing set of period labels.
 #'
 #' By default, the width of the new periods
 #' is derived from the last element of `labels`,
@@ -17,7 +17,6 @@
 #' @param include_x Should the return value
 #' include `labels`? Default is `TRUE`.
 #' @return Character vector or factor.
-#' Length is `n`, or `length(labels) + n` when `include_x` is `TRUE`.
 #'
 #' @seealso
 #' - [age_extend()] Age equivalent of `period_extend()`

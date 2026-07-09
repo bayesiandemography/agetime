@@ -1,16 +1,10 @@
 #' Check or Make Assertions About Periods
 #'
 #' @description
-#' `period_check()` creates reports comparing
-#' period labels against expectations.
+#' `period_check()` reports on whether period labels
+#' meet conditions such as not overlapping.
 #'
-#' `period_assert()` throws an error if
-#' period labels do not conform to expectations.
-#'
-#' If `labels` is a factor, then the tests are applied
-#' to the `levels` attribute of `labels`.
-#' Otherwise the tests are applied to the
-#' elements of `labels`.
+#' `period_assert()` throws an error if conditions are not met.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #' 
@@ -27,8 +21,7 @@
 #'
 #' @return
 #' - `period_check()` returns a list with a logical flag
-#'   called `ok` and a [tibble][tibble::tibble()]
-#'   called `details` with columns `check`, `passed`, and `comment`.
+#'   called `ok` and a [tibble][tibble::tibble()] called `details`.
 #' - `period_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'

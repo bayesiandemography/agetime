@@ -1,23 +1,19 @@
 #' Check or Make Assertions About Age Groups
 #'
 #' @description
-#' `age_check()` creates reports comparing
-#' age group labels against expectations.
+#' `age_check()` reports on whether age group labels
+#' meet conditions such as not overlapping.
 #'
-#' `age_assert()` throws an error if
-#' age group labels do not conform to expectations.
-#'
-#' If `labels` is a factor, then the tests are applied
-#' to the `levels` attribute of `labels`.
-#' Otherwise the tests are applied to the
-#' elements of `labels`.
+#' `age_assert()` throws an error if conditions are not met.
 #'
 #' @section Abridged and complete life tables:
 #'
-#' An 'abridged' life table uses age groups `"0"`,
-#' `"1-4"`, `"5-9"`, `"10-14"`, and so on
-#' up to the oldest age group, which is open on the right.
-#' A 'complete' life table uses single-year age groups.
+#' - An 'abridged' life table uses age groups `"0"`
+#'   and `"1-4"`, followed by 5-year age groups `"5-9"`, `"10-14"`, ...
+#' - A 'complete' life table uses single-year age groups
+#'   `"0"`, `"1"`, `"2"`, ...
+#' - Both types of life table have an open interval
+#'   such as `"85+"` or `"100+"`.
 #'
 #' @inheritParams age_lower
 #' @param no_overlap Check that no age groups overlap.
@@ -41,8 +37,7 @@
 #'
 #' @return
 #' - `age_check()` returns a list with a logical flag
-#'   called `ok` and a [tibble][tibble::tibble()]
-#'   called `details` with columns `check`, `passed`, and `comment`.
+#'   called `ok` and a [tibble][tibble::tibble()] called `details`.
 #' - `age_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'

@@ -42,10 +42,9 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Character vector or factor.
-Length is \code{n}, or \code{length(labels) + n} when \code{include_x} is \code{TRUE}.
 }
 \description{
-Add new periods at the end of \code{labels}.
+Continue an existing set of period labels.
 }
 \details{
 By default, the width of the new periods

@@ -67,23 +67,16 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \value{
 \itemize{
 \item \code{cohort_check()} returns a list with a logical flag
-called \code{ok} and a \link[tibble:tibble]{tibble}
-called \code{details} with columns \code{check}, \code{passed}, and \code{comment}.
+called \code{ok} and a \link[tibble:tibble]{tibble} called \code{details}.
 \item \code{cohort_assert()} returns \code{labels} invisibly,
 or raises an error.
 }
 }
 \description{
-\code{cohort_check()} creates reports comparing
-cohort labels against expectations.
+\code{cohort_check()} reports on whether cohorts labels
+meet conditions such as not overlapping.
 
-\code{cohort_assert()} throws an error if
-cohort labels do not conform to expectations.
-
-If \code{labels} is a factor, then the tests are applied
-to the \code{levels} attribute of \code{labels}.
-Otherwise the tests are applied to the
-elements of \code{labels}.
+\code{cohort_assert()} throws an error if conditions are not met.
 }
 \section{Controlling how cohort labels are interpreted}{
 

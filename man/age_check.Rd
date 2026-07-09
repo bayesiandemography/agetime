@@ -64,31 +64,27 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \value{
 \itemize{
 \item \code{age_check()} returns a list with a logical flag
-called \code{ok} and a \link[tibble:tibble]{tibble}
-called \code{details} with columns \code{check}, \code{passed}, and \code{comment}.
+called \code{ok} and a \link[tibble:tibble]{tibble} called \code{details}.
 \item \code{age_assert()} returns \code{labels} invisibly,
 or raises an error.
 }
 }
 \description{
-\code{age_check()} creates reports comparing
-age group labels against expectations.
+\code{age_check()} reports on whether age group labels
+meet conditions such as not overlapping.
 
-\code{age_assert()} throws an error if
-age group labels do not conform to expectations.
-
-If \code{labels} is a factor, then the tests are applied
-to the \code{levels} attribute of \code{labels}.
-Otherwise the tests are applied to the
-elements of \code{labels}.
+\code{age_assert()} throws an error if conditions are not met.
 }
 \section{Abridged and complete life tables}{
 
-
-An 'abridged' life table uses age groups \code{"0"},
-\code{"1-4"}, \code{"5-9"}, \code{"10-14"}, and so on
-up to the oldest age group, which is open on the right.
-A 'complete' life table uses single-year age groups.
+\itemize{
+\item An 'abridged' life table uses age groups \code{"0"}
+and \code{"1-4"}, followed by 5-year age groups \code{"5-9"}, \code{"10-14"}, ...
+\item A 'complete' life table uses single-year age groups
+\code{"0"}, \code{"1"}, \code{"2"}, ...
+\item Both types of life table have an open interval
+such as \code{"85+"} or \code{"100+"}.
+}
 }
 
 \examples{

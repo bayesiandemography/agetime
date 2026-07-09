@@ -1,6 +1,6 @@
 #' Extend a Set of Cohorts
 #'
-#' Add new cohorts at the end of `labels`.
+#' Continue an existing set of cohort labels.
 #'
 #' By default, the width of the new cohorts
 #' is derived from the last element of `labels`,
@@ -17,7 +17,6 @@
 #' @param include_x Should the return value
 #' include `labels`? Default is `TRUE`.
 #' @return Character vector or factor.
-#' Length is `n`, or `length(labels) + n` when `include_x` is `TRUE`.
 #'
 #' @seealso
 #' - [age_extend()] Age equivalent of `cohort_extend()`

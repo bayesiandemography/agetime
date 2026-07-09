@@ -1,13 +1,11 @@
 #' Work with Age, Period, and Cohort Labels
 #'
-#' Functions for cleaning, manipulating, and
-#' extracting information from labels for age groups,
-#' periods, and cohorts.
+#' Functions for working with
+#' labels for age groups, periods, and cohorts.
 #'
-#' @section Get information about existing labels:
+#' @section Functions:
 #'
 #' **Extract lower limits, upper limits, widths, midpoints**
-#'
 #' |                  |                  |                  |
 #' |------------------|------------------|------------------|
 #' | [age_lower()]    | [period_lower()] | [cohort_lower()] |
@@ -34,9 +32,6 @@
 #' |                 |                    |                    |
 #' |-----------------|--------------------|--------------------|
 #' | [age_mapping()] | [period_mapping()] | [cohort_mapping()] |
-#'
-#'
-#' @section Clean or modify existing labels:
 #'
 #' **Use standard format**
 #'
@@ -68,18 +63,20 @@
 #' | [age_levels_fill_five()] | [period_levels_fill_five()] | [cohort_levels_fill_five()] |
 #' | [age_levels_fill_ten()]  | [period_levels_fill_ten()] | [cohort_levels_fill_ten()] |
 #' | [age_levels_fill_life()] |                           |                           |
-#' | [age_levels_set_open()]  |                           | [cohort_levels_set_open()] |
 #'
-#' **Put levels in order**
+#' **Define open intervals**
 #'
 #' |                     |                       |                       |
 #' |---------------------|-----------------------|-----------------------|
+#' | [age_levels_set_open()] |                           | [cohort_levels_set_open()] |
+#'
+#' **Put levels in order**
+#'
+#' |                     |                         |                         |
+#' |---------------------|-------------------------|-------------------------|
 #' | [age_levels_sort()] | [period_levels_sort()] | [cohort_levels_sort()] |
 #'
-#'
-#' @section Make new labels:
-#'
-#' **New labels with standard format**
+#' **Create new labels**
 #'
 #' |                     |                         |                         |
 #' |---------------------|-------------------------|-------------------------|

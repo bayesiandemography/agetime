@@ -6,11 +6,10 @@
 \alias{agetime}
 \title{Work with Age, Period, and Cohort Labels}
 \description{
-Functions for cleaning, manipulating, and
-extracting information from labels for age groups,
-periods, and cohorts.
+Functions for working with
+labels for age groups, periods, and cohorts.
 }
-\section{Get information about existing labels}{
+\section{Functions}{
 
 
 \strong{Extract lower limits, upper limits, widths, midpoints}\tabular{lll}{
@@ -40,9 +39,6 @@ periods, and cohorts.
     \tab  \tab  \cr
    \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \cr
 }
-}
-
-\section{Clean or modify existing labels}{
 
 
 \strong{Use standard format}\tabular{lll}{
@@ -73,6 +69,11 @@ periods, and cohorts.
    \code{\link[=age_levels_fill_five]{age_levels_fill_five()}} \tab \code{\link[=period_levels_fill_five]{period_levels_fill_five()}} \tab \code{\link[=cohort_levels_fill_five]{cohort_levels_fill_five()}} \cr
    \code{\link[=age_levels_fill_ten]{age_levels_fill_ten()}} \tab \code{\link[=period_levels_fill_ten]{period_levels_fill_ten()}} \tab \code{\link[=cohort_levels_fill_ten]{cohort_levels_fill_ten()}} \cr
    \code{\link[=age_levels_fill_life]{age_levels_fill_life()}} \tab  \tab  \cr
+}
+
+
+\strong{Define open intervals}\tabular{lll}{
+    \tab  \tab  \cr
    \code{\link[=age_levels_set_open]{age_levels_set_open()}} \tab  \tab \code{\link[=cohort_levels_set_open]{cohort_levels_set_open()}} \cr
 }
 
@@ -81,12 +82,9 @@ periods, and cohorts.
     \tab  \tab  \cr
    \code{\link[=age_levels_sort]{age_levels_sort()}} \tab \code{\link[=period_levels_sort]{period_levels_sort()}} \tab \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} \cr
 }
-}
-
-\section{Make new labels}{
 
 
-\strong{New labels with standard format}\tabular{lll}{
+\strong{Create new labels}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_labels]{age_labels()}} \tab \code{\link[=period_labels]{period_labels()}} \tab \code{\link[=cohort_labels]{cohort_labels()}} \cr
    \code{\link[=age_labels_one]{age_labels_one()}} \tab \code{\link[=period_labels_one]{period_labels_one()}} \tab \code{\link[=cohort_labels_one]{cohort_labels_one()}} \cr

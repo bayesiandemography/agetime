@@ -30,10 +30,9 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Character vector or factor.
-Length is \code{n}, or \code{length(labels) + n} when \code{include_x} is \code{TRUE}.
 }
 \description{
-Add new age groups at the end of \code{labels}.
+Continue an existing set of age group labels.
 }
 \details{
 By default, the width of the new age groups

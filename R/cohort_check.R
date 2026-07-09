@@ -1,16 +1,10 @@
 #' Check or Make Assertions About Cohorts
 #'
 #' @description
-#' `cohort_check()` creates reports comparing
-#' cohort labels against expectations.
+#' `cohort_check()` reports on whether cohorts labels
+#' meet conditions such as not overlapping.
 #'
-#' `cohort_assert()` throws an error if
-#' cohort labels do not conform to expectations.
-#'
-#' If `labels` is a factor, then the tests are applied
-#' to the `levels` attribute of `labels`.
-#' Otherwise the tests are applied to the
-#' elements of `labels`.
+#' `cohort_assert()` throws an error if conditions are not met.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -31,8 +25,7 @@
 #'
 #' @return
 #' - `cohort_check()` returns a list with a logical flag
-#'   called `ok` and a [tibble][tibble::tibble()]
-#'   called `details` with columns `check`, `passed`, and `comment`.
+#'   called `ok` and a [tibble][tibble::tibble()] called `details`.
 #' - `cohort_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'

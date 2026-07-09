@@ -60,23 +60,16 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \value{
 \itemize{
 \item \code{period_check()} returns a list with a logical flag
-called \code{ok} and a \link[tibble:tibble]{tibble}
-called \code{details} with columns \code{check}, \code{passed}, and \code{comment}.
+called \code{ok} and a \link[tibble:tibble]{tibble} called \code{details}.
 \item \code{period_assert()} returns \code{labels} invisibly,
 or raises an error.
 }
 }
 \description{
-\code{period_check()} creates reports comparing
-period labels against expectations.
+\code{period_check()} reports on whether period labels
+meet conditions such as not overlapping.
 
-\code{period_assert()} throws an error if
-period labels do not conform to expectations.
-
-If \code{labels} is a factor, then the tests are applied
-to the \code{levels} attribute of \code{labels}.
-Otherwise the tests are applied to the
-elements of \code{labels}.
+\code{period_assert()} throws an error if conditions are not met.
 }
 \section{Controlling how period labels are interpreted}{
 
