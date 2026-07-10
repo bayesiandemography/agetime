@@ -17,7 +17,7 @@
 #'
 #' |                  |                   |                   |
 #' |------------------|-------------------|-------------------|
-#' | [age_is_open()]  |                   | [cohort_is_open()] |
+#' | [age_is_open()]  | [period_is_open()] | [cohort_is_open()] |
 #' | [age_is_total()] | [period_is_total()] | [cohort_is_total()] |
 #'
 #' **Characterise or make assertions**
@@ -68,7 +68,8 @@
 #'
 #' |                     |                       |                       |
 #' |---------------------|-----------------------|-----------------------|
-#' | [age_levels_set_open()] |                           | [cohort_levels_set_open()] |
+#' | [age_levels_open_right()] | [period_levels_open_left()] | [cohort_levels_open_left()] |
+#' |                     | [period_levels_open_right()] | [cohort_levels_open_right()] |
 #'
 #' **Put levels in order**
 #'

@@ -13,6 +13,13 @@
 #' midpoints based on half the median width of
 #' the closed intervals in `labels`. See below for examples.
 #'
+#' @section Open intervals:
+#'
+#' Age groups can be open on the right only, using labels
+#' such as `"85+"` for `[85, Inf)`.
+#' Open-left labels such as `"<5"` are not supported;
+#' use closed labels such as `"0-4"` instead.
+#'
 #' @param labels Vector of age group labels.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),

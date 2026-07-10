@@ -6,7 +6,7 @@
 #'
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
-#' @param open Whether the oldest age group
+#' @param open_right Whether the oldest age group
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
 #' @param lower_first Lower limit of
@@ -34,14 +34,14 @@
 #' age_labels_five(
 #'   lower_first = 15,
 #'   lower_last = 45,
-#'   open = FALSE
+#'   open_right = FALSE
 #' )
 #'
 #' ## reproductive ages: 1-year
 #' age_labels_one(
 #'   lower_first = 15,
 #'   lower_last = 49,
-#'   open = FALSE
+#'   open_right = FALSE
 #' )
 #'
 #' ## include total and NA
@@ -54,7 +54,7 @@
 #' ## arbitrary age groups
 #' age_labels(
 #'   breaks = c(0, 5, 10, 14, 18),
-#'   open = FALSE
+#'   open_right = FALSE
 #' )
 #'
 #' ## life table age groups with
@@ -62,16 +62,16 @@
 #' age_labels_life(lower_last = 75)
 #' @export
 age_labels <- function(breaks,
-                       open = TRUE,
+                       open_right = TRUE,
                        include_total = FALSE,
                        include_na = FALSE) {
-  check_flag(x = open, nm_x = "open")
+  check_flag(x = open_right, nm_x = "open_right")
   inner_labels(
     breaks = breaks,
     format_single = "lower",
     format_multi = "exclude",
     is_open_left = FALSE,
-    is_open_right = open,
+    is_open_right = open_right,
     include_total = include_total,
     include_na = include_na
   )
@@ -81,17 +81,17 @@ age_labels <- function(breaks,
 #' @export
 age_labels_one <- function(lower_first = 0,
                            lower_last = 100,
-                           open = TRUE,
+                           open_right = TRUE,
                            include_total = FALSE,
                            include_na = FALSE) {
-  check_flag(x = open, nm_x = "open")
+  check_flag(x = open_right, nm_x = "open_right")
   inner_labels_one(
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = "lower",
     format_multi = "exclude",
     is_open_left = FALSE,
-    is_open_right = open,
+    is_open_right = open_right,
     include_total = include_total,
     include_na = include_na
   )
@@ -102,17 +102,17 @@ age_labels_one <- function(lower_first = 0,
 #' @export
 age_labels_five <- function(lower_first = 0,
                             lower_last = 100,
-                            open = TRUE,
+                            open_right = TRUE,
                             include_total = FALSE,
                             include_na = FALSE) {
-  check_flag(x = open, nm_x = "open")
+  check_flag(x = open_right, nm_x = "open_right")
   inner_labels_five(
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = "lower",
     format_multi = "exclude",
     is_open_left = FALSE,
-    is_open_right = open,
+    is_open_right = open_right,
     include_total = include_total,
     include_na = include_na,
     require_divisible_bounds = TRUE
@@ -123,17 +123,17 @@ age_labels_five <- function(lower_first = 0,
 #' @export
 age_labels_ten <- function(lower_first = 0,
                            lower_last = 100,
-                           open = TRUE,
+                           open_right = TRUE,
                            include_total = FALSE,
                            include_na = FALSE) {
-  check_flag(x = open, nm_x = "open")
+  check_flag(x = open_right, nm_x = "open_right")
   inner_labels_ten(
     lower_first = lower_first,
     lower_last = lower_last,
     format_single = "lower",
     format_multi = "exclude",
     is_open_left = FALSE,
-    is_open_right = open,
+    is_open_right = open_right,
     include_total = include_total,
     include_na = include_na,
     require_divisible_bounds = TRUE
@@ -163,7 +163,7 @@ age_labels_life <- function(lower_last = 100,
   breaks <- c(0L, 1L, s)
   age_labels(
     breaks = breaks,
-    open = TRUE,
+    open_right = TRUE,
     include_total = include_total,
     include_na = include_na
   )

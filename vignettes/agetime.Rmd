@@ -109,7 +109,7 @@ age_modify_five(x)
 Check whether age labels conform to expectations:
 
 ```{r check}
-lab <- age_labels_five(lower_first = 0, lower_last = 85, open = TRUE)
+lab <- age_labels_five(lower_first = 0, lower_last = 85, open_right = TRUE)
 age_check(lab,
   no_overlap = TRUE,
   no_gap = TRUE,

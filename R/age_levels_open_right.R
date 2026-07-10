@@ -1,4 +1,4 @@
-#' Set Open Age Group Level
+#' Open Right Age Group Level
 #'
 #' Add an open age group level, i.e. an age group with no upper limit.
 #' Replace existing age groups where necessary.
@@ -8,18 +8,19 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_levels_set_open()] Set open cohort levels (left-open)
+#' - [cohort_levels_open_left()] Open cohort levels on the left
+#' - [cohort_levels_open_right()] Open cohort levels on the right
 #'
 #' @examples
 #' labels <- c("20-24", "80-84", "100+")
-#' age_levels_set_open(labels, lower_open = 80)
-#' age_levels_set_open(labels, lower_open = 50)
-#' age_levels_set_open(c("0-4", "60-64"), lower_open = 70)
+#' age_levels_open_right(labels, lower_open = 80)
+#' age_levels_open_right(labels, lower_open = 50)
+#' age_levels_open_right(c("0-4", "60-64"), lower_open = 70)
 #' @export
 
-age_levels_set_open <- function(labels,
-                                lower_open,
-                                interpret_fail = c("error", "warn", "silent")) {
+age_levels_open_right <- function(labels,
+                                  lower_open,
+                                  interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_set_open(
     labels = labels,

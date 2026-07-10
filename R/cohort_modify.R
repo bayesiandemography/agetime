@@ -9,15 +9,18 @@
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries between cohorts.
 #' A numeric vector.
-#' @param open Whether the first cohort
+#' @param open_left Whether the first cohort
 #' is "open", i.e. has no lower limit.
+#' Default is `FALSE`.
+#' @param open_right Whether the last cohort
+#' is "open", i.e. has no upper limit.
 #' Default is `FALSE`.
 #' @return Character vector or factor with the same length as `labels`.
 #'
 #' @examples
 #' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 #' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015))
-#' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
+#' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open_left = TRUE)
 #'
 #' @seealso
 #' - [cohort_modify_five()] Convert to 5-year cohorts
@@ -32,19 +35,21 @@
 # still modifies factor levels().
 cohort_modify <- function(labels,
                           breaks,
-                          open = FALSE,
+                          open_left = FALSE,
+                          open_right = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open, nm_x = "open")
+  check_flag(x = open_left, nm_x = "open_left")
+  check_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_modify(
     labels = labels,
     breaks = breaks,
-    is_open_left = open,
-    is_open_right = FALSE,
+    is_open_left = open_left,
+    is_open_right = open_right,
     label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

@@ -114,21 +114,23 @@ Boundary arguments name the boundary they represent.
 - `upper_open` is the upper bound of a left-open cohort such as `<1990`.
 
 ```{r boundaries}
-age_labels_five(lower_first = 0, lower_last = 20, open = FALSE)
+age_labels_five(lower_first = 0, lower_last = 20, open_right = FALSE)
 
-age_levels_set_open(c("0-4", "60-64"), lower_open = 70)
+age_levels_open_right(c("0-4", "60-64"), lower_open = 70)
 
-cohort_levels_set_open(
+cohort_levels_open_left(
   c("2000-2004", "2010-2014"),
   upper_open = 1990,
   interpret_multi = "exclude"
 )
 ```
 
-The boolean argument `open` is used where the question is whether to include
-an open interval at all. Boundary names such as `lower_open` and
+The boolean arguments `open_left` and `open_right` control whether to include
+open intervals at the start or end of a generated label sequence.
+Boundary names such as `lower_open` and
 `upper_open` are used where the question is where the open interval starts
-or ends.
+or ends. Age groups support `open_right` only; periods and cohorts support
+both directions.
 
 ## Values and levels
 
@@ -137,12 +139,12 @@ same length as `labels`. If `labels` is a factor, they also update levels.
 
 Functions in the `*_levels_*()` family always return a factor. They preserve
 observed values where possible, and change or add levels. This is why
-`age_levels_set_open()` can add a `70+` level even when no value in `labels`
+`age_levels_open_right()` can add a `70+` level even when no value in `labels`
 currently belongs to that open group.
 
 ```{r level-contract}
 labels <- c("0-4", "60-64")
-age_levels_set_open(labels, lower_open = 70)
+age_levels_open_right(labels, lower_open = 70)
 ```
 
 ## More information

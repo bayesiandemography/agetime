@@ -70,7 +70,7 @@ make_label_parsers_cohort <- function(interpret_single,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     allow_openleft = TRUE,
-    allow_openright = FALSE
+    allow_openright = TRUE
   )
 }
 #' Make Label Parsers Period
@@ -88,8 +88,8 @@ make_label_parsers_period <- function(interpret_single,
   make_label_parsers(
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
-    allow_openleft = FALSE,
-    allow_openright = FALSE
+    allow_openleft = TRUE,
+    allow_openright = TRUE
   )
 }
 #' Parse One Label to Interval

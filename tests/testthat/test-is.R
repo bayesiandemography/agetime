@@ -41,13 +41,21 @@ test_that("age_is_open() identifies open age groups", {
   expect_values(age_is_open(age_closed), c(FALSE, FALSE, FALSE))
 })
 
-test_that("cohort_is_open() identifies open cohorts", {
-  x <- c("2020", "<1900", "2040-2050", "<2022")
+test_that("cohort_is_open() identifies left- and right-open cohorts", {
+  x <- c("2020", "<1900", "2040-2050", "2030+")
   ans <- cohort_is_open(x)
   expect_is_logical(x, ans)
   expect_values(ans, c(FALSE, TRUE, FALSE, TRUE))
   expect_values(cohort_is_open(cohort_multi), c(FALSE, TRUE, FALSE))
   expect_values(cohort_is_open(cohort_with_na), c(FALSE, FALSE, FALSE))
+})
+
+test_that("period_is_open() identifies left- and right-open periods", {
+  x <- c("2020", "<1900", "2020-2030", "2030+")
+  ans <- period_is_open(x)
+  expect_is_logical(x, ans)
+  expect_values(ans, c(FALSE, TRUE, FALSE, TRUE))
+  expect_values(period_is_open(period_multi), c(FALSE, FALSE, FALSE))
 })
 
 test_that("is functions accept factor input with the same results", {
@@ -56,6 +64,9 @@ test_that("is functions accept factor input with the same results", {
 
   x <- factor(cohort_multi, levels = cohort_multi)
   expect_values(cohort_is_open(x), cohort_is_open(cohort_multi))
+
+  x <- factor(c("2020-2030", "2030+"), levels = c("2020-2030", "2030+"))
+  expect_values(period_is_open(x), period_is_open(c("2020-2030", "2030+")))
 })
 
 test_that("is_total() names match is_open() and extractors", {

@@ -18,6 +18,9 @@
 #' Default is `FALSE` (don't check).
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
+#' @param has_open Check that at least one period
+#' has no lower or upper limit.
+#' Default is `FALSE` (don't check).
 #'
 #' @return
 #' - `period_check()` returns a list with a logical flag
@@ -60,6 +63,7 @@ period_check <- function(labels,
                          no_gap = FALSE,
                          no_total = FALSE,
                          no_na = FALSE,
+                         has_open = FALSE,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
@@ -77,7 +81,7 @@ period_check <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = FALSE,
-    has_open = FALSE,
+    has_open = has_open,
     valid_life = FALSE
   )
 }
@@ -89,6 +93,7 @@ period_assert <- function(labels,
                           no_gap = FALSE,
                           no_total = FALSE,
                           no_na = FALSE,
+                          has_open = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
@@ -106,7 +111,7 @@ period_assert <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = FALSE,
-    has_open = FALSE,
+    has_open = has_open,
     valid_life = FALSE
   )
 }

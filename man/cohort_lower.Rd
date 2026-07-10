@@ -99,6 +99,14 @@ are assumed to exclude the upper limits
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
+\section{Open intervals}{
+
+
+Cohorts can be open on the left (\code{"<a"} for \verb{[-Inf, a)})
+or on the right (\code{"a+"} for \verb{[a, Inf)}).
+For open-left cohorts, \code{cohort_lower()} returns \code{-Inf}.
+}
+
 \examples{
 labels <- c("2025-2030", "<2025", "2030-2035")
 cohort_lower(labels) # [2025, 2030)

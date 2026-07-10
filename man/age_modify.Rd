@@ -7,7 +7,7 @@
 age_modify(
   labels,
   breaks,
-  open = TRUE,
+  open_right = TRUE,
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -17,7 +17,7 @@ age_modify(
 \item{breaks}{Boundaries between age groups.
 A numeric vector.}
 
-\item{open}{Whether the oldest age group
+\item{open_right}{Whether the oldest age group
 is "open", i.e. has no upper limit.
 Default is \code{TRUE}.}
 
@@ -36,7 +36,7 @@ contain the old ones.
 \examples{
 labels <- c("1-4", "87-89", "0", "50-54")
 age_modify(labels, breaks = c(0, 10, 40, 90))
-age_modify(labels, breaks = c(0, 10, 40, 90), open = FALSE)
+age_modify(labels, breaks = c(0, 10, 40, 90), open_right = FALSE)
 
 ## factor input: factor in, factor out
 age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))

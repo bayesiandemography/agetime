@@ -9,6 +9,8 @@
 \usage{
 period_labels(
   breaks,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -18,6 +20,8 @@ period_labels(
 period_labels_one(
   lower_first,
   lower_last,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -27,6 +31,8 @@ period_labels_one(
 period_labels_five(
   lower_first,
   lower_last,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -36,6 +42,8 @@ period_labels_five(
 period_labels_ten(
   lower_first,
   lower_last,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -45,6 +53,14 @@ period_labels_ten(
 \arguments{
 \item{breaks}{Boundaries between periods.
 A numeric vector.}
+
+\item{open_left}{Whether first period
+is "open", i.e. has no lower limit.
+Default is \code{FALSE}.}
+
+\item{open_right}{Whether last period
+is "open", i.e. has no upper limit.
+Default is \code{FALSE}.}
 
 \item{format_single}{How to format label for
 single-year period. Choices are \code{"lower"}

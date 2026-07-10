@@ -108,6 +108,39 @@ test_that("period_lower() returns NA silently for invalid labels", {
   expect_values(period_lower(x, interpret_fail = "silent"), c(2000, NA))
 })
 
+test_that("period extract functions handle open-left and open-right labels", {
+  x <- c("2020-2030", "2030+")
+  lo <- period_lower(x)
+  hi <- period_upper(x)
+  wd <- period_width(x)
+
+  expect_values(lo, c(2020, 2030))
+  expect_values(hi, c(2030, Inf))
+  expect_values(wd, c(10, Inf))
+})
+
+test_that("period extract functions handle open-left labels", {
+  x <- c("<2020", "2020-2025")
+  expect_values(period_lower(x), c(-Inf, 2020))
+  expect_values(period_upper(x), c(2020, 2025))
+})
+
+test_that("cohort extract functions handle open-right labels", {
+  x <- c("2025-2030", "2030+")
+  lo <- cohort_lower(x)
+  hi <- cohort_upper(x)
+  wd <- cohort_width(x)
+
+  expect_values(lo, c(2025, 2030))
+  expect_values(hi, c(2030, Inf))
+  expect_values(wd, c(5, Inf))
+})
+
+test_that("age_lower() rejects open-left labels", {
+  expect_error(age_lower("<5"), "Don't know how to interpret label")
+  expect_values(age_lower("<5", interpret_fail = "silent"), NA_real_)
+})
+
 test_that("cohort extract functions return expected values for mixed labels", {
   lo <- cohort_lower(cohort_multi)
   hi <- cohort_upper(cohort_multi)

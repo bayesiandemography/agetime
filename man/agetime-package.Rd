@@ -23,7 +23,7 @@ labels for age groups, periods, and cohorts.
 
 \strong{Identify open intervals and totals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_is_open]{age_is_open()}} \tab  \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \cr
+   \code{\link[=age_is_open]{age_is_open()}} \tab \code{\link[=period_is_open]{period_is_open()}} \tab \code{\link[=cohort_is_open]{cohort_is_open()}} \cr
    \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \cr
 }
 
@@ -74,7 +74,8 @@ labels for age groups, periods, and cohorts.
 
 \strong{Define open intervals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_levels_set_open]{age_levels_set_open()}} \tab  \tab \code{\link[=cohort_levels_set_open]{cohort_levels_set_open()}} \cr
+   \code{\link[=age_levels_open_right]{age_levels_open_right()}} \tab \code{\link[=period_levels_open_left]{period_levels_open_left()}} \tab \code{\link[=cohort_levels_open_left]{cohort_levels_open_left()}} \cr
+    \tab \code{\link[=period_levels_open_right]{period_levels_open_right()}} \tab \code{\link[=cohort_levels_open_right]{cohort_levels_open_right()}} \cr
 }
 
 

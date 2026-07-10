@@ -9,6 +9,12 @@
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
+#' @param open_left Whether the first period
+#' is "open", i.e. has no lower limit.
+#' Default is `FALSE`.
+#' @param open_right Whether the last period
+#' is "open", i.e. has no upper limit.
+#' Default is `FALSE`.
 #' @return Character vector or factor with the same length as `labels`.
 #'
 #' @examples
@@ -28,17 +34,21 @@
 # still modifies factor levels().
 period_modify <- function(labels,
                           breaks,
+                          open_left = FALSE,
+                          open_right = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
+  check_flag(x = open_left, nm_x = "open_left")
+  check_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_modify(
     labels = labels,
     breaks = breaks,
-    is_open_left = FALSE,
-    is_open_right = FALSE,
+    is_open_left = open_left,
+    is_open_right = open_right,
     label_type = "period",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

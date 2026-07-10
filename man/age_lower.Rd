@@ -39,6 +39,15 @@ have midpoints can be useful for plotting.
 midpoints based on half the median width of
 the closed intervals in \code{labels}. See below for examples.
 }
+\section{Open intervals}{
+
+
+Age groups can be open on the right only, using labels
+such as \code{"85+"} for \verb{[85, Inf)}.
+Open-left labels such as \code{"<5"} are not supported;
+use closed labels such as \code{"0-4"} instead.
+}
+
 \examples{
 labels <- c("5-9", "10-14", "100+")
 age_lower(labels)

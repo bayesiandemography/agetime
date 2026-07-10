@@ -20,7 +20,7 @@
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
 #' @param has_open Check that at least
-#' one cohort has no lower limit.
+#' one cohort has no lower or upper limit.
 #' Default is `FALSE` (don't check).
 #'
 #' @return

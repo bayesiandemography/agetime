@@ -340,11 +340,15 @@ inner_check_has_open <- function(intervals) {
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  lower <- m[, 1L]
   upper <- m[, 2L]
+  is_open_left <- is.infinite(lower) & is.finite(upper)
+  is_open_right <- is.finite(lower) & is.infinite(upper)
+  is_open <- is_open_left | is_open_right
   if (int_is_empty) {
     passed <- FALSE
   } else {
-    passed <- any(is.infinite(upper))
+    passed <- any(is_open)
   }
   if (identical(passed, TRUE)) {
     comment <- NA_character_

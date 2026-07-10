@@ -94,6 +94,16 @@ are assumed to exclude the upper limits,
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
+\section{Open intervals}{
+
+
+Periods can be open on the left (\code{"<a"} for \verb{[-Inf, a)})
+or on the right (\code{"a+"} for \verb{[a, Inf)}).
+For open-left periods, \code{period_lower()} returns \code{-Inf}.
+Right-open periods are useful for forecasting
+(e.g. \code{c("2020-2030", "2030+")}).
+}
+
 \examples{
 labels <- c("2025-2030", "2020-2025", "2030-2035")
 period_lower(labels)

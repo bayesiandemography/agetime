@@ -11,6 +11,7 @@ period_check(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  has_open = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -22,6 +23,7 @@ period_assert(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  has_open = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -41,6 +43,10 @@ Default is \code{FALSE} (don't check).}
 Default is \code{FALSE} (don't check).}
 
 \item{no_na}{Check that there is no \code{NA} label.
+Default is \code{FALSE} (don't check).}
+
+\item{has_open}{Check that at least one period
+has no lower or upper limit.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret

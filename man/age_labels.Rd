@@ -8,12 +8,17 @@
 \alias{age_labels_life}
 \title{Create New Age Group Labels}
 \usage{
-age_labels(breaks, open = TRUE, include_total = FALSE, include_na = FALSE)
+age_labels(
+  breaks,
+  open_right = TRUE,
+  include_total = FALSE,
+  include_na = FALSE
+)
 
 age_labels_one(
   lower_first = 0,
   lower_last = 100,
-  open = TRUE,
+  open_right = TRUE,
   include_total = FALSE,
   include_na = FALSE
 )
@@ -21,7 +26,7 @@ age_labels_one(
 age_labels_five(
   lower_first = 0,
   lower_last = 100,
-  open = TRUE,
+  open_right = TRUE,
   include_total = FALSE,
   include_na = FALSE
 )
@@ -29,7 +34,7 @@ age_labels_five(
 age_labels_ten(
   lower_first = 0,
   lower_last = 100,
-  open = TRUE,
+  open_right = TRUE,
   include_total = FALSE,
   include_na = FALSE
 )
@@ -40,7 +45,7 @@ age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
 \item{breaks}{Boundaries between age groups.
 A numeric vector.}
 
-\item{open}{Whether the oldest age group
+\item{open_right}{Whether the oldest age group
 is "open", i.e. has no upper limit.
 Default is \code{TRUE}.}
 
@@ -85,14 +90,14 @@ age_labels_five(lower_last = 80)
 age_labels_five(
   lower_first = 15,
   lower_last = 45,
-  open = FALSE
+  open_right = FALSE
 )
 
 ## reproductive ages: 1-year
 age_labels_one(
   lower_first = 15,
   lower_last = 49,
-  open = FALSE
+  open_right = FALSE
 )
 
 ## include total and NA
@@ -105,7 +110,7 @@ age_labels_five(
 ## arbitrary age groups
 age_labels(
   breaks = c(0, 5, 10, 14, 18),
-  open = FALSE
+  open_right = FALSE
 )
 
 ## life table age groups with

@@ -7,7 +7,8 @@
 cohort_modify(
   labels,
   breaks,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -19,8 +20,12 @@ cohort_modify(
 \item{breaks}{Boundaries between cohorts.
 A numeric vector.}
 
-\item{open}{Whether the first cohort
+\item{open_left}{Whether the first cohort
 is "open", i.e. has no lower limit.
+Default is \code{FALSE}.}
+
+\item{open_right}{Whether the last cohort
+is "open", i.e. has no upper limit.
 Default is \code{FALSE}.}
 
 \item{interpret_single}{How to interpret
@@ -77,7 +82,7 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 \examples{
 labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015))
-cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open = TRUE)
+cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open_left = TRUE)
 
 }
 \seealso{

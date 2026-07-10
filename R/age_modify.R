@@ -7,7 +7,7 @@
 #' @inheritParams age_lower
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
-#' @param open Whether the oldest age group
+#' @param open_right Whether the oldest age group
 #' is "open", i.e. has no upper limit.
 #' Default is `TRUE`.
 #' @return Character vector or factor with the same length as `labels`.
@@ -15,7 +15,7 @@
 #' @examples
 #' labels <- c("1-4", "87-89", "0", "50-54")
 #' age_modify(labels, breaks = c(0, 10, 40, 90))
-#' age_modify(labels, breaks = c(0, 10, 40, 90), open = FALSE)
+#' age_modify(labels, breaks = c(0, 10, 40, 90), open_right = FALSE)
 #'
 #' ## factor input: factor in, factor out
 #' age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))
@@ -34,15 +34,15 @@
 # still modifies factor levels().
 age_modify <- function(labels,
                        breaks,
-                       open = TRUE,
+                       open_right = TRUE,
                        interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open, nm_x = "open")
+  check_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_modify(
     labels = labels,
     breaks = breaks,
     is_open_left = FALSE,
-    is_open_right = open,
+    is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",

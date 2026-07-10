@@ -43,12 +43,42 @@ test_that("inner_check_has_zero() passes when zero is present", {
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_has_open() passes when open interval is present", {
+test_that("inner_check_has_open() passes when open-right interval is present", {
   intervals <- intervals(
     labels = c("5-9", "60+"),
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",
+    interpret_fail = "error"
+  )
+  val <- agetime:::inner_check_has_open(intervals)
+
+  expect_identical(val$check, "has_open")
+  expect_identical(val$passed, TRUE)
+  expect_identical(val$comment, NA_character_)
+})
+
+test_that("inner_check_has_open() passes when open-left cohort is present", {
+  intervals <- intervals(
+    labels = c("2020-2025", "<2020"),
+    label_type = "cohort",
+    interpret_single = "lower",
+    interpret_multi = "include",
+    interpret_fail = "error"
+  )
+  val <- agetime:::inner_check_has_open(intervals)
+
+  expect_identical(val$check, "has_open")
+  expect_identical(val$passed, TRUE)
+  expect_identical(val$comment, NA_character_)
+})
+
+test_that("inner_check_has_open() passes when open-right period is present", {
+  intervals <- intervals(
+    labels = c("2020-2030", "2030+"),
+    label_type = "period",
+    interpret_single = "lower",
+    interpret_multi = "include",
     interpret_fail = "error"
   )
   val <- agetime:::inner_check_has_open(intervals)

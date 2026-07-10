@@ -1,26 +1,25 @@
-#' Set Open Cohort Level
+#' Open Right Cohort Level
 #'
-#' Add an open cohort level, i.e. a cohort with no lower limit.
+#' Add an open cohort level, i.e. a cohort with no upper limit.
 #' Replace existing cohorts where necessary.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
 #' @inheritParams cohort_lower
-#' @param upper_open Upper limit of open cohort.
+#' @param lower_open Lower limit of open cohort.
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [age_levels_set_open()] Set open age group levels (right-open)
+#' - [cohort_levels_open_left()] Open cohort levels on the left
+#' - [period_levels_open_right()] Open period levels on the right
 #'
 #' @examples
-#' labels <- c("2020-2024", "<2000", "2015")
-#' cohort_levels_set_open(labels, upper_open = 2020)
-#' cohort_levels_set_open(labels, upper_open = 2005)
-#' cohort_levels_set_open(c("2000-2004", "2010-2014"), upper_open = 1990)
+#' labels <- c("2020-2024", "2025-2029", "2030")
+#' cohort_levels_open_right(labels, lower_open = 2030)
 #' @export
 
-cohort_levels_set_open <- function(labels,
-                                   upper_open,
+cohort_levels_open_right <- function(labels,
+                                   lower_open,
                                    interpret_single = c("lower", "upper"),
                                    interpret_multi = c("include", "exclude"),
                                    interpret_fail = c(
@@ -31,10 +30,10 @@ cohort_levels_set_open <- function(labels,
   interpret_multi <- match.arg(interpret_multi)
   inner_levels_set_open(
     labels = labels,
-    open_boundary = upper_open,
-    nm_open_boundary = "upper_open",
-    make_open_left = TRUE,
-    make_open_right = FALSE,
+    open_boundary = lower_open,
+    nm_open_boundary = "lower_open",
+    make_open_left = FALSE,
+    make_open_right = TRUE,
     label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

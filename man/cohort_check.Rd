@@ -47,7 +47,7 @@ Default is \code{FALSE} (don't check).}
 Default is \code{FALSE} (don't check).}
 
 \item{has_open}{Check that at least
-one cohort has no lower limit.
+one cohort has no lower or upper limit.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret

@@ -36,7 +36,7 @@ cohort_is_total <- function(labels,
 
 #' Identify Cohort Labels for Open Cohorts
 #'
-#' Find open cohorts, i.e., cohorts with no lower limit.
+#' Find open cohorts, i.e., cohorts with no lower or upper limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -49,7 +49,7 @@ cohort_is_total <- function(labels,
 #' - [age_is_open()] Age equivalent of `cohort_is_open()`
 #'
 #' @examples
-#' labels <- c("2020", "<1900", "2040-2050", "<2022")
+#' labels <- c("2020", "<1900", "2040-2050", "2030+")
 #' cohort_is_open(labels)
 #' @export
 
@@ -66,6 +66,6 @@ cohort_is_open <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     check_open_left = TRUE,
-    check_open_right = FALSE
+    check_open_right = TRUE
   )
 }

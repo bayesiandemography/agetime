@@ -1,13 +1,13 @@
 test_that("age_labels_one() creates one-year age groups", {
   expect_identical(
-    age_labels_one(lower_first = 15, lower_last = 17, open = FALSE),
+    age_labels_one(lower_first = 15, lower_last = 17, open_right = FALSE),
     c("15", "16", "17")
   )
 })
 
 test_that("age_labels_ten() creates ten-year age groups", {
   expect_identical(
-    age_labels_ten(lower_first = 0, lower_last = 20, open = FALSE),
+    age_labels_ten(lower_first = 0, lower_last = 20, open_right = FALSE),
     c("0-9", "10-19", "20-29")
   )
 })
@@ -36,16 +36,16 @@ test_that("age_labels_five() ends with an open group at lower_last", {
   )
 })
 
-test_that("age_labels_five() with open = FALSE creates closed groups", {
+test_that("age_labels_five() with open_right = FALSE creates closed groups", {
   expect_identical(
-    age_labels_five(lower_first = 15, lower_last = 45, open = FALSE),
+    age_labels_five(lower_first = 15, lower_last = 45, open_right = FALSE),
     c("15-19", "20-24", "25-29", "30-34", "35-39", "40-44", "45-49")
   )
 })
 
 test_that("age_labels() creates labels from breaks", {
   expect_identical(
-    age_labels(breaks = c(0, 5, 10, 14, 18), open = FALSE),
+    age_labels(breaks = c(0, 5, 10, 14, 18), open_right = FALSE),
     c("0-4", "5-9", "10-13", "14-17")
   )
 })
@@ -141,7 +141,7 @@ test_that("cohort_labels_five() can start with a left-open cohort", {
       cohort_labels_five(
         lower_first = 1960,
         lower_last = 1970,
-        open = TRUE
+        open_left = TRUE
       ),
       2L
     ),
@@ -165,6 +165,20 @@ test_that("cohort_labels_ten() only requires a ten-year span", {
   expect_identical(
     cohort_labels_ten(lower_first = 2001, lower_last = 2011),
     c("2001-2011", "2011-2021")
+  )
+})
+
+test_that("period_labels_five() can end with a right-open period", {
+  expect_identical(
+    tail(period_labels_five(lower_first = 2020, lower_last = 2030, open_right = TRUE), 1L),
+    "2030+"
+  )
+})
+
+test_that("cohort_labels_five() can end with a right-open cohort", {
+  expect_identical(
+    tail(cohort_labels_five(lower_first = 2020, lower_last = 2030, open_right = TRUE), 1L),
+    "2030+"
   )
 })
 

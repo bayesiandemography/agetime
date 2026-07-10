@@ -36,6 +36,14 @@
 #' are assumed to exclude the upper limits,
 #' so that `"2025-2030"` means `[2025,2031)`.
 #'
+#' @section Open intervals:
+#'
+#' Periods can be open on the left (`"<a"` for `[-Inf, a)`)
+#' or on the right (`"a+"` for `[a, Inf)`).
+#' For open-left periods, `period_lower()` returns `-Inf`.
+#' Right-open periods are useful for forecasting
+#' (e.g. `c("2020-2030", "2030+")`).
+#'
 #' @param labels Vector of period labels.
 #' @param interpret_single How to interpret
 #' labels for single-year periods.

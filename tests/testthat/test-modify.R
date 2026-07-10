@@ -8,16 +8,16 @@ test_that("age_modify() recodes to wider age groups", {
   expect_values(ans, c("0-9", "40-89", "0-9", "40-89"))
 })
 
-test_that("age_modify() with open = FALSE omits an open top group", {
+test_that("age_modify() with open_right = FALSE omits an open top group", {
   x <- c("1-4", "87-89", "0", "50-54")
   fx <- factor(x)
 
   expect_values(
-    age_modify(x, breaks = c(0, 10, 40, 90), open = FALSE),
+    age_modify(x, breaks = c(0, 10, 40, 90), open_right = FALSE),
     c("0-9", "40-89", "0-9", "40-89")
   )
   expect_identical(
-    levels(age_modify(fx, breaks = c(0, 10, 40, 90), open = FALSE)),
+    levels(age_modify(fx, breaks = c(0, 10, 40, 90), open_right = FALSE)),
     c("0-9", "10-39", "40-89")
   )
   expect_identical(

@@ -7,6 +7,8 @@
 period_modify(
   labels,
   breaks,
+  open_left = FALSE,
+  open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -17,6 +19,14 @@ period_modify(
 
 \item{breaks}{Boundaries between periods.
 A numeric vector.}
+
+\item{open_left}{Whether the first period
+is "open", i.e. has no lower limit.
+Default is \code{FALSE}.}
+
+\item{open_right}{Whether the last period
+is "open", i.e. has no upper limit.
+Default is \code{FALSE}.}
 
 \item{interpret_single}{How to interpret
 labels for single-year periods.

@@ -9,7 +9,8 @@
 \usage{
 cohort_labels(
   breaks,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -19,7 +20,8 @@ cohort_labels(
 cohort_labels_one(
   lower_first,
   lower_last,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -29,7 +31,8 @@ cohort_labels_one(
 cohort_labels_five(
   lower_first,
   lower_last,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -39,7 +42,8 @@ cohort_labels_five(
 cohort_labels_ten(
   lower_first,
   lower_last,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -50,8 +54,12 @@ cohort_labels_ten(
 \item{breaks}{Boundaries between cohorts
 A numeric vector.}
 
-\item{open}{Whether first cohort
+\item{open_left}{Whether first cohort
 is "open", i.e. has no lower limit.
+Default is \code{FALSE}.}
+
+\item{open_right}{Whether last cohort
+is "open", i.e. has no upper limit.
 Default is \code{FALSE}.}
 
 \item{format_single}{How to format label for
@@ -112,7 +120,7 @@ cohort_labels_five(
 cohort_labels_five(
   lower_first = 1960,
   lower_last = 2020,
-  open = TRUE
+  open_left = TRUE
 )
 
 ## single-year cohorts

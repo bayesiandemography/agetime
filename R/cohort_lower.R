@@ -41,6 +41,12 @@
 #' are assumed to exclude the upper limits
 #' so that `"2025-2030"` means `[2025,2031)`.
 #'
+#' @section Open intervals:
+#'
+#' Cohorts can be open on the left (`"<a"` for `[-Inf, a)`)
+#' or on the right (`"a+"` for `[a, Inf)`).
+#' For open-left cohorts, `cohort_lower()` returns `-Inf`.
+#'
 #' @param labels Vector of cohort labels.
 #' @param interpret_single How to interpret
 #' labels for single-year cohorts.
