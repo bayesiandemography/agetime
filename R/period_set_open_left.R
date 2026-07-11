@@ -1,26 +1,24 @@
-#' Open Left Cohort Level
+#' Open Left Period Level
 #'
-#' Add an open cohort level, i.e. a cohort with no lower limit.
-#' Replace existing cohorts where necessary.
+#' Add an open period level, i.e. a period with no lower limit.
+#' Replace existing periods where necessary.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection period_lower Controlling how period labels are interpreted
 #'
-#' @inheritParams cohort_lower
-#' @param upper_open Upper limit of open cohort.
+#' @inheritParams period_lower
+#' @param upper_open Upper limit of open period.
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_open_right()] Open cohort levels on the right
-#' - [age_open_right()] Open age group levels on the right
+#' - [period_set_open_right()] Open period levels on the right
+#' - [cohort_set_open_left()] Open cohort levels on the left
 #'
 #' @examples
-#' labels <- c("2020-2024", "<2000", "2015")
-#' cohort_open_left(labels, upper_open = 2020)
-#' cohort_open_left(labels, upper_open = 2005)
-#' cohort_open_left(c("2000-2004", "2010-2014"), upper_open = 1990)
+#' labels <- c("2020-2024", "2025-2029")
+#' period_set_open_left(labels, upper_open = 2020)
 #' @export
 
-cohort_open_left <- function(labels,
+period_set_open_left <- function(labels,
                                     upper_open,
                                     interpret_single = c("lower", "upper"),
                                     interpret_multi = c("include", "exclude"),
@@ -36,7 +34,7 @@ cohort_open_left <- function(labels,
     nm_open_boundary = "upper_open",
     make_open_left = TRUE,
     make_open_right = FALSE,
-    label_type = "cohort",
+    label_type = "period",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail

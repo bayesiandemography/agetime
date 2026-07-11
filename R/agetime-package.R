@@ -68,8 +68,8 @@
 #'
 #' |                     |                       |                       |
 #' |---------------------|-----------------------|-----------------------|
-#' | [age_open_right()] | [period_open_left()] | [cohort_open_left()] |
-#' |                     | [period_open_right()] | [cohort_open_right()] |
+#' | [age_set_open_right()] | [period_set_open_left()] | [cohort_set_open_left()] |
+#' |                     | [period_set_open_right()] | [cohort_set_open_right()] |
 #'
 #' **Put levels in order**
 #'

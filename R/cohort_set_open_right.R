@@ -10,15 +10,15 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_open_left()] Open cohort levels on the left
-#' - [period_open_right()] Open period levels on the right
+#' - [cohort_set_open_left()] Open cohort levels on the left
+#' - [period_set_open_right()] Open period levels on the right
 #'
 #' @examples
 #' labels <- c("2020-2024", "2025-2029", "2030")
-#' cohort_open_right(labels, lower_open = 2030)
+#' cohort_set_open_right(labels, lower_open = 2030)
 #' @export
 
-cohort_open_right <- function(labels,
+cohort_set_open_right <- function(labels,
                                    lower_open,
                                    interpret_single = c("lower", "upper"),
                                    interpret_multi = c("include", "exclude"),

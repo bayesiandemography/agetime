@@ -8,17 +8,17 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_open_left()] Open cohort levels on the left
-#' - [cohort_open_right()] Open cohort levels on the right
+#' - [cohort_set_open_left()] Open cohort levels on the left
+#' - [cohort_set_open_right()] Open cohort levels on the right
 #'
 #' @examples
 #' labels <- c("20-24", "80-84", "100+")
-#' age_open_right(labels, lower_open = 80)
-#' age_open_right(labels, lower_open = 50)
-#' age_open_right(c("0-4", "60-64"), lower_open = 70)
+#' age_set_open_right(labels, lower_open = 80)
+#' age_set_open_right(labels, lower_open = 50)
+#' age_set_open_right(c("0-4", "60-64"), lower_open = 70)
 #' @export
 
-age_open_right <- function(labels,
+age_set_open_right <- function(labels,
                                   lower_open,
                                   interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)

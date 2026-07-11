@@ -74,8 +74,8 @@ labels for age groups, periods, and cohorts.
 
 \strong{Define open intervals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_open_right]{age_open_right()}} \tab \code{\link[=period_open_left]{period_open_left()}} \tab \code{\link[=cohort_open_left]{cohort_open_left()}} \cr
-    \tab \code{\link[=period_open_right]{period_open_right()}} \tab \code{\link[=cohort_open_right]{cohort_open_right()}} \cr
+   \code{\link[=age_set_open_right]{age_set_open_right()}} \tab \code{\link[=period_set_open_left]{period_set_open_left()}} \tab \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} \cr
+    \tab \code{\link[=period_set_open_right]{period_set_open_right()}} \tab \code{\link[=cohort_set_open_right]{cohort_set_open_right()}} \cr
 }
 
 
