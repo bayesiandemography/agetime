@@ -2,7 +2,7 @@
 % Please edit documentation in R/period_is_total.R
 \name{period_is_open_left}
 \alias{period_is_open_left}
-\title{Identify Period Labels for Left-Open Periods}
+\title{Identify Periods Open on Left}
 \usage{
 period_is_open_left(
   labels,
@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find left-open periods, i.e., periods with no lower limit.
+Find periods that are open on the left, i.e., that have no lower limit.
 }
 \section{Controlling how period labels are interpreted}{
 

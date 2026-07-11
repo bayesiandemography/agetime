@@ -2,7 +2,7 @@
 % Please edit documentation in R/period_is_total.R
 \name{period_is_open_right}
 \alias{period_is_open_right}
-\title{Identify Period Labels for Right-Open Periods}
+\title{Identify Periods Open on Right}
 \usage{
 period_is_open_right(
   labels,
@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find right-open periods, i.e., periods with no upper limit.
+Find periods that are open on the right, i.e., that have no upper limit.
 }
 \section{Controlling how period labels are interpreted}{
 
@@ -71,7 +71,8 @@ period_is_open_right(labels)
 \seealso{
 \itemize{
 \item \code{\link[=period_is_total]{period_is_total()}} Find period labels for totals
-\item \code{\link[=period_is_open_left]{period_is_open_left()}} Find left-open periods
+\item \code{\link[=period_is_open_left]{period_is_open_left()}} Find periods open on left
 \item \code{\link[=age_is_open_right]{age_is_open_right()}} Age equivalent of \code{period_is_open_right()}
+\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Cohort equivalent of \code{period_is_open_right()}
 }
 }

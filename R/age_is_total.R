@@ -30,9 +30,9 @@ age_is_total <- function(labels,
 }
 
 
-#' Identify Age Labels for Right-Open Age Groups
+#' Identify Open Age Groups
 #'
-#' Find right-open age groups, i.e., age groups with no upper limit.
+#' Find age groups that are open on the right, i.e., that have no upper limit.
 #'
 #' @inheritParams age_lower
 #'

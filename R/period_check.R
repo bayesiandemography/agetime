@@ -19,10 +19,10 @@
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least one period
-#' has no lower limit.
+#' is open on the left.
 #' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least one period
-#' has no upper limit.
+#' is open on the right.
 #' Default is `FALSE` (don't check).
 #'
 #' @return

@@ -29,7 +29,7 @@
 #' age group has a lower limit of zero.
 #' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least one age
-#' group has no upper limit.
+#' group is open on the right.
 #' Default is `FALSE` (don't check).
 #' @param valid_life Check that all labels are
 #' valid for an abridged life table.

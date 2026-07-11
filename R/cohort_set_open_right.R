@@ -1,21 +1,4 @@
-#' Open Right Cohort Level
-#'
-#' Add an open cohort level, i.e. a cohort with no upper limit.
-#' Replace existing cohorts where necessary.
-#'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
-#'
-#' @inheritParams cohort_lower
-#' @param lower_open Lower limit of open cohort.
-#' @return Factor with the same length as `labels`.
-#'
-#' @seealso
-#' - [cohort_set_open_left()] Open cohort levels on the left
-#' - [period_set_open_right()] Open period levels on the right
-#'
-#' @examples
-#' labels <- c("2020-2024", "2025-2029", "2030")
-#' cohort_set_open_right(labels, lower_open = 2030)
+#' @rdname cohort_set_open_left
 #' @export
 
 cohort_set_open_right <- function(labels,

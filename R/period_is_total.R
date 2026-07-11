@@ -35,9 +35,9 @@ period_is_total <- function(labels,
 }
 
 
-#' Identify Period Labels for Left-Open Periods
+#' Identify Periods Open on Left
 #'
-#' Find left-open periods, i.e., periods with no lower limit.
+#' Find periods that are open on the left, i.e., that have no lower limit.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
@@ -75,9 +75,9 @@ period_is_open_left <- function(labels,
 }
 
 
-#' Identify Period Labels for Right-Open Periods
+#' Identify Periods Open on Right
 #'
-#' Find right-open periods, i.e., periods with no upper limit.
+#' Find periods that are open on the right, i.e., that have no upper limit.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
@@ -87,8 +87,9 @@ period_is_open_left <- function(labels,
 #'
 #' @seealso
 #' - [period_is_total()] Find period labels for totals
-#' - [period_is_open_left()] Find left-open periods
+#' - [period_is_open_left()] Find periods open on left
 #' - [age_is_open_right()] Age equivalent of `period_is_open_right()`
+#' - [cohort_is_open_right()] Cohort equivalent of `period_is_open_right()`
 #'
 #' @examples
 #' labels <- c("2020", "<1900", "2020-2030", "2030+")

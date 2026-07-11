@@ -35,9 +35,9 @@ cohort_is_total <- function(labels,
 }
 
 
-#' Identify Cohort Labels for Left-Open Cohorts
+#' Identify Cohorts Open on Left
 #'
-#' Find left-open cohorts, i.e., cohorts with no lower limit.
+#' Find cohorts that are open on the left, i.e., that have no lower limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -73,9 +73,9 @@ cohort_is_open_left <- function(labels,
 }
 
 
-#' Identify Cohort Labels for Right-Open Cohorts
+#' Identify Cohorts Open on Right
 #'
-#' Find right-open cohorts, i.e., cohorts with no upper limit.
+#' Find cohorts that are open on the right, i.e., that have no upper limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -85,7 +85,8 @@ cohort_is_open_left <- function(labels,
 #'
 #' @seealso
 #' - [cohort_is_total()] Find cohort labels for totals
-#' - [cohort_is_open_left()] Find left-open cohorts
+#' - [cohort_is_open_left()] Find cohorts open on left
+#' - [period_is_open_right()] Period equivalent of `cohort_is_open_right()`
 #' - [age_is_open_right()] Age equivalent of `cohort_is_open_right()`
 #'
 #' @examples

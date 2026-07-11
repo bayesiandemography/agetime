@@ -2,7 +2,7 @@
 % Please edit documentation in R/cohort_is_total.R
 \name{cohort_is_open_right}
 \alias{cohort_is_open_right}
-\title{Identify Cohort Labels for Right-Open Cohorts}
+\title{Identify Cohorts Open on Right}
 \usage{
 cohort_is_open_right(
   labels,
@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find right-open cohorts, i.e., cohorts with no upper limit.
+Find cohorts that are open on the right, i.e., that have no upper limit.
 }
 \section{Controlling how cohort labels are interpreted}{
 
@@ -70,7 +70,8 @@ cohort_is_open_right(labels)
 \seealso{
 \itemize{
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Find cohort labels for totals
-\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Find left-open cohorts
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Find cohorts open on left
+\item \code{\link[=period_is_open_right]{period_is_open_right()}} Period equivalent of \code{cohort_is_open_right()}
 \item \code{\link[=age_is_open_right]{age_is_open_right()}} Age equivalent of \code{cohort_is_open_right()}
 }
 }

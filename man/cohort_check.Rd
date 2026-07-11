@@ -49,11 +49,11 @@ Default is \code{FALSE} (don't check).}
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least
-one cohort has no lower limit.
+one cohort is open on the left.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least
-one cohort has no upper limit.
+one cohort is open on the right.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret

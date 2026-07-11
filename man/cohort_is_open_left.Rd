@@ -2,7 +2,7 @@
 % Please edit documentation in R/cohort_is_total.R
 \name{cohort_is_open_left}
 \alias{cohort_is_open_left}
-\title{Identify Cohort Labels for Left-Open Cohorts}
+\title{Identify Cohorts Open on Left}
 \usage{
 cohort_is_open_left(
   labels,
@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find left-open cohorts, i.e., cohorts with no lower limit.
+Find cohorts that are open on the left, i.e., that have no lower limit.
 }
 \section{Controlling how cohort labels are interpreted}{
 

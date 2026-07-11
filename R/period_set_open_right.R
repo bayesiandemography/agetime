@@ -1,21 +1,4 @@
-#' Open Right Period Level
-#'
-#' Add an open period level, i.e. a period with no upper limit.
-#' Replace existing periods where necessary.
-#'
-#' @inheritSection period_lower Controlling how period labels are interpreted
-#'
-#' @inheritParams period_lower
-#' @param lower_open Lower limit of open period.
-#' @return Factor with the same length as `labels`.
-#'
-#' @seealso
-#' - [period_set_open_left()] Open period levels on the left
-#' - [cohort_set_open_right()] Open cohort levels on the right
-#'
-#' @examples
-#' labels <- c("2020-2024", "2025-2029", "2030")
-#' period_set_open_right(labels, lower_open = 2030)
+#' @rdname period_set_open_left
 #' @export
 
 period_set_open_right <- function(labels,

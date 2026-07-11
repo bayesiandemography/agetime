@@ -20,10 +20,10 @@
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least
-#' one cohort has no lower limit.
+#' one cohort is open on the left.
 #' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least
-#' one cohort has no upper limit.
+#' one cohort is open on the right.
 #' Default is `FALSE` (don't check).
 #'
 #' @return

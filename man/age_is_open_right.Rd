@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_is_total.R
 \name{age_is_open_right}
 \alias{age_is_open_right}
-\title{Identify Age Labels for Right-Open Age Groups}
+\title{Identify Open Age Groups}
 \usage{
 age_is_open_right(labels, interpret_fail = c("error", "warn", "silent"))
 }
@@ -17,7 +17,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find right-open age groups, i.e., age groups with no upper limit.
+Find age groups that are open on the right, i.e., that have no upper limit.
 }
 \examples{
 labels <- c("20+", "infant", "100+", "60to79")
