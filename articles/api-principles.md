@@ -43,27 +43,31 @@ Function names use the domain prefix plus an operation family.
 | Family | Purpose | Return type |
 |----|----|----|
 | `*_lower()`, `*_upper()`, `*_width()`, `*_mid()` | Extract interval properties | Numeric vector |
-| `*_is_open()`, `*_is_total()` | Identify special labels | Logical vector |
+| `*_is_open_left()`, `*_is_open_right()`, `*_is_total()` | Identify special labels | Logical vector |
 | `*_check()`, `*_assert()` | Validate labels | Diagnostics or error |
 | `*_standard()` | Convert labels to standard format | Same shape as `labels` |
-| `*_modify()` | Regroup labels into new intervals | Same shape as `labels` |
+| `*_modify()` | Regroup labels into new intervals | Factor |
 | `*_extend()` | Continue a label series | Character vector or factor |
-| `*_levels_*()` | Work with factor levels | Factor |
+| `*_fill()`, `*_set_open_*()`, `*_sort()` | Work with factor levels | Factor |
 | `*_labels_*()` | Create new labels | Character vector |
 | `*_mapping()` | Map between interval sets | Matrix or tibble |
 
 The most important return-type distinction is between labels and levels:
 
 - `*_labels_*()` functions create character vectors of labels.
-- `*_levels_*()` functions return factors, because their purpose is to
-  create or reorder factor levels.
+- `*_modify()`, `*_fill()`, `*_set_open_*()`, and `*_sort()` functions
+  return factors, because their purpose is to recode values and shape
+  factor levels.
 
 ``` r
 
 age_labels_five(lower_last = 20)
 #> [1] "0-4"   "5-9"   "10-14" "15-19" "20+"
 
-age_levels_fill_five(c("10-14", "0-4"))
+age_modify(c("10-14", "0-4"), breaks = c(0, 10, 20))
+#> [1] 10-19 0-9  
+#> Levels: 0-9 10-19
+age_fill_five(c("10-14", "0-4"))
 #> [1] 10-14 0-4  
 #> Levels: 0-4 5-9 10-14
 ```
@@ -118,53 +122,64 @@ Boundary arguments name the boundary they represent.
 - `breaks` are boundaries between intervals.
 - `lower_first` is the lower bound of the first generated interval.
 - `lower_last` is the lower bound of the last generated interval.
-- `lower_open` is the lower bound of a right-open age group such as
-  `70+`.
-- `upper_open` is the upper bound of a left-open cohort such as `<1990`.
+- `at` is the breakpoint at which intervals become open, e.g. `70` in
+  `70+` or `1990` in `<1990`. The function name specifies whether
+  intervals open on the left or right.
 
 ``` r
 
-age_labels_five(lower_first = 0, lower_last = 20, open = FALSE)
+age_labels_five(lower_first = 0, lower_last = 20, open_right = FALSE)
 #> [1] "0-4"   "5-9"   "10-14" "15-19" "20-24"
 
-age_levels_set_open(c("0-4", "60-64"), lower_open = 70)
+age_set_open_right(c("0-4", "60-64"), at = 70)
 #> [1] 0-4   60-64
 #> Levels: 0-4 60-64 70+
 
-cohort_levels_set_open(
+cohort_set_open_left(
   c("2000-2004", "2010-2014"),
-  upper_open = 1990,
+  at = 1990,
   interpret_multi = "exclude"
 )
 #> [1] 2000-2004 2010-2014
 #> Levels: <1990 2000-2004 2010-2014
 ```
 
-The boolean argument `open` is used where the question is whether to
-include an open interval at all. Boundary names such as `lower_open` and
-`upper_open` are used where the question is where the open interval
-starts or ends.
+The boolean arguments `open_left` and `open_right` control whether to
+include open intervals at the start or end of a generated label
+sequence. Age groups support `open_right` only; periods and cohorts
+support both directions.
+
+In `*_labels_*()` functions, these arguments default to explicit boolean
+values because you are constructing a new label grid. In `*_modify()`
+functions, the defaults are `NULL`, which preserves the open/closed
+topology of `labels`: open ends are kept when present, and omitted when
+not. Use `open_left = TRUE` or `open_right = TRUE` to add a structural
+open level even when no value in `labels` currently belongs to that
+group.
 
 ## Values and levels
 
-Functions that modify values, such as
+Functions such as
 [`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md),
-return values with the same length as `labels`. If `labels` is a factor,
-they also update levels.
-
-Functions in the `*_levels_*()` family always return a factor. They
-preserve observed values where possible, and change or add levels. This
-is why
-[`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md)
-can add a `70+` level even when no value in `labels` currently belongs
-to that open group.
+[`age_fill()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md),
+[`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md),
+and
+[`age_sort()`](https://bayesiandemography.github.io/agetime/reference/age_sort.md)
+always return a factor. They preserve observed values where possible,
+and change or add levels. By default,
+[`age_modify()`](https://bayesiandemography.github.io/agetime/reference/age_modify.md)
+infers whether to include an open top from `labels`. Use
+`open_right = TRUE` to add a `90+` level even when no value in `labels`
+currently belongs to that open group, as
+[`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md)
+does for `70+`.
 
 ``` r
 
 labels <- c("0-4", "60-64")
-age_levels_set_open(labels, lower_open = 70)
-#> [1] 0-4   60-64
-#> Levels: 0-4 60-64 70+
+age_modify(labels, breaks = c(0, 50, 70), open_right = TRUE)
+#> [1] 0-49  50-69
+#> Levels: 0-49 50-69 70+
 ```
 
 ## More information

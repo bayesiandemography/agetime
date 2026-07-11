@@ -1,6 +1,6 @@
 # Extend a Set of Age Groups
 
-Add new age groups at the end of `labels`.
+Continue an existing set of age group labels.
 
 ## Usage
 
@@ -39,8 +39,7 @@ age_extend(
 
 ## Value
 
-Character vector or factor. Length is `n`, or `length(labels) + n` when
-`include_x` is `TRUE`.
+Character vector or factor.
 
 ## Details
 

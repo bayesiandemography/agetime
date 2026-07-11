@@ -13,6 +13,8 @@ old periods, and follow a regular pattern:
 period_modify_five(
   labels,
   offset = 0,
+  open_left = NULL,
+  open_right = NULL,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -21,6 +23,8 @@ period_modify_five(
 period_modify_ten(
   labels,
   offset = 0,
+  open_left = NULL,
+  open_right = NULL,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -36,6 +40,20 @@ period_modify_ten(
 - offset:
 
   Parameter controlling alignment of periods. Default is `0`.
+
+- open_left:
+
+  Whether the first period is open on the left, i.e. has no lower limit.
+  Default is `NULL`, which infers from `labels`: `TRUE` when any label
+  is open on the left, otherwise `FALSE`. Use `TRUE` or `FALSE` to add
+  or suppress an open left level regardless of `labels`.
+
+- open_right:
+
+  Whether the last period is open on the right, i.e. has no upper limit.
+  Default is `NULL`, which infers from `labels`: `TRUE` when any label
+  is open on the right, otherwise `FALSE`. Use `TRUE` or `FALSE` to add
+  or suppress an open right level regardless of `labels`.
 
 - interpret_single:
 
@@ -54,7 +72,7 @@ period_modify_ten(
 
 ## Value
 
-Character vector or factor with the same length as `labels`.
+Factor with the same length as `labels`.
 
 ## Controlling how period labels are interpreted
 
@@ -93,7 +111,7 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 - [`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   Cohort equivalent of `period_modify_ten()`
 
-- [`period_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
+- [`period_fill()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md)
   Add levels for intermediate periods
 
 ## Examples
@@ -101,15 +119,21 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 ``` r
 labels <- c("2002-2004", "1987-1989", "2000", "Total")
 period_modify_five(labels)
-#> [1] "2000-2005" "1985-1990" "2000-2005" "Total"    
+#> [1] 2000-2005 1985-1990 2000-2005 Total    
+#> Levels: 1985-1990 1990-1995 1995-2000 2000-2005 Total
 period_modify_five(labels, offset = 1)
-#> [1] "2001-2006" "1986-1991" "1996-2001" "Total"    
+#> [1] 2001-2006 1986-1991 1996-2001 Total    
+#> Levels: 1986-1991 1991-1996 1996-2001 2001-2006 Total
 period_modify_five(labels, offset = 2)
-#> [1] "2002-2007" "1987-1992" "1997-2002" "Total"    
+#> [1] 2002-2007 1987-1992 1997-2002 Total    
+#> Levels: 1987-1992 1992-1997 1997-2002 2002-2007 Total
 period_modify_ten(labels)
-#> [1] "2000-2010" "1980-1990" "2000-2010" "Total"    
+#> [1] 2000-2010 1980-1990 2000-2010 Total    
+#> Levels: 1980-1990 1990-2000 2000-2010 Total
 period_modify_ten(labels, offset = 1)
-#> [1] "2001-2011" "1981-1991" "1991-2001" "Total"    
+#> [1] 2001-2011 1981-1991 1991-2001 Total    
+#> Levels: 1981-1991 1991-2001 2001-2011 Total
 period_modify_ten(labels, offset = 2)
-#> [1] "2002-2012" "1982-1992" "1992-2002" "Total"    
+#> [1] 2002-2012 1982-1992 1992-2002 Total    
+#> Levels: 1982-1992 1992-2002 2002-2012 Total
 ```

@@ -9,6 +9,8 @@ the old ones.
 period_modify(
   labels,
   breaks,
+  open_left = NULL,
+  open_right = NULL,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -24,6 +26,20 @@ period_modify(
 - breaks:
 
   Boundaries between periods. A numeric vector.
+
+- open_left:
+
+  Whether the first period is open on the left, i.e. has no lower limit.
+  Default is `NULL`, which infers from `labels`: `TRUE` when any label
+  is open on the left, otherwise `FALSE`. Use `TRUE` or `FALSE` to add
+  or suppress an open left level regardless of `labels`.
+
+- open_right:
+
+  Whether the last period is open on the right, i.e. has no upper limit.
+  Default is `NULL`, which infers from `labels`: `TRUE` when any label
+  is open on the right, otherwise `FALSE`. Use `TRUE` or `FALSE` to add
+  or suppress an open right level regardless of `labels`.
 
 - interpret_single:
 
@@ -42,7 +58,7 @@ period_modify(
 
 ## Value
 
-Character vector or factor with the same length as `labels`.
+Factor with the same length as `labels`.
 
 ## Controlling how period labels are interpreted
 
@@ -83,5 +99,6 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 ``` r
 labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 period_modify(labels, breaks = c(1970, 2000, 2005, 2015))
-#> [1] "2000-2005" "1970-2000" "2000-2005" "2005-2015"
+#> [1] 2000-2005 1970-2000 2000-2005 2005-2015
+#> Levels: 1970-2000 2000-2005 2005-2015
 ```

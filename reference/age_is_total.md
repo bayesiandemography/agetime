@@ -25,20 +25,20 @@ Logical vector with the same length as `labels`.
 
 ## See also
 
-- [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
-  Find open age groups
-
 - [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
   Period equivalent of `age_is_total()`
 
 - [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
   Cohort equivalent of `age_is_total()`
 
+- [`age_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_is_open_right.md)
+  Identify age groups open on right
+
 ## Examples
 
 ``` r
-labels <- c("20-24", "Total", "100+", "ALL")
+labels <- c("overall", "20-24", "Total", "100+", "ALL")
 age_is_total(labels)
-#> 20-24 Total  100+   ALL 
-#> FALSE  TRUE FALSE  TRUE 
+#> overall   20-24   Total    100+     ALL 
+#>    TRUE   FALSE    TRUE   FALSE    TRUE 
 ```

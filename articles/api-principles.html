@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -124,7 +124,8 @@ example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <co
 </tr>
 <tr class="even">
 <td>
-<code>*_is_open()</code>, <code>*_is_total()</code>
+<code>*_is_open_left()</code>, <code>*_is_open_right()</code>,
+<code>*_is_total()</code>
 </td>
 <td>Identify special labels</td>
 <td>Logical vector</td>
@@ -145,8 +146,7 @@ example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <co
 <tr class="odd">
 <td><code>*_modify()</code></td>
 <td>Regroup labels into new intervals</td>
-<td>Same shape as <code>labels</code>
-</td>
+<td>Factor</td>
 </tr>
 <tr class="even">
 <td><code>*_extend()</code></td>
@@ -154,7 +154,10 @@ example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <co
 <td>Character vector or factor</td>
 </tr>
 <tr class="odd">
-<td><code>*_levels_*()</code></td>
+<td>
+<code>*_fill()</code>, <code>*_set_open_*()</code>,
+<code>*_sort()</code>
+</td>
 <td>Work with factor levels</td>
 <td>Factor</td>
 </tr>
@@ -177,14 +180,19 @@ levels:</p>
 <code>*_labels_*()</code> functions create character vectors of
 labels.</li>
 <li>
-<code>*_levels_*()</code> functions return factors, because their
-purpose is to create or reorder factor levels.</li>
+<code>*_modify()</code>, <code>*_fill()</code>,
+<code>*_set_open_*()</code>, and <code>*_sort()</code> functions return
+factors, because their purpose is to recode values and shape factor
+levels.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span>lower_last <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "0-4"   "5-9"   "10-14" "15-19" "20+"</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/age_levels_fill.html">age_levels_fill_five</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"0-4"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_modify.html">age_modify</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"0-4"</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 10-19 0-9  </span></span>
+<span><span class="co">#&gt; Levels: 0-9 10-19</span></span>
+<span><span class="fu"><a href="../reference/age_fill.html">age_fill_five</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"0-4"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 10-14 0-4  </span></span>
 <span><span class="co">#&gt; Levels: 0-4 5-9 10-14</span></span></code></pre></div>
 </div>
@@ -236,48 +244,56 @@ interval.</li>
 <code>lower_last</code> is the lower bound of the last generated
 interval.</li>
 <li>
-<code>lower_open</code> is the lower bound of a right-open age group
-such as <code>70+</code>.</li>
-<li>
-<code>upper_open</code> is the upper bound of a left-open cohort
-such as <code>&lt;1990</code>.</li>
+<code>at</code> is the breakpoint at which intervals become open,
+e.g. <code>70</code> in <code>70+</code> or <code>1990</code> in
+<code>&lt;1990</code>. The function name specifies whether intervals
+open on the left or right.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span>lower_first <span class="op">=</span> <span class="fl">0</span>, lower_last <span class="op">=</span> <span class="fl">20</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span>lower_first <span class="op">=</span> <span class="fl">0</span>, lower_last <span class="op">=</span> <span class="fl">20</span>, open_right <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "0-4"   "5-9"   "10-14" "15-19" "20-24"</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/age_levels_set_open.html">age_levels_set_open</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"60-64"</span><span class="op">)</span>, lower_open <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_set_open_right.html">age_set_open_right</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"60-64"</span><span class="op">)</span>, at <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0-4   60-64</span></span>
 <span><span class="co">#&gt; Levels: 0-4 60-64 70+</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/cohort_levels_set_open.html">cohort_levels_set_open</a></span><span class="op">(</span></span>
+<span><span class="fu"><a href="../reference/cohort_set_open_left.html">cohort_set_open_left</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2000-2004"</span>, <span class="st">"2010-2014"</span><span class="op">)</span>,</span>
-<span>  upper_open <span class="op">=</span> <span class="fl">1990</span>,</span>
+<span>  at <span class="op">=</span> <span class="fl">1990</span>,</span>
 <span>  interpret_multi <span class="op">=</span> <span class="st">"exclude"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2000-2004 2010-2014</span></span>
 <span><span class="co">#&gt; Levels: &lt;1990 2000-2004 2010-2014</span></span></code></pre></div>
-<p>The boolean argument <code>open</code> is used where the question is
-whether to include an open interval at all. Boundary names such as
-<code>lower_open</code> and <code>upper_open</code> are used where the
-question is where the open interval starts or ends.</p>
+<p>The boolean arguments <code>open_left</code> and
+<code>open_right</code> control whether to include open intervals at the
+start or end of a generated label sequence. Age groups support
+<code>open_right</code> only; periods and cohorts support both
+directions.</p>
+<p>In <code>*_labels_*()</code> functions, these arguments default to
+explicit boolean values because you are constructing a new label grid.
+In <code>*_modify()</code> functions, the defaults are
+<code>NULL</code>, which preserves the open/closed topology of
+<code>labels</code>: open ends are kept when present, and omitted when
+not. Use <code>open_left = TRUE</code> or <code>open_right = TRUE</code>
+to add a structural open level even when no value in <code>labels</code>
+currently belongs to that group.</p>
 </div>
 <div class="section level2">
 <h2 id="values-and-levels">Values and levels<a class="anchor" aria-label="anchor" href="#values-and-levels"></a>
 </h2>
-<p>Functions that modify values, such as <code><a href="../reference/age_modify.html">age_modify()</a></code>,
-return values with the same length as <code>labels</code>. If
-<code>labels</code> is a factor, they also update levels.</p>
-<p>Functions in the <code>*_levels_*()</code> family always return a
-factor. They preserve observed values where possible, and change or add
-levels. This is why <code><a href="../reference/age_levels_set_open.html">age_levels_set_open()</a></code> can add a
-<code>70+</code> level even when no value in <code>labels</code>
-currently belongs to that open group.</p>
+<p>Functions such as <code><a href="../reference/age_modify.html">age_modify()</a></code>, <code><a href="../reference/age_fill.html">age_fill()</a></code>,
+<code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code>, and <code><a href="../reference/age_sort.html">age_sort()</a></code> always
+return a factor. They preserve observed values where possible, and
+change or add levels. By default, <code><a href="../reference/age_modify.html">age_modify()</a></code> infers
+whether to include an open top from <code>labels</code>. Use
+<code>open_right = TRUE</code> to add a <code>90+</code> level even when
+no value in <code>labels</code> currently belongs to that open group, as
+<code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code> does for <code>70+</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"60-64"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_levels_set_open.html">age_levels_set_open</a></span><span class="op">(</span><span class="va">labels</span>, lower_open <span class="op">=</span> <span class="fl">70</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0-4   60-64</span></span>
-<span><span class="co">#&gt; Levels: 0-4 60-64 70+</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/age_modify.html">age_modify</a></span><span class="op">(</span><span class="va">labels</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span>, <span class="fl">70</span><span class="op">)</span>, open_right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 0-49  50-69</span></span>
+<span><span class="co">#&gt; Levels: 0-49 50-69 70+</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
@@ -299,7 +315,7 @@ task.</li>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

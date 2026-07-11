@@ -1,14 +1,9 @@
 # Check or Make Assertions About Periods
 
-`period_check()` creates reports comparing period labels against
-expectations.
+`period_check()` reports on whether period labels meet conditions such
+as not overlapping.
 
-`period_assert()` throws an error if period labels do not conform to
-expectations.
-
-If `labels` is a factor, then the tests are applied to the `levels`
-attribute of `labels`. Otherwise the tests are applied to the elements
-of `labels`.
+`period_assert()` throws an error if conditions are not met.
 
 ## Usage
 
@@ -19,6 +14,8 @@ period_check(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -30,6 +27,8 @@ period_assert(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -60,6 +59,16 @@ period_assert(
 
   Check that there is no `NA` label. Default is `FALSE` (don't check).
 
+- has_open_left:
+
+  Check that at least one period is open on the left (has no lower
+  limit). Default is `FALSE` (don't check).
+
+- has_open_right:
+
+  Check that at least one period is open on the right (has no upper
+  limit). Default is `FALSE` (don't check).
+
 - interpret_single:
 
   How to interpret labels for single-year periods. Choices are `"lower"`
@@ -79,7 +88,7 @@ period_assert(
 
 - `period_check()` returns a list with a logical flag called `ok` and a
   [tibble](https://tibble.tidyverse.org/reference/tibble.html) called
-  `details` with columns `check`, `passed`, and `comment`.
+  `details`.
 
 - `period_assert()` returns `labels` invisibly, or raises an error.
 

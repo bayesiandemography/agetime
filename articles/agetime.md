@@ -82,7 +82,7 @@ df |>
 #> 3 65+       6
 
 df |>
-  filter(age_is_open(age))
+  filter(age_is_open_right(age))
 #> # A tibble: 1 × 2
 #>   age   count
 #>   <chr> <dbl>
@@ -135,14 +135,16 @@ To widen or realign age groups, use an `age_modify` function.
 
 x <- c("0-4", "5-9", "10-14", "50-54")
 age_modify(x, breaks = c(0, 15, 55))
-#> [1] "0-14"  "0-14"  "0-14"  "15-54"
+#> [1] 0-14  0-14  0-14  15-54
+#> Levels: 0-14 15-54
 age_modify_five(x)
-#> [1] "0-4"   "5-9"   "10-14" "50-54"
+#> [1] 0-4   5-9   10-14 50-54
+#> Levels: 0-4 5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54
 ```
 
-[`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
+[`age_fill()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md)
 adds missing age groups to factor levels, and
-[`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md)
+[`age_sort()`](https://bayesiandemography.github.io/agetime/reference/age_sort.md)
 sorts levels.
 
 ## Check and assert
@@ -151,24 +153,24 @@ Check whether age labels conform to expectations:
 
 ``` r
 
-lab <- age_labels_five(lower_first = 0, lower_last = 85, open = TRUE)
+lab <- age_labels_five(lower_first = 0, lower_last = 85, open_right = TRUE)
 age_check(lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   has_zero = TRUE,
-  has_open = TRUE
+  has_open_right = TRUE
 )
 #> $ok
 #> [1] TRUE
 #> 
 #> $details
 #> # A tibble: 4 × 3
-#>   check      passed comment
-#>   <chr>      <lgl>  <chr>  
-#> 1 no_overlap TRUE   NA     
-#> 2 no_gap     TRUE   NA     
-#> 3 has_zero   TRUE   NA     
-#> 4 has_open   TRUE   NA
+#>   check          passed comment
+#>   <chr>          <lgl>  <chr>  
+#> 1 no_overlap     TRUE   NA     
+#> 2 no_gap         TRUE   NA     
+#> 3 has_zero       TRUE   NA     
+#> 4 has_open_right TRUE   NA
 ```
 
 [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md)

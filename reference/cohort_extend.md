@@ -1,6 +1,6 @@
 # Extend a Set of Cohorts
 
-Add new cohorts at the end of `labels`.
+Continue an existing set of cohort labels.
 
 ## Usage
 
@@ -51,8 +51,7 @@ cohort_extend(
 
 ## Value
 
-Character vector or factor. Length is `n`, or `length(labels) + n` when
-`include_x` is `TRUE`.
+Character vector or factor.
 
 ## Details
 

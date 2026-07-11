@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,18 +66,18 @@ cannot be interpreted. Choices are <code>"error"</code> (the default),
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
-<ul><li><p><code><a href="age_is_open.html">age_is_open()</a></code> Find open age groups</p></li>
-<li><p><code><a href="period_is_total.html">period_is_total()</a></code> Period equivalent of <code>age_is_total()</code></p></li>
+<ul><li><p><code><a href="period_is_total.html">period_is_total()</a></code> Period equivalent of <code>age_is_total()</code></p></li>
 <li><p><code><a href="cohort_is_total.html">cohort_is_total()</a></code> Cohort equivalent of <code>age_is_total()</code></p></li>
+<li><p><code><a href="age_is_open_right.html">age_is_open_right()</a></code> Identify age groups open on right</p></li>
 </ul></div>
     </div>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"20-24"</span>, <span class="st">"Total"</span>, <span class="st">"100+"</span>, <span class="st">"ALL"</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"overall"</span>, <span class="st">"20-24"</span>, <span class="st">"Total"</span>, <span class="st">"100+"</span>, <span class="st">"ALL"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">age_is_total</span><span class="op">(</span><span class="va">labels</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 20-24 Total  100+   ALL </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> FALSE  TRUE FALSE  TRUE </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> overall   20-24   Total    100+     ALL </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    TRUE   FALSE    TRUE   FALSE    TRUE </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -89,7 +89,7 @@ cannot be interpreted. Choices are <code>"error"</code> (the default),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

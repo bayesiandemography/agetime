@@ -7,6 +7,8 @@ Create a new set of period labels.
 ``` r
 period_labels(
   breaks,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -16,6 +18,8 @@ period_labels(
 period_labels_one(
   lower_first,
   lower_last,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -25,6 +29,8 @@ period_labels_one(
 period_labels_five(
   lower_first,
   lower_last,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -34,6 +40,8 @@ period_labels_five(
 period_labels_ten(
   lower_first,
   lower_last,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -46,6 +54,16 @@ period_labels_ten(
 - breaks:
 
   Boundaries between periods. A numeric vector.
+
+- open_left:
+
+  Whether first period is "open", i.e. has no lower limit. Default is
+  `FALSE`.
+
+- open_right:
+
+  Whether last period is "open", i.e. has no upper limit. Default is
+  `FALSE`.
 
 - format_single:
 

@@ -11,7 +11,7 @@ contain the old ones."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -51,7 +51,7 @@ contain the old ones.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">age_modify</span><span class="op">(</span></span>
 <span>  <span class="va">labels</span>,</span>
 <span>  <span class="va">breaks</span>,</span>
-<span>  open <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -69,10 +69,12 @@ contain the old ones.</p>
 A numeric vector.</p></dd>
 
 
-<dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
+<dt id="arg-open-right">open_right<a class="anchor" aria-label="anchor" href="#arg-open-right"></a></dt>
 <dd><p>Whether the oldest age group
-is "open", i.e. has no upper limit.
-Default is <code>TRUE</code>.</p></dd>
+is open on the right, i.e. has no upper limit.
+If <code>NULL</code> (the default), <code>open_right</code> is set to
+<code>TRUE</code> if <code>labels</code> has an age group that is open
+on the right, and to <code>FALSE</code> otherwise.</p></dd>
 
 
 <dt id="arg-interpret-fail">interpret_fail<a class="anchor" aria-label="anchor" href="#arg-interpret-fail"></a></dt>
@@ -83,7 +85,7 @@ cannot be interpreted. Choices are <code>"error"</code> (the default),
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>Character vector or factor with the same length as <code>labels</code>.</p>
+    <p>Factor with the same length as <code>labels</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -98,17 +100,29 @@ cannot be interpreted. Choices are <code>"error"</code> (the default),
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1-4"</span>, <span class="st">"87-89"</span>, <span class="st">"0"</span>, <span class="st">"50-54"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="va">labels</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0-9"   "40-89" "0-9"   "40-89"</span>
-<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="va">labels</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">90</span><span class="op">)</span>, open <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0-9"   "40-89" "0-9"   "40-89"</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"16"</span>, <span class="st">"22-23"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="va">labels</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 10-14 15-24 15-24</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 10-14 15-24</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## factor input: factor in, factor out</span></span></span>
-<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span><span class="op">)</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0-9 0-9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 0-9 10-89 90+</span>
+<span class="r-in"><span><span class="co">## open_right inferred from labels</span></span></span>
+<span class="r-in"><span><span class="va">labels_no_open</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1-4"</span>, <span class="st">"87-89"</span>, <span class="st">"0"</span>, <span class="st">"50-54"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="va">labels_no_open</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0-9   40-89 0-9   40-89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 0-9 10-39 40-89</span>
+<span class="r-in"><span><span class="va">labels_has_open</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"1-4"</span>, <span class="st">"87+"</span>, <span class="st">"0"</span>, <span class="st">"50-54"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span><span class="va">labels_has_open</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">90</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in check_m_contains(m_contains = m_contains, label_type = label_type):</span> label <span style="color: #0000BB;">"87+"</span> cannot each lie in exactly one new age group.</span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Make sure that every old age group lies in exactly one new age group?</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## open_right specified</span></span></span>
+<span class="r-in"><span><span class="fu">age_modify</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="va">labels_no_open</span>,</span></span>
+<span class="r-in"><span>  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">40</span>, <span class="fl">90</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  open_right <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0-9   40-89 0-9   40-89</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Levels: 0-9 10-39 40-89 90+</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -120,7 +134,7 @@ cannot be interpreted. Choices are <code>"error"</code> (the default),
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

@@ -1,9 +1,8 @@
 # Work with Age, Period, and Cohort Labels
 
-Functions for cleaning, manipulating, and extracting information from
-labels for age groups, periods, and cohorts.
+Functions for working with labels for age groups, periods, and cohorts.
 
-## Get information about existing labels
+## Functions
 
 **Extract lower limits, upper limits, widths, midpoints**
 
@@ -20,25 +19,8 @@ labels for age groups, periods, and cohorts.
 |  |  |  |
 |----|----|----|
 |  |  |  |
-| [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md) |  | [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md) |
+| [`age_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_is_open_right.md) | [`period_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_is_open_left.md) | [`cohort_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md) |
 | [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md) | [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md) | [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md) |
-
-**Characterise or make assertions**
-
-|  |  |  |
-|----|----|----|
-|  |  |  |
-| [`age_check()`](https://bayesiandemography.github.io/agetime/reference/age_check.md) | [`period_check()`](https://bayesiandemography.github.io/agetime/reference/period_check.md) | [`cohort_check()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md) |
-| [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md) | [`period_assert()`](https://bayesiandemography.github.io/agetime/reference/period_check.md) | [`cohort_assert()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md) |
-
-**Create mappings between intervals**
-
-|  |  |  |
-|----|----|----|
-|  |  |  |
-| [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md) | [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md) | [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md) |
-
-## Clean or modify existing labels
 
 **Use standard format**
 
@@ -69,23 +51,28 @@ labels for age groups, periods, and cohorts.
 |  |  |  |
 |----|----|----|
 |  |  |  |
-| [`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
-| [`age_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
-| [`age_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
-| [`age_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) | [`period_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md) | [`cohort_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md) |
-| [`age_levels_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md) |  |  |
-| [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md) |  | [`cohort_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.md) |
+| [`age_fill()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md) | [`period_fill()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md) | [`cohort_fill()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md) |
+| [`age_fill_one()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md) | [`period_fill_one()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md) | [`cohort_fill_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md) |
+| [`age_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md) | [`period_fill_five()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md) | [`cohort_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md) |
+| [`age_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md) | [`period_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md) | [`cohort_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md) |
+| [`age_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md) |  |  |
+
+**Define open intervals**
+
+|  |  |  |
+|----|----|----|
+|  |  |  |
+| [`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md) | [`period_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md) | [`cohort_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md) |
+|  | [`period_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md) | [`cohort_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md) |
 
 **Put levels in order**
 
 |  |  |  |
 |----|----|----|
 |  |  |  |
-| [`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md) | [`period_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/period_levels_sort.md) | [`cohort_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_sort.md) |
+| [`age_sort()`](https://bayesiandemography.github.io/agetime/reference/age_sort.md) | [`period_sort()`](https://bayesiandemography.github.io/agetime/reference/period_sort.md) | [`cohort_sort()`](https://bayesiandemography.github.io/agetime/reference/cohort_sort.md) |
 
-## Make new labels
-
-**New labels with standard format**
+**Create new labels**
 
 |  |  |  |
 |----|----|----|
@@ -95,6 +82,21 @@ labels for age groups, periods, and cohorts.
 | [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) |  |  |
+
+**Characterise labels or make assertions**
+
+|  |  |  |
+|----|----|----|
+|  |  |  |
+| [`age_check()`](https://bayesiandemography.github.io/agetime/reference/age_check.md) | [`period_check()`](https://bayesiandemography.github.io/agetime/reference/period_check.md) | [`cohort_check()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md) |
+| [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_check.md) | [`period_assert()`](https://bayesiandemography.github.io/agetime/reference/period_check.md) | [`cohort_assert()`](https://bayesiandemography.github.io/agetime/reference/cohort_check.md) |
+
+**Create mappings between labels**
+
+|  |  |  |
+|----|----|----|
+|  |  |  |
+| [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md) | [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md) | [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md) |
 
 ## See also
 

@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -42,12 +42,17 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">age_labels</span><span class="op">(</span><span class="va">breaks</span>, open <span class="op">=</span> <span class="cn">TRUE</span>, include_total <span class="op">=</span> <span class="cn">FALSE</span>, include_na <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">age_labels</span><span class="op">(</span></span>
+<span>  <span class="va">breaks</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  include_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_na <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">age_labels_one</span><span class="op">(</span></span>
 <span>  lower_first <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  lower_last <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  open <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_na <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
@@ -55,7 +60,7 @@
 <span><span class="fu">age_labels_five</span><span class="op">(</span></span>
 <span>  lower_first <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  lower_last <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  open <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_na <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
@@ -63,12 +68,17 @@
 <span><span class="fu">age_labels_ten</span><span class="op">(</span></span>
 <span>  lower_first <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  lower_last <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>  open <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  include_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  include_na <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">age_labels_life</span><span class="op">(</span>lower_last <span class="op">=</span> <span class="fl">100</span>, include_total <span class="op">=</span> <span class="cn">FALSE</span>, include_na <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">age_labels_life</span><span class="op">(</span></span>
+<span>  lower_last <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  include_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  include_na <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -80,7 +90,7 @@
 A numeric vector.</p></dd>
 
 
-<dt id="arg-open">open<a class="anchor" aria-label="anchor" href="#arg-open"></a></dt>
+<dt id="arg-open-right">open_right<a class="anchor" aria-label="anchor" href="#arg-open-right"></a></dt>
 <dd><p>Whether the oldest age group
 is "open", i.e. has no upper limit.
 Default is <code>TRUE</code>.</p></dd>
@@ -114,12 +124,13 @@ last age group.</p></dd>
     <h2 id="abridged-and-complete-life-tables">Abridged and complete life tables<a class="anchor" aria-label="anchor" href="#abridged-and-complete-life-tables"></a></h2>
 
 
-
-<p>An 'abridged' life table uses age groups <code>"0"</code>,
-<code>"1-4"</code>, <code>"5-9"</code>, <code>"10-14"</code>, and so on
-up to the oldest age group, which is open on the right.
-A 'complete' life table uses single-year age groups.</p>
-    </div>
+<ul><li><p>An 'abridged' life table uses age groups <code>"0"</code>
+and <code>"1-4"</code>, followed by 5-year age groups <code>"5-9"</code>, <code>"10-14"</code>, ...</p></li>
+<li><p>A 'complete' life table uses single-year age groups
+<code>"0"</code>, <code>"1"</code>, <code>"2"</code>, ...</p></li>
+<li><p>Both types of life table have an open interval
+such as <code>"85+"</code> or <code>"100+"</code>.</p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">
@@ -145,7 +156,7 @@ A 'complete' life table uses single-year age groups.</p>
 <span class="r-in"><span><span class="fu">age_labels_five</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  lower_first <span class="op">=</span> <span class="fl">15</span>,</span></span>
 <span class="r-in"><span>  lower_last <span class="op">=</span> <span class="fl">45</span>,</span></span>
-<span class="r-in"><span>  open <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  open_right <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "15-19" "20-24" "25-29" "30-34" "35-39" "40-44" "45-49"</span>
 <span class="r-in"><span></span></span>
@@ -153,7 +164,7 @@ A 'complete' life table uses single-year age groups.</p>
 <span class="r-in"><span><span class="fu">age_labels_one</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  lower_first <span class="op">=</span> <span class="fl">15</span>,</span></span>
 <span class="r-in"><span>  lower_last <span class="op">=</span> <span class="fl">49</span>,</span></span>
-<span class="r-in"><span>  open <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  open_right <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  [1] "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [16] "30" "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" "41" "42" "43" "44"</span>
@@ -170,7 +181,7 @@ A 'complete' life table uses single-year age groups.</p>
 <span class="r-in"><span><span class="co">## arbitrary age groups</span></span></span>
 <span class="r-in"><span><span class="fu">age_labels</span><span class="op">(</span></span></span>
 <span class="r-in"><span>  breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">14</span>, <span class="fl">18</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  open <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  open_right <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0-4"   "5-9"   "10-13" "14-17"</span>
 <span class="r-in"><span></span></span>
@@ -190,7 +201,7 @@ A 'complete' life table uses single-year age groups.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer></div>

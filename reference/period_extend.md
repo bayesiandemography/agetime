@@ -1,6 +1,6 @@
 # Extend a Set of Periods
 
-Add new periods at the end of `labels`.
+Continue an existing set of period labels.
 
 ## Usage
 
@@ -51,8 +51,7 @@ period_extend(
 
 ## Value
 
-Character vector or factor. Length is `n`, or `length(labels) + n` when
-`include_x` is `TRUE`.
+Character vector or factor.
 
 ## Details
 

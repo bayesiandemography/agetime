@@ -1,14 +1,9 @@
 # Check or Make Assertions About Cohorts
 
-`cohort_check()` creates reports comparing cohort labels against
-expectations.
+`cohort_check()` reports on whether cohorts labels meet conditions such
+as not overlapping.
 
-`cohort_assert()` throws an error if cohort labels do not conform to
-expectations.
-
-If `labels` is a factor, then the tests are applied to the `levels`
-attribute of `labels`. Otherwise the tests are applied to the elements
-of `labels`.
+`cohort_assert()` throws an error if conditions are not met.
 
 ## Usage
 
@@ -19,7 +14,8 @@ cohort_check(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
-  has_open = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -31,7 +27,8 @@ cohort_assert(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
-  has_open = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -62,10 +59,15 @@ cohort_assert(
 
   Check that there is no `NA` label. Default is `FALSE` (don't check).
 
-- has_open:
+- has_open_left:
 
-  Check that at least one cohort has no lower limit. Default is `FALSE`
-  (don't check).
+  Check that at least one cohort is open on the left (has no lower
+  limit). Default is `FALSE` (don't check).
+
+- has_open_right:
+
+  Check that at least one cohort is open on the right (has no upper
+  limit). Default is `FALSE` (don't check).
 
 - interpret_single:
 
@@ -86,7 +88,7 @@ cohort_assert(
 
 - `cohort_check()` returns a list with a logical flag called `ok` and a
   [tibble](https://tibble.tidyverse.org/reference/tibble.html) called
-  `details` with columns `check`, `passed`, and `comment`.
+  `details`.
 
 - `cohort_assert()` returns `labels` invisibly, or raises an error.
 
@@ -135,20 +137,22 @@ cohort_check(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  has_open = TRUE
+  has_open_left = TRUE,
+  has_open_right = TRUE
 )
 #> $ok
 #> [1] FALSE
 #> 
 #> $details
-#> # A tibble: 5 × 3
-#>   check      passed comment                      
-#>   <chr>      <lgl>  <chr>                        
-#> 1 no_overlap TRUE   NA                           
-#> 2 no_gap     TRUE   NA                           
-#> 3 no_total   TRUE   NA                           
-#> 4 no_na      TRUE   NA                           
-#> 5 has_open   FALSE  Highest interval: '2030-2035'
+#> # A tibble: 6 × 3
+#>   check          passed comment                      
+#>   <chr>          <lgl>  <chr>                        
+#> 1 no_overlap     TRUE   NA                           
+#> 2 no_gap         TRUE   NA                           
+#> 3 no_total       TRUE   NA                           
+#> 4 no_na          TRUE   NA                           
+#> 5 has_open_left  FALSE  Lowest interval: '2020-2025' 
+#> 6 has_open_right FALSE  Highest interval: '2030-2035'
 #> 
 
 ## throw error if overlap or gap

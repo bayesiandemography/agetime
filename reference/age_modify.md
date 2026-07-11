@@ -9,7 +9,7 @@ contain the old ones.
 age_modify(
   labels,
   breaks,
-  open = TRUE,
+  open_right = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 ```
@@ -24,10 +24,12 @@ age_modify(
 
   Boundaries between age groups. A numeric vector.
 
-- open:
+- open_right:
 
-  Whether the oldest age group is "open", i.e. has no upper limit.
-  Default is `TRUE`.
+  Whether the oldest age group is open on the right, i.e. has no upper
+  limit. If `NULL` (the default), `open_right` is set to `TRUE` if
+  `labels` has an age group that is open on the right, and to `FALSE`
+  otherwise.
 
 - interpret_fail:
 
@@ -36,7 +38,7 @@ age_modify(
 
 ## Value
 
-Character vector or factor with the same length as `labels`.
+Factor with the same length as `labels`.
 
 ## See also
 
@@ -58,14 +60,27 @@ Character vector or factor with the same length as `labels`.
 ## Examples
 
 ``` r
-labels <- c("1-4", "87-89", "0", "50-54")
-age_modify(labels, breaks = c(0, 10, 40, 90))
-#> [1] "0-9"   "40-89" "0-9"   "40-89"
-age_modify(labels, breaks = c(0, 10, 40, 90), open = FALSE)
-#> [1] "0-9"   "40-89" "0-9"   "40-89"
+labels <- c("10-14", "16", "22-23")
+age_modify(labels, breaks = c(10, 15, 25))
+#> [1] 10-14 15-24 15-24
+#> Levels: 10-14 15-24
 
-## factor input: factor in, factor out
-age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))
-#> [1] 0-9 0-9
-#> Levels: 0-9 10-89 90+
+## open_right inferred from labels
+labels_no_open <- c("1-4", "87-89", "0", "50-54")
+age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
+#> [1] 0-9   40-89 0-9   40-89
+#> Levels: 0-9 10-39 40-89
+labels_has_open <- c("1-4", "87+", "0", "50-54")
+age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
+#> Error in check_m_contains(m_contains = m_contains, label_type = label_type): label "87+" cannot each lie in exactly one new age group.
+#> ℹ Make sure that every old age group lies in exactly one new age group?
+
+## open_right specified
+age_modify(
+  labels_no_open,
+  breaks = c(0, 10, 40, 90),
+  open_right = TRUE
+)
+#> [1] 0-9   40-89 0-9   40-89
+#> Levels: 0-9 10-39 40-89 90+
 ```

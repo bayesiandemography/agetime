@@ -7,8 +7,14 @@
   : Check or Make Assertions About Age Groups
 - [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
   : Extend a Set of Age Groups
-- [`age_is_open()`](https://bayesiandemography.github.io/agetime/reference/age_is_open.md)
-  : Identify Age Labels for Open Age Groups
+- [`age_fill()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md)
+  [`age_fill_one()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md)
+  [`age_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md)
+  [`age_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md)
+  [`age_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md)
+  : Fill in Gaps in Age Group Levels
+- [`age_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_is_open_right.md)
+  : Identify Open Age Groups
 - [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
   : Identify Age Group Labels for Totals
 - [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
@@ -17,16 +23,6 @@
   [`age_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   : Create New Age Group Labels
-- [`age_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
-  [`age_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
-  [`age_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
-  [`age_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
-  [`age_levels_fill_life()`](https://bayesiandemography.github.io/agetime/reference/age_levels_fill.md)
-  : Fill in Gaps in Age Group Levels
-- [`age_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/age_levels_set_open.md)
-  : Set Open Age Group Level
-- [`age_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/age_levels_sort.md)
-  : Sort Age Group Levels
 - [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_upper()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
@@ -40,6 +36,10 @@
   [`age_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
   [`age_modify_life()`](https://bayesiandemography.github.io/agetime/reference/age_modify_five.md)
   : Convert to Specialised Age Groups
+- [`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md)
+  : Specify Open Age Group
+- [`age_sort()`](https://bayesiandemography.github.io/agetime/reference/age_sort.md)
+  : Sort Age Group Levels
 - [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
   : Standardize Age Group Labels
 - [`agetime-package`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
@@ -50,8 +50,14 @@
   : Check or Make Assertions About Cohorts
 - [`cohort_extend()`](https://bayesiandemography.github.io/agetime/reference/cohort_extend.md)
   : Extend a Set of Cohorts
-- [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
-  : Identify Cohort Labels for Open Cohorts
+- [`cohort_fill()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md)
+  [`cohort_fill_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md)
+  [`cohort_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md)
+  [`cohort_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_fill.md)
+  : Fill in Gaps in Cohort Levels
+- [`cohort_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
+  [`cohort_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
+  : Identify Open Cohorts
 - [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
   : Identify Cohort Labels for Totals
 - [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
@@ -59,15 +65,6 @@
   [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   [`cohort_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   : Create New Cohort Labels
-- [`cohort_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
-  [`cohort_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
-  [`cohort_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
-  [`cohort_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_fill.md)
-  : Fill in Gaps in Cohort Levels
-- [`cohort_levels_set_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_set_open.md)
-  : Set Open Cohort Level
-- [`cohort_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/cohort_levels_sort.md)
-  : Sort Cohort Levels
 - [`cohort_lower()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_upper()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
@@ -80,6 +77,11 @@
 - [`cohort_modify_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   [`cohort_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_modify_five.md)
   : Convert to Equal-Length Cohorts
+- [`cohort_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
+  [`cohort_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
+  : Specify Open Cohort
+- [`cohort_sort()`](https://bayesiandemography.github.io/agetime/reference/cohort_sort.md)
+  : Sort Cohort Levels
 - [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
   : Standardize Cohort Labels
 - [`period_check()`](https://bayesiandemography.github.io/agetime/reference/period_check.md)
@@ -87,6 +89,14 @@
   : Check or Make Assertions About Periods
 - [`period_extend()`](https://bayesiandemography.github.io/agetime/reference/period_extend.md)
   : Extend a Set of Periods
+- [`period_fill()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md)
+  [`period_fill_one()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md)
+  [`period_fill_five()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md)
+  [`period_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/period_fill.md)
+  : Fill in Gaps in Period Levels
+- [`period_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_is_open_left.md)
+  [`period_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/period_is_open_left.md)
+  : Identify Open Periods
 - [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md)
   : Identify Period Labels for Totals
 - [`period_labels()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
@@ -94,13 +104,6 @@
   [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   [`period_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   : Create New Period Labels
-- [`period_levels_fill()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
-  [`period_levels_fill_one()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
-  [`period_levels_fill_five()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
-  [`period_levels_fill_ten()`](https://bayesiandemography.github.io/agetime/reference/period_levels_fill.md)
-  : Fill in Gaps in Period Levels
-- [`period_levels_sort()`](https://bayesiandemography.github.io/agetime/reference/period_levels_sort.md)
-  : Sort Period Levels
 - [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_mid()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_upper()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
@@ -113,5 +116,10 @@
 - [`period_modify_five()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
   [`period_modify_ten()`](https://bayesiandemography.github.io/agetime/reference/period_modify_five.md)
   : Convert to Equal-Length Periods
+- [`period_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md)
+  [`period_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md)
+  : Specify Open Period
+- [`period_sort()`](https://bayesiandemography.github.io/agetime/reference/period_sort.md)
+  : Sort Period Levels
 - [`period_standard()`](https://bayesiandemography.github.io/agetime/reference/period_standard.md)
   : Standardize Period Labels

@@ -5,12 +5,17 @@ Create a new set of age group labels.
 ## Usage
 
 ``` r
-age_labels(breaks, open = TRUE, include_total = FALSE, include_na = FALSE)
+age_labels(
+  breaks,
+  open_right = TRUE,
+  include_total = FALSE,
+  include_na = FALSE
+)
 
 age_labels_one(
   lower_first = 0,
   lower_last = 100,
-  open = TRUE,
+  open_right = TRUE,
   include_total = FALSE,
   include_na = FALSE
 )
@@ -18,7 +23,7 @@ age_labels_one(
 age_labels_five(
   lower_first = 0,
   lower_last = 100,
-  open = TRUE,
+  open_right = TRUE,
   include_total = FALSE,
   include_na = FALSE
 )
@@ -26,12 +31,17 @@ age_labels_five(
 age_labels_ten(
   lower_first = 0,
   lower_last = 100,
-  open = TRUE,
+  open_right = TRUE,
   include_total = FALSE,
   include_na = FALSE
 )
 
-age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
+age_labels_life(
+  lower_last = 100,
+  open_right = TRUE,
+  include_total = FALSE,
+  include_na = FALSE
+)
 ```
 
 ## Arguments
@@ -40,7 +50,7 @@ age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
 
   Boundaries between age groups. A numeric vector.
 
-- open:
+- open_right:
 
   Whether the oldest age group is "open", i.e. has no upper limit.
   Default is `TRUE`.
@@ -67,9 +77,14 @@ Character vector.
 
 ## Abridged and complete life tables
 
-An 'abridged' life table uses age groups `"0"`, `"1-4"`, `"5-9"`,
-`"10-14"`, and so on up to the oldest age group, which is open on the
-right. A 'complete' life table uses single-year age groups.
+- An 'abridged' life table uses age groups `"0"` and `"1-4"`, followed
+  by 5-year age groups `"5-9"`, `"10-14"`, ...
+
+- A 'complete' life table uses single-year age groups `"0"`, `"1"`,
+  `"2"`, ...
+
+- Both types of life table have an open interval such as `"85+"` or
+  `"100+"`.
 
 ## See also
 
@@ -97,7 +112,7 @@ age_labels_five(lower_last = 80)
 age_labels_five(
   lower_first = 15,
   lower_last = 45,
-  open = FALSE
+  open_right = FALSE
 )
 #> [1] "15-19" "20-24" "25-29" "30-34" "35-39" "40-44" "45-49"
 
@@ -105,7 +120,7 @@ age_labels_five(
 age_labels_one(
   lower_first = 15,
   lower_last = 49,
-  open = FALSE
+  open_right = FALSE
 )
 #>  [1] "15" "16" "17" "18" "19" "20" "21" "22" "23" "24" "25" "26" "27" "28" "29"
 #> [16] "30" "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" "41" "42" "43" "44"
@@ -122,7 +137,7 @@ age_labels_five(
 ## arbitrary age groups
 age_labels(
   breaks = c(0, 5, 10, 14, 18),
-  open = FALSE
+  open_right = FALSE
 )
 #> [1] "0-4"   "5-9"   "10-13" "14-17"
 

@@ -60,8 +60,11 @@ are assumed to exclude the upper limits so that `"2025-2030"` means
 
 ## See also
 
-- [`cohort_is_open()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open.md)
-  Find open cohorts
+- [`cohort_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
+  Identify cohorts open on left
+
+- [`cohort_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
+  Identify cohorts open on right
 
 - [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
   Age equivalent of `cohort_is_total()`

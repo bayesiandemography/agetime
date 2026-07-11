@@ -1,14 +1,9 @@
 # Check or Make Assertions About Age Groups
 
-`age_check()` creates reports comparing age group labels against
-expectations.
+`age_check()` reports on whether age group labels meet conditions such
+as not overlapping.
 
-`age_assert()` throws an error if age group labels do not conform to
-expectations.
-
-If `labels` is a factor, then the tests are applied to the `levels`
-attribute of `labels`. Otherwise the tests are applied to the elements
-of `labels`.
+`age_assert()` throws an error if conditions are not met.
 
 ## Usage
 
@@ -20,7 +15,7 @@ age_check(
   no_total = FALSE,
   no_na = FALSE,
   has_zero = FALSE,
-  has_open = FALSE,
+  has_open_right = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -32,7 +27,7 @@ age_assert(
   no_total = FALSE,
   no_na = FALSE,
   has_zero = FALSE,
-  has_open = FALSE,
+  has_open_right = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -67,10 +62,10 @@ age_assert(
   Check that at least one age group has a lower limit of zero. Default
   is `FALSE` (don't check).
 
-- has_open:
+- has_open_right:
 
-  Check that at least one age group has no upper limit. Default is
-  `FALSE` (don't check).
+  Check that at least one age group is open on the right (has no upper
+  limit). Default is `FALSE` (don't check).
 
 - valid_life:
 
@@ -86,15 +81,20 @@ age_assert(
 
 - `age_check()` returns a list with a logical flag called `ok` and a
   [tibble](https://tibble.tidyverse.org/reference/tibble.html) called
-  `details` with columns `check`, `passed`, and `comment`.
+  `details`.
 
 - `age_assert()` returns `labels` invisibly, or raises an error.
 
 ## Abridged and complete life tables
 
-An 'abridged' life table uses age groups `"0"`, `"1-4"`, `"5-9"`,
-`"10-14"`, and so on up to the oldest age group, which is open on the
-right. A 'complete' life table uses single-year age groups.
+- An 'abridged' life table uses age groups `"0"` and `"1-4"`, followed
+  by 5-year age groups `"5-9"`, `"10-14"`, ...
+
+- A 'complete' life table uses single-year age groups `"0"`, `"1"`,
+  `"2"`, ...
+
+- Both types of life table have an open interval such as `"85+"` or
+  `"100+"`.
 
 ## See also
 
@@ -121,7 +121,7 @@ age_check(
   no_total = TRUE,
   no_na = TRUE,
   has_zero = TRUE,
-  has_open = TRUE,
+  has_open_right = TRUE,
   valid_life = TRUE
 )
 #> $ok
@@ -129,15 +129,15 @@ age_check(
 #> 
 #> $details
 #> # A tibble: 7 × 3
-#>   check      passed comment
-#>   <chr>      <lgl>  <chr>  
-#> 1 no_overlap TRUE   NA     
-#> 2 no_gap     TRUE   NA     
-#> 3 no_total   TRUE   NA     
-#> 4 no_na      TRUE   NA     
-#> 5 has_zero   TRUE   NA     
-#> 6 has_open   TRUE   NA     
-#> 7 valid_life TRUE   NA     
+#>   check          passed comment
+#>   <chr>          <lgl>  <chr>  
+#> 1 no_overlap     TRUE   NA     
+#> 2 no_gap         TRUE   NA     
+#> 3 no_total       TRUE   NA     
+#> 4 no_na          TRUE   NA     
+#> 5 has_zero       TRUE   NA     
+#> 6 has_open_right TRUE   NA     
+#> 7 valid_life     TRUE   NA     
 #> 
 
 ## throw error if overlap or gap

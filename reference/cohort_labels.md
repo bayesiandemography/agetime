@@ -7,7 +7,8 @@ Create a new set of cohort labels.
 ``` r
 cohort_labels(
   breaks,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -17,7 +18,8 @@ cohort_labels(
 cohort_labels_one(
   lower_first,
   lower_last,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -27,7 +29,8 @@ cohort_labels_one(
 cohort_labels_five(
   lower_first,
   lower_last,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -37,7 +40,8 @@ cohort_labels_five(
 cohort_labels_ten(
   lower_first,
   lower_last,
-  open = FALSE,
+  open_left = FALSE,
+  open_right = FALSE,
   format_single = c("lower", "upper"),
   format_multi = c("include", "exclude"),
   include_total = FALSE,
@@ -51,9 +55,14 @@ cohort_labels_ten(
 
   Boundaries between cohorts A numeric vector.
 
-- open:
+- open_left:
 
   Whether first cohort is "open", i.e. has no lower limit. Default is
+  `FALSE`.
+
+- open_right:
+
+  Whether last cohort is "open", i.e. has no upper limit. Default is
   `FALSE`.
 
 - format_single:
@@ -120,7 +129,7 @@ cohort_labels_five(
 cohort_labels_five(
   lower_first = 1960,
   lower_last = 2020,
-  open = TRUE
+  open_left = TRUE
 )
 #>  [1] "<1960"     "1960-1965" "1965-1970" "1970-1975" "1975-1980" "1980-1985"
 #>  [7] "1985-1990" "1990-1995" "1995-2000" "2000-2005" "2005-2010" "2010-2015"
