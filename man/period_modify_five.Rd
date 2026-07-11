@@ -8,8 +8,8 @@
 period_modify_five(
   labels,
   offset = 0,
-  open_left = FALSE,
-  open_right = FALSE,
+  open_left = NULL,
+  open_right = NULL,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -18,8 +18,8 @@ period_modify_five(
 period_modify_ten(
   labels,
   offset = 0,
-  open_left = FALSE,
-  open_right = FALSE,
+  open_left = NULL,
+  open_right = NULL,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -32,12 +32,18 @@ period_modify_ten(
 alignment of periods. Default is \code{0}.}
 
 \item{open_left}{Whether the first period
-is "open", i.e. has no lower limit.
-Default is \code{FALSE}.}
+is open on the left, i.e. has no lower limit.
+Default is \code{NULL}, which infers from \code{labels}:
+\code{TRUE} when any label is open on the left, otherwise \code{FALSE}.
+Use \code{TRUE} or \code{FALSE} to add or suppress an open left level
+regardless of \code{labels}.}
 
 \item{open_right}{Whether the last period
-is "open", i.e. has no upper limit.
-Default is \code{FALSE}.}
+is open on the right, i.e. has no upper limit.
+Default is \code{NULL}, which infers from \code{labels}:
+\code{TRUE} when any label is open on the right, otherwise \code{FALSE}.
+Use \code{TRUE} or \code{FALSE} to add or suppress an open right level
+regardless of \code{labels}.}
 
 \item{interpret_single}{How to interpret
 labels for single-year periods.

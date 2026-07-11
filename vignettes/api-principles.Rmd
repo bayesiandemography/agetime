@@ -132,19 +132,25 @@ open intervals at the start or end of a generated label sequence.
 Age groups support `open_right` only; periods and cohorts support both
 directions.
 
+In `*_labels_*()` functions, these arguments default to explicit boolean
+values because you are constructing a new label grid. In `*_modify()`
+functions, the defaults are `NULL`, which preserves the open/closed topology
+of `labels`: open ends are kept when present, and omitted when not. Use
+`open_left = TRUE` or `open_right = TRUE` to add a structural open level
+even when no value in `labels` currently belongs to that group.
+
 ## Values and levels
 
 Functions such as `age_modify()`, `age_fill()`, `age_set_open_right()`, and
 `age_sort()` always return a factor. They preserve observed values where
-possible, and change or add levels. This is why `age_modify()` with
-`open_right = TRUE` can add a `90+` level even when no value in `labels`
-currently belongs to that open group, and why `age_set_open_right()` can add
-a `70+` level even when no value in `labels` currently belongs to that open
-group.
+possible, and change or add levels. By default, `age_modify()` infers
+whether to include an open top from `labels`. Use `open_right = TRUE` to add
+a `90+` level even when no value in `labels` currently belongs to that open
+group, as `age_set_open_right()` does for `70+`.
 
 ```{r level-contract}
 labels <- c("0-4", "60-64")
-age_modify(labels, breaks = c(0, 50, 70))
+age_modify(labels, breaks = c(0, 50, 70), open_right = TRUE)
 ```
 
 ## More information

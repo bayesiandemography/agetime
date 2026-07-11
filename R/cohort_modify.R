@@ -10,11 +10,17 @@
 #' @param breaks Boundaries between cohorts.
 #' A numeric vector.
 #' @param open_left Whether the first cohort
-#' is "open", i.e. has no lower limit.
-#' Default is `FALSE`.
+#' is open on the left, i.e. has no lower limit.
+#' Default is `NULL`, which infers from `labels`:
+#' `TRUE` when any label is open on the left, otherwise `FALSE`.
+#' Use `TRUE` or `FALSE` to add or suppress an open left level
+#' regardless of `labels`.
 #' @param open_right Whether the last cohort
-#' is "open", i.e. has no upper limit.
-#' Default is `FALSE`.
+#' is open on the right, i.e. has no upper limit.
+#' Default is `NULL`, which infers from `labels`:
+#' `TRUE` when any label is open on the right, otherwise `FALSE`.
+#' Use `TRUE` or `FALSE` to add or suppress an open right level
+#' regardless of `labels`.
 #' @return Factor with the same length as `labels`.
 #'
 #' @examples
@@ -31,13 +37,13 @@
 
 cohort_modify <- function(labels,
                           breaks,
-                          open_left = FALSE,
-                          open_right = FALSE,
+                          open_left = NULL,
+                          open_right = NULL,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_left, nm_x = "open_left")
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_left, nm_x = "open_left")
+  check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
@@ -94,13 +100,13 @@ cohort_modify <- function(labels,
 
 cohort_modify_five <- function(labels,
                                offset = 0,
-                               open_left = FALSE,
-                               open_right = FALSE,
+                               open_left = NULL,
+                               open_right = NULL,
                                interpret_single = c("lower", "upper"),
                                interpret_multi = c("include", "exclude"),
                                interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_left, nm_x = "open_left")
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_left, nm_x = "open_left")
+  check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
@@ -122,13 +128,13 @@ cohort_modify_five <- function(labels,
 #' @export
 cohort_modify_ten <- function(labels,
                               offset = 0,
-                              open_left = FALSE,
-                              open_right = FALSE,
+                              open_left = NULL,
+                              open_right = NULL,
                               interpret_single = c("lower", "upper"),
                               interpret_multi = c("include", "exclude"),
                               interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_left, nm_x = "open_left")
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_left, nm_x = "open_left")
+  check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)

@@ -8,19 +8,19 @@
 \usage{
 age_modify_five(
   labels,
-  open_right = TRUE,
+  open_right = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 
 age_modify_ten(
   labels,
-  open_right = TRUE,
+  open_right = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 
 age_modify_life(
   labels,
-  open_right = TRUE,
+  open_right = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -28,8 +28,11 @@ age_modify_life(
 \item{labels}{Vector of age group labels.}
 
 \item{open_right}{Whether the oldest age group
-is "open", i.e. has no upper limit.
-Default is \code{TRUE}.}
+is open on the right, i.e. has no upper limit.
+Default is \code{NULL}, which infers from \code{labels}:
+\code{TRUE} when any label is open on the right, otherwise \code{FALSE}.
+Use \code{TRUE} or \code{FALSE} to add or suppress an open top level
+regardless of \code{labels}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),

@@ -1,9 +1,41 @@
+#' Resolve Open Left
+#'
+#' @param is_open_left Whether to include an open-left interval, or `NULL`
+#' to infer from `intervals`.
+#' @param intervals An `agetime_intervals` object.
+#' @returns Single logical flag.
+#'
+#' @noRd
+resolve_open_left <- function(is_open_left, intervals) {
+  if (is.null(is_open_left)) {
+    return(int_is_open_left(intervals))
+  }
+  isTRUE(is_open_left)
+}
+
+#' Resolve Open Right
+#'
+#' @param is_open_right Whether to include an open-right interval, or `NULL`
+#' to infer from `intervals`.
+#' @param intervals An `agetime_intervals` object.
+#' @returns Single logical flag.
+#'
+#' @noRd
+resolve_open_right <- function(is_open_right, intervals) {
+  if (is.null(is_open_right)) {
+    return(int_is_open_right(intervals))
+  }
+  isTRUE(is_open_right)
+}
+
 #' Inner Modify
 #'
 #' @param labels Vector of labels.
 #' @param breaks Increasing vector of break points.
-#' @param is_open_left Whether to include an open-left interval.
-#' @param is_open_right Whether to include an open-right interval.
+#' @param is_open_left Whether to include an open-left interval, or `NULL`
+#' to infer from `labels`.
+#' @param is_open_right Whether to include an open-right interval, or `NULL`
+#' to infer from `labels`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param interpret_multi Rule for multi-year labels: `"include"`
@@ -32,6 +64,14 @@ inner_modify <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
+  )
+  is_open_left <- resolve_open_left(
+    is_open_left = is_open_left,
+    intervals = intervals
+  )
+  is_open_right <- resolve_open_right(
+    is_open_right = is_open_right,
+    intervals = intervals
   )
   int_has_total <- int_has_total(intervals)
   int_has_na <- int_has_na(intervals)
@@ -77,8 +117,10 @@ inner_modify <- function(labels,
 #' @param labels Vector of labels.
 #' @param width Interval width.
 #' @param offset Alignment offset for width-based breaks.
-#' @param is_open_left Whether to include an open-left interval.
-#' @param is_open_right Whether to include an open-right interval.
+#' @param is_open_left Whether to include an open-left interval, or `NULL`
+#' to infer from `labels`.
+#' @param is_open_right Whether to include an open-right interval, or `NULL`
+#' to infer from `labels`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param interpret_multi Rule for multi-year labels: `"include"`
@@ -126,6 +168,14 @@ inner_modify_width <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
+  )
+  is_open_left <- resolve_open_left(
+    is_open_left = is_open_left,
+    intervals = intervals
+  )
+  is_open_right <- resolve_open_right(
+    is_open_right = is_open_right,
+    intervals = intervals
   )
   if (is_open_left) {
     u <- get_upper(intervals)

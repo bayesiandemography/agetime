@@ -7,7 +7,7 @@
 age_modify(
   labels,
   breaks,
-  open_right = TRUE,
+  open_right = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -18,8 +18,11 @@ age_modify(
 A numeric vector.}
 
 \item{open_right}{Whether the oldest age group
-is "open", i.e. has no upper limit.
-Default is \code{TRUE}.}
+is open on the right, i.e. has no upper limit.
+Default is \code{NULL}, which infers from \code{labels}:
+\code{TRUE} when any label is open on the right, otherwise \code{FALSE}.
+Use \code{TRUE} or \code{FALSE} to add or suppress an open top level
+regardless of \code{labels}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -37,6 +40,7 @@ contain the old ones.
 labels <- c("1-4", "87-89", "0", "50-54")
 age_modify(labels, breaks = c(0, 10, 40, 90))
 age_modify(labels, breaks = c(0, 10, 40, 90), open_right = FALSE)
+age_modify(labels, breaks = c(0, 10, 40, 90), open_right = TRUE)
 
 ## preserves ordered attribute from ordered input
 age_modify(ordered(c("0-4", "5-9")), breaks = c(0, 10, 90))

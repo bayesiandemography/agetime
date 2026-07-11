@@ -4,19 +4,26 @@
 test_that("age_modify() with length-0 input returns empty factor with levels", {
   expect_identical(
     age_modify(character(0), breaks = c(0, 10, 90)),
-    factor(levels = c("0-9", "10-89", "90+"))
+    factor(levels = c("0-9", "10-89"))
+  )
+})
+
+test_that("age_modify() with length-0 input and open_right adds level", {
+  expect_identical(
+    levels(age_modify(character(0), breaks = c(0, 10, 90), open_right = TRUE)),
+    c("0-9", "10-89", "90+")
   )
 })
 
 test_that("age_modify() with length-0 factor updates levels", {
   expect_identical(
     age_modify(factor(), breaks = c(0, 10, 90)),
-    factor(levels = c("0-9", "10-89", "90+"))
+    factor(levels = c("0-9", "10-89"))
   )
   fx <- factor(character(0), levels = c("0-4", "5-9"))
   expect_identical(
     age_modify(fx, breaks = c(0, 10, 90)),
-    factor(character(0), levels = c("0-9", "10-89", "90+"))
+    factor(character(0), levels = c("0-9", "10-89"))
   )
 })
 

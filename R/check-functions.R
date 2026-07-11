@@ -41,6 +41,21 @@ check_flag <- function(x, nm_x) {
   invisible(TRUE)
 }
 
+#' Check Open Flag
+#'
+#' @param x Single logical flag (`TRUE`, `FALSE`, `1L`, or `0L`), or `NULL`
+#' to infer from `labels` later.
+#' @param nm_x Argument name used in error messages.
+#' @returns Return value used internally.
+#'
+#' @noRd
+check_open_flag <- function(x, nm_x) {
+  if (is.null(x)) {
+    return(invisible(TRUE))
+  }
+  check_flag(x = x, nm_x = nm_x)
+}
+
 #' Check In Limits Intervals
 #'
 #' @param x Numeric break points.

@@ -8,14 +8,18 @@
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
 #' @param open_right Whether the oldest age group
-#' is "open", i.e. has no upper limit.
-#' Default is `TRUE`.
+#' is open on the right, i.e. has no upper limit.
+#' Default is `NULL`, which infers from `labels`:
+#' `TRUE` when any label is open on the right, otherwise `FALSE`.
+#' Use `TRUE` or `FALSE` to add or suppress an open top level
+#' regardless of `labels`.
 #' @return Factor with the same length as `labels`.
 #'
 #' @examples
 #' labels <- c("1-4", "87-89", "0", "50-54")
 #' age_modify(labels, breaks = c(0, 10, 40, 90))
 #' age_modify(labels, breaks = c(0, 10, 40, 90), open_right = FALSE)
+#' age_modify(labels, breaks = c(0, 10, 40, 90), open_right = TRUE)
 #'
 #' ## preserves ordered attribute from ordered input
 #' age_modify(ordered(c("0-4", "5-9")), breaks = c(0, 10, 90))
@@ -30,9 +34,9 @@
 
 age_modify <- function(labels,
                        breaks,
-                       open_right = TRUE,
+                       open_right = NULL,
                        interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_modify(
     labels = labels,
@@ -81,9 +85,9 @@ age_modify <- function(labels,
 #' @export
 
 age_modify_five <- function(labels,
-                            open_right = TRUE,
+                            open_right = NULL,
                             interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_modify_width(
     labels = labels,
@@ -102,9 +106,9 @@ age_modify_five <- function(labels,
 #' @inheritParams age_modify
 #' @export
 age_modify_ten <- function(labels,
-                           open_right = TRUE,
+                           open_right = NULL,
                            interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_modify_width(
     labels = labels,
@@ -123,9 +127,9 @@ age_modify_ten <- function(labels,
 #' @inheritParams age_modify
 #' @export
 age_modify_life <- function(labels,
-                            open_right = TRUE,
+                            open_right = NULL,
                             interpret_fail = c("error", "warn", "silent")) {
-  check_flag(x = open_right, nm_x = "open_right")
+  check_open_flag(x = open_right, nm_x = "open_right")
   is_ordered <- is.factor(labels) && is.ordered(labels)
   labels <- to_character_or_factor(
     labels = labels,
@@ -168,11 +172,15 @@ age_modify_life <- function(labels,
   } else {
     breaks <- c(0L, 1L, seq.int(from = 5L, to = top_lower, by = 5L))
   }
+  is_open_right <- resolve_open_right(
+    is_open_right = open_right,
+    intervals = intervals
+  )
   inner_modify(
     labels = labels,
     breaks = breaks,
     is_open_left = FALSE,
-    is_open_right = open_right,
+    is_open_right = is_open_right,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",
