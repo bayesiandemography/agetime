@@ -28,7 +28,7 @@
 #' age_modify(
 #'   labels_no_open,
 #'   breaks = c(0, 10, 40, 90),
-#'   open_right = FALSE
+#'   open_right = TRUE
 #' )
 #' @seealso
 #' - [age_modify_five()] Convert to 5-year age groups

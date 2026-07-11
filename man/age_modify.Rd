@@ -49,7 +49,7 @@ age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
 age_modify(
   labels_no_open,
   breaks = c(0, 10, 40, 90),
-  open_right = FALSE
+  open_right = TRUE
 )
 }
 \seealso{
