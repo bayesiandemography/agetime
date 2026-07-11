@@ -47,7 +47,7 @@ Function names use the domain prefix plus an operation family.
 | Family | Purpose | Return type |
 |---|---|---|
 | `*_lower()`, `*_upper()`, `*_width()`, `*_mid()` | Extract interval properties | Numeric vector |
-| `*_is_open()`, `*_is_total()` | Identify special labels | Logical vector |
+| `*_is_open_left()`, `*_is_open_right()`, `*_is_total()` | Identify special labels | Logical vector |
 | `*_check()`, `*_assert()` | Validate labels | Diagnostics or error |
 | `*_standard()` | Convert labels to standard format | Same shape as `labels` |
 | `*_modify()` | Regroup labels into new intervals | Same shape as `labels` |

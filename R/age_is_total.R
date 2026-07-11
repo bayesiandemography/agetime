@@ -7,7 +7,7 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [age_is_open()] Find open age groups
+#' - [age_is_open_right()] Find open age groups
 #' - [period_is_total()] Period equivalent of `age_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
 #'
@@ -30,9 +30,9 @@ age_is_total <- function(labels,
 }
 
 
-#' Identify Age Labels for Open Age Groups
+#' Identify Age Labels for Right-Open Age Groups
 #'
-#' Find open age groups, i.e., age groups with no upper limit.
+#' Find right-open age groups, i.e., age groups with no upper limit.
 #'
 #' @inheritParams age_lower
 #'
@@ -40,16 +40,16 @@ age_is_total <- function(labels,
 #'
 #' @seealso
 #' - [age_is_total()] Find age labels for totals
-#' - [cohort_is_open()] Cohort equivalent of `age_is_open()`
+#' - [cohort_is_open_right()] Cohort equivalent of `age_is_open_right()`
 #'
 #' @examples
 #' labels <- c("20+", "infant", "100+", "60to79")
-#' age_is_open(labels)
+#' age_is_open_right(labels)
 #' @export
 
 # When length(labels) == 0, returns logical(0).
-age_is_open <- function(labels,
-                        interpret_fail = c("error", "warn", "silent")) {
+age_is_open_right <- function(labels,
+                              interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
     labels = labels,

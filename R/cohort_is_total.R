@@ -9,7 +9,8 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_is_open()] Find open cohorts
+#' - [cohort_is_open_left()] Find left-open cohorts
+#' - [cohort_is_open_right()] Find right-open cohorts
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
 #'
@@ -34,9 +35,9 @@ cohort_is_total <- function(labels,
 }
 
 
-#' Identify Cohort Labels for Open Cohorts
+#' Identify Cohort Labels for Left-Open Cohorts
 #'
-#' Find open cohorts, i.e., cohorts with no lower or upper limit.
+#' Find left-open cohorts, i.e., cohorts with no lower limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -46,18 +47,19 @@ cohort_is_total <- function(labels,
 #'
 #' @seealso
 #' - [cohort_is_total()] Find cohort labels for totals
-#' - [age_is_open()] Age equivalent of `cohort_is_open()`
+#' - [cohort_is_open_right()] Find right-open cohorts
+#' - [period_is_open_left()] Period equivalent of `cohort_is_open_left()`
 #'
 #' @examples
 #' labels <- c("2020", "<1900", "2040-2050", "2030+")
-#' cohort_is_open(labels)
+#' cohort_is_open_left(labels)
 #' @export
 
 # When length(labels) == 0, returns logical(0).
-cohort_is_open <- function(labels,
-                           interpret_single = c("lower", "upper"),
-                           interpret_multi = c("include", "exclude"),
-                           interpret_fail = c("error", "warn", "silent")) {
+cohort_is_open_left <- function(labels,
+                                interpret_single = c("lower", "upper"),
+                                interpret_multi = c("include", "exclude"),
+                                interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
     labels = labels,
@@ -66,6 +68,44 @@ cohort_is_open <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     check_open_left = TRUE,
+    check_open_right = FALSE
+  )
+}
+
+
+#' Identify Cohort Labels for Right-Open Cohorts
+#'
+#' Find right-open cohorts, i.e., cohorts with no upper limit.
+#'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
+#' @inheritParams cohort_lower
+#'
+#' @return Logical vector with the same length as `labels`.
+#'
+#' @seealso
+#' - [cohort_is_total()] Find cohort labels for totals
+#' - [cohort_is_open_left()] Find left-open cohorts
+#' - [age_is_open_right()] Age equivalent of `cohort_is_open_right()`
+#'
+#' @examples
+#' labels <- c("2020", "<1900", "2040-2050", "2030+")
+#' cohort_is_open_right(labels)
+#' @export
+
+# When length(labels) == 0, returns logical(0).
+cohort_is_open_right <- function(labels,
+                                 interpret_single = c("lower", "upper"),
+                                 interpret_multi = c("include", "exclude"),
+                                 interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
+  inner_is_open(
+    labels = labels,
+    label_type = "cohort",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail,
+    check_open_left = FALSE,
     check_open_right = TRUE
   )
 }

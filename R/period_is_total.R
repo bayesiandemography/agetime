@@ -35,9 +35,9 @@ period_is_total <- function(labels,
 }
 
 
-#' Identify Period Labels for Open Periods
+#' Identify Period Labels for Left-Open Periods
 #'
-#' Find open periods, i.e., periods with no lower or upper limit.
+#' Find left-open periods, i.e., periods with no lower limit.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
@@ -47,19 +47,19 @@ period_is_total <- function(labels,
 #'
 #' @seealso
 #' - [period_is_total()] Find period labels for totals
-#' - [cohort_is_open()] Cohort equivalent of `period_is_open()`
-#' - [age_is_open()] Age equivalent of `period_is_open()`
+#' - [period_is_open_right()] Find right-open periods
+#' - [cohort_is_open_left()] Cohort equivalent of `period_is_open_left()`
 #'
 #' @examples
 #' labels <- c("2020", "<1900", "2020-2030", "2030+")
-#' period_is_open(labels)
+#' period_is_open_left(labels)
 #' @export
 
 # When length(labels) == 0, returns logical(0).
-period_is_open <- function(labels,
-                           interpret_single = c("lower", "upper"),
-                           interpret_multi = c("include", "exclude"),
-                           interpret_fail = c("error", "warn", "silent")) {
+period_is_open_left <- function(labels,
+                                interpret_single = c("lower", "upper"),
+                                interpret_multi = c("include", "exclude"),
+                                interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
@@ -70,6 +70,46 @@ period_is_open <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     check_open_left = TRUE,
+    check_open_right = FALSE
+  )
+}
+
+
+#' Identify Period Labels for Right-Open Periods
+#'
+#' Find right-open periods, i.e., periods with no upper limit.
+#'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
+#' @inheritParams period_lower
+#'
+#' @return Logical vector with the same length as `labels`.
+#'
+#' @seealso
+#' - [period_is_total()] Find period labels for totals
+#' - [period_is_open_left()] Find left-open periods
+#' - [age_is_open_right()] Age equivalent of `period_is_open_right()`
+#'
+#' @examples
+#' labels <- c("2020", "<1900", "2020-2030", "2030+")
+#' period_is_open_right(labels)
+#' @export
+
+# When length(labels) == 0, returns logical(0).
+period_is_open_right <- function(labels,
+                                 interpret_single = c("lower", "upper"),
+                                 interpret_multi = c("include", "exclude"),
+                                 interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- match.arg(interpret_multi)
+  interpret_fail <- match.arg(interpret_fail)
+  inner_is_open(
+    labels = labels,
+    label_type = "period",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail,
+    check_open_left = FALSE,
     check_open_right = TRUE
   )
 }

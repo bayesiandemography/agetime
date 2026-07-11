@@ -64,7 +64,7 @@ df |>
   filter(!age_is_total(age))
 
 df |>
-  filter(age_is_open(age))
+  filter(age_is_open_right(age))
 ```
 
 ## Standardize messy labels
