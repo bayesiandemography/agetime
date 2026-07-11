@@ -1,4 +1,4 @@
-#' Fill in Gaps in Period Levels
+#' Fill in Gaps in Cohort Levels
 #'
 #' Fill in gaps in levels of `labels`.
 #'
@@ -6,48 +6,48 @@
 #' not have levels, convert it to
 #' a factor before filling in levels.
 #'
-#' - `period_levels_fill` adds periods
+#' - `cohort_fill` adds cohorts
 #'   specified by `breaks`.
-#' - `period_levels_fill_one` adds periods with
+#' - `cohort_fill_one` adds cohorts with
 #'   width 1.
-#' - `period_levels_fill_five` adds periods with
+#' - `cohort_fill_five` adds cohorts with
 #'   width 5.
-#' - `period_levels_fill_ten` adds periods with
+#' - `cohort_fill_ten` adds cohorts with
 #'   width 10.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
-#' @inheritParams period_lower
-#' @param breaks Boundaries of newly-created periods.
-#' Boundaries for existing periods can be omitted.
+#' @inheritParams cohort_lower
+#' @param breaks Boundaries of newly-created cohorts.
+#' Boundaries for existing cohorts can be omitted.
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [age_levels_fill()] Age equivalent of `period_levels_fill()`
-#' - [cohort_levels_fill()] Cohort equivalent of `period_levels_fill()`
+#' - [age_fill()] Age equivalent of `cohort_fill()`
+#' - [period_fill()] Period equivalent of `cohort_fill()`
 #'
 #' @examples
 #' labels <- factor(c("2020-2025", "2030-2035"))
 #' labels
-#' period_levels_fill(labels) ## uses existing boundaries
-#' period_levels_fill(labels, breaks = 2028)
-#' period_levels_fill_one(labels)
-#' period_levels_fill_five(labels)
+#' cohort_fill(labels) ## uses existing boundaries
+#' cohort_fill(labels, breaks = 2028)
+#' cohort_fill_one(labels)
+#' cohort_fill_five(labels)
 #'
 #' labels <- c("2051-2061", "2021-2031")
-#' period_levels_fill_ten(labels)
+#' cohort_fill_ten(labels)
 #'
 #' ## levels are used by functions
 #' ## such as 'table()'
 #' labels |> table()
 #' labels |>
-#'   period_levels_fill_ten() |>
+#'   cohort_fill_ten() |>
 #'   table()
 #'
 #' ## sort after filling
 #' labels |>
-#'   period_levels_fill_ten() |>
-#'   period_levels_sort() |>
+#'   cohort_fill_ten() |>
+#'   cohort_sort() |>
 #'   table()
 #' @export
 
@@ -57,7 +57,7 @@
 # length(labels) == 0 but labels
 # is a factor with levels, levels() are still filled in. The ordered attribute
 # is preserved when labels is an ordered factor.
-period_levels_fill <- function(labels,
+cohort_fill <- function(labels,
                                breaks = NULL,
                                interpret_single = c("lower", "upper"),
                                interpret_multi = c("include", "exclude"),
@@ -69,16 +69,16 @@ period_levels_fill <- function(labels,
     labels = labels,
     breaks = breaks,
     width = NULL,
-    label_type = "period",
+    label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
 
-#' @rdname period_levels_fill
+#' @rdname cohort_fill
 #' @export
-period_levels_fill_one <- function(labels,
+cohort_fill_one <- function(labels,
                                    interpret_single = c("lower", "upper"),
                                    interpret_multi = c("include", "exclude"),
                                    interpret_fail = c(
@@ -91,16 +91,16 @@ period_levels_fill_one <- function(labels,
     labels = labels,
     breaks = NULL,
     width = 1L,
-    label_type = "period",
+    label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
 
-#' @rdname period_levels_fill
+#' @rdname cohort_fill
 #' @export
-period_levels_fill_five <- function(labels,
+cohort_fill_five <- function(labels,
                                     interpret_single = c("lower", "upper"),
                                     interpret_multi = c("include", "exclude"),
                                     interpret_fail = c(
@@ -113,16 +113,16 @@ period_levels_fill_five <- function(labels,
     labels = labels,
     breaks = NULL,
     width = 5L,
-    label_type = "period",
+    label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
 }
 
-#' @rdname period_levels_fill
+#' @rdname cohort_fill
 #' @export
-period_levels_fill_ten <- function(labels,
+cohort_fill_ten <- function(labels,
                                    interpret_single = c("lower", "upper"),
                                    interpret_multi = c("include", "exclude"),
                                    interpret_fail = c(
@@ -135,7 +135,7 @@ period_levels_fill_ten <- function(labels,
     labels = labels,
     breaks = NULL,
     width = 10L,
-    label_type = "period",
+    label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail

@@ -64,24 +64,24 @@ labels for age groups, periods, and cohorts.
 
 \strong{Fill in gaps in levels}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_levels_fill]{age_levels_fill()}} \tab \code{\link[=period_levels_fill]{period_levels_fill()}} \tab \code{\link[=cohort_levels_fill]{cohort_levels_fill()}} \cr
-   \code{\link[=age_levels_fill_one]{age_levels_fill_one()}} \tab \code{\link[=period_levels_fill_one]{period_levels_fill_one()}} \tab \code{\link[=cohort_levels_fill_one]{cohort_levels_fill_one()}} \cr
-   \code{\link[=age_levels_fill_five]{age_levels_fill_five()}} \tab \code{\link[=period_levels_fill_five]{period_levels_fill_five()}} \tab \code{\link[=cohort_levels_fill_five]{cohort_levels_fill_five()}} \cr
-   \code{\link[=age_levels_fill_ten]{age_levels_fill_ten()}} \tab \code{\link[=period_levels_fill_ten]{period_levels_fill_ten()}} \tab \code{\link[=cohort_levels_fill_ten]{cohort_levels_fill_ten()}} \cr
-   \code{\link[=age_levels_fill_life]{age_levels_fill_life()}} \tab  \tab  \cr
+   \code{\link[=age_fill]{age_fill()}} \tab \code{\link[=period_fill]{period_fill()}} \tab \code{\link[=cohort_fill]{cohort_fill()}} \cr
+   \code{\link[=age_fill_one]{age_fill_one()}} \tab \code{\link[=period_fill_one]{period_fill_one()}} \tab \code{\link[=cohort_fill_one]{cohort_fill_one()}} \cr
+   \code{\link[=age_fill_five]{age_fill_five()}} \tab \code{\link[=period_fill_five]{period_fill_five()}} \tab \code{\link[=cohort_fill_five]{cohort_fill_five()}} \cr
+   \code{\link[=age_fill_ten]{age_fill_ten()}} \tab \code{\link[=period_fill_ten]{period_fill_ten()}} \tab \code{\link[=cohort_fill_ten]{cohort_fill_ten()}} \cr
+   \code{\link[=age_fill_life]{age_fill_life()}} \tab  \tab  \cr
 }
 
 
 \strong{Define open intervals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_levels_open_right]{age_levels_open_right()}} \tab \code{\link[=period_levels_open_left]{period_levels_open_left()}} \tab \code{\link[=cohort_levels_open_left]{cohort_levels_open_left()}} \cr
-    \tab \code{\link[=period_levels_open_right]{period_levels_open_right()}} \tab \code{\link[=cohort_levels_open_right]{cohort_levels_open_right()}} \cr
+   \code{\link[=age_open_right]{age_open_right()}} \tab \code{\link[=period_open_left]{period_open_left()}} \tab \code{\link[=cohort_open_left]{cohort_open_left()}} \cr
+    \tab \code{\link[=period_open_right]{period_open_right()}} \tab \code{\link[=cohort_open_right]{cohort_open_right()}} \cr
 }
 
 
 \strong{Put levels in order}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_levels_sort]{age_levels_sort()}} \tab \code{\link[=period_levels_sort]{period_levels_sort()}} \tab \code{\link[=cohort_levels_sort]{cohort_levels_sort()}} \cr
+   \code{\link[=age_sort]{age_sort()}} \tab \code{\link[=period_sort]{period_sort()}} \tab \code{\link[=cohort_sort]{cohort_sort()}} \cr
 }
 
 

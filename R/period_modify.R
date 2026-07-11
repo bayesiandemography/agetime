@@ -82,7 +82,7 @@ period_modify <- function(labels,
 #' - [age_modify_ten()] Age equivalent of `period_modify_ten()`
 #' - [cohort_modify_five()] Cohort equivalent of `period_modify_five()`
 #' - [cohort_modify_ten()] Cohort equivalent of `period_modify_ten()`
-#' - [period_levels_fill()] Add levels for intermediate periods
+#' - [period_fill()] Add levels for intermediate periods
 #'
 #' @examples
 #' labels <- c("2002-2004", "1987-1989", "2000", "Total")

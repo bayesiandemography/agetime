@@ -102,7 +102,7 @@ age_modify(x, breaks = c(0, 15, 55))
 age_modify_five(x)
 ```
 
-`age_levels_fill()` adds missing age groups to factor levels, and `age_levels_sort()` sorts levels.
+`age_fill()` adds missing age groups to factor levels, and `age_sort()` sorts levels.
 
 ## Check and assert
 

@@ -58,24 +58,24 @@
 #'
 #' |                          |                           |                           |
 #' |--------------------------|---------------------------|---------------------------|
-#' | [age_levels_fill()]      | [period_levels_fill()]    | [cohort_levels_fill()]    |
-#' | [age_levels_fill_one()]  | [period_levels_fill_one()] | [cohort_levels_fill_one()] |
-#' | [age_levels_fill_five()] | [period_levels_fill_five()] | [cohort_levels_fill_five()] |
-#' | [age_levels_fill_ten()]  | [period_levels_fill_ten()] | [cohort_levels_fill_ten()] |
-#' | [age_levels_fill_life()] |                           |                           |
+#' | [age_fill()]      | [period_fill()]    | [cohort_fill()]    |
+#' | [age_fill_one()]  | [period_fill_one()] | [cohort_fill_one()] |
+#' | [age_fill_five()] | [period_fill_five()] | [cohort_fill_five()] |
+#' | [age_fill_ten()]  | [period_fill_ten()] | [cohort_fill_ten()] |
+#' | [age_fill_life()] |                           |                           |
 #'
 #' **Define open intervals**
 #'
 #' |                     |                       |                       |
 #' |---------------------|-----------------------|-----------------------|
-#' | [age_levels_open_right()] | [period_levels_open_left()] | [cohort_levels_open_left()] |
-#' |                     | [period_levels_open_right()] | [cohort_levels_open_right()] |
+#' | [age_open_right()] | [period_open_left()] | [cohort_open_left()] |
+#' |                     | [period_open_right()] | [cohort_open_right()] |
 #'
 #' **Put levels in order**
 #'
 #' |                     |                         |                         |
 #' |---------------------|-------------------------|-------------------------|
-#' | [age_levels_sort()] | [period_levels_sort()] | [cohort_levels_sort()] |
+#' | [age_sort()] | [period_sort()] | [cohort_sort()] |
 #'
 #' **Create new labels**
 #'

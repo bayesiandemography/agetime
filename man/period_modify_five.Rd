@@ -100,6 +100,6 @@ period_modify_ten(labels, offset = 2)
 \item \code{\link[=age_modify_ten]{age_modify_ten()}} Age equivalent of \code{period_modify_ten()}
 \item \code{\link[=cohort_modify_five]{cohort_modify_five()}} Cohort equivalent of \code{period_modify_five()}
 \item \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} Cohort equivalent of \code{period_modify_ten()}
-\item \code{\link[=period_levels_fill]{period_levels_fill()}} Add levels for intermediate periods
+\item \code{\link[=period_fill]{period_fill()}} Add levels for intermediate periods
 }
 }

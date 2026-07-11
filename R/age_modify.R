@@ -74,7 +74,7 @@ age_modify <- function(labels,
 #' - [period_modify_ten()] Period equivalent of `age_modify_ten()`
 #' - [cohort_modify_five()] Cohort equivalent of `age_modify_five()`
 #' - [cohort_modify_ten()] Cohort equivalent of `age_modify_ten()`
-#' - [age_levels_fill()] Add levels for intermediate age groups
+#' - [age_fill()] Add levels for intermediate age groups
 #'
 #' @examples
 #' labels <- c("1-3", "87-89", "0", "91+", "total", "52")
