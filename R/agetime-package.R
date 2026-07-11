@@ -21,19 +21,6 @@
 #' |                     | [period_is_open_right()] | [cohort_is_open_right()] |
 #' | [age_is_total()] | [period_is_total()] | [cohort_is_total()] |
 #'
-#' **Characterise or make assertions**
-#'
-#' |                |                   |                   |
-#' |----------------|-------------------|-------------------|
-#' | [age_check()]  | [period_check()]  | [cohort_check()]  |
-#' | [age_assert()] | [period_assert()] | [cohort_assert()] |
-#'
-#' **Create mappings between intervals**
-#'
-#' |                 |                    |                    |
-#' |-----------------|--------------------|--------------------|
-#' | [age_mapping()] | [period_mapping()] | [cohort_mapping()] |
-#'
 #' **Use standard format**
 #'
 #' |                  |                     |                     |
@@ -88,6 +75,18 @@
 #' | [age_labels_ten()]  | [period_labels_ten()]   | [cohort_labels_ten()]   |
 #' | [age_labels_life()] |                         |                         |
 #'
+#' **Characterise labels or make assertions**
+#'
+#' |                |                   |                   |
+#' |----------------|-------------------|-------------------|
+#' | [age_check()]  | [period_check()]  | [cohort_check()]  |
+#' | [age_assert()] | [period_assert()] | [cohort_assert()] |
+#'
+#' **Create mappings between labels**
+#'
+#' |                 |                    |                    |
+#' |-----------------|--------------------|--------------------|
+#' | [age_mapping()] | [period_mapping()] | [cohort_mapping()] |
 #'
 #'
 #' @docType package

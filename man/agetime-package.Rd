@@ -29,19 +29,6 @@ labels for age groups, periods, and cohorts.
 }
 
 
-\strong{Characterise or make assertions}\tabular{lll}{
-    \tab  \tab  \cr
-   \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \cr
-   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \cr
-}
-
-
-\strong{Create mappings between intervals}\tabular{lll}{
-    \tab  \tab  \cr
-   \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \cr
-}
-
-
 \strong{Use standard format}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \cr
@@ -93,6 +80,19 @@ labels for age groups, periods, and cohorts.
    \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \cr
    \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \cr
    \code{\link[=age_labels_life]{age_labels_life()}} \tab  \tab  \cr
+}
+
+
+\strong{Characterise labels or make assertions}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \cr
+   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \cr
+}
+
+
+\strong{Create mappings between labels}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_mapping]{age_mapping()}} \tab \code{\link[=period_mapping]{period_mapping()}} \tab \code{\link[=cohort_mapping]{cohort_mapping()}} \cr
 }
 }
 

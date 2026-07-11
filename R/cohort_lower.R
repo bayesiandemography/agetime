@@ -2,17 +2,16 @@
 #' Limits, Widths, and Midpoints from  Cohort Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints for cohorts.
+#' widths, and midpoints from cohort labels.
 #'
 #' Lower and upper limits can be used
 #' to filter on cohorts.
 #' See below for examples.
 #'
-#' Pretending that open cohorts (e.g., `"<2000"`)
-#' have midpoints can be useful for plotting.
-#' `cohort_mid()` assigns open cohorts
-#' midpoints based on half the median width of
-#' the closed intervals in `labels`. See below for examples.
+#' `cohort_mid()` assigns open cohorts (e.g., `"<2000"`)
+#' pseudo-midpoints. These pseudo-midpoints are
+#' based on half the median width of the closed intervals in `labels`.
+#' See below for examples. Pseudo-midpoints are useful for plotting.
 #'
 #' @section Controlling how cohort labels are interpreted:
 #'
@@ -40,12 +39,6 @@
 #' then labels for multi-year cohorts
 #' are assumed to exclude the upper limits
 #' so that `"2025-2030"` means `[2025,2031)`.
-#'
-#' @section Open intervals:
-#'
-#' Cohorts can be open on the left (`"<a"` for `[-Inf, a)`)
-#' or on the right (`"a+"` for `[a, Inf)`).
-#' For open-left cohorts, `cohort_lower()` returns `-Inf`.
 #'
 #' @param labels Vector of cohort labels.
 #' @param interpret_single How to interpret

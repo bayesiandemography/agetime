@@ -57,18 +57,17 @@ Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints for cohorts.
+widths, and midpoints from cohort labels.
 }
 \details{
 Lower and upper limits can be used
 to filter on cohorts.
 See below for examples.
 
-Pretending that open cohorts (e.g., \code{"<2000"})
-have midpoints can be useful for plotting.
-\code{cohort_mid()} assigns open cohorts
-midpoints based on half the median width of
-the closed intervals in \code{labels}. See below for examples.
+\code{cohort_mid()} assigns open cohorts (e.g., \code{"<2000"})
+pseudo-midpoints. These pseudo-midpoints are
+based on half the median width of the closed intervals in \code{labels}.
+See below for examples. Pseudo-midpoints are useful for plotting.
 }
 \section{Controlling how cohort labels are interpreted}{
 
@@ -97,14 +96,6 @@ If \code{interpret_multi} is \code{"exclude"},
 then labels for multi-year cohorts
 are assumed to exclude the upper limits
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
-}
-
-\section{Open intervals}{
-
-
-Cohorts can be open on the left (\code{"<a"} for \verb{[-Inf, a)})
-or on the right (\code{"a+"} for \verb{[a, Inf)}).
-For open-left cohorts, \code{cohort_lower()} returns \code{-Inf}.
 }
 
 \examples{

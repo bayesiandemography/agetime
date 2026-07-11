@@ -57,12 +57,17 @@ Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints for periods.
+widths, and midpoints from period labels.
 }
 \details{
 Lower and upper limits can be used
 to filter on periods.
 See below for examples.
+
+\code{period_mid()} assigns periods (e.g., \code{"2025+"})
+pseudo-midpoints. These pseudo-midpoints are
+based on half the median width of the closed intervals in \code{labels}.
+See below for examples. Pseudo-midpoints are useful for plotting.
 }
 \section{Controlling how period labels are interpreted}{
 
@@ -92,16 +97,6 @@ If \code{interpret_multi} is \code{"exclude"},
 then labels for multi-year periods
 are assumed to exclude the upper limits,
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
-}
-
-\section{Open intervals}{
-
-
-Periods can be open on the left (\code{"<a"} for \verb{[-Inf, a)})
-or on the right (\code{"a+"} for \verb{[a, Inf)}).
-For open-left periods, \code{period_lower()} returns \code{-Inf}.
-Right-open periods are useful for forecasting
-(e.g. \code{c("2020-2030", "2030+")}).
 }
 
 \examples{

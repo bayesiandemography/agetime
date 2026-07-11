@@ -2,23 +2,15 @@
 #' Limits, Widths, and Midpoints from Age Group Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints of age groups.
+#' widths, and midpoints from age group labels
 #'
 #' Lower and upper limits can be used
 #' to filter on age. See below for examples.
 #'
-#' Pretending that open age groups (e.g., `"100+"`)
-#' have midpoints can be useful for plotting.
-#' `age_mid()` assigns open age groups
-#' midpoints based on half the median width of
-#' the closed intervals in `labels`. See below for examples.
-#'
-#' @section Open intervals:
-#'
-#' Age groups can be open on the right only, using labels
-#' such as `"85+"` for `[85, Inf)`.
-#' Open-left labels such as `"<5"` are not supported;
-#' use closed labels such as `"0-4"` instead.
+#' `age_mid()` assigns open age groups (e.g., `"100+"`)
+#' pseudo-midpoints. These pseudo-midpoints are
+#' based on half the median width of the closed intervals in `labels`.
+#' See below for examples. Pseudo-midpoints are useful for plotting.
 #'
 #' @param labels Vector of age group labels.
 #' @param interpret_fail Action if element of `labels`

@@ -27,27 +27,17 @@ Numeric vector with the same length as \code{labels}.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints of age groups.
+widths, and midpoints from age group labels
 }
 \details{
 Lower and upper limits can be used
 to filter on age. See below for examples.
 
-Pretending that open age groups (e.g., \code{"100+"})
-have midpoints can be useful for plotting.
-\code{age_mid()} assigns open age groups
-midpoints based on half the median width of
-the closed intervals in \code{labels}. See below for examples.
+\code{age_mid()} assigns open age groups (e.g., \code{"100+"})
+pseudo-midpoints. These pseudo-midpoints are
+based on half the median width of the closed intervals in \code{labels}.
+See below for examples. Pseudo-midpoints are useful for plotting.
 }
-\section{Open intervals}{
-
-
-Age groups can be open on the right only, using labels
-such as \code{"85+"} for \verb{[85, Inf)}.
-Open-left labels such as \code{"<5"} are not supported;
-use closed labels such as \code{"0-4"} instead.
-}
-
 \examples{
 labels <- c("5-9", "10-14", "100+")
 age_lower(labels)

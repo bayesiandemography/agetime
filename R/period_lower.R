@@ -2,11 +2,16 @@
 #' Limits, Widths, and Midpoints from Period Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints for periods.
+#' widths, and midpoints from period labels.
 #'
 #' Lower and upper limits can be used
 #' to filter on periods.
 #' See below for examples.
+#'
+#' `period_mid()` assigns periods (e.g., `"2025+"`)
+#' pseudo-midpoints. These pseudo-midpoints are
+#' based on half the median width of the closed intervals in `labels`.
+#' See below for examples. Pseudo-midpoints are useful for plotting.
 #'
 #' @section Controlling how period labels are interpreted:
 #'
@@ -35,14 +40,6 @@
 #' then labels for multi-year periods
 #' are assumed to exclude the upper limits,
 #' so that `"2025-2030"` means `[2025,2031)`.
-#'
-#' @section Open intervals:
-#'
-#' Periods can be open on the left (`"<a"` for `[-Inf, a)`)
-#' or on the right (`"a+"` for `[a, Inf)`).
-#' For open-left periods, `period_lower()` returns `-Inf`.
-#' Right-open periods are useful for forecasting
-#' (e.g. `c("2020-2030", "2030+")`).
 #'
 #' @param labels Vector of period labels.
 #' @param interpret_single How to interpret
