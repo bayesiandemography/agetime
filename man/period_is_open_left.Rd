@@ -81,15 +81,17 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
 \examples{
-labels <- c("2020", "<1900", "2020-2030", "2030+")
+labels <- c("2020", "<1900", "2020-2030", "2000 or more", "2030+")
 period_is_open_left(labels)
 period_is_open_right(labels)
 }
 \seealso{
 \itemize{
+\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify age groups open on right
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify cohorts open on left
+\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
 \item \code{\link[=period_is_total]{period_is_total()}} Identify period totals
-\item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify open period
-\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify open cohort
-\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify open age group
+\item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify period open on left
+\item \code{\link[=period_set_open_right]{period_set_open_right()}} Specify period open on right
 }
 }

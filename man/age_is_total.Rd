@@ -25,8 +25,8 @@ age_is_total(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=age_is_open_right]{age_is_open_right()}} Find open age groups
 \item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{age_is_total()}
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{age_is_total()}
+\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify age groups open on right
 }
 }

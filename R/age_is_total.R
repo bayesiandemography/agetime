@@ -7,9 +7,9 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [age_is_open_right()] Find open age groups
 #' - [period_is_total()] Period equivalent of `age_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
+#' - [age_is_open_right()] Identify age groups open on right
 #'
 #' @examples
 #' labels <- c("overall", "20-24", "Total", "100+", "ALL")
@@ -39,8 +39,12 @@ age_is_total <- function(labels,
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [age_is_total()] Find age labels for totals
-#' - [cohort_is_open_left()] Identify open cohort
+#' - [cohort_is_open_left()] Identify cohorts open on left
+#' - [cohort_is_open_right()] Identify cohorts open on right
+#' - [period_is_open_left()] Identify periods open on left
+#' - [period_is_open_right()] Identify periods open on right
+#' - [age_is_total()] Identify totals for age groups
+#' - [age_set_open_right()] Specify age group open on right
 #'
 #' @examples
 #' labels <- c("20+", "infant", "100+", "60to79", "80 years or more")

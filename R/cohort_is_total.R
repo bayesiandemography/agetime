@@ -9,7 +9,8 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_is_open_left()] Identify open cohorts
+#' - [cohort_is_open_left()] Identify cohorts open on left
+#' - [cohort_is_open_right()] Identify cohorts open on right
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
 #'
@@ -50,10 +51,12 @@ cohort_is_total <- function(labels,
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
+#' - [age_is_open_right()] Identify age groups open on right
+#' - [period_is_open_left()] Identify periods open on left
+#' - [period_is_open_right()] Identify periods open on right
 #' - [cohort_is_total()] Identify cohort totals
-#' - [cohort_set_open_left()] Specify open cohort
-#' - [period_is_open_left()] Identify open period
-#' - [age_is_open_right()] Identify open age group
+#' - [cohort_set_open_left()] Specify cohort open on left
+#' - [cohort_set_open_right()] Specify cohort open on right
 #'
 #' @examples
 #' labels <- c("2020", "<1900", "2040-2050", "1900 or less", "2030+")

@@ -86,9 +86,11 @@ cohort_is_open_right(labels)
 }
 \seealso{
 \itemize{
+\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify age groups open on right
+\item \code{\link[=period_is_open_left]{period_is_open_left()}} Identify periods open on left
+\item \code{\link[=period_is_open_right]{period_is_open_right()}} Identify periods open on right
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Identify cohort totals
-\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Specify open cohort
-\item \code{\link[=period_is_open_left]{period_is_open_left()}} Identify open period
-\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify open age group
+\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Specify cohort open on left
+\item \code{\link[=cohort_set_open_right]{cohort_set_open_right()}} Specify cohort open on right
 }
 }

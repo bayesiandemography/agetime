@@ -25,7 +25,11 @@ age_is_open_right(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=age_is_total]{age_is_total()}} Find age labels for totals
-\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify open cohort
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify cohorts open on left
+\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
+\item \code{\link[=period_is_open_left]{period_is_open_left()}} Identify periods open on left
+\item \code{\link[=period_is_open_right]{period_is_open_right()}} Identify periods open on right
+\item \code{\link[=age_is_total]{age_is_total()}} Identify totals for age groups
+\item \code{\link[=age_set_open_right]{age_set_open_right()}} Specify age group open on right
 }
 }

@@ -51,13 +51,15 @@ period_is_total <- function(labels,
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
+#' - [age_is_open_right()] Identify age groups open on right
+#' - [cohort_is_open_left()] Identify cohorts open on left
+#' - [cohort_is_open_right()] Identify cohorts open on right
 #' - [period_is_total()] Identify period totals
-#' - [period_set_open_left()] Specify open period
-#' - [cohort_is_open_left()] Identify open cohort
-#' - [age_is_open_right()] Identify open age group
+#' - [period_set_open_left()] Specify period open on left
+#' - [period_set_open_right()] Specify period open on right
 #'
 #' @examples
-#' labels <- c("2020", "<1900", "2020-2030", "2030+")
+#' labels <- c("2020", "<1900", "2020-2030", "2000 or more", "2030+")
 #' period_is_open_left(labels)
 #' period_is_open_right(labels)
 #' @export

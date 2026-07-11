@@ -10,8 +10,14 @@
 #' @return Factor with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_set_open_left()] Specify open cohort
-#' - [period_set_open_left()] Specify open period
+#' - [cohort_set_open_left()] Specify cohort open on left
+#' - [cohort_set_open_right()] Specify cohort open on right
+#' - [period_set_open_left()] Specify period open on left
+#' - [period_set_open_right()] Specify period open on right
+#' - [cohort_is_open_left()] Identify cohorts open on left
+#' - [cohort_is_open_right()] Identify cohorts open on right
+#' - [period_is_open_left()] Identify periods open on left
+#' - [period_is_open_right()] Identify periods open on right
 #' - [age_is_open_right()] Identify age groups open on right
 #'
 #' @examples
