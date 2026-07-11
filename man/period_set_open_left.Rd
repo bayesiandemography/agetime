@@ -4,11 +4,11 @@
 \name{period_set_open_left}
 \alias{period_set_open_left}
 \alias{period_set_open_right}
-\title{Open Period Levels}
+\title{Specify Open Period}
 \usage{
 period_set_open_left(
   labels,
-  upper_open,
+  at,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -16,7 +16,7 @@ period_set_open_left(
 
 period_set_open_right(
   labels,
-  lower_open,
+  at,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -25,7 +25,8 @@ period_set_open_right(
 \arguments{
 \item{labels}{Vector of period labels.}
 
-\item{upper_open}{Upper limit of open period.}
+\item{at}{Point at which intervals become open,
+e.g. \code{2020} in \verb{<2020} or \code{2030} in \verb{2030+}.}
 
 \item{interpret_single}{How to interpret
 labels for single-year periods.
@@ -40,20 +41,20 @@ Choices are \code{"include"} (the default) and
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
-
-\item{lower_open}{Lower limit of open period.}
 }
 \value{
 Factor with the same length as \code{labels}.
 }
 \description{
-Add an open period level.
+Add a factor level representing an open period.
 Replace existing periods where necessary.
 }
 \details{
 \itemize{
-\item \code{period_set_open_left()} adds a period with no lower limit.
-\item \code{period_set_open_right()} adds a period with no upper limit.
+\item \code{period_set_open_left()} adds a period open on the left
+(has no lower limit).
+\item \code{period_set_open_right()} adds a period open on the right
+(has no upper limit).
 }
 }
 \section{Controlling how period labels are interpreted}{
@@ -88,14 +89,16 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 
 \examples{
 labels <- c("2020-2024", "2025-2029")
-period_set_open_left(labels, upper_open = 2020)
+period_set_open_left(labels, at = 2020)
 
 labels <- c("2020-2024", "2025-2029", "2030")
-period_set_open_right(labels, lower_open = 2030)
+period_set_open_right(labels, at = 2030)
 }
 \seealso{
 \itemize{
-\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Open cohort levels
-\item \code{\link[=age_set_open_right]{age_set_open_right()}} Open age group levels on the right
+\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Specify open cohort
+\item \code{\link[=age_set_open_right]{age_set_open_right()}} Specify open age group
+\item \code{\link[=period_is_open_left]{period_is_open_left()}} Identify periods open on left
+\item \code{\link[=period_is_open_right]{period_is_open_right()}} Identify periods open on right
 }
 }

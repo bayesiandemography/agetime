@@ -2,7 +2,7 @@
 #' @export
 
 period_set_open_right <- function(labels,
-                                     lower_open,
+                                     at,
                                      interpret_single = c("lower", "upper"),
                                      interpret_multi = c("include", "exclude"),
                                      interpret_fail = c(
@@ -13,8 +13,8 @@ period_set_open_right <- function(labels,
   interpret_multi <- match.arg(interpret_multi)
   inner_levels_set_open(
     labels = labels,
-    open_boundary = lower_open,
-    nm_open_boundary = "lower_open",
+    open_boundary = at,
+    nm_open_boundary = "at",
     make_open_left = FALSE,
     make_open_right = TRUE,
     label_type = "period",

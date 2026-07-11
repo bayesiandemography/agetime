@@ -110,27 +110,26 @@ Boundary arguments name the boundary they represent.
 - `breaks` are boundaries between intervals.
 - `lower_first` is the lower bound of the first generated interval.
 - `lower_last` is the lower bound of the last generated interval.
-- `lower_open` is the lower bound of a right-open age group such as `70+`.
-- `upper_open` is the upper bound of a left-open cohort such as `<1990`.
+- `at` is the breakpoint at which intervals become open, e.g. `70` in `70+`
+  or `1990` in `<1990`. The function name specifies whether intervals open on
+  the left or right.
 
 ```{r boundaries}
 age_labels_five(lower_first = 0, lower_last = 20, open_right = FALSE)
 
-age_set_open_right(c("0-4", "60-64"), lower_open = 70)
+age_set_open_right(c("0-4", "60-64"), at = 70)
 
 cohort_set_open_left(
   c("2000-2004", "2010-2014"),
-  upper_open = 1990,
+  at = 1990,
   interpret_multi = "exclude"
 )
 ```
 
 The boolean arguments `open_left` and `open_right` control whether to include
 open intervals at the start or end of a generated label sequence.
-Boundary names such as `lower_open` and
-`upper_open` are used where the question is where the open interval starts
-or ends. Age groups support `open_right` only; periods and cohorts support
-both directions.
+Age groups support `open_right` only; periods and cohorts support both
+directions.
 
 ## Values and levels
 
@@ -144,7 +143,7 @@ currently belongs to that open group.
 
 ```{r level-contract}
 labels <- c("0-4", "60-64")
-age_set_open_right(labels, lower_open = 70)
+age_set_open_right(labels, at = 70)
 ```
 
 ## More information

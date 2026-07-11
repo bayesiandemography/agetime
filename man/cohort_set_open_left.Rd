@@ -4,11 +4,11 @@
 \name{cohort_set_open_left}
 \alias{cohort_set_open_left}
 \alias{cohort_set_open_right}
-\title{Open Cohort Levels}
+\title{Specify Open Cohort}
 \usage{
 cohort_set_open_left(
   labels,
-  upper_open,
+  at,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -16,7 +16,7 @@ cohort_set_open_left(
 
 cohort_set_open_right(
   labels,
-  lower_open,
+  at,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -25,7 +25,8 @@ cohort_set_open_right(
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{upper_open}{Upper limit of open cohort.}
+\item{at}{Point at which intervals become open,
+e.g. \code{2020} in \verb{<2020} or \code{2030} in \verb{2030+}.}
 
 \item{interpret_single}{How to interpret
 labels for single-year cohorts.
@@ -40,20 +41,20 @@ Choices are \code{"include"} (the default) and
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
-
-\item{lower_open}{Lower limit of open cohort.}
 }
 \value{
 Factor with the same length as \code{labels}.
 }
 \description{
-Add an open cohort level.
+Add a factor level representing an open cohort.
 Replace existing cohorts where necessary.
 }
 \details{
 \itemize{
-\item \code{cohort_set_open_left()} adds a cohort with no lower limit.
-\item \code{cohort_set_open_right()} adds a cohort with no upper limit.
+\item \code{cohort_set_open_left()} adds a cohort open on the left
+(has no lower limit).
+\item \code{cohort_set_open_right()} adds a cohort open on the right
+(has no upper limit).
 }
 }
 \section{Controlling how cohort labels are interpreted}{
@@ -87,16 +88,18 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 
 \examples{
 labels <- c("2020-2024", "<2000", "2015")
-cohort_set_open_left(labels, upper_open = 2020)
-cohort_set_open_left(labels, upper_open = 2005)
-cohort_set_open_left(c("2000-2004", "2010-2014"), upper_open = 1990)
+cohort_set_open_left(labels, at = 2020)
+cohort_set_open_left(labels, at = 2005)
+cohort_set_open_left(c("2000-2004", "2010-2014"), at = 1990)
 
 labels <- c("2020-2024", "2025-2029", "2030")
-cohort_set_open_right(labels, lower_open = 2030)
+cohort_set_open_right(labels, at = 2030)
 }
 \seealso{
 \itemize{
-\item \code{\link[=period_set_open_left]{period_set_open_left()}} Open period levels
-\item \code{\link[=age_set_open_right]{age_set_open_right()}} Open age group levels on the right
+\item \code{\link[=age_set_open_right]{age_set_open_right()}} Specify open age group
+\item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify open period
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify cohorts open on left
+\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
 }
 }

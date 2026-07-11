@@ -48,11 +48,11 @@ Default is \code{FALSE} (don't check).}
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least one period
-is open on the left.
+is open on the left (has no lower limit).
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least one period
-is open on the right.
+is open on the right (has no upper limit).
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret

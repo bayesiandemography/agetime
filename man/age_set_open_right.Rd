@@ -2,18 +2,15 @@
 % Please edit documentation in R/age_set_open_right.R
 \name{age_set_open_right}
 \alias{age_set_open_right}
-\title{Open Right Age Group Level}
+\title{Specify Open Age Group}
 \usage{
-age_set_open_right(
-  labels,
-  lower_open,
-  interpret_fail = c("error", "warn", "silent")
-)
+age_set_open_right(labels, at, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{labels}{Vector of age group labels.}
 
-\item{lower_open}{Lower limit of open age group.}
+\item{at}{Point at which intervals become open,
+e.g. \code{80} in \verb{80+}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -23,18 +20,20 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Add an open age group level, i.e. an age group with no upper limit.
+Add a factor level representing an age group that is
+open on the right (has no upper limit).
 Replace existing age groups where necessary.
 }
 \examples{
 labels <- c("20-24", "80-84", "100+")
-age_set_open_right(labels, lower_open = 80)
-age_set_open_right(labels, lower_open = 50)
-age_set_open_right(c("0-4", "60-64"), lower_open = 70)
+age_set_open_right(labels, at = 80)
+age_set_open_right(labels, at = 50)
+age_set_open_right(c("0-4", "60-64"), at = 70)
 }
 \seealso{
 \itemize{
-\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Open cohort levels on the left
-\item \code{\link[=cohort_set_open_right]{cohort_set_open_right()}} Open cohort levels on the right
+\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Specify open cohort
+\item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify open period
+\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify age groups open on right
 }
 }

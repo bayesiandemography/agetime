@@ -50,7 +50,7 @@ age group has a lower limit of zero.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least one age
-group is open on the right.
+group is open on the right (has no upper limit).
 Default is \code{FALSE} (don't check).}
 
 \item{valid_life}{Check that all labels are
