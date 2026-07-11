@@ -2,31 +2,29 @@ test_that("age_modify() recodes to wider age groups", {
   x <- c("1-4", "87-89", "0", "50-54")
   ans <- age_modify(x, breaks = c(0, 10, 40, 90))
 
-  expect_type(ans, "character")
-  expect_false(is.factor(ans))
+  expect_s3_class(ans, "factor")
   expect_identical(length(ans), length(x))
   expect_values(ans, c("0-9", "40-89", "0-9", "40-89"))
 })
 
 test_that("age_modify() with open_right = FALSE omits an open top group", {
   x <- c("1-4", "87-89", "0", "50-54")
-  fx <- factor(x)
 
   expect_values(
     age_modify(x, breaks = c(0, 10, 40, 90), open_right = FALSE),
     c("0-9", "40-89", "0-9", "40-89")
   )
   expect_identical(
-    levels(age_modify(fx, breaks = c(0, 10, 40, 90), open_right = FALSE)),
+    levels(age_modify(x, breaks = c(0, 10, 40, 90), open_right = FALSE)),
     c("0-9", "10-39", "40-89")
   )
   expect_identical(
-    levels(age_modify(fx, breaks = c(0, 10, 40, 90))),
+    levels(age_modify(x, breaks = c(0, 10, 40, 90))),
     c("0-9", "10-39", "40-89", "90+")
   )
 })
 
-test_that("age_modify() returns factor with updated levels for factor input", {
+test_that("age_modify() returns factor with updated levels", {
   fx <- factor(c("0-4", "5-9"))
   ans <- age_modify(fx, breaks = c(0, 10, 90))
 
@@ -40,8 +38,18 @@ test_that("age_modify_five() recodes to five-year age groups", {
   x <- c("1-3", "87-89", "0", "91+", "total", "52")
   ans <- age_modify_five(x)
 
-  expect_type(ans, "character")
+  expect_s3_class(ans, "factor")
   expect_values(ans, c("0-4", "85-89", "0-4", "90+", "Total", "50-54"))
+})
+
+test_that("age_modify_five() adds structural open top by default", {
+  fx <- factor(c("1-3", "52"), levels = c("1-3", "52"))
+  expect_true("50+" %in% levels(age_modify_five(fx)))
+})
+
+test_that("age_modify_five() with open_right = FALSE omits open top", {
+  fx <- factor(c("1-3", "52"), levels = c("1-3", "52"))
+  expect_false("50+" %in% levels(age_modify_five(fx, open_right = FALSE)))
 })
 
 test_that("age_modify_life() recodes to life-table age groups", {
@@ -63,6 +71,18 @@ test_that("age_modify_life() recodes closed groups to 5-year labels", {
   expect_values(age_modify_life("5-9"), "5-9")
   expect_values(age_modify_life("10-14"), "10-14")
   expect_values(age_modify_life("87-89"), "85-89")
+})
+
+test_that("age_modify_life() adds structural open top by default", {
+  fx <- factor("87-89")
+  expect_values(age_modify_life("87-89"), "85-89")
+  expect_true("90+" %in% levels(age_modify_life(fx)))
+})
+
+test_that("age_modify_life() with open_right = FALSE omits open top", {
+  fx <- factor("87-89")
+  expect_values(age_modify_life("87-89", open_right = FALSE), "85-89")
+  expect_false("90+" %in% levels(age_modify_life(fx, open_right = FALSE)))
 })
 
 test_that("age_modify_life() rounds max upper to a 5-year break", {
@@ -89,12 +109,13 @@ test_that("age_modify_five() fills factor levels", {
   ans <- age_modify_five(fx)
 
   expect_s3_class(ans, "factor")
-  expect_identical(as.character(ans), c("0-4", "50-54"))
+  expect_identical(as.character(ans), c("0-4", "50+"))
+  expect_true("50+" %in% levels(ans))
   expect_identical(
     levels(ans),
     c(
       "0-4", "5-9", "10-14", "15-19", "20-24", "25-29",
-      "30-34", "35-39", "40-44", "45-49", "50-54"
+      "30-34", "35-39", "40-44", "45-49", "50+"
     )
   )
 })
@@ -103,4 +124,24 @@ test_that("period/cohort modify-five recode to five-year groups", {
   x <- c("2021", "2026-2028")
   expect_values(period_modify_five(x), c("2020-2025", "2025-2030"))
   expect_values(cohort_modify_five(x), c("2020-2025", "2025-2030"))
+})
+
+test_that("cohort_modify() adds structural open_right level", {
+  labels <- c("2001-2004", "1987-1989", "2000")
+  expect_identical(
+    levels(cohort_modify(labels, breaks = c(1980, 2000, 2050), open_right = TRUE)),
+    c("1980-2000", "2000-2050", "2050+")
+  )
+})
+
+test_that("cohort_modify_five() needs open_left for open-left labels", {
+  x <- c("<2020", "2020-2024")
+  expect_error(
+    cohort_modify_five(x),
+    "cannot each lie in exactly one new cohort"
+  )
+  expect_values(
+    cohort_modify_five(x, open_left = TRUE),
+    c("<2020", "2020-2025")
+  )
 })

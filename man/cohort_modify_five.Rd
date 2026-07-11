@@ -8,6 +8,8 @@
 cohort_modify_five(
   labels,
   offset = 0,
+  open_left = FALSE,
+  open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -16,6 +18,8 @@ cohort_modify_five(
 cohort_modify_ten(
   labels,
   offset = 0,
+  open_left = FALSE,
+  open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -26,6 +30,14 @@ cohort_modify_ten(
 
 \item{offset}{Parameter controlling
 alignment of cohorts. Default is \code{0}.}
+
+\item{open_left}{Whether the first cohort
+is "open", i.e. has no lower limit.
+Default is \code{FALSE}.}
+
+\item{open_right}{Whether the last cohort
+is "open", i.e. has no upper limit.
+Default is \code{FALSE}.}
 
 \item{interpret_single}{How to interpret
 labels for single-year cohorts.
@@ -42,7 +54,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{labels}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Modify the cohorts used by \code{labels}.

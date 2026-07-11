@@ -15,7 +15,7 @@
 #' @param open_right Whether the last period
 #' is "open", i.e. has no upper limit.
 #' Default is `FALSE`.
-#' @return Character vector or factor with the same length as `labels`.
+#' @return Factor with the same length as `labels`.
 #'
 #' @examples
 #' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
@@ -28,10 +28,6 @@
 #' - [cohort_modify()] Cohort equivalent of `period_modify()`
 #' @export
 
-# Character input returns character; factor input returns factor with the same
-# length and ordered attribute. When length(labels) == 0, returns
-# character(0) or
-# still modifies factor levels().
 period_modify <- function(labels,
                           breaks,
                           open_left = FALSE,
@@ -92,15 +88,18 @@ period_modify <- function(labels,
 #' period_modify_ten(labels)
 #' period_modify_ten(labels, offset = 1)
 #' period_modify_ten(labels, offset = 2)
+#' @inheritParams period_modify
 #' @export
 
-# When length(labels) == 0 and labels is a factor with no levels,
-# labels is returned unchanged.
 period_modify_five <- function(labels,
                                offset = 0,
+                               open_left = FALSE,
+                               open_right = FALSE,
                                interpret_single = c("lower", "upper"),
                                interpret_multi = c("include", "exclude"),
                                interpret_fail = c("error", "warn", "silent")) {
+  check_flag(x = open_left, nm_x = "open_left")
+  check_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
@@ -108,6 +107,8 @@ period_modify_five <- function(labels,
     labels = labels,
     width = 5L,
     offset = offset,
+    is_open_left = open_left,
+    is_open_right = open_right,
     label_type = "period",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
@@ -116,12 +117,17 @@ period_modify_five <- function(labels,
 }
 
 #' @rdname period_modify_five
+#' @inheritParams period_modify
 #' @export
 period_modify_ten <- function(labels,
                               offset = 0,
+                              open_left = FALSE,
+                              open_right = FALSE,
                               interpret_single = c("lower", "upper"),
                               interpret_multi = c("include", "exclude"),
                               interpret_fail = c("error", "warn", "silent")) {
+  check_flag(x = open_left, nm_x = "open_left")
+  check_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
@@ -129,6 +135,8 @@ period_modify_ten <- function(labels,
     labels = labels,
     width = 10L,
     offset = offset,
+    is_open_left = open_left,
+    is_open_right = open_right,
     label_type = "period",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

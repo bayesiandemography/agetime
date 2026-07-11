@@ -26,7 +26,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{labels}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Modify the age groups used by \code{labels}. The
@@ -38,8 +38,8 @@ labels <- c("1-4", "87-89", "0", "50-54")
 age_modify(labels, breaks = c(0, 10, 40, 90))
 age_modify(labels, breaks = c(0, 10, 40, 90), open_right = FALSE)
 
-## factor input: factor in, factor out
-age_modify(factor(c("0-4", "5-9")), breaks = c(0, 10, 90))
+## preserves ordered attribute from ordered input
+age_modify(ordered(c("0-4", "5-9")), breaks = c(0, 10, 90))
 
 }
 \seealso{

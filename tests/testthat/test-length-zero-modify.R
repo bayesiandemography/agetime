@@ -1,10 +1,10 @@
-# *_modify(): character(0) -> character(0). Factor in -> factor out.
-# Empty x still updates levels from breaks.
+# *_modify(): empty character -> factor(). Empty factor with no levels ->
+# factor(). Empty factor with levels -> levels still modified.
 
-test_that("age_modify() with length-0 input returns character(0)", {
+test_that("age_modify() with length-0 input returns empty factor with levels", {
   expect_identical(
     age_modify(character(0), breaks = c(0, 10, 90)),
-    character(0)
+    factor(levels = c("0-9", "10-89", "90+"))
   )
 })
 
@@ -20,8 +20,8 @@ test_that("age_modify() with length-0 factor updates levels", {
   )
 })
 
-test_that("age_modify_five() with length-0 input returns character(0)", {
-  expect_identical(age_modify_five(character(0)), character(0))
+test_that("age_modify_five() with length-0 input returns empty factor", {
+  expect_identical(age_modify_five(character(0)), factor())
 })
 
 test_that("age_modify_five() with length-0 factor updates levels", {
@@ -36,7 +36,7 @@ test_that("age_modify_five() with length-0 factor updates levels", {
 })
 
 test_that("age_modify_life() with length-0 factor updates levels", {
-  expect_identical(age_modify_life(character(0)), character(0))
+  expect_identical(age_modify_life(character(0)), factor())
   expect_identical(age_modify_life(factor()), factor())
   lev <- c("0", "1-4", "5-9", "50-54")
   fx <- factor(character(0), levels = lev)
@@ -50,10 +50,10 @@ test_that("age_modify_life() with length-0 factor updates levels", {
 # period_modify() / cohort_modify() have interpret_single and
 # interpret_multi; defaults suffice.
 
-test_that("period_modify() with length-0 input returns character(0)", {
+test_that("period_modify() with length-0 input returns empty factor with levels", {
   expect_identical(
     period_modify(character(0), breaks = c(2000, 2010, 2020)),
-    character(0)
+    factor(levels = c("2000-2010", "2010-2020"))
   )
 })
 
@@ -65,10 +65,17 @@ test_that("period_modify() with length-0 factor updates levels", {
   )
 })
 
-test_that("cohort_modify() with length-0 input returns character(0)", {
+test_that("cohort_modify() with length-0 input returns empty factor with levels", {
   expect_identical(
     cohort_modify(character(0), breaks = c(2000, 2010, 2020)),
-    character(0)
+    factor(levels = c("2000-2010", "2010-2020"))
+  )
+})
+
+test_that("cohort_modify() with length-0 input and open_right adds level", {
+  expect_identical(
+    levels(cohort_modify(character(0), breaks = c(2000, 2010, 2020), open_right = TRUE)),
+    c("2000-2010", "2010-2020", "2020+")
   )
 })
 
@@ -81,7 +88,7 @@ test_that("cohort_modify() with length-0 factor updates levels", {
 })
 
 test_that("period_modify_five() with length-0 factor updates levels", {
-  expect_identical(period_modify_five(character(0)), character(0))
+  expect_identical(period_modify_five(character(0)), factor())
   lev <- c("2000-2004", "2005-2009", "2015-2019")
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
@@ -92,7 +99,7 @@ test_that("period_modify_five() with length-0 factor updates levels", {
 })
 
 test_that("cohort_modify_five() with length-0 factor updates levels", {
-  expect_identical(cohort_modify_five(character(0)), character(0))
+  expect_identical(cohort_modify_five(character(0)), factor())
   lev <- c("2000-2004", "2005-2009", "2015-2019")
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
@@ -102,8 +109,8 @@ test_that("cohort_modify_five() with length-0 factor updates levels", {
   )
 })
 
-test_that("age_modify_ten() with length-0 input returns character(0)", {
-  expect_identical(age_modify_ten(character(0)), character(0))
+test_that("age_modify_ten() with length-0 input returns empty factor", {
+  expect_identical(age_modify_ten(character(0)), factor())
 })
 
 test_that("age_modify_ten() with length-0 factor updates levels", {
@@ -118,7 +125,7 @@ test_that("age_modify_ten() with length-0 factor updates levels", {
 })
 
 test_that("period_modify_ten() with length-0 factor updates levels", {
-  expect_identical(period_modify_ten(character(0)), character(0))
+  expect_identical(period_modify_ten(character(0)), factor())
   lev <- c("2000-2004", "2005-2009")
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
@@ -129,7 +136,7 @@ test_that("period_modify_ten() with length-0 factor updates levels", {
 })
 
 test_that("cohort_modify_ten() with length-0 factor updates levels", {
-  expect_identical(cohort_modify_ten(character(0)), character(0))
+  expect_identical(cohort_modify_ten(character(0)), factor())
   lev <- c("2000-2004", "2005-2009")
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)

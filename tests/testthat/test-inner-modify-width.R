@@ -4,13 +4,15 @@ test_that("inner_modify_width() uses upper bounds for open-left start", {
     x,
     width = 5L,
     offset = 0L,
+    is_open_left = TRUE,
+    is_open_right = FALSE,
     label_type = "cohort",
     interpret_single = "lower",
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
 
-  expect_identical(ans, c("<2020", "2020-2024"))
+  expect_values(ans, c("<2020", "2020-2024"))
 })
 
 test_that("inner_modify_width() aligns open-left start with offset", {
@@ -37,6 +39,8 @@ test_that("inner_modify_width() aligns open-left start with offset", {
       x,
       width = width,
       offset = offset,
+      is_open_left = TRUE,
+      is_open_right = FALSE,
       label_type = "cohort",
       interpret_single = "lower",
       interpret_multi = "exclude",

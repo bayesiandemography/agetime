@@ -43,7 +43,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{labels}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Modify the periods used by \code{labels}. The

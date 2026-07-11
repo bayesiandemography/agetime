@@ -61,6 +61,17 @@ test_that("age_labels_life() creates life-table age groups", {
   )
 })
 
+test_that("age_labels_life() can omit open top", {
+  expect_identical(
+    age_labels_life(lower_last = 75, open_right = FALSE),
+    c(
+      "0", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34",
+      "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+      "70-74"
+    )
+  )
+})
+
 test_that("age_labels_five() can include Total and NA", {
   ans <- age_labels_five(
     lower_last = 20,

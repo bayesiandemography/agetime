@@ -6,21 +6,37 @@
 \alias{age_modify_life}
 \title{Convert to Specialised Age Groups}
 \usage{
-age_modify_five(labels, interpret_fail = c("error", "warn", "silent"))
+age_modify_five(
+  labels,
+  open_right = TRUE,
+  interpret_fail = c("error", "warn", "silent")
+)
 
-age_modify_ten(labels, interpret_fail = c("error", "warn", "silent"))
+age_modify_ten(
+  labels,
+  open_right = TRUE,
+  interpret_fail = c("error", "warn", "silent")
+)
 
-age_modify_life(labels, interpret_fail = c("error", "warn", "silent"))
+age_modify_life(
+  labels,
+  open_right = TRUE,
+  interpret_fail = c("error", "warn", "silent")
+)
 }
 \arguments{
 \item{labels}{Vector of age group labels.}
+
+\item{open_right}{Whether the oldest age group
+is "open", i.e. has no upper limit.
+Default is \code{TRUE}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{labels}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Modify the age groups used by \code{labels}.

@@ -144,6 +144,7 @@ age_labels_ten <- function(lower_first = 0,
 #' @rdname age_labels
 #' @export
 age_labels_life <- function(lower_last = 100,
+                            open_right = TRUE,
                             include_total = FALSE,
                             include_na = FALSE) {
   check_n(
@@ -153,6 +154,7 @@ age_labels_life <- function(lower_last = 100,
     max = NULL,
     divisible_by = 5L
   )
+  check_flag(x = open_right, nm_x = "open_right")
   check_flag(x = include_total, nm_x = "include_total")
   check_flag(x = include_na, nm_x = "include_na")
   s <- seq(
@@ -163,7 +165,7 @@ age_labels_life <- function(lower_last = 100,
   breaks <- c(0L, 1L, s)
   age_labels(
     breaks = breaks,
-    open_right = TRUE,
+    open_right = open_right,
     include_total = include_total,
     include_na = include_na
   )

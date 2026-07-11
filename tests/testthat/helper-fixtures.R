@@ -30,6 +30,9 @@ period_gap <- c("2020-2025", "2030-2035")
 period_overlap <- c("2020-2025", "2023-2028")
 
 expect_values <- function(object, expected) {
+  if (is.factor(object)) {
+    object <- as.character(object)
+  }
   expect_identical(unname(object), unname(expected))
 }
 

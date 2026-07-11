@@ -39,7 +39,12 @@ age_labels_ten(
   include_na = FALSE
 )
 
-age_labels_life(lower_last = 100, include_total = FALSE, include_na = FALSE)
+age_labels_life(
+  lower_last = 100,
+  open_right = TRUE,
+  include_total = FALSE,
+  include_na = FALSE
+)
 }
 \arguments{
 \item{breaks}{Boundaries between age groups.

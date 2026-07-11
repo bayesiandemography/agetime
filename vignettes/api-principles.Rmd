@@ -50,7 +50,7 @@ Function names use the domain prefix plus an operation family.
 | `*_is_open_left()`, `*_is_open_right()`, `*_is_total()` | Identify special labels | Logical vector |
 | `*_check()`, `*_assert()` | Validate labels | Diagnostics or error |
 | `*_standard()` | Convert labels to standard format | Same shape as `labels` |
-| `*_modify()` | Regroup labels into new intervals | Same shape as `labels` |
+| `*_modify()` | Regroup labels into new intervals | Factor |
 | `*_extend()` | Continue a label series | Character vector or factor |
 | `*_fill()`, `*_set_open_*()`, `*_sort()` | Work with factor levels | Factor |
 | `*_labels_*()` | Create new labels | Character vector |
@@ -59,12 +59,13 @@ Function names use the domain prefix plus an operation family.
 The most important return-type distinction is between labels and levels:
 
 - `*_labels_*()` functions create character vectors of labels.
-- `*_fill()`, `*_set_open_*()`, and `*_sort()` functions return factors, because their purpose is to
-  create or reorder factor levels.
+- `*_modify()`, `*_fill()`, `*_set_open_*()`, and `*_sort()` functions return
+  factors, because their purpose is to recode values and shape factor levels.
 
 ```{r labels-vs-levels}
 age_labels_five(lower_last = 20)
 
+age_modify(c("10-14", "0-4"), breaks = c(0, 10, 20))
 age_fill_five(c("10-14", "0-4"))
 ```
 
@@ -133,17 +134,17 @@ directions.
 
 ## Values and levels
 
-Functions that modify values, such as `age_modify()`, return values with the
-same length as `labels`. If `labels` is a factor, they also update levels.
-
-Functions such as `age_fill()`, `age_set_open_right()`, and `age_sort()` always return a factor. They preserve
-observed values where possible, and change or add levels. This is why
-`age_set_open_right()` can add a `70+` level even when no value in `labels`
-currently belongs to that open group.
+Functions such as `age_modify()`, `age_fill()`, `age_set_open_right()`, and
+`age_sort()` always return a factor. They preserve observed values where
+possible, and change or add levels. This is why `age_modify()` with
+`open_right = TRUE` can add a `90+` level even when no value in `labels`
+currently belongs to that open group, and why `age_set_open_right()` can add
+a `70+` level even when no value in `labels` currently belongs to that open
+group.
 
 ```{r level-contract}
 labels <- c("0-4", "60-64")
-age_set_open_right(labels, at = 70)
+age_modify(labels, breaks = c(0, 50, 70))
 ```
 
 ## More information
