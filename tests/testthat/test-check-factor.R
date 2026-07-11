@@ -19,8 +19,8 @@ test_that("age_check() detects open interval from unused factor level", {
   char <- c("0-4", "5-9")
   fac <- factor(char, levels = c("0-4", "5-9", "100+"))
 
-  expect_false(age_check(char, has_open = TRUE)$ok)
-  expect_true(age_check(fac, has_open = TRUE)$ok)
+  expect_false(age_check(char, has_open_right = TRUE)$ok)
+  expect_true(age_check(fac, has_open_right = TRUE)$ok)
 })
 
 test_that("age_check() detects zero interval from unused factor level", {

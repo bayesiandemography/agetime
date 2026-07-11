@@ -12,7 +12,7 @@ age_check(
   no_total = FALSE,
   no_na = FALSE,
   has_zero = FALSE,
-  has_open = FALSE,
+  has_open_right = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -24,7 +24,7 @@ age_assert(
   no_total = FALSE,
   no_na = FALSE,
   has_zero = FALSE,
-  has_open = FALSE,
+  has_open_right = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -49,7 +49,7 @@ Default is \code{FALSE} (don't check).}
 age group has a lower limit of zero.
 Default is \code{FALSE} (don't check).}
 
-\item{has_open}{Check that at least one age
+\item{has_open_right}{Check that at least one age
 group has no upper limit.
 Default is \code{FALSE} (don't check).}
 
@@ -99,7 +99,7 @@ age_check(
   no_total = TRUE,
   no_na = TRUE,
   has_zero = TRUE,
-  has_open = TRUE,
+  has_open_right = TRUE,
   valid_life = TRUE
 )
 

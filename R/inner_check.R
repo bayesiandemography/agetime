@@ -11,7 +11,8 @@
 #' @param no_total Run the no-total check?
 #' @param no_na Run the no-NA check?
 #' @param has_zero Run the has-zero check?
-#' @param has_open Run the has-open check?
+#' @param has_open_left Run the has-open-left check?
+#' @param has_open_right Run the has-open-right check?
 #' @param valid_life Run the valid-life check?
 #' @returns `labels`, invisibly, or an error if checks fail.
 #'
@@ -27,7 +28,8 @@ inner_assert <- function(labels,
                          no_total,
                          no_na,
                          has_zero,
-                         has_open,
+                         has_open_left,
+                         has_open_right,
                          valid_life) {
   val <- inner_check(
     labels = labels,
@@ -40,7 +42,8 @@ inner_assert <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = has_zero,
-    has_open = has_open,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
     valid_life = valid_life
   )
   throw_assert_error(val)
@@ -59,7 +62,8 @@ inner_assert <- function(labels,
 #' @param no_total Run the no-total check?
 #' @param no_na Run the no-NA check?
 #' @param has_zero Run the has-zero check?
-#' @param has_open Run the has-open check?
+#' @param has_open_left Run the has-open-left check?
+#' @param has_open_right Run the has-open-right check?
 #' @param valid_life Run the valid-life check?
 #' @returns List with `ok` and check `details`.
 #'
@@ -76,7 +80,8 @@ inner_check <- function(labels,
                         no_total,
                         no_na,
                         has_zero,
-                        has_open,
+                        has_open_left,
+                        has_open_right,
                         valid_life) {
   labels <- to_character_or_factor(
     labels = labels,
@@ -121,10 +126,16 @@ inner_check <- function(labels,
       list(inner_check_has_zero(intervals = intervals))
     )
   }
-  if (isTRUE(has_open)) {
+  if (isTRUE(has_open_left)) {
     details_list <- c(
       details_list,
-      list(inner_check_has_open(intervals = intervals))
+      list(inner_check_has_open_left(intervals = intervals))
+    )
+  }
+  if (isTRUE(has_open_right)) {
+    details_list <- c(
+      details_list,
+      list(inner_check_has_open_right(intervals = intervals))
     )
   }
   if (isTRUE(valid_life)) {
@@ -328,27 +339,60 @@ inner_check_has_zero <- function(intervals) {
     comment = comment
   )
 }
-#' Inner Check Has Open
+#' Inner Check Has Open Left
 #'
 #' @param intervals An `agetime_intervals` object.
 #' @returns One-row tibble with check result details.
 #'
 #' @noRd
 
-inner_check_has_open <- function(intervals) {
+inner_check_has_open_left <- function(intervals) {
+  int_is_empty <- int_is_empty(intervals)
+  m <- get_m(intervals)
+  labels_unique <- get_labels_unique(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  lower <- m[, 1L]
+  is_open_left <- is.infinite(lower) & is.finite(m[, 2L])
+  if (int_is_empty) {
+    passed <- FALSE
+  } else {
+    passed <- any(is_open_left)
+  }
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else if (int_is_empty) {
+    comment <- "No intervals."
+  } else {
+    i_min <- which.min(ifelse(is.finite(lower), lower, Inf))
+    i_xu <- match(i_min, i_xun_to_xunu)
+    lab <- labels_unique[[i_xu]]
+    comment <- sprintf("Lowest interval: '%s'", lab)
+  }
+  tibble::tibble_row(
+    check = "has_open_left",
+    passed = passed,
+    comment = comment
+  )
+}
+#' Inner Check Has Open Right
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @returns One-row tibble with check result details.
+#'
+#' @noRd
+
+inner_check_has_open_right <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   lower <- m[, 1L]
   upper <- m[, 2L]
-  is_open_left <- is.infinite(lower) & is.finite(upper)
   is_open_right <- is.finite(lower) & is.infinite(upper)
-  is_open <- is_open_left | is_open_right
   if (int_is_empty) {
     passed <- FALSE
   } else {
-    passed <- any(is_open)
+    passed <- any(is_open_right)
   }
   if (identical(passed, TRUE)) {
     comment <- NA_character_
@@ -361,7 +405,7 @@ inner_check_has_open <- function(intervals) {
     comment <- sprintf("Highest interval: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "has_open",
+    check = "has_open_right",
     passed = passed,
     comment = comment
   )

@@ -7,7 +7,7 @@
 #' `period_assert()` throws an error if conditions are not met.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
-#' 
+#'
 #' @inheritParams period_lower
 #' @param no_overlap Check that no periods overlap.
 #' Default is `FALSE` (don't check).
@@ -18,8 +18,11 @@
 #' Default is `FALSE` (don't check).
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
-#' @param has_open Check that at least one period
-#' has no lower or upper limit.
+#' @param has_open_left Check that at least one period
+#' has no lower limit.
+#' Default is `FALSE` (don't check).
+#' @param has_open_right Check that at least one period
+#' has no upper limit.
 #' Default is `FALSE` (don't check).
 #'
 #' @return
@@ -63,7 +66,8 @@ period_check <- function(labels,
                          no_gap = FALSE,
                          no_total = FALSE,
                          no_na = FALSE,
-                         has_open = FALSE,
+                         has_open_left = FALSE,
+                         has_open_right = FALSE,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
@@ -81,7 +85,8 @@ period_check <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = FALSE,
-    has_open = has_open,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
     valid_life = FALSE
   )
 }
@@ -93,7 +98,8 @@ period_assert <- function(labels,
                           no_gap = FALSE,
                           no_total = FALSE,
                           no_na = FALSE,
-                          has_open = FALSE,
+                          has_open_left = FALSE,
+                          has_open_right = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
@@ -111,7 +117,8 @@ period_assert <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = FALSE,
-    has_open = has_open,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
     valid_life = FALSE
   )
 }

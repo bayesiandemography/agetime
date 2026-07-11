@@ -19,8 +19,11 @@
 #' Default is `FALSE` (don't check).
 #' @param no_na Check that there is no `NA` label.
 #' Default is `FALSE` (don't check).
-#' @param has_open Check that at least
-#' one cohort has no lower or upper limit.
+#' @param has_open_left Check that at least
+#' one cohort has no lower limit.
+#' Default is `FALSE` (don't check).
+#' @param has_open_right Check that at least
+#' one cohort has no upper limit.
 #' Default is `FALSE` (don't check).
 #'
 #' @return
@@ -47,7 +50,8 @@
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
 #'   no_na = TRUE,
-#'   has_open = TRUE
+#'   has_open_left = TRUE,
+#'   has_open_right = TRUE
 #' )
 #'
 #' ## throw error if overlap or gap
@@ -58,13 +62,14 @@
 #' )
 #' @export
 # When length(labels) == 0, checks on overlap, gaps, totals,
-# and NA are vacuously satisfied and has_open fails.
+# and NA are vacuously satisfied and has_open_* checks fail.
 cohort_check <- function(labels,
                          no_overlap = FALSE,
                          no_gap = FALSE,
                          no_total = FALSE,
                          no_na = FALSE,
-                         has_open = FALSE,
+                         has_open_left = FALSE,
+                         has_open_right = FALSE,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = c("include", "exclude"),
                          interpret_fail = c("error", "warn", "silent")) {
@@ -82,7 +87,8 @@ cohort_check <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = FALSE,
-    has_open = has_open,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
     valid_life = FALSE
   )
 }
@@ -94,7 +100,8 @@ cohort_assert <- function(labels,
                           no_gap = FALSE,
                           no_total = FALSE,
                           no_na = FALSE,
-                          has_open = FALSE,
+                          has_open_left = FALSE,
+                          has_open_right = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
@@ -112,7 +119,8 @@ cohort_assert <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = FALSE,
-    has_open = has_open,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
     valid_life = FALSE
   )
 }

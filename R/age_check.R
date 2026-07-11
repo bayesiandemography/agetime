@@ -28,7 +28,7 @@
 #' @param has_zero Check that at least one
 #' age group has a lower limit of zero.
 #' Default is `FALSE` (don't check).
-#' @param has_open Check that at least one age
+#' @param has_open_right Check that at least one age
 #' group has no upper limit.
 #' Default is `FALSE` (don't check).
 #' @param valid_life Check that all labels are
@@ -57,7 +57,7 @@
 #'   no_total = TRUE,
 #'   no_na = TRUE,
 #'   has_zero = TRUE,
-#'   has_open = TRUE,
+#'   has_open_right = TRUE,
 #'   valid_life = TRUE
 #' )
 #'
@@ -78,7 +78,7 @@ age_check <- function(labels,
                       no_total = FALSE,
                       no_na = FALSE,
                       has_zero = FALSE,
-                      has_open = FALSE,
+                      has_open_right = FALSE,
                       valid_life = FALSE,
                       interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -93,7 +93,8 @@ age_check <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = has_zero,
-    has_open = has_open,
+    has_open_left = FALSE,
+    has_open_right = has_open_right,
     valid_life = valid_life
   )
 }
@@ -106,7 +107,7 @@ age_assert <- function(labels,
                        no_total = FALSE,
                        no_na = FALSE,
                        has_zero = FALSE,
-                       has_open = FALSE,
+                       has_open_right = FALSE,
                        valid_life = FALSE,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -121,7 +122,8 @@ age_assert <- function(labels,
     no_total = no_total,
     no_na = no_na,
     has_zero = has_zero,
-    has_open = has_open,
+    has_open_left = FALSE,
+    has_open_right = has_open_right,
     valid_life = valid_life
   )
 }

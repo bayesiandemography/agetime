@@ -114,7 +114,7 @@ age_check(lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   has_zero = TRUE,
-  has_open = TRUE
+  has_open_right = TRUE
 )
 ```
 

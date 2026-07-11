@@ -11,7 +11,8 @@ cohort_check(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
-  has_open = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -23,7 +24,8 @@ cohort_assert(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
-  has_open = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -46,8 +48,12 @@ Default is \code{FALSE} (don't check).}
 \item{no_na}{Check that there is no \code{NA} label.
 Default is \code{FALSE} (don't check).}
 
-\item{has_open}{Check that at least
-one cohort has no lower or upper limit.
+\item{has_open_left}{Check that at least
+one cohort has no lower limit.
+Default is \code{FALSE} (don't check).}
+
+\item{has_open_right}{Check that at least
+one cohort has no upper limit.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret
@@ -121,7 +127,8 @@ cohort_check(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  has_open = TRUE
+  has_open_left = TRUE,
+  has_open_right = TRUE
 )
 
 ## throw error if overlap or gap

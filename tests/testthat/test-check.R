@@ -120,14 +120,29 @@ test_that("has_zero check fails when no group starts at zero", {
   expect_check(val, "has_zero", FALSE)
 })
 
-test_that("has_open check passes when x includes an open age group", {
-  val <- age_check(age_mixed, has_open = TRUE)
-  expect_check(val, "has_open", TRUE)
+test_that("has_open_right check passes when x includes an open age group", {
+  val <- age_check(age_mixed, has_open_right = TRUE)
+  expect_check(val, "has_open_right", TRUE)
 })
 
-test_that("has_open check fails when all age groups are closed", {
-  val <- age_check(age_closed, has_open = TRUE)
-  expect_check(val, "has_open", FALSE)
+test_that("has_open_right check fails when all age groups are closed", {
+  val <- age_check(age_closed, has_open_right = TRUE)
+  expect_check(val, "has_open_right", FALSE)
+})
+
+test_that("has_open_left check passes when x includes a left-open cohort", {
+  val <- cohort_check(cohort_multi, has_open_left = TRUE)
+  expect_check(val, "has_open_left", TRUE)
+})
+
+test_that("has_open_left check fails when all cohorts are closed on the left", {
+  val <- cohort_check(c("2020-2025", "2025-2030"), has_open_left = TRUE)
+  expect_check(val, "has_open_left", FALSE)
+})
+
+test_that("has_open_right check passes when x includes a right-open period", {
+  val <- period_check(c("2020-2030", "2030+"), has_open_right = TRUE)
+  expect_check(val, "has_open_right", TRUE)
 })
 
 test_that("valid_life passes for life-table labels even when there is a gap", {

@@ -6,11 +6,15 @@ test_that("has_* checks work on length-0 input", {
   expect_false(val$ok)
   expect_identical(val$details$passed, FALSE)
 
-  val <- age_check(character(0), has_open = TRUE)
+  val <- age_check(character(0), has_open_right = TRUE)
   expect_false(val$ok)
   expect_identical(val$details$passed, FALSE)
 
-  val <- cohort_check(character(0), has_open = TRUE)
+  val <- cohort_check(character(0), has_open_left = TRUE)
+  expect_false(val$ok)
+  expect_identical(val$details$passed, FALSE)
+
+  val <- cohort_check(character(0), has_open_right = TRUE)
   expect_false(val$ok)
   expect_identical(val$details$passed, FALSE)
 })
@@ -47,11 +51,11 @@ test_that("has_* asserts fail cleanly on length-0 input", {
     "Check failed\\."
   )
   expect_error(
-    age_assert(character(0), has_open = TRUE),
+    age_assert(character(0), has_open_right = TRUE),
     "Check failed\\."
   )
   expect_error(
-    cohort_assert(character(0), has_open = TRUE),
+    cohort_assert(character(0), has_open_left = TRUE),
     "Check failed\\."
   )
 })
