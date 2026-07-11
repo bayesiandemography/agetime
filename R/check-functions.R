@@ -179,6 +179,51 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   invisible(TRUE)
 }
 
+#' Check Modify Open Flags
+#'
+#' @param is_open_left Whether to include an open-left interval, or `NULL`
+#' to infer from `intervals`.
+#' @param is_open_right Whether to include an open-right interval, or `NULL`
+#' to infer from `intervals`.
+#' @param intervals An `agetime_intervals` object.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @returns Return value used internally.
+#'
+#' @noRd
+check_modify_open_flags <- function(is_open_left,
+                                    is_open_right,
+                                    intervals,
+                                    label_type) {
+  ln <- label_name(label_type)
+  if (!is.null(is_open_left) && !isTRUE(is_open_left)) {
+    is_orl <- get_is_open_left(intervals)
+    if (any(is_orl)) {
+      labels_open <- get_labels_unique_norm_unique(intervals)[is_orl]
+      n <- length(labels_open)
+      cli::cli_abort(c(
+        "{.arg labels} contains {cli::qty(n)} {ln}{?s} open on the left: {.val {labels_open}}.",
+        i = "{.arg open_left} is {.val {FALSE}}.",
+        i = "Remove open-left labels from {.arg labels}?",
+        i = "Or unset {.arg open_left}, or pass {.val {TRUE}}?"
+      ))
+    }
+  }
+  if (!is.null(is_open_right) && !isTRUE(is_open_right)) {
+    is_orr <- get_is_open_right(intervals)
+    if (any(is_orr)) {
+      labels_open <- get_labels_unique_norm_unique(intervals)[is_orr]
+      n <- length(labels_open)
+      cli::cli_abort(c(
+        "{.arg labels} contains {cli::qty(n)} {ln}{?s} open on the right: {.val {labels_open}}.",
+        i = "{.arg open_right} is {.val {FALSE}}.",
+        i = "Remove open-right labels from {.arg labels}?",
+        i = "Or unset {.arg open_right}, or pass {.val {TRUE}}?"
+      ))
+    }
+  }
+  invisible(TRUE)
+}
+
 #' Check if Any Labels Do Not Fit into New Set
 #'
 #' @param m_contains Containment matrix from modified breaks to original labels.

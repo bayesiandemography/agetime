@@ -9,21 +9,27 @@
 #' A numeric vector.
 #' @param open_right Whether the oldest age group
 #' is open on the right, i.e. has no upper limit.
-#' Default is `NULL`, which infers from `labels`:
-#' `TRUE` when any label is open on the right, otherwise `FALSE`.
-#' Use `TRUE` or `FALSE` to add or suppress an open top level
-#' regardless of `labels`.
+#' If `NULL` (the default), `open_right` is set to
+#' `TRUE` if `labels` has an age group that is open
+#' on the right, and to `FALSE` otherwise.
 #' @return Factor with the same length as `labels`.
 #'
 #' @examples
-#' labels <- c("1-4", "87-89", "0", "50-54")
-#' age_modify(labels, breaks = c(0, 10, 40, 90))
-#' age_modify(labels, breaks = c(0, 10, 40, 90), open_right = FALSE)
-#' age_modify(labels, breaks = c(0, 10, 40, 90), open_right = TRUE)
+#' labels <- c("10-14", "16", "22-23")
+#' age_modify(labels, breaks = c(10, 15, 25))
 #'
-#' ## preserves ordered attribute from ordered input
-#' age_modify(ordered(c("0-4", "5-9")), breaks = c(0, 10, 90))
-#'
+#' ## open_right inferred from labels
+#' labels_no_open <- c("1-4", "87-89", "0", "50-54")
+#' age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
+#' labels_has_open <- c("1-4", "87+", "0", "50-54")
+#' age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
+#' 
+#' ## open_right specified
+#' age_modify(
+#'   labels_no_open,
+#'   breaks = c(0, 10, 40, 90),
+#'   open_right = FALSE
+#' )
 #' @seealso
 #' - [age_modify_five()] Convert to 5-year age groups
 #' - [age_modify_ten()] Convert to 10-year age groups
@@ -41,7 +47,7 @@ age_modify <- function(labels,
   inner_modify(
     labels = labels,
     breaks = breaks,
-    is_open_left = FALSE,
+    is_open_left = NULL,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
@@ -93,7 +99,7 @@ age_modify_five <- function(labels,
     labels = labels,
     width = 5L,
     offset = 0L,
-    is_open_left = FALSE,
+    is_open_left = NULL,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
@@ -114,7 +120,7 @@ age_modify_ten <- function(labels,
     labels = labels,
     width = 10L,
     offset = 0L,
-    is_open_left = FALSE,
+    is_open_left = NULL,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
@@ -172,15 +178,11 @@ age_modify_life <- function(labels,
   } else {
     breaks <- c(0L, 1L, seq.int(from = 5L, to = top_lower, by = 5L))
   }
-  is_open_right <- resolve_open_right(
-    is_open_right = open_right,
-    intervals = intervals
-  )
   inner_modify(
     labels = labels,
     breaks = breaks,
-    is_open_left = FALSE,
-    is_open_right = is_open_right,
+    is_open_left = NULL,
+    is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",

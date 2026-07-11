@@ -29,10 +29,9 @@ age_modify_life(
 
 \item{open_right}{Whether the oldest age group
 is open on the right, i.e. has no upper limit.
-Default is \code{NULL}, which infers from \code{labels}:
-\code{TRUE} when any label is open on the right, otherwise \code{FALSE}.
-Use \code{TRUE} or \code{FALSE} to add or suppress an open top level
-regardless of \code{labels}.}
+If \code{NULL} (the default), \code{open_right} is set to
+\code{TRUE} if \code{labels} has an age group that is open
+on the right, and to \code{FALSE} otherwise.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),

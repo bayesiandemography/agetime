@@ -75,7 +75,7 @@ test_that("age_modify_five() with open_right = FALSE errors on open labels", {
   fx <- factor(c("1-3", "91+"), levels = c("1-3", "91+"))
   expect_error(
     age_modify_five(fx, open_right = FALSE),
-    "cannot each lie in exactly one new age group"
+    regexp = "contains age group open on the right: \"91\\+\""
   )
 })
 
@@ -115,7 +115,7 @@ test_that("age_modify_life() with open_right = FALSE errors on open labels", {
   fx <- factor("90+")
   expect_error(
     age_modify_life(fx, open_right = FALSE),
-    "cannot each lie in exactly one new age group"
+    regexp = "open on the right.*90"
   )
 })
 
@@ -187,6 +187,6 @@ test_that("cohort_modify_five() can suppress inferred open_left", {
   x <- c("<2020", "2020-2024")
   expect_error(
     cohort_modify_five(x, open_left = FALSE),
-    "cannot each lie in exactly one new cohort"
+    regexp = "contains cohort open on the left: \"<2020\""
   )
 })

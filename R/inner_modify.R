@@ -65,6 +65,12 @@ inner_modify <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
+  check_modify_open_flags(
+    is_open_left = is_open_left,
+    is_open_right = is_open_right,
+    intervals = intervals,
+    label_type = label_type
+  )
   is_open_left <- resolve_open_left(
     is_open_left = is_open_left,
     intervals = intervals
@@ -169,15 +175,15 @@ inner_modify_width <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
-  is_open_left <- resolve_open_left(
+  is_open_left_resolved <- resolve_open_left(
     is_open_left = is_open_left,
     intervals = intervals
   )
-  is_open_right <- resolve_open_right(
+  is_open_right_resolved <- resolve_open_right(
     is_open_right = is_open_right,
     intervals = intervals
   )
-  if (is_open_left) {
+  if (is_open_left_resolved) {
     u <- get_upper(intervals)
     start <- min(u, na.rm = TRUE)
   } else {
@@ -186,13 +192,13 @@ inner_modify_width <- function(labels,
   }
   remainder_start <- (start - offset) %% width
   if (remainder_start > 0L) {
-    if (is_open_left) {
+    if (is_open_left_resolved) {
       start <- start + width - remainder_start
     } else {
       start <- start - remainder_start
     }
   }
-  if (is_open_right) {
+  if (is_open_right_resolved) {
     l <- get_lower(intervals)
     end <- max(l[is.finite(l)], na.rm = TRUE)
   } else {
@@ -201,7 +207,7 @@ inner_modify_width <- function(labels,
   }
   remainder_end <- (end - offset) %% width
   if (remainder_end > 0L) {
-    if (is_open_right) {
+    if (is_open_right_resolved) {
       end <- end - remainder_end
     } else {
       end <- end + width - remainder_end
