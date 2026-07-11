@@ -2,9 +2,17 @@
 % Please edit documentation in R/period_is_total.R
 \name{period_is_open_left}
 \alias{period_is_open_left}
-\title{Identify Periods Open on Left}
+\alias{period_is_open_right}
+\title{Identify Open Periods}
 \usage{
 period_is_open_left(
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
+)
+
+period_is_open_right(
   labels,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
@@ -32,7 +40,15 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find periods that are open on the left, i.e., that have no lower limit.
+Find periods that are open on the left or right.
+}
+\details{
+\itemize{
+\item \code{period_is_open_left()} finds periods open on the left
+(has no lower limit).
+\item \code{period_is_open_right()} finds periods open on the right
+(has no upper limit).
+}
 }
 \section{Controlling how period labels are interpreted}{
 
@@ -67,11 +83,13 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 \examples{
 labels <- c("2020", "<1900", "2020-2030", "2030+")
 period_is_open_left(labels)
+period_is_open_right(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=period_is_total]{period_is_total()}} Find period labels for totals
-\item \code{\link[=period_is_open_right]{period_is_open_right()}} Find right-open periods
-\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Cohort equivalent of \code{period_is_open_left()}
+\item \code{\link[=period_is_total]{period_is_total()}} Identify period totals
+\item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify open period
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify open cohort
+\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify open age group
 }
 }

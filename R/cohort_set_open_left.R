@@ -18,8 +18,7 @@
 #' @seealso
 #' - [age_set_open_right()] Specify open age group
 #' - [period_set_open_left()] Specify open period
-#' - [cohort_is_open_left()] Identify cohorts open on left
-#' - [cohort_is_open_right()] Identify cohorts open on right
+#' - [cohort_is_open_left()] Identify open cohort
 #'
 #' @examples
 #' labels <- c("2020-2024", "<2000", "2015")

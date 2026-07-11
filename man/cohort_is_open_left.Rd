@@ -2,9 +2,17 @@
 % Please edit documentation in R/cohort_is_total.R
 \name{cohort_is_open_left}
 \alias{cohort_is_open_left}
-\title{Identify Cohorts Open on Left}
+\alias{cohort_is_open_right}
+\title{Identify Open Cohorts}
 \usage{
 cohort_is_open_left(
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
+)
+
+cohort_is_open_right(
   labels,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
@@ -32,7 +40,15 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find cohorts that are open on the left, i.e., that have no lower limit.
+Find cohorts that are open on the left or right.
+}
+\details{
+\itemize{
+\item \code{cohort_is_open_left()} finds cohorts open on the left
+(has no lower limit).
+\item \code{cohort_is_open_right()} finds cohorts open on the right
+(has no upper limit).
+}
 }
 \section{Controlling how cohort labels are interpreted}{
 
@@ -64,13 +80,15 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
 \examples{
-labels <- c("2020", "<1900", "2040-2050", "2030+")
+labels <- c("2020", "<1900", "2040-2050", "1900 or less", "2030+")
 cohort_is_open_left(labels)
+cohort_is_open_right(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=cohort_is_total]{cohort_is_total()}} Find cohort labels for totals
-\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Find right-open cohorts
-\item \code{\link[=period_is_open_left]{period_is_open_left()}} Period equivalent of \code{cohort_is_open_left()}
+\item \code{\link[=cohort_is_total]{cohort_is_total()}} Identify cohort totals
+\item \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} Specify open cohort
+\item \code{\link[=period_is_open_left]{period_is_open_left()}} Identify open period
+\item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify open age group
 }
 }

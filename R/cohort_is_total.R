@@ -9,8 +9,7 @@
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_is_open_left()] Find left-open cohorts
-#' - [cohort_is_open_right()] Find right-open cohorts
+#' - [cohort_is_open_left()] Identify open cohorts
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
 #'
@@ -35,9 +34,14 @@ cohort_is_total <- function(labels,
 }
 
 
-#' Identify Cohorts Open on Left
+#' Identify Open Cohorts
 #'
-#' Find cohorts that are open on the left, i.e., that have no lower limit.
+#' Find cohorts that are open on the left or right.
+#'
+#' - `cohort_is_open_left()` finds cohorts open on the left
+#'   (has no lower limit).
+#' - `cohort_is_open_right()` finds cohorts open on the right
+#'   (has no upper limit).
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -46,13 +50,15 @@ cohort_is_total <- function(labels,
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [cohort_is_total()] Find cohort labels for totals
-#' - [cohort_is_open_right()] Find right-open cohorts
-#' - [period_is_open_left()] Period equivalent of `cohort_is_open_left()`
+#' - [cohort_is_total()] Identify cohort totals
+#' - [cohort_set_open_left()] Specify open cohort
+#' - [period_is_open_left()] Identify open period
+#' - [age_is_open_right()] Identify open age group
 #'
 #' @examples
-#' labels <- c("2020", "<1900", "2040-2050", "2030+")
+#' labels <- c("2020", "<1900", "2040-2050", "1900 or less", "2030+")
 #' cohort_is_open_left(labels)
+#' cohort_is_open_right(labels)
 #' @export
 
 # When length(labels) == 0, returns logical(0).
@@ -73,25 +79,7 @@ cohort_is_open_left <- function(labels,
 }
 
 
-#' Identify Cohorts Open on Right
-#'
-#' Find cohorts that are open on the right, i.e., that have no upper limit.
-#'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
-#'
-#' @inheritParams cohort_lower
-#'
-#' @return Logical vector with the same length as `labels`.
-#'
-#' @seealso
-#' - [cohort_is_total()] Find cohort labels for totals
-#' - [cohort_is_open_left()] Find cohorts open on left
-#' - [period_is_open_right()] Period equivalent of `cohort_is_open_right()`
-#' - [age_is_open_right()] Age equivalent of `cohort_is_open_right()`
-#'
-#' @examples
-#' labels <- c("2020", "<1900", "2040-2050", "2030+")
-#' cohort_is_open_right(labels)
+#' @rdname cohort_is_open_left
 #' @export
 
 # When length(labels) == 0, returns logical(0).

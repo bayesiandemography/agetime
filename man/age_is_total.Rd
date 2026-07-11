@@ -20,7 +20,7 @@ Logical vector with the same length as \code{labels}.
 Find "total" categories in age group labels.
 }
 \examples{
-labels <- c("20-24", "Total", "100+", "ALL")
+labels <- c("overall", "20-24", "Total", "100+", "ALL")
 age_is_total(labels)
 }
 \seealso{

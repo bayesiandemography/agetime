@@ -69,8 +69,7 @@ cohort_is_total(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Find left-open cohorts
-\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Find right-open cohorts
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify open cohorts
 \item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{cohort_is_total()}
 \item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{cohort_is_total()}
 }

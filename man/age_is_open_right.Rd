@@ -20,12 +20,12 @@ Logical vector with the same length as \code{labels}.
 Find age groups that are open on the right, i.e., that have no upper limit.
 }
 \examples{
-labels <- c("20+", "infant", "100+", "60to79")
+labels <- c("20+", "infant", "100+", "60to79", "80 years or more")
 age_is_open_right(labels)
 }
 \seealso{
 \itemize{
 \item \code{\link[=age_is_total]{age_is_total()}} Find age labels for totals
-\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Cohort equivalent of \code{age_is_open_right()}
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify open cohort
 }
 }

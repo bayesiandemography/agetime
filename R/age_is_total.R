@@ -12,7 +12,7 @@
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
 #'
 #' @examples
-#' labels <- c("20-24", "Total", "100+", "ALL")
+#' labels <- c("overall", "20-24", "Total", "100+", "ALL")
 #' age_is_total(labels)
 #' @export
 
@@ -40,10 +40,10 @@ age_is_total <- function(labels,
 #'
 #' @seealso
 #' - [age_is_total()] Find age labels for totals
-#' - [cohort_is_open_right()] Cohort equivalent of `age_is_open_right()`
+#' - [cohort_is_open_left()] Identify open cohort
 #'
 #' @examples
-#' labels <- c("20+", "infant", "100+", "60to79")
+#' labels <- c("20+", "infant", "100+", "60to79", "80 years or more")
 #' age_is_open_right(labels)
 #' @export
 

@@ -35,9 +35,14 @@ period_is_total <- function(labels,
 }
 
 
-#' Identify Periods Open on Left
+#' Identify Open Periods
 #'
-#' Find periods that are open on the left, i.e., that have no lower limit.
+#' Find periods that are open on the left or right.
+#'
+#' - `period_is_open_left()` finds periods open on the left
+#'   (has no lower limit).
+#' - `period_is_open_right()` finds periods open on the right
+#'   (has no upper limit).
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
@@ -46,13 +51,15 @@ period_is_total <- function(labels,
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [period_is_total()] Find period labels for totals
-#' - [period_is_open_right()] Find right-open periods
-#' - [cohort_is_open_left()] Cohort equivalent of `period_is_open_left()`
+#' - [period_is_total()] Identify period totals
+#' - [period_set_open_left()] Specify open period
+#' - [cohort_is_open_left()] Identify open cohort
+#' - [age_is_open_right()] Identify open age group
 #'
 #' @examples
 #' labels <- c("2020", "<1900", "2020-2030", "2030+")
 #' period_is_open_left(labels)
+#' period_is_open_right(labels)
 #' @export
 
 # When length(labels) == 0, returns logical(0).
@@ -75,25 +82,7 @@ period_is_open_left <- function(labels,
 }
 
 
-#' Identify Periods Open on Right
-#'
-#' Find periods that are open on the right, i.e., that have no upper limit.
-#'
-#' @inheritSection period_lower Controlling how period labels are interpreted
-#'
-#' @inheritParams period_lower
-#'
-#' @return Logical vector with the same length as `labels`.
-#'
-#' @seealso
-#' - [period_is_total()] Find period labels for totals
-#' - [period_is_open_left()] Find periods open on left
-#' - [age_is_open_right()] Age equivalent of `period_is_open_right()`
-#' - [cohort_is_open_right()] Cohort equivalent of `period_is_open_right()`
-#'
-#' @examples
-#' labels <- c("2020", "<1900", "2020-2030", "2030+")
-#' period_is_open_right(labels)
+#' @rdname period_is_open_left
 #' @export
 
 # When length(labels) == 0, returns logical(0).

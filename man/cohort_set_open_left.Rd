@@ -99,7 +99,6 @@ cohort_set_open_right(labels, at = 2030)
 \itemize{
 \item \code{\link[=age_set_open_right]{age_set_open_right()}} Specify open age group
 \item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify open period
-\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify cohorts open on left
-\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify open cohort
 }
 }
