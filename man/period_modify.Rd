@@ -117,8 +117,18 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
 \examples{
+## basic recoding
 labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 period_modify(labels, breaks = c(1970, 2000, 2005, 2015))
+
+## open ends inferred from labels
+labels_closed <- c("2001-2004", "2005-2010")
+period_modify(labels_closed, breaks = c(2000, 2010, 2020))
+labels_open <- c("<1970", "2001-2004", "2020+")
+period_modify(labels_open, breaks = c(1970, 2000, 2010, 2020))
+
+## structural open right
+period_modify(labels_closed, breaks = c(2000, 2010, 2020), open_right = TRUE)
 
 }
 \seealso{

@@ -3,7 +3,7 @@
 \name{cohort_modify_five}
 \alias{cohort_modify_five}
 \alias{cohort_modify_ten}
-\title{Convert to Equal-Length Cohorts}
+\title{Convert to Cohorts with Equal Widths}
 \usage{
 cohort_modify_five(
   labels,
@@ -55,10 +55,10 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Modify the cohorts used by \code{labels}.
+Modify the cohorts defined by \code{labels}.
 The new cohorts must contain
-the old cohorts, and follow a regular
-pattern:
+the old cohorts, and (except for open cohorts)
+all have the same width.
 \itemize{
 \item \code{cohort_modify_five} Five-year cohorts
 \item \code{cohort_modify_ten} Ten-year cohorts
@@ -134,11 +134,13 @@ The full range of options is:\tabular{lll}{
 \examples{
 labels <- c("2002-2004", "1987-1989", "2000", "Total")
 cohort_modify_five(labels)
-cohort_modify_five(labels, offset = 1)
-cohort_modify_five(labels, offset = 2)
 cohort_modify_ten(labels)
-cohort_modify_ten(labels, offset = 1)
-cohort_modify_ten(labels, offset = 2)
+
+## align to different boundaries
+cohort_modify_five(labels, offset = 2)
+
+## open ends inferred from labels
+cohort_modify_five(c("<2020", "2020-2024"))
 }
 \seealso{
 \itemize{

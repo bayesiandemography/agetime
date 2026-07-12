@@ -29,15 +29,16 @@
 #' | `FALSE` | No | No |
 #'
 #' @examples
+#' ## basic recoding
 #' labels <- c("10-14", "16", "22-23")
 #' age_modify(labels, breaks = c(10, 15, 25))
 #'
-#' ## open_right inferred from labels
+#' ## open top inferred from labels
 #' labels_no_open <- c("1-4", "87-89", "0", "50-54")
 #' age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
 #' labels_has_open <- c("1-4", "87+", "0", "50-54")
-#' age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
-#' 
+#' age_modify(labels_has_open, breaks = c(0, 10, 40, 87))
+#'
 #' ## structural open top
 #' age_modify(
 #'   labels_no_open,
@@ -99,7 +100,7 @@ age_modify <- function(labels,
 #'
 #' @examples
 #' labels <- c("1-3", "87-89", "0", "91+", "total", "52")
-#' age_modify_five(labels)
+#' age_modify_five(labels) # 5-year groups; open top from "91+"
 #' age_modify_ten(labels)
 #' age_modify_life(labels)
 #' @inheritParams age_modify

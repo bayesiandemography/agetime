@@ -80,7 +80,7 @@ if and only if \code{labels} does. The full range of options is:\tabular{lll}{
 
 \examples{
 labels <- c("1-3", "87-89", "0", "91+", "total", "52")
-age_modify_five(labels)
+age_modify_five(labels) # 5-year groups; open top from "91+"
 age_modify_ten(labels)
 age_modify_life(labels)
 }

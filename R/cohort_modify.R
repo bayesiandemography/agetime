@@ -52,9 +52,18 @@
 #' | `FALSE` | No | No |
 #'
 #' @examples
+#' ## basic recoding
 #' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 #' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015))
-#' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015), open_left = TRUE)
+#'
+#' ## open ends inferred from labels
+#' labels_closed <- c("2001-2004", "2005-2010")
+#' cohort_modify(labels_closed, breaks = c(2000, 2010, 2020))
+#' labels_open <- c("<1970", "2001-2004", "2020+")
+#' cohort_modify(labels_open, breaks = c(1970, 2000, 2010, 2020))
+#'
+#' ## structural open right
+#' cohort_modify(labels_closed, breaks = c(2000, 2010, 2020), open_right = TRUE)
 #'
 #' @seealso
 #' - [cohort_modify_five()] Convert to 5-year cohorts
@@ -88,14 +97,14 @@ cohort_modify <- function(labels,
 }
 
 
-#' Convert to Equal-Length Cohorts
+#' Convert to Cohorts with Equal Widths
 #'
 #' @description
 #'
-#' Modify the cohorts used by `labels`.
+#' Modify the cohorts defined by `labels`.
 #' The new cohorts must contain
-#' the old cohorts, and follow a regular
-#' pattern:
+#' the old cohorts, and (except for open cohorts)
+#' all have the same width.
 #'
 #' - `cohort_modify_five` Five-year cohorts
 #' - `cohort_modify_ten` Ten-year cohorts
@@ -118,11 +127,13 @@ cohort_modify <- function(labels,
 #' @examples
 #' labels <- c("2002-2004", "1987-1989", "2000", "Total")
 #' cohort_modify_five(labels)
-#' cohort_modify_five(labels, offset = 1)
-#' cohort_modify_five(labels, offset = 2)
 #' cohort_modify_ten(labels)
-#' cohort_modify_ten(labels, offset = 1)
-#' cohort_modify_ten(labels, offset = 2)
+#'
+#' ## align to different boundaries
+#' cohort_modify_five(labels, offset = 2)
+#'
+#' ## open ends inferred from labels
+#' cohort_modify_five(c("<2020", "2020-2024"))
 #' @inheritParams cohort_modify
 #' @inheritSection cohort_modify The `open_left` argument
 #' @inheritSection cohort_modify The `open_right` argument

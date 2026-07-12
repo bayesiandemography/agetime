@@ -51,14 +51,15 @@ if and only if \code{labels} does. The full range of options is:\tabular{lll}{
 }
 
 \examples{
+## basic recoding
 labels <- c("10-14", "16", "22-23")
 age_modify(labels, breaks = c(10, 15, 25))
 
-## open_right inferred from labels
+## open top inferred from labels
 labels_no_open <- c("1-4", "87-89", "0", "50-54")
 age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
 labels_has_open <- c("1-4", "87+", "0", "50-54")
-age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
+age_modify(labels_has_open, breaks = c(0, 10, 40, 87))
 
 ## structural open top
 age_modify(

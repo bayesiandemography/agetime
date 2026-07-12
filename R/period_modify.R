@@ -52,8 +52,18 @@
 #' | `FALSE` | No | No |
 #'
 #' @examples
+#' ## basic recoding
 #' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 #' period_modify(labels, breaks = c(1970, 2000, 2005, 2015))
+#'
+#' ## open ends inferred from labels
+#' labels_closed <- c("2001-2004", "2005-2010")
+#' period_modify(labels_closed, breaks = c(2000, 2010, 2020))
+#' labels_open <- c("<1970", "2001-2004", "2020+")
+#' period_modify(labels_open, breaks = c(1970, 2000, 2010, 2020))
+#'
+#' ## structural open right
+#' period_modify(labels_closed, breaks = c(2000, 2010, 2020), open_right = TRUE)
 #'
 #' @seealso
 #' - [period_modify_five()] Convert to 5-year periods
@@ -87,18 +97,18 @@ period_modify <- function(labels,
 }
 
 
-#' Convert to Equal-Length Periods
+#' Convert to Periods with Equal Widths
 #'
 #' @description
 #'
-#' Modify the periods used by `labels`.
+#' Modify the periods defined by `labels`.
 #' The new periods must contain
-#' the old periods, and follow a regular
-#' pattern:
+#' the old periods, and (except for open periods)
+#' all have the same width.
 #'
 #' - `period_modify_five` Five-year periods
 #' - `period_modify_ten` Ten-year periods
-#'
+#' 
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
 #' @inheritParams period_lower
@@ -117,11 +127,13 @@ period_modify <- function(labels,
 #' @examples
 #' labels <- c("2002-2004", "1987-1989", "2000", "Total")
 #' period_modify_five(labels)
-#' period_modify_five(labels, offset = 1)
-#' period_modify_five(labels, offset = 2)
 #' period_modify_ten(labels)
-#' period_modify_ten(labels, offset = 1)
-#' period_modify_ten(labels, offset = 2)
+#'
+#' ## align to different boundaries
+#' period_modify_five(labels, offset = 2)
+#'
+#' ## open ends inferred from labels
+#' period_modify_five(c("<2020", "2020-2024"))
 #' @inheritParams period_modify
 #' @inheritSection period_modify The `open_left` argument
 #' @inheritSection period_modify The `open_right` argument

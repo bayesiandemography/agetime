@@ -3,7 +3,7 @@
 \name{period_modify_five}
 \alias{period_modify_five}
 \alias{period_modify_ten}
-\title{Convert to Equal-Length Periods}
+\title{Convert to Periods with Equal Widths}
 \usage{
 period_modify_five(
   labels,
@@ -55,10 +55,10 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Modify the periods used by \code{labels}.
+Modify the periods defined by \code{labels}.
 The new periods must contain
-the old periods, and follow a regular
-pattern:
+the old periods, and (except for open periods)
+all have the same width.
 \itemize{
 \item \code{period_modify_five} Five-year periods
 \item \code{period_modify_ten} Ten-year periods
@@ -135,11 +135,13 @@ The full range of options is:\tabular{lll}{
 \examples{
 labels <- c("2002-2004", "1987-1989", "2000", "Total")
 period_modify_five(labels)
-period_modify_five(labels, offset = 1)
-period_modify_five(labels, offset = 2)
 period_modify_ten(labels)
-period_modify_ten(labels, offset = 1)
-period_modify_ten(labels, offset = 2)
+
+## align to different boundaries
+period_modify_five(labels, offset = 2)
+
+## open ends inferred from labels
+period_modify_five(c("<2020", "2020-2024"))
 }
 \seealso{
 \itemize{
