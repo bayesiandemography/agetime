@@ -17,11 +17,8 @@ age_modify(
 \item{breaks}{Boundaries between age groups.
 A numeric vector.}
 
-\item{open_right}{Whether the oldest age group
-is open on the right, i.e. has no upper limit.
-If \code{NULL} (the default), \code{open_right} is set to
-\code{TRUE} if \code{labels} has an age group that is open
-on the right, and to \code{FALSE} otherwise.}
+\item{open_right}{Whether to include an age group that is
+open on the right. Optional. See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -35,6 +32,24 @@ Modify the age groups used by \code{labels}. The
 the new age groups must
 contain the old ones.
 }
+\section{The \code{open_right} argument}{
+
+
+An age group is open on the right if it has no upper limit,
+e.g. \code{"100+"}.
+
+By default, the return value has an open age group
+if and only if \code{labels} does. The full range of options is:\tabular{lll}{
+   \code{open_right} \tab \code{labels} has open on right \tab Return value has open on right \cr
+   \code{NULL} (default) \tab Yes \tab Yes \cr
+   \code{NULL} (default) \tab No \tab No \cr
+   \code{TRUE} \tab Yes \tab Yes \cr
+   \code{TRUE} \tab No \tab Yes \cr
+   \code{FALSE} \tab Yes \tab \emph{Error} \cr
+   \code{FALSE} \tab No \tab No \cr
+}
+}
+
 \examples{
 labels <- c("10-14", "16", "22-23")
 age_modify(labels, breaks = c(10, 15, 25))
@@ -45,7 +60,7 @@ age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
 labels_has_open <- c("1-4", "87+", "0", "50-54")
 age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
 
-## open_right specified
+## structural open top
 age_modify(
   labels_no_open,
   breaks = c(0, 10, 40, 90),

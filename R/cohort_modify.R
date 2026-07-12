@@ -9,19 +9,47 @@
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries between cohorts.
 #' A numeric vector.
-#' @param open_left Whether the first cohort
-#' is open on the left, i.e. has no lower limit.
-#' Default is `NULL`, which infers from `labels`:
-#' `TRUE` when any label is open on the left, otherwise `FALSE`.
-#' Use `TRUE` or `FALSE` to add or suppress an open left level
-#' regardless of `labels`.
-#' @param open_right Whether the last cohort
-#' is open on the right, i.e. has no upper limit.
-#' Default is `NULL`, which infers from `labels`:
-#' `TRUE` when any label is open on the right, otherwise `FALSE`.
-#' Use `TRUE` or `FALSE` to add or suppress an open right level
-#' regardless of `labels`.
+#' @param open_left Whether to include a cohort that is open on the left.
+#' Optional. See below for details.
+#' @param open_right Whether to include a cohort that is open on the right.
+#' Optional. See below for details.
 #' @return Factor with the same length as `labels`.
+#'
+#' @section The `open_left` argument:
+#'
+#' A cohort is open on the left if it has no lower limit,
+#' e.g. `"<2000"`.
+#'
+#' By default, the return value has a cohort
+#' that is open on the left if and only if `labels` does.
+#' The full range of options is:
+#'
+#' | `open_left` | `labels` has open on left | Return value has open on left |
+#' |-------------|---------------------------|-------------------------------|
+#' | `NULL` (default) | Yes | Yes |
+#' | `NULL` (default) | No | No |
+#' | `TRUE` | Yes | Yes |
+#' | `TRUE` | No | Yes |
+#' | `FALSE` | Yes | *Error* |
+#' | `FALSE` | No | No |
+#'
+#' @section The `open_right` argument:
+#'
+#' A cohort is open on the right if it has no upper limit,
+#' e.g. `"2000+"`.
+#'
+#' By default, the return value has a cohort
+#' that is open on the right if and only if `labels` does.
+#' The full range of options is:
+#'
+#' | `open_right` | `labels` has open on right | Return value has open on right |
+#' |--------------|----------------------------|--------------------------------|
+#' | `NULL` (default) | Yes | Yes |
+#' | `NULL` (default) | No | No |
+#' | `TRUE` | Yes | Yes |
+#' | `TRUE` | No | Yes |
+#' | `FALSE` | Yes | *Error* |
+#' | `FALSE` | No | No |
 #'
 #' @examples
 #' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
@@ -96,6 +124,8 @@ cohort_modify <- function(labels,
 #' cohort_modify_ten(labels, offset = 1)
 #' cohort_modify_ten(labels, offset = 2)
 #' @inheritParams cohort_modify
+#' @inheritSection cohort_modify The `open_left` argument
+#' @inheritSection cohort_modify The `open_right` argument
 #' @export
 
 cohort_modify_five <- function(labels,

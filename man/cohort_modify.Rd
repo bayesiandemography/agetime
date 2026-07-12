@@ -20,19 +20,11 @@ cohort_modify(
 \item{breaks}{Boundaries between cohorts.
 A numeric vector.}
 
-\item{open_left}{Whether the first cohort
-is open on the left, i.e. has no lower limit.
-Default is \code{NULL}, which infers from \code{labels}:
-\code{TRUE} when any label is open on the left, otherwise \code{FALSE}.
-Use \code{TRUE} or \code{FALSE} to add or suppress an open left level
-regardless of \code{labels}.}
+\item{open_left}{Whether to include a cohort that is open on the left.
+Optional. See below for details.}
 
-\item{open_right}{Whether the last cohort
-is open on the right, i.e. has no upper limit.
-Default is \code{NULL}, which infers from \code{labels}:
-\code{TRUE} when any label is open on the right, otherwise \code{FALSE}.
-Use \code{TRUE} or \code{FALSE} to add or suppress an open right level
-regardless of \code{labels}.}
+\item{open_right}{Whether to include a cohort that is open on the right.
+Optional. See below for details.}
 
 \item{interpret_single}{How to interpret
 labels for single-year cohorts.
@@ -56,6 +48,44 @@ Modify the cohorts used by \code{labels}. The
 the new cohorts must
 contain the old ones.
 }
+\section{The \code{open_left} argument}{
+
+
+A cohort is open on the left if it has no lower limit,
+e.g. \code{"<2000"}.
+
+By default, the return value has a cohort
+that is open on the left if and only if \code{labels} does.
+The full range of options is:\tabular{lll}{
+   \code{open_left} \tab \code{labels} has open on left \tab Return value has open on left \cr
+   \code{NULL} (default) \tab Yes \tab Yes \cr
+   \code{NULL} (default) \tab No \tab No \cr
+   \code{TRUE} \tab Yes \tab Yes \cr
+   \code{TRUE} \tab No \tab Yes \cr
+   \code{FALSE} \tab Yes \tab \emph{Error} \cr
+   \code{FALSE} \tab No \tab No \cr
+}
+}
+
+\section{The \code{open_right} argument}{
+
+
+A cohort is open on the right if it has no upper limit,
+e.g. \code{"2000+"}.
+
+By default, the return value has a cohort
+that is open on the right if and only if \code{labels} does.
+The full range of options is:\tabular{lll}{
+   \code{open_right} \tab \code{labels} has open on right \tab Return value has open on right \cr
+   \code{NULL} (default) \tab Yes \tab Yes \cr
+   \code{NULL} (default) \tab No \tab No \cr
+   \code{TRUE} \tab Yes \tab Yes \cr
+   \code{TRUE} \tab No \tab Yes \cr
+   \code{FALSE} \tab Yes \tab \emph{Error} \cr
+   \code{FALSE} \tab No \tab No \cr
+}
+}
+
 \section{Controlling how cohort labels are interpreted}{
 
 

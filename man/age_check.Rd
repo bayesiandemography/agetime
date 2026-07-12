@@ -82,7 +82,7 @@ meet conditions such as not overlapping.
 and \code{"1-4"}, followed by 5-year age groups \code{"5-9"}, \code{"10-14"}, ...
 \item A 'complete' life table uses single-year age groups
 \code{"0"}, \code{"1"}, \code{"2"}, ...
-\item Both types of life table have an open interval
+\item Both types of life table usually have an open age group
 such as \code{"85+"} or \code{"100+"}.
 }
 }

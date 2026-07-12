@@ -7,12 +7,26 @@
 #' @inheritParams age_lower
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
-#' @param open_right Whether the oldest age group
-#' is open on the right, i.e. has no upper limit.
-#' If `NULL` (the default), `open_right` is set to
-#' `TRUE` if `labels` has an age group that is open
-#' on the right, and to `FALSE` otherwise.
+#' @param open_right Whether to include an age group that is
+#' open on the right. Optional. See below for details.
 #' @return Factor with the same length as `labels`.
+#'
+#' @section The `open_right` argument:
+#'
+#' An age group is open on the right if it has no upper limit,
+#' e.g. `"100+"`.
+#'
+#' By default, the return value has an open age group
+#' if and only if `labels` does. The full range of options is:
+#'
+#' | `open_right` | `labels` has open on right | Return value has open on right |
+#' |--------------|----------------------------|--------------------------------|
+#' | `NULL` (default) | Yes | Yes |
+#' | `NULL` (default) | No | No |
+#' | `TRUE` | Yes | Yes |
+#' | `TRUE` | No | Yes |
+#' | `FALSE` | Yes | *Error* |
+#' | `FALSE` | No | No |
 #'
 #' @examples
 #' labels <- c("10-14", "16", "22-23")
@@ -24,7 +38,7 @@
 #' labels_has_open <- c("1-4", "87+", "0", "50-54")
 #' age_modify(labels_has_open, breaks = c(0, 10, 40, 90))
 #' 
-#' ## open_right specified
+#' ## structural open top
 #' age_modify(
 #'   labels_no_open,
 #'   breaks = c(0, 10, 40, 90),
@@ -73,6 +87,7 @@ age_modify <- function(labels,
 #' @inheritSection age_check Abridged and complete life tables
 #' @inheritParams age_lower
 #' @inherit age_modify return
+#' @inheritSection age_modify The `open_right` argument
 #'
 #' @seealso
 #' - [age_modify()] Convert to general age groups

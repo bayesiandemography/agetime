@@ -12,7 +12,7 @@
 #'   and `"1-4"`, followed by 5-year age groups `"5-9"`, `"10-14"`, ...
 #' - A 'complete' life table uses single-year age groups
 #'   `"0"`, `"1"`, `"2"`, ...
-#' - Both types of life table have an open interval
+#' - Both types of life table usually have an open age group
 #'   such as `"85+"` or `"100+"`.
 #'
 #' @inheritParams age_lower

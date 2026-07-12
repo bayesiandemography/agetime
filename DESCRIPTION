@@ -18,7 +18,6 @@ Description: Work with vectors of age, period, and
     easier and safer.
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 Depends:
     R (>= 4.1.0)
 Imports:

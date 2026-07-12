@@ -27,11 +27,8 @@ age_modify_life(
 \arguments{
 \item{labels}{Vector of age group labels.}
 
-\item{open_right}{Whether the oldest age group
-is open on the right, i.e. has no upper limit.
-If \code{NULL} (the default), \code{open_right} is set to
-\code{TRUE} if \code{labels} has an age group that is open
-on the right, and to \code{FALSE} otherwise.}
+\item{open_right}{Whether to include an age group that is
+open on the right. Optional. See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -58,8 +55,26 @@ pattern:
 and \code{"1-4"}, followed by 5-year age groups \code{"5-9"}, \code{"10-14"}, ...
 \item A 'complete' life table uses single-year age groups
 \code{"0"}, \code{"1"}, \code{"2"}, ...
-\item Both types of life table have an open interval
+\item Both types of life table usually have an open age group
 such as \code{"85+"} or \code{"100+"}.
+}
+}
+
+\section{The \code{open_right} argument}{
+
+
+An age group is open on the right if it has no upper limit,
+e.g. \code{"100+"}.
+
+By default, the return value has an open age group
+if and only if \code{labels} does. The full range of options is:\tabular{lll}{
+   \code{open_right} \tab \code{labels} has open on right \tab Return value has open on right \cr
+   \code{NULL} (default) \tab Yes \tab Yes \cr
+   \code{NULL} (default) \tab No \tab No \cr
+   \code{TRUE} \tab Yes \tab Yes \cr
+   \code{TRUE} \tab No \tab Yes \cr
+   \code{FALSE} \tab Yes \tab \emph{Error} \cr
+   \code{FALSE} \tab No \tab No \cr
 }
 }
 

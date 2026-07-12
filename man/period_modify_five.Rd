@@ -31,19 +31,11 @@ period_modify_ten(
 \item{offset}{Parameter controlling
 alignment of periods. Default is \code{0}.}
 
-\item{open_left}{Whether the first period
-is open on the left, i.e. has no lower limit.
-Default is \code{NULL}, which infers from \code{labels}:
-\code{TRUE} when any label is open on the left, otherwise \code{FALSE}.
-Use \code{TRUE} or \code{FALSE} to add or suppress an open left level
-regardless of \code{labels}.}
+\item{open_left}{Whether to include a period that is open on the left.
+Optional. See below for details.}
 
-\item{open_right}{Whether the last period
-is open on the right, i.e. has no upper limit.
-Default is \code{NULL}, which infers from \code{labels}:
-\code{TRUE} when any label is open on the right, otherwise \code{FALSE}.
-Use \code{TRUE} or \code{FALSE} to add or suppress an open right level
-regardless of \code{labels}.}
+\item{open_right}{Whether to include a period that is open on the right.
+Optional. See below for details.}
 
 \item{interpret_single}{How to interpret
 labels for single-year periods.
@@ -100,6 +92,44 @@ If \code{interpret_multi} is \code{"exclude"},
 then labels for multi-year periods
 are assumed to exclude the upper limits,
 so that \code{"2025-2030"} means \verb{[2025,2031)}.
+}
+
+\section{The \code{open_left} argument}{
+
+
+A period is open on the left if it has no lower limit,
+e.g. \code{"<2000"}.
+
+By default, the return value has a period
+that is open on the left if and only if \code{labels} does.
+The full range of options is:\tabular{lll}{
+   \code{open_left} \tab \code{labels} has open on left \tab Return value has open on left \cr
+   \code{NULL} (default) \tab Yes \tab Yes \cr
+   \code{NULL} (default) \tab No \tab No \cr
+   \code{TRUE} \tab Yes \tab Yes \cr
+   \code{TRUE} \tab No \tab Yes \cr
+   \code{FALSE} \tab Yes \tab \emph{Error} \cr
+   \code{FALSE} \tab No \tab No \cr
+}
+}
+
+\section{The \code{open_right} argument}{
+
+
+A period is open on the right if it has no upper limit,
+e.g. \code{"2000+"}.
+
+By default, the return value has a period
+that is open on the right if and only if \code{labels} does.
+The full range of options is:\tabular{lll}{
+   \code{open_right} \tab \code{labels} has open on right \tab Return value has open on right \cr
+   \code{NULL} (default) \tab Yes \tab Yes \cr
+   \code{NULL} (default) \tab No \tab No \cr
+   \code{TRUE} \tab Yes \tab Yes \cr
+   \code{TRUE} \tab No \tab Yes \cr
+   \code{FALSE} \tab Yes \tab \emph{Error} \cr
+   \code{FALSE} \tab No \tab No \cr
+}
 }
 
 \examples{
