@@ -140,8 +140,11 @@ period_modify_ten(labels)
 ## align to different boundaries
 period_modify_five(labels, offset = 2)
 
-## open ends inferred from labels
+## let inclusion of open period depend on labels
 period_modify_five(c("<2020", "2020-2024"))
+
+## insist on an open period
+period_modify_five(c("2010", "2020-2025"), open_right = TRUE)
 }
 \seealso{
 \itemize{

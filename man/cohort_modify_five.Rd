@@ -139,8 +139,11 @@ cohort_modify_ten(labels)
 ## align to different boundaries
 cohort_modify_five(labels, offset = 2)
 
-## open ends inferred from labels
-cohort_modify_five(c("<2020", "2020-2024"))
+## let inclusion of open cohort depend on labels
+cohort_modify_five(c("2010", "2020-2025"))
+
+## insist on an open cohort
+cohort_modify_five(c("2010", "2020-2025"), open_left = TRUE)
 }
 \seealso{
 \itemize{

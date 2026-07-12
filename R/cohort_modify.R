@@ -52,18 +52,21 @@
 #' | `FALSE` | No | No |
 #'
 #' @examples
-#' ## basic recoding
 #' labels <- c("2001-2004", "1987-1989", "2000", "2005-2010")
 #' cohort_modify(labels, breaks = c(1970, 2000, 2005, 2015))
 #'
-#' ## open ends inferred from labels
+#' ## let inclusion of open cohort depend on labels
 #' labels_closed <- c("2001-2004", "2005-2010")
 #' cohort_modify(labels_closed, breaks = c(2000, 2010, 2020))
 #' labels_open <- c("<1970", "2001-2004", "2020+")
 #' cohort_modify(labels_open, breaks = c(1970, 2000, 2010, 2020))
 #'
-#' ## structural open right
-#' cohort_modify(labels_closed, breaks = c(2000, 2010, 2020), open_right = TRUE)
+#' ## insist on an open cohort
+#' cohort_modify(
+#'   labels_closed,
+#'   breaks = c(2000, 2010, 2020),
+#'   open_right = TRUE
+#' )
 #'
 #' @seealso
 #' - [cohort_modify_five()] Convert to 5-year cohorts
@@ -132,8 +135,11 @@ cohort_modify <- function(labels,
 #' ## align to different boundaries
 #' cohort_modify_five(labels, offset = 2)
 #'
-#' ## open ends inferred from labels
-#' cohort_modify_five(c("<2020", "2020-2024"))
+#' ## let inclusion of open cohort depend on labels
+#' cohort_modify_five(c("2010", "2020-2025"))
+#'
+#' ## insist on an open cohort
+#' cohort_modify_five(c("2010", "2020-2025"), open_left = TRUE)
 #' @inheritParams cohort_modify
 #' @inheritSection cohort_modify The `open_left` argument
 #' @inheritSection cohort_modify The `open_right` argument

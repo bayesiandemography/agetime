@@ -29,17 +29,16 @@
 #' | `FALSE` | No | No |
 #'
 #' @examples
-#' ## basic recoding
 #' labels <- c("10-14", "16", "22-23")
 #' age_modify(labels, breaks = c(10, 15, 25))
 #'
-#' ## open top inferred from labels
+#' ## let inclusion of open age group depend on labels
 #' labels_no_open <- c("1-4", "87-89", "0", "50-54")
 #' age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
 #' labels_has_open <- c("1-4", "87+", "0", "50-54")
 #' age_modify(labels_has_open, breaks = c(0, 10, 40, 87))
 #'
-#' ## structural open top
+#' ## insist on an open age group
 #' age_modify(
 #'   labels_no_open,
 #'   breaks = c(0, 10, 40, 90),
@@ -99,10 +98,14 @@ age_modify <- function(labels,
 #' - [age_fill()] Add levels for intermediate age groups
 #'
 #' @examples
-#' labels <- c("1-3", "87-89", "0", "91+", "total", "52")
-#' age_modify_five(labels) # 5-year groups; open top from "91+"
+#' labels <- c("1-3", "16-19", "0", "31+", "total", "22")
+#' age_modify_five(labels)
 #' age_modify_ten(labels)
 #' age_modify_life(labels)
+#'
+#' labels_no_open <- c("1-3", "16-19", "0", "total", "22")
+#' age_modify_five(labels_no_open)
+#' age_modify_five(labels_no_open, open_right = TRUE)
 #' @inheritParams age_modify
 #' @export
 

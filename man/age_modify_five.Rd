@@ -79,10 +79,14 @@ if and only if \code{labels} does. The full range of options is:\tabular{lll}{
 }
 
 \examples{
-labels <- c("1-3", "87-89", "0", "91+", "total", "52")
-age_modify_five(labels) # 5-year groups; open top from "91+"
+labels <- c("1-3", "16-19", "0", "31+", "total", "22")
+age_modify_five(labels)
 age_modify_ten(labels)
 age_modify_life(labels)
+
+labels_no_open <- c("1-3", "16-19", "0", "total", "22")
+age_modify_five(labels_no_open)
+age_modify_five(labels_no_open, open_right = TRUE)
 }
 \seealso{
 \itemize{
