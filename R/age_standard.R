@@ -1,22 +1,27 @@
 ## HAS_TESTS
 #' Standardize Age Group Labels
 #'
-#' Convert age group labels to the default \pkg{agetime} format.
+#' Convert age group labels to the default \pkg{agetime} format for age.
+#'
+#' Default format for age:
+#' 
+#' | Interval type | Lower | Upper | Format  | Example |
+#' |---------------|-------|-------|---------|----------|
+#' | single | `a` | `a+1` | `"a"` | `"11"` |
+#' | multi | `a` | `a+n` | `"a-<a+n-1>"` | `"10-14"` |
+#' | open on right | `a` | `Inf` | `"a+"` | `"85+"` |
 #'
 #' @inheritParams age_lower
-#'
 #' @return Character vector or factor with the same length as `labels`.
 #'
 #' @seealso
 #' - [period_standard()] Period equivalent of `age_standard()`
 #' - [cohort_standard()] Cohort equivalent of `age_standard()`
+#' - [age_labels()] Create age group labels
 #'
 #' @examples
-#' labels <- c("5to9", "10--14", "100plus")
+#' labels <- c("5to9", "10--14", "100plus", "all")
 #' age_standard(labels)
-#'
-#' ## factor input: factor in, factor out
-#' age_standard(factor(c("5to9", "10--14")))
 #' @export
 
 # Character input returns character; factor input returns factor with the same

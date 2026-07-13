@@ -1,8 +1,24 @@
 ## HAS_TESTS
 #' Standardize Period Labels
 #'
-#' Convert period labels to the default \pkg{agetime} format.
+#' Convert period labels to the default \pkg{agetime} format for periods.
 #'
+#' Default format for periods:
+#' 
+#' | Interval type | Lower | Upper | Format  | Example |
+#' |---------------|-------|-------|---------|----------|
+#' | single | `a` | `a+1` | `"a"` | `"2020"` |
+#' | multi | `a` | `a+n` | `"a-<a+n>"` | `"2020-2025"` |
+#' | open on left | `-Inf` | `a` | `"<a"` | `"<2020"` |
+#' | open on right | `a` | `Inf` | `"a+"` | `"2020+"` |
+#' 
+#' The format for single-year periods corresponds
+#' to `interpret_single = "lower"`.
+#' 
+#' The format for multi-year periods corresponds
+#' to `interpret_multi = "include"`.
+#'
+#' 
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
 #' @inheritParams period_lower
@@ -11,9 +27,10 @@
 #' @seealso
 #' - [age_standard()] Age equivalent of `period_standard()`
 #' - [cohort_standard()] Cohort equivalent of `period_standard()`
+#' - [period_labels()] Create period labels
 #'
 #' @examples
-#' labels <- c("2025to2030", "1910--1914", " 2022 ")
+#' labels <- c("2025to2030", "1910--1914", " 2022 ", "all")
 #' period_standard(labels)
 #' @export
 period_standard <- function(labels,

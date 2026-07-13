@@ -17,18 +17,24 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Convert age group labels to the default \pkg{agetime} format.
+Convert age group labels to the default \pkg{agetime} format for age.
+}
+\details{
+Default format for age:\tabular{lllll}{
+   Interval type \tab Lower \tab Upper \tab Format \tab Example \cr
+   single \tab \code{a} \tab \code{a+1} \tab \code{"a"} \tab \code{"11"} \cr
+   multi \tab \code{a} \tab \code{a+n} \tab \code{"a-<a+n-1>"} \tab \code{"10-14"} \cr
+   open on right \tab \code{a} \tab \code{Inf} \tab \code{"a+"} \tab \code{"85+"} \cr
+}
 }
 \examples{
-labels <- c("5to9", "10--14", "100plus")
+labels <- c("5to9", "10--14", "100plus", "all")
 age_standard(labels)
-
-## factor input: factor in, factor out
-age_standard(factor(c("5to9", "10--14")))
 }
 \seealso{
 \itemize{
 \item \code{\link[=period_standard]{period_standard()}} Period equivalent of \code{age_standard()}
 \item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{age_standard()}
+\item \code{\link[=age_labels]{age_labels()}} Create age group labels
 }
 }

@@ -32,7 +32,23 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Character vector or factor with the same length as \code{labels}.
 }
 \description{
-Convert cohort labels to the default \pkg{agetime} format.
+Convert cohort labels to the default \pkg{agetime} format for cohorts.
+}
+\details{
+Default format for cohorts:\tabular{lllll}{
+   Interval type \tab Lower \tab Upper \tab Format \tab Example \cr
+   single \tab \code{a} \tab \code{a+1} \tab \code{"a"} \tab \code{"2020"} \cr
+   multi \tab \code{a} \tab \code{a+n} \tab \code{"a-<a+n>"} \tab \code{"2020-2025"} \cr
+   open on left \tab \code{-Inf} \tab \code{a} \tab \code{"<a"} \tab \code{"<2020"} \cr
+   open on right \tab \code{a} \tab \code{Inf} \tab \code{"a+"} \tab \code{"2020+"} \cr
+}
+
+
+The format for single-year cohorts corresponds
+to \code{interpret_single = "lower"}.
+
+The format for multi-year cohorts corresponds
+to \code{interpret_multi = "include"}.
 }
 \section{Controlling how cohort labels are interpreted}{
 
@@ -64,13 +80,13 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
 \examples{
-labels <- c("2025to2030", "1910--1914", " < 2022 ")
+labels <- c("2025to2030", "1910--1914", " < 2022 ", "all")
 cohort_standard(labels)
 }
 \seealso{
 \itemize{
-\item \code{\link[=cohort_labels]{cohort_labels()}} Default \pkg{agetime} format
 \item \code{\link[=age_standard]{age_standard()}} Age equivalent of \code{cohort_standard()}
 \item \code{\link[=period_standard]{period_standard()}} Period equivalent of \code{cohort_standard()}
+\item \code{\link[=cohort_labels]{cohort_labels()}} Create cohort labels
 }
 }
