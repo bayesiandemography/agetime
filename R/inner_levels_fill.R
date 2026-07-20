@@ -215,10 +215,7 @@ inner_levels_fill <- function(labels,
             ),
             .envir = msg_envir
           )
-          cli::cli_abort(c(
-            msg,
-            i = "Choose a different {.arg width}?"
-          ))
+          cli::cli_abort(msg)
         }
         breaks_gap <- seq.int(
           from = u_prev,

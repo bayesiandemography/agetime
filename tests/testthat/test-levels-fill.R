@@ -163,7 +163,6 @@ test_that("period/cohort fill-ten errors for indivisible gaps", {
     msg,
     "Gap between .2010-2019. and .2030-2039. is not divisible by 10"
   )
-  expect_match(msg, "Choose a different .width.")
   expect_error(
     cohort_fill_ten(x),
     "Gap between .2010-2019. and .2030-2039. is not divisible by 10"
@@ -206,7 +205,6 @@ test_that("age_fill_five() errors for indivisible gaps", {
     error = function(e) conditionMessage(e)
   )
   expect_match(msg, "Gap between .0-4. and .11-14. is not divisible by 5")
-  expect_match(msg, "Choose a different .width.")
 })
 
 test_that("age_fill_life() returns a factor for one level", {
