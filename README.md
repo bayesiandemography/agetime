@@ -23,7 +23,7 @@ Functions for
 - cleaning,
 - validating,
 - extracting information,
-- modifying, and
+- coarsening, and
 - creating new labels.
 
 Example: standardizing labels.

@@ -34,12 +34,12 @@ labels for age groups, periods, and cohorts.
 }
 
 
-\strong{Modify boundaries}\tabular{lll}{
+\strong{Coarsen intervals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_modify]{age_modify()}} \tab \code{\link[=period_modify]{period_modify()}} \tab \code{\link[=cohort_modify]{cohort_modify()}} \cr
-   \code{\link[=age_modify_five]{age_modify_five()}} \tab \code{\link[=period_modify_five]{period_modify_five()}} \tab \code{\link[=cohort_modify_five]{cohort_modify_five()}} \cr
-   \code{\link[=age_modify_ten]{age_modify_ten()}} \tab \code{\link[=period_modify_ten]{period_modify_ten()}} \tab \code{\link[=cohort_modify_ten]{cohort_modify_ten()}} \cr
-   \code{\link[=age_modify_life]{age_modify_life()}} \tab  \tab  \cr
+   \code{\link[=age_coarsen]{age_coarsen()}} \tab \code{\link[=period_coarsen]{period_coarsen()}} \tab \code{\link[=cohort_coarsen]{cohort_coarsen()}} \cr
+   \code{\link[=age_coarsen_five]{age_coarsen_five()}} \tab \code{\link[=period_coarsen_five]{period_coarsen_five()}} \tab \code{\link[=cohort_coarsen_five]{cohort_coarsen_five()}} \cr
+   \code{\link[=age_coarsen_ten]{age_coarsen_ten()}} \tab \code{\link[=period_coarsen_ten]{period_coarsen_ten()}} \tab \code{\link[=cohort_coarsen_ten]{cohort_coarsen_ten()}} \cr
+   \code{\link[=age_coarsen_life]{age_coarsen_life()}} \tab  \tab  \cr
 }
 
 

@@ -1,6 +1,6 @@
-test_that("inner_modify_width() uses upper bounds for open-left start", {
+test_that("inner_coarsen_width() uses upper bounds for open-left start", {
   x <- c("<2020", "2020-2024")
-  ans <- agetime:::inner_modify_width(
+  ans <- agetime:::inner_coarsen_width(
     x,
     width = 5L,
     offset = 0L,
@@ -15,7 +15,7 @@ test_that("inner_modify_width() uses upper bounds for open-left start", {
   expect_values(ans, c("<2020", "2020-2024"))
 })
 
-test_that("inner_modify_width() aligns open-left start with offset", {
+test_that("inner_coarsen_width() aligns open-left start with offset", {
   x <- c("<2020", "2020-2024")
   intervals <- intervals(
     labels = x,
@@ -35,7 +35,7 @@ test_that("inner_modify_width() aligns open-left start with offset", {
   expect_equal(start + width - remainder_start, 2022)
 
   expect_error(
-    agetime:::inner_modify_width(
+    agetime:::inner_coarsen_width(
       x,
       width = width,
       offset = offset,

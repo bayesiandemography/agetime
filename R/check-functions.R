@@ -179,7 +179,7 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   invisible(TRUE)
 }
 
-#' Check Modify Open Flags
+#' Check Coarsen Open Flags
 #'
 #' @param is_open_left Whether to include an open-left interval, or `NULL`
 #' to infer from `intervals`.
@@ -190,7 +190,7 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
 #' @returns Return value used internally.
 #'
 #' @noRd
-check_modify_open_flags <- function(is_open_left,
+check_coarsen_open_flags <- function(is_open_left,
                                     is_open_right,
                                     intervals,
                                     label_type) {

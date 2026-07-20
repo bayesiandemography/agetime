@@ -1,4 +1,4 @@
-test_that("construct_modify_mapping() adds an open-left row", {
+test_that("construct_coarsen_mapping() adds an open-left row", {
   x <- c("<2020", "2020-2025", "2025-2030")
   intervals <- intervals(
     labels = x,
@@ -17,7 +17,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     include_total = FALSE,
     include_na = FALSE
   )
-  m_open <- agetime:::construct_modify_mapping(
+  m_open <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
     levels_breaks = levels_breaks,
     is_open_left = TRUE,
@@ -35,7 +35,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
     include_total = FALSE,
     include_na = FALSE
   )
-  m_closed <- agetime:::construct_modify_mapping(
+  m_closed <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
     levels_breaks = levels_closed,
     is_open_left = FALSE,
@@ -52,7 +52,7 @@ test_that("construct_modify_mapping() adds an open-left row", {
   expect_false(any(m_open["2025-2029", , drop = FALSE]))
 })
 
-test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
+test_that("construct_coarsen_mapping() maps NA only when include_na is TRUE", {
   x <- c("0-4", "5-9", NA)
   intervals <- intervals(
     labels = x,
@@ -71,7 +71,7 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
     include_total = FALSE,
     include_na = TRUE
   )
-  m_with_na <- agetime:::construct_modify_mapping(
+  m_with_na <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
     levels_breaks = levels_with_na,
     is_open_left = FALSE,
@@ -92,7 +92,7 @@ test_that("construct_modify_mapping() maps NA only when include_na is TRUE", {
   expect_false(any(m_with_na[-i_na_row, i_na_col, drop = FALSE]))
 })
 
-test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
+test_that("construct_coarsen_mapping() omits NA row when include_na is FALSE", {
   x <- c("0-4", "5-9")
   intervals <- intervals(
     labels = x,
@@ -111,7 +111,7 @@ test_that("construct_modify_mapping() omits NA row when include_na is FALSE", {
     include_total = FALSE,
     include_na = FALSE
   )
-  m <- agetime:::construct_modify_mapping(
+  m <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
     levels_breaks = levels_breaks,
     is_open_left = FALSE,

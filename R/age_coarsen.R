@@ -1,6 +1,6 @@
-#' Convert to New Age Groups
+#' Coarsen Age Groups
 #'
-#' Modify the age groups used by `labels`. The
+#' Coarsen the age groups used by `labels`. The
 #' the new age groups must
 #' contain the old ones.
 #'
@@ -30,35 +30,35 @@
 #'
 #' @examples
 #' labels <- c("10-14", "16", "22-23")
-#' age_modify(labels, breaks = c(10, 15, 25))
+#' age_coarsen(labels, breaks = c(10, 15, 25))
 #'
 #' ## let inclusion of open age group depend on labels
 #' labels_no_open <- c("1-4", "87-89", "0", "50-54")
-#' age_modify(labels_no_open, breaks = c(0, 10, 40, 90))
+#' age_coarsen(labels_no_open, breaks = c(0, 10, 40, 90))
 #' labels_has_open <- c("1-4", "87+", "0", "50-54")
-#' age_modify(labels_has_open, breaks = c(0, 10, 40, 87))
+#' age_coarsen(labels_has_open, breaks = c(0, 10, 40, 87))
 #'
 #' ## insist on an open age group
-#' age_modify(
+#' age_coarsen(
 #'   labels_no_open,
 #'   breaks = c(0, 10, 40, 90),
 #'   open_right = TRUE
 #' )
 #' @seealso
-#' - [age_modify_five()] Convert to 5-year age groups
-#' - [age_modify_ten()] Convert to 10-year age groups
-#' - [age_modify_life()] Convert to life table age groups
-#' - [period_modify()] Period equivalent of `age_modify()`
-#' - [cohort_modify()] Cohort equivalent of `age_modify()`
+#' - [age_coarsen_five()] Coarsen to 5-year age groups
+#' - [age_coarsen_ten()] Coarsen to 10-year age groups
+#' - [age_coarsen_life()] Coarsen to life table age groups
+#' - [period_coarsen()] Period equivalent of `age_coarsen()`
+#' - [cohort_coarsen()] Cohort equivalent of `age_coarsen()`
 #' @export
 
-age_modify <- function(labels,
+age_coarsen <- function(labels,
                        breaks,
                        open_right = NULL,
                        interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
-  inner_modify(
+  inner_coarsen(
     labels = labels,
     breaks = breaks,
     is_open_left = NULL,
@@ -66,55 +66,61 @@ age_modify <- function(labels,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    minimal_levels = FALSE,
+    preserve_input_type = FALSE
   )
 }
 
 
-#' Convert to Specialised Age Groups
+#' Coarsen to Specialised Age Groups
 #'
 #' @description
 #'
-#' Modify the age groups used by `labels`.
+#' Coarsen the age groups used by `labels`.
 #' The new age groups must contain
 #' the old age groups, and follow a regular
 #' pattern:
 #'
-#' - `age_modify_five` Five-year age groups
-#' - `age_modify_ten` Ten-year age groups
-#' - `age_modify_life` Age groups used in 'abridged' life tables
+#' - `age_coarsen_five` Five-year age groups
+#' - `age_coarsen_ten` Ten-year age groups
+#' - `age_coarsen_life` Age groups used in 'abridged' life tables
 #'
 #' @inheritSection age_check Abridged and complete life tables
 #' @inheritParams age_lower
-#' @inherit age_modify return
-#' @inheritSection age_modify The `open_right` argument
+#' @inherit age_coarsen return
+#' @return Character vector or factor with the same length as `labels`.
+#' Character input returns character; factor input returns factor.
+#' Factor levels are recoded from `levels(labels)`; intermediate break
+#' levels are not added.
+#' @inheritSection age_coarsen The `open_right` argument
 #'
 #' @seealso
-#' - [age_modify()] Convert to general age groups
-#' - [period_modify_five()] Period equivalent of `age_modify_five()`
-#' - [period_modify_ten()] Period equivalent of `age_modify_ten()`
-#' - [cohort_modify_five()] Cohort equivalent of `age_modify_five()`
-#' - [cohort_modify_ten()] Cohort equivalent of `age_modify_ten()`
+#' - [age_coarsen()] Coarsen to general age groups
+#' - [period_coarsen_five()] Period equivalent of `age_coarsen_five()`
+#' - [period_coarsen_ten()] Period equivalent of `age_coarsen_ten()`
+#' - [cohort_coarsen_five()] Cohort equivalent of `age_coarsen_five()`
+#' - [cohort_coarsen_ten()] Cohort equivalent of `age_coarsen_ten()`
 #' - [age_fill()] Add levels for intermediate age groups
 #'
 #' @examples
 #' labels <- c("1-3", "16-19", "0", "31+", "total", "22")
-#' age_modify_five(labels)
-#' age_modify_ten(labels)
-#' age_modify_life(labels)
+#' age_coarsen_five(labels)
+#' age_coarsen_ten(labels)
+#' age_coarsen_life(labels)
 #'
 #' labels_no_open <- c("1-3", "16-19", "0", "total", "22")
-#' age_modify_five(labels_no_open)
-#' age_modify_five(labels_no_open, open_right = TRUE)
-#' @inheritParams age_modify
+#' age_coarsen_five(labels_no_open)
+#' age_coarsen_five(labels_no_open, open_right = TRUE)
+#' @inheritParams age_coarsen
 #' @export
 
-age_modify_five <- function(labels,
+age_coarsen_five <- function(labels,
                             open_right = NULL,
                             interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
-  inner_modify_width(
+  inner_coarsen_width(
     labels = labels,
     width = 5L,
     offset = 0L,
@@ -127,15 +133,15 @@ age_modify_five <- function(labels,
   )
 }
 
-#' @rdname age_modify_five
-#' @inheritParams age_modify
+#' @rdname age_coarsen_five
+#' @inheritParams age_coarsen
 #' @export
-age_modify_ten <- function(labels,
+age_coarsen_ten <- function(labels,
                            open_right = NULL,
                            interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
-  inner_modify_width(
+  inner_coarsen_width(
     labels = labels,
     width = 10L,
     offset = 0L,
@@ -148,10 +154,10 @@ age_modify_ten <- function(labels,
   )
 }
 
-#' @rdname age_modify_five
-#' @inheritParams age_modify
+#' @rdname age_coarsen_five
+#' @inheritParams age_coarsen
 #' @export
-age_modify_life <- function(labels,
+age_coarsen_life <- function(labels,
                             open_right = NULL,
                             interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_right, nm_x = "open_right")
@@ -167,7 +173,7 @@ age_modify_life <- function(labels,
       return(factor(levels = character(), ordered = is_ordered))
     }
     if (!is.factor(labels)) {
-      return(factor())
+      return(character(0))
     }
   }
   intervals <- intervals(
@@ -197,7 +203,7 @@ age_modify_life <- function(labels,
   } else {
     breaks <- c(0L, 1L, seq.int(from = 5L, to = top_lower, by = 5L))
   }
-  inner_modify(
+  inner_coarsen(
     labels = labels,
     breaks = breaks,
     is_open_left = NULL,
@@ -205,6 +211,8 @@ age_modify_life <- function(labels,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    minimal_levels = TRUE,
+    preserve_input_type = TRUE
   )
 }

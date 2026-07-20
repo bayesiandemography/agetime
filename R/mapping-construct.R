@@ -1,7 +1,7 @@
 # mapping-construct.R
-# Build label-to-label mapping matrices and modify containment maps.
-# Used by inner_mapping.R and inner_modify.R.
-#' Construct Modify Mapping
+# Build label-to-label mapping matrices and coarsen containment maps.
+# Used by inner_mapping.R and inner_coarsen.R.
+#' Construct Coarsen Mapping
 #'
 #' @param breaks Increasing vector of break points.
 #' @param levels_breaks Labels constructed from new breaks.
@@ -14,7 +14,7 @@
 #'
 #' @noRd
 
-construct_modify_mapping <- function(breaks,
+construct_coarsen_mapping <- function(breaks,
                                      levels_breaks,
                                      is_open_left,
                                      is_open_right,

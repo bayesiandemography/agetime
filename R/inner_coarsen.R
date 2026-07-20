@@ -28,7 +28,49 @@ resolve_open_right <- function(is_open_right, intervals) {
   isTRUE(is_open_right)
 }
 
-#' Inner Modify
+#' Coarsen Minimal Levels
+#'
+#' @param levels_breaks Labels constructed from new breaks.
+#' @param breaks Increasing vector of break points.
+#' @param i_new Index of new label for each unique input label.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param is_ordered Whether output factor should be ordered.
+#' @returns Character vector of output factor levels.
+#'
+#' @noRd
+coarsen_minimal_levels <- function(levels_breaks,
+                                  breaks,
+                                  i_new,
+                                  is_open_left,
+                                  is_open_right,
+                                  is_ordered) {
+  levels_recoded <- levels_breaks[i_new]
+  n_core <- length(breaks) - 1L +
+    as.integer(is_open_left) +
+    as.integer(is_open_right)
+  core_labels <- levels_breaks[seq_len(n_core)]
+  extra <- character(0)
+  if (is_open_left) {
+    extra <- c(extra, core_labels[[1L]])
+  }
+  if (is_open_right) {
+    extra <- c(extra, core_labels[[length(core_labels)]])
+  }
+  levels_all <- unique(c(levels_recoded, extra))
+  if (is_ordered) {
+    levels_output <- levels_recoded[!duplicated(levels_recoded)]
+    for (label in extra) {
+      if (!label %in% levels_output) {
+        levels_output <- c(levels_output, label)
+      }
+    }
+    return(levels_output)
+  }
+  levels_breaks[levels_breaks %in% levels_all]
+}
+
+#' Inner Coarsen
 #'
 #' @param labels Vector of labels.
 #' @param breaks Increasing vector of break points.
@@ -41,18 +83,23 @@ resolve_open_right <- function(is_open_right, intervals) {
 #' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
-#' @returns Modified labels as a factor.
+#' @param minimal_levels Whether to omit break levels with no mapped input.
+#' @param preserve_input_type Whether to return character for non-factor input.
+#' @returns Coarsened labels as a factor or character vector.
 #'
 #' @noRd
-inner_modify <- function(labels,
+inner_coarsen <- function(labels,
                          breaks,
                          is_open_left,
                          is_open_right,
                          label_type,
                          interpret_single,
                          interpret_multi,
-                         interpret_fail) {
-  is_ordered <- is.factor(labels) && is.ordered(labels)
+                         interpret_fail,
+                         minimal_levels,
+                         preserve_input_type) {
+  is_factor <- is.factor(labels)
+  is_ordered <- is_factor && is.ordered(labels)
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
@@ -65,7 +112,7 @@ inner_modify <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
-  check_modify_open_flags(
+  check_coarsen_open_flags(
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     intervals = intervals,
@@ -90,8 +137,9 @@ inner_modify <- function(labels,
     include_total = int_has_total,
     include_na = int_has_na
   )
-  if (length(labels) > 0L) {
-    m_contains <- construct_modify_mapping(
+  i_new <- NULL
+  if (length(get_labels_unique(intervals)) > 0L) {
+    m_contains <- construct_coarsen_mapping(
       breaks = breaks,
       levels_breaks = levels_breaks,
       is_open_left = is_open_left,
@@ -105,20 +153,41 @@ inner_modify <- function(labels,
       label_type = label_type
     )
     i_new <- apply(m_contains, 2L, which)
+  }
+  if (length(labels) > 0L) {
     i_x_to_xu <- get_i_x_to_xu(intervals)
     ans <- levels_breaks[i_new][i_x_to_xu]
   } else {
     ans <- character(0)
   }
+  if (minimal_levels) {
+    if (is.null(i_new)) {
+      levels_output <- character(0)
+    } else {
+      levels_output <- coarsen_minimal_levels(
+        levels_breaks = levels_breaks,
+        breaks = breaks,
+        i_new = i_new,
+        is_open_left = is_open_left,
+        is_open_right = is_open_right,
+        is_ordered = is_ordered
+      )
+    }
+  } else {
+    levels_output <- levels_breaks
+  }
+  if (preserve_input_type && !is_factor) {
+    return(ans)
+  }
   factor(
     x = ans,
-    levels = levels_breaks,
+    levels = levels_output,
     ordered = is_ordered,
     exclude = NULL
   )
 }
 
-#' Inner Modify Width
+#' Inner Coarsen Width
 #'
 #' @param labels Vector of labels.
 #' @param width Interval width.
@@ -132,13 +201,13 @@ inner_modify <- function(labels,
 #' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
-#' @returns Modified labels as a factor.
+#' @returns Coarsened labels as a factor or character vector.
 #'
 #' Computes aligned breaks from `width` and `offset` using existing interval
-#' bounds before calling `inner_modify()`.
+#' bounds before calling `inner_coarsen()`.
 #'
 #' @noRd
-inner_modify_width <- function(labels,
+inner_coarsen_width <- function(labels,
                                width,
                                offset,
                                is_open_left,
@@ -158,7 +227,7 @@ inner_modify_width <- function(labels,
       return(factor(levels = character(), ordered = is_ordered))
     }
     if (!is.factor(labels)) {
-      return(factor())
+      return(character(0))
     }
   }
   check_n(
@@ -214,7 +283,7 @@ inner_modify_width <- function(labels,
     }
   }
   breaks <- seq.int(from = start, to = end, by = width)
-  inner_modify(
+  inner_coarsen(
     labels = labels,
     breaks = breaks,
     is_open_left = is_open_left,
@@ -222,6 +291,8 @@ inner_modify_width <- function(labels,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    minimal_levels = TRUE,
+    preserve_input_type = TRUE
   )
 }
