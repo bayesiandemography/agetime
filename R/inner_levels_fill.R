@@ -240,7 +240,7 @@ inner_levels_fill <- function(labels,
   levels_old <- as.list(labels_display)
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
-  levels <- unique(levels)
+  levels <- unique(c(levels, labels_unique))
   inner_levels_fill_factor(
     labels = labels_input,
     levels = levels,
@@ -333,7 +333,7 @@ inner_levels_fill_life <- function(labels,
   levels_old <- as.list(labels_display)
   levels <- rbind(levels_old, levels_extra)
   levels <- unlist(levels)
-  levels <- unique(levels)
+  levels <- unique(c(levels, labels_unique))
   inner_levels_fill_factor(
     labels = labels_input,
     levels = levels,

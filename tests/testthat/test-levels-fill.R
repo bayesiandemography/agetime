@@ -66,6 +66,17 @@ test_that("levels-fill functions sort out-of-order input levels", {
   )
 })
 
+test_that("levels-fill functions preserve total, all, and NA labels", {
+  x <- c("10-14", "0-4", "total", NA, "all")
+  ans <- age_fill_five(x)
+
+  expect_identical(as.character(ans), x)
+  expect_identical(
+    levels(ans),
+    c("0-4", "5-9", "10-14", "total", NA, "all")
+  )
+})
+
 test_that("cohort_fill() preserves original open-left values", {
   ans <- cohort_fill_five(
     c("2010-2014", "2000-2004", "less than 1990"),
