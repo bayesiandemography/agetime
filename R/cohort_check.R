@@ -1,10 +1,17 @@
 #' Check or Make Assertions About Cohorts
 #'
 #' @description
-#' `cohort_check()` reports on whether cohorts labels
-#' meet conditions such as not overlapping.
+#' `cohort_check()` reports whether cohort labels
+#' meet conditions.
 #'
 #' `cohort_assert()` throws an error if conditions are not met.
+#'
+#' Conditions include:
+#'
+#' - Not overlapping
+#' - Not having gaps
+#' - Having open cohorts
+#' - Having totals or NAs
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'

@@ -79,10 +79,18 @@ or raises an error.
 }
 }
 \description{
-\code{cohort_check()} reports on whether cohorts labels
-meet conditions such as not overlapping.
+\code{cohort_check()} reports whether cohort labels
+meet conditions.
 
 \code{cohort_assert()} throws an error if conditions are not met.
+
+Conditions include:
+\itemize{
+\item Not overlapping
+\item Not having gaps
+\item Having open cohorts
+\item Having totals or NAs
+}
 }
 \section{Controlling how cohort labels are interpreted}{
 

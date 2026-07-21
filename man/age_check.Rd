@@ -70,10 +70,19 @@ or raises an error.
 }
 }
 \description{
-\code{age_check()} reports on whether age group labels
-meet conditions such as not overlapping.
+\code{age_check()} reports whether age group labels
+meet conditions.
 
 \code{age_assert()} throws an error if conditions are not met.
+
+Conditions include:
+\itemize{
+\item Not overlapping
+\item Not having gaps
+\item Having open age groups
+\item Having totals, NAs, or zeros
+\item Valid for an abridged life table
+}
 }
 \section{Abridged and complete life tables}{
 

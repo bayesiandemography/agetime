@@ -1,10 +1,18 @@
 #' Check or Make Assertions About Age Groups
 #'
 #' @description
-#' `age_check()` reports on whether age group labels
-#' meet conditions such as not overlapping.
+#' `age_check()` reports whether age group labels
+#' meet conditions.
 #'
 #' `age_assert()` throws an error if conditions are not met.
+#'
+#' Conditions include:
+#'
+#' - Not overlapping
+#' - Not having gaps
+#' - Having open age groups
+#' - Having totals, NAs, or zeros
+#' - Valid for an abridged life table
 #'
 #' @section Abridged and complete life tables:
 #'

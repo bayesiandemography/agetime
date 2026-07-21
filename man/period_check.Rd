@@ -78,10 +78,18 @@ or raises an error.
 }
 }
 \description{
-\code{period_check()} reports on whether period labels
-meet conditions such as not overlapping.
+\code{period_check()} reports whether period labels
+meet conditions.
 
 \code{period_assert()} throws an error if conditions are not met.
+
+Conditions include:
+\itemize{
+\item Not overlapping
+\item Not having gaps
+\item Having open periods
+\item Having totals or NAs
+}
 }
 \section{Controlling how period labels are interpreted}{
 

@@ -23,12 +23,13 @@ labels for age groups, periods, and cohorts.
 
 \strong{Identify open intervals and totals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_is_open_right]{age_is_open_right()}} \tab \code{\link[=period_is_open_left]{period_is_open_left()}} \tab \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} \cr
+    \tab \code{\link[=period_is_open_left]{period_is_open_left()}} \tab \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} \cr
+   \code{\link[=age_is_open_right]{age_is_open_right()}} \tab \code{\link[=period_is_open_right]{period_is_open_right()}} \tab \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} \cr
    \code{\link[=age_is_total]{age_is_total()}} \tab \code{\link[=period_is_total]{period_is_total()}} \tab \code{\link[=cohort_is_total]{cohort_is_total()}} \cr
 }
 
 
-\strong{Use standard format}\tabular{lll}{
+\strong{Use agetime default format}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \cr
 }
@@ -61,8 +62,8 @@ labels for age groups, periods, and cohorts.
 
 \strong{Define open intervals}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_set_open_right]{age_set_open_right()}} \tab \code{\link[=period_set_open_left]{period_set_open_left()}} \tab \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} \cr
-    \tab \code{\link[=period_set_open_right]{period_set_open_right()}} \tab \code{\link[=cohort_set_open_right]{cohort_set_open_right()}} \cr
+    \tab \code{\link[=period_set_open_left]{period_set_open_left()}} \tab \code{\link[=cohort_set_open_left]{cohort_set_open_left()}} \cr
+   \code{\link[=age_set_open_right]{age_set_open_right()}} \tab \code{\link[=period_set_open_right]{period_set_open_right()}} \tab \code{\link[=cohort_set_open_right]{cohort_set_open_right()}} \cr
 }
 
 

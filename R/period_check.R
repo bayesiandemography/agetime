@@ -1,10 +1,17 @@
 #' Check or Make Assertions About Periods
 #'
 #' @description
-#' `period_check()` reports on whether period labels
-#' meet conditions such as not overlapping.
+#' `period_check()` reports whether period labels
+#' meet conditions.
 #'
 #' `period_assert()` throws an error if conditions are not met.
+#'
+#' Conditions include:
+#'
+#' - Not overlapping
+#' - Not having gaps
+#' - Having open periods
+#' - Having totals or NAs
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'

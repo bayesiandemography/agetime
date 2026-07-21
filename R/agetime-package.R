@@ -17,10 +17,11 @@
 #'
 #' |                  |                   |                   |
 #' |------------------|-------------------|-------------------|
-#' | [age_is_open_right()]  | [period_is_open_left()] | [cohort_is_open_left()] |
+#' |  | [period_is_open_left()] | [cohort_is_open_left()] |
+#' | [age_is_open_right()] | [period_is_open_right()] | [cohort_is_open_right()] |
 #' | [age_is_total()] | [period_is_total()] | [cohort_is_total()] |
 #'
-#' **Use standard format**
+#' **Use agetime default format**
 #'
 #' |                  |                     |                     |
 #' |------------------|---------------------|---------------------|
@@ -55,8 +56,8 @@
 #'
 #' |                     |                       |                       |
 #' |---------------------|-----------------------|-----------------------|
-#' | [age_set_open_right()] | [period_set_open_left()] | [cohort_set_open_left()] |
-#' |                     | [period_set_open_right()] | [cohort_set_open_right()] |
+#' |  | [period_set_open_left()] | [cohort_set_open_left()] |
+#' | [age_set_open_right()] | [period_set_open_right()] | [cohort_set_open_right()] |
 #'
 #' **Put levels in order**
 #'
