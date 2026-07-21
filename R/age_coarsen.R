@@ -3,7 +3,7 @@
 #' Define new age groups that contain existing age groups.
 #'
 #' The new age groups cannot split existing
-#' age groups, and are typically wider than them.
+#' age groups, and are typically wider than the existing age groups.
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
@@ -87,7 +87,7 @@ age_coarsen <- function(labels,
 #'
 #' - `age_coarsen_five` Five-year age groups
 #' - `age_coarsen_ten` Ten-year age groups
-#' - `age_coarsen_life` Age groups used in 'abridged' life tables
+#' - `age_coarsen_life` Age groups used in abridged life tables
 #'
 #' @details
 #'

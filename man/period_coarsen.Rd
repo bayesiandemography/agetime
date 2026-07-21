@@ -48,7 +48,7 @@ Define new periods that contain existing periods.
 }
 \details{
 The new periods cannot split existing periods,
-and are typically wider than them.
+and are typically wider than the existing periods.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.

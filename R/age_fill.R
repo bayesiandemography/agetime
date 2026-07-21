@@ -3,19 +3,14 @@
 #' Fill in gaps in levels of `labels`.
 #'
 #' If `labels` is not a factor, and so does
-#' not have levels, convert it to
-#' a factor before filling in levels.
+#' not have levels, it is converted to
+#' a factor before the levels are filled in.
 #'
-#' - `age_fill` adds age groups
-#'   specified by `breaks`.
-#' - `age_fill_one` adds age groups with
-#'   width 1.
-#' - `age_fill_five` adds age groups with
-#'   width 5.
-#' - `age_fill_ten` adds age groups with
-#'   width 10.
-#' - `age_fill_life` adds age groups
-#'   used by an abridged life table.
+#' - `age_fill` adds age groups specified by `breaks`.
+#' - `age_fill_one` adds age groups with width 1.
+#' - `age_fill_five` adds age groups with width 5.
+#' - `age_fill_ten` adds age groups with width 10.
+#' - `age_fill_life` adds age groups used by an abridged life table.
 #'
 #' @inheritSection age_check Abridged and complete life tables
 #'

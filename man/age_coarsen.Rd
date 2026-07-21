@@ -32,7 +32,7 @@ Define new age groups that contain existing age groups.
 }
 \details{
 The new age groups cannot split existing
-age groups, and are typically wider than them.
+age groups, and are typically wider than the existing age groups.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.

@@ -66,7 +66,7 @@ all have the same width.
 }
 \details{
 The new cohorts cannot split existing
-cohorts, and are typically wider than them.
+cohorts, and are typically wider than the existing cohorts.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.

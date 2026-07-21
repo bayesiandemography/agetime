@@ -3,7 +3,7 @@
 #' Define new periods that contain existing periods.
 #'
 #' The new periods cannot split existing periods,
-#' and are typically wider than them.
+#' and are typically wider than the existing periods.
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
@@ -121,7 +121,7 @@ period_coarsen <- function(labels,
 #' @details
 #'
 #' The new periods cannot split existing
-#' periods, and are typically wider than them.
+#' periods, and are typically wider than the existing periods.
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.

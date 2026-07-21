@@ -3,7 +3,7 @@
 #' Define new cohorts that contain existing cohorts.
 #'
 #' The new cohorts cannot split existing cohorts,
-#' and are typically wider than them.
+#' and are typically wider than the existing cohorts.
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
@@ -121,7 +121,7 @@ cohort_coarsen <- function(labels,
 #' @details
 #'
 #' The new cohorts cannot split existing
-#' cohorts, and are typically wider than them.
+#' cohorts, and are typically wider than the existing cohorts.
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.

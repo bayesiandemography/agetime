@@ -3,17 +3,13 @@
 #' Fill in gaps in levels of `labels`.
 #'
 #' If `labels` is not a factor, and so does
-#' not have levels, convert it to
-#' a factor before filling in levels.
+#' not have levels, it is converted to
+#' a factor before the levels are filled in.
 #'
-#' - `period_fill` adds periods
-#'   specified by `breaks`.
-#' - `period_fill_one` adds periods with
-#'   width 1.
-#' - `period_fill_five` adds periods with
-#'   width 5.
-#' - `period_fill_ten` adds periods with
-#'   width 10.
+#' - `period_fill` adds periods specified by `breaks`.
+#' - `period_fill_one` adds periods with width 1.
+#' - `period_fill_five` adds periods with width 5.
+#' - `period_fill_ten` adds periods with width 10.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'

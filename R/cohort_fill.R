@@ -3,17 +3,13 @@
 #' Fill in gaps in levels of `labels`.
 #'
 #' If `labels` is not a factor, and so does
-#' not have levels, convert it to
-#' a factor before filling in levels.
+#' not have levels, it is converted to
+#' a factor before the levels are filled in.
 #'
-#' - `cohort_fill` adds cohorts
-#'   specified by `breaks`.
-#' - `cohort_fill_one` adds cohorts with
-#'   width 1.
-#' - `cohort_fill_five` adds cohorts with
-#'   width 5.
-#' - `cohort_fill_ten` adds cohorts with
-#'   width 10.
+#' - `cohort_fill` adds cohorts specified by `breaks`.
+#' - `cohort_fill_one` adds cohorts with width 1.
+#' - `cohort_fill_five` adds cohorts with width 5.
+#' - `cohort_fill_ten` adds cohorts with width 10.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'

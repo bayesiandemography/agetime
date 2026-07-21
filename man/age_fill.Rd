@@ -36,19 +36,14 @@ Fill in gaps in levels of \code{labels}.
 }
 \details{
 If \code{labels} is not a factor, and so does
-not have levels, convert it to
-a factor before filling in levels.
+not have levels, it is converted to
+a factor before the levels are filled in.
 \itemize{
-\item \code{age_fill} adds age groups
-specified by \code{breaks}.
-\item \code{age_fill_one} adds age groups with
-width 1.
-\item \code{age_fill_five} adds age groups with
-width 5.
-\item \code{age_fill_ten} adds age groups with
-width 10.
-\item \code{age_fill_life} adds age groups
-used by an abridged life table.
+\item \code{age_fill} adds age groups specified by \code{breaks}.
+\item \code{age_fill_one} adds age groups with width 1.
+\item \code{age_fill_five} adds age groups with width 5.
+\item \code{age_fill_ten} adds age groups with width 10.
+\item \code{age_fill_life} adds age groups used by an abridged life table.
 }
 }
 \section{Abridged and complete life tables}{

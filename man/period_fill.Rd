@@ -64,17 +64,13 @@ Fill in gaps in levels of \code{labels}.
 }
 \details{
 If \code{labels} is not a factor, and so does
-not have levels, convert it to
-a factor before filling in levels.
+not have levels, it is converted to
+a factor before the levels are filled in.
 \itemize{
-\item \code{period_fill} adds periods
-specified by \code{breaks}.
-\item \code{period_fill_one} adds periods with
-width 1.
-\item \code{period_fill_five} adds periods with
-width 5.
-\item \code{period_fill_ten} adds periods with
-width 10.
+\item \code{period_fill} adds periods specified by \code{breaks}.
+\item \code{period_fill_one} adds periods with width 1.
+\item \code{period_fill_five} adds periods with width 5.
+\item \code{period_fill_ten} adds periods with width 10.
 }
 }
 \section{Controlling how period labels are interpreted}{

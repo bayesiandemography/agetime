@@ -66,7 +66,7 @@ all have the same width.
 }
 \details{
 The new periods cannot split existing
-periods, and are typically wider than them.
+periods, and are typically wider than the existing periods.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.

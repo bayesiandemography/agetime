@@ -64,17 +64,13 @@ Fill in gaps in levels of \code{labels}.
 }
 \details{
 If \code{labels} is not a factor, and so does
-not have levels, convert it to
-a factor before filling in levels.
+not have levels, it is converted to
+a factor before the levels are filled in.
 \itemize{
-\item \code{cohort_fill} adds cohorts
-specified by \code{breaks}.
-\item \code{cohort_fill_one} adds cohorts with
-width 1.
-\item \code{cohort_fill_five} adds cohorts with
-width 5.
-\item \code{cohort_fill_ten} adds cohorts with
-width 10.
+\item \code{cohort_fill} adds cohorts specified by \code{breaks}.
+\item \code{cohort_fill_one} adds cohorts with width 1.
+\item \code{cohort_fill_five} adds cohorts with width 5.
+\item \code{cohort_fill_ten} adds cohorts with width 10.
 }
 }
 \section{Controlling how cohort labels are interpreted}{
