@@ -1,8 +1,12 @@
 #' Coarsen Age Groups
 #'
-#' Coarsen the age groups used by `labels`. The
-#' the new age groups must
-#' contain the old ones.
+#' Define new age groups that contain existing age groups.
+#'
+#' The new age groups cannot split existing
+#' age groups, and are typically wider than them.
+#' 
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
 #'
 #' @inheritParams age_lower
 #' @param breaks Boundaries between age groups.
@@ -77,22 +81,27 @@ age_coarsen <- function(labels,
 #'
 #' @description
 #'
-#' Coarsen the age groups used by `labels`.
-#' The new age groups must contain
-#' the old age groups, and follow a regular
+#' Define new age groups that contain existing
+#' age groups and that follow a regular
 #' pattern:
 #'
 #' - `age_coarsen_five` Five-year age groups
 #' - `age_coarsen_ten` Ten-year age groups
 #' - `age_coarsen_life` Age groups used in 'abridged' life tables
 #'
+#' @details
+#'
+#' The new age groups cannot split existing
+#' age groups.
+#' 
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
+#'
 #' @inheritSection age_check Abridged and complete life tables
 #' @inheritParams age_lower
-#' @inherit age_coarsen return
-#' @return Character vector or factor with the same length as `labels`.
-#' Character input returns character; factor input returns factor.
-#' Factor levels are recoded from `levels(labels)`; intermediate break
-#' levels are not added.
+#' @inheritParams age_coarsen
+#' @inherit age_standard return
+#'
 #' @inheritSection age_coarsen The `open_right` argument
 #'
 #' @seealso
@@ -112,7 +121,6 @@ age_coarsen <- function(labels,
 #' labels_no_open <- c("1-3", "16-19", "0", "total", "22")
 #' age_coarsen_five(labels_no_open)
 #' age_coarsen_five(labels_no_open, open_right = TRUE)
-#' @inheritParams age_coarsen
 #' @export
 
 age_coarsen_five <- function(labels,
@@ -134,7 +142,6 @@ age_coarsen_five <- function(labels,
 }
 
 #' @rdname age_coarsen_five
-#' @inheritParams age_coarsen
 #' @export
 age_coarsen_ten <- function(labels,
                            open_right = NULL,
@@ -155,7 +162,6 @@ age_coarsen_ten <- function(labels,
 }
 
 #' @rdname age_coarsen_five
-#' @inheritParams age_coarsen
 #' @export
 age_coarsen_life <- function(labels,
                             open_right = NULL,

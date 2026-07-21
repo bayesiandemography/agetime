@@ -53,9 +53,6 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Character vector or factor with the same length as \code{labels}.
-Character input returns character; factor input returns factor.
-Factor levels are recoded from \code{levels(labels)}; intermediate break
-levels are not added.
 }
 \description{
 Coarsen the cohorts defined by \code{labels}.
@@ -66,6 +63,13 @@ all have the same width.
 \item \code{cohort_coarsen_five} Five-year cohorts
 \item \code{cohort_coarsen_ten} Ten-year cohorts
 }
+}
+\details{
+The new cohorts cannot split existing
+cohorts, and are typically wider than them.
+
+If \code{labels} is a factor, its levels are modified
+along with its elements.
 }
 \section{Controlling how cohort labels are interpreted}{
 

@@ -1,8 +1,12 @@
 #' Coarsen Cohorts
 #'
-#' Coarsen the cohorts used by `labels`. The
-#' the new cohorts must
-#' contain the old ones.
+#' Define new cohorts that contain existing cohorts.
+#'
+#' The new cohorts cannot split existing cohorts,
+#' and are typically wider than them.
+#' 
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -114,15 +118,20 @@ cohort_coarsen <- function(labels,
 #' - `cohort_coarsen_five` Five-year cohorts
 #' - `cohort_coarsen_ten` Ten-year cohorts
 #'
+#' @details
+#'
+#' The new cohorts cannot split existing
+#' cohorts, and are typically wider than them.
+#' 
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
+#'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
 #' @inheritParams cohort_lower
 #' @param offset Parameter controlling
 #' alignment of cohorts. Default is `0`.
-#' @return Character vector or factor with the same length as `labels`.
-#' Character input returns character; factor input returns factor.
-#' Factor levels are recoded from `levels(labels)`; intermediate break
-#' levels are not added.
+#' @inherit age_standard return
 #'
 #' @seealso
 #' - [cohort_coarsen()] Coarsen to general cohorts
@@ -176,7 +185,6 @@ cohort_coarsen_five <- function(labels,
 }
 
 #' @rdname cohort_coarsen_five
-#' @inheritParams cohort_coarsen
 #' @export
 cohort_coarsen_ten <- function(labels,
                               offset = 0,

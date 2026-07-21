@@ -44,9 +44,14 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Coarsen the cohorts used by \code{labels}. The
-the new cohorts must
-contain the old ones.
+Define new cohorts that contain existing cohorts.
+}
+\details{
+The new cohorts cannot split existing cohorts,
+and are typically wider than them.
+
+If \code{labels} is a factor, its levels are modified
+along with its elements.
 }
 \section{The \code{open_left} argument}{
 

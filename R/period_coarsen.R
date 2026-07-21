@@ -1,9 +1,13 @@
 #' Coarsen Periods
 #'
-#' Coarsen the periods used by `labels`. The
-#' the new periods must
-#' contain the old ones.
+#' Define new periods that contain existing periods.
 #'
+#' The new periods cannot split existing periods,
+#' and are typically wider than them.
+#' 
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
+#' 
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
 #' @inheritParams period_lower
@@ -113,16 +117,22 @@ period_coarsen <- function(labels,
 #'
 #' - `period_coarsen_five` Five-year periods
 #' - `period_coarsen_ten` Ten-year periods
+#'
+#' @details
+#'
+#' The new periods cannot split existing
+#' periods, and are typically wider than them.
 #' 
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
+#'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
 #' @inheritParams period_lower
 #' @param offset Parameter controlling
 #' alignment of periods. Default is `0`.
-#' @return Character vector or factor with the same length as `labels`.
-#' Character input returns character; factor input returns factor.
-#' Factor levels are recoded from `levels(labels)`; intermediate break
-#' levels are not added.
+#' @inherit age_standard return
+#' @inheritParams period_coarsen
 #'
 #' @seealso
 #' - [period_coarsen()] Coarsen to general periods
@@ -145,7 +155,6 @@ period_coarsen <- function(labels,
 #'
 #' ## insist on an open period
 #' period_coarsen_five(c("2010", "2020-2025"), open_right = TRUE)
-#' @inheritParams period_coarsen
 #' @inheritSection period_coarsen The `open_left` argument
 #' @inheritSection period_coarsen The `open_right` argument
 #' @export

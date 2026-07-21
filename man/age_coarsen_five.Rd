@@ -36,20 +36,23 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Character vector or factor with the same length as \code{labels}.
-Character input returns character; factor input returns factor.
-Factor levels are recoded from \code{levels(labels)}; intermediate break
-levels are not added.
 }
 \description{
-Coarsen the age groups used by \code{labels}.
-The new age groups must contain
-the old age groups, and follow a regular
+Define new age groups that contain existing
+age groups and that follow a regular
 pattern:
 \itemize{
 \item \code{age_coarsen_five} Five-year age groups
 \item \code{age_coarsen_ten} Ten-year age groups
 \item \code{age_coarsen_life} Age groups used in 'abridged' life tables
 }
+}
+\details{
+The new age groups cannot split existing
+age groups.
+
+If \code{labels} is a factor, its levels are modified
+along with its elements.
 }
 \section{Abridged and complete life tables}{
 

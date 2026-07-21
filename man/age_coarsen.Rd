@@ -28,9 +28,14 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Coarsen the age groups used by \code{labels}. The
-the new age groups must
-contain the old ones.
+Define new age groups that contain existing age groups.
+}
+\details{
+The new age groups cannot split existing
+age groups, and are typically wider than them.
+
+If \code{labels} is a factor, its levels are modified
+along with its elements.
 }
 \section{The \code{open_right} argument}{
 

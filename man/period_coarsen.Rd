@@ -44,9 +44,14 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Coarsen the periods used by \code{labels}. The
-the new periods must
-contain the old ones.
+Define new periods that contain existing periods.
+}
+\details{
+The new periods cannot split existing periods,
+and are typically wider than them.
+
+If \code{labels} is a factor, its levels are modified
+along with its elements.
 }
 \section{The \code{open_left} argument}{
 
