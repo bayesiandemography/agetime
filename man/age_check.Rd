@@ -39,10 +39,10 @@ Default is \code{FALSE} (don't check).}
 youngest and oldest age groups are included.
 Default is \code{FALSE} (don't check).}
 
-\item{no_total}{Check that there is no "Total" label.
+\item{no_total}{Check that there is no total category.
 Default is \code{FALSE} (don't check).}
 
-\item{no_na}{Check that there is no \code{NA} label.
+\item{no_na}{Check that there is no \code{NA} category.
 Default is \code{FALSE} (don't check).}
 
 \item{has_zero}{Check that at least one
@@ -79,17 +79,17 @@ Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Having open age groups
 \item Having totals, NAs, or zeros
+\item Having open age groups
 \item Valid for an abridged life table
 }
 }
 \section{Abridged and complete life tables}{
 
 \itemize{
-\item An 'abridged' life table uses age groups \code{"0"}
+\item An abridged life table uses age groups \code{"0"}
 and \code{"1-4"}, followed by 5-year age groups \code{"5-9"}, \code{"10-14"}, ...
-\item A 'complete' life table uses single-year age groups
+\item A complete life table uses single-year age groups
 \code{"0"}, \code{"1"}, \code{"2"}, ...
 \item Both types of life table usually have an open age group
 such as \code{"85+"} or \code{"100+"}.

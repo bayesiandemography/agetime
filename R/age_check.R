@@ -10,15 +10,15 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Having open age groups
 #' - Having totals, NAs, or zeros
+#' - Having open age groups
 #' - Valid for an abridged life table
 #'
 #' @section Abridged and complete life tables:
 #'
-#' - An 'abridged' life table uses age groups `"0"`
+#' - An abridged life table uses age groups `"0"`
 #'   and `"1-4"`, followed by 5-year age groups `"5-9"`, `"10-14"`, ...
-#' - A 'complete' life table uses single-year age groups
+#' - A complete life table uses single-year age groups
 #'   `"0"`, `"1"`, `"2"`, ...
 #' - Both types of life table usually have an open age group
 #'   such as `"85+"` or `"100+"`.
@@ -29,9 +29,9 @@
 #' @param no_gap Check that all ages between the
 #' youngest and oldest age groups are included.
 #' Default is `FALSE` (don't check).
-#' @param no_total Check that there is no "Total" label.
+#' @param no_total Check that there is no total category.
 #' Default is `FALSE` (don't check).
-#' @param no_na Check that there is no `NA` label.
+#' @param no_na Check that there is no `NA` category.
 #' Default is `FALSE` (don't check).
 #' @param has_zero Check that at least one
 #' age group has a lower limit of zero.

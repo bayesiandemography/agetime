@@ -42,10 +42,10 @@ the earliest and latest cohort are
 included.
 Default is \code{FALSE} (don't check).}
 
-\item{no_total}{Check that there is no "Total" label.
+\item{no_total}{Check that there is no total category.
 Default is \code{FALSE} (don't check).}
 
-\item{no_na}{Check that there is no \code{NA} label.
+\item{no_na}{Check that there is no \code{NA} category.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least
@@ -88,8 +88,8 @@ Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Having open cohorts
 \item Having totals or NAs
+\item Having open cohorts
 }
 }
 \section{Controlling how cohort labels are interpreted}{

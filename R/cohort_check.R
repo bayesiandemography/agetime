@@ -10,8 +10,8 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Having open cohorts
 #' - Having totals or NAs
+#' - Having open cohorts
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
@@ -22,9 +22,9 @@
 #' the earliest and latest cohort are
 #' included.
 #' Default is `FALSE` (don't check).
-#' @param no_total Check that there is no "Total" label.
+#' @param no_total Check that there is no total category.
 #' Default is `FALSE` (don't check).
-#' @param no_na Check that there is no `NA` label.
+#' @param no_na Check that there is no `NA` category.
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least
 #' one cohort is open on the left (has no lower limit).

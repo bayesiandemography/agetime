@@ -10,8 +10,8 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Having open periods
 #' - Having totals or NAs
+#' - Having open periods
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'
@@ -21,9 +21,9 @@
 #' @param no_gap Check that all periods between
 #' the earliest and latest periods are included.
 #' Default is `FALSE` (don't check).
-#' @param no_total Check that there is no "Total" label.
+#' @param no_total Check that there is no total category.
 #' Default is `FALSE` (don't check).
-#' @param no_na Check that there is no `NA` label.
+#' @param no_na Check that there is no `NA` category.
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least one period
 #' is open on the left (has no lower limit).

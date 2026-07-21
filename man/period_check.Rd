@@ -41,10 +41,10 @@ Default is \code{FALSE} (don't check).}
 the earliest and latest periods are included.
 Default is \code{FALSE} (don't check).}
 
-\item{no_total}{Check that there is no "Total" label.
+\item{no_total}{Check that there is no total category.
 Default is \code{FALSE} (don't check).}
 
-\item{no_na}{Check that there is no \code{NA} label.
+\item{no_na}{Check that there is no \code{NA} category.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least one period
@@ -87,8 +87,8 @@ Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Having open periods
 \item Having totals or NAs
+\item Having open periods
 }
 }
 \section{Controlling how period labels are interpreted}{
