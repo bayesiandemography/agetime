@@ -32,6 +32,24 @@ test_that("age_sort() puts NA second-to-last and Total last", {
   expect_identical(levels(ans), c("0-4", "20-24", "50+", NA, "Total"))
 })
 
+test_that("age_sort() preserves input order among total synonyms", {
+  x <- c("0-4", "10+", "all", "total", NA)
+  ans <- age_sort(x)
+
+  expect_identical(as.character(ans), x)
+  expect_identical(
+    levels(ans),
+    c("0-4", "10+", NA, "all", "total")
+  )
+
+  x_rev <- c("0-4", "10+", "total", "all", NA)
+  ans_rev <- age_sort(x_rev)
+  expect_identical(
+    levels(ans_rev),
+    c("0-4", "10+", NA, "total", "all")
+  )
+})
+
 test_that("age_sort() preserves ordered factors", {
   x <- ordered(c("20-24", "0-4"), levels = c("20-24", "0-4"))
   ans <- age_sort(x)

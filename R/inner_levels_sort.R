@@ -52,8 +52,8 @@ inner_levels_sort <- function(labels,
     upper,
     is_total
   )
-  ord_norm <- ord_norm[i_xun_to_xunu]
-  i_rank <- match(i_xun, ord_norm)
+  rank_norm <- match(seq_along(ord_norm), ord_norm)
+  i_rank <- rank_norm[i_xun_to_xunu]
   ord_unique <- order(i_rank,
     i_xun,
     decreasing = decreasing
