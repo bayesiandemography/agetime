@@ -27,10 +27,10 @@
 #' @param lower_last Lower limit of
 #' last cohort. Non-negative number.
 #' @param open_left Whether first cohort
-#' is "open", i.e. has no lower limit.
+#' is open on the left, i.e. has no lower limit.
 #' Default is `FALSE`.
 #' @param open_right Whether last cohort
-#' is "open", i.e. has no upper limit.
+#' is open on the right, i.e. has no upper limit.
 #' Default is `FALSE`.
 #' @param include_total Whether to include a
 #' `"Total"` category. Default is `FALSE`.

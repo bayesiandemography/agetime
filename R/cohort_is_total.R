@@ -1,6 +1,6 @@
 #' Identify Cohort Labels for Totals
 #'
-#' Find "total" categories in  cohort labels.
+#' Find categories representing totals in cohort labels.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'

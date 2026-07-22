@@ -7,7 +7,7 @@
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
 #' @param open_right Whether the oldest age group
-#' is "open", i.e. has no upper limit.
+#' is open on the right, i.e. has no upper limit.
 #' Default is `TRUE`.
 #' @param lower_first Lower limit of
 #' youngest age group.

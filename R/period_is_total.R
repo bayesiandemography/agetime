@@ -1,6 +1,6 @@
 #' Identify Period Labels for Totals
 #'
-#' Find "total" categories in period labels.
+#' Find categories representing totals in period labels.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'

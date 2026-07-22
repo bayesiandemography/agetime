@@ -1,6 +1,6 @@
 #' Identify Age Group Labels for Totals
 #'
-#' Find "total" categories in age group labels.
+#' Find categories representing totals in age group labels.
 #'
 #' @inheritParams age_lower
 #'

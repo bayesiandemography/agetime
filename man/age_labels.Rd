@@ -51,7 +51,7 @@ age_labels_life(
 A numeric vector.}
 
 \item{open_right}{Whether the oldest age group
-is "open", i.e. has no upper limit.
+is open on the right, i.e. has no upper limit.
 Default is \code{TRUE}.}
 
 \item{include_total}{Whether to include a

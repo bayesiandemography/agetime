@@ -17,7 +17,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find "total" categories in age group labels.
+Find categories representing totals in age group labels.
 }
 \examples{
 labels <- c("overall", "20-24", "Total", "100+", "ALL")

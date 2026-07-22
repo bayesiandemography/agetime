@@ -55,11 +55,11 @@ period_labels_ten(
 A numeric vector.}
 
 \item{open_left}{Whether first period
-is "open", i.e. has no lower limit.
+is open on the left, i.e. has no lower limit.
 Default is \code{FALSE}.}
 
 \item{open_right}{Whether last period
-is "open", i.e. has no upper limit.
+is open on the right, i.e. has no upper limit.
 Default is \code{FALSE}.}
 
 \item{format_single}{How to format label for

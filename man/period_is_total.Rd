@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Find "total" categories in period labels.
+Find categories representing totals in period labels.
 }
 \section{Controlling how period labels are interpreted}{
 
