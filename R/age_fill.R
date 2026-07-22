@@ -1,10 +1,10 @@
 #' Fill in Gaps in Age Group Levels
 #'
-#' Fill in gaps in levels of `labels`.
+#' @description
+#' Add intermediate age groups.
 #'
-#' If `labels` is not a factor, and so does
-#' not have levels, it is converted to
-#' a factor before the levels are filled in.
+#' The return value is a factor, and the intermediate
+#' age groups are added as factor levels.
 #'
 #' - `age_fill` adds age groups specified by `breaks`.
 #' - `age_fill_one` adds age groups with width 1.

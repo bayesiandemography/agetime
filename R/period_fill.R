@@ -1,10 +1,10 @@
 #' Fill in Gaps in Period Levels
 #'
-#' Fill in gaps in levels of `labels`.
+#' @description
+#' Add intermediate periods.
 #'
-#' If `labels` is not a factor, and so does
-#' not have levels, it is converted to
-#' a factor before the levels are filled in.
+#' The return value is a factor, and the intermediate
+#' periods are added as factor levels.
 #'
 #' - `period_fill` adds periods specified by `breaks`.
 #' - `period_fill_one` adds periods with width 1.

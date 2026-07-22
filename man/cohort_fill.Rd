@@ -60,12 +60,10 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Fill in gaps in levels of \code{labels}.
-}
-\details{
-If \code{labels} is not a factor, and so does
-not have levels, it is converted to
-a factor before the levels are filled in.
+Add intermediate cohorts.
+
+The return value is a factor, and the intermediate
+cohorts are added as factor levels.
 \itemize{
 \item \code{cohort_fill} adds cohorts specified by \code{breaks}.
 \item \code{cohort_fill_one} adds cohorts with width 1.

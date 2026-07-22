@@ -32,12 +32,10 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Fill in gaps in levels of \code{labels}.
-}
-\details{
-If \code{labels} is not a factor, and so does
-not have levels, it is converted to
-a factor before the levels are filled in.
+Add intermediate age groups.
+
+The return value is a factor, and the intermediate
+age groups are added as factor levels.
 \itemize{
 \item \code{age_fill} adds age groups specified by \code{breaks}.
 \item \code{age_fill_one} adds age groups with width 1.

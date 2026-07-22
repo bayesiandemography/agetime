@@ -1,10 +1,10 @@
 #' Fill in Gaps in Cohort Levels
 #'
-#' Fill in gaps in levels of `labels`.
+#' @description
+#' Add intermediate cohorts.
 #'
-#' If `labels` is not a factor, and so does
-#' not have levels, it is converted to
-#' a factor before the levels are filled in.
+#' The return value is a factor, and the intermediate
+#' cohorts are added as factor levels.
 #'
 #' - `cohort_fill` adds cohorts specified by `breaks`.
 #' - `cohort_fill_one` adds cohorts with width 1.
