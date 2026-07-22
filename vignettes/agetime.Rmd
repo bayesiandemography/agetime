@@ -125,9 +125,9 @@ age_check(lab,
 `age_mapping()` builds a mapping between sets of labels.
 
 ```{r mapping-contains}
-x <- c("10--14", "0--9")
-y <- c("0-4", "5-9", "10-14")
-age_mapping(x, y, relation = "contains", format = "matrix")
+labels_x <- c("10--14", "0--9")
+labels_y <- c("0-4", "5-9", "10-14")
+age_mapping(labels_x, labels_y, relation = "contains", format = "matrix")
 ```
 
 

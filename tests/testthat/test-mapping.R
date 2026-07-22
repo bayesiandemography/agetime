@@ -8,11 +8,11 @@ expect_mapping_matrix <- function(object, expected) {
 
 expect_same_mapping_formats <- function(x, y, relation = "equals", ...) {
   tb <- do.call(age_mapping, c(
-    list(labels = x, y = y, relation = relation),
+    list(labels_x = x, labels_y = y, relation = relation),
     ...
   ))
   mx <- do.call(age_mapping, c(
-    list(labels = x, y = y, relation = relation, format = "matrix"),
+    list(labels_x = x, labels_y = y, relation = relation, format = "matrix"),
     ...
   ))
   idx <- which(mx == 1L, arr.ind = TRUE)
@@ -131,12 +131,12 @@ test_that("age_mapping() maps unique labels only", {
 
 test_that("period/cohort mappings match equals on shared fixtures", {
   expect_mapping_tibble(
-    period_mapping(period_multi, y = c("2020-2025", "2025-2030")),
+    period_mapping(period_multi, labels_y = c("2020-2025", "2025-2030")),
     c("2020-2025", "2025-2030"),
     c("2020-2025", "2025-2030")
   )
   expect_mapping_tibble(
-    cohort_mapping(cohort_multi, y = c("2025-2030", "2030-2035")),
+    cohort_mapping(cohort_multi, labels_y = c("2025-2030", "2030-2035")),
     c("2025-2030", "2030-2035"),
     c("2025-2030", "2030-2035")
   )

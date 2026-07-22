@@ -5,8 +5,8 @@
 \title{Mapping Between Cohort Labels}
 \usage{
 cohort_mapping(
-  labels,
-  y = NULL,
+  labels_x,
+  labels_y = NULL,
   relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
   format = c("tibble", "matrix"),
   interpret_single = c("lower", "upper"),
@@ -15,10 +15,10 @@ cohort_mapping(
 )
 }
 \arguments{
-\item{labels}{Vector of cohort labels.}
+\item{labels_x}{Vector of cohort labels.}
 
-\item{y}{Vector of cohort labels. If
-no value supplied, \code{labels} is mapped onto itself.}
+\item{labels_y}{Vector of cohort labels. If
+no value supplied, \code{labels_x} is mapped onto itself.}
 
 \item{relation}{Relationship between
 labels. Choices are \code{"equals"} (the default),
@@ -48,19 +48,19 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \description{
 Create a mapping between cohort labels. A mapping
-depicts a relationship between the labels of \code{labels}
-and the labels of \code{y}. The types of relationship
+depicts a relationship between the labels of \code{labels_x}
+and the labels of \code{labels_y}. The types of relationship
 that can be mapped are:
 \itemize{
-\item "labels equals y"
-\item "labels contains y"
-\item "labels is contained in y"
-\item "labels overlaps with y".
+\item "labels_x equals labels_y"
+\item "labels_x contains labels_y"
+\item "labels_x is contained in labels_y"
+\item "labels_x overlaps with labels_y".
 }
 }
 \details{
-If no value for \code{y} is supplied,
-\code{labels} is mapped onto itself.
+If no value for \code{labels_y} is supplied,
+\code{labels_x} is mapped onto itself.
 
 Tibbles produced by \code{cohort_mapping()} are sparse
 in that they only include matches. Matrices
@@ -70,11 +70,11 @@ example below.
 }
 \section{The \code{relation} argument}{
 \tabular{ll}{
-   \code{relation} \tab Endpoints of \code{labels} and \code{y} \cr
+   \code{relation} \tab Endpoints of \code{labels_x} and \code{labels_y} \cr
    \code{"equals"} \tab Endpoints equal \cr
-   \code{"contains"} \tab Endpoints of \code{y} inside endpoints of \code{labels} \cr
-   \code{"is-contained-in"} \tab Endpoints of \code{labels} inside endpoints of \code{y} \cr
-   \code{"overlaps-with"} \tab Endpoint of \code{labels} in \code{y}, or reverse \cr
+   \code{"contains"} \tab Endpoints of \code{labels_y} inside endpoints of \code{labels_x} \cr
+   \code{"is-contained-in"} \tab Endpoints of \code{labels_x} inside endpoints of \code{labels_y} \cr
+   \code{"overlaps-with"} \tab Endpoint of \code{labels_x} in \code{labels_y}, or reverse \cr
 }
 }
 
@@ -108,23 +108,23 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
 \examples{
-labels <- c("2020-2025", "2030", "2025-2027")
-y <- c("2025-2030", "2020-2025", "2026-2034")
-cohort_mapping(labels = labels, y = y)
-cohort_mapping(labels = labels, y = y, format = "matrix")
-cohort_mapping(labels = labels, y = y, relation = "contains")
-cohort_mapping(labels = labels, y = y, relation = "is-contained-in")
-cohort_mapping(labels = labels, y = y, relation = "overlaps-with")
+labels_x <- c("2020-2025", "2030", "2025-2027")
+labels_y <- c("2025-2030", "2020-2025", "2026-2034")
+cohort_mapping(labels_x = labels_x, labels_y = labels_y)
+cohort_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
+cohort_mapping(labels_x = labels_x, labels_y = labels_y, relation = "contains")
+cohort_mapping(labels_x = labels_x, labels_y = labels_y, relation = "is-contained-in")
+cohort_mapping(labels_x = labels_x, labels_y = labels_y, relation = "overlaps-with")
 
 # sparse tibble vs dense matrix
-labels <- c("2020-2025", "2030-2035")
-y <- c("2020-2025", "<2025")
-cohort_mapping(labels = labels, y = y) # one match
-cohort_mapping(labels = labels, y = y, format = "matrix")
+labels_x <- c("2020-2025", "2030-2035")
+labels_y <- c("2020-2025", "<2025")
+cohort_mapping(labels_x = labels_x, labels_y = labels_y) # one match
+cohort_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
 
-# mapping 'labels' on to itself
-labels <- c("2020--2025", "2020-2025", "<2030")
-cohort_mapping(labels)
+# mapping 'labels_x' on to itself
+labels_x <- c("2020--2025", "2020-2025", "<2030")
+cohort_mapping(labels_x)
 }
 \seealso{
 \itemize{

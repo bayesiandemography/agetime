@@ -37,8 +37,8 @@ mapping_empty <- function(format) {
 }
 #' Inner Mapping
 #'
-#' @param labels Vector of labels.
-#' @param y Vector of labels to compare against `labels`.
+#' @param labels_x Vector of labels.
+#' @param labels_y Vector of labels to compare against `labels_x`.
 #' @param relation Interval relation used to build mappings.
 #' @param format Output format for mappings.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
@@ -50,40 +50,40 @@ mapping_empty <- function(format) {
 #'
 #' @noRd
 
-inner_mapping <- function(labels,
-                          y,
+inner_mapping <- function(labels_x,
+                          labels_y,
                           relation,
                           format,
                           label_type,
                           interpret_single,
                           interpret_multi,
                           interpret_fail) {
-  labels <- to_character_or_factor(
-    labels = labels,
-    nm_labels = "labels",
+  labels_x <- to_character_or_factor(
+    labels = labels_x,
+    nm_labels = "labels_x",
     length_zero_ok = TRUE
   )
-  if (is.null(y)) {
-    y <- labels
+  if (is.null(labels_y)) {
+    labels_y <- labels_x
   } else {
-    y <- to_character_or_factor(
-      labels = y,
-      nm_labels = "y",
+    labels_y <- to_character_or_factor(
+      labels = labels_y,
+      nm_labels = "labels_y",
       length_zero_ok = TRUE
     )
   }
-  if (mapping_has_no_labels(labels) || mapping_has_no_labels(y)) {
+  if (mapping_has_no_labels(labels_x) || mapping_has_no_labels(labels_y)) {
     return(mapping_empty(format = format))
   }
   intervals_x <- intervals(
-    labels = labels,
+    labels = labels_x,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   intervals_y <- intervals(
-    labels = y,
+    labels = labels_y,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

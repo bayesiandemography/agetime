@@ -1,5 +1,5 @@
-# *_mapping(): empty x or y (character(0) or factor with no levels) -> empty
-# mapping. Empty factor with levels still maps normally.
+# *_mapping(): empty labels_x or labels_y (character(0) or factor with no
+# levels) -> empty mapping. Empty factor with levels still maps normally.
 
 test_that("age_mapping() with length-0 input returns empty tibble", {
   expect_identical(
@@ -23,14 +23,14 @@ test_that("age_mapping() with length-0 input returns empty matrix", {
   )
 })
 
-test_that("age_mapping() with empty y returns empty mapping", {
-  y <- c("0-4", "5-9")
+test_that("age_mapping() with empty labels_y returns empty mapping", {
+  labels_y <- c("0-4", "5-9")
   expect_identical(
-    age_mapping(character(0), y = y),
+    age_mapping(character(0), labels_y = labels_y),
     tibble::tibble(x = character(0), y = character(0))
   )
   expect_identical(
-    age_mapping(c("0-4", "5-9"), y = character(0)),
+    age_mapping(c("0-4", "5-9"), labels_y = character(0)),
     tibble::tibble(x = character(0), y = character(0))
   )
 })

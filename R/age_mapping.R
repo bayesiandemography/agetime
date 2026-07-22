@@ -3,18 +3,18 @@
 #' @description
 #'
 #' Create a mapping between age group labels. A mapping
-#' depicts a relationship between the labels of `labels`
-#' and the labels of `y`. The types of relationship
+#' depicts a relationship between the labels of `labels_x`
+#' and the labels of `labels_y`. The types of relationship
 #' that can be mapped are:
-#' - "labels equals y"
-#' - "labels contains y"
-#' - "labels is contained in y"
-#' - "labels overlaps with y".
+#' - "labels_x equals labels_y"
+#' - "labels_x contains labels_y"
+#' - "labels_x is contained in labels_y"
+#' - "labels_x overlaps with labels_y".
 #'
 #' @details
 #'
-#' If no value for `y` is supplied,
-#' `labels` is mapped onto itself.
+#' If no value for `labels_y` is supplied,
+#' `labels_x` is mapped onto itself.
 #'
 #' Tibbles produced by `age_mapping()` are sparse
 #' in that they only include matches. Matrices
@@ -24,17 +24,17 @@
 #'
 #' @section The `relation` argument:
 #'
-#' | `relation` | Endpoints of `labels` and `y`                   |
+#' | `relation` | Endpoints of `labels_x` and `labels_y`                   |
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | Endpoints equal  |
-#' | `"contains"` | Endpoints of `y` inside endpoints of `labels`  |
-#' | `"is-contained-in"`| Endpoints of `labels` inside endpoints of `y`  |
-#' | `"overlaps-with"` | Endpoint of `labels` in `y`, or reverse |
+#' | `"contains"` | Endpoints of `labels_y` inside endpoints of `labels_x`  |
+#' | `"is-contained-in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
+#' | `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 #'
 #' @inheritParams age_lower
-#' @param labels Vector of age group labels.
-#' @param y Vector of age group labels. If
-#' no value supplied, `labels` is mapped onto itself.
+#' @param labels_x Vector of age group labels.
+#' @param labels_y Vector of age group labels. If
+#' no value supplied, `labels_x` is mapped onto itself.
 #' @param relation Relationship between
 #' labels. Choices are `"equals"` (the default),
 #' `"contains"`, `"is-contained-in"`, and `"overlaps-with"`.
@@ -49,28 +49,28 @@
 #' - [cohort_mapping()] Cohort equivalent of `age_mapping()`
 #'
 #' @examples
-#' labels <- c("0-4", "10", "5-7")
-#' y <- c("5-9", "0-4", "6-14")
-#' age_mapping(labels = labels, y = y)
-#' age_mapping(labels = labels, format = "matrix")
-#' age_mapping(labels = labels, y = y, relation = "contains")
-#' age_mapping(labels = labels, y = y, relation = "is-contained-in")
-#' age_mapping(labels = labels, y = y, relation = "overlaps-with")
+#' labels_x <- c("0-4", "10", "5-7")
+#' labels_y <- c("5-9", "0-4", "6-14")
+#' age_mapping(labels_x = labels_x, labels_y = labels_y)
+#' age_mapping(labels_x = labels_x, format = "matrix")
+#' age_mapping(labels_x = labels_x, labels_y = labels_y, relation = "contains")
+#' age_mapping(labels_x = labels_x, labels_y = labels_y, relation = "is-contained-in")
+#' age_mapping(labels_x = labels_x, labels_y = labels_y, relation = "overlaps-with")
 #'
 #' # sparse tibble vs dense matrix
-#' labels <- c("0-4", "10-14")
-#' y <- c("0-4", "5-9")
-#' age_mapping(labels = labels, y = y) # one match
-#' age_mapping(labels = labels, y = y, format = "matrix")
+#' labels_x <- c("0-4", "10-14")
+#' labels_y <- c("0-4", "5-9")
+#' age_mapping(labels_x = labels_x, labels_y = labels_y) # one match
+#' age_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
 #'
-#' # mapping 'labels' on to itself
-#' labels <- c("0--4", "0-4", "5+")
-#' age_mapping(labels)
+#' # mapping 'labels_x' on to itself
+#' labels_x <- c("0--4", "0-4", "5+")
+#' age_mapping(labels_x)
 #' @export
-# When labels or y is character(0), or a factor with no levels, returns an empty
-# mapping (zero-row tibble or zero-by-zero matrix, per format).
-age_mapping <- function(labels,
-                        y = NULL,
+# When labels_x or labels_y is character(0), or a factor with no levels, returns
+# an empty mapping (zero-row tibble or zero-by-zero matrix, per format).
+age_mapping <- function(labels_x,
+                        labels_y = NULL,
                         relation = c(
                           "equals",
                           "contains",
@@ -83,8 +83,8 @@ age_mapping <- function(labels,
   relation <- match.arg(relation)
   format <- match.arg(format)
   inner_mapping(
-    labels = labels,
-    y = y,
+    labels_x = labels_x,
+    labels_y = labels_y,
     relation = relation,
     format = format,
     label_type = "age",
