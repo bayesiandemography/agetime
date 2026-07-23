@@ -42,30 +42,31 @@
 #' @param format Format of
 #' return value. Choices are `"tibble"`
 #' (the default) or `"matrix"`.
-#' @return [Tibble][tibble::tibble()] or matrix, depending on `format`.
+#' @return [Tibble][tibble::tibble()] or matrix,
+#' depending on the value of `format`.
 #'
 #' @seealso
 #' - [period_mapping()] Period equivalent of `age_mapping()`
 #' - [cohort_mapping()] Cohort equivalent of `age_mapping()`
 #'
 #' @examples
-#' labels_x <- c("0-4", "10", "5-7")
-#' labels_y <- c("5-9", "0-4", "6-14")
-#' age_mapping(labels_x = labels_x, labels_y = labels_y)
-#' age_mapping(labels_x = labels_x, format = "matrix")
-#' age_mapping(labels_x = labels_x, labels_y = labels_y, relation = "contains")
-#' age_mapping(labels_x = labels_x, labels_y = labels_y, relation = "is-contained-in")
-#' age_mapping(labels_x = labels_x, labels_y = labels_y, relation = "overlaps-with")
+#' x <- c("0-4", "10", "5-7")
+#' y <- c("5-9", "0-4", "6-14")
+#' age_mapping(labels_x = x, labels_y = y)
+#' age_mapping(labels_x = x, labels_y = y, format = "matrix")
+#' age_mapping(labels_x = x, labels_y = y, relation = "contains")
+#' age_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
+#' age_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
 #'
 #' # sparse tibble vs dense matrix
-#' labels_x <- c("0-4", "10-14")
-#' labels_y <- c("0-4", "5-9")
-#' age_mapping(labels_x = labels_x, labels_y = labels_y) # one match
-#' age_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
+#' x <- c("0-4", "10-14")
+#' y <- c("0-4", "5-9")
+#' age_mapping(labels_x = x, labels_y = y) # one match
+#' age_mapping(labels_x = x, labels_y = y, format = "matrix")
 #'
-#' # mapping 'labels_x' on to itself
-#' labels_x <- c("0--4", "0-4", "5+")
-#' age_mapping(labels_x)
+#' # map labels_x onto itself
+#' x <- c("0--4", "0-4", "5+")
+#' age_mapping(x)
 #' @export
 # When labels_x or labels_y is character(0), or a factor with no levels, returns
 # an empty mapping (zero-row tibble or zero-by-zero matrix, per format).

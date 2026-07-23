@@ -44,7 +44,8 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-\link[tibble:tibble]{Tibble} or matrix, depending on \code{format}.
+\link[tibble:tibble]{Tibble} or matrix,
+depending on the value of \code{format}.
 }
 \description{
 Create a mapping between cohort labels. A mapping
@@ -108,23 +109,23 @@ so that \code{"2025-2030"} means \verb{[2025,2031)}.
 }
 
 \examples{
-labels_x <- c("2020-2025", "2030", "2025-2027")
-labels_y <- c("2025-2030", "2020-2025", "2026-2034")
-cohort_mapping(labels_x = labels_x, labels_y = labels_y)
-cohort_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
-cohort_mapping(labels_x = labels_x, labels_y = labels_y, relation = "contains")
-cohort_mapping(labels_x = labels_x, labels_y = labels_y, relation = "is-contained-in")
-cohort_mapping(labels_x = labels_x, labels_y = labels_y, relation = "overlaps-with")
+x <- c("2020-2025", "2030", "2025-2027")
+y <- c("2025-2030", "2020-2025", "2026-2034")
+cohort_mapping(labels_x = x, labels_y = y)
+cohort_mapping(labels_x = x, labels_y = y, format = "matrix")
+cohort_mapping(labels_x = x, labels_y = y, relation = "contains")
+cohort_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
+cohort_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
 
 # sparse tibble vs dense matrix
-labels_x <- c("2020-2025", "2030-2035")
-labels_y <- c("2020-2025", "<2025")
-cohort_mapping(labels_x = labels_x, labels_y = labels_y) # one match
-cohort_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
+x <- c("2020-2025", "2030-2035")
+y <- c("2020-2025", "<2025")
+cohort_mapping(labels_x = x, labels_y = y) # one match
+cohort_mapping(labels_x = x, labels_y = y, format = "matrix")
 
-# mapping 'labels_x' on to itself
-labels_x <- c("2020--2025", "2020-2025", "<2030")
-cohort_mapping(labels_x)
+# map labels_x onto itself
+x <- c("2020--2025", "2020-2025", "<2030")
+cohort_mapping(x)
 }
 \seealso{
 \itemize{

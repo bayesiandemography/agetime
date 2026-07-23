@@ -44,30 +44,31 @@
 #' @param format Format of
 #' return value. Choices are `"tibble"`
 #' (the default) or `"matrix"`.
-#' @return [Tibble][tibble::tibble()] or matrix, depending on `format`.
+#' @return [Tibble][tibble::tibble()] or matrix,
+#' depending on the value of `format`.
 #'
 #' @seealso
 #' - [age_mapping()] Age equivalent of `period_mapping()`
 #' - [cohort_mapping()] Cohort equivalent of `period_mapping()`
 #'
 #' @examples
-#' labels_x <- c("2020-2025", "2030", "2025-2027")
-#' labels_y <- c("2025-2030", "2020-2025", "2026-2034")
-#' period_mapping(labels_x = labels_x, labels_y = labels_y)
-#' period_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
-#' period_mapping(labels_x = labels_x, labels_y = labels_y, relation = "contains")
-#' period_mapping(labels_x = labels_x, labels_y = labels_y, relation = "is-contained-in")
-#' period_mapping(labels_x = labels_x, labels_y = labels_y, relation = "overlaps-with")
+#' x <- c("2020-2025", "2030", "2025-2027")
+#' y <- c("2025-2030", "2020-2025", "2026-2034")
+#' period_mapping(labels_x = x, labels_y = y)
+#' period_mapping(labels_x = x, labels_y = y, format = "matrix")
+#' period_mapping(labels_x = x, labels_y = y, relation = "contains")
+#' period_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
+#' period_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
 #'
 #' # sparse tibble vs dense matrix
-#' labels_x <- c("2020-2025", "2030-2035")
-#' labels_y <- c("2020-2025", "2025-2030")
-#' period_mapping(labels_x = labels_x, labels_y = labels_y) # one match
-#' period_mapping(labels_x = labels_x, labels_y = labels_y, format = "matrix")
+#' x <- c("2020-2025", "2030-2035")
+#' y <- c("2020-2025", "2025-2030")
+#' period_mapping(labels_x = x, labels_y = y) # one match
+#' period_mapping(labels_x = x, labels_y = y, format = "matrix")
 #'
-#' # mapping 'labels_x' on to itself
-#' labels_x <- c("2020--2025", "2020-2025", "2030")
-#' period_mapping(labels_x)
+#' # map labels_x onto itself
+#' x <- c("2020--2025", "2020-2025", "2030")
+#' period_mapping(x)
 #' @export
 # When labels_x or labels_y is character(0), or a factor with no levels, returns
 # an empty mapping (zero-row tibble or zero-by-zero matrix, per format).
