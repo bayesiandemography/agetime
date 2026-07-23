@@ -100,3 +100,20 @@ test_that("period_set_open_right() relabels groups to right-open periods", {
   expect_identical(as.character(ans), c("2020-2024", "2025-2029", "2030+"))
   expect_identical(levels(ans), c("2020-2024", "2025-2029", "2030+"))
 })
+
+test_that("inner_levels_set_open() errors when no open direction is specified", {
+  expect_error(
+    agetime:::inner_levels_set_open(
+      labels = c("0-4", "5-9"),
+      open_boundary = 10,
+      nm_open_boundary = "at",
+      make_open_left = FALSE,
+      make_open_right = FALSE,
+      label_type = "age",
+      interpret_single = "lower",
+      interpret_multi = "exclude",
+      interpret_fail = "error"
+    ),
+    "Internal error: no open direction specified."
+  )
+})

@@ -137,7 +137,7 @@ inner_coarsen <- function(labels,
     include_total = int_has_total,
     include_na = int_has_na
   )
-  i_new <- NULL
+  i_new <- integer(0)
   if (length(get_labels_unique(intervals)) > 0L) {
     m_contains <- construct_coarsen_mapping(
       breaks = breaks,
@@ -161,18 +161,14 @@ inner_coarsen <- function(labels,
     ans <- character(0)
   }
   if (minimal_levels) {
-    if (is.null(i_new)) {
-      levels_output <- character(0)
-    } else {
-      levels_output <- coarsen_minimal_levels(
-        levels_breaks = levels_breaks,
-        breaks = breaks,
-        i_new = i_new,
-        is_open_left = is_open_left,
-        is_open_right = is_open_right,
-        is_ordered = is_ordered
-      )
-    }
+    levels_output <- coarsen_minimal_levels(
+      levels_breaks = levels_breaks,
+      breaks = breaks,
+      i_new = i_new,
+      is_open_left = is_open_left,
+      is_open_right = is_open_right,
+      is_ordered = is_ordered
+    )
   } else {
     levels_output <- levels_breaks
   }

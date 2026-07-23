@@ -27,6 +27,21 @@ test_that("label_non_life() flags an interval with lower 10 and upper 13", {
   expect_identical(agetime:::label_non_life(intervals), "10-13")
 })
 
+test_that("label_non_life() skips intervals with missing lower bounds", {
+  intervals <- intervals_with_bounds("Total", lower = NA_real_, upper = NA_real_)
+  expect_null(agetime:::label_non_life(intervals))
+})
+
+test_that("label_non_life() flags open-left intervals", {
+  intervals <- intervals_with_bounds("<5", lower = -Inf, upper = 5)
+  expect_identical(agetime:::label_non_life(intervals), "<5")
+})
+
+test_that("label_non_life() flags a lower bound not divisible by 5", {
+  intervals <- intervals_with_bounds("7-12", lower = 7, upper = 12)
+  expect_identical(agetime:::label_non_life(intervals), "7-12")
+})
+
 test_that("label_name() errors for an invalid label_type", {
   expect_error(
     agetime:::label_name("bogus"),

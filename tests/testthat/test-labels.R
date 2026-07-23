@@ -204,6 +204,21 @@ test_that("age label generators still require divisible endpoints", {
   )
 })
 
+test_that("period/cohort label generators require a divisible span", {
+  expect_error(
+    period_labels_five(lower_first = 2001, lower_last = 2010),
+    "Difference between `lower_first` and `lower_last` is 9"
+  )
+  expect_error(
+    period_labels_ten(lower_first = 2001, lower_last = 2010),
+    "Difference between `lower_first` and `lower_last` is 9"
+  )
+  expect_error(
+    cohort_labels_five(lower_first = 2001, lower_last = 2010),
+    "divisible by 5"
+  )
+})
+
 test_that("label generators error when lower_first exceeds lower_last", {
   expect_error(
     age_labels_five(lower_first = 50, lower_last = 20),

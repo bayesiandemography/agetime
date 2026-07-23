@@ -175,6 +175,15 @@ test_that("age_coarsen_five() preserves ordered factor level order", {
   expect_identical(levels(ans), c("20-24", "0-4", "5-9"))
 })
 
+test_that("age_coarsen_life() appends open_right to ordered levels", {
+  fx <- ordered(c("0", "1-4", "5-9"), levels = c("0", "1-4", "5-9"))
+  ans <- age_coarsen_life(fx, open_right = TRUE)
+
+  expect_true(is.ordered(ans))
+  expect_identical(as.character(ans), c("0", "1-4", "5-9"))
+  expect_identical(levels(ans), c("0", "1-4", "5-9", "10+"))
+})
+
 test_that("period/cohort coarsen-five recode to five-year groups", {
   x <- c("2021", "2026-2028")
   expect_values(period_coarsen_five(x), c("2020-2025", "2025-2030"))

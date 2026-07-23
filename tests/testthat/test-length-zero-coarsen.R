@@ -32,6 +32,39 @@ test_that("age_coarsen_five() with length-0 input returns empty character", {
   expect_identical(age_coarsen_five(character(0)), character(0))
 })
 
+test_that("inner_coarsen() with no unique labels uses minimal empty levels", {
+  expect_identical(
+    agetime:::inner_coarsen(
+      labels = character(0),
+      breaks = c(0, 5, 10),
+      is_open_left = FALSE,
+      is_open_right = FALSE,
+      label_type = "age",
+      interpret_single = "lower",
+      interpret_multi = "exclude",
+      interpret_fail = "error",
+      minimal_levels = TRUE,
+      preserve_input_type = TRUE
+    ),
+    character(0)
+  )
+  expect_identical(
+    agetime:::inner_coarsen(
+      labels = character(0),
+      breaks = c(0, 5, 10),
+      is_open_left = FALSE,
+      is_open_right = TRUE,
+      label_type = "age",
+      interpret_single = "lower",
+      interpret_multi = "exclude",
+      interpret_fail = "error",
+      minimal_levels = TRUE,
+      preserve_input_type = FALSE
+    ),
+    factor(levels = "10+")
+  )
+})
+
 test_that("age_coarsen_five() with length-0 factor updates levels", {
   expect_identical(age_coarsen_five(factor()), factor())
   lev <- c("0-4", "5-9", "50-54")
