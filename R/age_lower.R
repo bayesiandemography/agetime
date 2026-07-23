@@ -8,9 +8,9 @@
 #' to filter on age. See below for examples.
 #'
 #' `age_mid()` assigns open age groups (e.g., `"100+"`)
-#' pseudo-midpoints. These pseudo-midpoints are
-#' based on half the median width of the closed intervals in `labels`.
-#' See below for examples. Pseudo-midpoints are useful for plotting.
+#' honorary midpoints, which are useful for plotting.
+#' These midpoints are based on half the median width of
+#' the closed intervals in `labels`.
 #'
 #' @param labels Vector of age group labels.
 #' @param interpret_fail Action if element of `labels`
@@ -40,12 +40,13 @@
 #' df
 #' df |> filter(age_lower(age) >= 10)
 #'
-#' ## 'midpoint' of open intervals
-#' age_mid(c("80-89", "90-99", "100+"))
-#' age_mid(c("90-94", "95-99", "100+"))
-#' 
+#' ## midpoint of open intervals
+#' age_mid(c("80-89", "90-99", "100+")) # 105
+#' age_mid(c("90-94", "95-99", "100+")) # 102.5
+#'
 #' ## no action when 'interpret_fail' is "silent"
-#' age_lower(c("0-4", "young people", "50plus"),
+#' age_lower(
+#'   labels = c("0-4", "young people", "50plus"),
 #'   interpret_fail = "silent"
 #' )
 #' @export

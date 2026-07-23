@@ -65,9 +65,9 @@ to filter on cohorts.
 See below for examples.
 
 \code{cohort_mid()} assigns open cohorts (e.g., \code{"<2000"})
-pseudo-midpoints. These pseudo-midpoints are
-based on half the median width of the closed intervals in \code{labels}.
-See below for examples. Pseudo-midpoints are useful for plotting.
+honorary midpoints, which are useful for plotting.
+These midpoints are based on half the median width of
+the closed intervals in \code{labels}.
 }
 \section{Controlling how cohort labels are interpreted}{
 
@@ -114,9 +114,9 @@ df <- tribble(
 df
 df |> filter(cohort_lower(cohort) >= 2025)
 
-## 'midpoint' of open cohorts
-cohort_mid(c("<2000", "2000-2010", "2010-2020"))
-cohort_mid(c("<2000", "2000-2005", "2005-2010"))
+## midpoint of open cohorts
+cohort_mid(c("<2000", "2000-2010", "2010-2020")) # 1995
+cohort_mid(c("<2000", "2000-2005", "2005-2010")) # 1997.5
 
 ## 'interpret_single' is "lower" (the default)
 cohort_lower("2025")
@@ -137,7 +137,8 @@ cohort_upper("2025-2030", interpret_multi = "exclude")
 cohort_width("2025-2030", interpret_multi = "exclude")
 
 ## no action when 'interpret_fail' is "silent"
-cohort_lower(c("2000-2005", "long time ago"),
+cohort_lower(
+  labels = c("2000-2005", "long time ago"),
   interpret_fail = "silent"
 )
 }

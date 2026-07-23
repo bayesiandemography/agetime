@@ -8,10 +8,10 @@
 #' to filter on periods.
 #' See below for examples.
 #'
-#' `period_mid()` assigns periods (e.g., `"2025+"`)
-#' pseudo-midpoints. These pseudo-midpoints are
-#' based on half the median width of the closed intervals in `labels`.
-#' See below for examples. Pseudo-midpoints are useful for plotting.
+#' `period_mid()` assigns open periods (e.g., `"2025+"`)
+#' honorary midpoints, which are useful for plotting.
+#' These midpoints are based on half the median width of
+#' the closed intervals in `labels`.
 #'
 #' @section Controlling how period labels are interpreted:
 #'
@@ -76,6 +76,10 @@
 #' )
 #' df
 #' df |> filter(period_lower(period) >= 2025)
+#' 
+#' ## midpoint of open periods
+#' period_mid(c("2020-2030", "2030-2040", "2040+")) # 2045
+#' period_mid(c("2020-2025", "2025-2030", "2030+")) # 2032.5
 #'
 #' ## 'interpret_single' is "lower" (the default)
 #' period_lower("2025")
@@ -96,7 +100,8 @@
 #' period_width("2025-2030", interpret_multi = "exclude")
 #'
 #' ## no action when 'interpret_fail' is "silent"
-#' period_lower(c("2000-2005", "long time ago"),
+#' period_lower(
+#'   labels = c("2000-2005", "long time ago"),
 #'   interpret_fail = "silent"
 #' )
 #' @export
