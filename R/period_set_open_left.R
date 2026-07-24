@@ -1,12 +1,11 @@
 #' Specify Open Period
 #'
-#' Add a factor level representing an open period.
+#' @description
+#' Define a factor level representing an open period.
 #' Replace existing periods where necessary.
 #'
-#' - `period_set_open_left()` adds a period open on the left
-#'   (has no lower limit).
-#' - `period_set_open_right()` adds a period open on the right
-#'   (has no upper limit).
+#' - `period_set_open_left()` defines a period with no lower limit.
+#' - `period_set_open_right()` defines a period with no upper limit.
 #'
 #' @inheritSection period_lower Controlling how period labels are interpreted
 #'

@@ -46,15 +46,11 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Add a factor level representing an open cohort.
+Define a factor level representing an open cohort.
 Replace existing cohorts where necessary.
-}
-\details{
 \itemize{
-\item \code{cohort_set_open_left()} adds a cohort open on the left
-(has no lower limit).
-\item \code{cohort_set_open_right()} adds a cohort open on the right
-(has no upper limit).
+\item \code{cohort_set_open_left()} defines a cohort with no lower limit.
+\item \code{cohort_set_open_right()} defines a cohort with no upper limit.
 }
 }
 \section{Controlling how cohort labels are interpreted}{

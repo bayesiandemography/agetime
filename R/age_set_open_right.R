@@ -1,7 +1,6 @@
 #' Specify Open Age Group
 #'
-#' Add a factor level representing an age group that is
-#' open on the right (has no upper limit).
+#' Define a factor level representing an age group with no upper limit.
 #' Replace existing age groups where necessary.
 #'
 #' @inheritParams age_lower

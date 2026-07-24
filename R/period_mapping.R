@@ -3,13 +3,12 @@
 #' @description
 #'
 #' Create a mapping between period labels. A mapping
-#' depicts a relationship between the labels of `labels_x`
-#' and the labels of `labels_y`. The types of relationship
-#' that can be mapped are:
-#' - "labels_x equals labels_y"
-#' - "labels_x contains labels_y"
-#' - "labels_x is contained in labels_y"
-#' - "labels_x overlaps with labels_y".
+#' depicts a relationship between `labels_x` and `labels_y`.
+#' The types of relationship that can be mapped are:
+#' - "`labels_x` equals `labels_y`"
+#' - "`labels_x` contains `labels_y`"
+#' - "`labels_x` is contained in `labels_y`"
+#' - "`labels_x` overlaps with `labels_y`".
 #'
 #' @details
 #'

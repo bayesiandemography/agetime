@@ -20,8 +20,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Add a factor level representing an age group that is
-open on the right (has no upper limit).
+Define a factor level representing an age group with no upper limit.
 Replace existing age groups where necessary.
 }
 \examples{

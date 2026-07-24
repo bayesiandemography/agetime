@@ -1,12 +1,11 @@
 #' Specify Open Cohort
 #'
-#' Add a factor level representing an open cohort.
+#' @description
+#' Define a factor level representing an open cohort.
 #' Replace existing cohorts where necessary.
 #'
-#' - `cohort_set_open_left()` adds a cohort open on the left
-#'   (has no lower limit).
-#' - `cohort_set_open_right()` adds a cohort open on the right
-#'   (has no upper limit).
+#' - `cohort_set_open_left()` defines a cohort with no lower limit.
+#' - `cohort_set_open_right()` defines a cohort with no upper limit.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'

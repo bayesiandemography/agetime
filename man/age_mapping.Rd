@@ -37,14 +37,13 @@ depending on the value of \code{format}.
 }
 \description{
 Create a mapping between age group labels. A mapping
-depicts a relationship between the labels of \code{labels_x}
-and the labels of \code{labels_y}. The types of relationship
-that can be mapped are:
+depicts a relationship between \code{labels_x} and \code{labels_y}.
+The types of relationship that can be mapped are:
 \itemize{
-\item "labels_x equals labels_y"
-\item "labels_x contains labels_y"
-\item "labels_x is contained in labels_y"
-\item "labels_x overlaps with labels_y".
+\item "\code{labels_x} equals \code{labels_y}"
+\item "\code{labels_x} contains \code{labels_y}"
+\item "\code{labels_x} is contained in \code{labels_y}"
+\item "\code{labels_x} overlaps with \code{labels_y}".
 }
 }
 \details{

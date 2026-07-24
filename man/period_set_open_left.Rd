@@ -46,15 +46,11 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Add a factor level representing an open period.
+Define a factor level representing an open period.
 Replace existing periods where necessary.
-}
-\details{
 \itemize{
-\item \code{period_set_open_left()} adds a period open on the left
-(has no lower limit).
-\item \code{period_set_open_right()} adds a period open on the right
-(has no upper limit).
+\item \code{period_set_open_left()} defines a period with no lower limit.
+\item \code{period_set_open_right()} defines a period with no upper limit.
 }
 }
 \section{Controlling how period labels are interpreted}{
