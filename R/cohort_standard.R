@@ -5,12 +5,12 @@
 #'
 #' Default format for cohorts:
 #' 
-#' | Interval type | Lower | Upper | Format  | Example |
-#' |---------------|-------|-------|---------|----------|
-#' | single | `a` | `a+1` | `"a"` | `"2020"` |
-#' | multi | `a` | `a+n` | `"a-<a+n>"` | `"2020-2025"` |
-#' | open on left | `-Inf` | `a` | `"<a"` | `"<2020"` |
-#' | open on right | `a` | `Inf` | `"a+"` | `"2020+"` |
+#' | Interval type | Rule       | Example |
+#' |---------------|------------|----------|
+#' | single | `[a,a+1) -> "a"` | `[2020,2021) -> "2020"` |
+#' | multi | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
+#' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
+#' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
 #' 
 #' The format for single-year cohorts corresponds
 #' to `interpret_single = "lower"`.

@@ -35,12 +35,12 @@ Character vector or factor with the same length as \code{labels}.
 Convert cohort labels to the default \pkg{agetime} format for cohorts.
 }
 \details{
-Default format for cohorts:\tabular{lllll}{
-   Interval type \tab Lower \tab Upper \tab Format \tab Example \cr
-   single \tab \code{a} \tab \code{a+1} \tab \code{"a"} \tab \code{"2020"} \cr
-   multi \tab \code{a} \tab \code{a+n} \tab \code{"a-<a+n>"} \tab \code{"2020-2025"} \cr
-   open on left \tab \code{-Inf} \tab \code{a} \tab \code{"<a"} \tab \code{"<2020"} \cr
-   open on right \tab \code{a} \tab \code{Inf} \tab \code{"a+"} \tab \code{"2020+"} \cr
+Default format for cohorts:\tabular{lll}{
+   Interval type \tab Rule \tab Example \cr
+   single \tab \verb{[a,a+1) -> "a"} \tab \verb{[2020,2021) -> "2020"} \cr
+   multi \tab \verb{[a,a+n) -> "a-<a+n>"} \tab \verb{[2020,2025) -> "2020-2025"} \cr
+   open on left \tab \verb{(-Inf,a) -> "<a"} \tab \verb{(-Inf,2020) -> "<2020"} \cr
+   open on right \tab \verb{[a,Inf) -> "a+"} \tab \verb{[2020,Inf) -> "2020+"} \cr
 }
 
 

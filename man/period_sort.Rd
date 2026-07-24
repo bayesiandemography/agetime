@@ -41,14 +41,12 @@ Sort the levels of \code{labels}.
 }
 \details{
 If \code{labels} is not a factor, and so
-does not have  levels,
-convert it to a factor first.
+does not have levels, it is converted to a factor
+before the sorting is performed.
 
-Levels are sorted on their lower
-limits. When there are ties,
-upper limits are used. \code{NA}s come
-second-to-last, and
-totals come last.
+Levels are sorted on their lower limits.
+When there are ties, upper limits are used.
+\code{NA}s come second-to-last, and totals come last.
 }
 \section{Controlling how period labels are interpreted}{
 

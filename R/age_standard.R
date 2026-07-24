@@ -5,11 +5,11 @@
 #'
 #' Default format for age:
 #' 
-#' | Interval type | Lower | Upper | Format  | Example |
-#' |---------------|-------|-------|---------|----------|
-#' | single | `a` | `a+1` | `"a"` | `"11"` |
-#' | multi | `a` | `a+n` | `"a-<a+n-1>"` | `"10-14"` |
-#' | open on right | `a` | `Inf` | `"a+"` | `"85+"` |
+#' | Interval type | Rule        | Example     |
+#' |---------------|-------------|-------------|
+#' | single | `[a,a+1) -> "a"` | `[10,11) -> "10"` |
+#' | multi | `[a,a+n) -> "a-<a+n-1>"` | `[10,15) -> "10-14"` |
+#' | open on right | `[a,Inf) -> "a+"` | `[85,Inf) -> "85+"` |
 #'
 #' @inheritParams age_lower
 #' @return Character vector or factor with the same length as `labels`.

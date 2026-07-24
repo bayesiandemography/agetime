@@ -3,14 +3,12 @@
 #' Sort the levels of `labels`.
 #'
 #' If `labels` is not a factor, and so
-#' does not have levels,
-#' convert it to a factor first.
+#' does not have levels, it is converted to a factor
+#' before the sorting is performed.
 #'
-#' Levels are sorted on their lower
-#' limits. When there are ties,
-#' upper limits are used. `NA`s come
-#' second-to-last, and
-#' totals come last.
+#' Levels are sorted on their lower limits.
+#' When there are ties, upper limits are used.
+#' `NA`s come second-to-last, and totals come last.
 #'
 #' @inheritSection cohort_lower Controlling how cohort labels are interpreted
 #'
