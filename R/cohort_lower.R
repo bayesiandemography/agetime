@@ -15,30 +15,24 @@
 #'
 #' @section Controlling how cohort labels are interpreted:
 #'
-#' If `interpret_single` is `"lower"` (the default),
-#' then labels for single-year cohorts
-#' are assumed to refer to lower limits,
-#' so that `"2025"` means `[2025,2026)`.
-#' This is the convention that data providers
-#' typically use for calendar years. 
+#' Interpretation of single-year cohorts:
 #'
-#' If `interpret_single` is `"upper"`,
-#' then labels for single-year cohorts
-#' are assumed to refer to upper limits,
-#' so that `"2025"` means `[2024,2025)`.
-#' This is the convention that data providers
-#' typically use for non-calendar years,
-#' such as 1 July to 30 June.
+#' | `interpret_single`| Rule       | Example |
+#' |---------------|-------------|-------------|
+#' | `"lower"` | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
+#' | `"upper"` | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 #'
-#' If `interpret_multi` is `"include"` (the default),
-#' then labels for multi-year cohorts
-#' are assumed to include upper limits,
-#' so that `"2025-2030"` means `[2025,2030)`.
+#' Data providers typically use the "lower" convention
+#' for calendar years (1 January to 31 December),
+#' and the "upper" convention for non-calendar years
+#' (e.g., 1 July to 30 June).
 #'
-#' If `interpret_multi` is `"exclude"`,
-#' then labels for multi-year cohorts
-#' are assumed to exclude the upper limits
-#' so that `"2025-2030"` means `[2025,2031)`.
+#' Interpretation of multi-year cohorts:
+#'
+#' | `interpret_multi`| Rule       | Example |
+#' |---------------|-------------|-------------|
+#' | `"include"` | `"a-<a+n>" -> [a,a+n)` | `"2020-2025" -> [2020,2025)` |
+#' | `"exclude"` | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
 #'
 #' @param labels Vector of cohort labels.
 #' @param interpret_single How to interpret

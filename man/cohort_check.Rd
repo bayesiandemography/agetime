@@ -95,30 +95,23 @@ Conditions include:
 \section{Controlling how cohort labels are interpreted}{
 
 
-If \code{interpret_single} is \code{"lower"} (the default),
-then labels for single-year cohorts
-are assumed to refer to lower limits,
-so that \code{"2025"} means \verb{[2025,2026)}.
-This is the convention that data providers
-typically use for calendar years.
+Interpretation of single-year cohorts:\tabular{lll}{
+   \code{interpret_single} \tab Rule \tab Example \cr
+   \code{"lower"} \tab \verb{"a" -> [a,a+1)} \tab \verb{"2020" -> [2020,2021)} \cr
+   \code{"upper"} \tab \verb{"a" -> [a-1,a)} \tab \verb{"2020" -> [2019,2020)} \cr
+}
 
-If \code{interpret_single} is \code{"upper"},
-then labels for single-year cohorts
-are assumed to refer to upper limits,
-so that \code{"2025"} means \verb{[2024,2025)}.
-This is the convention that data providers
-typically use for non-calendar years,
-such as 1 July to 30 June.
 
-If \code{interpret_multi} is \code{"include"} (the default),
-then labels for multi-year cohorts
-are assumed to include upper limits,
-so that \code{"2025-2030"} means \verb{[2025,2030)}.
+Data providers typically use the "lower" convention
+for calendar years (1 January to 31 December),
+and the "upper" convention for non-calendar years
+(e.g., 1 July to 30 June).
 
-If \code{interpret_multi} is \code{"exclude"},
-then labels for multi-year cohorts
-are assumed to exclude the upper limits
-so that \code{"2025-2030"} means \verb{[2025,2031)}.
+Interpretation of multi-year cohorts:\tabular{lll}{
+   \code{interpret_multi} \tab Rule \tab Example \cr
+   \code{"include"} \tab \verb{"a-<a+n>" -> [a,a+n)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
+   \code{"exclude"} \tab \verb{"a-<a+n-1>" -> [a,a+n)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
+}
 }
 
 \examples{
