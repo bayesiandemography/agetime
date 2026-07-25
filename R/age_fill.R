@@ -45,10 +45,10 @@
 #'   age_fill() |>
 #'   table()
 #'
-#' ## sort after filling
+#' ## set level order after filling
 #' labels |>
 #'   age_fill() |>
-#'   age_sort() |>
+#'   age_set_order() |>
 #'   table()
 #' @export
 

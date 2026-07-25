@@ -10,3 +10,4 @@ docs
 README.html
 /doc/
 /Meta/
+/vignettes/*.html

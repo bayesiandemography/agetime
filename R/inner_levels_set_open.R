@@ -92,7 +92,7 @@ inner_levels_set_open <- function(labels,
   is_val_now_open <- i_vals_to_xunu %in% i_open
   vals_new <- ifelse(is_val_now_open, label_open, vals)
   levels_new <- unique(c(labels_new, label_open))
-  levels_new <- levels(inner_levels_sort(
+  levels_new <- levels(inner_levels_set_order(
     labels = factor(levels_new, levels = levels_new, exclude = NULL),
     decreasing = FALSE,
     label_type = label_type,

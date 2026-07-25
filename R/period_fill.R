@@ -40,10 +40,10 @@
 #'   period_fill_ten() |>
 #'   table()
 #'
-#' ## sort after filling
+#' ## set level order after filling
 #' labels |>
 #'   period_fill_ten() |>
-#'   period_sort() |>
+#'   period_set_order() |>
 #'   table()
 #' @export
 

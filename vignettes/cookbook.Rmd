@@ -23,7 +23,36 @@ library(agetime)
 library(dplyr, warn.conflicts = FALSE)
 ```
 
-# Prepare data
+# Filter and sort datasets
+
+## Filter rows by age, period, or cohort
+
+### Problem
+
+Select rows based on ages, periods, or cohorts
+
+### Solution
+
+Filter on lower or upper limits.
+
+```{r filter-limits}
+df <- tibble(
+  age = c("0-14", "15-64", "65+", "Total"),
+  period = c("2017", "2033", "2050+", "2020-2030"),
+  count = c(100, 200, 50, 350)
+)
+
+df |>
+  filter(age_lower(age) >= 15)
+
+df |>
+  filter(period_upper(period) >= 2020)
+```
+
+### See Also
+
+TODO - ADD LINKS
+
 
 ## Drop totals from a dataset {#drop-totals}
 
@@ -54,11 +83,11 @@ df |>
 - [Drop NA and not-stated from a dataset](#drop-missing)
 
 
-## Drop NA and not-stated from a dataset {#drop-missing}
+## Drop "Not stated" categories from a dataset {#drop-missing}
 
 ### Problem
 
-Remove rows where data on age, period, or cohort is missing in some way.
+Remove rows where data on age, period, or cohort is not stated or missing.
 
 ### Solution
 
@@ -66,7 +95,7 @@ Use `age_is_missing()`, `period_is_missing()`, or `cohort_is_missing()` to ident
 
 ```{r drop-missing}
 df <- tibble(
-  time = c("2005", "Missing", "2005-2010", NA),
+  time = c("2005", "unknown", "2005-2010", NA),
   count = c(100, 2, 55, 12)
 )
 
@@ -76,27 +105,71 @@ df |>
 
 ### Discussion
 
-`age_is_missing()`, `period_is_missing()`, and `cohort_is_total()` look for `NA`s, but also for text equivalents, such as `"Not stated"`.
+`age_is_missing()`, `period_is_missing()`, and `cohort_is_total()` look for `NA`s, but also for text equivalents, such as `"Not stated"`, `"Don't know"` or `"n\a"`.
 
 ### See Also
 
 - [Drop totals from a dataset](#drop-totals)
 
 
-## Standardize messy labels before analysis
+## Order by age groups
 
 ### Problem
 
-Convert inconsistently formatted labels to a single default style.
+Sort rows by age group.
+
+Sorting on raw age groups, which uses alphabetical order, gives the wrong result:
+
+```{r sort-age_wrong}
+df <- tibble(
+  age_group = c("5-9", "0-4", "10-14"),
+  count = c(33, 7, 15)
+)
+
+df |>
+  arrange(age) ## "10-14" comes before "5-9"!!
+```
 
 ### Solution
 
-Use `age_standard()` (or the period/cohort equivalent) inside
-`dplyr::mutate()`.
+`age_set_order()` creates a new variable (a factor) that sorts as expected,
+
+```{r sort-age-correct}
+df |>
+  mutate(age_group = age_set_order(age_group)) |>
+  arrange(age_group)
+```
+
+`age_lower()` can also be used for sorting, leaving the age variable unchanged.
+
+```{r sort-age-lower}
+df |>
+  arrange(age_group)
+```
+
+## Discussion
+
+Producing a new age variable that behaves as expected, as `age_set_order()` does, is appropriate if the variable will be used in future in tasks that involve sorting, e.g. when making tables and plots.
+
+## See Also
+
+TODO - finish
+
+
+
+## Clean up messy labels {#standardize}
+
+### Problem
+
+Convert labels to a single default style.
+
+### Solution
+
+Use `age_standard()`, `period_standard()`, or `cohort_standard()` to create a cleaned-up version of the original labels.
 
 ```{r standard}
 df <- tibble(
-  age = c("5to9", "10--14", "100plus", "all"),
+  age = c("5to9", "10--14", "100plus", "infants"),
   count = c(11, 9, 2, 22)
 )
 
@@ -106,12 +179,15 @@ df |>
 
 ### Discussion
 
-If `age` is a factor, levels are standardized as well as values.
+If the `labels` argument to `age_standard()`, `period_standard()`, or `cohort_standard()` is a factor, then levels are standardized along with the actual values.
+
 
 ### See Also
 
-- `vignette("api-principles")` for the default formats
-- [Validate incoming labels](#validate-incoming-labels)
+- The help for `age_standard()`, `period_standard()`, and `cohort_standard()` describe the default format
+
+
+
 
 
 
@@ -132,7 +208,7 @@ period_extend(recent, n = 2)
 
 ### See Also
 
-- `period_sort()`, `cohort_sort()` before extending a factor whose
+- `period_set_order()`, `cohort_set_order()` before extending a factor whose
   levels are out of order
 - [Build a complete age or period skeleton](#build-a-complete-age-or-period-skeleton)
 
@@ -172,7 +248,7 @@ messy <- factor(
   c("10-14", "0-4", "5-9"),
   levels = c("10-14", "0-4", "5-9")
 )
-age_sort(messy)
+age_set_order(messy)
 ```
 
 ### Discussion
@@ -186,48 +262,6 @@ levels.
 - [Impose an open end on factor levels](#impose-an-open-end-on-factor-levels)
 
 
-
-## Aggregate to wider groups
-
-### Problem
-
-Collapse fine age groups to a coarser classification and sum counts.
-
-### Solution
-
-Coarsen labels, then summarise with dplyr.
-
-```{r coarsen-aggregate}
-deaths <- tibble(
-  age = c("0", "1", "2", "5", "6", "10", "11"),
-  n = c(3, 1, 2, 4, 5, 6, 7)
-)
-
-deaths |>
-  mutate(age = age_coarsen_five(age)) |>
-  group_by(age) |>
-  summarise(n = sum(n), .groups = "drop")
-```
-
-### Discussion
-
-For irregular breaks, pass `breaks` to `age_coarsen()`. Life-table
-groupings are available via `age_coarsen_life()`.
-
-```{r coarsen-breaks}
-tibble(
-  age = c("0-4", "5-9", "10-14", "15-19"),
-  n = c(10, 20, 15, 12)
-) |>
-  mutate(age = age_coarsen(age, breaks = c(0, 15, 20))) |>
-  group_by(age) |>
-  summarise(n = sum(n), .groups = "drop")
-```
-
-### See Also
-
-- [Map between two classifications](#map-between-two-classifications)
-- `age_coarsen_ten()`, `period_coarsen_five()`
 
 ## Build a complete age or period skeleton
 
@@ -273,30 +307,51 @@ age_fill_five(x)
 
 # Analyse data
 
-## Filter rows by age, period, or cohort
+
+
+
+## Aggregate to wider groups
 
 ### Problem
 
-Select rows whose age groups fall in a given range.
+Collapse fine age groups to a coarser classification and sum counts.
 
 ### Solution
 
-Use lower or upper limits with `dplyr::filter()`.
+Coarsen labels, then summarise with dplyr.
 
-```{r filter-limits}
-df <- tibble(
-  age = c("0-14", "15-64", "65+", "Total"),
-  count = c(100, 200, 50, 350)
+```{r coarsen-aggregate}
+deaths <- tibble(
+  age = c("0", "1", "2", "5", "6", "10", "11"),
+  n = c(3, 1, 2, 4, 5, 6, 7)
 )
 
-df |>
-  filter(age_lower(age) >= 15, age_upper(age) <= 65)
+deaths |>
+  mutate(age = age_coarsen_five(age)) |>
+  group_by(age) |>
+  summarise(n = sum(n), .groups = "drop")
+```
+
+### Discussion
+
+For irregular breaks, pass `breaks` to `age_coarsen()`. Life-table
+groupings are available via `age_coarsen_life()`.
+
+```{r coarsen-breaks}
+tibble(
+  age = c("0-4", "5-9", "10-14", "15-19"),
+  n = c(10, 20, 15, 12)
+) |>
+  mutate(age = age_coarsen(age, breaks = c(0, 15, 20))) |>
+  group_by(age) |>
+  summarise(n = sum(n), .groups = "drop")
 ```
 
 ### See Also
 
-- [Drop totals, missing, or isolate open intervals](#drop-totals-missing-or-isolate-open-intervals)
-- `age_mid()`, `age_width()`
+- [Map between two classifications](#map-between-two-classifications)
+- `age_coarsen_ten()`, `period_coarsen_five()`
+
 
 
 ## Plot against interval midpoints

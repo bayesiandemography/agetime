@@ -70,7 +70,7 @@ labels for age groups, periods, and cohorts.
 
 \strong{Put levels in order}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_sort]{age_sort()}} \tab \code{\link[=period_sort]{period_sort()}} \tab \code{\link[=cohort_sort]{cohort_sort()}} \cr
+   \code{\link[=age_set_order]{age_set_order()}} \tab \code{\link[=period_set_order]{period_set_order()}} \tab \code{\link[=cohort_set_order]{cohort_set_order()}} \cr
 }
 
 
