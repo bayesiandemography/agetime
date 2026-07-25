@@ -17,62 +17,75 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette shows how to use functions from the  `agetime` package to perform tasks that often arise when dealing with age, period, and cohort labels.
-
 
 ```{r libs}
 library(agetime)
 library(dplyr, warn.conflicts = FALSE)
 ```
 
-# Preparing data
+# Prepare data
 
+## Drop totals from a dataset {#drop-totals}
 
-## Drop totals, missing, or isolate open intervals
+### Problem
 
-### Task
-
-Remove total or missing categories, or keep only open-ended intervals,
-before summing or plotting.
+Remove rows with age, period, or cohort totals.
 
 ### Solution
 
-Identify special labels with `*_is_total()`, `*_is_missing()`, and
-`*_is_open_*()`, then filter.
+Use `age_is_total()`, `period_is_total()`, or `cohort_is_total()` to identify rows and then filter. 
 
-```{r filter-special}
+```{r drop-totals}
 df <- tibble(
-  age = c("0-14", "15-64", "65+", "All", "not stated"),
-  period = c("2015-2020", "2020-2025", "<2015", "Total", NA),
-  count = c(10, 20, 5, 35, 1)
+  age = c("0-14", "15-64", "65+", "All"),
+  count = c(10, 20, 5, 35)
 )
 
 df |>
-  filter(
-    !age_is_total(age),
-    !age_is_missing(age),
-    !age_is_open_right(age)
-  )
-
-df |>
-  filter(period_is_open_left(period))
+  filter(!age_is_total(age))
 ```
 
 ### Discussion
 
-Totals, missing values, and open ends are often stored as ordinary
-character labels. Treat them explicitly so they are not mixed into
-ordinary age or period sums.
+`age_is_total()`, `period_is_total()`, and `cohort_is_total()` recognize synonyms for total (e.g. `"all"`) and ignore case (e.g. `"tOTaL"`).
 
 ### See Also
 
-- `cohort_is_open_left()`, `cohort_is_open_right()`
-- `period_is_missing()`, `cohort_is_missing()`
-- [Impose an open end on factor levels](#impose-an-open-end-on-factor-levels)
+- [Drop NA and not-stated from a dataset](#drop-missing)
+
+
+## Drop NA and not-stated from a dataset {#drop-missing}
+
+### Problem
+
+Remove rows where data on age, period, or cohort is missing in some way.
+
+### Solution
+
+Use `age_is_missing()`, `period_is_missing()`, or `cohort_is_missing()` to identify rows and then filter. 
+
+```{r drop-missing}
+df <- tibble(
+  time = c("2005", "Missing", "2005-2010", NA),
+  count = c(100, 2, 55, 12)
+)
+
+df |>
+  filter(!period_is_missing(time))
+```
+
+### Discussion
+
+`age_is_missing()`, `period_is_missing()`, and `cohort_is_total()` look for `NA`s, but also for text equivalents, such as `"Not stated"`.
+
+### See Also
+
+- [Drop totals from a dataset](#drop-totals)
+
 
 ## Standardize messy labels before analysis
 
-### Task
+### Problem
 
 Convert inconsistently formatted labels to a single default style.
 
@@ -104,7 +117,7 @@ If `age` is a factor, levels are standardized as well as values.
 
 ## Continue a period or cohort series
 
-### Task
+### Problem
 
 Extend an existing sequence of periods (or cohorts) forward in time.
 
@@ -125,7 +138,7 @@ period_extend(recent, n = 2)
 
 ## Impose an open end on factor levels
 
-### Task
+### Problem
 
 Add an open-ended level (such as `70+` or `<2000`) for publication or
 modelling, even when no observation falls in that group yet.
@@ -148,7 +161,7 @@ cohort_set_open_left(c("2000-2004", "2010-2014"), at = 2000)
 
 ## Order levels for tables and plots
 
-### Task
+### Problem
 
 Put factor levels in chronological or age order.
 
@@ -176,7 +189,7 @@ levels.
 
 ## Aggregate to wider groups
 
-### Task
+### Problem
 
 Collapse fine age groups to a coarser classification and sum counts.
 
@@ -218,7 +231,7 @@ tibble(
 
 ## Build a complete age or period skeleton
 
-### Task
+### Problem
 
 Ensure every planned age group appears in a table, even when some have
 no observations.
@@ -258,11 +271,11 @@ age_fill_five(x)
 - `age_labels_life()`, `period_labels_five()`
 
 
-# Analysing data
+# Analyse data
 
 ## Filter rows by age, period, or cohort
 
-### Task
+### Problem
 
 Select rows whose age groups fall in a given range.
 
@@ -288,7 +301,7 @@ df |>
 
 ## Plot against interval midpoints
 
-### Task
+### Problem
 
 Place age groups on a numeric axis for a plot.
 
@@ -320,7 +333,7 @@ plot(
 
 ## Measure interval length
 
-### Task
+### Problem
 
 Turn interval labels into widths for exposure-style calculations.
 
@@ -359,7 +372,7 @@ Open intervals have undefined width (`NA`).
 
 ## Validate incoming labels
 
-### Task
+### Problem
 
 Check that a label vector meets expectations, either for a report or to
 stop a pipeline.
@@ -395,7 +408,7 @@ pipeline.
 
 ## Map between two classifications
 
-### Task
+### Problem
 
 Relate a coarse period classification to a finer one and reallocate
 counts.

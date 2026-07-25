@@ -5,6 +5,7 @@
 #' @param use_dashes Whether to apply `norm_dashes()`.
 #' @param use_leadingzeros Whether to apply `norm_leadingzeros()`.
 #' @param use_years Whether to apply `norm_years()`.
+#' @param use_apostrophes Whether to apply `norm_apostrophes()`.
 #' @param use_whitespace Whether to apply `norm_whitespace()`.
 #' @param use_lessthan Whether to apply `norm_lessthan()`.
 #' @param use_plus Whether to apply `norm_plus()`.
@@ -20,6 +21,7 @@ make_labels_normalizers <- function(use_tolower,
                                     use_dashes,
                                     use_leadingzeros,
                                     use_years,
+                                    use_apostrophes,
                                     use_whitespace,
                                     use_lessthan,
                                     use_plus,
@@ -42,6 +44,9 @@ make_labels_normalizers <- function(use_tolower,
   }
   if (use_years) {
     ans <- append(ans, norm_years)
+  }
+  if (use_apostrophes) {
+    ans <- append(ans, norm_apostrophes)
   }
   if (use_whitespace) {
     ans <- append(ans, norm_whitespace)
@@ -79,6 +84,7 @@ make_labels_normalizers_age <- function() {
     use_dashes = TRUE,
     use_leadingzeros = TRUE,
     use_years = TRUE,
+    use_apostrophes = TRUE,
     use_whitespace = TRUE,
     use_lessthan = FALSE,
     use_plus = TRUE,
@@ -101,6 +107,7 @@ make_labels_normalizers_cohort <- function() {
     use_dashes = TRUE,
     use_leadingzeros = TRUE,
     use_years = FALSE,
+    use_apostrophes = TRUE,
     use_whitespace = TRUE,
     use_lessthan = TRUE,
     use_plus = FALSE,
@@ -123,6 +130,7 @@ make_labels_normalizers_period <- function() {
     use_dashes = TRUE,
     use_leadingzeros = TRUE,
     use_years = FALSE,
+    use_apostrophes = TRUE,
     use_whitespace = TRUE,
     use_lessthan = FALSE,
     use_plus = FALSE,

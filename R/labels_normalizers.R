@@ -1,12 +1,13 @@
 ## Normalization functions - listed in the order in which they should be run
 
-## Tokens for whole label (whitespace, tolower) -------------------------------
+## Tokens for whole label (tolower, apostrophes, whitespace) ------------------
 
 NA_TOKENS <- c(
   "unknown",
   "unk",
   "unspecified",
   "notknown",
+  "dontknow",
   "missing",
   "notstated",
   "na",
@@ -98,6 +99,16 @@ norm_leadingzeros <- function(x) {
 #' @noRd
 norm_years <- function(x) {
   gsub("\\b(year|years|yr|yrs)\\b", "", x, perl = TRUE)
+}
+
+#' Norm Apostrophes
+#'
+#' @param x Vector of labels.
+#' @returns Labels with apostrophes removed.
+#'
+#' @noRd
+norm_apostrophes <- function(x) {
+  gsub("['\u2018\u2019]", "", x, perl = TRUE)
 }
 
 #' Norm Whitespace

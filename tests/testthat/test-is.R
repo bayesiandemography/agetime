@@ -38,6 +38,11 @@ test_that("age_is_missing() identifies NA and missing-label tokens", {
   expect_values(ans, c(FALSE, TRUE, TRUE, FALSE, TRUE))
 })
 
+test_that("age_is_missing() treats dont know variants as missing", {
+  x <- c("0-4", "dont know", "Don't Know", "don\u2019t know", "Total")
+  expect_values(age_is_missing(x), c(FALSE, TRUE, TRUE, TRUE, FALSE))
+})
+
 test_that("age_is_missing() handles ordinary, NA, and Total labels", {
   expect_values(age_is_missing(age_closed), c(FALSE, FALSE, FALSE))
   expect_values(age_is_missing(age_with_na), c(FALSE, TRUE, FALSE))
