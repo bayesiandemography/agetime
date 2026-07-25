@@ -1,0 +1,438 @@
+---
+title: "Cookbook"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Cookbook}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette shows how to use functions from the  `agetime` package to perform tasks that often arise when dealing with age, period, and cohort labels.
+
+
+```{r libs}
+library(agetime)
+library(dplyr, warn.conflicts = FALSE)
+```
+
+# Preparing data
+
+
+## Drop totals, missing, or isolate open intervals
+
+### Task
+
+Remove total or missing categories, or keep only open-ended intervals,
+before summing or plotting.
+
+### Solution
+
+Identify special labels with `*_is_total()`, `*_is_missing()`, and
+`*_is_open_*()`, then filter.
+
+```{r filter-special}
+df <- tibble(
+  age = c("0-14", "15-64", "65+", "All", "not stated"),
+  period = c("2015-2020", "2020-2025", "<2015", "Total", NA),
+  count = c(10, 20, 5, 35, 1)
+)
+
+df |>
+  filter(
+    !age_is_total(age),
+    !age_is_missing(age),
+    !age_is_open_right(age)
+  )
+
+df |>
+  filter(period_is_open_left(period))
+```
+
+### Discussion
+
+Totals, missing values, and open ends are often stored as ordinary
+character labels. Treat them explicitly so they are not mixed into
+ordinary age or period sums.
+
+### See Also
+
+- `cohort_is_open_left()`, `cohort_is_open_right()`
+- `period_is_missing()`, `cohort_is_missing()`
+- [Impose an open end on factor levels](#impose-an-open-end-on-factor-levels)
+
+## Standardize messy labels before analysis
+
+### Task
+
+Convert inconsistently formatted labels to a single default style.
+
+### Solution
+
+Use `age_standard()` (or the period/cohort equivalent) inside
+`dplyr::mutate()`.
+
+```{r standard}
+df <- tibble(
+  age = c("5to9", "10--14", "100plus", "all"),
+  count = c(11, 9, 2, 22)
+)
+
+df |>
+  mutate(age = age_standard(age))
+```
+
+### Discussion
+
+If `age` is a factor, levels are standardized as well as values.
+
+### See Also
+
+- `vignette("api-principles")` for the default formats
+- [Validate incoming labels](#validate-incoming-labels)
+
+
+
+## Continue a period or cohort series
+
+### Task
+
+Extend an existing sequence of periods (or cohorts) forward in time.
+
+### Solution
+
+Use `period_extend()` (or `cohort_extend()`).
+
+```{r extend}
+recent <- c("2020-2025", "2025-2030")
+period_extend(recent, n = 2)
+```
+
+### See Also
+
+- `period_sort()`, `cohort_sort()` before extending a factor whose
+  levels are out of order
+- [Build a complete age or period skeleton](#build-a-complete-age-or-period-skeleton)
+
+## Impose an open end on factor levels
+
+### Task
+
+Add an open-ended level (such as `70+` or `<2000`) for publication or
+modelling, even when no observation falls in that group yet.
+
+### Solution
+
+Use `age_set_open_right()` or `cohort_set_open_left()` (and the other
+domain-specific open helpers).
+
+```{r set-open}
+age_set_open_right(c("0-4", "60-64"), at = 70)
+
+cohort_set_open_left(c("2000-2004", "2010-2014"), at = 2000)
+```
+
+### See Also
+
+- [Drop totals, missing, or isolate open intervals](#drop-totals-missing-or-isolate-open-intervals)
+- `period_set_open_left()`, `period_set_open_right()`
+
+## Order levels for tables and plots
+
+### Task
+
+Put factor levels in chronological or age order.
+
+### Solution
+
+```{r sort}
+messy <- factor(
+  c("10-14", "0-4", "5-9"),
+  levels = c("10-14", "0-4", "5-9")
+)
+age_sort(messy)
+```
+
+### Discussion
+
+Combine with fill or set-open when you need a complete, ordered set of
+levels.
+
+### See Also
+
+- [Build a complete age or period skeleton](#build-a-complete-age-or-period-skeleton)
+- [Impose an open end on factor levels](#impose-an-open-end-on-factor-levels)
+
+
+
+## Aggregate to wider groups
+
+### Task
+
+Collapse fine age groups to a coarser classification and sum counts.
+
+### Solution
+
+Coarsen labels, then summarise with dplyr.
+
+```{r coarsen-aggregate}
+deaths <- tibble(
+  age = c("0", "1", "2", "5", "6", "10", "11"),
+  n = c(3, 1, 2, 4, 5, 6, 7)
+)
+
+deaths |>
+  mutate(age = age_coarsen_five(age)) |>
+  group_by(age) |>
+  summarise(n = sum(n), .groups = "drop")
+```
+
+### Discussion
+
+For irregular breaks, pass `breaks` to `age_coarsen()`. Life-table
+groupings are available via `age_coarsen_life()`.
+
+```{r coarsen-breaks}
+tibble(
+  age = c("0-4", "5-9", "10-14", "15-19"),
+  n = c(10, 20, 15, 12)
+) |>
+  mutate(age = age_coarsen(age, breaks = c(0, 15, 20))) |>
+  group_by(age) |>
+  summarise(n = sum(n), .groups = "drop")
+```
+
+### See Also
+
+- [Map between two classifications](#map-between-two-classifications)
+- `age_coarsen_ten()`, `period_coarsen_five()`
+
+## Build a complete age or period skeleton
+
+### Task
+
+Ensure every planned age group appears in a table, even when some have
+no observations.
+
+### Solution
+
+Generate the full set of labels with `*_labels_*()`, then join observed
+data onto that skeleton.
+
+```{r skeleton}
+skeleton <- tibble(
+  age = age_labels_five(lower_first = 0, lower_last = 20, open_right = FALSE)
+)
+
+observed <- tibble(
+  age = c("0-4", "10-14"),
+  n = c(30, 25)
+)
+
+skeleton |>
+  left_join(observed, by = "age")
+```
+
+### Discussion
+
+When the problem is missing **factor levels** (for tables or models)
+rather than missing rows, use `age_fill()` or `age_fill_five()`:
+
+```{r fill-levels}
+x <- factor(c("0-4", "10-14"), levels = c("0-4", "10-14"))
+age_fill_five(x)
+```
+
+### See Also
+
+- [Order levels for tables and plots](#order-levels-for-tables-and-plots)
+- `age_labels_life()`, `period_labels_five()`
+
+
+# Analysing data
+
+## Filter rows by age, period, or cohort
+
+### Task
+
+Select rows whose age groups fall in a given range.
+
+### Solution
+
+Use lower or upper limits with `dplyr::filter()`.
+
+```{r filter-limits}
+df <- tibble(
+  age = c("0-14", "15-64", "65+", "Total"),
+  count = c(100, 200, 50, 350)
+)
+
+df |>
+  filter(age_lower(age) >= 15, age_upper(age) <= 65)
+```
+
+### See Also
+
+- [Drop totals, missing, or isolate open intervals](#drop-totals-missing-or-isolate-open-intervals)
+- `age_mid()`, `age_width()`
+
+
+## Plot against interval midpoints
+
+### Task
+
+Place age groups on a numeric axis for a plot.
+
+### Solution
+
+Use `age_mid()` (including honorary midpoints for open intervals).
+
+```{r mid-plot, fig.width = 5, fig.height = 3.5}
+rates <- tibble(
+  age = c("0-4", "5-9", "10-14", "15-19", "20+"),
+  rate = c(0.02, 0.01, 0.015, 0.03, 0.05)
+)
+
+plot(
+  age_mid(rates$age),
+  rates$rate,
+  type = "b",
+  xlab = "Age (midpoint)",
+  ylab = "Rate"
+)
+```
+
+### See Also
+
+- [Measure interval length](#measure-interval-length)
+- `period_mid()`, `cohort_mid()`
+
+
+
+## Measure interval length
+
+### Task
+
+Turn interval labels into widths for exposure-style calculations.
+
+### Solution
+
+```{r width}
+pop <- tibble(
+  age = c("0-4", "5-9", "10-14", "85+"),
+  person_years = c(500, 480, 470, 200)
+)
+
+pop |>
+  mutate(
+    width = age_width(age),
+    approx_midyear_pop = person_years / width
+  )
+```
+
+### Discussion
+
+Open intervals have undefined width (`NA`).
+
+### See Also
+
+- [Plot against interval midpoints](#plot-against-interval-midpoints)
+- `period_width()`, `cohort_width()`
+
+
+
+
+
+
+
+
+# Programming
+
+## Validate incoming labels
+
+### Task
+
+Check that a label vector meets expectations, either for a report or to
+stop a pipeline.
+
+### Solution
+
+Use `*_check()` for diagnostics and `*_assert()` to fail fast.
+
+```{r validate}
+lab <- c("2020-2025", "2025-2030", "2030-2035")
+period_check(lab, no_gap = TRUE, no_overlap = TRUE)
+
+pop <- tibble(
+  age = c("0-4", "5-9", "10-14"),
+  count = c(100, 110, 105)
+)
+
+pop |>
+  mutate(age = age_assert(age, has_zero = TRUE, no_gap = TRUE))
+```
+
+### Discussion
+
+`*_check()` returns a list with an `ok` flag and details. `*_assert()`
+returns its input invisibly when checks pass, so it fits in a mutate
+pipeline.
+
+### See Also
+
+- `?age_check` for the full set of conditions
+
+
+
+## Map between two classifications
+
+### Task
+
+Relate a coarse period classification to a finer one and reallocate
+counts.
+
+### Solution
+
+Build a mapping with `period_mapping()`, then join and summarise.
+
+```{r mapping}
+coarse <- c("2020-2030", "2030-2040")
+fine <- c("2020-2025", "2025-2030", "2030-2035", "2035-2040")
+
+map <- period_mapping(
+  labels_x = coarse,
+  labels_y = fine,
+  relation = "contains"
+)
+map
+
+fine_counts <- tibble(
+  period = fine,
+  n = c(10, 12, 9, 11)
+)
+
+map |>
+  left_join(fine_counts, by = c("y" = "period")) |>
+  group_by(x) |>
+  summarise(n = sum(n), .groups = "drop")
+```
+
+### Discussion
+
+Other relations include `"equals"`, `"is-contained-in"`, and
+`"overlaps-with"`. The matrix form of `format = "matrix"` is useful when
+you need a dense indicator grid.
+
+### See Also
+
+- [Aggregate to wider groups](#aggregate-to-wider-groups)
+- `age_mapping()`, `cohort_mapping()`

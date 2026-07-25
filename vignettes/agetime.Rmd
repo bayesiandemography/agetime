@@ -92,14 +92,14 @@ age_labels_five(lower_first = 0, lower_last = 20)
 age_labels_life(lower_last = 60) ## life table age groups
 ```
 
-## Modify to new groupings
+## Coarsen to new groupings
 
-To widen or realign age groups, use an `age_modify` function.
+To widen or realign age groups, use an `age_coarsen` function.
 
-```{r modify}
+```{r coarsen}
 x <- c("0-4", "5-9", "10-14", "50-54")
-age_modify(x, breaks = c(0, 15, 55))
-age_modify_five(x)
+age_coarsen(x, breaks = c(0, 15, 55))
+age_coarsen_five(x)
 ```
 
 `age_fill()` adds missing age groups to factor levels, and `age_sort()` sorts levels.
@@ -140,11 +140,12 @@ Age group functions have period and cohort equivalents. For instance:
 | `age_lower()`       | `period_lower()`       | `cohort_lower()`       |
 | `age_standard()`    | `period_standard()`    | `cohort_standard()`    |
 | `age_labels_five()` | `period_labels_five()` | `cohort_labels_five()` |
-| `age_modify()`      | `period_modify()`      | `cohort_modify()`      |
+| `age_coarsen()`      | `period_coarsen()`      | `cohort_coarsen()`      |
 
 
 ## More information
 
+- `vignette("cookbook")` for task-oriented recipes
 - `?agetime` for a full list of functions grouped by task
 - `vignette("api-principles")` for naming and return-type conventions
 - Package website: <https://bayesiandemography.github.io/agetime/>

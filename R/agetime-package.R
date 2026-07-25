@@ -13,13 +13,14 @@
 #' | [age_width()]    | [period_width()] | [cohort_width()] |
 #' | [age_mid()]      | [period_mid()]   | [cohort_mid()]   |
 #'
-#' **Identify open intervals and totals**
+#' **Identify open intervals, totals, and missing**
 #'
 #' |                  |                   |                   |
 #' |------------------|-------------------|-------------------|
 #' |  | [period_is_open_left()] | [cohort_is_open_left()] |
 #' | [age_is_open_right()] | [period_is_open_right()] | [cohort_is_open_right()] |
 #' | [age_is_total()] | [period_is_total()] | [cohort_is_total()] |
+#' | [age_is_missing()] | [period_is_missing()] | [cohort_is_missing()] |
 #'
 #' **Use agetime default format**
 #'

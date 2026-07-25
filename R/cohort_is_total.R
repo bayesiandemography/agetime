@@ -13,6 +13,7 @@
 #' - [cohort_is_open_right()] Identify cohorts open on right
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
+#' - [cohort_is_missing()] Identify missing cohort labels
 #'
 #' @examples
 #' labels <- c("2020-2025", "Total", "1999", "ALL")
@@ -26,6 +27,47 @@ cohort_is_total <- function(labels,
                             interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
+    labels = labels,
+    label_type = "cohort",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+}
+
+
+#' Identify Missing Cohort Labels
+#'
+#' Find categories representing missing, not stated, or `NA` values
+#' in cohort labels.
+#'
+#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#'
+#' @inheritParams cohort_lower
+#'
+#' @return Logical vector with the same length as `labels`.
+#'
+#' @seealso
+#' - [age_is_missing()] Age equivalent of `cohort_is_missing()`
+#' - [period_is_missing()] Period equivalent of `cohort_is_missing()`
+#' - [cohort_is_total()] Identify cohort totals
+#' - [cohort_is_open_left()] Identify cohorts open on left
+#' - [cohort_is_open_right()] Identify cohorts open on right
+#'
+#' @examples
+#' labels <- c("2020-2025", NA, "not stated", "Total", "missing")
+#' cohort_is_missing(labels)
+#' @export
+
+# When length(labels) == 0, returns logical(0).
+cohort_is_missing <- function(labels,
+                              interpret_single = c("lower", "upper"),
+                              interpret_multi = c("include", "exclude"),
+                              interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- match.arg(interpret_multi)
+  interpret_fail <- match.arg(interpret_fail)
+  inner_is_missing(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
@@ -55,6 +97,7 @@ cohort_is_total <- function(labels,
 #' - [period_is_open_left()] Identify periods open on left
 #' - [period_is_open_right()] Identify periods open on right
 #' - [cohort_is_total()] Identify cohort totals
+#' - [cohort_is_missing()] Identify missing cohort labels
 #' - [cohort_set_open_left()] Specify cohort open on left
 #' - [cohort_set_open_right()] Specify cohort open on right
 #'

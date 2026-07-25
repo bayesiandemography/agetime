@@ -50,7 +50,7 @@ Function names use the domain prefix plus an operation family.
 | `*_is_open_left()`, `*_is_open_right()`, `*_is_total()` | Identify special labels | Logical vector |
 | `*_check()`, `*_assert()` | Validate labels | Diagnostics or error |
 | `*_standard()` | Convert labels to standard format | Same shape as `labels` |
-| `*_modify()` | Regroup labels into new intervals | Factor |
+| `*_coarsen()` | Regroup labels into new intervals | Factor |
 | `*_extend()` | Continue a label series | Character vector or factor |
 | `*_fill()`, `*_set_open_*()`, `*_sort()` | Work with factor levels | Factor |
 | `*_labels_*()` | Create new labels | Character vector |
@@ -59,13 +59,13 @@ Function names use the domain prefix plus an operation family.
 The most important return-type distinction is between labels and levels:
 
 - `*_labels_*()` functions create character vectors of labels.
-- `*_modify()`, `*_fill()`, `*_set_open_*()`, and `*_sort()` functions return
+- `*_coarsen()`, `*_fill()`, `*_set_open_*()`, and `*_sort()` functions return
   factors, because their purpose is to recode values and shape factor levels.
 
 ```{r labels-vs-levels}
 age_labels_five(lower_last = 20)
 
-age_modify(c("10-14", "0-4"), breaks = c(0, 10, 20))
+age_coarsen(c("10-14", "0-4"), breaks = c(0, 10, 20))
 age_fill_five(c("10-14", "0-4"))
 ```
 
@@ -133,7 +133,7 @@ Age groups support `open_right` only; periods and cohorts support both
 directions.
 
 In `*_labels_*()` functions, these arguments default to explicit boolean
-values because you are constructing a new label grid. In `*_modify()`
+values because you are constructing a new label grid. In `*_coarsen()`
 functions, the defaults are `NULL`, which preserves the open/closed topology
 of `labels`: open ends are kept when present, and omitted when not. Use
 `open_left = TRUE` or `open_right = TRUE` to add a structural open level
@@ -141,19 +141,20 @@ even when no value in `labels` currently belongs to that group.
 
 ## Values and levels
 
-Functions such as `age_modify()`, `age_fill()`, `age_set_open_right()`, and
+Functions such as `age_coarsen()`, `age_fill()`, `age_set_open_right()`, and
 `age_sort()` always return a factor. They preserve observed values where
-possible, and change or add levels. By default, `age_modify()` infers
+possible, and change or add levels. By default, `age_coarsen()` infers
 whether to include an open top from `labels`. Use `open_right = TRUE` to add
 a `90+` level even when no value in `labels` currently belongs to that open
 group, as `age_set_open_right()` does for `70+`.
 
 ```{r level-contract}
 labels <- c("0-4", "60-64")
-age_modify(labels, breaks = c(0, 50, 70), open_right = TRUE)
+age_coarsen(labels, breaks = c(0, 50, 70), open_right = TRUE)
 ```
 
 ## More information
 
 - See `vignette("agetime")` for a quick start.
+- See `vignette("cookbook")` for task-oriented recipes.
 - See `?agetime` for a complete function list grouped by task.

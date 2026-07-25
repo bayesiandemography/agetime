@@ -7,4 +7,5 @@ articles:
     navbar: ~
     contents:
       - agetime
+      - cookbook
       - api-principles

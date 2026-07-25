@@ -11,6 +11,7 @@
 #' @seealso
 #' - [age_is_total()] Age equivalent of `period_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `period_is_total()`
+#' - [period_is_missing()] Identify missing period labels
 #'
 #' @examples
 #' labels <- c("2020-2025", "Total", "1999", "ALL")
@@ -26,6 +27,47 @@ period_is_total <- function(labels,
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
+    labels = labels,
+    label_type = "period",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+}
+
+
+#' Identify Missing Period Labels
+#'
+#' Find categories representing missing, not stated, or `NA` values
+#' in period labels.
+#'
+#' @inheritSection period_lower Controlling how period labels are interpreted
+#'
+#' @inheritParams period_lower
+#'
+#' @return Logical vector with the same length as `labels`.
+#'
+#' @seealso
+#' - [age_is_missing()] Age equivalent of `period_is_missing()`
+#' - [cohort_is_missing()] Cohort equivalent of `period_is_missing()`
+#' - [period_is_total()] Identify period totals
+#' - [period_is_open_left()] Identify periods open on left
+#' - [period_is_open_right()] Identify periods open on right
+#'
+#' @examples
+#' labels <- c("2020-2025", NA, "not stated", "Total", "missing")
+#' period_is_missing(labels)
+#' @export
+
+# When length(labels) == 0, returns logical(0).
+period_is_missing <- function(labels,
+                              interpret_single = c("lower", "upper"),
+                              interpret_multi = c("include", "exclude"),
+                              interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- match.arg(interpret_multi)
+  interpret_fail <- match.arg(interpret_fail)
+  inner_is_missing(
     labels = labels,
     label_type = "period",
     interpret_single = interpret_single,
@@ -55,6 +97,7 @@ period_is_total <- function(labels,
 #' - [cohort_is_open_left()] Identify cohorts open on left
 #' - [cohort_is_open_right()] Identify cohorts open on right
 #' - [period_is_total()] Identify period totals
+#' - [period_is_missing()] Identify missing period labels
 #' - [period_set_open_left()] Specify period open on left
 #' - [period_set_open_right()] Specify period open on right
 #'

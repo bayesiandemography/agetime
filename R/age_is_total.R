@@ -9,6 +9,7 @@
 #' @seealso
 #' - [period_is_total()] Period equivalent of `age_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
+#' - [age_is_missing()] Identify missing age group labels
 #' - [age_is_open_right()] Identify age groups open on right
 #'
 #' @examples
@@ -21,6 +22,40 @@ age_is_total <- function(labels,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
+    labels = labels,
+    label_type = "age",
+    interpret_single = "lower",
+    interpret_multi = "exclude",
+    interpret_fail = interpret_fail
+  )
+}
+
+
+#' Identify Missing Age Group Labels
+#'
+#' Find categories representing missing, not stated, or `NA` values
+#' in age group labels.
+#'
+#' @inheritParams age_lower
+#'
+#' @return Logical vector with the same length as `labels`.
+#'
+#' @seealso
+#' - [period_is_missing()] Period equivalent of `age_is_missing()`
+#' - [cohort_is_missing()] Cohort equivalent of `age_is_missing()`
+#' - [age_is_total()] Identify totals for age groups
+#' - [age_is_open_right()] Identify age groups open on right
+#'
+#' @examples
+#' labels <- c("0-4", NA, "not stated", "Total", "missing")
+#' age_is_missing(labels)
+#' @export
+
+# When length(labels) == 0, returns logical(0).
+age_is_missing <- function(labels,
+                           interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
+  inner_is_missing(
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
@@ -44,6 +79,7 @@ age_is_total <- function(labels,
 #' - [period_is_open_left()] Identify periods open on left
 #' - [period_is_open_right()] Identify periods open on right
 #' - [age_is_total()] Identify totals for age groups
+#' - [age_is_missing()] Identify missing age group labels
 #' - [age_set_open_right()] Specify age group open on right
 #'
 #' @examples

@@ -64,5 +64,6 @@ period_is_total(labels)
 \itemize{
 \item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{period_is_total()}
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{period_is_total()}
+\item \code{\link[=period_is_missing]{period_is_missing()}} Identify missing period labels
 }
 }

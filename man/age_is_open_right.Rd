@@ -30,6 +30,7 @@ age_is_open_right(labels)
 \item \code{\link[=period_is_open_left]{period_is_open_left()}} Identify periods open on left
 \item \code{\link[=period_is_open_right]{period_is_open_right()}} Identify periods open on right
 \item \code{\link[=age_is_total]{age_is_total()}} Identify totals for age groups
+\item \code{\link[=age_is_missing]{age_is_missing()}} Identify missing age group labels
 \item \code{\link[=age_set_open_right]{age_set_open_right()}} Specify age group open on right
 }
 }

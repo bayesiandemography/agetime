@@ -83,6 +83,7 @@ period_is_open_right(labels)
 \item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify cohorts open on left
 \item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
 \item \code{\link[=period_is_total]{period_is_total()}} Identify period totals
+\item \code{\link[=period_is_missing]{period_is_missing()}} Identify missing period labels
 \item \code{\link[=period_set_open_left]{period_set_open_left()}} Specify period open on left
 \item \code{\link[=period_set_open_right]{period_set_open_right()}} Specify period open on right
 }

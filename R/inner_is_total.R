@@ -70,3 +70,36 @@ inner_is_total <- function(labels,
   i <- get_i_x_to_xunu(intervals)
   set_labels_names(is_total[i], labels)
 }
+
+#' Inner Is Missing
+#'
+#' @param labels Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_multi Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
+#' @returns Logical vector the same length as `labels`.
+#'
+#' @noRd
+inner_is_missing <- function(labels,
+                             label_type,
+                             interpret_single,
+                             interpret_multi,
+                             interpret_fail) {
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
+    length_zero_ok = TRUE
+  )
+  intervals <- intervals(
+    labels = labels,
+    label_type = label_type,
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+  is_missing <- get_is_na(intervals)
+  i <- get_i_x_to_xunu(intervals)
+  set_labels_names(is_missing[i], labels)
+}
