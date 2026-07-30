@@ -14,7 +14,7 @@
 #'
 #' Observed values are preserved; only the level order changes.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param decreasing Whether order is

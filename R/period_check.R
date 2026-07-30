@@ -13,7 +13,7 @@
 #' - Having totals or NAs
 #' - Having open periods
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param no_overlap Check that no periods overlap.

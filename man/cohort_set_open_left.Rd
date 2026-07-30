@@ -53,11 +53,11 @@ Replace existing cohorts where necessary.
 \item \code{cohort_set_open_right()} defines a cohort with no upper limit.
 }
 }
-\section{Controlling how cohort labels are interpreted}{
+\section{Rules for interpreting inputs}{
 
 
-Interpretation of single-year cohorts:\tabular{lll}{
-   \code{interpret_single} \tab Rule \tab Example \cr
+Single-year cohorts:\tabular{lll}{
+   \code{interpret_single} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"lower"} \tab \verb{"a" -> [a,a+1)} \tab \verb{"2020" -> [2020,2021)} \cr
    \code{"upper"} \tab \verb{"a" -> [a-1,a)} \tab \verb{"2020" -> [2019,2020)} \cr
 }
@@ -68,8 +68,8 @@ for calendar years (1 January to 31 December),
 and the "upper" convention for non-calendar years
 (e.g., 1 July to 30 June).
 
-Interpretation of multi-year cohorts:\tabular{lll}{
-   \code{interpret_multi} \tab Rule \tab Example \cr
+Multi-year cohorts:\tabular{lll}{
+   \code{interpret_multi} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"include"} \tab \verb{"a-<a+n>" -> [a,a+n)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
    \code{"exclude"} \tab \verb{"a-<a+n-1>" -> [a,a+n)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
 }

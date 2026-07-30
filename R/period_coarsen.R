@@ -8,7 +8,7 @@
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
 #' 
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param breaks Boundaries between periods.
@@ -126,7 +126,7 @@ period_coarsen <- function(labels,
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param offset Parameter controlling

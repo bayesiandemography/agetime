@@ -1,24 +1,8 @@
 #' Create New Cohort Labels
 #'
 #' Create a new set of cohort labels.
-#'
-#' @section Controlling the formatting of cohort labels:
-#'
-#'  `format_single` controls whether the label
-#' for a single-year cohorts is based on the
-#' lower or upper limit.
-#' For instance, the cohort `[2025,2026)`
-#' has label `"2025"` if `format_single`
-#' is `"lower"` and `"2026"` if
-#' `format_single` is `"upper"`.
-#'
-#' `format_multi` controls whether the label
-#' for a multi-year cohort includes the upper limit.
-#' For instance, the cohort `[2025,2030)`
-#' has label `"2025-2035"` if
-#' `format_multi` is `"include"` and
-#' `"2025-2029"` if `format_multi` is
-#' `"exclude"`.
+#' 
+#' @inheritSection cohort_standard Rules for formatting output
 #'
 #' @param breaks Boundaries between cohorts
 #' A numeric vector.

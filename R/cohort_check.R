@@ -13,7 +13,7 @@
 #' - Having totals or NAs
 #' - Having open cohorts
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param no_overlap Check that no cohorts overlap.

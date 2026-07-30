@@ -3,23 +3,16 @@
 #'
 #' Convert cohort labels to the default \pkg{agetime} format for cohorts.
 #'
-#' Default format for cohorts:
-#' 
-#' | Interval type | Rule       | Example |
+#' @section Rules for formatting output:
+#'
+#' | *Interval type* | *Rule*       | *Example* |
 #' |---------------|------------|----------|
 #' | single | `[a,a+1) -> "a"` | `[2020,2021) -> "2020"` |
 #' | multi | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
 #' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
 #' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
 #' 
-#' The format for single-year cohorts corresponds
-#' to `interpret_single = "lower"`.
-#' 
-#' The format for multi-year cohorts corresponds
-#' to `interpret_multi = "include"`.
-#'
-#' 
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @inherit age_standard return

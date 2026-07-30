@@ -3,23 +3,17 @@
 #'
 #' Convert period labels to the default \pkg{agetime} format for periods.
 #'
-#' Default format for periods:
+#' @section Rules for formatting output:
 #' 
-#' | Interval type | Rule       | Example |
+#' | *Interval type* | *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
 #' | single | `[a,a+1) -> "a"` | `[2020,2021) -> "2020"` |
 #' | multi | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
 #' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
 #' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
 #' 
-#' The format for single-year periods corresponds
-#' to `interpret_single = "lower"`.
 #' 
-#' The format for multi-year periods corresponds
-#' to `interpret_multi = "include"`.
-#'
-#' 
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @inherit age_standard return

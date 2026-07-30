@@ -30,7 +30,7 @@
 #' | `"is-contained-in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
 #' | `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param labels_x Vector of cohort labels.

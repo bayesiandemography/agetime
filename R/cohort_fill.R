@@ -11,7 +11,7 @@
 #' - `cohort_fill_five` adds cohorts with width 5.
 #' - `cohort_fill_ten` adds cohorts with width 10.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries of newly-created cohorts.

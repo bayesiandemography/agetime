@@ -11,7 +11,7 @@
 #' - `period_fill_five` adds periods with width 5.
 #' - `period_fill_ten` adds periods with width 10.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param breaks Boundaries of newly-created periods.

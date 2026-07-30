@@ -89,24 +89,14 @@ Character vector.
 \description{
 Create a new set of cohort labels.
 }
-\section{Controlling the formatting of cohort labels}{
-
-
-\code{format_single} controls whether the label
-for a single-year cohorts is based on the
-lower or upper limit.
-For instance, the cohort \verb{[2025,2026)}
-has label \code{"2025"} if \code{format_single}
-is \code{"lower"} and \code{"2026"} if
-\code{format_single} is \code{"upper"}.
-
-\code{format_multi} controls whether the label
-for a multi-year cohort includes the upper limit.
-For instance, the cohort \verb{[2025,2030)}
-has label \code{"2025-2035"} if
-\code{format_multi} is \code{"include"} and
-\code{"2025-2029"} if \code{format_multi} is
-\code{"exclude"}.
+\section{Rules for formatting output}{
+\tabular{lll}{
+   \emph{Interval type} \tab \emph{Rule} \tab \emph{Example} \cr
+   single \tab \verb{[a,a+1) -> "a"} \tab \verb{[2020,2021) -> "2020"} \cr
+   multi \tab \verb{[a,a+n) -> "a-<a+n>"} \tab \verb{[2020,2025) -> "2020-2025"} \cr
+   open on left \tab \verb{(-Inf,a) -> "<a"} \tab \verb{(-Inf,2020) -> "<2020"} \cr
+   open on right \tab \verb{[a,Inf) -> "a+"} \tab \verb{[2020,Inf) -> "2020+"} \cr
+}
 }
 
 \examples{

@@ -7,7 +7,7 @@
 #' - `cohort_set_open_left()` defines a cohort with no lower limit.
 #' - `cohort_set_open_right()` defines a cohort with no upper limit.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param at Point at which intervals become open,

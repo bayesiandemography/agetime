@@ -2,7 +2,7 @@
 #'
 #' Find categories representing totals in cohort labels.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #'
@@ -41,7 +41,7 @@ cohort_is_total <- function(labels,
 #' Find categories representing missing, not stated, or `NA` values
 #' in cohort labels.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #'
@@ -86,7 +86,7 @@ cohort_is_missing <- function(labels,
 #' - `cohort_is_open_right()` finds cohorts open on the right
 #'   (has no upper limit).
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #'

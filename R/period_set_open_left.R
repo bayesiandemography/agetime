@@ -7,7 +7,7 @@
 #' - `period_set_open_left()` defines a period with no lower limit.
 #' - `period_set_open_right()` defines a period with no upper limit.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param at Point at which intervals become open,

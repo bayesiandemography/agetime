@@ -14,7 +14,7 @@
 #'
 #' Observed values are preserved; only the level order changes.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param decreasing Whether order is

@@ -13,11 +13,11 @@
 #' These midpoints are based on half the median width of
 #' the closed intervals in `labels`.
 #'
-#' @section Controlling how period labels are interpreted:
+#' @section Rules for interpreting inputs:
 #'
-#' Interpretation of single-year periods:
+#' Single-year periods:
 #'
-#' | `interpret_single`| Rule       | Example |
+#' | `interpret_single`| *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
 #' | `"lower"` | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
 #' | `"upper"` | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
@@ -27,9 +27,9 @@
 #' and the "upper" convention for non-calendar years
 #' (e.g., 1 July to 30 June).
 #'
-#' Interpretation of multi-year periods:
+#' Multi-year periods:
 #'
-#' | `interpret_multi`| Rule       | Example |
+#' | `interpret_multi`| *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
 #' | `"include"` | `"a-<a+n>" -> [a,a+n)` | `"2020-2025" -> [2020,2025)` |
 #' | `"exclude"` | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |

@@ -30,7 +30,7 @@
 #' | `"is-contained-in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
 #' | `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param labels_x Vector of period labels.

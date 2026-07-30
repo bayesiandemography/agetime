@@ -72,6 +72,15 @@ Character vector.
 \description{
 Create a new set of age group labels.
 }
+\section{Rules for formatting output}{
+\tabular{lll}{
+   \emph{Interval type} \tab \emph{Rule} \tab \emph{Example} \cr
+   single \tab \verb{[a,a+1) -> "a"} \tab \verb{[10,11) -> "10"} \cr
+   multi \tab \verb{[a,a+n) -> "a-<a+n-1>"} \tab \verb{[10,15) -> "10-14"} \cr
+   open on right \tab \verb{[a,Inf) -> "a+"} \tab \verb{[85,Inf) -> "85+"} \cr
+}
+}
+
 \section{Abridged and complete life tables}{
 
 \itemize{

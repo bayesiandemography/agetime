@@ -7,7 +7,7 @@
 #' but a value can be specified through the
 #' `width` arugment.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param n Number of cohorts to add.

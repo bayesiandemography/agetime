@@ -8,7 +8,7 @@
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param breaks Boundaries between cohorts.
@@ -126,7 +126,7 @@ cohort_coarsen <- function(labels,
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
 #'
-#' @inheritSection cohort_lower Controlling how cohort labels are interpreted
+#' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param offset Parameter controlling

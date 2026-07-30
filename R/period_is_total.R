@@ -2,7 +2,7 @@
 #'
 #' Find categories representing totals in period labels.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #'
@@ -41,7 +41,7 @@ period_is_total <- function(labels,
 #' Find categories representing missing, not stated, or `NA` values
 #' in period labels.
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #'
@@ -86,7 +86,7 @@ period_is_missing <- function(labels,
 #' - `period_is_open_right()` finds periods open on the right
 #'   (has no upper limit).
 #'
-#' @inheritSection period_lower Controlling how period labels are interpreted
+#' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #'

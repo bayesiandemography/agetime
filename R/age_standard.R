@@ -3,9 +3,9 @@
 #'
 #' Convert age group labels to the default \pkg{agetime} format for age.
 #'
-#' Default format for age:
+#' @section Rules for formatting output:
 #' 
-#' | Interval type | Rule        | Example     |
+#' | *Interval type* | *Rule*        | *Example*     |
 #' |---------------|-------------|-------------|
 #' | single | `[a,a+1) -> "a"` | `[10,11) -> "10"` |
 #' | multi | `[a,a+n) -> "a-<a+n-1>"` | `[10,15) -> "10-14"` |

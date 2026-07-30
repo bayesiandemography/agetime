@@ -19,14 +19,15 @@ Character vector or factor with the same length as \code{labels}.
 \description{
 Convert age group labels to the default \pkg{agetime} format for age.
 }
-\details{
-Default format for age:\tabular{lll}{
-   Interval type \tab Rule \tab Example \cr
+\section{Rules for formatting output}{
+\tabular{lll}{
+   \emph{Interval type} \tab \emph{Rule} \tab \emph{Example} \cr
    single \tab \verb{[a,a+1) -> "a"} \tab \verb{[10,11) -> "10"} \cr
    multi \tab \verb{[a,a+n) -> "a-<a+n-1>"} \tab \verb{[10,15) -> "10-14"} \cr
    open on right \tab \verb{[a,Inf) -> "a+"} \tab \verb{[85,Inf) -> "85+"} \cr
 }
 }
+
 \examples{
 labels <- c("5to9", "10--14", "100plus", "all")
 age_standard(labels)
