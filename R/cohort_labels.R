@@ -1,9 +1,32 @@
+
 #' Create New Cohort Labels
 #'
 #' Create a new set of cohort labels.
 #' 
-#' @inheritSection cohort_standard Rules for formatting output
+#' @section Rules for formatting output:
 #'
+#' **Single-year cohorts**
+#'
+#' | `format_single` | *Rule*       | *Example* |
+#' |---------------|-------------|-------------|
+#' | `"lower"` | `[a,a+1) -> "a"` | `[2020,2021) -> "2020"` |
+#' | `"upper"` | `[a,a+1) -> "<a+1>"` | `[2020,2021) -> "2021"` |
+#'
+#' **Multi-year cohorts**
+#'
+#' | `format_multi` | *Rule*       | *Example* |
+#' |---------------|-------------|-------------|
+#' | `"include"` | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
+#' | `"exclude"` | `[a,a+n) -> "a-<a+n-1>"` | `[2020,2025) -> "2020-2024"` |
+#'
+#' **Open cohorts**
+#'
+#' | *Interval type* | *Rule*       | *Example* |
+#' |---------------|-------------|-------------|
+#' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
+#' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
+#'
+#' 
 #' @param breaks Boundaries between cohorts
 #' A numeric vector.
 #' @param lower_first Lower limit of

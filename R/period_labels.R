@@ -2,8 +2,30 @@
 #'
 #' Create a new set of period labels.
 #'
-#' @inheritSection period_standard Rules for formatting output
-#' 
+#' @section Rules for formatting output:
+#'
+#' **Single-year periods**
+#'
+#' | `format_single` | *Rule*       | *Example* |
+#' |---------------|-------------|-------------|
+#' | `"lower"` | `[a,a+1) -> "a"` | `[2020,2021) -> "2020"` |
+#' | `"upper"` | `[a,a+1) -> "<a+1>"` | `[2020,2021) -> "2021"` |
+#'
+#' **Multi-year periods**
+#'
+#' | `format_multi` | *Rule*       | *Example* |
+#' |---------------|-------------|-------------|
+#' | `"include"` | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
+#' | `"exclude"` | `[a,a+n) -> "a-<a+n-1>"` | `[2020,2025) -> "2020-2024"` |
+#'
+#' **Open periods**
+#'
+#' | *Interval type* | *Rule*       | *Example* |
+#' |---------------|-------------|-------------|
+#' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
+#' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
+#'
+#'
 #' @param breaks Boundaries between periods.
 #' A numeric vector.
 #' @param lower_first Lower limit of first period.

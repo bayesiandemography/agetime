@@ -90,10 +90,24 @@ Character vector.
 Create a new set of cohort labels.
 }
 \section{Rules for formatting output}{
-\tabular{lll}{
+
+
+\strong{Single-year cohorts}\tabular{lll}{
+   \code{format_single} \tab \emph{Rule} \tab \emph{Example} \cr
+   \code{"lower"} \tab \verb{[a,a+1) -> "a"} \tab \verb{[2020,2021) -> "2020"} \cr
+   \code{"upper"} \tab \verb{[a,a+1) -> "<a+1>"} \tab \verb{[2020,2021) -> "2021"} \cr
+}
+
+
+\strong{Multi-year cohorts}\tabular{lll}{
+   \code{format_multi} \tab \emph{Rule} \tab \emph{Example} \cr
+   \code{"include"} \tab \verb{[a,a+n) -> "a-<a+n>"} \tab \verb{[2020,2025) -> "2020-2025"} \cr
+   \code{"exclude"} \tab \verb{[a,a+n) -> "a-<a+n-1>"} \tab \verb{[2020,2025) -> "2020-2024"} \cr
+}
+
+
+\strong{Open cohorts}\tabular{lll}{
    \emph{Interval type} \tab \emph{Rule} \tab \emph{Example} \cr
-   single \tab \verb{[a,a+1) -> "a"} \tab \verb{[2020,2021) -> "2020"} \cr
-   multi \tab \verb{[a,a+n) -> "a-<a+n>"} \tab \verb{[2020,2025) -> "2020-2025"} \cr
    open on left \tab \verb{(-Inf,a) -> "<a"} \tab \verb{(-Inf,2020) -> "<2020"} \cr
    open on right \tab \verb{[a,Inf) -> "a+"} \tab \verb{[2020,Inf) -> "2020+"} \cr
 }

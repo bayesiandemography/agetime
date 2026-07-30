@@ -12,7 +12,6 @@
 #' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
 #' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
 #' 
-#' 
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower

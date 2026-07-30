@@ -59,7 +59,7 @@ for calendar years (1 January to 31 December),
 and the "upper" convention for non-calendar years
 (e.g., 1 July to 30 June).
 
-Interpretation of multi-year periods:\tabular{lll}{
+Multi-year periods:\tabular{lll}{
    \code{interpret_multi} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"include"} \tab \verb{"a-<a+n>" -> [a,a+n)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
    \code{"exclude"} \tab \verb{"a-<a+n-1>" -> [a,a+n)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
