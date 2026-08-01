@@ -43,8 +43,8 @@ For labels with regular widths, use function such as `age_labels_ten()` or `peri
 ```{r labels-from-scratch-regular}
 age_labels_ten()
 period_labels_five(
-  lower_start = 2001,
-  lower_end = 2031
+  lower_first = 2001,
+  lower_last = 2031
 )
 ```
 
@@ -465,6 +465,7 @@ To aggregate to life-table groupings, use `age_coarsen_life()`.
 
 ### See Also
 
+- [Recode labels into another classification](#recode-into-classification)
 - `period_coarsen_five()`, `cohort_coarsen_five()`
 - `period_coarsen()`, `cohort_coarsen()`
 
@@ -558,9 +559,57 @@ age_mapping(
 
 ### Discussion
 
-Other possible values for `relation` are `"equals"`, and `"contains"`.
+Other possible values for `relation` are `"equals"`, `"contains"`, and
+`"overlaps-with"`.
 
 ### See Also
 
-- [Aggregate to wider groups](#aggregate-to-wider-groups)
+- [Recode labels into another classification](#recode-into-classification)
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- `period_mapping()`, `cohort_mapping()`
+
+
+## Recode labels into another classification {#recode-into-classification}
+
+### Problem
+
+Observed labels use a fine classification. You already have a broader
+classification as a label vector, and need to recode or aggregate to those
+broader labels.
+
+### Solution
+
+Build a fine-to-broad lookup with `age_mapping()`, then join it to the data.
+
+```{r recode-classification}
+fine <- tibble(
+  age = c("0", "1", "5", "10", "11"),
+  n = c(3, 1, 4, 6, 7)
+)
+broad <- c("0-4", "5-9", "10-14")
+
+map <- age_mapping(
+  labels_x = fine$age,
+  labels_y = broad,
+  relation = "is-contained-in"
+)
+
+fine |>
+  left_join(map, by = c("age" = "x")) |>
+  count(y, wt = n)
+```
+
+### Discussion
+
+Prefer `age_coarsen()` or `age_coarsen_five()` when the target is a regular
+break grid or fixed width, not an existing label vector.
+
+`relation = "is-contained-in"` assumes each fine interval nests in exactly
+one broad interval. If some fine labels are missing from the mapping or
+appear more than once, inspect `map` before aggregating.
+
+### See Also
+
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [Build a mapping between age groups](#build-a-mapping-between-age-groups)
 - `period_mapping()`, `cohort_mapping()`
