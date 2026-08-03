@@ -428,3 +428,53 @@ check_x_lt_y <- function(x, y, nm_x, nm_y) {
   }
   invisible(TRUE)
 }
+
+#' Check Mapping Name
+#'
+#' @param x Single name for a mapping side: character, numeric, or factor.
+#' @param nm_x Argument name used in error messages.
+#' @returns Character string of length 1.
+#'
+#' @noRd
+check_mapping_name <- function(x, nm_x) {
+  if (length(x) != 1L) {
+    cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
+      i = "Supply a single name?"
+    ))
+  }
+  if (!(is.character(x) || is.numeric(x) || is.factor(x))) {
+    cli::cli_abort(c("{.arg {nm_x}} is {.obj_type_friendly {x}}.",
+      i = "Use a character, numeric, or factor name?"
+    ))
+  }
+  x <- as.character(x)
+  if (is.na(x)) {
+    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.")
+  }
+  x <- trimws(x)
+  if (!nzchar(x)) {
+    cli::cli_abort(c("{.arg {nm_x}} is an empty string.",
+      i = "Supply a non-empty name?"
+    ))
+  }
+  x
+}
+
+#' Check Mapping Names
+#'
+#' @param name_x Name for the `labels_x` side of a mapping.
+#' @param name_y Name for the `labels_y` side of a mapping.
+#' @returns List with character scalars `name_x` and `name_y`.
+#'
+#' @noRd
+check_mapping_names <- function(name_x, name_y) {
+  name_x <- check_mapping_name(x = name_x, nm_x = "name_x")
+  name_y <- check_mapping_name(x = name_y, nm_x = "name_y")
+  if (identical(name_x, name_y)) {
+    cli::cli_abort(c(
+      "{.arg name_x} and {.arg name_y} are both {.val {name_x}}.",
+      i = "Supply two different names?"
+    ))
+  }
+  list(name_x = name_x, name_y = name_y)
+}

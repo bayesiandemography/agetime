@@ -76,13 +76,17 @@ construct_coarsen_mapping <- function(breaks,
 #' @param relation `"equals"`,
 #' `"contains"`, `"is-contained-in"`, or `"overlaps-with"`.
 #' @param format Type of return value.
+#' @param name_x Name for the `labels_x` side of the mapping.
+#' @param name_y Name for the `labels_y` side of the mapping.
 #' @returns Tibble or matrix
 #'
 #' @noRd
 construct_mapping <- function(intervals_x,
                               intervals_y,
                               relation,
-                              format) {
+                              format,
+                              name_x,
+                              name_y) {
   labels_x <- get_labels_unique(intervals_x)
   labels_y <- get_labels_unique(intervals_y)
   is_na_x <- get_is_na(intervals_x)
@@ -116,12 +120,15 @@ construct_mapping <- function(intervals_x,
       "{.arg relation}."
     ))
   }
-  mxy <- mxy[i_xun_to_xunu_x, ]
-  mxy <- mxy[, i_xun_to_xunu_y]
-  dimnames(mxy) <- list(x = labels_x, y = labels_y)
+  mxy <- mxy[i_xun_to_xunu_x, , drop = FALSE]
+  mxy <- mxy[, i_xun_to_xunu_y, drop = FALSE]
+  dn <- list(labels_x, labels_y)
+  names(dn) <- c(name_x, name_y)
+  dimnames(mxy) <- dn
   if (format == "tibble") {
     ans <- as.data.frame.table(mxy, stringsAsFactors = FALSE)
     ans <- ans[ans[[3L]], 1:2]
+    names(ans) <- c(name_x, name_y)
     ans <- tibble::tibble(ans)
   } else {
     ans <- 1L * mxy

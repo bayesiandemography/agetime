@@ -1,7 +1,7 @@
-#' Check or Make Assertions About Age Groups
+#' Diagnose or Assert Age Groups
 #'
 #' @description
-#' `age_check()` reports whether age group labels
+#' `age_diagnose()` reports whether age group labels
 #' meet conditions.
 #'
 #' `age_assert()` throws an error if conditions are not met.
@@ -44,21 +44,21 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `age_check()` returns a list with a logical flag
+#' - `age_diagnose()` returns a list with a logical flag
 #'   called `ok` and a [tibble][tibble::tibble()] called `details`.
 #' - `age_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'
 #' @seealso
-#' - [period_check()] Period equivalent of `age_check()`
-#' - [cohort_check()] Cohort equivalent of `age_check()`
+#' - [period_diagnose()] Period equivalent of `age_diagnose()`
+#' - [cohort_diagnose()] Cohort equivalent of `age_diagnose()`
 #'
 #' @examples
 #' lab <- age_labels_life()
 #' lab
 #'
 #' ## get info on everything
-#' age_check(
+#' age_diagnose(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
@@ -80,7 +80,7 @@
 # When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
 # validity are vacuously satisfied. Checks that require at
 # least one interval (has_*) fail.
-age_check <- function(labels,
+age_diagnose <- function(labels,
                       no_overlap = FALSE,
                       no_gap = FALSE,
                       no_total = FALSE,
@@ -90,7 +90,7 @@ age_check <- function(labels,
                       valid_life = FALSE,
                       interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
-  inner_check(
+  inner_diagnose(
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
@@ -107,7 +107,7 @@ age_check <- function(labels,
   )
 }
 
-#' @rdname age_check
+#' @rdname age_diagnose
 #' @export
 age_assert <- function(labels,
                        no_overlap = FALSE,

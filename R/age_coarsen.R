@@ -97,7 +97,7 @@ age_coarsen <- function(labels,
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
 #'
-#' @inheritSection age_check Abridged and complete life tables
+#' @inheritSection age_diagnose Abridged and complete life tables
 #' @inheritParams age_lower
 #' @inheritParams age_coarsen
 #' @inherit age_standard return

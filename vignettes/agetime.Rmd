@@ -111,7 +111,7 @@ Check whether age labels conform to expectations:
 
 ```{r check}
 lab <- age_labels_five(lower_first = 0, lower_last = 85, open_right = TRUE)
-age_check(lab,
+age_diagnose(lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   has_zero = TRUE,

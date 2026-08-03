@@ -14,24 +14,24 @@ mapping_has_no_labels <- function(labels) {
 #' Mapping Empty
 #'
 #' @param format Output format for mappings.
+#' @param name_x Name for the `labels_x` side.
+#' @param name_y Name for the `labels_y` side.
 #' @returns Empty mapping object in requested `format`.
 #'
 #' @noRd
 
-mapping_empty <- function(format) {
+mapping_empty <- function(format, name_x, name_y) {
   if (format == "tibble") {
-    tibble::tibble(
-      x = character(0),
-      y = character(0)
-    )
+    ans <- tibble::tibble(x = character(0), y = character(0))
+    names(ans) <- c(name_x, name_y)
+    ans
   } else {
+    dn <- list(character(0), character(0))
+    names(dn) <- c(name_x, name_y)
     matrix(integer(0),
       nrow = 0L,
       ncol = 0L,
-      dimnames = list(
-        x = character(0),
-        y = character(0)
-      )
+      dimnames = dn
     )
   }
 }
@@ -41,6 +41,8 @@ mapping_empty <- function(format) {
 #' @param labels_y Vector of labels to compare against `labels_x`.
 #' @param relation Interval relation used to build mappings.
 #' @param format Output format for mappings.
+#' @param name_x Name for the `labels_x` side of the mapping.
+#' @param name_y Name for the `labels_y` side of the mapping.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param interpret_multi Rule for multi-year labels: `"include"`
@@ -54,10 +56,15 @@ inner_mapping <- function(labels_x,
                           labels_y,
                           relation,
                           format,
+                          name_x,
+                          name_y,
                           label_type,
                           interpret_single,
                           interpret_multi,
                           interpret_fail) {
+  names_xy <- check_mapping_names(name_x = name_x, name_y = name_y)
+  name_x <- names_xy$name_x
+  name_y <- names_xy$name_y
   labels_x <- to_character_or_factor(
     labels = labels_x,
     nm_labels = "labels_x",
@@ -73,7 +80,11 @@ inner_mapping <- function(labels_x,
     )
   }
   if (mapping_has_no_labels(labels_x) || mapping_has_no_labels(labels_y)) {
-    return(mapping_empty(format = format))
+    return(mapping_empty(
+      format = format,
+      name_x = name_x,
+      name_y = name_y
+    ))
   }
   intervals_x <- intervals(
     labels = labels_x,
@@ -93,6 +104,8 @@ inner_mapping <- function(labels_x,
     intervals_x = intervals_x,
     intervals_y = intervals_y,
     relation = relation,
-    format = format
+    format = format,
+    name_x = name_x,
+    name_y = name_y
   )
 }

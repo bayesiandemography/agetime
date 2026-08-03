@@ -86,7 +86,7 @@ labels for age groups, periods, and cohorts.
 
 \strong{Characterise labels or make assertions}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_check]{age_check()}} \tab \code{\link[=period_check]{period_check()}} \tab \code{\link[=cohort_check]{cohort_check()}} \cr
+   \code{\link[=age_diagnose]{age_diagnose()}} \tab \code{\link[=period_diagnose]{period_diagnose()}} \tab \code{\link[=cohort_diagnose]{cohort_diagnose()}} \cr
    \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \cr
 }
 

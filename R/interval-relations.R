@@ -1,6 +1,6 @@
 # interval-relations.R
 # Pairwise interval logic on numeric [lower, upper) bounds.
-# Used by mapping-construct.R and inner_check.R (no_overlap).
+# Used by mapping-construct.R and inner_diagnose.R (no_overlap).
 
 #' Does First Interval Contain Second
 #'

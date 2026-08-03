@@ -80,7 +80,7 @@
 #'
 #' |                |                   |                   |
 #' |----------------|-------------------|-------------------|
-#' | [age_check()]  | [period_check()]  | [cohort_check()]  |
+#' | [age_diagnose()]  | [period_diagnose()]  | [cohort_diagnose()]  |
 #' | [age_assert()] | [period_assert()] | [cohort_assert()] |
 #'
 #' **Create mappings between labels**

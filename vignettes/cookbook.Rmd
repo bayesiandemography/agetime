@@ -239,11 +239,11 @@ stop a pipeline.
 
 ### Solution
 
-Use `*_check()` for diagnostics and `*_assert()` to fail fast.
+Use `*_diagnose()` for diagnostics and `*_assert()` to fail fast.
 
 ```{r validate}
 lab <- c("2020-2025", "2025-2030", "2030-2035")
-period_check(lab, no_gap = TRUE, no_overlap = TRUE)
+period_diagnose(lab, no_gap = TRUE, no_overlap = TRUE)
 
 pop <- tibble(
   age = c("0-4", "5-9", "10-14"),
@@ -256,13 +256,13 @@ pop |>
 
 ### Discussion
 
-`*_check()` returns a list with an `ok` flag and details. `*_assert()`
+`*_diagnose()` returns a list with an `ok` flag and details. `*_assert()`
 returns its input invisibly when checks pass, so it fits in a mutate
 pipeline.
 
 ### See Also
 
-- `?age_check` for the full set of conditions
+- `?age_diagnose` for the full set of conditions
 
 
 
@@ -569,33 +569,33 @@ Other possible values for `relation` are `"equals"`, `"contains"`, and
 - `period_mapping()`, `cohort_mapping()`
 
 
-## Recode labels into another classification {#recode-into-classification}
+## Switch to the age groups used by a second, coarser age variable {#recode-into-classification}
 
 ### Problem
 
-Observed labels use a fine classification. You already have a broader
-classification as a label vector, and need to recode or aggregate to those
-broader labels.
+Current age groups are too fine, and you want to switch
+to the age groups used by a second, coarser set of labels.
 
 ### Solution
 
-Build a fine-to-broad lookup with `age_mapping()`, then join it to the data.
+Use `age_mapping()` to build a lookup table and join the table to the data.
 
 ```{r recode-classification}
-fine <- tibble(
+df <- tibble(
   age = c("0", "1", "5", "10", "11"),
   n = c(3, 1, 4, 6, 7)
 )
-broad <- c("0-4", "5-9", "10-14")
+age_wide <- c("0-4", "5-14")
 
-map <- age_mapping(
-  labels_x = fine$age,
-  labels_y = broad,
-  relation = "is-contained-in"
+lookup <- age_mapping(
+  labels_x = df$age,
+  labels_y = age_wide,
+  relation = "is-contained-in",
+  name_x = "age"
 )
 
-fine |>
-  left_join(map, by = c("age" = "x")) |>
+df |>
+  left_join(lookup, by = "age") |>
   count(y, wt = n)
 ```
 
@@ -606,7 +606,7 @@ break grid or fixed width, not an existing label vector.
 
 `relation = "is-contained-in"` assumes each fine interval nests in exactly
 one broad interval. If some fine labels are missing from the mapping or
-appear more than once, inspect `map` before aggregating.
+appear more than once, inspect `lookup` before aggregating.
 
 ### See Also
 

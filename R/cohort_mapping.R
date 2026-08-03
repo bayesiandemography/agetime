@@ -43,6 +43,9 @@
 #' @param format Format of
 #' return value. Choices are `"tibble"`
 #' (the default) or `"matrix"`.
+#' @param name_x,name_y Names for the two sides of the mapping
+#' in the return value. Defaults are `"x"` and `"y"`.
+#' Applied to tibble columns and to matrix dimnames.
 #' @return [Tibble][tibble::tibble()] or matrix,
 #' depending on the value of `format`.
 #'
@@ -80,6 +83,8 @@ cohort_mapping <- function(labels_x,
                              "overlaps-with"
                            ),
                            format = c("tibble", "matrix"),
+                           name_x = "x",
+                           name_y = "y",
                            interpret_single = c("lower", "upper"),
                            interpret_multi = c("include", "exclude"),
                            interpret_fail = c("error", "warn", "silent")) {
@@ -93,6 +98,8 @@ cohort_mapping <- function(labels_x,
     labels_y = labels_y,
     relation = relation,
     format = format,
+    name_x = name_x,
+    name_y = name_y,
     label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

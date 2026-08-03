@@ -31,7 +31,7 @@ inner_assert <- function(labels,
                          has_open_left,
                          has_open_right,
                          valid_life) {
-  val <- inner_check(
+  val <- inner_diagnose(
     labels = labels,
     label_type = label_type,
     interpret_single = interpret_single,
@@ -49,7 +49,7 @@ inner_assert <- function(labels,
   throw_assert_error(val)
   invisible(labels)
 }
-#' Inner Check
+#' Inner Diagnose
 #'
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
@@ -65,12 +65,12 @@ inner_assert <- function(labels,
 #' @param has_open_left Run the has-open-left check?
 #' @param has_open_right Run the has-open-right check?
 #' @param valid_life Run the valid-life check?
-#' @returns List with `ok` and check `details`.
+#' @returns List with `ok` and condition `details`.
 #'
 #' @noRd
 
 
-inner_check <- function(labels,
+inner_diagnose <- function(labels,
                         label_type,
                         interpret_single,
                         interpret_multi,
@@ -99,54 +99,54 @@ inner_check <- function(labels,
   if (isTRUE(no_overlap)) {
     details_list <- c(
       details_list,
-      list(inner_check_no_overlap(intervals = intervals))
+      list(inner_diagnose_no_overlap(intervals = intervals))
     )
   }
   if (isTRUE(no_gap)) {
     details_list <- c(
       details_list,
-      list(inner_check_no_gap(intervals = intervals))
+      list(inner_diagnose_no_gap(intervals = intervals))
     )
   }
   if (isTRUE(no_total)) {
     details_list <- c(
       details_list,
-      list(inner_check_no_total(intervals = intervals))
+      list(inner_diagnose_no_total(intervals = intervals))
     )
   }
   if (isTRUE(no_na)) {
     details_list <- c(
       details_list,
-      list(inner_check_no_na(intervals = intervals))
+      list(inner_diagnose_no_na(intervals = intervals))
     )
   }
   if (isTRUE(has_zero)) {
     details_list <- c(
       details_list,
-      list(inner_check_has_zero(intervals = intervals))
+      list(inner_diagnose_has_zero(intervals = intervals))
     )
   }
   if (isTRUE(has_open_left)) {
     details_list <- c(
       details_list,
-      list(inner_check_has_open_left(intervals = intervals))
+      list(inner_diagnose_has_open_left(intervals = intervals))
     )
   }
   if (isTRUE(has_open_right)) {
     details_list <- c(
       details_list,
-      list(inner_check_has_open_right(intervals = intervals))
+      list(inner_diagnose_has_open_right(intervals = intervals))
     )
   }
   if (isTRUE(valid_life)) {
     details_list <- c(
       details_list,
-      list(inner_check_valid_life(intervals = intervals))
+      list(inner_diagnose_valid_life(intervals = intervals))
     )
   }
   details <- if (length(details_list) == 0L) {
     tibble::tibble(
-      check = character(),
+      condition = character(),
       passed = logical(),
       comment = character()
     )
@@ -163,15 +163,15 @@ inner_check <- function(labels,
     details = details
   )
 }
-#' Inner Check No Overlap
+#' Inner Diagnose No Overlap
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_check_no_overlap <- function(intervals) {
+inner_diagnose_no_overlap <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -200,19 +200,19 @@ inner_check_no_overlap <- function(intervals) {
     )
   }
   tibble::tibble_row(
-    check = "no_overlap",
+    condition = "no_overlap",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check No Gap
+#' Inner Diagnose No Gap
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
-inner_check_no_gap <- function(intervals) {
+inner_diagnose_no_gap <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   int_has_total <- int_has_total(intervals)
   if (int_is_empty || int_has_total) {
@@ -240,20 +240,20 @@ inner_check_no_gap <- function(intervals) {
     comment <- sprintf("Example: gap below '%s'", lab)
   }
   tibble::tibble_row(
-    check = "no_gap",
+    condition = "no_gap",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check No Total
+#' Inner Diagnose No Total
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_check_no_total <- function(intervals) {
+inner_diagnose_no_total <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -272,20 +272,20 @@ inner_check_no_total <- function(intervals) {
     comment <- sprintf("Example: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "no_total",
+    condition = "no_total",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check No Na
+#' Inner Diagnose No Na
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_check_no_na <- function(intervals) {
+inner_diagnose_no_na <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -299,20 +299,20 @@ inner_check_no_na <- function(intervals) {
     comment <- "Labels include NA."
   }
   tibble::tibble_row(
-    check = "no_na",
+    condition = "no_na",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check Has Zero
+#' Inner Diagnose Has Zero
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_check_has_zero <- function(intervals) {
+inner_diagnose_has_zero <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -334,19 +334,19 @@ inner_check_has_zero <- function(intervals) {
     comment <- sprintf("Lowest interval: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "has_zero",
+    condition = "has_zero",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check Has Open Left
+#' Inner Diagnose Has Open Left
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
-inner_check_has_open_left <- function(intervals) {
+inner_diagnose_has_open_left <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -369,19 +369,19 @@ inner_check_has_open_left <- function(intervals) {
     comment <- sprintf("Lowest interval: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "has_open_left",
+    condition = "has_open_left",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check Has Open Right
+#' Inner Diagnose Has Open Right
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
-inner_check_has_open_right <- function(intervals) {
+inner_diagnose_has_open_right <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -405,20 +405,20 @@ inner_check_has_open_right <- function(intervals) {
     comment <- sprintf("Highest interval: '%s'", lab)
   }
   tibble::tibble_row(
-    check = "has_open_right",
+    condition = "has_open_right",
     passed = passed,
     comment = comment
   )
 }
-#' Inner Check Valid Life
+#' Inner Diagnose Valid Life
 #'
 #' @param intervals An `agetime_intervals` object.
-#' @returns One-row tibble with check result details.
+#' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_check_valid_life <- function(intervals) {
+inner_diagnose_valid_life <- function(intervals) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -432,14 +432,14 @@ inner_check_valid_life <- function(intervals) {
     comment <- sprintf("Not valid for life table: '%s'", val)
   }
   tibble::tibble_row(
-    check = "valid_life",
+    condition = "valid_life",
     passed = passed,
     comment = comment
   )
 }
 #' Throw Assert Error
 #'
-#' @param val Result object from `inner_check()`.
+#' @param val Result object from `inner_diagnose()`.
 #' @returns `NULL`, invisibly, or aborts when checks fail.
 #'
 #' @noRd
@@ -452,7 +452,7 @@ throw_assert_error <- function(val) {
     details <- paste(utils::capture.output(print(details)),
       collapse = "\n"
     )
-    msg <- c("Check failed.", " " = details)
+    msg <- c("Assertion failed.", " " = details)
     cli::cli_abort(msg)
   }
   invisible(NULL)

@@ -129,6 +129,79 @@ test_that("age_mapping() maps unique labels only", {
   )
 })
 
+test_that("age_mapping() uses name_x and name_y for tibble and matrix", {
+  x <- c("0-4", "5-9")
+  y <- c("0-9")
+  tb <- age_mapping(
+    x,
+    y,
+    relation = "is-contained-in",
+    name_x = "age",
+    name_y = "age_broad"
+  )
+  expect_identical(names(tb), c("age", "age_broad"))
+  expect_identical(tb$age, c("0-4", "5-9"))
+  expect_identical(tb$age_broad, c("0-9", "0-9"))
+
+  mx <- age_mapping(
+    x,
+    y,
+    relation = "is-contained-in",
+    format = "matrix",
+    name_x = "age",
+    name_y = "age_broad"
+  )
+  expect_identical(names(dimnames(mx)), c("age", "age_broad"))
+})
+
+test_that("age_mapping() coerces numeric and factor names", {
+  tb <- age_mapping(
+    "0-4",
+    "0-9",
+    relation = "is-contained-in",
+    name_x = 1,
+    name_y = factor("broad")
+  )
+  expect_identical(names(tb), c("1", "broad"))
+})
+
+test_that("age_mapping() empty mapping respects custom names", {
+  expect_identical(
+    age_mapping(character(0), name_x = "age", name_y = "age_broad"),
+    tibble::tibble(age = character(0), age_broad = character(0))
+  )
+  mx <- age_mapping(
+    character(0),
+    format = "matrix",
+    name_x = "age",
+    name_y = "age_broad"
+  )
+  expect_identical(names(dimnames(mx)), c("age", "age_broad"))
+})
+
+test_that("age_mapping() errors for invalid name_x / name_y", {
+  expect_error(
+    age_mapping("0-4", name_x = c("a", "b")),
+    "`name_x` has length 2"
+  )
+  expect_error(
+    age_mapping("0-4", name_x = list("a")),
+    "`name_x` is"
+  )
+  expect_error(
+    age_mapping("0-4", name_x = NA_character_),
+    "`name_x` is NA"
+  )
+  expect_error(
+    age_mapping("0-4", name_x = "   "),
+    "`name_x` is an empty string"
+  )
+  expect_error(
+    age_mapping("0-4", name_x = "age", name_y = "age"),
+    "`name_x` and `name_y` are both \"age\""
+  )
+})
+
 test_that("period/cohort mappings match equals on shared fixtures", {
   expect_mapping_tibble(
     period_mapping(period_multi, labels_y = c("2020-2025", "2025-2030")),

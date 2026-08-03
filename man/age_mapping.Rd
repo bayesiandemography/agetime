@@ -9,6 +9,8 @@ age_mapping(
   labels_y = NULL,
   relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
   format = c("tibble", "matrix"),
+  name_x = "x",
+  name_y = "y",
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -26,6 +28,10 @@ See below for details and examples.}
 \item{format}{Format of
 return value. Choices are \code{"tibble"}
 (the default) or \code{"matrix"}.}
+
+\item{name_x, name_y}{Names for the two sides of the mapping
+in the return value. Defaults are \code{"x"} and \code{"y"}.
+Applied to tibble columns and to matrix dimnames.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -84,6 +90,23 @@ age_mapping(labels_x = x, labels_y = y, format = "matrix")
 # map labels_x onto itself
 x <- c("0--4", "0-4", "5+")
 age_mapping(x)
+
+## recode a data-frame column into categories from labels_y
+library(dplyr, warn.conflicts = FALSE)
+df <- tibble(
+  age = c("0", "1", "5", "10", "11"),
+  n = c(3, 1, 4, 6, 7)
+)
+y <- c("0-4", "5-9", "10-14")
+map <- age_mapping(
+  df$age,
+  y,
+  relation = "is-contained-in",
+  name_x = "age"
+)
+df <- df |>
+  left_join(map, by = "age")
+df
 }
 \seealso{
 \itemize{

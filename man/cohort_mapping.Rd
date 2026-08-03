@@ -9,6 +9,8 @@ cohort_mapping(
   labels_y = NULL,
   relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
   format = c("tibble", "matrix"),
+  name_x = "x",
+  name_y = "y",
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -28,6 +30,10 @@ See below for details and examples.}
 \item{format}{Format of
 return value. Choices are \code{"tibble"}
 (the default) or \code{"matrix"}.}
+
+\item{name_x, name_y}{Names for the two sides of the mapping
+in the return value. Defaults are \code{"x"} and \code{"y"}.
+Applied to tibble columns and to matrix dimnames.}
 
 \item{interpret_single}{How to interpret
 labels for single-year cohorts.

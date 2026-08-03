@@ -1,7 +1,7 @@
-#' Check or Make Assertions About Periods
+#' Diagnose or Assert Periods
 #'
 #' @description
-#' `period_check()` reports whether period labels
+#' `period_diagnose()` reports whether period labels
 #' meet conditions.
 #'
 #' `period_assert()` throws an error if conditions are not met.
@@ -33,14 +33,14 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `period_check()` returns a list with a logical flag
+#' - `period_diagnose()` returns a list with a logical flag
 #'   called `ok` and a [tibble][tibble::tibble()] called `details`.
 #' - `period_assert()` returns `labels` invisibly,
 #'   or raises an error.
 #'
 #' @seealso
-#' - [age_check()] Age equivalent of `period_check()`
-#' - [cohort_check()] Cohort equivalent of `period_check()`
+#' - [age_diagnose()] Age equivalent of `period_diagnose()`
+#' - [cohort_diagnose()] Cohort equivalent of `period_diagnose()`
 #'
 #' @examples
 #' lab <- period_labels_five(
@@ -50,7 +50,7 @@
 #' lab
 #'
 #' ## get info on everything
-#' period_check(
+#' period_diagnose(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
@@ -68,7 +68,7 @@
 
 # When length(labels) == 0, checks on overlap, gaps, totals,
 # and NA are vacuously satisfied.
-period_check <- function(labels,
+period_diagnose <- function(labels,
                          no_overlap = FALSE,
                          no_gap = FALSE,
                          no_total = FALSE,
@@ -81,7 +81,7 @@ period_check <- function(labels,
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
   interpret_fail <- match.arg(interpret_fail)
-  inner_check(
+  inner_diagnose(
     labels = labels,
     label_type = "period",
     interpret_single = interpret_single,
@@ -98,7 +98,7 @@ period_check <- function(labels,
   )
 }
 
-#' @rdname period_check
+#' @rdname period_diagnose
 #' @export
 period_assert <- function(labels,
                           no_overlap = FALSE,

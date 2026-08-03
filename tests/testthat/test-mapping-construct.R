@@ -149,7 +149,9 @@ test_that("construct_mapping() errors for an invalid relation", {
       intervals_x,
       intervals_y,
       relation = "bogus",
-      format = "matrix"
+      format = "matrix",
+      name_x = "x",
+      name_y = "y"
     ),
     'Internal error: "bogus" is not a valid value for `relation`.'
   )

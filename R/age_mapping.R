@@ -41,6 +41,9 @@
 #' @param format Format of
 #' return value. Choices are `"tibble"`
 #' (the default) or `"matrix"`.
+#' @param name_x,name_y Names for the two sides of the mapping
+#' in the return value. Defaults are `"x"` and `"y"`.
+#' Applied to tibble columns and to matrix dimnames.
 #' @return [Tibble][tibble::tibble()] or matrix,
 #' depending on the value of `format`.
 #'
@@ -66,6 +69,23 @@
 #' # map labels_x onto itself
 #' x <- c("0--4", "0-4", "5+")
 #' age_mapping(x)
+#'
+#' ## recode a data-frame column into categories from labels_y
+#' library(dplyr, warn.conflicts = FALSE)
+#' df <- tibble(
+#'   age = c("0", "1", "5", "10", "11"),
+#'   n = c(3, 1, 4, 6, 7)
+#' )
+#' y <- c("0-4", "5-9", "10-14")
+#' map <- age_mapping(
+#'   df$age,
+#'   y,
+#'   relation = "is-contained-in",
+#'   name_x = "age"
+#' )
+#' df <- df |>
+#'   left_join(map, by = "age")
+#' df
 #' @export
 # When labels_x or labels_y is character(0), or a factor with no levels, returns
 # an empty mapping (zero-row tibble or zero-by-zero matrix, per format).
@@ -78,6 +98,8 @@ age_mapping <- function(labels_x,
                           "overlaps-with"
                         ),
                         format = c("tibble", "matrix"),
+                        name_x = "x",
+                        name_y = "y",
                         interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   relation <- match.arg(relation)
@@ -87,6 +109,8 @@ age_mapping <- function(labels_x,
     labels_y = labels_y,
     relation = relation,
     format = format,
+    name_x = name_x,
+    name_y = name_y,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",

@@ -1,4 +1,4 @@
-test_that("inner_check_no_gap() passes for contiguous intervals", {
+test_that("inner_diagnose_no_gap() passes for contiguous intervals", {
   intervals <- intervals(
     labels = c("0-4", "5-9"),
     label_type = "age",
@@ -6,14 +6,14 @@ test_that("inner_check_no_gap() passes for contiguous intervals", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_no_gap(intervals)
+  val <- agetime:::inner_diagnose_no_gap(intervals)
 
-  expect_identical(val$check, "no_gap")
+  expect_identical(val$condition, "no_gap")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_no_na() passes when there is no NA", {
+test_that("inner_diagnose_no_na() passes when there is no NA", {
   intervals <- intervals(
     labels = c("0-4", "5-9"),
     label_type = "age",
@@ -21,14 +21,14 @@ test_that("inner_check_no_na() passes when there is no NA", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_no_na(intervals)
+  val <- agetime:::inner_diagnose_no_na(intervals)
 
-  expect_identical(val$check, "no_na")
+  expect_identical(val$condition, "no_na")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_has_zero() passes when zero is present", {
+test_that("inner_diagnose_has_zero() passes when zero is present", {
   intervals <- intervals(
     labels = c("5-9", "0-4"),
     label_type = "age",
@@ -36,14 +36,14 @@ test_that("inner_check_has_zero() passes when zero is present", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_has_zero(intervals)
+  val <- agetime:::inner_diagnose_has_zero(intervals)
 
-  expect_identical(val$check, "has_zero")
+  expect_identical(val$condition, "has_zero")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_has_open_right() passes when open-right interval is present", {
+test_that("inner_diagnose_has_open_right() passes when open-right interval is present", {
   intervals <- intervals(
     labels = c("5-9", "60+"),
     label_type = "age",
@@ -51,14 +51,14 @@ test_that("inner_check_has_open_right() passes when open-right interval is prese
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_has_open_right(intervals)
+  val <- agetime:::inner_diagnose_has_open_right(intervals)
 
-  expect_identical(val$check, "has_open_right")
+  expect_identical(val$condition, "has_open_right")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_has_open_left() passes when open-left cohort is present", {
+test_that("inner_diagnose_has_open_left() passes when open-left cohort is present", {
   intervals <- intervals(
     labels = c("2020-2025", "<2020"),
     label_type = "cohort",
@@ -66,14 +66,14 @@ test_that("inner_check_has_open_left() passes when open-left cohort is present",
     interpret_multi = "include",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_has_open_left(intervals)
+  val <- agetime:::inner_diagnose_has_open_left(intervals)
 
-  expect_identical(val$check, "has_open_left")
+  expect_identical(val$condition, "has_open_left")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_has_open_right() passes when open-right period is present", {
+test_that("inner_diagnose_has_open_right() passes when open-right period is present", {
   intervals <- intervals(
     labels = c("2020-2030", "2030+"),
     label_type = "period",
@@ -81,14 +81,14 @@ test_that("inner_check_has_open_right() passes when open-right period is present
     interpret_multi = "include",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_has_open_right(intervals)
+  val <- agetime:::inner_diagnose_has_open_right(intervals)
 
-  expect_identical(val$check, "has_open_right")
+  expect_identical(val$condition, "has_open_right")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check_valid_life() passes for valid labels", {
+test_that("inner_diagnose_valid_life() passes for valid labels", {
   intervals <- intervals(
     labels = c("0", "5-9"),
     label_type = "age",
@@ -96,15 +96,15 @@ test_that("inner_check_valid_life() passes for valid labels", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_check_valid_life(intervals)
+  val <- agetime:::inner_diagnose_valid_life(intervals)
 
-  expect_identical(val$check, "valid_life")
+  expect_identical(val$condition, "valid_life")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_check() skips checks when all flags are FALSE", {
-  val <- agetime:::inner_check(
+test_that("inner_diagnose() skips checks when all flags are FALSE", {
+  val <- agetime:::inner_diagnose(
     labels = c("0-4", "5-9"),
     label_type = "age",
     interpret_single = "lower",

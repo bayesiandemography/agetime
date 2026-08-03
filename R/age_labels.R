@@ -4,7 +4,7 @@
 #' 
 #' @inheritSection age_standard Rules for formatting output
 #'
-#' @inheritSection age_check Abridged and complete life tables
+#' @inheritSection age_diagnose Abridged and complete life tables
 #'
 #' @param breaks Boundaries between age groups.
 #' A numeric vector.
