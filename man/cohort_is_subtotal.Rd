@@ -2,7 +2,7 @@
 % Please edit documentation in R/cohort_is_subtotal.R
 \name{cohort_is_subtotal}
 \alias{cohort_is_subtotal}
-\title{Identify Subtotal Cohort Labels}
+\title{Identify Cohort Labels for Subtotals}
 \usage{
 cohort_is_subtotal(
   labels,
@@ -32,15 +32,18 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Logical vector with the same length as \code{labels}.
 }
 \description{
-Test whether each cohort label is a \strong{subtotal}: a cohort with an
-explicit interval that is already fully represented by finer cohorts
-in the same data.
+Find categories representing subtotals in cohort labels.
 }
 \details{
-Grand-total labels (\code{\link[=cohort_is_total]{cohort_is_total()}}) are never subtotals.
+A subtotal is a cohort that is fully covered by
+other cohorts in the same set of labels.
+For instance, in the labels
+\code{c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")},
+\code{"2020-2030"} is a subtotal.
 
-Intended for grouped \code{filter()} / \code{mutate()} so each group is assessed
-separately.
+Subtotals are distinct from grand total labels
+such as \code{"Total"} or \code{"All"}, which are identified
+by \code{\link[=cohort_is_total]{cohort_is_total()}}.
 }
 \section{Rules for interpreting inputs}{
 
@@ -65,19 +68,39 @@ Multi-year cohorts:\tabular{lll}{
 }
 
 \examples{
-# Incomplete detail — broad cohort kept
-cohort_is_subtotal(c("2020-2025", "2025-2030", "2020-2035"))
-
-labels <- c("2020-2025", "2025-2030", "2020-2035", "Total")
+labels <- c(
+  cohort_labels_five(lower_first = 2000, lower_last = 2035),
+  "2000-2015",
+  "2015-2040",
+  "Total"
+)
 cohort_is_subtotal(labels)
 cohort_is_total(labels)
+
+## subtotals must fully cover range
+labels_no_2020_2025 <- setdiff(labels, "2020-2025")
+cohort_is_subtotal(labels_no_2020_2025) ## "2015-2040" not subtotal
+
+## subtotals can overlap
+labels_2000_2040 <- c(labels, "2000-2040")
+cohort_is_subtotal(labels_2000_2040)
+
+## use to filter data
+library(dplyr, warn.conflicts = FALSE)
+df <- data.frame(
+  cohort = c("2020-2025", "2025-2030", "2030-2035", "2020-2035"),
+  value = c(100, 200, 300, 400)
+)
+df |>
+  filter(!cohort_is_subtotal(cohort))
 }
 \seealso{
 \itemize{
 \item \code{\link[=age_is_subtotal]{age_is_subtotal()}} Age equivalent of \code{cohort_is_subtotal()}
 \item \code{\link[=period_is_subtotal]{period_is_subtotal()}} Period equivalent of \code{cohort_is_subtotal()}
-\item \code{\link[=cohort_is_total]{cohort_is_total()}} Grand totals
-\item \code{\link[=cohort_is_missing]{cohort_is_missing()}} Missing cohort labels
-\item \code{\link[=cohort_mapping]{cohort_mapping()}} Interval containment between label sets
+\item \code{\link[=cohort_is_total]{cohort_is_total()}} Identify grand totals
+\item \code{\link[=cohort_is_missing]{cohort_is_missing()}} Identify missing cohort labels
+\item \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} Identify cohorts open on left
+\item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
 }
 }

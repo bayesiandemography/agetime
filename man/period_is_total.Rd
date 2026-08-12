@@ -63,12 +63,21 @@ period_is_subtotal(labels)
 
 labels <- c("2020-2025", "Total", "1999", "ALL")
 period_is_total(labels)
+
+## use to filter data
+library(dplyr, warn.conflicts = FALSE)
+df <- data.frame(
+  period = c("2020-2025", "2025-2030", "2020-2035", "Total"),
+  value = c(100, 200, 300, 400)
+)
+df |>
+  filter(!period_is_total(period))
 }
 \seealso{
 \itemize{
 \item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{period_is_total()}
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{period_is_total()}
-\item \code{\link[=period_is_subtotal]{period_is_subtotal()}} Identify subtotal period labels
+\item \code{\link[=period_is_subtotal]{period_is_subtotal()}} Identify subtotals
 \item \code{\link[=period_is_missing]{period_is_missing()}} Identify missing period labels
 }
 }

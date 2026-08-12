@@ -1,48 +1,54 @@
-#' Identify Subtotal Age Group Labels
+#' Identify Age Group Labels for Subtotals
 #'
-#' Test whether each age label is a **subtotal**: an age band with an
-#' explicit interval that is already fully represented by finer age groups
-#' in the same data.
+#' Find categories representing subtotals in age group labels.
 #'
-#' Grand-total labels ([`age_is_total()`]) are never subtotals.
-#' A label like `"0-64"` is a subtotal only when the finest matching
-#' labels in the group fully partition its range. If detail is incomplete,
-#' the broad band is kept.
+#' A subtotal is an age group that is fully covered by
+#' other age groups in the same set of labels.
+#' For instance, in the labels `c("0-4", "5-9", "10-14", "0-9", "Total")`,
+#' `"0-9"` is a subtotal.
 #'
-#' Intended for grouped `filter()` / `mutate()` so each group
-#' (e.g. country–year) is assessed separately. Calling
-#' `age_is_subtotal(df$age)` on an ungrouped column mixes schemes across
-#' groups and is usually wrong.
+#' Subtotals are distinct from grand total labels
+#' such as `"Total"` or `"All"`, which are identified
+#' by [age_is_total()].
 #'
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `labels`.
 #'
 #' @seealso
-#' - [age_is_total()] Grand totals (`"Total"`, `"All ages"`, ...)
-#' - [age_is_missing()] Missing age group labels
-#' - [age_mapping()] Interval containment between label sets
+#' - [period_is_subtotal()] Period equivalent of `age_is_subtotal()`
+#' - [cohort_is_subtotal()] Cohort equivalent of `age_is_subtotal()`
+#' - [age_is_total()] Identify grand totals
+#' - [age_is_missing()] Identify missing age group labels
+#' - [age_is_open_right()] Identify age groups open on right
 #'
 #' @examples
-#' # Coarse-only — nothing is a subtotal
-#' age_is_subtotal(c("0-64", "65-79", "80+"))
-#'
-#' # Incomplete detail — "0-64" is not a subtotal
-#' labels <- c("0-4", "5-9", "0-64", "Total")
+#' labels <- c(
+#'   age_labels_five(),
+#'   "0-14",
+#'   "15-64",
+#'   "65+",
+#'   "Total"
+#' )
 #' age_is_subtotal(labels)
 #' age_is_total(labels)
 #'
-#' # Nested hierarchy — finest detail drives the test
-#' age_is_subtotal(c("0", "1", "2", "3", "0-1", "2-3", "0-3"))
+#' ## subtotals must fully cover range
+#' labels_no_20_24 <- setdiff(labels, "20-24")
+#' age_is_subtotal(labels_no_20_24) ## "15-64" not subtotal
 #'
-#' # Complete fine bands + redundant "0-64"
-#' labs <- c(
-#'   "0", "1-4", "5-9", "10-14", "15-19",
-#'   "20-24", "25-29", "30-34", "35-39", "40-44",
-#'   "45-49", "50-54", "55-59", "60-64", "0-64", "Total"
+#' ## subtotals can overlap
+#' labels_064 <- c(labels, "0-64")
+#' age_is_subtotal(labels_064)
+#'
+#' ## use to filter data
+#' library(dplyr, warn.conflicts = FALSE)
+#' df <- data.frame(
+#'   age = c("0-4", "5-9", "10-14", "0-14"),
+#'   value = c(100, 200, 300, 400)
 #' )
-#' age_is_subtotal(labs)
-#' age_is_total(labs)
+#' df |>
+#'   filter(!age_is_subtotal(age))
 #' @export
 
 # When length(labels) == 0, returns logical(0).

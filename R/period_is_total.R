@@ -11,7 +11,7 @@
 #' @seealso
 #' - [age_is_total()] Age equivalent of `period_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `period_is_total()`
-#' - [period_is_subtotal()] Identify subtotal period labels
+#' - [period_is_subtotal()] Identify subtotals
 #' - [period_is_missing()] Identify missing period labels
 #'
 #' @examples
@@ -21,6 +21,15 @@
 #'
 #' labels <- c("2020-2025", "Total", "1999", "ALL")
 #' period_is_total(labels)
+#'
+#' ## use to filter data
+#' library(dplyr, warn.conflicts = FALSE)
+#' df <- data.frame(
+#'   period = c("2020-2025", "2025-2030", "2020-2035", "Total"),
+#'   value = c(100, 200, 300, 400)
+#' )
+#' df |>
+#'   filter(!period_is_total(period))
 #' @export
 
 # When length(labels) == 0, returns logical(0).

@@ -26,12 +26,21 @@ age_is_subtotal(labels)
 
 labels <- c("overall", "20-24", "Total", "100+", "ALL")
 age_is_total(labels)
+
+## use to filter data
+library(dplyr, warn.conflicts = FALSE)
+df <- data.frame(
+  age = c("0-4", "5-9", "0-64", "Total"),
+  value = c(100, 200, 300, 400)
+)
+df |>
+  filter(!age_is_total(age))
 }
 \seealso{
 \itemize{
 \item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{age_is_total()}
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{age_is_total()}
-\item \code{\link[=age_is_subtotal]{age_is_subtotal()}} Identify subtotal age group labels
+\item \code{\link[=age_is_subtotal]{age_is_subtotal()}} Identify subtotals
 \item \code{\link[=age_is_missing]{age_is_missing()}} Identify missing age group labels
 \item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify age groups open on right
 }

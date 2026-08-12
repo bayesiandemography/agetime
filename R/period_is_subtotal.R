@@ -1,13 +1,16 @@
-#' Identify Subtotal Period Labels
+#' Identify Period Labels for Subtotals
 #'
-#' Test whether each period label is a **subtotal**: a period with an
-#' explicit interval that is already fully represented by finer periods
-#' in the same data.
+#' Find categories representing subtotals in period labels.
 #'
-#' Grand-total labels ([`period_is_total()`]) are never subtotals.
+#' A subtotal is a period that is fully covered by
+#' other periods in the same set of labels.
+#' For instance, in the labels
+#' `c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")`,
+#' `"2020-2030"` is a subtotal.
 #'
-#' Intended for grouped `filter()` / `mutate()` so each group is assessed
-#' separately.
+#' Subtotals are distinct from grand total labels
+#' such as `"Total"` or `"All"`, which are identified
+#' by [period_is_total()].
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
@@ -18,17 +21,37 @@
 #' @seealso
 #' - [age_is_subtotal()] Age equivalent of `period_is_subtotal()`
 #' - [cohort_is_subtotal()] Cohort equivalent of `period_is_subtotal()`
-#' - [period_is_total()] Grand totals
-#' - [period_is_missing()] Missing period labels
-#' - [period_mapping()] Interval containment between label sets
+#' - [period_is_total()] Identify grand totals
+#' - [period_is_missing()] Identify missing period labels
+#' - [period_is_open_left()] Identify periods open on left
+#' - [period_is_open_right()] Identify periods open on right
 #'
 #' @examples
-#' # Incomplete detail — broad period kept
-#' period_is_subtotal(c("2020-2025", "2025-2030", "2020-2035"))
-#'
-#' labels <- c("2020-2025", "2025-2030", "2020-2035", "Total")
+#' labels <- c(
+#'   period_labels_five(lower_first = 2000, lower_last = 2035),
+#'   "2000-2015",
+#'   "2015-2040",
+#'   "Total"
+#' )
 #' period_is_subtotal(labels)
 #' period_is_total(labels)
+#'
+#' ## subtotals must fully cover range
+#' labels_no_2020_2025 <- setdiff(labels, "2020-2025")
+#' period_is_subtotal(labels_no_2020_2025) ## "2015-2040" not subtotal
+#'
+#' ## subtotals can overlap
+#' labels_2000_2040 <- c(labels, "2000-2040")
+#' period_is_subtotal(labels_2000_2040)
+#'
+#' ## use to filter data
+#' library(dplyr, warn.conflicts = FALSE)
+#' df <- data.frame(
+#'   period = c("2020-2025", "2025-2030", "2030-2035", "2020-2035"),
+#'   value = c(100, 200, 300, 400)
+#' )
+#' df |>
+#'   filter(!period_is_subtotal(period))
 #' @export
 
 # When length(labels) == 0, returns logical(0).

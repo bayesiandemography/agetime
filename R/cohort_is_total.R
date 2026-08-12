@@ -13,7 +13,7 @@
 #' - [cohort_is_open_right()] Identify cohorts open on right
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
-#' - [cohort_is_subtotal()] Identify subtotal cohort labels
+#' - [cohort_is_subtotal()] Identify subtotals
 #' - [cohort_is_missing()] Identify missing cohort labels
 #'
 #' @examples
@@ -23,6 +23,15 @@
 #'
 #' labels <- c("2020-2025", "Total", "1999", "ALL")
 #' cohort_is_total(labels)
+#'
+#' ## use to filter data
+#' library(dplyr, warn.conflicts = FALSE)
+#' df <- data.frame(
+#'   cohort = c("2020-2025", "2025-2030", "2020-2035", "Total"),
+#'   value = c(100, 200, 300, 400)
+#' )
+#' df |>
+#'   filter(!cohort_is_total(cohort))
 #' @export
 
 # When length(labels) == 0, returns logical(0).

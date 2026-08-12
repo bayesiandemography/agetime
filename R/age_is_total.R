@@ -9,7 +9,7 @@
 #' @seealso
 #' - [period_is_total()] Period equivalent of `age_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
-#' - [age_is_subtotal()] Identify subtotal age group labels
+#' - [age_is_subtotal()] Identify subtotals
 #' - [age_is_missing()] Identify missing age group labels
 #' - [age_is_open_right()] Identify age groups open on right
 #'
@@ -20,6 +20,15 @@
 #'
 #' labels <- c("overall", "20-24", "Total", "100+", "ALL")
 #' age_is_total(labels)
+#' 
+#' ## use to filter data
+#' library(dplyr, warn.conflicts = FALSE)
+#' df <- data.frame(
+#'   age = c("0-4", "5-9", "0-64", "Total"),
+#'   value = c(100, 200, 300, 400)
+#' )
+#' df |>
+#'   filter(!age_is_total(age))
 #' @export
 
 # When length(labels) == 0, returns logical(0).

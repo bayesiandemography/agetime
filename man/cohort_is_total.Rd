@@ -63,6 +63,15 @@ cohort_is_subtotal(labels)
 
 labels <- c("2020-2025", "Total", "1999", "ALL")
 cohort_is_total(labels)
+
+## use to filter data
+library(dplyr, warn.conflicts = FALSE)
+df <- data.frame(
+  cohort = c("2020-2025", "2025-2030", "2020-2035", "Total"),
+  value = c(100, 200, 300, 400)
+)
+df |>
+  filter(!cohort_is_total(cohort))
 }
 \seealso{
 \itemize{
@@ -70,7 +79,7 @@ cohort_is_total(labels)
 \item \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} Identify cohorts open on right
 \item \code{\link[=age_is_total]{age_is_total()}} Age equivalent of \code{cohort_is_total()}
 \item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{cohort_is_total()}
-\item \code{\link[=cohort_is_subtotal]{cohort_is_subtotal()}} Identify subtotal cohort labels
+\item \code{\link[=cohort_is_subtotal]{cohort_is_subtotal()}} Identify subtotals
 \item \code{\link[=cohort_is_missing]{cohort_is_missing()}} Identify missing cohort labels
 }
 }
