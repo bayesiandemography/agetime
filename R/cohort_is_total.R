@@ -13,9 +13,14 @@
 #' - [cohort_is_open_right()] Identify cohorts open on right
 #' - [age_is_total()] Age equivalent of `cohort_is_total()`
 #' - [period_is_total()] Period equivalent of `cohort_is_total()`
+#' - [cohort_is_subtotal()] Identify subtotal cohort labels
 #' - [cohort_is_missing()] Identify missing cohort labels
 #'
 #' @examples
+#' labels <- c("2020-2025", "2025-2030", "2020-2035", "Total")
+#' cohort_is_total(labels)
+#' cohort_is_subtotal(labels)
+#'
 #' labels <- c("2020-2025", "Total", "1999", "ALL")
 #' cohort_is_total(labels)
 #' @export

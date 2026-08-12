@@ -1,7 +1,7 @@
 Package: agetime
 Type: Package
 Title: Work with Age, Period, and Cohort Labels
-Version: 0.1.6
+Version: 0.1.7
 Authors@R: 
     c(person(given = "John",
              family = "Bryant",
@@ -34,4 +34,4 @@ Config/testthat/edition: 3
 URL: https://bayesiandemography.github.io/agetime/
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-Config/roxygen2/version: 8.0.0
+Config/roxygen2/version: 8.1.0

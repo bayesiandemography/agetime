@@ -9,10 +9,15 @@
 #' @seealso
 #' - [period_is_total()] Period equivalent of `age_is_total()`
 #' - [cohort_is_total()] Cohort equivalent of `age_is_total()`
+#' - [age_is_subtotal()] Identify subtotal age group labels
 #' - [age_is_missing()] Identify missing age group labels
 #' - [age_is_open_right()] Identify age groups open on right
 #'
 #' @examples
+#' labels <- c("0-4", "5-9", "0-64", "Total")
+#' age_is_total(labels)
+#' age_is_subtotal(labels)
+#'
 #' labels <- c("overall", "20-24", "Total", "100+", "ALL")
 #' age_is_total(labels)
 #' @export

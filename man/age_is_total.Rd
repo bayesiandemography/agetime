@@ -20,6 +20,10 @@ Logical vector with the same length as \code{labels}.
 Find categories representing totals in age group labels.
 }
 \examples{
+labels <- c("0-4", "5-9", "0-64", "Total")
+age_is_total(labels)
+age_is_subtotal(labels)
+
 labels <- c("overall", "20-24", "Total", "100+", "ALL")
 age_is_total(labels)
 }
@@ -27,6 +31,7 @@ age_is_total(labels)
 \itemize{
 \item \code{\link[=period_is_total]{period_is_total()}} Period equivalent of \code{age_is_total()}
 \item \code{\link[=cohort_is_total]{cohort_is_total()}} Cohort equivalent of \code{age_is_total()}
+\item \code{\link[=age_is_subtotal]{age_is_subtotal()}} Identify subtotal age group labels
 \item \code{\link[=age_is_missing]{age_is_missing()}} Identify missing age group labels
 \item \code{\link[=age_is_open_right]{age_is_open_right()}} Identify age groups open on right
 }

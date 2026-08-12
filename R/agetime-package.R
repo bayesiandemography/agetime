@@ -21,6 +21,7 @@
 #' | [age_is_open_right()] | [period_is_open_right()] | [cohort_is_open_right()] |
 #' | [age_is_total()] | [period_is_total()] | [cohort_is_total()] |
 #' | [age_is_missing()] | [period_is_missing()] | [cohort_is_missing()] |
+#' | [age_is_subtotal()] | [period_is_subtotal()] | [cohort_is_subtotal()] |
 #'
 #' **Use agetime default format**
 #'
