@@ -5,6 +5,7 @@
 NA_TOKENS <- c(
   "unknown",
   "unk",
+  "unk-na",
   "unspecified",
   "notknown",
   "dontknow",
