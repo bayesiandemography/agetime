@@ -96,7 +96,7 @@ If the `labels` argument to `age_standard()`, `period_standard()`, or `cohort_st
 
 ### See Also
 
-- The help pages for `age_labels()`, `period_labels()`, and `cohort_labels()` describe `agetime`formatting rules
+- The help pages for `age_standard()`, `period_standard()`, and `cohort_standard()` describe `agetime` formatting rules
 
 
 ## Create period labels for a forecast
@@ -148,7 +148,9 @@ labels_cohort |>
 
 ### Discussion
 
-If `labels` is not a factor, the `set_open` functions turn it into one. The `set_open` functions change the levels of the factor along with the labels.
+The `set_open` functions always return factors. If the `labels` argument is not a factor, the `set_open` functions turn it into one.
+
+The `set_open` functions change factor levels along with the values.
 
 ### See Also
 

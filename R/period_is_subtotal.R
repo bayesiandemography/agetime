@@ -3,7 +3,7 @@
 #' Find categories representing subtotals in period labels.
 #'
 #' A subtotal covers the same interval as more detailed
-#' labels elsewhere in the label set. 
+#' labels elsewhere in the label set.
 #' For instance, in the label set
 #' `c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")`,
 #' the label `"2020-2030"` is a subtotal because it covers

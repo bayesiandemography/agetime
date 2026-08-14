@@ -20,10 +20,12 @@ Logical vector with the same length as \code{labels}.
 Find categories representing subtotals in age group labels.
 }
 \details{
-A subtotal is an age group that is fully covered by
-other age groups in the same set of labels.
-For instance, in the labels \code{c("0-4", "5-9", "10-14", "0-9", "Total")},
-\code{"0-9"} is a subtotal.
+A subtotal covers the same age interval as more detailed
+labels elsewhere in the label set.
+For instance, in the label set
+\code{c("0-4", "5-9", "10-14", "0-9", "Total")},
+the label \code{"0-9"} is a subtotal because it
+covers the same age interval as \code{"0-4"} and \code{"5-9"}.
 
 Subtotals are distinct from grand total labels
 such as \code{"Total"} or \code{"All"}, which are identified
