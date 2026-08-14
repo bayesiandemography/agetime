@@ -2,10 +2,12 @@
 #'
 #' Find categories representing subtotals in age group labels.
 #'
-#' A subtotal is an age group that is fully covered by
-#' other age groups in the same set of labels.
-#' For instance, in the labels `c("0-4", "5-9", "10-14", "0-9", "Total")`,
-#' `"0-9"` is a subtotal.
+#' A subtotal covers the same age interval as more detailed
+#' labels elsewhere in the label set.
+#' For instance, in the label set
+#' `c("0-4", "5-9", "10-14", "0-9", "Total")`,
+#' the label `"0-9"` is a subtotal because it
+#' covers the same age interval as `"0-4"` and `"5-9"`.
 #'
 #' Subtotals are distinct from grand total labels
 #' such as `"Total"` or `"All"`, which are identified

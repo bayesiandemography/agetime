@@ -2,11 +2,12 @@
 #'
 #' Find categories representing subtotals in cohort labels.
 #'
-#' A subtotal is a cohort that is fully covered by
-#' other cohorts in the same set of labels.
-#' For instance, in the labels
+#' A subtotal covers the same interval as more detailed
+#' labels elsewhere in the label set.
+#' For instance, in the label set
 #' `c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")`,
-#' `"2020-2030"` is a subtotal.
+#' the label `"2020-2030"` is a subtotal because it covers
+#' the same interval as `"2020-2025"` and `"2025-2030"`.
 #'
 #' Subtotals are distinct from grand total labels
 #' such as `"Total"` or `"All"`, which are identified

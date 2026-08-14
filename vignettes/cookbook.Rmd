@@ -30,7 +30,7 @@ set.seed(0)
 
 # Create and modify labels
 
-## Create labels from scratch
+## Create labels from scratch {#create-labels}
 
 ### Problem
 
@@ -62,17 +62,18 @@ cohort_labels(
 
 ### Discussion
 
-- The help for `age_labels()`, `period_labels()`, and `cohort_labels()` describes official `agetime` style.
+There is no universally accepted set of conventions on how age, period, and cohort labels should be formatted, but `agetime` tries to reflect common practices among statisticians and social scientists.
 
 ### See Also
 
-TODO - COMPLETE
+- The help pages for `age_labels()`, `period_labels()`, and `cohort_labels()` describe `agetime` formatting rules
+
 
 ## Convert labels to a default format {#standardize}
 
 ### Problem
 
-Convert age, period, or cohort labels to the official `agetime` style.
+Convert age, period, or cohort labels to the default `agetime` style.
 
 ### Solution
 
@@ -90,12 +91,12 @@ df |>
 
 ### Discussion
 
-If the `labels` argument to `age_standard()`, `period_standard()`, or `cohort_standard()` is a factor, then the factor levels are standardized along with the values.
+If the `labels` argument to `age_standard()`, `period_standard()`, or `cohort_standard()` is a factor, then the levels of the factor are standardized along with the values.
 
 
 ### See Also
 
-- The help for `age_standard()`, `period_standard()`, and `cohort_standard()` describe official `agetime` style.
+- The help pages for `age_labels()`, `period_labels()`, and `cohort_labels()` describe `agetime`formatting rules
 
 
 ## Create period labels for a forecast
@@ -147,7 +148,7 @@ labels_cohort |>
 
 ### Discussion
 
-The `*_set_open_*()` functions change the levels of `labels` as well as the values. If `labels` is not a factor, the `*_set_open_*()` functions turn it into one.
+If `labels` is not a factor, the `set_open` functions turn it into one. The `set_open` functions change the levels of the factor along with the labels.
 
 ### See Also
 
