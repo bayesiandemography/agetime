@@ -69,7 +69,7 @@ There is no universally accepted set of conventions on how age, period, and coho
 - The help pages for `age_labels()`, `period_labels()`, and `cohort_labels()` describe `agetime` formatting rules
 
 
-## Convert labels to a default format {#standardize}
+## Standardize labels {#standardize}
 
 ### Problem
 
@@ -91,7 +91,7 @@ df |>
 
 ### Discussion
 
-If the `labels` argument to `age_standard()`, `period_standard()`, or `cohort_standard()` is a factor, then the levels of the factor are standardized along with the values.
+If the `labels` argument is a factor, then the `standard` functions standardize the factor levels along with the values.
 
 
 ### See Also
@@ -99,7 +99,7 @@ If the `labels` argument to `age_standard()`, `period_standard()`, or `cohort_st
 - The help pages for `age_standard()`, `period_standard()`, and `cohort_standard()` describe `agetime` formatting rules
 
 
-## Create period labels for a forecast
+## Create labels for a forecast {#extend}
 
 ### Problem
 
@@ -116,7 +116,7 @@ period_extend(recent, n = 2)
 
 ### See Also
 
-- `age_extend()` and `cohort_extend()` do the same thing for age groups and cohorts.
+- `age_extend()` extends age groups and `cohort_extend()` extends cohorts. 
 
 ## Specify an open age group, period, or cohort
 
@@ -124,7 +124,7 @@ period_extend(recent, n = 2)
 
 Move the starting point of existing open age groups, periods, or cohorts, or specify a new open age group, period, or cohort.
 
-An open age group, period, or cohort is one that has no lower limit (e.g. `"<2000"`) or no upper limit (e.g. `"85+"`).
+An open age group, period, or cohort is an interval with no lower limit (e.g. `"<2000"`) or no upper limit (e.g. `"85+"`).
 
 ### Solution
 
@@ -148,13 +148,15 @@ labels_cohort |>
 
 ### Discussion
 
-The `set_open` functions always return factors. If the `labels` argument is not a factor, the `set_open` functions turn it into one.
+The `set_open` functions always return factors. If `labels` argument is not a factor, then the `set_open` functions turn it into one.
 
 The `set_open` functions change factor levels along with the values.
 
 ### See Also
 
-TODO - COMPLETE
+- Use `age_is_open_right()`, `period_is_open_left()`, `period_is_open_right()`, `cohort_is_open_left()`, and `cohort_is_open_right()` to identify open intervals
+- The `coarsen`, `fill`, and `set_order` functions, like the `set_open` functions, always return factors
+
 
 ## Create an age variable that sorts properly {#sort-age-permanently}
 
@@ -189,23 +191,34 @@ If `labels` is not a factor, `age_set_order()` turns it into one.
 
 - `period_set_order()` and `cohort_set_order()` permanently modify period and cohort variables.
 - [Order by age when working interactively](#sort-age-interactive)
+- - The `set_open`, `coarsen`, and `fill` functions, like the `set_order` functions, always return factors
 
 
-## Build a complete age or period skeleton
+## Ensure that all age groups appear in a table
 
 ### Problem
 
-Ensure every planned age group appears in a table, even when some have
+Ensure every age group appears in a table, including age groups with
 no observations.
 
 ### Solution
 
-Generate the full set of labels with `*_labels_*()`, then join observed
-data onto that skeleton.
+Generate the full set of labels with
+
+- `age_labels()`, 
+- `age_labels_one()`, 
+- `age_labels_five()`, or
+- `age_labels_life()`,
+
+then join the data on to the set.
 
 ```{r skeleton}
-skeleton <- tibble(
-  age = age_labels_five(lower_first = 0, lower_last = 20, open_right = FALSE)
+all_ages <- tibble(
+  age = age_labels_five(
+    lower_first = 0,
+    lower_last = 20,
+    open_right = FALSE
+  )
 )
 
 observed <- tibble(
@@ -213,24 +226,20 @@ observed <- tibble(
   n = c(30, 25)
 )
 
-skeleton |>
+all_ages |>
   left_join(observed, by = "age")
 ```
 
 ### Discussion
 
-When the problem is missing **factor levels** (for tables or models)
-rather than missing rows, use `age_fill()` or `age_fill_five()`:
-
-```{r fill-levels}
-x <- factor(c("0-4", "10-14"), levels = c("0-4", "10-14"))
-age_fill_five(x)
-```
+`age_labels_life()` creates the labels used by an abridged life table,
+`"0"`, `"1-4"`, `"5-9"`, `"10-14"`, ... 
 
 ### See Also
 
+- Periods and cohorts have equivalent `labels` functions.
+- The `fill` functions (eg `age_fill_five()` add intermediate levels to a factor.
 - [Order levels for tables and plots](#order-levels-for-tables-and-plots)
-- `age_labels_life()`, `period_labels_five()`
 
 
 ## Validate incoming labels
