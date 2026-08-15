@@ -292,3 +292,91 @@ inner_coarsen_width <- function(labels,
     preserve_input_type = TRUE
   )
 }
+
+#' Inner Coarsen To
+#'
+#' @param labels Vector of labels to recode.
+#' @param to Vector of labels giving the target classification.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_multi Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param interpret_fail How to handle unparsable labels.
+#' @returns Recoded labels as a factor.
+#'
+#' @noRd
+inner_coarsen_to <- function(labels,
+                             to,
+                             label_type,
+                             interpret_single,
+                             interpret_multi,
+                             interpret_fail) {
+  is_factor <- is.factor(labels)
+  is_ordered <- is_factor && is.ordered(labels)
+  labels <- to_character_or_factor(
+    labels = labels,
+    nm_labels = "labels",
+    length_zero_ok = TRUE
+  )
+  to <- to_character_or_factor(
+    labels = to,
+    nm_labels = "to",
+    length_zero_ok = TRUE
+  )
+  if (mapping_has_no_labels(to)) {
+    if (mapping_has_no_labels(labels)) {
+      return(factor(levels = character(), ordered = is_ordered))
+    }
+    cli::cli_abort(c(
+      "{.arg to} has no labels.",
+      i = "Supply at least one label to coarsen to?"
+    ))
+  }
+  intervals_to <- intervals(
+    labels = to,
+    label_type = label_type,
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+  check_coarsen_to_no_overlap(
+    intervals_to = intervals_to,
+    label_type = label_type
+  )
+  levels_output <- get_labels_unique(intervals_to)
+  if (mapping_has_no_labels(labels)) {
+    return(factor(
+      character(0),
+      levels = levels_output,
+      ordered = is_ordered,
+      exclude = NULL
+    ))
+  }
+  intervals_labels <- intervals(
+    labels = labels,
+    label_type = label_type,
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+  m_contains <- construct_coarsen_to_mapping(
+    intervals_labels = intervals_labels,
+    intervals_to = intervals_to
+  )
+  check_m_contains(
+    m_contains = m_contains,
+    label_type = label_type
+  )
+  i_new <- apply(m_contains, 2L, which)
+  if (length(labels) > 0L) {
+    ans <- levels_output[i_new][get_i_x_to_xu(intervals_labels)]
+  } else {
+    ans <- character(0)
+  }
+  factor(
+    x = ans,
+    levels = levels_output,
+    ordered = is_ordered,
+    exclude = NULL
+  )
+}

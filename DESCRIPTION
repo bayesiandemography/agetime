@@ -1,7 +1,7 @@
 Package: agetime
 Type: Package
 Title: Work with Age, Period, and Cohort Labels
-Version: 0.1.7
+Version: 0.1.8
 Authors@R: 
     c(person(given = "John",
              family = "Bryant",

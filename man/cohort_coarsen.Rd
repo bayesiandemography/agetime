@@ -133,6 +133,7 @@ cohort_coarsen(
 }
 \seealso{
 \itemize{
+\item \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} Coarsen to an existing set of labels
 \item \code{\link[=cohort_coarsen_five]{cohort_coarsen_five()}} Coarsen to 5-year cohorts
 \item \code{\link[=cohort_coarsen_ten]{cohort_coarsen_ten()}} Coarsen to 10-year cohorts
 \item \code{\link[=age_coarsen]{age_coarsen()}} Age group equivalent of \code{cohort_coarsen()}

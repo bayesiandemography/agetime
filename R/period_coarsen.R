@@ -73,6 +73,7 @@
 #' )
 #'
 #' @seealso
+#' - [period_coarsen_to()] Coarsen to an existing set of labels
 #' - [period_coarsen_five()] Coarsen to 5-year periods
 #' - [period_coarsen_ten()] Coarsen to 10-year periods
 #' - [age_coarsen()] Age group equivalent of `period_coarsen()`
@@ -102,6 +103,61 @@ period_coarsen <- function(labels,
     interpret_fail = interpret_fail,
     minimal_levels = FALSE,
     preserve_input_type = FALSE
+  )
+}
+
+
+#' Coarsen Periods to a Target Classification
+#'
+#' Recode period labels so they match a second set of labels.
+#'
+#' Every interval in `labels` must lie in exactly one interval in `to`.
+#' Intervals in `to` must not overlap. Gaps in `to` are allowed if
+#' nothing in `labels` falls in them.
+#'
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
+#' The return value is always a factor. Levels are the unique
+#' labels in `to`, including unused labels.
+#'
+#' @inheritSection period_lower Rules for interpreting inputs
+#'
+#' @inheritParams period_lower
+#' @param to Vector of period labels giving the target classification.
+#' @param interpret_fail Action if an element of `labels` or `to`
+#' cannot be interpreted. Choices are `"error"` (the default),
+#' `"warn"`, and `"silent"`.
+#' @return Factor with the same length as `labels`.
+#'
+#' @examples
+#' labels <- c("2020", "2021", "2025")
+#' to <- c("2020-2025", "2025-2030")
+#' period_coarsen_to(labels, to)
+#'
+#' ## unused labels in `to` are kept as levels
+#' period_coarsen_to(c("2020", "2021"), to)
+#' @seealso
+#' - [period_coarsen()] Coarsen using break points
+#' - [period_mapping()] Inspect the relationship between two sets of labels
+#' - [age_coarsen_to()] Age equivalent of `period_coarsen_to()`
+#' - [cohort_coarsen_to()] Cohort equivalent of `period_coarsen_to()`
+#' @export
+
+period_coarsen_to <- function(labels,
+                              to,
+                              interpret_single = c("lower", "upper"),
+                              interpret_multi = c("include", "exclude"),
+                              interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- match.arg(interpret_multi)
+  interpret_fail <- match.arg(interpret_fail)
+  inner_coarsen_to(
+    labels = labels,
+    to = to,
+    label_type = "period",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
   )
 }
 
@@ -136,6 +192,7 @@ period_coarsen <- function(labels,
 #'
 #' @seealso
 #' - [period_coarsen()] Coarsen to general periods
+#' - [period_coarsen_to()] Coarsen to an existing set of labels
 #' - [age_coarsen_five()] Age equivalent of `period_coarsen_five()`
 #' - [age_coarsen_ten()] Age equivalent of `period_coarsen_ten()`
 #' - [cohort_coarsen_five()] Cohort equivalent of `period_coarsen_five()`

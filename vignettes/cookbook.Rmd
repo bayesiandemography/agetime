@@ -116,7 +116,7 @@ period_extend(recent, n = 2)
 
 ### See Also
 
-- `age_extend()` extends age groups and `cohort_extend()` extends cohorts. 
+- `age_extend()` extends age groups and `cohort_extend()` extends cohorts.
 
 ## Specify an open age group, period, or cohort
 
@@ -148,7 +148,7 @@ labels_cohort |>
 
 ### Discussion
 
-The `set_open` functions always return factors. If `labels` argument is not a factor, then the `set_open` functions turn it into one.
+The `set_open` functions always return factors. If the `labels` argument is not a factor, then the `set_open` functions turn it into one.
 
 The `set_open` functions change factor levels along with the values.
 
@@ -191,7 +191,7 @@ If `labels` is not a factor, `age_set_order()` turns it into one.
 
 - `period_set_order()` and `cohort_set_order()` permanently modify period and cohort variables.
 - [Order by age when working interactively](#sort-age-interactive)
-- - The `set_open`, `coarsen`, and `fill` functions, like the `set_order` functions, always return factors
+- The `set_open`, `coarsen`, and `fill` functions, like the `set_order` functions, always return factors
 
 
 ## Ensure that all age groups appear in a table
@@ -205,9 +205,10 @@ no observations.
 
 Generate the full set of labels with
 
-- `age_labels()`, 
-- `age_labels_one()`, 
-- `age_labels_five()`, or
+- `age_labels()`,
+- `age_labels_one()`,
+- `age_labels_five()`,
+- `age_labels_ten()`, or
 - `age_labels_life()`,
 
 then join the data on to the set.
@@ -233,12 +234,12 @@ all_ages |>
 ### Discussion
 
 `age_labels_life()` creates the labels used by an abridged life table,
-`"0"`, `"1-4"`, `"5-9"`, `"10-14"`, ... 
+`"0"`, `"1-4"`, `"5-9"`, `"10-14"`, ...
 
 ### See Also
 
 - Periods and cohorts have equivalent `labels` functions.
-- The `fill` functions (eg `age_fill_five()` add intermediate levels to a factor.
+- The `fill` functions (e.g. `age_fill_five()`) add intermediate levels to a factor.
 - [Order levels for tables and plots](#order-levels-for-tables-and-plots)
 
 
@@ -480,6 +481,7 @@ To aggregate to life-table groupings, use `age_coarsen_life()`.
 - [Recode labels into another classification](#recode-into-classification)
 - `period_coarsen_five()`, `cohort_coarsen_five()`
 - `period_coarsen()`, `cohort_coarsen()`
+- `age_coarsen_to()`, `period_coarsen_to()`, `cohort_coarsen_to()`
 
 
 ## Use age, period, or cohort on the x-axis of a plot {#plot-nicer}
@@ -578,7 +580,7 @@ Other possible values for `relation` are `"equals"`, `"contains"`, and
 
 - [Recode labels into another classification](#recode-into-classification)
 - [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
-- `period_mapping()`, `cohort_mapping()`
+- `age_coarsen_to()`, `period_mapping()`, `cohort_mapping()`
 
 
 ## Switch to the age groups used by a second, coarser age variable {#recode-into-classification}
@@ -590,7 +592,7 @@ to the age groups used by a second, coarser set of labels.
 
 ### Solution
 
-Use `age_mapping()` to build a lookup table and join the table to the data.
+Use `age_coarsen_to()`.
 
 ```{r recode-classification}
 df <- tibble(
@@ -599,16 +601,9 @@ df <- tibble(
 )
 age_wide <- c("0-4", "5-14")
 
-lookup <- age_mapping(
-  labels_x = df$age,
-  labels_y = age_wide,
-  relation = "is-contained-in",
-  name_x = "age"
-)
-
 df |>
-  left_join(lookup, by = "age") |>
-  count(y, wt = n)
+  mutate(age = age_coarsen_to(age, to = age_wide)) |>
+  count(age, wt = n)
 ```
 
 ### Discussion
@@ -616,12 +611,11 @@ df |>
 Prefer `age_coarsen()` or `age_coarsen_five()` when the target is a regular
 break grid or fixed width, not an existing label vector.
 
-`relation = "is-contained-in"` assumes each fine interval nests in exactly
-one broad interval. If some fine labels are missing from the mapping or
-appear more than once, inspect `lookup` before aggregating.
+`age_coarsen_to()` errors if a fine interval does not nest in exactly one
+broad interval, or if labels in `to` overlap.
 
 ### See Also
 
 - [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
 - [Build a mapping between age groups](#build-a-mapping-between-age-groups)
-- `period_mapping()`, `cohort_mapping()`
+- `period_coarsen_to()`, `cohort_coarsen_to()`

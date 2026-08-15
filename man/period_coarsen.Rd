@@ -133,6 +133,7 @@ period_coarsen(
 }
 \seealso{
 \itemize{
+\item \code{\link[=period_coarsen_to]{period_coarsen_to()}} Coarsen to an existing set of labels
 \item \code{\link[=period_coarsen_five]{period_coarsen_five()}} Coarsen to 5-year periods
 \item \code{\link[=period_coarsen_ten]{period_coarsen_ten()}} Coarsen to 10-year periods
 \item \code{\link[=age_coarsen]{age_coarsen()}} Age group equivalent of \code{period_coarsen()}

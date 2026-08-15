@@ -69,6 +69,41 @@ construct_coarsen_mapping <- function(breaks,
   ans
 }
 
+#' Construct Coarsen-To Mapping
+#'
+#' @param intervals_labels Intervals parsed from `labels`.
+#' @param intervals_to Intervals parsed from `to`.
+#' @returns Logical matrix mapping unique `to` labels (rows)
+#' to unique `labels` (columns).
+#'
+#' @noRd
+construct_coarsen_to_mapping <- function(intervals_labels, intervals_to) {
+  m_labels <- get_m(intervals_labels)
+  m_to <- get_m(intervals_to)
+  is_total_labels <- get_is_total(intervals_labels)
+  is_total_to <- get_is_total(intervals_to)
+  is_na_labels <- get_is_na(intervals_labels)
+  is_na_to <- get_is_na(intervals_to)
+  ans <- does_m1_contain_m2(m1 = m_to, m2 = m_labels)
+  ans[is_total_to, ] <- FALSE
+  ans[, is_total_labels] <- FALSE
+  if (any(is_total_to) && any(is_total_labels)) {
+    ans[is_total_to, is_total_labels] <- TRUE
+  }
+  ans[is_na_to, ] <- FALSE
+  ans[, is_na_labels] <- FALSE
+  if (any(is_na_to) && any(is_na_labels)) {
+    ans[is_na_to, is_na_labels] <- TRUE
+  }
+  ans[is.na(ans)] <- FALSE
+  i_xun_to_xunu_labels <- get_i_xun_to_xunu(intervals_labels)
+  i_xun_to_xunu_to <- get_i_xun_to_xunu(intervals_to)
+  ans <- ans[i_xun_to_xunu_to, i_xun_to_xunu_labels, drop = FALSE]
+  rownames(ans) <- get_labels_unique(intervals_to)
+  colnames(ans) <- get_labels_unique(intervals_labels)
+  ans
+}
+
 #' Construct a Mapping Between Two Sets of Labels
 #'
 #' @param intervals_x,intervals_y Objects of class "agetime_intervals"

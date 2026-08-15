@@ -127,6 +127,7 @@ cohort_mapping(x)
 }
 \seealso{
 \itemize{
+\item \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} Recode labels into another classification
 \item \code{\link[=age_mapping]{age_mapping()}} Age equivalent of \code{cohort_mapping()}
 \item \code{\link[=period_mapping]{period_mapping()}} Period equivalent of \code{cohort_mapping()}
 }

@@ -110,6 +110,7 @@ df
 }
 \seealso{
 \itemize{
+\item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Recode labels into another classification
 \item \code{\link[=period_mapping]{period_mapping()}} Period equivalent of \code{age_mapping()}
 \item \code{\link[=cohort_mapping]{cohort_mapping()}} Cohort equivalent of \code{age_mapping()}
 }

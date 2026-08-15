@@ -40,6 +40,7 @@ labels for age groups, periods, and cohorts.
 \strong{Coarsen intervals}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_coarsen]{age_coarsen()}} \tab \code{\link[=period_coarsen]{period_coarsen()}} \tab \code{\link[=cohort_coarsen]{cohort_coarsen()}} \cr
+   \code{\link[=age_coarsen_to]{age_coarsen_to()}} \tab \code{\link[=period_coarsen_to]{period_coarsen_to()}} \tab \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} \cr
    \code{\link[=age_coarsen_five]{age_coarsen_five()}} \tab \code{\link[=period_coarsen_five]{period_coarsen_five()}} \tab \code{\link[=cohort_coarsen_five]{cohort_coarsen_five()}} \cr
    \code{\link[=age_coarsen_ten]{age_coarsen_ten()}} \tab \code{\link[=period_coarsen_ten]{period_coarsen_ten()}} \tab \code{\link[=cohort_coarsen_ten]{cohort_coarsen_ten()}} \cr
    \code{\link[=age_coarsen_life]{age_coarsen_life()}} \tab  \tab  \cr

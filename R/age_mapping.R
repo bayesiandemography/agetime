@@ -48,6 +48,7 @@
 #' depending on the value of `format`.
 #'
 #' @seealso
+#' - [age_coarsen_to()] Recode labels into another classification
 #' - [period_mapping()] Period equivalent of `age_mapping()`
 #' - [cohort_mapping()] Cohort equivalent of `age_mapping()`
 #'

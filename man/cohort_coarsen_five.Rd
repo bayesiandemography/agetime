@@ -148,6 +148,7 @@ cohort_coarsen_five(c("2010", "2020-2025"), open_left = TRUE)
 \seealso{
 \itemize{
 \item \code{\link[=cohort_coarsen]{cohort_coarsen()}} Coarsen to general cohorts
+\item \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} Coarsen to an existing set of labels
 \item \code{\link[=age_coarsen_five]{age_coarsen_five()}} Age equivalent of \code{cohort_coarsen_five()}
 \item \code{\link[=age_coarsen_ten]{age_coarsen_ten()}} Age equivalent of \code{cohort_coarsen_ten()}
 \item \code{\link[=period_coarsen_five]{period_coarsen_five()}} Period equivalent of \code{cohort_coarsen_five()}

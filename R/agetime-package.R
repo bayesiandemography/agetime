@@ -34,6 +34,7 @@
 #' |                     |                      |                      |
 #' |---------------------|----------------------|----------------------|
 #' | [age_coarsen()]      | [period_coarsen()]    | [cohort_coarsen()]    |
+#' | [age_coarsen_to()]   | [period_coarsen_to()] | [cohort_coarsen_to()] |
 #' | [age_coarsen_five()] | [period_coarsen_five()] | [cohort_coarsen_five()] |
 #' | [age_coarsen_ten()]  | [period_coarsen_ten()] | [cohort_coarsen_ten()] |
 #' | [age_coarsen_life()] |                      |                      |

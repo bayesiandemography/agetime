@@ -97,6 +97,7 @@ age_coarsen_five(labels_no_open, open_right = TRUE)
 \seealso{
 \itemize{
 \item \code{\link[=age_coarsen]{age_coarsen()}} Coarsen to general age groups
+\item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Coarsen to an existing set of labels
 \item \code{\link[=period_coarsen_five]{period_coarsen_five()}} Period equivalent of \code{age_coarsen_five()}
 \item \code{\link[=period_coarsen_ten]{period_coarsen_ten()}} Period equivalent of \code{age_coarsen_ten()}
 \item \code{\link[=cohort_coarsen_five]{cohort_coarsen_five()}} Cohort equivalent of \code{age_coarsen_five()}

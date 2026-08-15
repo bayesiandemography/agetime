@@ -74,6 +74,7 @@ age_coarsen(
 }
 \seealso{
 \itemize{
+\item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Coarsen to an existing set of labels
 \item \code{\link[=age_coarsen_five]{age_coarsen_five()}} Coarsen to 5-year age groups
 \item \code{\link[=age_coarsen_ten]{age_coarsen_ten()}} Coarsen to 10-year age groups
 \item \code{\link[=age_coarsen_life]{age_coarsen_life()}} Coarsen to life table age groups

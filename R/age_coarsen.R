@@ -49,6 +49,7 @@
 #'   open_right = TRUE
 #' )
 #' @seealso
+#' - [age_coarsen_to()] Coarsen to an existing set of labels
 #' - [age_coarsen_five()] Coarsen to 5-year age groups
 #' - [age_coarsen_ten()] Coarsen to 10-year age groups
 #' - [age_coarsen_life()] Coarsen to life table age groups
@@ -73,6 +74,55 @@ age_coarsen <- function(labels,
     interpret_fail = interpret_fail,
     minimal_levels = FALSE,
     preserve_input_type = FALSE
+  )
+}
+
+
+#' Coarsen Age Groups to a Target Classification
+#'
+#' Recode age group labels so they match a second set of labels.
+#'
+#' Every interval in `labels` must lie in exactly one interval in `to`.
+#' Intervals in `to` must not overlap. Gaps in `to` are allowed if
+#' nothing in `labels` falls in them.
+#'
+#' If `labels` is a factor, its levels are modified
+#' along with its elements.
+#' The return value is always a factor. Levels are the unique
+#' labels in `to`, including unused labels.
+#'
+#' @inheritParams age_lower
+#' @param to Vector of age group labels giving the target classification.
+#' @param interpret_fail Action if an element of `labels` or `to`
+#' cannot be interpreted. Choices are `"error"` (the default),
+#' `"warn"`, and `"silent"`.
+#' @return Factor with the same length as `labels`.
+#'
+#' @examples
+#' labels <- c("0", "1", "5", "10", "11")
+#' to <- c("0-4", "5-9", "10-14")
+#' age_coarsen_to(labels, to)
+#'
+#' ## unused labels in `to` are kept as levels
+#' age_coarsen_to(c("0", "1"), to)
+#' @seealso
+#' - [age_coarsen()] Coarsen using break points
+#' - [age_mapping()] Inspect the relationship between two sets of labels
+#' - [period_coarsen_to()] Period equivalent of `age_coarsen_to()`
+#' - [cohort_coarsen_to()] Cohort equivalent of `age_coarsen_to()`
+#' @export
+
+age_coarsen_to <- function(labels,
+                           to,
+                           interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
+  inner_coarsen_to(
+    labels = labels,
+    to = to,
+    label_type = "age",
+    interpret_single = "lower",
+    interpret_multi = "exclude",
+    interpret_fail = interpret_fail
   )
 }
 
@@ -106,6 +156,7 @@ age_coarsen <- function(labels,
 #'
 #' @seealso
 #' - [age_coarsen()] Coarsen to general age groups
+#' - [age_coarsen_to()] Coarsen to an existing set of labels
 #' - [period_coarsen_five()] Period equivalent of `age_coarsen_five()`
 #' - [period_coarsen_ten()] Period equivalent of `age_coarsen_ten()`
 #' - [cohort_coarsen_five()] Cohort equivalent of `age_coarsen_five()`

@@ -1,6 +1,8 @@
 # *_coarsen(): empty character -> character() for width-based helpers, factor()
 # with levels for breaks-based coarsen. Empty factor with no levels -> factor().
 # Empty factor with levels -> levels still coarsened.
+# *_coarsen_to(): empty character or factor with no levels -> factor with
+# levels from `to`. Empty factor with levels still recoded against `to`.
 
 test_that("age_coarsen() with length-0 input returns empty factor with levels", {
   expect_identical(
@@ -196,5 +198,49 @@ test_that("cohort_coarsen_ten() with length-0 factor updates levels", {
   expect_identical(
     levels(cohort_coarsen_ten(fx)),
     levels(cohort_coarsen_ten(f_ref))
+  )
+})
+
+test_that("age_coarsen_to() with length-0 input returns empty factor with levels", {
+  to <- c("0-4", "5-9")
+  expect_identical(
+    age_coarsen_to(character(0), to),
+    factor(levels = to)
+  )
+})
+
+test_that("age_coarsen_to() with length-0 factor with levels recodes levels", {
+  to <- c("0-4", "5-9", "10-14")
+  fx <- factor(character(0), levels = c("0", "10"))
+  expect_identical(
+    age_coarsen_to(fx, to),
+    factor(character(0), levels = to)
+  )
+})
+
+test_that("age_coarsen_to() with empty labels and empty to returns empty factor", {
+  expect_identical(
+    age_coarsen_to(character(0), character(0)),
+    factor()
+  )
+  expect_identical(
+    age_coarsen_to(factor(), factor()),
+    factor()
+  )
+})
+
+test_that("period_coarsen_to() with length-0 input returns empty factor with levels", {
+  to <- c("2020-2025", "2025-2030")
+  expect_identical(
+    period_coarsen_to(character(0), to),
+    factor(levels = to)
+  )
+})
+
+test_that("cohort_coarsen_to() with length-0 input returns empty factor with levels", {
+  to <- c("2020-2025", "2025-2030")
+  expect_identical(
+    cohort_coarsen_to(character(0), to),
+    factor(levels = to)
   )
 })

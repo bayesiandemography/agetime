@@ -264,6 +264,42 @@ check_m_contains <- function(m_contains, label_type) {
   invisible(TRUE)
 }
 
+#' Check That Target Labels Do Not Overlap
+#'
+#' @param intervals_to Intervals parsed from `to`.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @returns Return value used internally.
+#'
+#' @noRd
+check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
+  if (int_is_empty(intervals_to)) {
+    return(invisible(TRUE))
+  }
+  m <- get_m(intervals_to)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals_to)
+  m_xu <- m[i_xun_to_xunu, , drop = FALSE]
+  is_skip <- get_is_total(intervals_to)[i_xun_to_xunu] |
+    get_is_na(intervals_to)[i_xun_to_xunu]
+  m_overlap <- does_m1_overlap_m2(m1 = m_xu, m2 = m_xu)
+  m_overlap[is_skip, ] <- FALSE
+  m_overlap[, is_skip] <- FALSE
+  m_overlap[row(m_overlap) >= col(m_overlap)] <- FALSE
+  if (any(m_overlap, na.rm = TRUE)) {
+    labels_unique <- get_labels_unique(intervals_to)
+    i_overlap <- match(TRUE, m_overlap)
+    i1 <- row(m_overlap)[[i_overlap]]
+    i2 <- col(m_overlap)[[i_overlap]]
+    lab1 <- labels_unique[[i1]]
+    lab2 <- labels_unique[[i2]]
+    ln <- label_name(label_type)
+    cli::cli_abort(c(
+      "{.arg to} has overlapping {ln}s {.val {lab1}} and {.val {lab2}}.",
+      i = "Supply {ln}s in {.arg to} that do not overlap?"
+    ))
+  }
+  invisible(TRUE)
+}
+
 
 #' Check Whole Number
 #'
