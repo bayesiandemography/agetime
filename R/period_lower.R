@@ -36,8 +36,9 @@
 #'
 #' A two-value label cannot describe a one-year period.
 #' With `interpret_multi = "include"`, `"2010-2011"` would be
-#' `[2010, 2011)` and is rejected; use `"2010"`, or `"2010-2012"`
-#' for two years. With `interpret_multi = "exclude"`,
+#' `[2010, 2011)` and `"2010-2010"` would be empty; both are
+#' rejected. Use `"2010"`, or `"2010-2012"` for two years.
+#' With `interpret_multi = "exclude"`,
 #' `"2010-2011"` is two years `[2010, 2012)` and is accepted.
 #'
 #' @param labels Vector of period labels.

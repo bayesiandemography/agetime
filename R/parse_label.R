@@ -117,26 +117,32 @@ x_label <- function(label,
     if (!is.null(val)) {
       l <- val[[1L]]
       u <- val[[2L]]
+      parsed_i <- msg_i_parsed_interval(label_type)
       if (is.finite(l) && is.finite(u) && l >= u) {
-        msg <- c("Label {.val {label}} invalid.")
-        if (l == u) {
-          msg <- c(msg, i = "Lower limit equals upper limit.")
+        if (l == u && is_two_value_label(label)) {
+          msg <- c(
+            "Label {.val {label}} describes a zero-width {label_name(label_type)}.",
+            i = parsed_i,
+            i = paste0(
+              "Write one-year {label_name(label_type)}s as a single year, ",
+              "e.g. {.val {as.character(l)}}?"
+            )
+          )
         } else {
-          msg <- c(msg, i = "Lower limit greater than upper limit.")
+          msg <- c("Label {.val {label}} invalid.")
+          if (l == u) {
+            msg <- c(msg, i = "Lower limit equals upper limit.")
+          } else {
+            msg <- c(msg, i = "Lower limit greater than upper limit.")
+          }
+          msg <- c(msg, i = parsed_i)
         }
-        msg <- c(msg,
-          i = "Lower limit: {.val {l}}.",
-          i = "Upper limit: {.val {u}}."
-        )
         return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
       }
       if (is_one_year_range_label(label = label, l = l, u = u)) {
         msg <- c(
           "Label {.val {label}} describes a one-year {label_name(label_type)}.",
-          i = paste0(
-            "With {.arg interpret_multi} = {.val {interpret_multi}}, ",
-            "{.val {label}} is the interval [{l}, {u})."
-          ),
+          i = parsed_i,
           i = paste0(
             "Write one-year {label_name(label_type)}s as a single year, ",
             "e.g. {.val {as.character(l)}}?"
@@ -160,6 +166,16 @@ x_label <- function(label,
   x_label_fail(msg = msg, interpret_fail = interpret_fail)
 }
 
+#' Is Two-Value Label
+#'
+#' @param label Single label string.
+#' @returns `TRUE` when `label` is a hyphenated pair of integers.
+#'
+#' @noRd
+is_two_value_label <- function(label) {
+  grepl("^\\d+-\\d+$", label, perl = TRUE)
+}
+
 #' Is One-Year Range Label
 #'
 #' @param label Single label string.
@@ -169,7 +185,28 @@ x_label <- function(label,
 #' @noRd
 is_one_year_range_label <- function(label, l, u) {
   is.finite(l) && is.finite(u) && (u - l == 1) &&
-    grepl("^\\d+-\\d+$", label, perl = TRUE)
+    is_two_value_label(label)
+}
+
+#' Parsed-Interval Context Line
+#'
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @returns Character string for a `cli` `i` line. Placeholders are
+#' interpolated later in `x_label()`.
+#'
+#' Age functions do not expose `interpret_multi`, so that argument is
+#' named only for period and cohort.
+#'
+#' @noRd
+msg_i_parsed_interval <- function(label_type) {
+  if (identical(label_type, "age")) {
+    "{.val {label}} is the interval [{l}, {u})."
+  } else {
+    paste0(
+      "With {.arg interpret_multi} = {.val {interpret_multi}}, ",
+      "{.val {label}} is the interval [{l}, {u})."
+    )
+  }
 }
 
 #' Handle a Label Parse Failure

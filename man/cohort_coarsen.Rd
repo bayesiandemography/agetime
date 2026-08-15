@@ -115,8 +115,9 @@ Multi-year cohorts:\tabular{lll}{
 
 A two-value label cannot describe a one-year cohort.
 With \code{interpret_multi = "include"}, \code{"2010-2011"} would be
-\verb{[2010, 2011)} and is rejected; use \code{"2010"}, or \code{"2010-2012"}
-for two years. With \code{interpret_multi = "exclude"},
+\verb{[2010, 2011)} and \code{"2010-2010"} would be empty; both are
+rejected. Use \code{"2010"}, or \code{"2010-2012"} for two years.
+With \code{interpret_multi = "exclude"},
 \code{"2010-2011"} is two years \verb{[2010, 2012)} and is accepted.
 }
 

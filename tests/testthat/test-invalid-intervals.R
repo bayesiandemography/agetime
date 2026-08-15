@@ -25,8 +25,29 @@ test_that("reversed range labels warn or return NA with interpret_fail", {
 })
 
 test_that("zero-width range labels are rejected", {
-  expect_error(period_lower("2030-2030"), "Lower limit equals upper limit")
-  expect_error(age_lower("5-4"), "Lower limit equals upper limit")
+  expect_error(
+    period_lower("2030-2030"),
+    regexp = "describes a zero-width period"
+  )
+  expect_error(
+    period_upper("2010-2010", interpret_multi = "include"),
+    regexp = "interpret_multi.*include"
+  )
+  expect_error(
+    period_upper("2010-2010", interpret_multi = "include"),
+    regexp = "single year"
+  )
+  err_include <- tryCatch(
+    period_upper("2010-2010", interpret_multi = "include"),
+    error = identity
+  )
+  expect_false(grepl("meant to be two years", conditionMessage(err_include)))
+  expect_false(grepl("Lower limit equals upper limit", conditionMessage(err_include)))
+
+  expect_error(age_lower("5-4"), regexp = "describes a zero-width age group")
+  err_age <- tryCatch(age_lower("5-4"), error = identity)
+  expect_match(conditionMessage(err_age), "\\[5, 5\\)")
+  expect_false(grepl("interpret_multi", conditionMessage(err_age)))
 })
 
 test_that("valid range labels still parse", {
