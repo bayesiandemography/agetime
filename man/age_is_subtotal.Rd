@@ -20,12 +20,16 @@ Logical vector with the same length as \code{labels}.
 Find categories representing subtotals in age group labels.
 }
 \details{
-A subtotal covers the same age interval as more detailed
-labels elsewhere in the label set.
-For instance, in the label set
+A subtotal is a label that can be rebuilt from two or more
+other labels in the set. For instance, in
 \code{c("0-4", "5-9", "10-14", "0-9", "Total")},
-the label \code{"0-9"} is a subtotal because it
-covers the same age interval as \code{"0-4"} and \code{"5-9"}.
+\code{"0-9"} is a subtotal because it covers the same interval as
+\code{"0-4"} and \code{"5-9"}.
+
+Overlapping alternative groupings still count. In
+\code{c("90+", "90", "91+", "95+", "90-94")},
+\code{"90+"} is a subtotal because it can be rebuilt from \code{"90"}
+and \code{"91+"}, or from \code{"90-94"} and \code{"95+"}.
 
 Subtotals are distinct from grand total labels
 such as \code{"Total"} or \code{"All"}, which are identified
@@ -41,6 +45,9 @@ labels <- c(
 )
 age_is_subtotal(labels)
 age_is_total(labels)
+
+## overlapping alternative groupings still count
+age_is_subtotal(c("90+", "90", "91+", "95+", "90-94"))
 
 ## subtotals must fully cover range
 labels_no_20_24 <- setdiff(labels, "20-24")

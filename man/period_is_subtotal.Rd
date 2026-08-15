@@ -35,12 +35,11 @@ Logical vector with the same length as \code{labels}.
 Find categories representing subtotals in period labels.
 }
 \details{
-A subtotal covers the same interval as more detailed
-labels elsewhere in the label set.
-For instance, in the label set
+A subtotal is a label that can be rebuilt from two or more
+other labels in the set. For instance, in
 \code{c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")},
-the label \code{"2020-2030"} is a subtotal because it covers
-the same interval as \code{"2020-2025"} and \code{"2025-2030"}.
+\code{"2020-2030"} is a subtotal because it covers the same interval as
+\code{"2020-2025"} and \code{"2025-2030"}.
 
 Subtotals are distinct from grand total labels
 such as \code{"Total"} or \code{"All"}, which are identified

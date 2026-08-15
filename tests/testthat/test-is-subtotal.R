@@ -18,12 +18,31 @@ test_that("age_is_subtotal() incomplete detail keeps broad band", {
   expect_values(age_is_subtotal(labs), rep(FALSE, 5L))
 })
 
-test_that("age_is_subtotal() nested hierarchy uses finest detail", {
+test_that("age_is_subtotal() nested hierarchy marks every rebuildable band", {
   labs <- c("0", "1", "2", "3", "0-1", "2-3", "0-3")
   expect_values(
     age_is_subtotal(labs),
     c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE)
   )
+})
+
+test_that("age_is_subtotal() overlapping alternative groupings still count", {
+  labs <- c("90+", "90", "91+", "95+", "90-94")
+  expect_values(
+    age_is_subtotal(labs),
+    c(TRUE, FALSE, FALSE, FALSE, FALSE)
+  )
+})
+
+test_that("age_is_subtotal() rebuilds an open group from either tiling", {
+  expect_true(age_is_subtotal(c("90+", "90", "91+", "90-94"))[[1L]])
+  expect_true(age_is_subtotal(c("90+", "90", "95+", "90-94"))[[1L]])
+  expect_true(age_is_subtotal(c("90+", "91+", "95+", "90-94"))[[1L]])
+})
+
+test_that("age_is_subtotal() needs two or more labels to rebuild", {
+  expect_values(age_is_subtotal(c("90-94", "90")), c(FALSE, FALSE))
+  expect_values(age_is_subtotal(c("91+", "95+")), c(FALSE, FALSE))
 })
 
 test_that("age_is_subtotal() mid-level bands partition parent without singles", {
@@ -93,14 +112,24 @@ test_that("cohort_is_subtotal() never marks grand totals", {
   expect_values(cohort_is_total(labs), c(FALSE, FALSE, FALSE, TRUE))
 })
 
-test_that("intervals_partition_covers() passes for contiguous children", {
-  parent <- c(0, 4)
-  children <- matrix(c(0, 1, 1, 2, 2, 3, 3, 4), ncol = 2, byrow = TRUE)
-  expect_true(agetime:::intervals_partition_covers(parent, children))
+test_that("children_can_rebuild_parent() finds a tiling among overlapping children", {
+  parent <- c(90, Inf)
+  children <- matrix(
+    c(90, 91, 91, Inf, 95, Inf, 90, 95),
+    ncol = 2,
+    byrow = TRUE
+  )
+  expect_true(agetime:::children_can_rebuild_parent(parent, children))
 })
 
-test_that("intervals_partition_covers() fails when there is a gap", {
+test_that("children_can_rebuild_parent() fails when there is a gap", {
   parent <- c(0, 4)
   children <- matrix(c(0, 2, 3, 4), ncol = 2, byrow = TRUE)
-  expect_false(agetime:::intervals_partition_covers(parent, children))
+  expect_false(agetime:::children_can_rebuild_parent(parent, children))
+})
+
+test_that("children_can_rebuild_parent() needs two or more children", {
+  parent <- c(90, Inf)
+  children <- matrix(c(91, Inf), ncol = 2, byrow = TRUE)
+  expect_false(agetime:::children_can_rebuild_parent(parent, children))
 })

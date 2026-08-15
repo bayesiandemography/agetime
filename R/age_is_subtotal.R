@@ -2,12 +2,16 @@
 #'
 #' Find categories representing subtotals in age group labels.
 #'
-#' A subtotal covers the same age interval as more detailed
-#' labels elsewhere in the label set.
-#' For instance, in the label set
+#' A subtotal is a label that can be rebuilt from two or more
+#' other labels in the set. For instance, in
 #' `c("0-4", "5-9", "10-14", "0-9", "Total")`,
-#' the label `"0-9"` is a subtotal because it
-#' covers the same age interval as `"0-4"` and `"5-9"`.
+#' `"0-9"` is a subtotal because it covers the same interval as
+#' `"0-4"` and `"5-9"`.
+#'
+#' Overlapping alternative groupings still count. In
+#' `c("90+", "90", "91+", "95+", "90-94")`,
+#' `"90+"` is a subtotal because it can be rebuilt from `"90"`
+#' and `"91+"`, or from `"90-94"` and `"95+"`.
 #'
 #' Subtotals are distinct from grand total labels
 #' such as `"Total"` or `"All"`, which are identified
@@ -34,6 +38,9 @@
 #' )
 #' age_is_subtotal(labels)
 #' age_is_total(labels)
+#'
+#' ## overlapping alternative groupings still count
+#' age_is_subtotal(c("90+", "90", "91+", "95+", "90-94"))
 #'
 #' ## subtotals must fully cover range
 #' labels_no_20_24 <- setdiff(labels, "20-24")

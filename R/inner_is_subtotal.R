@@ -27,31 +27,6 @@ pool_labels_for_subtotal <- function(intervals) {
   pool[nzchar(pool)]
 }
 
-#' Finest Child Indices
-#'
-#' @param child_idx Integer indices into interval rows.
-#' @param strict_contain Strict containment matrix (parents contain children).
-#' @returns Subset of `child_idx` that are not strict parents of another child.
-#'
-#' @noRd
-finest_child_indices <- function(child_idx, strict_contain) {
-  if (length(child_idx) == 0L) {
-    return(integer(0))
-  }
-  is_finest <- rep(TRUE, length(child_idx))
-  for (ic in seq_along(child_idx)) {
-    c_idx <- child_idx[[ic]]
-    for (id in seq_along(child_idx)) {
-      d_idx <- child_idx[[id]]
-      if (d_idx != c_idx && isTRUE(strict_contain[d_idx, c_idx])) {
-        is_finest[[ic]] <- FALSE
-        break
-      }
-    }
-  }
-  child_idx[is_finest]
-}
-
 #' Interval Bounds Match
 #'
 #' @param a,b Numeric bounds, possibly infinite.
@@ -59,6 +34,8 @@ finest_child_indices <- function(child_idx, strict_contain) {
 #'
 #' @noRd
 interval_bounds_match <- function(a, b) {
+  a <- as.numeric(a)
+  b <- as.numeric(b)
   if (is.infinite(a) && is.infinite(b)) {
     return(TRUE)
   }
@@ -68,43 +45,73 @@ interval_bounds_match <- function(a, b) {
   isTRUE(all.equal(a, b))
 }
 
-#' Intervals Partition Cover Parent
+#' Bound In List
 #'
-#' @param parent Numeric vector of length 2.
-#' @param children Two-column matrix of child intervals.
-#' @returns `TRUE` when children partition `parent` without gaps or overlaps.
+#' @param x Numeric bound, possibly infinite.
+#' @param bounds List of numeric bounds.
+#' @returns `TRUE` when `x` matches an element of `bounds`.
 #'
 #' @noRd
-intervals_partition_covers <- function(parent, children) {
-  if (nrow(children) == 0L) {
-    return(FALSE)
-  }
-  m_overlap <- does_m1_overlap_m2(m1 = children, m2 = children)
-  diag(m_overlap) <- FALSE
-  if (any(m_overlap, na.rm = TRUE)) {
-    return(FALSE)
-  }
-  ord <- order(children[, 1L], children[, 2L])
-  m <- children[ord, , drop = FALSE]
-  lower <- m[, 1L]
-  upper <- m[, 2L]
-  l_parent <- parent[[1L]]
-  u_parent <- parent[[2L]]
-  if (!interval_bounds_match(lower[[1L]], l_parent)) {
-    return(FALSE)
-  }
-  if (!interval_bounds_match(upper[[length(upper)]], u_parent)) {
-    return(FALSE)
-  }
-  n <- length(upper)
-  if (n > 1L) {
-    uppermax <- cummax(upper)
-    is_gap <- !is.na(lower[-1L]) & (lower[-1L] > uppermax[-n])
-    if (any(is_gap)) {
-      return(FALSE)
+bound_in_list <- function(x, bounds) {
+  for (b in bounds) {
+    if (interval_bounds_match(x, b)) {
+      return(TRUE)
     }
   }
-  TRUE
+  FALSE
+}
+
+#' Children Can Rebuild Parent
+#'
+#' @param parent Numeric vector of length 2.
+#' @param children Two-column matrix of candidate child intervals.
+#' @returns `TRUE` when two or more children tile `parent`
+#' without gaps or overlaps.
+#'
+#' @noRd
+children_can_rebuild_parent <- function(parent, children) {
+  n <- nrow(children)
+  if (n < 2L) {
+    return(FALSE)
+  }
+  l_parent <- parent[[1L]]
+  u_parent <- parent[[2L]]
+  bounds <- list(l_parent)
+  n_used <- 0L
+  i <- 1L
+  while (i <= length(bounds)) {
+    t <- bounds[[i]]
+    used <- n_used[[i]]
+    if (interval_bounds_match(t, u_parent) && used >= 2L) {
+      return(TRUE)
+    }
+    for (j in seq_len(n)) {
+      if (!interval_bounds_match(children[j, 1L], t)) {
+        next
+      }
+      u_child <- children[j, 2L]
+      used_new <- used + 1L
+      already <- FALSE
+      for (k in seq_along(bounds)) {
+        if (interval_bounds_match(u_child, bounds[[k]])) {
+          already <- TRUE
+          if (used_new < n_used[[k]]) {
+            n_used[[k]] <- used_new
+          }
+          if (interval_bounds_match(u_child, u_parent) && used_new >= 2L) {
+            return(TRUE)
+          }
+          break
+        }
+      }
+      if (!already) {
+        bounds <- c(bounds, list(u_child))
+        n_used <- c(n_used, used_new)
+      }
+    }
+    i <- i + 1L
+  }
+  FALSE
 }
 
 #' Subtotal Labels from Pool Intervals
@@ -126,19 +133,12 @@ subtotal_labels_from_pool <- function(intervals) {
   subtotal <- character(0)
   for (i in seq_len(n)) {
     child_idx <- which(strict_contain[i, ])
-    if (length(child_idx) == 0L) {
+    if (length(child_idx) < 2L) {
       next
     }
-    finest_idx <- finest_child_indices(
-      child_idx = child_idx,
-      strict_contain = strict_contain
-    )
-    if (length(finest_idx) == 0L) {
-      next
-    }
-    if (intervals_partition_covers(
+    if (children_can_rebuild_parent(
       parent = m[i, ],
-      children = m[finest_idx, , drop = FALSE]
+      children = m[child_idx, , drop = FALSE]
     )) {
       subtotal <- c(subtotal, labels_unique[[i]])
     }
