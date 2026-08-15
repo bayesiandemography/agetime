@@ -36,6 +36,7 @@ intervals <- function(labels,
     labels_normalizers = labels_normalizers,
     label_parsers = label_parsers,
     label_type = label_type,
+    interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
   ans
@@ -47,6 +48,8 @@ intervals <- function(labels,
 #' @param labels_normalizers List of label normalizer functions.
 #' @param label_parsers List of label parser functions.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param interpret_multi Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns An `agetime_intervals` object.
 #'
@@ -55,6 +58,7 @@ intervals_inner <- function(labels,
                             labels_normalizers,
                             label_parsers,
                             label_type,
+                            interpret_multi,
                             interpret_fail) {
   if (is.factor(labels)) {
     labels_unique <- levels(labels)
@@ -73,7 +77,9 @@ intervals_inner <- function(labels,
     FUN = x_label,
     FUN.VALUE = c(NA_real_, NA_real_),
     label_parsers = label_parsers,
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    interpret_multi = interpret_multi,
+    label_type = label_type
   )
   m <- t(m)
   ans <- list(

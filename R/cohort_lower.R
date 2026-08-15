@@ -34,6 +34,12 @@
 #' | `"include"` | `"a-<a+n>" -> [a,a+n)` | `"2020-2025" -> [2020,2025)` |
 #' | `"exclude"` | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
 #'
+#' A two-value label cannot describe a one-year cohort.
+#' With `interpret_multi = "include"`, `"2010-2011"` would be
+#' `[2010, 2011)` and is rejected; use `"2010"`, or `"2010-2012"`
+#' for two years. With `interpret_multi = "exclude"`,
+#' `"2010-2011"` is two years `[2010, 2012)` and is accepted.
+#'
 #' @param labels Vector of cohort labels.
 #' @param interpret_single How to interpret
 #' labels for single-year cohorts.

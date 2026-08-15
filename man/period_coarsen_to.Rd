@@ -67,6 +67,13 @@ Multi-year periods:\tabular{lll}{
    \code{"include"} \tab \verb{"a-<a+n>" -> [a,a+n)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
    \code{"exclude"} \tab \verb{"a-<a+n-1>" -> [a,a+n)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
 }
+
+
+A two-value label cannot describe a one-year period.
+With \code{interpret_multi = "include"}, \code{"2010-2011"} would be
+\verb{[2010, 2011)} and is rejected; use \code{"2010"}, or \code{"2010-2012"}
+for two years. With \code{interpret_multi = "exclude"},
+\code{"2010-2011"} is two years \verb{[2010, 2012)} and is accepted.
 }
 
 \examples{

@@ -97,12 +97,17 @@ make_label_parsers_period <- function(interpret_single,
 #' @param label Single label string.
 #' @param label_parsers List of label parser functions.
 #' @param interpret_fail How to handle unparsable labels.
+#' @param interpret_multi Rule for multi-year labels: `"include"`
+#' or `"exclude"`.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @returns Length-2 numeric interval vector for one label.
 #'
 #' @noRd
-
-
-x_label <- function(label, label_parsers, interpret_fail) {
+x_label <- function(label,
+                    label_parsers,
+                    interpret_fail,
+                    interpret_multi,
+                    label_type) {
   na <- c(NA_real_, NA_real_)
   if (is.na(label)) {
     return(na)
@@ -123,23 +128,64 @@ x_label <- function(label, label_parsers, interpret_fail) {
           i = "Lower limit: {.val {l}}.",
           i = "Upper limit: {.val {u}}."
         )
-        if (interpret_fail == "error") {
-          cli::cli_abort(msg)
+        return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
+      }
+      if (is_one_year_range_label(label = label, l = l, u = u)) {
+        msg <- c(
+          "Label {.val {label}} describes a one-year {label_name(label_type)}.",
+          i = paste0(
+            "With {.arg interpret_multi} = {.val {interpret_multi}}, ",
+            "{.val {label}} is the interval [{l}, {u})."
+          ),
+          i = paste0(
+            "Write one-year {label_name(label_type)}s as a single year, ",
+            "e.g. {.val {as.character(l)}}?"
+          )
+        )
+        if (identical(interpret_multi, "include")) {
+          msg <- c(
+            msg,
+            i = paste0(
+              "Or set {.arg interpret_multi} to {.val {\"exclude\"}} ",
+              "if {.val {label}} is meant to be two years?"
+            )
+          )
         }
-        if (interpret_fail == "warn") {
-          cli::cli_warn(msg)
-        }
-        return(na)
+        return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
       }
       return(val)
     }
   }
   msg <- "Don't know how to interpret label {.val {label}}."
+  x_label_fail(msg = msg, interpret_fail = interpret_fail)
+}
+
+#' Is One-Year Range Label
+#'
+#' @param label Single label string.
+#' @param l,u Parsed interval bounds.
+#' @returns `TRUE` when `label` is a two-value label with parsed width 1.
+#'
+#' @noRd
+is_one_year_range_label <- function(label, l, u) {
+  is.finite(l) && is.finite(u) && (u - l == 1) &&
+    grepl("^\\d+-\\d+$", label, perl = TRUE)
+}
+
+#' Handle a Label Parse Failure
+#'
+#' @param msg Error or warning message.
+#' @param interpret_fail How to handle unparsable labels.
+#' @returns `c(NA_real_, NA_real_)` when not aborting.
+#'
+#' @noRd
+x_label_fail <- function(msg, interpret_fail) {
+  envir <- parent.frame()
   if (interpret_fail == "error") {
-    cli::cli_abort(msg)
+    cli::cli_abort(msg, .envir = envir)
   }
   if (interpret_fail == "warn") {
-    cli::cli_warn(msg)
+    cli::cli_warn(msg, .envir = envir)
   }
-  na
+  c(NA_real_, NA_real_)
 }
