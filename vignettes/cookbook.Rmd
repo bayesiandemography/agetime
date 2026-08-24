@@ -273,6 +273,13 @@ pop |>
 returns its input invisibly when checks pass, so it fits in a mutate
 pipeline.
 
+When `labels` is a factor, these functions check **levels**, including
+unused ones. That matters for grouped data with a shared factor column:
+a per-group overlap check can fail because of levels that never appear
+in that group. Use `*_diagnose_values()` / `*_assert_values()` to check
+only observed values while still returning the original factor from
+assert. Failure comments say whether the check used levels or values.
+
 ### See Also
 
 - `?age_diagnose` for the full set of conditions

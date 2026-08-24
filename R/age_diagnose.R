@@ -14,6 +14,12 @@
 #' - Having open age groups
 #' - Valid for an abridged life table
 #'
+#' When `labels` is a factor, these functions check **levels**,
+#' including unused levels. Use [age_diagnose_values()] or
+#' [age_assert_values()] to check only observed values (useful
+#' with grouped data) while still returning the original factor
+#' from `age_assert_values()`.
+#'
 #' @section Abridged and complete life tables:
 #'
 #' - An abridged life table uses age groups `"0"`
@@ -44,12 +50,14 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `age_diagnose()` returns a list with a logical flag
-#'   called `ok` and a [tibble][tibble::tibble()] called `details`.
-#' - `age_assert()` returns `labels` invisibly,
-#'   or raises an error.
+#' - `age_diagnose()` and `age_diagnose_values()` return a list with
+#'   a logical flag called `ok` and a [tibble][tibble::tibble()]
+#'   called `details`.
+#' - `age_assert()` and `age_assert_values()` return `labels`
+#'   invisibly, or raise an error.
 #'
 #' @seealso
+#' - [age_diagnose_values()] Check observed values only
 #' - [period_diagnose()] Period equivalent of `age_diagnose()`
 #' - [cohort_diagnose()] Cohort equivalent of `age_diagnose()`
 #'
@@ -75,6 +83,11 @@
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE
 #' )
+#'
+#' ## factor with unused overlapping level
+#' fac <- factor("0-4", levels = c("0-4", "3-7"))
+#' age_diagnose(fac, no_overlap = TRUE)$ok
+#' age_diagnose_values(fac, no_overlap = TRUE)$ok
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
@@ -96,6 +109,7 @@ age_diagnose <- function(labels,
     interpret_single = "lower",
     interpret_multi = "exclude",
     interpret_fail = interpret_fail,
+    on = "levels",
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
@@ -125,6 +139,67 @@ age_assert <- function(labels,
     interpret_single = "lower",
     interpret_multi = "exclude",
     interpret_fail = interpret_fail,
+    on = "levels",
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    has_zero = has_zero,
+    has_open_left = FALSE,
+    has_open_right = has_open_right,
+    valid_life = valid_life
+  )
+}
+
+#' @rdname age_diagnose
+#' @export
+age_diagnose_values <- function(labels,
+                                no_overlap = FALSE,
+                                no_gap = FALSE,
+                                no_total = FALSE,
+                                no_na = FALSE,
+                                has_zero = FALSE,
+                                has_open_right = FALSE,
+                                valid_life = FALSE,
+                                interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
+  inner_diagnose(
+    labels = labels,
+    label_type = "age",
+    interpret_single = "lower",
+    interpret_multi = "exclude",
+    interpret_fail = interpret_fail,
+    on = "values",
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    has_zero = has_zero,
+    has_open_left = FALSE,
+    has_open_right = has_open_right,
+    valid_life = valid_life
+  )
+}
+
+#' @rdname age_diagnose
+#' @export
+age_assert_values <- function(labels,
+                              no_overlap = FALSE,
+                              no_gap = FALSE,
+                              no_total = FALSE,
+                              no_na = FALSE,
+                              has_zero = FALSE,
+                              has_open_right = FALSE,
+                              valid_life = FALSE,
+                              interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
+  inner_assert(
+    labels = labels,
+    label_type = "age",
+    interpret_single = "lower",
+    interpret_multi = "exclude",
+    interpret_fail = interpret_fail,
+    on = "values",
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,

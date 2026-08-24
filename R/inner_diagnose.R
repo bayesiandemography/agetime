@@ -6,6 +6,7 @@
 #' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
+#' @param on Universe to check: `"levels"` or `"values"`.
 #' @param no_overlap Run the no-overlap check?
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
@@ -23,6 +24,7 @@ inner_assert <- function(labels,
                          interpret_single,
                          interpret_multi,
                          interpret_fail,
+                         on,
                          no_overlap,
                          no_gap,
                          no_total,
@@ -37,6 +39,7 @@ inner_assert <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
+    on = on,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
@@ -57,6 +60,7 @@ inner_assert <- function(labels,
 #' @param interpret_multi Rule for multi-year labels: `"include"`
 #' or `"exclude"`.
 #' @param interpret_fail How to handle unparsable labels.
+#' @param on Universe to check: `"levels"` or `"values"`.
 #' @param no_overlap Run the no-overlap check?
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
@@ -75,6 +79,7 @@ inner_diagnose <- function(labels,
                         interpret_single,
                         interpret_multi,
                         interpret_fail,
+                        on,
                         no_overlap,
                         no_gap,
                         no_total,
@@ -88,8 +93,13 @@ inner_diagnose <- function(labels,
     nm_labels = "labels",
     length_zero_ok = TRUE
   )
+  on <- match.arg(on, choices = c("levels", "values"))
+  labels_for_intervals <- labels
+  if (identical(on, "values") && is.factor(labels)) {
+    labels_for_intervals <- droplevels(labels)
+  }
   intervals <- intervals(
-    labels = labels,
+    labels = labels_for_intervals,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
@@ -99,49 +109,49 @@ inner_diagnose <- function(labels,
   if (isTRUE(no_overlap)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_no_overlap(intervals = intervals))
+      list(inner_diagnose_no_overlap(intervals = intervals, on = on))
     )
   }
   if (isTRUE(no_gap)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_no_gap(intervals = intervals))
+      list(inner_diagnose_no_gap(intervals = intervals, on = on))
     )
   }
   if (isTRUE(no_total)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_no_total(intervals = intervals))
+      list(inner_diagnose_no_total(intervals = intervals, on = on))
     )
   }
   if (isTRUE(no_na)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_no_na(intervals = intervals))
+      list(inner_diagnose_no_na(intervals = intervals, on = on))
     )
   }
   if (isTRUE(has_zero)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_has_zero(intervals = intervals))
+      list(inner_diagnose_has_zero(intervals = intervals, on = on))
     )
   }
   if (isTRUE(has_open_left)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_has_open_left(intervals = intervals))
+      list(inner_diagnose_has_open_left(intervals = intervals, on = on))
     )
   }
   if (isTRUE(has_open_right)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_has_open_right(intervals = intervals))
+      list(inner_diagnose_has_open_right(intervals = intervals, on = on))
     )
   }
   if (isTRUE(valid_life)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_valid_life(intervals = intervals))
+      list(inner_diagnose_valid_life(intervals = intervals, on = on))
     )
   }
   details <- if (length(details_list) == 0L) {
@@ -166,12 +176,13 @@ inner_diagnose <- function(labels,
 #' Inner Diagnose No Overlap
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_diagnose_no_overlap <- function(intervals) {
+inner_diagnose_no_overlap <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -195,8 +206,8 @@ inner_diagnose_no_overlap <- function(intervals) {
     lab1 <- labels_unique[[match(i1, i_xun_to_xunu)]]
     lab2 <- labels_unique[[match(i2, i_xun_to_xunu)]]
     comment <- sprintf(
-      "Example of overlap: '%s' and '%s'",
-      lab1, lab2
+      "Example of overlap among %s: '%s' and '%s'",
+      on, lab1, lab2
     )
   }
   tibble::tibble_row(
@@ -208,11 +219,12 @@ inner_diagnose_no_overlap <- function(intervals) {
 #' Inner Diagnose No Gap
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
-inner_diagnose_no_gap <- function(intervals) {
+inner_diagnose_no_gap <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   int_has_total <- int_has_total(intervals)
   if (int_is_empty || int_has_total) {
@@ -237,7 +249,7 @@ inner_diagnose_no_gap <- function(intervals) {
     i_xunu <- ord[[i_gap + 1L]]
     i_xu <- match(i_xunu, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Example: gap below '%s'", lab)
+    comment <- sprintf("Example: gap among %s below '%s'", on, lab)
   }
   tibble::tibble_row(
     condition = "no_gap",
@@ -248,12 +260,13 @@ inner_diagnose_no_gap <- function(intervals) {
 #' Inner Diagnose No Total
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_diagnose_no_total <- function(intervals) {
+inner_diagnose_no_total <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -269,7 +282,7 @@ inner_diagnose_no_total <- function(intervals) {
     i_total <- match(TRUE, is_total)
     i_xu <- match(i_total, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Example: '%s'", lab)
+    comment <- sprintf("Example among %s: '%s'", on, lab)
   }
   tibble::tibble_row(
     condition = "no_total",
@@ -280,12 +293,13 @@ inner_diagnose_no_total <- function(intervals) {
 #' Inner Diagnose No Na
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_diagnose_no_na <- function(intervals) {
+inner_diagnose_no_na <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -296,7 +310,7 @@ inner_diagnose_no_na <- function(intervals) {
   if (identical(passed, TRUE)) {
     comment <- NA_character_
   } else {
-    comment <- "Labels include NA."
+    comment <- sprintf("%s include NA.", on_sentence_start(on))
   }
   tibble::tibble_row(
     condition = "no_na",
@@ -307,12 +321,13 @@ inner_diagnose_no_na <- function(intervals) {
 #' Inner Diagnose Has Zero
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_diagnose_has_zero <- function(intervals) {
+inner_diagnose_has_zero <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -326,12 +341,12 @@ inner_diagnose_has_zero <- function(intervals) {
   if (identical(passed, TRUE)) {
     comment <- NA_character_
   } else if (int_is_empty) {
-    comment <- "No intervals."
+    comment <- sprintf("No %s.", on)
   } else {
     i_min <- which.min(lower)
     i_xu <- match(i_min, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Lowest interval: '%s'", lab)
+    comment <- sprintf("Lowest interval among %s: '%s'", on, lab)
   }
   tibble::tibble_row(
     condition = "has_zero",
@@ -342,11 +357,12 @@ inner_diagnose_has_zero <- function(intervals) {
 #' Inner Diagnose Has Open Left
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
-inner_diagnose_has_open_left <- function(intervals) {
+inner_diagnose_has_open_left <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -361,12 +377,12 @@ inner_diagnose_has_open_left <- function(intervals) {
   if (identical(passed, TRUE)) {
     comment <- NA_character_
   } else if (int_is_empty) {
-    comment <- "No intervals."
+    comment <- sprintf("No %s.", on)
   } else {
     i_min <- which.min(ifelse(is.finite(lower), lower, Inf))
     i_xu <- match(i_min, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Lowest interval: '%s'", lab)
+    comment <- sprintf("Lowest interval among %s: '%s'", on, lab)
   }
   tibble::tibble_row(
     condition = "has_open_left",
@@ -377,11 +393,12 @@ inner_diagnose_has_open_left <- function(intervals) {
 #' Inner Diagnose Has Open Right
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
-inner_diagnose_has_open_right <- function(intervals) {
+inner_diagnose_has_open_right <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   m <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -397,12 +414,12 @@ inner_diagnose_has_open_right <- function(intervals) {
   if (identical(passed, TRUE)) {
     comment <- NA_character_
   } else if (int_is_empty) {
-    comment <- "No intervals."
+    comment <- sprintf("No %s.", on)
   } else {
     i_max <- which.max(upper)
     i_xu <- match(i_max, i_xun_to_xunu)
     lab <- labels_unique[[i_xu]]
-    comment <- sprintf("Highest interval: '%s'", lab)
+    comment <- sprintf("Highest interval among %s: '%s'", on, lab)
   }
   tibble::tibble_row(
     condition = "has_open_right",
@@ -413,12 +430,13 @@ inner_diagnose_has_open_right <- function(intervals) {
 #' Inner Diagnose Valid Life
 #'
 #' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
 #' @returns One-row tibble with condition result details.
 #'
 #' @noRd
 
 
-inner_diagnose_valid_life <- function(intervals) {
+inner_diagnose_valid_life <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
@@ -429,13 +447,29 @@ inner_diagnose_valid_life <- function(intervals) {
   if (identical(passed, TRUE)) {
     comment <- NA_character_
   } else {
-    comment <- sprintf("Not valid for life table: '%s'", val)
+    comment <- sprintf(
+      "Not valid for life table among %s: '%s'",
+      on, val
+    )
   }
   tibble::tibble_row(
     condition = "valid_life",
     passed = passed,
     comment = comment
   )
+}
+#' Sentence-Start Form of `on`
+#'
+#' @param on `"levels"` or `"values"`.
+#' @returns Capitalized noun for the start of a sentence.
+#'
+#' @noRd
+on_sentence_start <- function(on) {
+  if (identical(on, "levels")) {
+    "Levels"
+  } else {
+    "Values"
+  }
 }
 #' Throw Assert Error
 #'

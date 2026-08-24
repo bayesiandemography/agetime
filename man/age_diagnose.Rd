@@ -3,6 +3,8 @@
 \name{age_diagnose}
 \alias{age_diagnose}
 \alias{age_assert}
+\alias{age_diagnose_values}
+\alias{age_assert_values}
 \title{Diagnose or Assert Age Groups}
 \usage{
 age_diagnose(
@@ -18,6 +20,30 @@ age_diagnose(
 )
 
 age_assert(
+  labels,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_zero = FALSE,
+  has_open_right = FALSE,
+  valid_life = FALSE,
+  interpret_fail = c("error", "warn", "silent")
+)
+
+age_diagnose_values(
+  labels,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_zero = FALSE,
+  has_open_right = FALSE,
+  valid_life = FALSE,
+  interpret_fail = c("error", "warn", "silent")
+)
+
+age_assert_values(
   labels,
   no_overlap = FALSE,
   no_gap = FALSE,
@@ -63,10 +89,11 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 \itemize{
-\item \code{age_diagnose()} returns a list with a logical flag
-called \code{ok} and a \link[tibble:tibble]{tibble} called \code{details}.
-\item \code{age_assert()} returns \code{labels} invisibly,
-or raises an error.
+\item \code{age_diagnose()} and \code{age_diagnose_values()} return a list with
+a logical flag called \code{ok} and a \link[tibble:tibble]{tibble}
+called \code{details}.
+\item \code{age_assert()} and \code{age_assert_values()} return \code{labels}
+invisibly, or raise an error.
 }
 }
 \description{
@@ -83,6 +110,12 @@ Conditions include:
 \item Having open age groups
 \item Valid for an abridged life table
 }
+
+When \code{labels} is a factor, these functions check \strong{levels},
+including unused levels. Use \code{\link[=age_diagnose_values]{age_diagnose_values()}} or
+\code{\link[=age_assert_values]{age_assert_values()}} to check only observed values (useful
+with grouped data) while still returning the original factor
+from \code{age_assert_values()}.
 }
 \section{Abridged and complete life tables}{
 
@@ -118,9 +151,15 @@ age_assert(
   no_overlap = TRUE,
   no_gap = TRUE
 )
+
+## factor with unused overlapping level
+fac <- factor("0-4", levels = c("0-4", "3-7"))
+age_diagnose(fac, no_overlap = TRUE)$ok
+age_diagnose_values(fac, no_overlap = TRUE)$ok
 }
 \seealso{
 \itemize{
+\item \code{\link[=age_diagnose_values]{age_diagnose_values()}} Check observed values only
 \item \code{\link[=period_diagnose]{period_diagnose()}} Period equivalent of \code{age_diagnose()}
 \item \code{\link[=cohort_diagnose]{cohort_diagnose()}} Cohort equivalent of \code{age_diagnose()}
 }

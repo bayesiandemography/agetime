@@ -3,6 +3,8 @@
 \name{cohort_diagnose}
 \alias{cohort_diagnose}
 \alias{cohort_assert}
+\alias{cohort_diagnose_values}
+\alias{cohort_assert_values}
 \title{Diagnose or Assert Cohorts}
 \usage{
 cohort_diagnose(
@@ -19,6 +21,32 @@ cohort_diagnose(
 )
 
 cohort_assert(
+  labels,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
+)
+
+cohort_diagnose_values(
+  labels,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
+)
+
+cohort_assert_values(
   labels,
   no_overlap = FALSE,
   no_gap = FALSE,
@@ -72,10 +100,11 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 \itemize{
-\item \code{cohort_diagnose()} returns a list with a logical flag
-called \code{ok} and a \link[tibble:tibble]{tibble} called \code{details}.
-\item \code{cohort_assert()} returns \code{labels} invisibly,
-or raises an error.
+\item \code{cohort_diagnose()} and \code{cohort_diagnose_values()} return a list
+with a logical flag called \code{ok} and a \link[tibble:tibble]{tibble}
+called \code{details}.
+\item \code{cohort_assert()} and \code{cohort_assert_values()} return \code{labels}
+invisibly, or raise an error.
 }
 }
 \description{
@@ -91,6 +120,12 @@ Conditions include:
 \item Having totals or NAs
 \item Having open cohorts
 }
+
+When \code{labels} is a factor, these functions check \strong{levels},
+including unused levels. Use \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} or
+\code{\link[=cohort_assert_values]{cohort_assert_values()}} to check only observed values (useful
+with grouped data) while still returning the original factor
+from \code{cohort_assert_values()}.
 }
 \section{Rules for interpreting inputs}{
 
@@ -149,6 +184,7 @@ cohort_assert(
 }
 \seealso{
 \itemize{
+\item \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} Check observed values only
 \item \code{\link[=age_diagnose]{age_diagnose()}} Age equivalent of \code{cohort_diagnose()}
 \item \code{\link[=period_diagnose]{period_diagnose()}} Period equivalent of \code{cohort_diagnose()}
 }

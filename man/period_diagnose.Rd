@@ -3,6 +3,8 @@
 \name{period_diagnose}
 \alias{period_diagnose}
 \alias{period_assert}
+\alias{period_diagnose_values}
+\alias{period_assert_values}
 \title{Diagnose or Assert Periods}
 \usage{
 period_diagnose(
@@ -19,6 +21,32 @@ period_diagnose(
 )
 
 period_assert(
+  labels,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
+)
+
+period_diagnose_values(
+  labels,
+  no_overlap = FALSE,
+  no_gap = FALSE,
+  no_total = FALSE,
+  no_na = FALSE,
+  has_open_left = FALSE,
+  has_open_right = FALSE,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = c("include", "exclude"),
+  interpret_fail = c("error", "warn", "silent")
+)
+
+period_assert_values(
   labels,
   no_overlap = FALSE,
   no_gap = FALSE,
@@ -71,10 +99,11 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 \itemize{
-\item \code{period_diagnose()} returns a list with a logical flag
-called \code{ok} and a \link[tibble:tibble]{tibble} called \code{details}.
-\item \code{period_assert()} returns \code{labels} invisibly,
-or raises an error.
+\item \code{period_diagnose()} and \code{period_diagnose_values()} return a list
+with a logical flag called \code{ok} and a \link[tibble:tibble]{tibble}
+called \code{details}.
+\item \code{period_assert()} and \code{period_assert_values()} return \code{labels}
+invisibly, or raise an error.
 }
 }
 \description{
@@ -90,6 +119,12 @@ Conditions include:
 \item Having totals or NAs
 \item Having open periods
 }
+
+When \code{labels} is a factor, these functions check \strong{levels},
+including unused levels. Use \code{\link[=period_diagnose_values]{period_diagnose_values()}} or
+\code{\link[=period_assert_values]{period_assert_values()}} to check only observed values (useful
+with grouped data) while still returning the original factor
+from \code{period_assert_values()}.
 }
 \section{Rules for interpreting inputs}{
 
@@ -146,6 +181,7 @@ period_assert(
 }
 \seealso{
 \itemize{
+\item \code{\link[=period_diagnose_values]{period_diagnose_values()}} Check observed values only
 \item \code{\link[=age_diagnose]{age_diagnose()}} Age equivalent of \code{period_diagnose()}
 \item \code{\link[=cohort_diagnose]{cohort_diagnose()}} Cohort equivalent of \code{period_diagnose()}
 }

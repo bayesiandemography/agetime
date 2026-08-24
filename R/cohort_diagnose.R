@@ -13,6 +13,12 @@
 #' - Having totals or NAs
 #' - Having open cohorts
 #'
+#' When `labels` is a factor, these functions check **levels**,
+#' including unused levels. Use [cohort_diagnose_values()] or
+#' [cohort_assert_values()] to check only observed values (useful
+#' with grouped data) while still returning the original factor
+#' from `cohort_assert_values()`.
+#'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
@@ -34,12 +40,14 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `cohort_diagnose()` returns a list with a logical flag
-#'   called `ok` and a [tibble][tibble::tibble()] called `details`.
-#' - `cohort_assert()` returns `labels` invisibly,
-#'   or raises an error.
+#' - `cohort_diagnose()` and `cohort_diagnose_values()` return a list
+#'   with a logical flag called `ok` and a [tibble][tibble::tibble()]
+#'   called `details`.
+#' - `cohort_assert()` and `cohort_assert_values()` return `labels`
+#'   invisibly, or raise an error.
 #'
 #' @seealso
+#' - [cohort_diagnose_values()] Check observed values only
 #' - [age_diagnose()] Age equivalent of `cohort_diagnose()`
 #' - [period_diagnose()] Period equivalent of `cohort_diagnose()`
 #'
@@ -89,6 +97,7 @@ cohort_diagnose <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
+    on = "levels",
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
@@ -121,6 +130,73 @@ cohort_assert <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
+    on = "levels",
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    has_zero = FALSE,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
+    valid_life = FALSE
+  )
+}
+
+#' @rdname cohort_diagnose
+#' @export
+cohort_diagnose_values <- function(labels,
+                                   no_overlap = FALSE,
+                                   no_gap = FALSE,
+                                   no_total = FALSE,
+                                   no_na = FALSE,
+                                   has_open_left = FALSE,
+                                   has_open_right = FALSE,
+                                   interpret_single = c("lower", "upper"),
+                                   interpret_multi = c("include", "exclude"),
+                                   interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- match.arg(interpret_multi)
+  interpret_fail <- match.arg(interpret_fail)
+  inner_diagnose(
+    labels = labels,
+    label_type = "cohort",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail,
+    on = "values",
+    no_overlap = no_overlap,
+    no_gap = no_gap,
+    no_total = no_total,
+    no_na = no_na,
+    has_zero = FALSE,
+    has_open_left = has_open_left,
+    has_open_right = has_open_right,
+    valid_life = FALSE
+  )
+}
+
+#' @rdname cohort_diagnose
+#' @export
+cohort_assert_values <- function(labels,
+                                 no_overlap = FALSE,
+                                 no_gap = FALSE,
+                                 no_total = FALSE,
+                                 no_na = FALSE,
+                                 has_open_left = FALSE,
+                                 has_open_right = FALSE,
+                                 interpret_single = c("lower", "upper"),
+                                 interpret_multi = c("include", "exclude"),
+                                 interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- match.arg(interpret_multi)
+  interpret_fail <- match.arg(interpret_fail)
+  inner_assert(
+    labels = labels,
+    label_type = "cohort",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail,
+    on = "values",
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,

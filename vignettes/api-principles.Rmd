@@ -153,6 +153,12 @@ labels <- c("0-4", "60-64")
 age_coarsen(labels, breaks = c(0, 50, 70), open_right = TRUE)
 ```
 
+`*_diagnose()` and `*_assert()` follow the same levels contract: for a
+factor they validate levels, including unused ones. Use
+`*_diagnose_values()` / `*_assert_values()` when you want to check only
+observed values (for example in a grouped pipeline) and still keep the
+original factor from assert.
+
 ## More information
 
 - See `vignette("agetime")` for a quick start.

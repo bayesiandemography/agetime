@@ -6,7 +6,7 @@ test_that("inner_diagnose_no_gap() passes for contiguous intervals", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_no_gap(intervals)
+  val <- agetime:::inner_diagnose_no_gap(intervals, on = "levels")
 
   expect_identical(val$condition, "no_gap")
   expect_identical(val$passed, TRUE)
@@ -21,7 +21,7 @@ test_that("inner_diagnose_no_na() passes when there is no NA", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_no_na(intervals)
+  val <- agetime:::inner_diagnose_no_na(intervals, on = "levels")
 
   expect_identical(val$condition, "no_na")
   expect_identical(val$passed, TRUE)
@@ -36,7 +36,7 @@ test_that("inner_diagnose_has_zero() passes when zero is present", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_has_zero(intervals)
+  val <- agetime:::inner_diagnose_has_zero(intervals, on = "levels")
 
   expect_identical(val$condition, "has_zero")
   expect_identical(val$passed, TRUE)
@@ -51,7 +51,7 @@ test_that("inner_diagnose_has_open_right() passes when open-right interval is pr
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_has_open_right(intervals)
+  val <- agetime:::inner_diagnose_has_open_right(intervals, on = "levels")
 
   expect_identical(val$condition, "has_open_right")
   expect_identical(val$passed, TRUE)
@@ -66,7 +66,7 @@ test_that("inner_diagnose_has_open_left() passes when open-left cohort is presen
     interpret_multi = "include",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_has_open_left(intervals)
+  val <- agetime:::inner_diagnose_has_open_left(intervals, on = "levels")
 
   expect_identical(val$condition, "has_open_left")
   expect_identical(val$passed, TRUE)
@@ -81,7 +81,7 @@ test_that("inner_diagnose_has_open_right() passes when open-right period is pres
     interpret_multi = "include",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_has_open_right(intervals)
+  val <- agetime:::inner_diagnose_has_open_right(intervals, on = "levels")
 
   expect_identical(val$condition, "has_open_right")
   expect_identical(val$passed, TRUE)
@@ -96,7 +96,7 @@ test_that("inner_diagnose_valid_life() passes for valid labels", {
     interpret_multi = "exclude",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_valid_life(intervals)
+  val <- agetime:::inner_diagnose_valid_life(intervals, on = "levels")
 
   expect_identical(val$condition, "valid_life")
   expect_identical(val$passed, TRUE)
@@ -110,6 +110,7 @@ test_that("inner_diagnose() skips checks when all flags are FALSE", {
     interpret_single = "lower",
     interpret_multi = "exclude",
     interpret_fail = "error",
+    on = "levels",
     no_overlap = FALSE,
     no_gap = FALSE,
     no_total = FALSE,

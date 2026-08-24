@@ -81,3 +81,73 @@ test_that("character checks ignore duplicated labels", {
     age_diagnose(char_dup, no_gap = TRUE)$ok
   )
 })
+
+test_that("age_diagnose_values() ignores unused factor levels", {
+  fac <- factor("0-4", levels = c("0-4", "3-7"))
+
+  expect_false(age_diagnose(fac, no_overlap = TRUE)$ok)
+  expect_true(age_diagnose_values(fac, no_overlap = TRUE)$ok)
+})
+
+test_that("age_assert_values() preserves the original factor", {
+  fac <- factor("0-4", levels = c("0-4", "3-7"))
+
+  expect_error(age_assert(fac, no_overlap = TRUE), "Assertion failed")
+  ans <- age_assert_values(fac, no_overlap = TRUE)
+  expect_identical(ans, fac)
+})
+
+test_that("failure comments name levels or values", {
+  fac <- factor("0-4", levels = c("0-4", "3-7"))
+
+  expect_match(
+    age_diagnose(fac, no_overlap = TRUE)$details$comment,
+    "among levels"
+  )
+  expect_match(
+    age_diagnose(c("0-4", "3-7"), no_overlap = TRUE)$details$comment,
+    "among levels"
+  )
+  expect_match(
+    age_diagnose_values(c("0-4", "3-7"), no_overlap = TRUE)$details$comment,
+    "among values"
+  )
+})
+
+test_that("age_assert() error mentions levels for unused overlap", {
+  fac <- factor("0-4", levels = c("0-4", "3-7"))
+  expect_error(age_assert(fac, no_overlap = TRUE), "among levels")
+})
+
+test_that("character base and values diagnose agree", {
+  char <- c("0-4", "5-9")
+  expect_identical(
+    age_diagnose(char, no_gap = TRUE, no_overlap = TRUE),
+    age_diagnose_values(char, no_gap = TRUE, no_overlap = TRUE)
+  )
+})
+
+test_that("period_diagnose_values() ignores unused factor levels", {
+  fac <- factor("2020-2025", levels = c("2020-2025", "2023-2028"))
+
+  expect_false(period_diagnose(fac, no_overlap = TRUE)$ok)
+  expect_true(period_diagnose_values(fac, no_overlap = TRUE)$ok)
+  expect_identical(
+    period_assert_values(fac, no_overlap = TRUE),
+    fac
+  )
+})
+
+test_that("cohort_diagnose_values() ignores unused factor levels", {
+  fac <- factor(
+    c("2020-2025", "2025-2030"),
+    levels = c("2020-2025", "2025-2030", "Total")
+  )
+
+  expect_false(cohort_diagnose(fac, no_total = TRUE)$ok)
+  expect_true(cohort_diagnose_values(fac, no_total = TRUE)$ok)
+  expect_identical(
+    cohort_assert_values(fac, no_total = TRUE),
+    fac
+  )
+})
