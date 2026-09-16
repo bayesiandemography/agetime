@@ -2,7 +2,7 @@
 % Please edit documentation in R/cohort_extend.R
 \name{cohort_extend}
 \alias{cohort_extend}
-\title{Extend a Set of Cohorts}
+\title{Extend a Set of Cohort Labels}
 \usage{
 cohort_extend(
   labels,
@@ -44,7 +44,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Character vector or factor.
 }
 \description{
-Continue an existing set of cohort labels.
+Add new cohort labels to the end of an existing set.
 }
 \details{
 By default, the width of the new cohorts

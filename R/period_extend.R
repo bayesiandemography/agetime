@@ -1,6 +1,6 @@
-#' Extend a Set of Periods
+#' Extend a Set of Period Labels
 #'
-#' Continue an existing set of period labels.
+#' Add new period labels to the end of an existing set.
 #'
 #' By default, the width of the new periods
 #' is derived from the last element of `labels`,

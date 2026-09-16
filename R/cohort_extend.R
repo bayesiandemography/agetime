@@ -1,6 +1,6 @@
-#' Extend a Set of Cohorts
+#' Extend a Set of Cohort Labels
 #'
-#' Continue an existing set of cohort labels.
+#' Add new cohort labels to the end of an existing set.
 #'
 #' By default, the width of the new cohorts
 #' is derived from the last element of `labels`,

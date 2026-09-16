@@ -2,7 +2,7 @@
 % Please edit documentation in R/period_extend.R
 \name{period_extend}
 \alias{period_extend}
-\title{Extend a Set of Periods}
+\title{Extend a Set of Period Labels}
 \usage{
 period_extend(
   labels,
@@ -44,7 +44,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Character vector or factor.
 }
 \description{
-Continue an existing set of period labels.
+Add new period labels to the end of an existing set.
 }
 \details{
 By default, the width of the new periods

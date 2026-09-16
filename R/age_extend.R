@@ -1,7 +1,7 @@
-#' Extend a Set of Age Groups
+#' Extend a Set of Age Group Labels
 #'
-#' Continue an existing set of age group labels.
-#'
+#' Add new age group labels to the end of an existing set.
+#' 
 #' By default, the width of the new age groups
 #' is derived from the last element of `labels`,
 #' but a value can be specified through the

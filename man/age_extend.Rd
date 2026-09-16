@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_extend.R
 \name{age_extend}
 \alias{age_extend}
-\title{Extend a Set of Age Groups}
+\title{Extend a Set of Age Group Labels}
 \usage{
 age_extend(
   labels,
@@ -32,7 +32,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Character vector or factor.
 }
 \description{
-Continue an existing set of age group labels.
+Add new age group labels to the end of an existing set.
 }
 \details{
 By default, the width of the new age groups

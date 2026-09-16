@@ -86,9 +86,13 @@
 #' )
 #'
 #' ## factor with unused overlapping level
-#' fac <- factor("0-4", levels = c("0-4", "3-7"))
-#' age_diagnose(fac, no_overlap = TRUE)$ok
-#' age_diagnose_values(fac, no_overlap = TRUE)$ok
+#' fac <- factor(
+#'   x = "0-4",
+#'   levels = c("0-4", "3-7")
+#' )
+#' fac
+#' age_diagnose(fac, no_overlap = TRUE)
+#' age_diagnose_values(fac, no_overlap = TRUE)
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table

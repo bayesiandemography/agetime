@@ -179,6 +179,15 @@ period_assert(
   no_overlap = TRUE,
   no_gap = TRUE
 )
+
+## factor with unused levels
+fac <- factor(
+  x = "2020-2025",
+  levels = c("2020-2025", "2030-2035")
+)
+fac
+period_diagnose(fac, no_gap = TRUE)
+period_diagnose_values(fac, no_gap = TRUE)
 }
 \seealso{
 \itemize{
