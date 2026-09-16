@@ -13,7 +13,7 @@
 #' | [age_width()]    | [period_width()] | [cohort_width()] |
 #' | [age_mid()]      | [period_mid()]   | [cohort_mid()]   |
 #'
-#' **Identify open intervals, totals, and missing**
+#' **Identify open intervals, totals, and missing values**
 #'
 #' |                  |                   |                   |
 #' |------------------|-------------------|-------------------|

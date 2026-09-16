@@ -83,8 +83,8 @@ age_coarsen <- function(labels,
 #' Recode age group labels so they match a second set of labels.
 #'
 #' Every interval in `labels` must lie in exactly one interval in `to`.
-#' Intervals in `to` must not overlap. Gaps in `to` are allowed if
-#' nothing in `labels` falls in them.
+#' Intervals in `to` must not overlap. Gaps in `to` are allowed,
+#' provided that no intervals in `labels` fall within them.
 #'
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.

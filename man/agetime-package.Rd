@@ -21,7 +21,7 @@ labels for age groups, periods, and cohorts.
 }
 
 
-\strong{Identify open intervals, totals, and missing}\tabular{lll}{
+\strong{Identify open intervals, totals, and missing values}\tabular{lll}{
     \tab  \tab  \cr
     \tab \code{\link[=period_is_open_left]{period_is_open_left()}} \tab \code{\link[=cohort_is_open_left]{cohort_is_open_left()}} \cr
    \code{\link[=age_is_open_right]{age_is_open_right()}} \tab \code{\link[=period_is_open_right]{period_is_open_right()}} \tab \code{\link[=cohort_is_open_right]{cohort_is_open_right()}} \cr

@@ -39,8 +39,8 @@ Recode period labels so they match a second set of labels.
 }
 \details{
 Every interval in \code{labels} must lie in exactly one interval in \code{to}.
-Intervals in \code{to} must not overlap. Gaps in \code{to} are allowed if
-nothing in \code{labels} falls in them.
+Intervals in \code{to} must not overlap. Gaps in \code{to} are allowed,
+provided that no intervals in \code{labels} fall within them.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.
