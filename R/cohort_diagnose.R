@@ -1,4 +1,4 @@
-#' Diagnose or Assert Cohorts
+#' Diagnostics and Assertions for Cohorts
 #'
 #' @description
 #' `cohort_diagnose()` reports whether cohort labels
@@ -13,11 +13,12 @@
 #' - Having totals or NAs
 #' - Having open cohorts
 #'
-#' When `labels` is a factor, these functions check **levels**,
-#' including unused levels. Use [cohort_diagnose_values()] or
-#' [cohort_assert_values()] to check only observed values (useful
-#' with grouped data) while still returning the original factor
-#' from `cohort_assert_values()`.
+#' If `labels` is a factor, `cohort_diagnose()` and `cohort_assert()`
+#' check levels, including unused levels, rather than values.
+#' To check the values of a factor, use `cohort_diagnose_values()`
+#' or `cohort_assert_values()`. Checking values rather than levels
+#' is sometimes useful when working with subsets of factors,
+#' such as when working with grouped data.
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'

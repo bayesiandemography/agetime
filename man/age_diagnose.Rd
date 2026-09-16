@@ -5,7 +5,7 @@
 \alias{age_assert}
 \alias{age_diagnose_values}
 \alias{age_assert_values}
-\title{Diagnose or Assert Age Groups}
+\title{Diagnostics and Assertions for Age Groups}
 \usage{
 age_diagnose(
   labels,
@@ -111,11 +111,12 @@ Conditions include:
 \item Valid for an abridged life table
 }
 
-When \code{labels} is a factor, these functions check \strong{levels},
-including unused levels. Use \code{\link[=age_diagnose_values]{age_diagnose_values()}} or
-\code{\link[=age_assert_values]{age_assert_values()}} to check only observed values (useful
-with grouped data) while still returning the original factor
-from \code{age_assert_values()}.
+If \code{labels} is a factor, \code{age_diagnose()} and \code{age_assert()}
+check levels, including unused levels, rather than values.
+To check the values of a factor, use \code{age_diagnose_values()}
+or \code{age_assert_values()}. Checking values rather than levels
+is sometimes useful when working with subsets of factors,
+such as when working with grouped data.
 }
 \section{Abridged and complete life tables}{
 

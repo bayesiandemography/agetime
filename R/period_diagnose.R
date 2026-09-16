@@ -1,4 +1,4 @@
-#' Diagnose or Assert Periods
+#' Diagnostics and Assertions for Periods
 #'
 #' @description
 #' `period_diagnose()` reports whether period labels
@@ -13,11 +13,12 @@
 #' - Having totals or NAs
 #' - Having open periods
 #'
-#' When `labels` is a factor, these functions check **levels**,
-#' including unused levels. Use [period_diagnose_values()] or
-#' [period_assert_values()] to check only observed values (useful
-#' with grouped data) while still returning the original factor
-#' from `period_assert_values()`.
+#' If `labels` is a factor, `period_diagnose()` and `period_assert()`
+#' check levels, including unused levels, rather than values.
+#' To check the values of a factor, use `period_diagnose_values()`
+#' or `period_assert_values()`. Checking values rather than levels
+#' is sometimes useful when working with subsets of factors,
+#' such as when working with grouped data.
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'

@@ -5,7 +5,7 @@
 \alias{cohort_assert}
 \alias{cohort_diagnose_values}
 \alias{cohort_assert_values}
-\title{Diagnose or Assert Cohorts}
+\title{Diagnostics and Assertions for Cohorts}
 \usage{
 cohort_diagnose(
   labels,
@@ -121,11 +121,12 @@ Conditions include:
 \item Having open cohorts
 }
 
-When \code{labels} is a factor, these functions check \strong{levels},
-including unused levels. Use \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} or
-\code{\link[=cohort_assert_values]{cohort_assert_values()}} to check only observed values (useful
-with grouped data) while still returning the original factor
-from \code{cohort_assert_values()}.
+If \code{labels} is a factor, \code{cohort_diagnose()} and \code{cohort_assert()}
+check levels, including unused levels, rather than values.
+To check the values of a factor, use \code{cohort_diagnose_values()}
+or \code{cohort_assert_values()}. Checking values rather than levels
+is sometimes useful when working with subsets of factors,
+such as when working with grouped data.
 }
 \section{Rules for interpreting inputs}{
 

@@ -1,4 +1,4 @@
-#' Diagnose or Assert Age Groups
+#' Diagnostics and Assertions for Age Groups
 #'
 #' @description
 #' `age_diagnose()` reports whether age group labels
@@ -14,11 +14,12 @@
 #' - Having open age groups
 #' - Valid for an abridged life table
 #'
-#' When `labels` is a factor, these functions check **levels**,
-#' including unused levels. Use [age_diagnose_values()] or
-#' [age_assert_values()] to check only observed values (useful
-#' with grouped data) while still returning the original factor
-#' from `age_assert_values()`.
+#' If `labels` is a factor, `age_diagnose()` and `age_assert()`
+#' check levels, including unused levels, rather than values.
+#' To check the values of a factor, use `age_diagnose_values()`
+#' or `age_assert_values()`. Checking values rather than levels
+#' is sometimes useful when working with subsets of factors,
+#' such as when working with grouped data.
 #'
 #' @section Abridged and complete life tables:
 #'

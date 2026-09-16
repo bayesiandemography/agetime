@@ -5,7 +5,7 @@
 \alias{period_assert}
 \alias{period_diagnose_values}
 \alias{period_assert_values}
-\title{Diagnose or Assert Periods}
+\title{Diagnostics and Assertions for Periods}
 \usage{
 period_diagnose(
   labels,
@@ -120,11 +120,12 @@ Conditions include:
 \item Having open periods
 }
 
-When \code{labels} is a factor, these functions check \strong{levels},
-including unused levels. Use \code{\link[=period_diagnose_values]{period_diagnose_values()}} or
-\code{\link[=period_assert_values]{period_assert_values()}} to check only observed values (useful
-with grouped data) while still returning the original factor
-from \code{period_assert_values()}.
+If \code{labels} is a factor, \code{period_diagnose()} and \code{period_assert()}
+check levels, including unused levels, rather than values.
+To check the values of a factor, use \code{period_diagnose_values()}
+or \code{period_assert_values()}. Checking values rather than levels
+is sometimes useful when working with subsets of factors,
+such as when working with grouped data.
 }
 \section{Rules for interpreting inputs}{
 
