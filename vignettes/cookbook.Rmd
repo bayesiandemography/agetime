@@ -1,16 +1,14 @@
 ---
-title: "Cookbook"
+title: "Cookbook for agetime Package"
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 2
 vignette: >
-  %\VignetteIndexEntry{Cookbook}
+  %\VignetteIndexEntry{Cookbook for agetime Package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-This vignette shows how to use functions from package `agetime` to carry out common tasks when working with age, period, and cohort data. 
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -38,7 +36,7 @@ Create a new set of age group, cohort, or period labels.
 
 ### Solution
 
-For labels with regular widths, use function such as `age_labels_ten()` or `period_labels_five()`.
+For labels with regular widths, use functions such as `age_labels_ten()` or `period_labels_five()`.
 
 ```{r labels-from-scratch-regular}
 age_labels_ten()
@@ -48,7 +46,7 @@ period_labels_five(
 )
 ```
 
-For labels with irregular widths, use `age_labels()`, `period_labels()`, or `cohort_labels()`.
+For labels with irregular widths, use `age_labels()`, `period_labels()`, or `cohort_labels()`, and specify the breaks.
 
 ```{r labels-from-scratch-irregular}
 age_labels(
@@ -62,7 +60,7 @@ cohort_labels(
 
 ### Discussion
 
-There is no universally accepted set of conventions on how age, period, and cohort labels should be formatted, but `agetime` tries to reflect common practices among statisticians and social scientists.
+There is no universally accepted set of conventions on how age, period, and cohort labels should be formatted, but `agetime` tries to reflect common practices.
 
 ### See Also
 
@@ -118,22 +116,22 @@ period_extend(recent, n = 2)
 
 - `age_extend()` extends age groups and `cohort_extend()` extends cohorts.
 
-## Specify an open age group, period, or cohort
+## Specify an open-ended age group, period, or cohort
 
 ### Problem
 
-Move the starting point of existing open age groups, periods, or cohorts, or specify a new open age group, period, or cohort.
+Move the starting point of existing open age groups, open periods, or open cohorts, or specify a new open age group, open period, or open cohort.
 
-An open age group, period, or cohort is an interval with no lower limit (e.g. `"<2000"`) or no upper limit (e.g. `"85+"`).
+An open interval is one that has no lower limit (e.g. `"<2000"`) or no upper limit (e.g. `"85+"`).
 
 ### Solution
 
 Use 
  
- - `age_set_open_right()`
- - `period_set_open_left()`
- - `period_set_open_right()`
- - `cohort_set_open_left()`
+ - `age_set_open_right()`,
+ - `period_set_open_left()`,
+ - `period_set_open_right()`,
+ - `cohort_set_open_left()`, or
  - `cohort_set_open_right()`.
 
 ```{r set-open}
@@ -154,7 +152,14 @@ The `set_open` functions change factor levels along with the values.
 
 ### See Also
 
-- Use `age_is_open_right()`, `period_is_open_left()`, `period_is_open_right()`, `cohort_is_open_left()`, and `cohort_is_open_right()` to identify open intervals
+- Use
+  - `age_is_open_right()`,
+  - `period_is_open_left()`,
+  - `period_is_open_right()`,
+  - `cohort_is_open_left()`, or
+  - `cohort_is_open_right()`
+  
+  to identify open intervals.
 - The `coarsen`, `fill`, and `set_order` functions, like the `set_open` functions, always return factors
 
 
@@ -198,8 +203,7 @@ If `labels` is not a factor, `age_set_order()` turns it into one.
 
 ### Problem
 
-Ensure every age group appears in a table, including age groups with
-no observations.
+Ensure that a table includes all age groups, including age groups with no observations.
 
 ### Solution
 
@@ -240,10 +244,10 @@ all_ages |>
 
 - Periods and cohorts have equivalent `labels` functions.
 - The `fill` functions (e.g. `age_fill_five()`) add intermediate levels to a factor.
-- [Order levels for tables and plots](#order-levels-for-tables-and-plots)
+- [Create an age variable that sorts properly](#sort-age-permanently)
 
 
-## Validate incoming labels
+## Validate labels {#validate-labels}
 
 ### Problem
 
@@ -252,7 +256,7 @@ stop a pipeline.
 
 ### Solution
 
-Use `*_diagnose()` for diagnostics and `*_assert()` to fail fast.
+Use the `*_diagnose()` functions for diagnostics. Use the `*_assert()` functions to throw an error as soon as a condition is violated.
 
 ```{r validate}
 lab <- c("2020-2025", "2025-2030", "2030-2035")
@@ -269,22 +273,56 @@ pop |>
 
 ### Discussion
 
-`*_diagnose()` returns a list with an `ok` flag and details. `*_assert()`
-returns its input invisibly when checks pass, so it fits in a mutate
-pipeline.
+`*_diagnose()` functions return a list with an `ok` flag and details.
 
-When `labels` is a factor, these functions check **levels**, including
-unused ones. That matters for grouped data with a shared factor column:
-a per-group overlap check can fail because of levels that never appear
-in that group. Use `*_diagnose_values()` / `*_assert_values()` to check
-only observed values while still returning the original factor from
-assert. Failure comments say whether the check used levels or values.
+`*_assert()` functions return their input invisibly when checks pass. Returning their inputs allows them to be used in pipelines.
+
 
 ### See Also
 
-- `?age_diagnose` for the full set of conditions
+- `?age_diagnose`, `?period_diagnose`, or `?cohort_diagnose` for the full set of conditions
+- When working with subsets of factors, you might want to [validate labels - based on values, not levels](#validate-labels-values)
 
 
+## Validate labels - based on values, not levels {#validate-labels-values}
+
+### Problem
+
+When `labels` is a factor, the `*_diagnose()` and `*_assert()` functions check factor *levels*, including unused levels, rather than the values themselves. For instance, if we have
+```
+labels <- factor(c("0-4", "5-9"))
+```
+then the check
+```
+age_assert(labels[2], has_zero = TRUE)
+```
+will pass because it is applied to the levels of `labels[2]` (i.e. `c("0-4", "5-9")`) and not the value (`"5-9"`).
+
+This means, for instance, that the following test will pass, even though the `"M"` group does not have any age groups starting with 0.
+
+```{r validate-values-problem}
+df <- tibble(
+  age = factor(c("0-4", "5-9", "5-9")),
+  gender = c("F", "F", "M")
+) |>
+group_by(gender)
+
+df |>
+  mutate(age = age_assert(age, has_zero = TRUE))
+```
+
+### Solution
+
+To check the values of a factor, rather than the levels, use `*_diagnose_values()` and `*_assert_values()`.
+
+```{r validate-values-solution, error = TRUE}
+df |>
+  mutate(age = age_assert_values(age, has_zero = TRUE))
+```
+
+### See Also
+
+- [Validate labels](#validate-labels) for checking factor levels, not values
 
 
 # Analyse data
@@ -315,8 +353,18 @@ df |>
 
 ### See Also
 
-TODO - ADD LINKS
+- Use
+  - `age_is_total()`,
+  - `period_is_total()`, or
+  - `cohort_is_total()`
 
+  to filter out totals, and use
+  - `age_is_missing()`,
+  - `period_is_missing()`, or
+  - `cohort_is_missing()`
+
+  to filter out not-stated or missing values.
+  
 
 ## Drop totals from a dataset {#drop-totals}
 
@@ -369,7 +417,7 @@ df |>
 
 ### Discussion
 
-`age_is_missing()`, `period_is_missing()`, and `cohort_is_total()` look for `NA`s, but also for text equivalents, such as `"Not stated"`, `"Don't know"` or `"n\a"`.
+`age_is_missing()`, `period_is_missing()`, and `cohort_is_missing()` look for `NA`s, but also for text equivalents, such as `"Not stated"`, `"Don't know"` or `"n/a"`.
 
 ### See Also
 
@@ -380,9 +428,7 @@ df |>
 
 ### Problem
 
-Sort rows by age group as a one-off operation.
-
-Note that sorting on raw age group labels can give the wrong result
+Sorting on raw age group labels gets ages in the wrong order.
 
 ```{r sort-age-wrong-interactive}
 df <- tibble(
@@ -391,7 +437,7 @@ df <- tibble(
 )
 
 df |>
-  arrange(age_group) ## "10-14" comes before "5-9"!!
+  arrange(age_group) ## "10-14" comes before "5-9"
 ```
 
 ### Solution
@@ -446,11 +492,19 @@ df |>
   count(age, wt = respondents, .drop = FALSE) 
 ```
 
+Note that tidyverse functions such as `count()` and `summarise()` drop unused levels by default. If `.drop = FALSE` is not included in the call to `count()`, then the extra level added by `age_fill()` does not appear in the results,
+```{r fill-no-drop}
+df |>
+  mutate(age = age_fill(age)) |>
+  count(age, wt = respondents)
+```
+
+
 ### Discussion
 
 `age_fill()`, `period_fill()`, and `cohort_fill()` change the levels of `labels`, not the values. If `labels` is not a factor, `age_fill()`, `period_fill()`, and `cohort_fill()` turn it into one.
 
-Tidyverse functions such as `count()` and `summarise()` drop unused levels by default. To include these levels, set `.drop` to `FALSE`.
+
 
 ### See Also
 
@@ -465,13 +519,14 @@ The data use one-year age groups. You want to aggregate to five-year age groups.
 
 ### Solution
 
-Coarsen labels, then aggregate.
+Convert to coarser labels, then aggregate.
 
 ```{r coarsen-aggregate}
 deaths <- tibble(
   age = c("0", "1", "2", "5", "6", "10", "11"),
   n = c(3, 1, 2, 4, 5, 6, 7)
 )
+deaths
 
 deaths |>
   mutate(age = age_coarsen_five(age)) |>
@@ -480,8 +535,7 @@ deaths |>
 
 ### Discussion
 
-For irregular age groups, pass `breaks` to `age_coarsen()`. 
-To aggregate to life-table groupings, use `age_coarsen_life()`.
+For irregular age groups, use `age_coarsen()`. To aggregate to (abridged) life-table ages, use `age_coarsen_life()`.
 
 ### See Also
 
@@ -497,7 +551,7 @@ To aggregate to life-table groupings, use `age_coarsen_life()`.
 
 Plots that use non-numeric age groups, periods, or cohorts on the x-axis often look terrible, with overlapping labels and points instead of smooth curves. Sometimes ages are also in the wrong order, e.g. "100+" after "10-14" and "5-9" after "50-54".
 
-```{r mid-plot-problem , fig.width = 5, fig.height = 3.5}
+```{r mid-plot-problem, fig.width = 5, fig.height = 3.5}
 df <- tibble(
   age = age_labels_five(),
   rate = 10 + 0.1 * (1:21)^2 + rnorm(21)
@@ -554,7 +608,7 @@ The width of an open interval is undefined.
 
 ### See Also
 
-- [Plot against interval midpoints](#plot-against-interval-midpoints)
+- [Use age, period, or cohort on the x-axis of a plot](#plot-nicer)
 - `age_width()`, `cohort_width()`
 
 
@@ -562,7 +616,7 @@ The width of an open interval is undefined.
 
 ### Problem
 
-Create lookup table showing the relationship between two age classifications.
+Create a lookup table showing the relationship between two age classifications.
 
 ### Solution
 
@@ -583,6 +637,18 @@ age_mapping(
 Other possible values for `relation` are `"equals"`, `"contains"`, and
 `"overlaps-with"`.
 
+To represent the mapping as a matrix rather than a data frame, set `format` to `"matrix"`,
+
+```{r mapping-matrix}
+age_mapping(
+  labels_x = classif_fine,
+  labels_y = classif_broad,
+  relation = "is-contained-in",
+  format = "matrix"
+)
+```
+
+
 ### See Also
 
 - [Recode labels into another classification](#recode-into-classification)
@@ -590,12 +656,11 @@ Other possible values for `relation` are `"equals"`, `"contains"`, and
 - `age_coarsen_to()`, `period_mapping()`, `cohort_mapping()`
 
 
-## Switch to the age groups used by a second, coarser age variable {#recode-into-classification}
+## Adopt coarser age groups from another age variable {#recode-into-classification}
 
 ### Problem
 
-Current age groups are too fine, and you want to switch
-to the age groups used by a second, coarser set of labels.
+You want to switch to the coarser age groups used by a different age variable.
 
 ### Solution
 
@@ -615,11 +680,7 @@ df |>
 
 ### Discussion
 
-Prefer `age_coarsen()` or `age_coarsen_five()` when the target is a regular
-break grid or fixed width, not an existing label vector.
-
-`age_coarsen_to()` errors if a fine interval does not nest in exactly one
-broad interval, or if labels in `to` overlap.
+If any of the age groups in `labels` do not map uniquely on to an age group in `to`, then `age_coarsen_to()` throws an error.
 
 ### See Also
 
