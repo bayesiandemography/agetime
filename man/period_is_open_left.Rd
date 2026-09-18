@@ -3,7 +3,7 @@
 \name{period_is_open_left}
 \alias{period_is_open_left}
 \alias{period_is_open_right}
-\title{Identify Open Periods}
+\title{Identify Periods With No Lower Limit or No Upper Limit}
 \usage{
 period_is_open_left(
   labels,

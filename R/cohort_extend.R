@@ -1,11 +1,11 @@
 #' Extend a Set of Cohort Labels
 #'
-#' Add new cohort labels to the end of an existing set.
+#' Add new equal-width cohort labels to the end of an existing set.
 #'
 #' By default, the width of the new cohorts
 #' is derived from the last element of `labels`,
 #' but a value can be specified through the
-#' `width` arugment.
+#' `width` argument.
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'

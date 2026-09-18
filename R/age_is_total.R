@@ -79,7 +79,7 @@ age_is_missing <- function(labels,
 }
 
 
-#' Identify Open Age Groups
+#' Identify Age Groups With No Upper Limit
 #'
 #' Find age groups that are open on the right, i.e., that have no upper limit.
 #'

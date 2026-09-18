@@ -1,11 +1,11 @@
 #' Extend a Set of Period Labels
 #'
-#' Add new period labels to the end of an existing set.
+#' Add new equal-width period labels to the end of an existing set.
 #'
 #' By default, the width of the new periods
 #' is derived from the last element of `labels`,
 #' but a value can be specified through the
-#' `width` arugment.
+#' `width` argument.
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'

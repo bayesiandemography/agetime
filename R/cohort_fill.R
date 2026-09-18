@@ -35,7 +35,8 @@
 #'
 #' ## levels are used by functions
 #' ## such as 'table()'
-#' labels |> table()
+#' labels |>
+#'   table()
 #' labels |>
 #'   cohort_fill_ten() |>
 #'   table()

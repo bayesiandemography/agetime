@@ -73,7 +73,8 @@ age_fill_life(labels)
 ## levels are used by functions
 ## such as 'table()'
 labels <- c("30-39", "0-9")
-labels |> table()
+labels |>
+  table()
 labels |>
   age_fill() |>
   table()

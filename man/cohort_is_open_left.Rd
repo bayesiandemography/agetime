@@ -3,7 +3,7 @@
 \name{cohort_is_open_left}
 \alias{cohort_is_open_left}
 \alias{cohort_is_open_right}
-\title{Identify Open Cohorts}
+\title{Identify Cohorts With No Lower Limit or No Upper Limit}
 \usage{
 cohort_is_open_left(
   labels,

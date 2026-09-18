@@ -91,7 +91,7 @@ period_is_missing <- function(labels,
 }
 
 
-#' Identify Open Periods
+#' Identify Periods With No Lower Limit or No Upper Limit
 #'
 #' Find periods that are open on the left or right.
 #'

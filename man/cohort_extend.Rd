@@ -44,13 +44,13 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Character vector or factor.
 }
 \description{
-Add new cohort labels to the end of an existing set.
+Add new equal-width cohort labels to the end of an existing set.
 }
 \details{
 By default, the width of the new cohorts
 is derived from the last element of \code{labels},
 but a value can be specified through the
-\code{width} arugment.
+\code{width} argument.
 }
 \section{Rules for interpreting inputs}{
 

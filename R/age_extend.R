@@ -1,11 +1,11 @@
 #' Extend a Set of Age Group Labels
 #'
-#' Add new age group labels to the end of an existing set.
+#' Add new equal-width age group labels to the end of an existing set.
 #' 
 #' By default, the width of the new age groups
 #' is derived from the last element of `labels`,
 #' but a value can be specified through the
-#' `width` arugment.
+#' `width` argument.
 #'
 #' @inheritParams age_lower
 #' @param n Number of age groups to add.

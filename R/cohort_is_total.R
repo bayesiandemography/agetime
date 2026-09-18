@@ -91,7 +91,7 @@ cohort_is_missing <- function(labels,
 }
 
 
-#' Identify Open Cohorts
+#' Identify Cohorts With No Lower Limit or No Upper Limit
 #'
 #' Find cohorts that are open on the left or right.
 #'

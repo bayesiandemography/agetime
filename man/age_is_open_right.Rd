@@ -2,7 +2,7 @@
 % Please edit documentation in R/age_is_total.R
 \name{age_is_open_right}
 \alias{age_is_open_right}
-\title{Identify Open Age Groups}
+\title{Identify Age Groups With No Upper Limit}
 \usage{
 age_is_open_right(labels, interpret_fail = c("error", "warn", "silent"))
 }
