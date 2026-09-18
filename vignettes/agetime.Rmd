@@ -16,9 +16,9 @@ knitr::opts_chunk$set(
 
 Multi-year age groups, periods, and cohorts are stored as character vectors or factors with labels such as `"0-14"`, `"2020-2025"`, or `"1980-1990"`. Working with these label vectors can be awkward. Identifying 5-year age groups older than 60, for instance, is harder than it should be. 
 
-**agetime** makes working with label vectors easy. **agetime** functions know how to interpret age, period, and cohort labels, and can work directly with label vectors. **agetime** contains functions for validating, manipulating, and extracting information from label vectors.
+`agetime` makes working with label vectors easy. `agetime` functions know how to interpret age, period, and cohort labels, and can work directly with label vectors. `agetime` contains functions for validating, manipulating, and extracting information from label vectors.
 
-**agetime** functions for age groups, periods, and cohorts follow a common pattern. This vignette uses age groups to illustrate the pattern.
+`agetime` functions for age groups, periods, and cohorts follow a common pattern. This vignette uses age groups to illustrate the pattern.
 
 ## Read intervals from labels
 
@@ -52,7 +52,7 @@ df |>
 
 ## Find special labels
 
-**agetime** understands open intervals and totals.
+`agetime` understands open intervals and totals.
 
 ```{r filter-total-open}
 df <- tibble(

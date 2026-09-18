@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-**agetime** functions are designed around label vectors. A label such as
+`agetime` functions are designed around label vectors. A label such as
 `"5-9"`, `"2020-2025"`, or `"<1990"` is a character value, but it also
 implies an interval. The API tries to make this distinction explicit:
 some functions read intervals from existing labels, some functions create

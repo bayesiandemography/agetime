@@ -31,7 +31,7 @@ labels for age groups, periods, and cohorts.
 }
 
 
-\strong{Use agetime default format}\tabular{lll}{
+\strong{Use \pkg{agetime} default format}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_standard]{age_standard()}} \tab \code{\link[=period_standard]{period_standard()}} \tab \code{\link[=cohort_standard]{cohort_standard()}} \cr
 }

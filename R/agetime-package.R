@@ -23,7 +23,7 @@
 #' | [age_is_missing()] | [period_is_missing()] | [cohort_is_missing()] |
 #' | [age_is_subtotal()] | [period_is_subtotal()] | [cohort_is_subtotal()] |
 #'
-#' **Use agetime default format**
+#' **Use \pkg{agetime} default format**
 #'
 #' |                  |                     |                     |
 #' |------------------|---------------------|---------------------|
