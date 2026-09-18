@@ -143,6 +143,18 @@ Age group functions have period and cohort equivalents. For instance:
 | `age_labels_five()` | `period_labels_five()` | `cohort_labels_five()` |
 | `age_coarsen()`      | `period_coarsen()`      | `cohort_coarsen()`      |
 
+## Function groups
+
+Most functions fall into one of five groups:
+
+| Group | Examples | Task | Return value |
+|--------------------------|---------------------------------------------------------------|-------------------------------------------|----------------------------------|
+| Read labels | `age_lower()`, `age_upper()`, `age_mid()`, `age_width()`, `age_is_total()` | Extract limits or identify special labels | Numeric or logical |
+| Create or reformat labels | `age_labels_five()`, `age_standard()`, `age_extend()` | Create a new series, or reformat existing labels | Character, or same type as `labels` |
+| Reshape levels | `age_coarsen()`, `age_fill()`, `age_set_open_right()`, `age_set_order()` | Recode values and set factor levels | Factor |
+| Check | `age_diagnose()`, `age_assert()` | Validate labels | Diagnostics, or `labels` |
+| Map | `age_mapping()` | Relate two sets of labels | Tibble or matrix |
+
 
 ## More information
 

@@ -137,18 +137,16 @@ Use
 ```{r set-open}
 labels_age <- c("0-4", "60-64", "90+")
 age_set_open_right(labels_age, at = 80)
-
-labels_cohort <- c("2000-2004", "2010-2014")
-labels_cohort |>
-  cohort_set_open_left(at = 1990) |>
-  table()
 ```
 
 ### Discussion
 
-The `set_open` functions always return factors. If the `labels` argument is not a factor, then the `set_open` functions turn it into one.
-
-The `set_open` functions change factor levels along with the values.
+The `set_open` functions always return factors. If you would prefer a character vector, call `as.character()` on the result,
+```{r set-open-character}
+labels_age |>
+  age_set_open_right(at = 80) |>
+  as.character()
+```
 
 ### See Also
 
