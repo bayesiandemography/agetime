@@ -19,8 +19,7 @@ period_mapping(
 \arguments{
 \item{labels_x}{Vector of period labels.}
 
-\item{labels_y}{Vector of period labels. If
-no value supplied, \code{labels_x} is mapped onto itself.}
+\item{labels_y}{Vector of period labels or \code{NULL}.}
 
 \item{relation}{Relationship between
 labels. Choices are \code{"equals"} (the default),
@@ -54,9 +53,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 depending on the value of \code{format}.
 }
 \description{
-Create a mapping between period labels. A mapping
-depicts a relationship between \code{labels_x} and \code{labels_y}.
-The types of relationship that can be mapped are:
+Create a mapping depicting the relationship between \code{labels_x} and \code{labels_y}. The types of relationship that can be mapped are:
 \itemize{
 \item "\code{labels_x} equals \code{labels_y}"
 \item "\code{labels_x} contains \code{labels_y}"

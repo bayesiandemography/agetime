@@ -17,8 +17,7 @@ age_mapping(
 \arguments{
 \item{labels_x}{Vector of age group labels.}
 
-\item{labels_y}{Vector of age group labels. If
-no value supplied, \code{labels_x} is mapped onto itself.}
+\item{labels_y}{Vector of age group labels or \code{NULL}.}
 
 \item{relation}{Relationship between
 labels. Choices are \code{"equals"} (the default),
@@ -42,9 +41,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 depending on the value of \code{format}.
 }
 \description{
-Create a mapping between age group labels. A mapping
-depicts a relationship between \code{labels_x} and \code{labels_y}.
-The types of relationship that can be mapped are:
+Create a mapping depicting the relationship between \code{labels_x} and \code{labels_y}. The types of relationship that can be mapped are:
 \itemize{
 \item "\code{labels_x} equals \code{labels_y}"
 \item "\code{labels_x} contains \code{labels_y}"
@@ -90,23 +87,6 @@ age_mapping(labels_x = x, labels_y = y, format = "matrix")
 # map labels_x onto itself
 x <- c("0--4", "0-4", "5+")
 age_mapping(x)
-
-## recode a data-frame column into categories from labels_y
-library(dplyr, warn.conflicts = FALSE)
-df <- tibble(
-  age = c("0", "1", "5", "10", "11"),
-  n = c(3, 1, 4, 6, 7)
-)
-y <- c("0-4", "5-9", "10-14")
-map <- age_mapping(
-  df$age,
-  y,
-  relation = "is-contained-in",
-  name_x = "age"
-)
-df <- df |>
-  left_join(map, by = "age")
-df
 }
 \seealso{
 \itemize{

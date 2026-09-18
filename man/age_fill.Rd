@@ -48,9 +48,8 @@ age groups are added as factor levels.
 
 \itemize{
 \item An abridged life table uses age groups \code{"0"}
-and \code{"1-4"}, followed by 5-year age groups \code{"5-9"}, \code{"10-14"}, ...
-\item A complete life table uses single-year age groups
-\code{"0"}, \code{"1"}, \code{"2"}, ...
+and \code{"1-4"}, followed by 5-year age groups such as \code{"5-9"} and \code{"10-14"}.
+\item A complete life table uses single-year age groups such as \code{"0"}, \code{"1"}, and \code{"2"}.
 \item Both types of life table usually have an open age group
 such as \code{"85+"} or \code{"100+"}.
 }

@@ -2,9 +2,7 @@
 #'
 #' @description
 #'
-#' Create a mapping between period labels. A mapping
-#' depicts a relationship between `labels_x` and `labels_y`.
-#' The types of relationship that can be mapped are:
+#' Create a mapping depicting the relationship between `labels_x` and `labels_y`. The types of relationship that can be mapped are:
 #' - "`labels_x` equals `labels_y`"
 #' - "`labels_x` contains `labels_y`"
 #' - "`labels_x` is contained in `labels_y`"
@@ -34,8 +32,7 @@
 #'
 #' @inheritParams period_lower
 #' @param labels_x Vector of period labels.
-#' @param labels_y Vector of period labels. If
-#' no value supplied, `labels_x` is mapped onto itself.
+#' @param labels_y Vector of period labels or `NULL`.
 #' @param relation Relationship between
 #' labels. Choices are `"equals"` (the default),
 #' `"contains"`, `"is-contained-in"`, and `"overlaps-with"`.

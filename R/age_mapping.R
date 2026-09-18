@@ -2,9 +2,7 @@
 #'
 #' @description
 #'
-#' Create a mapping between age group labels. A mapping
-#' depicts a relationship between `labels_x` and `labels_y`.
-#' The types of relationship that can be mapped are:
+#' Create a mapping depicting the relationship between `labels_x` and `labels_y`. The types of relationship that can be mapped are:
 #' - "`labels_x` equals `labels_y`"
 #' - "`labels_x` contains `labels_y`"
 #' - "`labels_x` is contained in `labels_y`"
@@ -32,8 +30,7 @@
 #'
 #' @inheritParams age_lower
 #' @param labels_x Vector of age group labels.
-#' @param labels_y Vector of age group labels. If
-#' no value supplied, `labels_x` is mapped onto itself.
+#' @param labels_y Vector of age group labels or `NULL`.
 #' @param relation Relationship between
 #' labels. Choices are `"equals"` (the default),
 #' `"contains"`, `"is-contained-in"`, and `"overlaps-with"`.
@@ -70,23 +67,6 @@
 #' # map labels_x onto itself
 #' x <- c("0--4", "0-4", "5+")
 #' age_mapping(x)
-#'
-#' ## recode a data-frame column into categories from labels_y
-#' library(dplyr, warn.conflicts = FALSE)
-#' df <- tibble(
-#'   age = c("0", "1", "5", "10", "11"),
-#'   n = c(3, 1, 4, 6, 7)
-#' )
-#' y <- c("0-4", "5-9", "10-14")
-#' map <- age_mapping(
-#'   df$age,
-#'   y,
-#'   relation = "is-contained-in",
-#'   name_x = "age"
-#' )
-#' df <- df |>
-#'   left_join(map, by = "age")
-#' df
 #' @export
 # When labels_x or labels_y is character(0), or a factor with no levels, returns
 # an empty mapping (zero-row tibble or zero-by-zero matrix, per format).

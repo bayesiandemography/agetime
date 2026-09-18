@@ -66,7 +66,7 @@ See below for examples.
 
 \code{period_mid()} assigns open periods (e.g., \code{"2025+"})
 honorary midpoints, which are useful for plotting.
-These midpoints are based on half the median width of
+These midpoints use half the median width of
 the closed intervals in \code{labels}.
 }
 \section{Rules for interpreting inputs}{

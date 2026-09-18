@@ -12,7 +12,7 @@
 #' is open on the right, i.e. has no upper limit.
 #' Default is `TRUE`.
 #' @param lower_first Lower limit of
-#' youngest age group.
+#' first age group.
 #' @param lower_last Lower limit of
 #' last age group.
 #' @param include_total Whether to include a

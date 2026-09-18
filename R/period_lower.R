@@ -10,7 +10,7 @@
 #'
 #' `period_mid()` assigns open periods (e.g., `"2025+"`)
 #' honorary midpoints, which are useful for plotting.
-#' These midpoints are based on half the median width of
+#' These midpoints use half the median width of
 #' the closed intervals in `labels`.
 #'
 #' @section Rules for interpreting inputs:

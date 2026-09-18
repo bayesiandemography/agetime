@@ -9,7 +9,7 @@
 #'
 #' `age_mid()` assigns open age groups (e.g., `"100+"`)
 #' honorary midpoints, which are useful for plotting.
-#' These midpoints are based on half the median width of
+#' These midpoints use half the median width of
 #' the closed intervals in `labels`.
 #'
 #' @param labels Vector of age group labels.
