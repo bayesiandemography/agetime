@@ -7,11 +7,6 @@
 #' `c("0-4", "5-9", "10-14", "0-9", "Total")`,
 #' `"0-9"` is a subtotal because it represents the same interval as `"0-4"` and `"5-9"`.
 #'
-#' Overlapping alternative groupings still count. In
-#' `c("90+", "90", "91+", "95+", "90-94")`,
-#' `"90+"` is a subtotal because it represents the same interval as `"90"`
-#' and `"91+"`, or as `"90-94"` and `"95+"`.
-#'
 #' Subtotals are distinct from grand total labels such as `"Total"` or `"All"`,
 #' which are identified by [age_is_total()].
 #'
