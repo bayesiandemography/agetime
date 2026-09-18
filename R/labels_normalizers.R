@@ -127,8 +127,10 @@ norm_whitespace <- function(x) gsub("\\s+", "", x, perl = TRUE)
 #'
 #' @noRd
 norm_lessthan <- function(x) {
-  lessthan <- "^(upto|before|under|lessthan|lt)"
-  x <- sub(lessthan, "<", x, perl = TRUE)
+  lessthan_prefix <- "^(upto|before|under|lessthan|lt)"
+  lessthan_suffix <- "(orless|oryounger|andunder|andbelow|andless)$"
+  x <- sub(lessthan_prefix, "<", x, perl = TRUE)
+  x <- sub(paste0("^(\\d+)", lessthan_suffix), "<\\1", x, perl = TRUE)
   x <- sub("^[-_]", "<", x, perl = TRUE)
   x <- sub("^<+", "<", x, perl = TRUE)
   x

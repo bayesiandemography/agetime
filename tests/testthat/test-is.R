@@ -84,36 +84,36 @@ test_that("age_is_open_right() identifies right-open age groups", {
 })
 
 test_that("cohort_is_open_left() identifies left-open cohorts", {
-  x <- c("2020", "<1900", "2040-2050", "2030+")
+  x <- c("2020", "<1900", "2040-2050", "1900 or less", "2030+")
   ans <- cohort_is_open_left(x)
   expect_is_logical(x, ans)
-  expect_values(ans, c(FALSE, TRUE, FALSE, FALSE))
+  expect_values(ans, c(FALSE, TRUE, FALSE, TRUE, FALSE))
   expect_values(cohort_is_open_left(cohort_multi), c(FALSE, TRUE, FALSE))
   expect_values(cohort_is_open_left(cohort_with_na), c(FALSE, FALSE, FALSE))
 })
 
 test_that("cohort_is_open_right() identifies right-open cohorts", {
-  x <- c("2020", "<1900", "2040-2050", "2030+")
+  x <- c("2020", "<1900", "2040-2050", "1900 or less", "2030+")
   ans <- cohort_is_open_right(x)
   expect_is_logical(x, ans)
-  expect_values(ans, c(FALSE, FALSE, FALSE, TRUE))
+  expect_values(ans, c(FALSE, FALSE, FALSE, FALSE, TRUE))
   expect_values(cohort_is_open_right(cohort_multi), c(FALSE, FALSE, FALSE))
   expect_values(cohort_is_open_right(cohort_with_na), c(FALSE, FALSE, FALSE))
 })
 
 test_that("period_is_open_left() identifies left-open periods", {
-  x <- c("2020", "<1900", "2020-2030", "2030+")
+  x <- c("2020", "<1900", "2020-2030", "2000 or more", "2030+")
   ans <- period_is_open_left(x)
   expect_is_logical(x, ans)
-  expect_values(ans, c(FALSE, TRUE, FALSE, FALSE))
+  expect_values(ans, c(FALSE, TRUE, FALSE, FALSE, FALSE))
   expect_values(period_is_open_left(period_multi), c(FALSE, FALSE, FALSE))
 })
 
 test_that("period_is_open_right() identifies right-open periods", {
-  x <- c("2020", "<1900", "2020-2030", "2030+")
+  x <- c("2020", "<1900", "2020-2030", "2000 or more", "2030+")
   ans <- period_is_open_right(x)
   expect_is_logical(x, ans)
-  expect_values(ans, c(FALSE, FALSE, FALSE, TRUE))
+  expect_values(ans, c(FALSE, FALSE, FALSE, TRUE, TRUE))
   expect_values(period_is_open_right(period_multi), c(FALSE, FALSE, FALSE))
 })
 
