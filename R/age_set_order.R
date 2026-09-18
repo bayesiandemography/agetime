@@ -1,18 +1,27 @@
 #' Set Order of Age Group Levels
 #'
-#' Set the order of levels in `labels` so that age groups
-#' behave as expected with functions such as `sort()` and
-#' `arrange()`.
+#' Modify the `levels` attribute of `labels` so that age groups
+#' are ordered by their lower limits.
+#'
+#' `age_set_order()` fixes a common problem with age group labels,
+#' where levels are ordered alphabetically rather than numerically,
+#' so that, for instance, `"10-14"` comes before `"5-9"`.
+#' Calling `age_set_order()` on age group
+#' labels makes the labels behave sensibly
+#' with functions such as `sort()`,
+#' `order()`, and `arrange()`.
 #'
 #' If `labels` is not a factor, and so
 #' does not have levels, it is converted to a factor
 #' before the ordering is performed.
 #'
-#' Levels are ordered on their lower limits.
-#' When there are ties, upper limits are used.
-#' `NA`s come second-to-last, and totals come last.
+#' `age_set_order()` has no effect on the
+#' values of `labels`. Only the levels are changed.
 #'
-#' Observed values are preserved; only the level order changes.
+#' When two age groups have the same lower limit,
+#' the age group with the smallest upper limit comes first.
+#' Labels for missing values come second-to-last in the ordering,
+#' and totals come last.
 #'
 #' @inheritParams age_lower
 #' @param decreasing Whether order is

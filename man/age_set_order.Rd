@@ -25,20 +25,29 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Set the order of levels in \code{labels} so that age groups
-behave as expected with functions such as \code{sort()} and
-\code{arrange()}.
+Modify the \code{levels} attribute of \code{labels} so that age groups
+are ordered by their lower limits.
 }
 \details{
+\code{age_set_order()} fixes a common problem with age group labels,
+where levels are ordered alphabetically rather than numerically,
+so that, for instance, \code{"10-14"} comes before \code{"5-9"}.
+Calling \code{age_set_order()} on age group
+labels makes the labels behave sensibly
+with functions such as \code{sort()},
+\code{order()}, and \code{arrange()}.
+
 If \code{labels} is not a factor, and so
 does not have levels, it is converted to a factor
 before the ordering is performed.
 
-Levels are ordered on their lower limits.
-When there are ties, upper limits are used.
-\code{NA}s come second-to-last, and totals come last.
+\code{age_set_order()} has no effect on the
+values of \code{labels}. Only the levels are changed.
 
-Observed values are preserved; only the level order changes.
+When two age groups have the same lower limit,
+the age group with the smallest upper limit comes first.
+Labels for missing values come second-to-last in the ordering,
+and totals come last.
 }
 \examples{
 labels <- c("0-4", "50+", "Total", NA, "20-24")

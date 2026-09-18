@@ -1,18 +1,19 @@
 #' Set Order of Period Levels
 #'
-#' Set the order of levels in `labels` so that periods
-#' behave as expected with functions such as `sort()` and
-#' `arrange()`.
+#' Modify the `levels` attribute of `labels` so that periods
+#' are ordered by their lower limits.
 #'
 #' If `labels` is not a factor, and so
 #' does not have levels, it is converted to a factor
 #' before the ordering is performed.
 #'
-#' Levels are ordered on their lower limits.
-#' When there are ties, upper limits are used.
-#' `NA`s come second-to-last, and totals come last.
+#' `period_set_order()` has no effect on the
+#' values of `labels`. Only the levels are changed.
 #'
-#' Observed values are preserved; only the level order changes.
+#' When two periods have the same lower limit,
+#' the period with the smallest upper limit comes first.
+#' Labels for missing values come second-to-last in the ordering,
+#' and totals come last.
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'

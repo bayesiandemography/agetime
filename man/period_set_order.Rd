@@ -37,20 +37,21 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Set the order of levels in \code{labels} so that periods
-behave as expected with functions such as \code{sort()} and
-\code{arrange()}.
+Modify the \code{levels} attribute of \code{labels} so that periods
+are ordered by their lower limits.
 }
 \details{
 If \code{labels} is not a factor, and so
 does not have levels, it is converted to a factor
 before the ordering is performed.
 
-Levels are ordered on their lower limits.
-When there are ties, upper limits are used.
-\code{NA}s come second-to-last, and totals come last.
+\code{period_set_order()} has no effect on the
+values of \code{labels}. Only the levels are changed.
 
-Observed values are preserved; only the level order changes.
+When two periods have the same lower limit,
+the period with the smallest upper limit comes first.
+Labels for missing values come second-to-last in the ordering,
+and totals come last.
 }
 \section{Rules for interpreting inputs}{
 
