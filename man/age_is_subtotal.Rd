@@ -20,20 +20,18 @@ Logical vector with the same length as \code{labels}.
 Find categories representing subtotals in age group labels.
 }
 \details{
-A subtotal is a label that can be rebuilt from two or more
-other labels in the set. For instance, in
+A subtotal is a label representing the same interval as two or more
+smaller intervals in the same set. For example, in
 \code{c("0-4", "5-9", "10-14", "0-9", "Total")},
-\code{"0-9"} is a subtotal because it covers the same interval as
-\code{"0-4"} and \code{"5-9"}.
+\code{"0-9"} is a subtotal because it represents the same interval as \code{"0-4"} and \code{"5-9"}.
 
 Overlapping alternative groupings still count. In
 \code{c("90+", "90", "91+", "95+", "90-94")},
-\code{"90+"} is a subtotal because it can be rebuilt from \code{"90"}
-and \code{"91+"}, or from \code{"90-94"} and \code{"95+"}.
+\code{"90+"} is a subtotal because it represents the same interval as \code{"90"}
+and \code{"91+"}, or as \code{"90-94"} and \code{"95+"}.
 
-Subtotals are distinct from grand total labels
-such as \code{"Total"} or \code{"All"}, which are identified
-by \code{\link[=age_is_total]{age_is_total()}}.
+Subtotals are distinct from grand total labels such as \code{"Total"} or \code{"All"},
+which are identified by \code{\link[=age_is_total]{age_is_total()}}.
 }
 \examples{
 labels <- c(

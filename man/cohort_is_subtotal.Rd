@@ -35,15 +35,13 @@ Logical vector with the same length as \code{labels}.
 Find categories representing subtotals in cohort labels.
 }
 \details{
-A subtotal is a label that can be rebuilt from two or more
-other labels in the set. For instance, in
+A subtotal is a label representing the same interval as two or more
+smaller intervals in the same set. For example, in
 \code{c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")},
-\code{"2020-2030"} is a subtotal because it covers the same interval as
-\code{"2020-2025"} and \code{"2025-2030"}.
+\code{"2020-2030"} is a subtotal because it represents the same interval as \code{"2020-2025"} and \code{"2025-2030"}.
 
-Subtotals are distinct from grand total labels
-such as \code{"Total"} or \code{"All"}, which are identified
-by \code{\link[=cohort_is_total]{cohort_is_total()}}.
+Subtotals are distinct from grand total labels such as \code{"Total"} or \code{"All"},
+which are identified by \code{\link[=cohort_is_total]{cohort_is_total()}}.
 }
 \section{Rules for interpreting inputs}{
 

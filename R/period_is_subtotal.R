@@ -2,15 +2,13 @@
 #'
 #' Find categories representing subtotals in period labels.
 #'
-#' A subtotal is a label that can be rebuilt from two or more
-#' other labels in the set. For instance, in
+#' A subtotal is a label representing the same interval as two or more
+#' smaller intervals in the same set. For example, in
 #' `c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")`,
-#' `"2020-2030"` is a subtotal because it covers the same interval as
-#' `"2020-2025"` and `"2025-2030"`.
+#' `"2020-2030"` is a subtotal because it represents the same interval as `"2020-2025"` and `"2025-2030"`.
 #'
-#' Subtotals are distinct from grand total labels
-#' such as `"Total"` or `"All"`, which are identified
-#' by [period_is_total()].
+#' Subtotals are distinct from grand total labels such as `"Total"` or `"All"`,
+#' which are identified by [period_is_total()].
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
