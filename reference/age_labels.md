@@ -52,8 +52,8 @@ age_labels_life(
 
 - open_right:
 
-  Whether the oldest age group is "open", i.e. has no upper limit.
-  Default is `TRUE`.
+  Whether the oldest age group is open on the right, i.e. has no upper
+  limit. Default is `TRUE`.
 
 - include_total:
 
@@ -65,7 +65,7 @@ age_labels_life(
 
 - lower_first:
 
-  Lower limit of youngest age group.
+  Lower limit of first age group.
 
 - lower_last:
 
@@ -75,16 +75,25 @@ age_labels_life(
 
 Character vector.
 
+## Rules for formatting output
+
+|                 |                          |                      |
+|-----------------|--------------------------|----------------------|
+| *Interval type* | *Rule*                   | *Example*            |
+| single          | `[a,a+1) -> "a"`         | `[10,11) -> "10"`    |
+| multi           | `[a,a+n) -> "a-<a+n-1>"` | `[10,15) -> "10-14"` |
+| open on right   | `[a,Inf) -> "a+"`        | `[85,Inf) -> "85+"`  |
+
 ## Abridged and complete life tables
 
-- An 'abridged' life table uses age groups `"0"` and `"1-4"`, followed
-  by 5-year age groups `"5-9"`, `"10-14"`, ...
+- An abridged life table uses age groups `"0"` and `"1-4"`, followed by
+  5-year age groups such as `"5-9"` and `"10-14"`.
 
-- A 'complete' life table uses single-year age groups `"0"`, `"1"`,
-  `"2"`, ...
+- A complete life table uses single-year age groups such as `"0"`,
+  `"1"`, and `"2"`.
 
-- Both types of life table have an open interval such as `"85+"` or
-  `"100+"`.
+- Both types of life table usually have an open age group such as
+  `"85+"` or `"100+"`.
 
 ## See also
 

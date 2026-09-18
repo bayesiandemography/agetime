@@ -57,13 +57,13 @@ period_labels_ten(
 
 - open_left:
 
-  Whether first period is "open", i.e. has no lower limit. Default is
-  `FALSE`.
+  Whether first period is open on the left, i.e. has no lower limit.
+  Default is `FALSE`.
 
 - open_right:
 
-  Whether last period is "open", i.e. has no upper limit. Default is
-  `FALSE`.
+  Whether last period is open on the right, i.e. has no upper limit.
+  Default is `FALSE`.
 
 - format_single:
 
@@ -95,17 +95,31 @@ period_labels_ten(
 
 Character vector.
 
-## Controlling the formatting of period labels
+## Rules for formatting output
 
-`format_single` controls whether the label for a single-year periods is
-based on the lower or upper limit. For instance, the period
-`[2025,2026)` has label `"2025"` if `format_single` is `"lower"` and
-`"2026"` if `format_single` is `"upper"`.
+**Single-year periods**
 
-`format_multi` controls whether the label for a multi-year period
-includes the upper limit. For instance, the period `[2025,2030)` has
-label `"2025-2035"` if `format_multi` is `"include"` and `"2025-2029"`
-if `format_multi` is `"exclude"`.
+|                 |                      |                         |
+|-----------------|----------------------|-------------------------|
+| `format_single` | *Rule*               | *Example*               |
+| `"lower"`       | `[a,a+1) -> "a"`     | `[2020,2021) -> "2020"` |
+| `"upper"`       | `[a,a+1) -> "<a+1>"` | `[2020,2021) -> "2021"` |
+
+**Multi-year periods**
+
+|                |                          |                              |
+|----------------|--------------------------|------------------------------|
+| `format_multi` | *Rule*                   | *Example*                    |
+| `"include"`    | `[a,a+n) -> "a-<a+n>"`   | `[2020,2025) -> "2020-2025"` |
+| `"exclude"`    | `[a,a+n) -> "a-<a+n-1>"` | `[2020,2025) -> "2020-2024"` |
+
+**Open periods**
+
+|                 |                    |                          |
+|-----------------|--------------------|--------------------------|
+| *Interval type* | *Rule*             | *Example*                |
+| open on left    | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
+| open on right   | `[a,Inf) -> "a+"`  | `[2020,Inf) -> "2020+"`  |
 
 ## See also
 

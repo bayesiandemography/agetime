@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,8 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cookbook.html">Cookbook for agetime Package</a></li>
+    <li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -46,17 +47,38 @@
 
       <dl><dt>
 
-          <code><a href="age_check.html">age_check()</a></code> <code><a href="age_check.html">age_assert()</a></code>
+          <code><a href="age_coarsen.html">age_coarsen()</a></code>
 
         </dt>
-        <dd>Check or Make Assertions About Age Groups</dd>
+        <dd>Coarsen Age Groups</dd>
+
+        <dt>
+
+          <code><a href="age_coarsen_five.html">age_coarsen_five()</a></code> <code><a href="age_coarsen_five.html">age_coarsen_ten()</a></code> <code><a href="age_coarsen_five.html">age_coarsen_life()</a></code>
+
+        </dt>
+        <dd>Coarsen to Specialised Age Groups</dd>
+
+        <dt>
+
+          <code><a href="age_coarsen_to.html">age_coarsen_to()</a></code>
+
+        </dt>
+        <dd>Coarsen Age Groups to a Target Classification</dd>
+
+        <dt>
+
+          <code><a href="age_diagnose.html">age_diagnose()</a></code> <code><a href="age_diagnose.html">age_assert()</a></code> <code><a href="age_diagnose.html">age_diagnose_values()</a></code> <code><a href="age_diagnose.html">age_assert_values()</a></code>
+
+        </dt>
+        <dd>Diagnostics and Assertions for Age Groups</dd>
 
         <dt>
 
           <code><a href="age_extend.html">age_extend()</a></code>
 
         </dt>
-        <dd>Extend a Set of Age Groups</dd>
+        <dd>Extend a Set of Age Group Labels</dd>
 
         <dt>
 
@@ -67,10 +89,24 @@
 
         <dt>
 
+          <code><a href="age_is_missing.html">age_is_missing()</a></code>
+
+        </dt>
+        <dd>Identify Missing Age Group Labels</dd>
+
+        <dt>
+
           <code><a href="age_is_open_right.html">age_is_open_right()</a></code>
 
         </dt>
-        <dd>Identify Open Age Groups</dd>
+        <dd>Identify Age Groups With No Upper Limit</dd>
+
+        <dt>
+
+          <code><a href="age_is_subtotal.html">age_is_subtotal()</a></code>
+
+        </dt>
+        <dd>Identify Age Group Labels for Subtotals</dd>
 
         <dt>
 
@@ -102,20 +138,6 @@
 
         <dt>
 
-          <code><a href="age_modify.html">age_modify()</a></code>
-
-        </dt>
-        <dd>Convert to New Age Groups</dd>
-
-        <dt>
-
-          <code><a href="age_modify_five.html">age_modify_five()</a></code> <code><a href="age_modify_five.html">age_modify_ten()</a></code> <code><a href="age_modify_five.html">age_modify_life()</a></code>
-
-        </dt>
-        <dd>Convert to Specialised Age Groups</dd>
-
-        <dt>
-
           <code><a href="age_set_open_right.html">age_set_open_right()</a></code>
 
         </dt>
@@ -123,10 +145,10 @@
 
         <dt>
 
-          <code><a href="age_sort.html">age_sort()</a></code>
+          <code><a href="age_set_order.html">age_set_order()</a></code>
 
         </dt>
-        <dd>Sort Age Group Levels</dd>
+        <dd>Set Order of Age Group Levels</dd>
 
         <dt>
 
@@ -144,17 +166,38 @@
 
         <dt>
 
-          <code><a href="cohort_check.html">cohort_check()</a></code> <code><a href="cohort_check.html">cohort_assert()</a></code>
+          <code><a href="cohort_coarsen.html">cohort_coarsen()</a></code>
 
         </dt>
-        <dd>Check or Make Assertions About Cohorts</dd>
+        <dd>Coarsen Cohorts</dd>
+
+        <dt>
+
+          <code><a href="cohort_coarsen_five.html">cohort_coarsen_five()</a></code> <code><a href="cohort_coarsen_five.html">cohort_coarsen_ten()</a></code>
+
+        </dt>
+        <dd>Coarsen to Cohorts with Equal Widths</dd>
+
+        <dt>
+
+          <code><a href="cohort_coarsen_to.html">cohort_coarsen_to()</a></code>
+
+        </dt>
+        <dd>Coarsen Cohorts to a Target Classification</dd>
+
+        <dt>
+
+          <code><a href="cohort_diagnose.html">cohort_diagnose()</a></code> <code><a href="cohort_diagnose.html">cohort_assert()</a></code> <code><a href="cohort_diagnose.html">cohort_diagnose_values()</a></code> <code><a href="cohort_diagnose.html">cohort_assert_values()</a></code>
+
+        </dt>
+        <dd>Diagnostics and Assertions for Cohorts</dd>
 
         <dt>
 
           <code><a href="cohort_extend.html">cohort_extend()</a></code>
 
         </dt>
-        <dd>Extend a Set of Cohorts</dd>
+        <dd>Extend a Set of Cohort Labels</dd>
 
         <dt>
 
@@ -165,10 +208,24 @@
 
         <dt>
 
+          <code><a href="cohort_is_missing.html">cohort_is_missing()</a></code>
+
+        </dt>
+        <dd>Identify Missing Cohort Labels</dd>
+
+        <dt>
+
           <code><a href="cohort_is_open_left.html">cohort_is_open_left()</a></code> <code><a href="cohort_is_open_left.html">cohort_is_open_right()</a></code>
 
         </dt>
-        <dd>Identify Open Cohorts</dd>
+        <dd>Identify Cohorts With No Lower Limit or No Upper Limit</dd>
+
+        <dt>
+
+          <code><a href="cohort_is_subtotal.html">cohort_is_subtotal()</a></code>
+
+        </dt>
+        <dd>Identify Cohort Labels for Subtotals</dd>
 
         <dt>
 
@@ -200,20 +257,6 @@
 
         <dt>
 
-          <code><a href="cohort_modify.html">cohort_modify()</a></code>
-
-        </dt>
-        <dd>Convert to New Cohorts</dd>
-
-        <dt>
-
-          <code><a href="cohort_modify_five.html">cohort_modify_five()</a></code> <code><a href="cohort_modify_five.html">cohort_modify_ten()</a></code>
-
-        </dt>
-        <dd>Convert to Equal-Length Cohorts</dd>
-
-        <dt>
-
           <code><a href="cohort_set_open_left.html">cohort_set_open_left()</a></code> <code><a href="cohort_set_open_left.html">cohort_set_open_right()</a></code>
 
         </dt>
@@ -221,10 +264,10 @@
 
         <dt>
 
-          <code><a href="cohort_sort.html">cohort_sort()</a></code>
+          <code><a href="cohort_set_order.html">cohort_set_order()</a></code>
 
         </dt>
-        <dd>Sort Cohort Levels</dd>
+        <dd>Set Order of Cohort Levels</dd>
 
         <dt>
 
@@ -235,17 +278,38 @@
 
         <dt>
 
-          <code><a href="period_check.html">period_check()</a></code> <code><a href="period_check.html">period_assert()</a></code>
+          <code><a href="period_coarsen.html">period_coarsen()</a></code>
 
         </dt>
-        <dd>Check or Make Assertions About Periods</dd>
+        <dd>Coarsen Periods</dd>
+
+        <dt>
+
+          <code><a href="period_coarsen_five.html">period_coarsen_five()</a></code> <code><a href="period_coarsen_five.html">period_coarsen_ten()</a></code>
+
+        </dt>
+        <dd>Coarsen to Periods with Equal Widths</dd>
+
+        <dt>
+
+          <code><a href="period_coarsen_to.html">period_coarsen_to()</a></code>
+
+        </dt>
+        <dd>Coarsen Periods to a Target Classification</dd>
+
+        <dt>
+
+          <code><a href="period_diagnose.html">period_diagnose()</a></code> <code><a href="period_diagnose.html">period_assert()</a></code> <code><a href="period_diagnose.html">period_diagnose_values()</a></code> <code><a href="period_diagnose.html">period_assert_values()</a></code>
+
+        </dt>
+        <dd>Diagnostics and Assertions for Periods</dd>
 
         <dt>
 
           <code><a href="period_extend.html">period_extend()</a></code>
 
         </dt>
-        <dd>Extend a Set of Periods</dd>
+        <dd>Extend a Set of Period Labels</dd>
 
         <dt>
 
@@ -256,10 +320,24 @@
 
         <dt>
 
+          <code><a href="period_is_missing.html">period_is_missing()</a></code>
+
+        </dt>
+        <dd>Identify Missing Period Labels</dd>
+
+        <dt>
+
           <code><a href="period_is_open_left.html">period_is_open_left()</a></code> <code><a href="period_is_open_left.html">period_is_open_right()</a></code>
 
         </dt>
-        <dd>Identify Open Periods</dd>
+        <dd>Identify Periods With No Lower Limit or No Upper Limit</dd>
+
+        <dt>
+
+          <code><a href="period_is_subtotal.html">period_is_subtotal()</a></code>
+
+        </dt>
+        <dd>Identify Period Labels for Subtotals</dd>
 
         <dt>
 
@@ -291,20 +369,6 @@
 
         <dt>
 
-          <code><a href="period_modify.html">period_modify()</a></code>
-
-        </dt>
-        <dd>Convert to New Periods</dd>
-
-        <dt>
-
-          <code><a href="period_modify_five.html">period_modify_five()</a></code> <code><a href="period_modify_five.html">period_modify_ten()</a></code>
-
-        </dt>
-        <dd>Convert to Equal-Length Periods</dd>
-
-        <dt>
-
           <code><a href="period_set_open_left.html">period_set_open_left()</a></code> <code><a href="period_set_open_left.html">period_set_open_right()</a></code>
 
         </dt>
@@ -312,10 +376,10 @@
 
         <dt>
 
-          <code><a href="period_sort.html">period_sort()</a></code>
+          <code><a href="period_set_order.html">period_set_order()</a></code>
 
         </dt>
-        <dd>Sort Period Levels</dd>
+        <dd>Set Order of Period Levels</dd>
 
         <dt>
 

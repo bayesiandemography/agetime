@@ -1,6 +1,19 @@
 # Fill in Gaps in Age Group Levels
 
-Fill in gaps in levels of `labels`.
+Add intermediate age groups.
+
+The return value is a factor, and the intermediate age groups are added
+as factor levels.
+
+- `age_fill()` adds age groups specified by `breaks`.
+
+- `age_fill_one()` adds age groups with width 1.
+
+- `age_fill_five()` adds age groups with width 5.
+
+- `age_fill_ten()` adds age groups with width 10.
+
+- `age_fill_life()` adds age groups used by an abridged life table.
 
 ## Usage
 
@@ -36,31 +49,16 @@ age_fill_life(labels, interpret_fail = c("error", "warn", "silent"))
 
 Factor with the same length as `labels`.
 
-## Details
-
-If `labels` is not a factor, and so does not have levels, convert it to
-a factor before filling in levels.
-
-- `age_fill` adds age groups specified by `breaks`.
-
-- `age_fill_one` adds age groups with width 1.
-
-- `age_fill_five` adds age groups with width 5.
-
-- `age_fill_ten` adds age groups with width 10.
-
-- `age_fill_life` adds age groups used by an abridged life table.
-
 ## Abridged and complete life tables
 
-- An 'abridged' life table uses age groups `"0"` and `"1-4"`, followed
-  by 5-year age groups `"5-9"`, `"10-14"`, ...
+- An abridged life table uses age groups `"0"` and `"1-4"`, followed by
+  5-year age groups such as `"5-9"` and `"10-14"`.
 
-- A 'complete' life table uses single-year age groups `"0"`, `"1"`,
-  `"2"`, ...
+- A complete life table uses single-year age groups such as `"0"`,
+  `"1"`, and `"2"`.
 
-- Both types of life table have an open interval such as `"85+"` or
-  `"100+"`.
+- Both types of life table usually have an open age group such as
+  `"85+"` or `"100+"`.
 
 ## See also
 
@@ -103,7 +101,8 @@ age_fill_life(labels)
 ## levels are used by functions
 ## such as 'table()'
 labels <- c("30-39", "0-9")
-labels |> table()
+labels |>
+  table()
 #> labels
 #>   0-9 30-39 
 #>     1     1 
@@ -114,10 +113,10 @@ labels |>
 #>   0-9 10-29 30-39 
 #>     1     0     1 
 
-## sort after filling
+## set level order after filling
 labels |>
   age_fill() |>
-  age_sort() |>
+  age_set_order() |>
   table()
 #> 
 #>   0-9 10-29 30-39 

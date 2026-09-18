@@ -1,4 +1,4 @@
-# Identify Open Age Groups
+# Identify Age Groups With No Upper Limit
 
 Find age groups that are open on the right, i.e., that have no upper
 limit.
@@ -40,6 +40,9 @@ Logical vector with the same length as `labels`.
 
 - [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
   Identify totals for age groups
+
+- [`age_is_missing()`](https://bayesiandemography.github.io/agetime/reference/age_is_missing.md)
+  Identify missing age group labels
 
 - [`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md)
   Specify age group open on right

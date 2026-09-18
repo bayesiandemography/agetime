@@ -1,25 +1,26 @@
 # Mapping Between Period Labels
 
-Create a mapping between period labels. A mapping depicts a relationship
-between the labels of `labels` and the labels of `y`. The types of
-relationship that can be mapped are:
+Create a mapping depicting the relationship between `labels_x` and
+`labels_y`. The types of relationship that can be mapped are:
 
-- "labels equals y"
+- "`labels_x` equals `labels_y`"
 
-- "labels contains y"
+- "`labels_x` contains `labels_y`"
 
-- "labels is contained in y"
+- "`labels_x` is contained in `labels_y`"
 
-- "labels overlaps with y".
+- "`labels_x` overlaps with `labels_y`".
 
 ## Usage
 
 ``` r
 period_mapping(
-  labels,
-  y = NULL,
+  labels_x,
+  labels_y = NULL,
   relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
   format = c("tibble", "matrix"),
+  name_x = "x",
+  name_y = "y",
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -28,14 +29,13 @@ period_mapping(
 
 ## Arguments
 
-- labels:
+- labels_x:
 
   Vector of period labels.
 
-- y:
+- labels_y:
 
-  Vector of period labels. If no value supplied, `labels` is mapped onto
-  itself.
+  Vector of period labels or `NULL`.
 
 - relation:
 
@@ -47,6 +47,11 @@ period_mapping(
 
   Format of return value. Choices are `"tibble"` (the default) or
   `"matrix"`.
+
+- name_x, name_y:
+
+  Names for the two sides of the mapping in the return value. Defaults
+  are `"x"` and `"y"`. Applied to tibble columns and to matrix dimnames.
 
 - interpret_single:
 
@@ -66,11 +71,12 @@ period_mapping(
 ## Value
 
 [Tibble](https://tibble.tidyverse.org/reference/tibble.html) or matrix,
-depending on `format`.
+depending on the value of `format`.
 
 ## Details
 
-If no value for `y` is supplied, `labels` is mapped onto itself.
+If no value for `labels_y` is supplied, `labels_x` is mapped onto
+itself.
 
 Tibbles produced by `period_mapping()` are sparse in that they only
 include matches. Matrices produced by `period_mapping()` are dense in
@@ -78,35 +84,46 @@ that they include matches and non-matches. See the example below.
 
 ## The `relation` argument
 
-|                     |                                               |
-|---------------------|-----------------------------------------------|
-| `relation`          | Endpoints of `labels` and `y`                 |
-| `"equals"`          | Endpoints equal                               |
-| `"contains"`        | Endpoints of `y` inside endpoints of `labels` |
-| `"is-contained-in"` | Endpoints of `labels` inside endpoints of `y` |
-| `"overlaps-with"`   | Endpoint of `labels` in `y`, or reverse       |
+|  |  |
+|----|----|
+| `relation` | Endpoints of `labels_x` and `labels_y` |
+| `"equals"` | Endpoints equal |
+| `"contains"` | Endpoints of `labels_y` inside endpoints of `labels_x` |
+| `"is-contained-in"` | Endpoints of `labels_x` inside endpoints of `labels_y` |
+| `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 
-## Controlling how period labels are interpreted
+## Rules for interpreting inputs
 
-If `interpret_single` is `"lower"` (the default), then labels for
-single-year periods are assumed to refer to lower limits, so that
-`"2025"` means `[2025,2026)`. This is the convention that data providers
-typically use for calendar years.
+Single-year periods:
 
-If `interpret_single` is `"upper"`, then labels for single-year periods
-are assumed to refer to upper limits, so that `"2025"` means
-`[2024,2025)`. This is the convention that data providers typically use
-for non-calendar years, such as 1 July to 30 June.
+|                    |                  |                         |
+|--------------------|------------------|-------------------------|
+| `interpret_single` | *Rule*           | *Example*               |
+| `"lower"`          | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
+| `"upper"`          | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 
-If `interpret_multi` is `"include"` (the default), then labels for
-multi-year periods are assumed to include upper limits, so that
-`"2025-2030"` means `[2025,2030)`.
+Data providers typically use the "lower" convention for calendar years
+(1 January to 31 December), and the "upper" convention for non-calendar
+years (e.g., 1 July to 30 June).
 
-If `interpret_multi` is `"exclude"`, then labels for multi-year periods
-are assumed to exclude the upper limits, so that `"2025-2030"` means
-`[2025,2031)`.
+Multi-year periods:
+
+|                   |                          |                              |
+|-------------------|--------------------------|------------------------------|
+| `interpret_multi` | *Rule*                   | *Example*                    |
+| `"include"`       | `"a-<a+n>" -> [a,a+n)`   | `"2020-2025" -> [2020,2025)` |
+| `"exclude"`       | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
+
+A two-value label cannot describe a one-year period. With
+`interpret_multi = "include"`, `"2010-2011"` would be `[2010, 2011)` and
+`"2010-2010"` would be empty; both are rejected. Use `"2010"`, or
+`"2010-2012"` for two years. With `interpret_multi = "exclude"`,
+`"2010-2011"` is two years `[2010, 2012)` and is accepted.
 
 ## See also
+
+- [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md)
+  Recode labels into another classification
 
 - [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
   Age equivalent of `period_mapping()`
@@ -117,32 +134,32 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 ## Examples
 
 ``` r
-labels <- c("2020-2025", "2030", "2025-2027")
+x <- c("2020-2025", "2030", "2025-2027")
 y <- c("2025-2030", "2020-2025", "2026-2034")
-period_mapping(labels = labels, y = y)
+period_mapping(labels_x = x, labels_y = y)
 #> # A tibble: 1 × 2
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-period_mapping(labels = labels, y = y, format = "matrix")
+period_mapping(labels_x = x, labels_y = y, format = "matrix")
 #>            y
 #> x           2025-2030 2020-2025 2026-2034
 #>   2020-2025         0         1         0
 #>   2030              0         0         0
 #>   2025-2027         0         0         0
-period_mapping(labels = labels, y = y, relation = "contains")
+period_mapping(labels_x = x, labels_y = y, relation = "contains")
 #> # A tibble: 1 × 2
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-period_mapping(labels = labels, y = y, relation = "is-contained-in")
+period_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
 #> # A tibble: 3 × 2
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2025-2027 2025-2030
 #> 2 2020-2025 2020-2025
 #> 3 2030      2026-2034
-period_mapping(labels = labels, y = y, relation = "overlaps-with")
+period_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
 #> # A tibble: 4 × 2
 #>   x         y        
 #>   <chr>     <chr>    
@@ -152,22 +169,22 @@ period_mapping(labels = labels, y = y, relation = "overlaps-with")
 #> 4 2025-2027 2026-2034
 
 # sparse tibble vs dense matrix
-labels <- c("2020-2025", "2030-2035")
+x <- c("2020-2025", "2030-2035")
 y <- c("2020-2025", "2025-2030")
-period_mapping(labels = labels, y = y) # one match
+period_mapping(labels_x = x, labels_y = y) # one match
 #> # A tibble: 1 × 2
 #>   x         y        
 #>   <chr>     <chr>    
 #> 1 2020-2025 2020-2025
-period_mapping(labels = labels, y = y, format = "matrix")
+period_mapping(labels_x = x, labels_y = y, format = "matrix")
 #>            y
 #> x           2020-2025 2025-2030
 #>   2020-2025         1         0
 #>   2030-2035         0         0
 
-# mapping 'labels' on to itself
-labels <- c("2020--2025", "2020-2025", "2030")
-period_mapping(labels)
+# map labels_x onto itself
+x <- c("2020--2025", "2020-2025", "2030")
+period_mapping(x)
 #> # A tibble: 5 × 2
 #>   x          y         
 #>   <chr>      <chr>     

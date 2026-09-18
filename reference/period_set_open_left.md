@@ -1,7 +1,11 @@
 # Specify Open Period
 
-Add a factor level representing an open period. Replace existing periods
-where necessary.
+Define a factor level representing an open period. Replace existing
+periods where necessary.
+
+- `period_set_open_left()` defines a period with no lower limit.
+
+- `period_set_open_right()` defines a period with no upper limit.
 
 ## Usage
 
@@ -53,42 +57,38 @@ period_set_open_right(
 
 Factor with the same length as `labels`.
 
-## Details
+## Rules for interpreting inputs
 
-- `period_set_open_left()` adds a period open on the left (has no lower
-  limit).
+Single-year periods:
 
-- `period_set_open_right()` adds a period open on the right (has no
-  upper limit).
+|                    |                  |                         |
+|--------------------|------------------|-------------------------|
+| `interpret_single` | *Rule*           | *Example*               |
+| `"lower"`          | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
+| `"upper"`          | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 
-## Controlling how period labels are interpreted
+Data providers typically use the "lower" convention for calendar years
+(1 January to 31 December), and the "upper" convention for non-calendar
+years (e.g., 1 July to 30 June).
 
-If `interpret_single` is `"lower"` (the default), then labels for
-single-year periods are assumed to refer to lower limits, so that
-`"2025"` means `[2025,2026)`. This is the convention that data providers
-typically use for calendar years.
+Multi-year periods:
 
-If `interpret_single` is `"upper"`, then labels for single-year periods
-are assumed to refer to upper limits, so that `"2025"` means
-`[2024,2025)`. This is the convention that data providers typically use
-for non-calendar years, such as 1 July to 30 June.
+|                   |                          |                              |
+|-------------------|--------------------------|------------------------------|
+| `interpret_multi` | *Rule*                   | *Example*                    |
+| `"include"`       | `"a-<a+n>" -> [a,a+n)`   | `"2020-2025" -> [2020,2025)` |
+| `"exclude"`       | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
 
-If `interpret_multi` is `"include"` (the default), then labels for
-multi-year periods are assumed to include upper limits, so that
-`"2025-2030"` means `[2025,2030)`.
-
-If `interpret_multi` is `"exclude"`, then labels for multi-year periods
-are assumed to exclude the upper limits, so that `"2025-2030"` means
-`[2025,2031)`.
+A two-value label cannot describe a one-year period. With
+`interpret_multi = "include"`, `"2010-2011"` would be `[2010, 2011)` and
+`"2010-2010"` would be empty; both are rejected. Use `"2010"`, or
+`"2010-2012"` for two years. With `interpret_multi = "exclude"`,
+`"2010-2011"` is two years `[2010, 2012)` and is accepted.
 
 ## See also
 
 - [`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md)
   Specify age group open on right
-
-- `period_set_open_left()` Specify period open on left
-
-- `period_set_open_right()` Specify period open on right
 
 - [`cohort_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
   Specify cohort open on left
@@ -101,15 +101,6 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 
 - [`period_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/period_is_open_left.md)
   Identify periods open on right
-
-- [`cohort_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
-  Identify cohorts open on left
-
-- [`cohort_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
-  Identify cohorts open on right
-
-- [`age_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_is_open_right.md)
-  Identify age groups open on right
 
 ## Examples
 

@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+<li><a class="dropdown-item" href="../articles/cookbook.html">Cookbook for agetime Package</a></li>
+    <li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
   </ul>
 </li>
       </ul>
@@ -64,8 +65,8 @@
 
     
     
-<p><strong>agetime</strong> functions are designed around label vectors.
-A label such as <code>"5-9"</code>, <code>"2020-2025"</code>, or
+<p><code>agetime</code> functions are designed around label vectors. A
+label such as <code>"5-9"</code>, <code>"2020-2025"</code>, or
 <code>"&lt;1990"</code> is a character value, but it also implies an
 interval. The API tries to make this distinction explicit: some
 functions read intervals from existing labels, some functions create new
@@ -76,11 +77,11 @@ labels, and some functions work with factor levels.</p>
 <p>Most functions start with a domain:</p>
 <ul>
 <li>
-<code>age_*()</code> for age groups.</li>
+<code>age</code> for age groups</li>
 <li>
-<code>period_*()</code> for time periods.</li>
+<code>period</code> for time periods</li>
 <li>
-<code>cohort_*()</code> for birth cohorts.</li>
+<code>cohort</code> for birth cohorts</li>
 </ul>
 <p>The three domains usually share the same operation names. For
 example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <code><a href="../reference/period_lower.html">period_lower()</a></code>, and
@@ -97,6 +98,17 @@ example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <co
 <span><span class="fu"><a href="../reference/cohort_lower.html">cohort_lower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;1990"</span>, <span class="st">"1990-1995"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;     &lt;1990 1990-1995 </span></span>
 <span><span class="co">#&gt;      -Inf      1990</span></span></code></pre></div>
+<p>A few operations are domain-specific:</p>
+<ul>
+<li>Open intervals on the left (<code>is_open_left</code>,
+<code>set_open_left</code>) exist for periods and cohorts only. Ages
+open on the right only.</li>
+<li>Life-table helpers (<code>labels_life</code>,
+<code>coarsen_life</code>, <code>fill_life</code>, and the
+<code>valid_life</code> diagnose check) exist for ages only.</li>
+</ul>
+<p>See <code><a href="../reference/agetime-package.html">?agetime</a></code> for the full inventory, including blank
+cells where a domain has no equivalent.</p>
 </div>
 <div class="section level2">
 <h2 id="operation-families">Operation families<a class="anchor" aria-label="anchor" href="#operation-families"></a>
@@ -116,80 +128,88 @@ example, <code><a href="../reference/age_lower.html">age_lower()</a></code>, <co
 <tbody>
 <tr class="odd">
 <td>
-<code>*_lower()</code>, <code>*_upper()</code>,
-<code>*_width()</code>, <code>*_mid()</code>
+<code>lower</code>, <code>upper</code>, <code>width</code>,
+<code>mid</code>
 </td>
 <td>Extract interval properties</td>
 <td>Numeric vector</td>
 </tr>
 <tr class="even">
 <td>
-<code>*_is_open_left()</code>, <code>*_is_open_right()</code>,
-<code>*_is_total()</code>
+<code>is_open_left</code>, <code>is_open_right</code>,
+<code>is_total</code>, <code>is_missing</code>,
+<code>is_subtotal</code>
 </td>
 <td>Identify special labels</td>
 <td>Logical vector</td>
 </tr>
 <tr class="odd">
 <td>
-<code>*_check()</code>, <code>*_assert()</code>
+<code>diagnose</code>, <code>assert</code>
 </td>
-<td>Validate labels</td>
-<td>Diagnostics or error</td>
+<td>Validate labels (factor levels by default)</td>
+<td>List with <code>ok</code>, or <code>labels</code> / error</td>
 </tr>
 <tr class="even">
-<td><code>*_standard()</code></td>
-<td>Convert labels to standard format</td>
-<td>Same shape as <code>labels</code>
+<td>
+<code>diagnose_values</code>, <code>assert_values</code>
 </td>
+<td>Validate observed values only</td>
+<td>List with <code>ok</code>, or <code>labels</code> / error</td>
 </tr>
 <tr class="odd">
-<td><code>*_modify()</code></td>
+<td><code>standard</code></td>
+<td>Convert labels to standard format</td>
+<td>Same type and length as <code>labels</code>
+</td>
+</tr>
+<tr class="even">
+<td>
+<code>coarsen</code>, <code>coarsen_to</code>
+</td>
 <td>Regroup labels into new intervals</td>
 <td>Factor</td>
 </tr>
-<tr class="even">
-<td><code>*_extend()</code></td>
+<tr class="odd">
+<td><code>extend</code></td>
 <td>Continue a label series</td>
 <td>Character vector or factor</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>
-<code>*_fill()</code>, <code>*_set_open_*()</code>,
-<code>*_sort()</code>
+<code>fill</code>, <code>set_open_left</code>,
+<code>set_open_right</code>, <code>set_order</code>
 </td>
 <td>Work with factor levels</td>
 <td>Factor</td>
 </tr>
-<tr class="even">
-<td><code>*_labels_*()</code></td>
+<tr class="odd">
+<td><code>labels</code></td>
 <td>Create new labels</td>
 <td>Character vector</td>
 </tr>
-<tr class="odd">
-<td><code>*_mapping()</code></td>
+<tr class="even">
+<td><code>mapping</code></td>
 <td>Map between interval sets</td>
-<td>Matrix or tibble</td>
+<td>Tibble or matrix</td>
 </tr>
 </tbody>
 </table>
 <p>The most important return-type distinction is between labels and
 levels:</p>
 <ul>
-<li>
-<code>*_labels_*()</code> functions create character vectors of
+<li>The <code>labels</code> functions create character vectors of
 labels.</li>
-<li>
-<code>*_modify()</code>, <code>*_fill()</code>,
-<code>*_set_open_*()</code>, and <code>*_sort()</code> functions return
-factors, because their purpose is to recode values and shape factor
-levels.</li>
+<li>The <code>coarsen</code>, <code>fill</code>,
+<code>set_open_left</code>, <code>set_open_right</code>, and
+<code>set_order</code> functions return factors, because their purpose
+is to recode values and shape factor levels.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span>lower_last <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "0-4"   "5-9"   "10-14" "15-19" "20+"</span></span>
 <span></span>
-<span><span class="fu"><a href="../reference/age_modify.html">age_modify</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"0-4"</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_coarsen.html">age_coarsen</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"0-4"</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span>, <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 10-19 0-9  </span></span>
 <span><span class="co">#&gt; Levels: 0-9 10-19</span></span>
 <span><span class="fu"><a href="../reference/age_fill.html">age_fill_five</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10-14"</span>, <span class="st">"0-4"</span><span class="op">)</span><span class="op">)</span></span>
@@ -209,17 +229,27 @@ use the lower boundary, and multi-year labels exclude the upper
 boundary. Age functions therefore do not expose
 <code>interpret_single</code> or <code>interpret_multi</code> arguments.
 Period and cohort labels do not have the same universal convention, so
-period and cohort functions let you specify how input labels should be
-parsed.</p>
+period and cohort functions that <em>consume</em> labels (for example
+<code><a href="../reference/period_standard.html">period_standard()</a></code> or <code><a href="../reference/cohort_coarsen.html">cohort_coarsen()</a></code>) let you
+specify how inputs should be parsed. The period and cohort
+<code>labels</code> constructors do not take <code>interpret_</code>
+arguments; they create new labels instead.</p>
 <p>For example, <code><a href="../reference/period_standard.html">period_standard()</a></code> uses
 <code>interpret_multi</code> to interpret the input:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/period_standard.html">period_standard</a></span><span class="op">(</span><span class="st">"2020-2025"</span>, interpret_multi <span class="op">=</span> <span class="st">"exclude"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2020-2026"</span></span></code></pre></div>
+<p>Label-consuming functions also take <code>interpret_fail</code>,
+which controls what happens when a label cannot be parsed
+(<code>"error"</code>, <code>"warn"</code>, or
+<code>"silent"</code>).</p>
 <p>Arguments beginning with <code>format_</code> describe how new output
-labels should be rendered. For example, <code><a href="../reference/period_labels.html">period_labels_ten()</a></code>
-uses <code>format_multi</code> to decide whether the displayed upper
-limit is included or excluded:</p>
+labels should be rendered. Only the period and cohort
+<code>labels</code> constructors expose <code>format_single</code> and
+<code>format_multi</code>. Age <code>labels</code> functions hard-code
+the usual demographic conventions. For example,
+<code><a href="../reference/period_labels.html">period_labels_ten()</a></code> uses <code>format_multi</code> to
+decide whether the displayed upper limit is included or excluded:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/period_labels.html">period_labels_ten</a></span><span class="op">(</span></span>
 <span>  lower_first <span class="op">=</span> <span class="fl">2000</span>,</span>
@@ -227,8 +257,10 @@ limit is included or excluded:</p>
 <span>  format_multi <span class="op">=</span> <span class="st">"exclude"</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "2000-2009" "2010-2019" "2020-2029"</span></span></code></pre></div>
-<p>This convention is intended to keep input interpretation separate
-from output formatting.</p>
+<p>This convention keeps input interpretation separate from output
+formatting. (The <code>mapping</code> functions use a different argument
+named <code>format</code>, which chooses between a tibble and a matrix
+return value.)</p>
 </div>
 <div class="section level2">
 <h2 id="boundary-names">Boundary names<a class="anchor" aria-label="anchor" href="#boundary-names"></a>
@@ -269,9 +301,9 @@ open on the left or right.</li>
 start or end of a generated label sequence. Age groups support
 <code>open_right</code> only; periods and cohorts support both
 directions.</p>
-<p>In <code>*_labels_*()</code> functions, these arguments default to
+<p>In the <code>labels</code> functions, these arguments default to
 explicit boolean values because you are constructing a new label grid.
-In <code>*_modify()</code> functions, the defaults are
+In the <code>coarsen</code> functions, the defaults are
 <code>NULL</code>, which preserves the open/closed topology of
 <code>labels</code>: open ends are kept when present, and omitted when
 not. Use <code>open_left = TRUE</code> or <code>open_right = TRUE</code>
@@ -281,25 +313,34 @@ currently belongs to that group.</p>
 <div class="section level2">
 <h2 id="values-and-levels">Values and levels<a class="anchor" aria-label="anchor" href="#values-and-levels"></a>
 </h2>
-<p>Functions such as <code><a href="../reference/age_modify.html">age_modify()</a></code>, <code><a href="../reference/age_fill.html">age_fill()</a></code>,
-<code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code>, and <code><a href="../reference/age_sort.html">age_sort()</a></code> always
-return a factor. They preserve observed values where possible, and
-change or add levels. By default, <code><a href="../reference/age_modify.html">age_modify()</a></code> infers
-whether to include an open top from <code>labels</code>. Use
-<code>open_right = TRUE</code> to add a <code>90+</code> level even when
-no value in <code>labels</code> currently belongs to that open group, as
-<code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code> does for <code>70+</code>.</p>
+<p>Functions such as <code><a href="../reference/age_coarsen.html">age_coarsen()</a></code>,
+<code><a href="../reference/age_fill.html">age_fill()</a></code>, <code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code>, and
+<code><a href="../reference/age_set_order.html">age_set_order()</a></code> always return a factor. They preserve
+observed values where possible, and change or add levels. By default,
+<code><a href="../reference/age_coarsen.html">age_coarsen()</a></code> infers whether to include an open top from
+<code>labels</code>. Use <code>open_right = TRUE</code> to add an open
+level even when no value in <code>labels</code> currently belongs to
+that open group, as <code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code> does:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"60-64"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_modify.html">age_modify</a></span><span class="op">(</span><span class="va">labels</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span>, <span class="fl">70</span><span class="op">)</span>, open_right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_coarsen.html">age_coarsen</a></span><span class="op">(</span><span class="va">labels</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span>, <span class="fl">70</span><span class="op">)</span>, open_right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0-49  50-69</span></span>
 <span><span class="co">#&gt; Levels: 0-49 50-69 70+</span></span></code></pre></div>
+<p>The <code>diagnose</code> and <code>assert</code> functions follow
+the same levels contract: for a factor they validate levels, including
+unused ones. Use the <code>diagnose_values</code> and
+<code>assert_values</code> functions when you want to check only
+observed values (for example in a grouped pipeline). The
+<code>assert</code> functions return <code>labels</code> invisibly when
+checks pass, so they can sit in a pipeline.</p>
 </div>
 <div class="section level2">
 <h2 id="more-information">More information<a class="anchor" aria-label="anchor" href="#more-information"></a>
 </h2>
 <ul>
 <li>See <code><a href="../articles/agetime.html">vignette("agetime")</a></code> for a quick start.</li>
+<li>See <code><a href="../articles/cookbook.html">vignette("cookbook")</a></code> for task-oriented
+recipes.</li>
 <li>See <code><a href="../reference/agetime-package.html">?agetime</a></code> for a complete function list grouped by
 task.</li>
 </ul>

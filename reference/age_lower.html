@@ -9,7 +9,7 @@ widths, and midpoints from age group labels"></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,7 +21,8 @@ widths, and midpoints from age group labels"></head><body>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cookbook.html">Cookbook for agetime Package</a></li>
+    <li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -77,9 +78,9 @@ cannot be interpreted. Choices are <code>"error"</code> (the default),
     <p>Lower and upper limits can be used
 to filter on age. See below for examples.</p>
 <p><code>age_mid()</code> assigns open age groups (e.g., <code>"100+"</code>)
-pseudo-midpoints. These pseudo-midpoints are
-based on half the median width of the closed intervals in <code>labels</code>.
-See below for examples. Pseudo-midpoints are useful for plotting.</p>
+honorary midpoints, which are useful for plotting.
+These midpoints use half the median width of
+the closed intervals in <code>labels</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -127,16 +128,17 @@ See below for examples. Pseudo-midpoints are useful for plotting.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 10-14    20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> 100+      7</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">## 'midpoint' of open intervals</span></span></span>
-<span class="r-in"><span><span class="fu">age_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"80-89"</span>, <span class="st">"90-99"</span>, <span class="st">"100+"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co">## midpoint of open intervals</span></span></span>
+<span class="r-in"><span><span class="fu">age_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"80-89"</span>, <span class="st">"90-99"</span>, <span class="st">"100+"</span><span class="op">)</span><span class="op">)</span> <span class="co"># 105</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 80-89 90-99  100+ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    85    95   105 </span>
-<span class="r-in"><span><span class="fu">age_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"90-94"</span>, <span class="st">"95-99"</span>, <span class="st">"100+"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">age_mid</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"90-94"</span>, <span class="st">"95-99"</span>, <span class="st">"100+"</span><span class="op">)</span><span class="op">)</span> <span class="co"># 102.5</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 90-94 95-99  100+ </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  92.5  97.5 102.5 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## no action when 'interpret_fail' is "silent"</span></span></span>
-<span class="r-in"><span><span class="fu">age_lower</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"young people"</span>, <span class="st">"50plus"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span><span class="fu">age_lower</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"young people"</span>, <span class="st">"50plus"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  interpret_fail <span class="op">=</span> <span class="st">"silent"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>          0-4 young people       50plus </span>

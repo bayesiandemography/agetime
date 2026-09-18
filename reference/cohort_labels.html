@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,7 +19,8 @@
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/cookbook.html">Cookbook for agetime Package</a></li>
+    <li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -97,13 +98,13 @@ A numeric vector.</p></dd>
 
 <dt id="arg-open-left">open_left<a class="anchor" aria-label="anchor" href="#arg-open-left"></a></dt>
 <dd><p>Whether first cohort
-is "open", i.e. has no lower limit.
+is open on the left, i.e. has no lower limit.
 Default is <code>FALSE</code>.</p></dd>
 
 
 <dt id="arg-open-right">open_right<a class="anchor" aria-label="anchor" href="#arg-open-right"></a></dt>
 <dd><p>Whether last cohort
-is "open", i.e. has no upper limit.
+is open on the right, i.e. has no upper limit.
 Default is <code>FALSE</code>.</p></dd>
 
 
@@ -145,25 +146,11 @@ last cohort. Non-negative number.</p></dd>
     <p>Character vector.</p>
     </div>
     <div class="section level2">
-    <h2 id="controlling-the-formatting-of-cohort-labels">Controlling the formatting of cohort labels<a class="anchor" aria-label="anchor" href="#controlling-the-formatting-of-cohort-labels"></a></h2>
+    <h2 id="rules-for-formatting-output">Rules for formatting output<a class="anchor" aria-label="anchor" href="#rules-for-formatting-output"></a></h2>
 
 
 
-<p><code>format_single</code> controls whether the label
-for a single-year cohorts is based on the
-lower or upper limit.
-For instance, the cohort <code>[2025,2026)</code>
-has label <code>"2025"</code> if <code>format_single</code>
-is <code>"lower"</code> and <code>"2026"</code> if
-<code>format_single</code> is <code>"upper"</code>.</p>
-<p><code>format_multi</code> controls whether the label
-for a multi-year cohort includes the upper limit.
-For instance, the cohort <code>[2025,2030)</code>
-has label <code>"2025-2035"</code> if
-<code>format_multi</code> is <code>"include"</code> and
-<code>"2025-2029"</code> if <code>format_multi</code> is
-<code>"exclude"</code>.</p>
-    </div>
+<p><strong>Single-year cohorts</strong></p><table class="table table"><tr><td><code>format_single</code></td><td><em>Rule</em></td><td><em>Example</em></td></tr><tr><td><code>"lower"</code></td><td><code>[a,a+1) -&gt; "a"</code></td><td><code>[2020,2021) -&gt; "2020"</code></td></tr><tr><td><code>"upper"</code></td><td><code>[a,a+1) -&gt; "&lt;a+1&gt;"</code></td><td><code>[2020,2021) -&gt; "2021"</code></td></tr></table><p><strong>Multi-year cohorts</strong></p><table class="table table"><tr><td><code>format_multi</code></td><td><em>Rule</em></td><td><em>Example</em></td></tr><tr><td><code>"include"</code></td><td><code>[a,a+n) -&gt; "a-&lt;a+n&gt;"</code></td><td><code>[2020,2025) -&gt; "2020-2025"</code></td></tr><tr><td><code>"exclude"</code></td><td><code>[a,a+n) -&gt; "a-&lt;a+n-1&gt;"</code></td><td><code>[2020,2025) -&gt; "2020-2024"</code></td></tr></table><p><strong>Open cohorts</strong></p><table class="table table"><tr><td><em>Interval type</em></td><td><em>Rule</em></td><td><em>Example</em></td></tr><tr><td>open on left</td><td><code>(-Inf,a) -&gt; "&lt;a"</code></td><td><code>(-Inf,2020) -&gt; "&lt;2020"</code></td></tr><tr><td>open on right</td><td><code>[a,Inf) -&gt; "a+"</code></td><td><code>[2020,Inf) -&gt; "2020+"</code></td></tr></table></div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
     <div class="dont-index">

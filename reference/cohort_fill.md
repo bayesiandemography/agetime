@@ -1,6 +1,17 @@
 # Fill in Gaps in Cohort Levels
 
-Fill in gaps in levels of `labels`.
+Add intermediate cohorts.
+
+The return value is a factor, and the intermediate cohorts are added as
+factor levels.
+
+- `cohort_fill()` adds cohorts specified by `breaks`.
+
+- `cohort_fill_one()` adds cohorts with width 1.
+
+- `cohort_fill_five()` adds cohorts with width 5.
+
+- `cohort_fill_ten()` adds cohorts with width 10.
 
 ## Usage
 
@@ -65,38 +76,33 @@ cohort_fill_ten(
 
 Factor with the same length as `labels`.
 
-## Details
+## Rules for interpreting inputs
 
-If `labels` is not a factor, and so does not have levels, convert it to
-a factor before filling in levels.
+Single-year cohorts:
 
-- `cohort_fill` adds cohorts specified by `breaks`.
+|                    |                  |                         |
+|--------------------|------------------|-------------------------|
+| `interpret_single` | *Rule*           | *Example*               |
+| `"lower"`          | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
+| `"upper"`          | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 
-- `cohort_fill_one` adds cohorts with width 1.
+Data providers typically use the "lower" convention for calendar years
+(1 January to 31 December), and the "upper" convention for non-calendar
+years (e.g., 1 July to 30 June).
 
-- `cohort_fill_five` adds cohorts with width 5.
+Multi-year cohorts:
 
-- `cohort_fill_ten` adds cohorts with width 10.
+|                   |                          |                              |
+|-------------------|--------------------------|------------------------------|
+| `interpret_multi` | *Rule*                   | *Example*                    |
+| `"include"`       | `"a-<a+n>" -> [a,a+n)`   | `"2020-2025" -> [2020,2025)` |
+| `"exclude"`       | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
 
-## Controlling how cohort labels are interpreted
-
-If `interpret_single` is `"lower"` (the default), then labels for
-single-year cohorts are assumed to refer to lower limits, so that
-`"2025"` means `[2025,2026)`. This is the convention that data providers
-typically use for calendar years.
-
-If `interpret_single` is `"upper"`, then labels for single-year cohorts
-are assumed to refer to upper limits, so that `"2025"` means
-`[2024,2025)`. This is the convention that data providers typically use
-for non-calendar years, such as 1 July to 30 June.
-
-If `interpret_multi` is `"include"` (the default), then labels for
-multi-year cohorts are assumed to include upper limits, so that
-`"2025-2030"` means `[2025,2030)`.
-
-If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
-are assumed to exclude the upper limits so that `"2025-2030"` means
-`[2025,2031)`.
+A two-value label cannot describe a one-year cohort. With
+`interpret_multi = "include"`, `"2010-2011"` would be `[2010, 2011)` and
+`"2010-2010"` would be empty; both are rejected. Use `"2010"`, or
+`"2010-2012"` for two years. With `interpret_multi = "exclude"`,
+`"2010-2011"` is two years `[2010, 2012)` and is accepted.
 
 ## See also
 
@@ -133,7 +139,8 @@ cohort_fill_ten(labels)
 
 ## levels are used by functions
 ## such as 'table()'
-labels |> table()
+labels |>
+  table()
 #> labels
 #> 2021-2031 2051-2061 
 #>         1         1 
@@ -144,10 +151,10 @@ labels |>
 #> 2021-2031 2031-2041 2041-2051 2051-2061 
 #>         1         0         0         1 
 
-## sort after filling
+## set level order after filling
 labels |>
   cohort_fill_ten() |>
-  cohort_sort() |>
+  cohort_set_order() |>
   table()
 #> 
 #> 2021-2031 2031-2041 2041-2051 2051-2061 

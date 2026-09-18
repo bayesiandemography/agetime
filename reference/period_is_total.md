@@ -1,6 +1,6 @@
 # Identify Period Labels for Totals
 
-Find "total" categories in period labels.
+Find categories representing totals in period labels.
 
 ## Usage
 
@@ -38,25 +38,33 @@ period_is_total(
 
 Logical vector with the same length as `labels`.
 
-## Controlling how period labels are interpreted
+## Rules for interpreting inputs
 
-If `interpret_single` is `"lower"` (the default), then labels for
-single-year periods are assumed to refer to lower limits, so that
-`"2025"` means `[2025,2026)`. This is the convention that data providers
-typically use for calendar years.
+Single-year periods:
 
-If `interpret_single` is `"upper"`, then labels for single-year periods
-are assumed to refer to upper limits, so that `"2025"` means
-`[2024,2025)`. This is the convention that data providers typically use
-for non-calendar years, such as 1 July to 30 June.
+|                    |                  |                         |
+|--------------------|------------------|-------------------------|
+| `interpret_single` | *Rule*           | *Example*               |
+| `"lower"`          | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
+| `"upper"`          | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 
-If `interpret_multi` is `"include"` (the default), then labels for
-multi-year periods are assumed to include upper limits, so that
-`"2025-2030"` means `[2025,2030)`.
+Data providers typically use the "lower" convention for calendar years
+(1 January to 31 December), and the "upper" convention for non-calendar
+years (e.g., 1 July to 30 June).
 
-If `interpret_multi` is `"exclude"`, then labels for multi-year periods
-are assumed to exclude the upper limits, so that `"2025-2030"` means
-`[2025,2031)`.
+Multi-year periods:
+
+|                   |                          |                              |
+|-------------------|--------------------------|------------------------------|
+| `interpret_multi` | *Rule*                   | *Example*                    |
+| `"include"`       | `"a-<a+n>" -> [a,a+n)`   | `"2020-2025" -> [2020,2025)` |
+| `"exclude"`       | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
+
+A two-value label cannot describe a one-year period. With
+`interpret_multi = "include"`, `"2010-2011"` would be `[2010, 2011)` and
+`"2010-2010"` would be empty; both are rejected. Use `"2010"`, or
+`"2010-2012"` for two years. With `interpret_multi = "exclude"`,
+`"2010-2011"` is two years `[2010, 2012)` and is accepted.
 
 ## See also
 
@@ -66,11 +74,38 @@ are assumed to exclude the upper limits, so that `"2025-2030"` means
 - [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
   Cohort equivalent of `period_is_total()`
 
+- [`period_is_subtotal()`](https://bayesiandemography.github.io/agetime/reference/period_is_subtotal.md)
+  Identify subtotals
+
+- [`period_is_missing()`](https://bayesiandemography.github.io/agetime/reference/period_is_missing.md)
+  Identify missing period labels
+
 ## Examples
 
 ``` r
+labels <- c("2020-2025", "2025-2030", "2020-2035", "Total")
+period_is_total(labels)
+#> 2020-2025 2025-2030 2020-2035     Total 
+#>     FALSE     FALSE     FALSE      TRUE 
+period_is_subtotal(labels)
+#> 2020-2025 2025-2030 2020-2035     Total 
+#>     FALSE     FALSE     FALSE     FALSE 
+
 labels <- c("2020-2025", "Total", "1999", "ALL")
 period_is_total(labels)
 #> 2020-2025     Total      1999       ALL 
 #>     FALSE      TRUE     FALSE      TRUE 
+
+## use to filter data
+library(dplyr, warn.conflicts = FALSE)
+df <- data.frame(
+  period = c("2020-2025", "2025-2030", "2020-2035", "Total"),
+  value = c(100, 200, 300, 400)
+)
+df |>
+  filter(!period_is_total(period))
+#>      period value
+#> 1 2020-2025   100
+#> 2 2025-2030   200
+#> 3 2020-2035   300
 ```

@@ -1,6 +1,6 @@
 # Standardize Cohort Labels
 
-Convert cohort labels to the default agetime format.
+Convert cohort labels to the default agetime format for cohorts.
 
 ## Usage
 
@@ -38,30 +38,45 @@ cohort_standard(
 
 Character vector or factor with the same length as `labels`.
 
-## Controlling how cohort labels are interpreted
+## Rules for formatting output
 
-If `interpret_single` is `"lower"` (the default), then labels for
-single-year cohorts are assumed to refer to lower limits, so that
-`"2025"` means `[2025,2026)`. This is the convention that data providers
-typically use for calendar years.
+|                 |                        |                              |
+|-----------------|------------------------|------------------------------|
+| *Interval type* | *Rule*                 | *Example*                    |
+| single          | `[a,a+1) -> "a"`       | `[2020,2021) -> "2020"`      |
+| multi           | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
+| open on left    | `(-Inf,a) -> "<a"`     | `(-Inf,2020) -> "<2020"`     |
+| open on right   | `[a,Inf) -> "a+"`      | `[2020,Inf) -> "2020+"`      |
 
-If `interpret_single` is `"upper"`, then labels for single-year cohorts
-are assumed to refer to upper limits, so that `"2025"` means
-`[2024,2025)`. This is the convention that data providers typically use
-for non-calendar years, such as 1 July to 30 June.
+## Rules for interpreting inputs
 
-If `interpret_multi` is `"include"` (the default), then labels for
-multi-year cohorts are assumed to include upper limits, so that
-`"2025-2030"` means `[2025,2030)`.
+Single-year cohorts:
 
-If `interpret_multi` is `"exclude"`, then labels for multi-year cohorts
-are assumed to exclude the upper limits so that `"2025-2030"` means
-`[2025,2031)`.
+|                    |                  |                         |
+|--------------------|------------------|-------------------------|
+| `interpret_single` | *Rule*           | *Example*               |
+| `"lower"`          | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
+| `"upper"`          | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
+
+Data providers typically use the "lower" convention for calendar years
+(1 January to 31 December), and the "upper" convention for non-calendar
+years (e.g., 1 July to 30 June).
+
+Multi-year cohorts:
+
+|                   |                          |                              |
+|-------------------|--------------------------|------------------------------|
+| `interpret_multi` | *Rule*                   | *Example*                    |
+| `"include"`       | `"a-<a+n>" -> [a,a+n)`   | `"2020-2025" -> [2020,2025)` |
+| `"exclude"`       | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
+
+A two-value label cannot describe a one-year cohort. With
+`interpret_multi = "include"`, `"2010-2011"` would be `[2010, 2011)` and
+`"2010-2010"` would be empty; both are rejected. Use `"2010"`, or
+`"2010-2012"` for two years. With `interpret_multi = "exclude"`,
+`"2010-2011"` is two years `[2010, 2012)` and is accepted.
 
 ## See also
-
-- [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
-  Default agetime format
 
 - [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
   Age equivalent of `cohort_standard()`
@@ -69,10 +84,13 @@ are assumed to exclude the upper limits so that `"2025-2030"` means
 - [`period_standard()`](https://bayesiandemography.github.io/agetime/reference/period_standard.md)
   Period equivalent of `cohort_standard()`
 
+- [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
+  Create cohort labels
+
 ## Examples
 
 ``` r
-labels <- c("2025to2030", "1910--1914", " < 2022 ")
+labels <- c("2025to2030", "1910--1914", " < 2022 ", "all")
 cohort_standard(labels)
-#> [1] "2025-2030" "1910-1914" "<2022"    
+#> [1] "2025-2030" "1910-1914" "<2022"     "Total"    
 ```

@@ -1,7 +1,7 @@
 # Specify Open Age Group
 
-Add a factor level representing an age group that is open on the right
-(has no upper limit). Replace existing age groups where necessary.
+Define a factor level representing an age group with no upper limit.
+Replace existing age groups where necessary.
 
 ## Usage
 
@@ -30,29 +30,17 @@ Factor with the same length as `labels`.
 
 ## See also
 
-- [`cohort_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
-  Specify cohort open on left
-
-- [`cohort_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
-  Specify cohort open on right
-
 - [`period_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md)
   Specify period open on left
 
 - [`period_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md)
   Specify period open on right
 
-- [`cohort_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
-  Identify cohorts open on left
+- [`cohort_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
+  Specify cohort open on left
 
-- [`cohort_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md)
-  Identify cohorts open on right
-
-- [`period_is_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_is_open_left.md)
-  Identify periods open on left
-
-- [`period_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/period_is_open_left.md)
-  Identify periods open on right
+- [`cohort_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
+  Specify cohort open on right
 
 - [`age_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_is_open_right.md)
   Identify age groups open on right

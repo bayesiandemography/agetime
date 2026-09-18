@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">agetime</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +34,8 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
+<li><a class="dropdown-item" href="../articles/cookbook.html">Cookbook for agetime Package</a></li>
+    <li><a class="dropdown-item" href="../articles/api-principles.html">API principles</a></li>
   </ul>
 </li>
       </ul>
@@ -64,21 +65,13 @@
 
     
     
-<p>Multi-year age groups, periods, and cohorts are stored as character
-vectors or factors with labels such as <code>"0-14"</code>,
-<code>"2020-2025"</code>, or <code>"1980-1990"</code>. Working with
-these label vectors can be awkward. Identifying 5-year age groups older
-than 60, for instance, is harder than it should be.</p>
-<p><strong>agetime</strong> makes working with label vectors easy.
-<strong>agetime</strong> functions know how to interpret age, period,
-and cohort labels, and can work directly with label vectors.
-<strong>agetime</strong> contains functions for validating,
-manipulating, and extracting information from label vectors.</p>
-<p><strong>agetime</strong> functions for age groups, periods, and
-cohorts follow a common pattern. This vignette uses age groups to
-illustrate the pattern.</p>
+<p>Working with age group, period, and cohort labels is often awkward
+and error-prone. The <code>agetime</code> package makes it easier. This
+vignette introduces some of the basic functions. The vignette focuses on
+age group labels, but equivalent functions also exist for period and
+cohort labels.</p>
 <div class="section level2">
-<h2 id="read-intervals-from-labels">Read intervals from labels<a class="anchor" aria-label="anchor" href="#read-intervals-from-labels"></a>
+<h2 id="infer-intervals-from-labels">Infer intervals from labels<a class="anchor" aria-label="anchor" href="#infer-intervals-from-labels"></a>
 </h2>
 <p>Given a vector of age group labels, extract lower limits, upper
 limits, midpoints, and widths:</p>
@@ -114,12 +107,11 @@ limits, midpoints, and widths:</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 15-64   200</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> 65+      50</span></span></code></pre></div>
-<p><code><a href="../reference/age_lower.html">age_mid()</a></code> is useful for plotting.</p>
 </div>
 <div class="section level2">
 <h2 id="find-special-labels">Find special labels<a class="anchor" aria-label="anchor" href="#find-special-labels"></a>
 </h2>
-<p><strong>agetime</strong> understands open intervals and totals.</p>
+<p><code>agetime</code> knows about totals and open intervals.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  age   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"15-64"</span>, <span class="st">"0-14"</span>, <span class="st">"65+"</span>, <span class="st">"All"</span><span class="op">)</span>,</span>
@@ -145,26 +137,18 @@ limits, midpoints, and widths:</p>
 <div class="section level2">
 <h2 id="standardize-messy-labels">Standardize messy labels<a class="anchor" aria-label="anchor" href="#standardize-messy-labels"></a>
 </h2>
-<p>There are many ways of formatting age group labels.
-<code><a href="../reference/age_standard.html">age_standard()</a></code> converts labels to a standard format:</p>
+<p><code><a href="../reference/age_standard.html">age_standard()</a></code> converts labels to a standard format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"5to9"</span>, <span class="st">"10--14"</span>, <span class="st">"100plus"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_standard.html">age_standard</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "5-9"   "10-14" "100+"</span></span></code></pre></div>
-<p>If <code>x</code> is a factor, <code><a href="../reference/age_standard.html">age_standard()</a></code> returns a
-factor where the levels are also standardized.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"5to9"</span>, <span class="st">"10--14"</span>, <span class="st">"100plus"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_standard.html">age_standard</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 5-9   10-14 100+ </span></span>
-<span><span class="co">#&gt; Levels: 10-14 100+ 5-9</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="create-a-regular-series-of-labels">Create a regular series of labels<a class="anchor" aria-label="anchor" href="#create-a-regular-series-of-labels"></a>
 </h2>
-<p>To generate labels from scratch, use the <code>age_labels</code>
-functions.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>The <code>age_labels</code> functions generate labels from
+scratch.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span>lower_first <span class="op">=</span> <span class="fl">0</span>, lower_last <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "0-4"   "5-9"   "10-14" "15-19" "20+"</span></span>
 <span><span class="fu"><a href="../reference/age_labels.html">age_labels_life</a></span><span class="op">(</span>lower_last <span class="op">=</span> <span class="fl">60</span><span class="op">)</span> <span class="co">## life table age groups</span></span>
@@ -172,28 +156,38 @@ functions.</p>
 <span><span class="co">#&gt; [10] "40-44" "45-49" "50-54" "55-59" "60+"</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="modify-to-new-groupings">Modify to new groupings<a class="anchor" aria-label="anchor" href="#modify-to-new-groupings"></a>
+<h2 id="manipulate-levels">Manipulate levels<a class="anchor" aria-label="anchor" href="#manipulate-levels"></a>
 </h2>
-<p>To widen or realign age groups, use an <code>age_modify</code>
-function.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Use the <code>age_coarsen</code> functions to convert to wider age
+groups.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-14"</span>, <span class="st">"50-54"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_modify.html">age_modify</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span>, <span class="fl">55</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_coarsen.html">age_coarsen</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span>, <span class="fl">55</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0-14  0-14  0-14  15-54</span></span>
 <span><span class="co">#&gt; Levels: 0-14 15-54</span></span>
-<span><span class="fu"><a href="../reference/age_modify_five.html">age_modify_five</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_coarsen_five.html">age_coarsen_five</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "0-4"   "5-9"   "10-14" "50-54"</span></span></code></pre></div>
+<p>Use the <code>age_fill</code> functions to add intermediate
+levels:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/age_coarsen_five.html">age_coarsen_five</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/age_fill.html">age_fill_five</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0-4   5-9   10-14 50-54</span></span>
 <span><span class="co">#&gt; Levels: 0-4 5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54</span></span></code></pre></div>
-<p><code><a href="../reference/age_fill.html">age_fill()</a></code> adds missing age groups to factor levels, and
-<code><a href="../reference/age_sort.html">age_sort()</a></code> sorts levels.</p>
 </div>
 <div class="section level2">
 <h2 id="check-and-assert">Check and assert<a class="anchor" aria-label="anchor" href="#check-and-assert"></a>
 </h2>
 <p>Check whether age labels conform to expectations:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span>lower_first <span class="op">=</span> <span class="fl">0</span>, lower_last <span class="op">=</span> <span class="fl">85</span>, open_right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_check.html">age_check</a></span><span class="op">(</span><span class="va">lab</span>,</span>
+<code class="sourceCode R"><span><span class="va">lab</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span></span>
+<span>  lower_first <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  lower_last <span class="op">=</span> <span class="fl">85</span>,</span>
+<span>  open_right <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_diagnose.html">age_diagnose</a></span><span class="op">(</span></span>
+<span>  <span class="va">lab</span>,</span>
 <span>  no_overlap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  has_zero <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -204,13 +198,13 @@ function.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $details</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 3</span></span></span>
-<span><span class="co">#&gt;   check          passed comment</span></span>
+<span><span class="co">#&gt;   condition      passed comment</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> no_overlap     TRUE   <span style="color: #BB0000;">NA</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> no_gap         TRUE   <span style="color: #BB0000;">NA</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> has_zero       TRUE   <span style="color: #BB0000;">NA</span>     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> has_open_right TRUE   <span style="color: #BB0000;">NA</span></span></span></code></pre></div>
-<p><code><a href="../reference/age_check.html">age_assert()</a></code> throws an error if a check fails.</p>
+<p><code><a href="../reference/age_diagnose.html">age_assert()</a></code> throws an error if a check fails.</p>
 </div>
 <div class="section level2">
 <h2 id="create-mappings">Create mappings<a class="anchor" aria-label="anchor" href="#create-mappings"></a>
@@ -218,9 +212,14 @@ function.</p>
 <p><code><a href="../reference/age_mapping.html">age_mapping()</a></code> builds a mapping between sets of
 labels.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10--14"</span>, <span class="st">"0--9"</span><span class="op">)</span></span>
-<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-14"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="../reference/age_mapping.html">age_mapping</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, relation <span class="op">=</span> <span class="st">"contains"</span>, format <span class="op">=</span> <span class="st">"matrix"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">labels_x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10--14"</span>, <span class="st">"0--9"</span><span class="op">)</span></span>
+<span><span class="va">labels_y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"10-14"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/age_mapping.html">age_mapping</a></span><span class="op">(</span></span>
+<span>  <span class="va">labels_x</span>,</span>
+<span>  <span class="va">labels_y</span>,</span>
+<span>  relation <span class="op">=</span> <span class="st">"contains"</span>,</span>
+<span>  format <span class="op">=</span> <span class="st">"matrix"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="co">#&gt;         y</span></span>
 <span><span class="co">#&gt; x        0-4 5-9 10-14</span></span>
 <span><span class="co">#&gt;   10--14   0   0     1</span></span>
@@ -259,9 +258,68 @@ instance:</p>
 <td><code><a href="../reference/cohort_labels.html">cohort_labels_five()</a></code></td>
 </tr>
 <tr class="even">
-<td><code><a href="../reference/age_modify.html">age_modify()</a></code></td>
-<td><code><a href="../reference/period_modify.html">period_modify()</a></code></td>
-<td><code><a href="../reference/cohort_modify.html">cohort_modify()</a></code></td>
+<td><code><a href="../reference/age_coarsen.html">age_coarsen()</a></code></td>
+<td><code><a href="../reference/period_coarsen.html">period_coarsen()</a></code></td>
+<td><code><a href="../reference/cohort_coarsen.html">cohort_coarsen()</a></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section level2">
+<h2 id="function-tasks">Function tasks<a class="anchor" aria-label="anchor" href="#function-tasks"></a>
+</h2>
+<p><code>agetime</code> functions fall into five groups, defined by
+their tasks:</p>
+<table class="table">
+<colgroup>
+<col width="30%">
+<col width="45%">
+<col width="24%">
+</colgroup>
+<thead><tr class="header">
+<th>Task</th>
+<th>Examples</th>
+<th>Return value</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Extract limits or identify special labels</td>
+<td>
+<code><a href="../reference/age_lower.html">age_lower()</a></code>, <code><a href="../reference/age_lower.html">age_upper()</a></code>,
+<code><a href="../reference/age_lower.html">age_mid()</a></code>, <code><a href="../reference/age_lower.html">age_width()</a></code>,
+<code><a href="../reference/age_is_total.html">age_is_total()</a></code>
+</td>
+<td>Numeric or logical</td>
+</tr>
+<tr class="even">
+<td>Create a new series, or reformat existing labels</td>
+<td>
+<code><a href="../reference/age_labels.html">age_labels_five()</a></code>, <code><a href="../reference/age_standard.html">age_standard()</a></code>,
+<code><a href="../reference/age_extend.html">age_extend()</a></code>
+</td>
+<td>Character, or same type as <code>labels</code>
+</td>
+</tr>
+<tr class="odd">
+<td>Recode values and set factor levels</td>
+<td>
+<code><a href="../reference/age_coarsen.html">age_coarsen()</a></code>, <code><a href="../reference/age_fill.html">age_fill()</a></code>,
+<code><a href="../reference/age_set_open_right.html">age_set_open_right()</a></code>, <code><a href="../reference/age_set_order.html">age_set_order()</a></code>
+</td>
+<td>Factor</td>
+</tr>
+<tr class="even">
+<td>Validate labels</td>
+<td>
+<code><a href="../reference/age_diagnose.html">age_diagnose()</a></code>, <code><a href="../reference/age_diagnose.html">age_assert()</a></code>
+</td>
+<td>Diagnostics, or <code>labels</code>
+</td>
+</tr>
+<tr class="odd">
+<td>Relate two sets of labels</td>
+<td><code><a href="../reference/age_mapping.html">age_mapping()</a></code></td>
+<td>Tibble or matrix</td>
 </tr>
 </tbody>
 </table>
@@ -271,11 +329,13 @@ instance:</p>
 </h2>
 <ul>
 <li>
-<code><a href="../reference/agetime-package.html">?agetime</a></code> for a full list of functions grouped by
-task</li>
+<code><a href="../reference/agetime-package.html">?agetime</a></code> for a full list of functions</li>
 <li>
-<code><a href="../articles/api-principles.html">vignette("api-principles")</a></code> for naming and return-type
-conventions</li>
+<code><a href="../articles/cookbook.html">vignette("cookbook")</a></code> for suggestions for performing
+common label-related tasks</li>
+<li>
+<code><a href="../articles/api-principles.html">vignette("api-principles")</a></code> for an AI-written summary of
+principles underlying the interface for the package</li>
 <li>Package website: <a href="https://bayesiandemography.github.io/agetime/" class="uri">https://bayesiandemography.github.io/agetime/</a>
 </li>
 </ul>
