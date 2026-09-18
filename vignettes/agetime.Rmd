@@ -162,5 +162,5 @@ Age group functions have period and cohort equivalents. For instance:
 
 - `?agetime` for a full list of functions
 - `vignette("cookbook")` for suggestions for performing common label-related tasks
-- `vignette("api-principles")` on design decisions for the package
+- `vignette("api-principles")` for an AI-written summary of principles underlying the interface for the package
 - Package website: <https://bayesiandemography.github.io/agetime/>
