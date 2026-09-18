@@ -65,10 +65,10 @@ Add intermediate cohorts.
 The return value is a factor, and the intermediate
 cohorts are added as factor levels.
 \itemize{
-\item \code{cohort_fill} adds cohorts specified by \code{breaks}.
-\item \code{cohort_fill_one} adds cohorts with width 1.
-\item \code{cohort_fill_five} adds cohorts with width 5.
-\item \code{cohort_fill_ten} adds cohorts with width 10.
+\item \code{cohort_fill()} adds cohorts specified by \code{breaks}.
+\item \code{cohort_fill_one()} adds cohorts with width 1.
+\item \code{cohort_fill_five()} adds cohorts with width 5.
+\item \code{cohort_fill_ten()} adds cohorts with width 10.
 }
 }
 \section{Rules for interpreting inputs}{

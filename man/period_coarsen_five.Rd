@@ -60,8 +60,8 @@ The new periods must contain
 the old periods, and (except for open periods)
 all have the same width.
 \itemize{
-\item \code{period_coarsen_five} Five-year periods
-\item \code{period_coarsen_ten} Ten-year periods
+\item \code{period_coarsen_five()} Five-year periods
+\item \code{period_coarsen_ten()} Ten-year periods
 }
 }
 \details{

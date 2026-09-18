@@ -135,9 +135,9 @@ age_coarsen_to <- function(labels,
 #' age groups and that follow a regular
 #' pattern:
 #'
-#' - `age_coarsen_five` Five-year age groups
-#' - `age_coarsen_ten` Ten-year age groups
-#' - `age_coarsen_life` Age groups used in abridged life tables
+#' - `age_coarsen_five()` Five-year age groups
+#' - `age_coarsen_ten()` Ten-year age groups
+#' - `age_coarsen_life()` Age groups used in abridged life tables
 #'
 #' @details
 #'

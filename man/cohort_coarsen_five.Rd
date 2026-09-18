@@ -60,8 +60,8 @@ The new cohorts must contain
 the old cohorts, and (except for open cohorts)
 all have the same width.
 \itemize{
-\item \code{cohort_coarsen_five} Five-year cohorts
-\item \code{cohort_coarsen_ten} Ten-year cohorts
+\item \code{cohort_coarsen_five()} Five-year cohorts
+\item \code{cohort_coarsen_ten()} Ten-year cohorts
 }
 }
 \details{

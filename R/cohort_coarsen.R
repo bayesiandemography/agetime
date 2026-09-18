@@ -171,8 +171,8 @@ cohort_coarsen_to <- function(labels,
 #' the old cohorts, and (except for open cohorts)
 #' all have the same width.
 #'
-#' - `cohort_coarsen_five` Five-year cohorts
-#' - `cohort_coarsen_ten` Ten-year cohorts
+#' - `cohort_coarsen_five()` Five-year cohorts
+#' - `cohort_coarsen_ten()` Ten-year cohorts
 #'
 #' @details
 #'

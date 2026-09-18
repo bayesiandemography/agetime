@@ -6,11 +6,11 @@
 #' The return value is a factor, and the intermediate
 #' age groups are added as factor levels.
 #'
-#' - `age_fill` adds age groups specified by `breaks`.
-#' - `age_fill_one` adds age groups with width 1.
-#' - `age_fill_five` adds age groups with width 5.
-#' - `age_fill_ten` adds age groups with width 10.
-#' - `age_fill_life` adds age groups used by an abridged life table.
+#' - `age_fill()` adds age groups specified by `breaks`.
+#' - `age_fill_one()` adds age groups with width 1.
+#' - `age_fill_five()` adds age groups with width 5.
+#' - `age_fill_ten()` adds age groups with width 10.
+#' - `age_fill_life()` adds age groups used by an abridged life table.
 #'
 #' @inheritSection age_diagnose Abridged and complete life tables
 #'

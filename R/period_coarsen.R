@@ -171,8 +171,8 @@ period_coarsen_to <- function(labels,
 #' the old periods, and (except for open periods)
 #' all have the same width.
 #'
-#' - `period_coarsen_five` Five-year periods
-#' - `period_coarsen_ten` Ten-year periods
+#' - `period_coarsen_five()` Five-year periods
+#' - `period_coarsen_ten()` Ten-year periods
 #'
 #' @details
 #'

@@ -6,10 +6,10 @@
 #' The return value is a factor, and the intermediate
 #' periods are added as factor levels.
 #'
-#' - `period_fill` adds periods specified by `breaks`.
-#' - `period_fill_one` adds periods with width 1.
-#' - `period_fill_five` adds periods with width 5.
-#' - `period_fill_ten` adds periods with width 10.
+#' - `period_fill()` adds periods specified by `breaks`.
+#' - `period_fill_one()` adds periods with width 1.
+#' - `period_fill_five()` adds periods with width 5.
+#' - `period_fill_ten()` adds periods with width 10.
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'

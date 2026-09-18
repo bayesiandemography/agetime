@@ -42,9 +42,9 @@ Define new age groups that contain existing
 age groups and that follow a regular
 pattern:
 \itemize{
-\item \code{age_coarsen_five} Five-year age groups
-\item \code{age_coarsen_ten} Ten-year age groups
-\item \code{age_coarsen_life} Age groups used in abridged life tables
+\item \code{age_coarsen_five()} Five-year age groups
+\item \code{age_coarsen_ten()} Ten-year age groups
+\item \code{age_coarsen_life()} Age groups used in abridged life tables
 }
 }
 \details{

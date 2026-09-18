@@ -254,7 +254,7 @@ stop a pipeline.
 
 ### Solution
 
-Use the `*_diagnose()` functions for diagnostics. Use the `*_assert()` functions to throw an error as soon as a condition is violated.
+Use the `diagnose` functions for diagnostics. Use the `assert` functions to throw an error as soon as a condition is violated.
 
 ```{r validate}
 lab <- c("2020-2025", "2025-2030", "2030-2035")
@@ -271,9 +271,9 @@ pop |>
 
 ### Discussion
 
-`*_diagnose()` functions return a list with an `ok` flag and details.
+The `diagnose` functions return a list with an `ok` flag and details.
 
-`*_assert()` functions return their input invisibly when checks pass. Returning their inputs allows them to be used in pipelines.
+The `assert` functions return their input invisibly when checks pass. Returning their inputs allows them to be used in pipelines.
 
 
 ### See Also
@@ -286,7 +286,7 @@ pop |>
 
 ### Problem
 
-When `labels` is a factor, the `*_diagnose()` and `*_assert()` functions check factor *levels*, including unused levels, rather than the values themselves. For instance, if we have
+When `labels` is a factor, the `diagnose` and `assert` functions check factor *levels*, including unused levels, rather than the values themselves. For instance, if we have
 ```
 labels <- factor(c("0-4", "5-9"))
 ```
@@ -311,7 +311,7 @@ df |>
 
 ### Solution
 
-To check the values of a factor, rather than the levels, use `*_diagnose_values()` and `*_assert_values()`.
+To check the values of a factor, rather than the levels, use the `diagnose_values` and `assert_values` functions.
 
 ```{r validate-values-solution, error = TRUE}
 df |>

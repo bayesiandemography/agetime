@@ -65,10 +65,10 @@ Add intermediate periods.
 The return value is a factor, and the intermediate
 periods are added as factor levels.
 \itemize{
-\item \code{period_fill} adds periods specified by \code{breaks}.
-\item \code{period_fill_one} adds periods with width 1.
-\item \code{period_fill_five} adds periods with width 5.
-\item \code{period_fill_ten} adds periods with width 10.
+\item \code{period_fill()} adds periods specified by \code{breaks}.
+\item \code{period_fill_one()} adds periods with width 1.
+\item \code{period_fill_five()} adds periods with width 5.
+\item \code{period_fill_ten()} adds periods with width 10.
 }
 }
 \section{Rules for interpreting inputs}{

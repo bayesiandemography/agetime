@@ -14,13 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-Multi-year age groups, periods, and cohorts are stored as character vectors or factors with labels such as `"0-14"`, `"2020-2025"`, or `"1980-1990"`. Working with these label vectors can be awkward. Identifying 5-year age groups older than 60, for instance, is harder than it should be. 
+Working with age group, period, and cohort labels is often awkward and error-prone. The `agetime` package makes it easier. This vignette introduces some of the basic functions. The vignette focuses on age group labels, but equivalent functions also exist for period and cohort labels.
 
-`agetime` makes working with label vectors easy. `agetime` functions know how to interpret age, period, and cohort labels, and can work directly with label vectors. `agetime` contains functions for validating, manipulating, and extracting information from label vectors.
-
-`agetime` functions for age groups, periods, and cohorts follow a common pattern. This vignette uses age groups to illustrate the pattern.
-
-## Read intervals from labels
+## Infer intervals from labels
 
 Given a vector of age group labels, extract lower limits, upper limits, midpoints, and widths:
 
@@ -48,11 +44,9 @@ df |>
   filter(age_lower(age) >= 15)
 ```
 
-`age_mid()` is useful for plotting.
-
 ## Find special labels
 
-`agetime` understands open intervals and totals.
+`agetime` knows about totals and open intervals.
 
 ```{r filter-total-open}
 df <- tibble(
@@ -69,32 +63,25 @@ df |>
 
 ## Standardize messy labels
 
-There are many ways of formatting age group labels. `age_standard()` converts labels to a standard format:
+`age_standard()` converts labels to a standard format:
 
 ```{r standard}
 x <- c("5to9", "10--14", "100plus")
 age_standard(x)
 ```
 
-If `x` is a factor, `age_standard()` returns a factor where the levels are also standardized.
-
-```{r standard-factor}
-x <- factor(c("5to9", "10--14", "100plus"))
-age_standard(x)
-```
-
 ## Create a regular series of labels
 
-To generate labels from scratch, use the `age_labels` functions.
+The `age_labels` functions generate labels from scratch.
 
 ```{r labels}
 age_labels_five(lower_first = 0, lower_last = 20)
 age_labels_life(lower_last = 60) ## life table age groups
 ```
 
-## Coarsen to new groupings
+## Manipulate levels
 
-To widen or realign age groups, use an `age_coarsen` function.
+Use the `age_coarsen` functions to convert to wider age groups.
 
 ```{r coarsen}
 x <- c("0-4", "5-9", "10-14", "50-54")
@@ -102,16 +89,25 @@ age_coarsen(x, breaks = c(0, 15, 55))
 age_coarsen_five(x)
 ```
 
-`age_fill()` adds missing age groups to factor levels, and `age_set_order()`
-sets the order of those levels.
+Use the `age_fill` functions to add intermediate levels:
+```{r fill}
+x |>
+  age_coarsen_five() |>
+  age_fill_five()
+```
 
 ## Check and assert
 
 Check whether age labels conform to expectations:
 
 ```{r check}
-lab <- age_labels_five(lower_first = 0, lower_last = 85, open_right = TRUE)
-age_diagnose(lab,
+lab <- age_labels_five(
+  lower_first = 0,
+  lower_last = 85,
+  open_right = TRUE
+)
+age_diagnose(
+  lab,
   no_overlap = TRUE,
   no_gap = TRUE,
   has_zero = TRUE,
@@ -128,7 +124,12 @@ age_diagnose(lab,
 ```{r mapping-contains}
 labels_x <- c("10--14", "0--9")
 labels_y <- c("0-4", "5-9", "10-14")
-age_mapping(labels_x, labels_y, relation = "contains", format = "matrix")
+age_mapping(
+  labels_x,
+  labels_y,
+  relation = "contains",
+  format = "matrix"
+)
 ```
 
 
@@ -141,24 +142,25 @@ Age group functions have period and cohort equivalents. For instance:
 | `age_lower()`       | `period_lower()`       | `cohort_lower()`       |
 | `age_standard()`    | `period_standard()`    | `cohort_standard()`    |
 | `age_labels_five()` | `period_labels_five()` | `cohort_labels_five()` |
-| `age_coarsen()`      | `period_coarsen()`      | `cohort_coarsen()`      |
+| `age_coarsen()`     | `period_coarsen()`     | `cohort_coarsen()`     |
 
-## Function groups
 
-Most functions fall into one of five groups:
+## Function tasks
 
-| Group | Examples | Task | Return value |
-|--------------------------|---------------------------------------------------------------|-------------------------------------------|----------------------------------|
-| Read labels | `age_lower()`, `age_upper()`, `age_mid()`, `age_width()`, `age_is_total()` | Extract limits or identify special labels | Numeric or logical |
-| Create or reformat labels | `age_labels_five()`, `age_standard()`, `age_extend()` | Create a new series, or reformat existing labels | Character, or same type as `labels` |
-| Reshape levels | `age_coarsen()`, `age_fill()`, `age_set_open_right()`, `age_set_order()` | Recode values and set factor levels | Factor |
-| Check | `age_diagnose()`, `age_assert()` | Validate labels | Diagnostics, or `labels` |
-| Map | `age_mapping()` | Relate two sets of labels | Tibble or matrix |
+`agetime` functions fall into five groups, defined by their tasks:
+
+| Task | Examples | Return value |
+|-------------------------------------------|---------------------------------------------------------------|----------------------------------|
+| Extract limits or identify special labels | `age_lower()`, `age_upper()`, `age_mid()`, `age_width()`, `age_is_total()` | Numeric or logical |
+| Create a new series, or reformat existing labels | `age_labels_five()`, `age_standard()`, `age_extend()` | Character, or same type as `labels` |
+| Recode values and set factor levels | `age_coarsen()`, `age_fill()`, `age_set_open_right()`, `age_set_order()` | Factor |
+| Validate labels | `age_diagnose()`, `age_assert()` | Diagnostics, or `labels` |
+| Relate two sets of labels | `age_mapping()` | Tibble or matrix |
 
 
 ## More information
 
-- `vignette("cookbook")` for task-oriented recipes
-- `?agetime` for a full list of functions grouped by task
-- `vignette("api-principles")` for naming and return-type conventions
+- `?agetime` for a full list of functions
+- `vignette("cookbook")` for suggestions for performing common label-related tasks
+- `vignette("api-principles")` on design decisions for the package
 - Package website: <https://bayesiandemography.github.io/agetime/>
