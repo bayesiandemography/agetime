@@ -131,9 +131,11 @@ With <code>interpret_multi = "exclude"</code>,
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">labels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020"</span>, <span class="st">"&lt;1900"</span>, <span class="st">"2020-2030"</span>, <span class="st">"2000 or more"</span>, <span class="st">"2030+"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">period_is_open_left</span><span class="op">(</span><span class="va">labels</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in FUN(X[[i]], ...):</span> Don't know how to interpret label <span style="color: #0000BB;">"2000ormore"</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2020        &lt;1900    2020-2030 2000 or more        2030+ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        FALSE         TRUE        FALSE        FALSE        FALSE </span>
 <span class="r-in"><span><span class="fu">period_is_open_right</span><span class="op">(</span><span class="va">labels</span><span class="op">)</span></span></span>
-<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in FUN(X[[i]], ...):</span> Don't know how to interpret label <span style="color: #0000BB;">"2000ormore"</span>.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         2020        &lt;1900    2020-2030 2000 or more        2030+ </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>        FALSE        FALSE        FALSE         TRUE         TRUE </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

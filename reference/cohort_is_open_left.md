@@ -109,7 +109,9 @@ A two-value label cannot describe a one-year cohort. With
 ``` r
 labels <- c("2020", "<1900", "2040-2050", "1900 or less", "2030+")
 cohort_is_open_left(labels)
-#> Error in FUN(X[[i]], ...): Don't know how to interpret label "1900orless".
+#>         2020        <1900    2040-2050 1900 or less        2030+ 
+#>        FALSE         TRUE        FALSE         TRUE        FALSE 
 cohort_is_open_right(labels)
-#> Error in FUN(X[[i]], ...): Don't know how to interpret label "1900orless".
+#>         2020        <1900    2040-2050 1900 or less        2030+ 
+#>        FALSE        FALSE        FALSE        FALSE         TRUE 
 ```

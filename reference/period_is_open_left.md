@@ -109,7 +109,9 @@ A two-value label cannot describe a one-year period. With
 ``` r
 labels <- c("2020", "<1900", "2020-2030", "2000 or more", "2030+")
 period_is_open_left(labels)
-#> Error in FUN(X[[i]], ...): Don't know how to interpret label "2000ormore".
+#>         2020        <1900    2020-2030 2000 or more        2030+ 
+#>        FALSE         TRUE        FALSE        FALSE        FALSE 
 period_is_open_right(labels)
-#> Error in FUN(X[[i]], ...): Don't know how to interpret label "2000ormore".
+#>         2020        <1900    2020-2030 2000 or more        2030+ 
+#>        FALSE        FALSE        FALSE         TRUE         TRUE 
 ```
