@@ -22,9 +22,8 @@ Depends:
     R (>= 4.1.0)
 Imports:
     cli,
-    pillar,
-    stats,
-    tibble
+    tibble,
+    vctrs
 Suggests:
     dplyr,
     ggplot2,

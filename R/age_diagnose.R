@@ -31,6 +31,9 @@
 #'
 #' @inheritParams age_lower
 #' @param no_overlap Check that no age groups overlap.
+#' Different labels that describe the same interval,
+#' such as `"0"` and `"infant"`, count as overlapping.
+#' Repeated copies of the same label do not.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all ages between the
 #' youngest and oldest age groups are included.

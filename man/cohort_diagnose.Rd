@@ -63,6 +63,9 @@ cohort_assert_values(
 \item{labels}{Vector of cohort labels.}
 
 \item{no_overlap}{Check that no cohorts overlap.
+Different labels that describe the same interval,
+such as \code{"<2000"} and \code{"before 2000"}, count as overlapping.
+Repeated copies of the same label do not.
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all cohorts between

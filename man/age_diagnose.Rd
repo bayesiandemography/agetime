@@ -59,6 +59,9 @@ age_assert_values(
 \item{labels}{Vector of age group labels.}
 
 \item{no_overlap}{Check that no age groups overlap.
+Different labels that describe the same interval,
+such as \code{"0"} and \code{"infant"}, count as overlapping.
+Repeated copies of the same label do not.
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all ages between the

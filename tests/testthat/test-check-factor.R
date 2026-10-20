@@ -92,7 +92,7 @@ test_that("age_diagnose_values() ignores unused factor levels", {
 test_that("age_assert_values() preserves the original factor", {
   fac <- factor("0-4", levels = c("0-4", "3-7"))
 
-  expect_error(age_assert(fac, no_overlap = TRUE), "Assertion failed")
+  expect_error(age_assert(fac, no_overlap = TRUE), "Age group labels fail check `no_overlap`.")
   ans <- age_assert_values(fac, no_overlap = TRUE)
   expect_identical(ans, fac)
 })

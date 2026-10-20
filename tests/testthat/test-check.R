@@ -90,6 +90,36 @@ test_that("no_overlap check fails for overlapping age groups", {
   expect_diagnose_result(val, "no_overlap", FALSE)
 })
 
+test_that("no_overlap check fails for synonyms describing the same interval", {
+  val <- age_diagnose(c("0", "infant", "1-4", "5+"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", FALSE)
+  expect_match(val$details$comment, "'0' and 'infant' describe the same interval")
+  val <- age_diagnose(c("0-4", "0 to 4", "5+"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", FALSE)
+  val <- cohort_diagnose(c("<2000", "before 2000", "2000-2004"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", FALSE)
+})
+
+test_that("no_overlap check passes for repeated labels", {
+  val <- age_diagnose(c("0", "0", "1-4", "1-4", "5+"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", TRUE)
+})
+
+test_that("no_overlap check ignores synonyms for NA, and unparsed labels", {
+  val <- age_diagnose(c("unknown", "NA", "0-4"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", TRUE)
+  val <- age_diagnose(c("0-4", "young", "old"), no_overlap = TRUE, interpret_fail = "silent")
+  expect_diagnose_result(val, "no_overlap", TRUE)
+})
+
+test_that("no_overlap check for synonyms uses levels or values", {
+  x <- factor(c("0", "1-4"), levels = c("0", "infant", "1-4"))
+  val <- age_diagnose(x, no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", FALSE)
+  val <- age_diagnose_values(x, no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", TRUE)
+})
+
 test_that("no_gap check passes for contiguous age groups", {
   val <- age_diagnose(age_closed, no_gap = TRUE)
   expect_diagnose_result(val, "no_gap", TRUE)
@@ -222,7 +252,24 @@ test_that("cohort no_gap check fails when there is a gap", {
 
 test_that("age_assert succeeds and fails as expected", {
   expect_invisible(age_assert(age_closed, no_overlap = TRUE))
-  expect_error(age_assert(age_overlap, no_overlap = TRUE), "Assertion failed\\.")
+  expect_error(age_assert(age_overlap, no_overlap = TRUE),
+               "Age group labels fail check `no_overlap`.")
   expect_invisible(age_assert(age_life_gap, valid_life = TRUE))
-  expect_error(age_assert(age_life_gap, no_gap = TRUE), "Assertion failed\\.")
+  expect_error(age_assert(age_life_gap, no_gap = TRUE),
+               "Age group labels fail check `no_gap`.")
+})
+
+test_that("assert error messages name each failed condition and give comments", {
+  expect_snapshot(
+    age_assert(c("0-4", "3-7", "10-14"), no_overlap = TRUE, no_gap = TRUE),
+    error = TRUE
+  )
+  expect_snapshot(
+    period_assert_values(c("2020", "Total"), no_total = TRUE),
+    error = TRUE
+  )
+  expect_snapshot(
+    cohort_assert(c("2000-2004", "2005-2009"), has_open_left = TRUE),
+    error = TRUE
+  )
 })

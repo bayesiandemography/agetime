@@ -24,6 +24,9 @@
 #'
 #' @inheritParams period_lower
 #' @param no_overlap Check that no periods overlap.
+#' Different labels that describe the same interval,
+#' such as `"2020-2024"` and `"2020 to 2024"`, count as overlapping.
+#' Repeated copies of the same label do not.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all periods between
 #' the earliest and latest periods are included.

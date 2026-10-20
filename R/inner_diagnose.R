@@ -15,6 +15,8 @@
 #' @param has_open_left Run the has-open-left check?
 #' @param has_open_right Run the has-open-right check?
 #' @param valid_life Run the valid-life check?
+#' @param call Environment of the user-facing function,
+#' used to report where an error occurred.
 #' @returns `labels`, invisibly, or an error if checks fail.
 #'
 #' @noRd
@@ -32,7 +34,8 @@ inner_assert <- function(labels,
                          has_zero,
                          has_open_left,
                          has_open_right,
-                         valid_life) {
+                         valid_life,
+                         call = parent.frame()) {
   val <- inner_diagnose(
     labels = labels,
     label_type = label_type,
@@ -49,7 +52,7 @@ inner_assert <- function(labels,
     has_open_right = has_open_right,
     valid_life = valid_life
   )
-  throw_assert_error(val)
+  throw_assert_error(val = val, label_type = label_type, call = call)
   invisible(labels)
 }
 #' Inner Diagnose
@@ -161,7 +164,7 @@ inner_diagnose <- function(labels,
       comment = character()
     )
   } else {
-    dplyr::bind_rows(details_list)
+    vctrs::vec_rbind(!!!details_list)
   }
   ok <- if (nrow(details) == 0L) {
     TRUE
@@ -184,6 +187,7 @@ inner_diagnose <- function(labels,
 
 inner_diagnose_no_overlap <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
+  synonyms <- NULL
   if (int_is_empty) {
     passed <- TRUE
   } else {
@@ -193,10 +197,16 @@ inner_diagnose_no_overlap <- function(intervals, on) {
     m_overlap[is_total, ] <- TRUE
     m_overlap[, is_total] <- TRUE
     m_overlap[row(m_overlap) >= col(m_overlap)] <- FALSE
-    passed <- !any(m_overlap, na.rm = TRUE)
+    synonyms <- find_synonyms(intervals)
+    passed <- !any(m_overlap, na.rm = TRUE) && is.null(synonyms)
   }
   if (identical(passed, TRUE)) {
     comment <- NA_character_
+  } else if (!is.null(synonyms)) {
+    comment <- sprintf(
+      "Example of overlap among %s: '%s' and '%s' describe the same interval",
+      on, synonyms[[1L]], synonyms[[2L]]
+    )
   } else {
     labels_unique <- get_labels_unique(intervals)
     i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
@@ -216,6 +226,42 @@ inner_diagnose_no_overlap <- function(intervals, on) {
     comment = comment
   )
 }
+#' Find Labels That Describe the Same Interval
+#'
+#' Two different labels, such as `"0"` and `"infant"`, are
+#' synonyms if they describe the same interval. Repeated copies
+#' of the same label are not synonyms. Labels for totals and
+#' missing values are ignored, since these are handled by other
+#' conditions.
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @returns `NULL` if there are no synonyms, or a length-2
+#' character vector with an example pair of synonyms.
+#'
+#' @noRd
+find_synonyms <- function(intervals) {
+  labels_unique <- get_labels_unique(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  m <- get_m(intervals)
+  is_na <- get_is_na(intervals)
+  is_total <- get_is_total(intervals)
+  is_unparsed <- is.na(m[, 1L]) & is.na(m[, 2L])
+  is_ignore <- (is_na | is_total | is_unparsed)[i_xun_to_xunu]
+  ## different labels with the same normalized label, or
+  ## different normalized labels with the same interval
+  key <- vctrs::vec_group_id(vctrs::data_frame(lower = m[, 1L], upper = m[, 2L]))
+  key_xu <- key[i_xun_to_xunu]
+  key_xu[is_ignore] <- NA
+  is_dup <- !is.na(key_xu) & duplicated(key_xu)
+  if (!any(is_dup)) {
+    return(NULL)
+  }
+  i_second <- match(TRUE, is_dup)
+  i_first <- match(key_xu[[i_second]], key_xu)
+  c(labels_unique[[i_first]], labels_unique[[i_second]])
+}
+
+
 #' Inner Diagnose No Gap
 #'
 #' @param intervals An `agetime_intervals` object.
@@ -473,21 +519,30 @@ on_sentence_start <- function(on) {
 }
 #' Throw Assert Error
 #'
+#' The message names each failed condition, followed by
+#' the comment from `inner_diagnose()`.
+#'
 #' @param val Result object from `inner_diagnose()`.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param call Environment of the user-facing function,
+#' used to report where the error occurred.
 #' @returns `NULL`, invisibly, or aborts when checks fail.
 #'
 #' @noRd
-
-
-throw_assert_error <- function(val) {
+throw_assert_error <- function(val, label_type, call) {
   if (!val$ok) {
     details <- val$details[!val$details$passed, , drop = FALSE]
-    details <- pillar::pillar(details)
-    details <- paste(utils::capture.output(print(details)),
-      collapse = "\n"
-    )
-    msg <- c("Assertion failed.", " " = details)
-    cli::cli_abort(msg)
+    conditions <- details$condition
+    comments <- details$comment
+    is_no_stop <- !is.na(comments) & !grepl("\\.$", comments)
+    comments[is_no_stop] <- paste0(comments[is_no_stop], ".")
+    label <- label_name(label_type)
+    label <- paste0(toupper(substr(label, 1L, 1L)), substring(label, 2L))
+    n <- length(conditions)
+    msg <- paste0(label, " labels fail {cli::qty(n)}check{?s} {.arg {conditions}}.")
+    bullets <- paste0("{.arg {conditions[[", seq_len(n), "]]}}: {comments[[", seq_len(n), "]]}")
+    names(bullets) <- rep("x", times = n)
+    cli::cli_abort(c(msg, bullets), call = call)
   }
   invisible(NULL)
 }

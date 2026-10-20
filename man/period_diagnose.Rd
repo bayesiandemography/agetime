@@ -63,6 +63,9 @@ period_assert_values(
 \item{labels}{Vector of period labels.}
 
 \item{no_overlap}{Check that no periods overlap.
+Different labels that describe the same interval,
+such as \code{"2020-2024"} and \code{"2020 to 2024"}, count as overlapping.
+Repeated copies of the same label do not.
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all periods between

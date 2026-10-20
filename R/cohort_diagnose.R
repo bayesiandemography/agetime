@@ -24,6 +24,9 @@
 #'
 #' @inheritParams cohort_lower
 #' @param no_overlap Check that no cohorts overlap.
+#' Different labels that describe the same interval,
+#' such as `"<2000"` and `"before 2000"`, count as overlapping.
+#' Repeated copies of the same label do not.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all cohorts between
 #' the earliest and latest cohort are
