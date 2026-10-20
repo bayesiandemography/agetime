@@ -15,6 +15,12 @@
 #' @return Character vector or factor with the same length as `labels`.
 #'
 #' @seealso
+#' To create a new set of age group labels, use
+#' [age_labels_one()], [age_labels_five()], [age_labels_life()],
+#' or [age_labels()]. To clean existing labels, use
+#' [age_standard()]. To map labels onto an existing set of
+#' labels, use [age_coarsen_to()].
+#'
 #' - [period_standard()] Period equivalent of `age_standard()`
 #' - [cohort_standard()] Cohort equivalent of `age_standard()`
 #' - [age_labels()] Create age group labels

@@ -53,6 +53,12 @@
 #' @return Character vector.
 #'
 #' @seealso
+#' To create a new set of period labels, use
+#' [period_labels_one()], [period_labels_five()], [period_labels_ten()],
+#' or [period_labels()]. To clean existing labels, use
+#' [period_standard()]. To map labels onto an existing set of
+#' labels, use [period_coarsen_to()].
+#'
 #' - [age_labels()] Age equivalent of `period_labels()`
 #' - [cohort_labels()] Cohort equivalent of `period_labels()`
 #'

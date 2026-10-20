@@ -106,6 +106,12 @@ age_coarsen <- function(labels,
 #' ## unused labels in `to` are kept as levels
 #' age_coarsen_to(c("0", "1"), to)
 #' @seealso
+#' To create a new set of age group labels, use
+#' [age_labels_one()], [age_labels_five()], [age_labels_life()],
+#' or [age_labels()]. To clean existing labels, use
+#' [age_standard()]. To map labels onto an existing set of
+#' labels, use [age_coarsen_to()].
+#'
 #' - [age_coarsen()] Coarsen using break points
 #' - [age_mapping()] Inspect the relationship between two sets of labels
 #' - [period_coarsen_to()] Period equivalent of `age_coarsen_to()`

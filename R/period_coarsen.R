@@ -137,6 +137,12 @@ period_coarsen <- function(labels,
 #' ## unused labels in `to` are kept as levels
 #' period_coarsen_to(c("2020", "2021"), to)
 #' @seealso
+#' To create a new set of period labels, use
+#' [period_labels_one()], [period_labels_five()], [period_labels_ten()],
+#' or [period_labels()]. To clean existing labels, use
+#' [period_standard()]. To map labels onto an existing set of
+#' labels, use [period_coarsen_to()].
+#'
 #' - [period_coarsen()] Coarsen using break points
 #' - [period_mapping()] Inspect the relationship between two sets of labels
 #' - [age_coarsen_to()] Age equivalent of `period_coarsen_to()`

@@ -137,6 +137,12 @@ cohort_coarsen <- function(labels,
 #' ## unused labels in `to` are kept as levels
 #' cohort_coarsen_to(c("2020", "2021"), to)
 #' @seealso
+#' To create a new set of cohort labels, use
+#' [cohort_labels_one()], [cohort_labels_five()], [cohort_labels_ten()],
+#' or [cohort_labels()]. To clean existing labels, use
+#' [cohort_standard()]. To map labels onto an existing set of
+#' labels, use [cohort_coarsen_to()].
+#'
 #' - [cohort_coarsen()] Coarsen using break points
 #' - [cohort_mapping()] Inspect the relationship between two sets of labels
 #' - [age_coarsen_to()] Age equivalent of `cohort_coarsen_to()`

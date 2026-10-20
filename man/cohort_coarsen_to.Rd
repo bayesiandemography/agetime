@@ -86,6 +86,11 @@ cohort_coarsen_to(labels, to)
 cohort_coarsen_to(c("2020", "2021"), to)
 }
 \seealso{
+To create a new set of cohort labels, use
+\code{\link[=cohort_labels_one]{cohort_labels_one()}}, \code{\link[=cohort_labels_five]{cohort_labels_five()}}, \code{\link[=cohort_labels_ten]{cohort_labels_ten()}},
+or \code{\link[=cohort_labels]{cohort_labels()}}. To clean existing labels, use
+\code{\link[=cohort_standard]{cohort_standard()}}. To map labels onto an existing set of
+labels, use \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}}.
 \itemize{
 \item \code{\link[=cohort_coarsen]{cohort_coarsen()}} Coarsen using break points
 \item \code{\link[=cohort_mapping]{cohort_mapping()}} Inspect the relationship between two sets of labels

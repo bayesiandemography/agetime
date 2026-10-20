@@ -26,12 +26,20 @@ Functions for
 - coarsening, and
 - creating new labels.
 
-Example: standardizing labels.
+Example: creating a complete set of labels.
 
 ``` r
 library(agetime)
 
-x <-  c("2003 to 2005", "2012--2015", "2000-2005")
+age_labels_five(lower_last = 85)
+#>  [1] "0-4"   "5-9"   "10-14" "15-19" "20-24" "25-29" "30-34" "35-39" "40-44"
+#> [10] "45-49" "50-54" "55-59" "60-64" "65-69" "70-74" "75-79" "80-84" "85+"
+```
+
+Example: standardizing labels.
+
+``` r
+x <- c("2003 to 2005", "2012--2015", "2000-2005")
 
 x |>
   period_standard()
@@ -46,7 +54,7 @@ library(dplyr, warn.conflicts = FALSE)
 df <- data.frame(
   age = c("0-14", "100+", "15-39"),
   count = c(100, 40, 200)
-)   
+)
 
 df |>
   filter(age_lower(age) >= 15)

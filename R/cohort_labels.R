@@ -54,6 +54,12 @@
 #' @return Character vector.
 #'
 #' @seealso
+#' To create a new set of cohort labels, use
+#' [cohort_labels_one()], [cohort_labels_five()], [cohort_labels_ten()],
+#' or [cohort_labels()]. To clean existing labels, use
+#' [cohort_standard()]. To map labels onto an existing set of
+#' labels, use [cohort_coarsen_to()].
+#'
 #' - [age_labels()] Age equivalent of `cohort_labels()`
 #' - [period_labels()] Period equivalent of `cohort_labels()`
 #'
