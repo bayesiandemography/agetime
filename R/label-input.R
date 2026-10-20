@@ -99,16 +99,19 @@ to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
   labels_char
 }
 
-#' Set Labels Names
+#' Copy Names of Input Labels to Result
+#'
+#' Results of element-wise functions, such as `age_lower()`,
+#' keep the names of `labels`, if any, following the
+#' convention of base R functions such as `nchar()`.
+#' Unnamed labels give unnamed results.
 #'
 #' @param x Vector with one value per element of `labels`.
-#' @param labels Vector of labels.
-#' @returns `x` with names set to the original label strings.
+#' @param labels Vector of labels, as supplied by the user.
+#' @returns `x` with the names of `labels`.
 #'
 #' @noRd
-set_labels_names <- function(x, labels) {
-  if (length(x) > 0L) {
-    names(x) <- as.character(labels)
-  }
+copy_labels_names <- function(x, labels) {
+  names(x) <- names(labels)
   x
 }

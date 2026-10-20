@@ -57,7 +57,7 @@ inner_lower <- function(labels,
   )
   m <- l$m
   i <- l$i
-  set_labels_names(m[i, 1L], labels)
+  copy_labels_names(m[i, 1L], labels)
 }
 #' Inner Mid
 #'
@@ -86,21 +86,63 @@ inner_mid <- function(labels,
   )
   m <- l$m
   i <- l$i
+  mid <- mid_intervals(m = m, label_type = label_type, call = parent.frame())
+  copy_labels_names(mid[i], labels)
+}
+
+
+#' Midpoints of Intervals, Including Open Intervals
+#'
+#' Closed intervals get their ordinary midpoints. An open
+#' interval gets a midpoint half the width of the nearest
+#' closed interval away from its finite limit: for an interval
+#' that is open on the right, such as `"80+"`, the closed
+#' interval with the highest lower limit, and for an interval
+#' that is open on the left, such as `"<2000"`, the closed
+#' interval with the lowest upper limit.
+#'
+#' @param m Matrix of intervals, with lower limits in column 1,
+#' upper limits in column 2, and labels as row names.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param call Environment used to report errors.
+#' @returns Numeric vector with one midpoint per row of `m`.
+#'
+#' @noRd
+mid_intervals <- function(m, label_type, call) {
   l <- m[, 1L]
   u <- m[, 2L]
-  w <- u - l
-  m <- l + 0.5 * w
-  is_open_left <- is.infinite(l)
-  is_open_right <- is.infinite(u)
-  if (any(is_open_left) || any(is_open_right)) {
-    is_w_defined <- !is.na(w) & is.finite(w)
-    if (any(is_w_defined)) {
-      median_w <- stats::median(w[is_w_defined])
-      m[is_open_left] <- u[is_open_left] - 0.5 * median_w
-      m[is_open_right] <- l[is_open_right] + 0.5 * median_w
-    }
+  ans <- l + 0.5 * (u - l)
+  is_open_left <- is.infinite(l) & is.finite(u)
+  is_open_right <- is.finite(l) & is.infinite(u)
+  if (!any(is_open_left) && !any(is_open_right)) {
+    return(ans)
   }
-  set_labels_names(m[i], labels)
+  is_closed <- is.finite(l) & is.finite(u)
+  if (!any(is_closed)) {
+    i_open <- match(TRUE, is_open_left | is_open_right)
+    label <- rownames(m)[[i_open]]
+    nm <- label_name(label_type)
+    cli::cli_abort(
+      c(
+        "Can't calculate midpoint of open {nm} {.val {label}}.",
+        i = "No closed {nm}s to take a width from."
+      ),
+      call = call
+    )
+  }
+  l_closed <- l[is_closed]
+  u_closed <- u[is_closed]
+  if (any(is_open_right)) {
+    i_top <- which(l_closed == max(l_closed))
+    w_top <- max(u_closed[i_top] - l_closed[i_top])
+    ans[is_open_right] <- l[is_open_right] + 0.5 * w_top
+  }
+  if (any(is_open_left)) {
+    i_bottom <- which(u_closed == min(u_closed))
+    w_bottom <- max(u_closed[i_bottom] - l_closed[i_bottom])
+    ans[is_open_left] <- u[is_open_left] - 0.5 * w_bottom
+  }
+  ans
 }
 #' Inner Upper
 #'
@@ -129,7 +171,7 @@ inner_upper <- function(labels,
   )
   m <- l$m
   i <- l$i
-  set_labels_names(m[i, 2L], labels)
+  copy_labels_names(m[i, 2L], labels)
 }
 #' Inner Width
 #'
@@ -161,5 +203,5 @@ inner_width <- function(labels,
   l <- m[, 1L]
   u <- m[, 2L]
   w <- u - l
-  set_labels_names(w[i], labels)
+  copy_labels_names(w[i], labels)
 }

@@ -24,6 +24,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Numeric vector with the same length as \code{labels}.
+If \code{labels} has names, the result has the same names.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -35,8 +36,12 @@ to filter on age. See below for examples.
 
 \code{age_mid()} assigns open age groups (e.g., \code{"100+"})
 honorary midpoints, which are useful for plotting.
-These midpoints use half the median width of
-the closed intervals in \code{labels}.
+An open age group gets a midpoint half the width of the
+closed age group with the highest lower limit, so that,
+for instance, the midpoint of \code{"100+"} is \code{102.5} when
+the other age groups are five-year groups.
+If \code{labels} has no closed age groups, \code{age_mid()}
+throws an error.
 }
 \examples{
 labels <- c("5-9", "10-14", "100+")

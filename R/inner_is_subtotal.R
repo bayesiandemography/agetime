@@ -162,6 +162,7 @@ inner_is_subtotal <- function(labels,
                               interpret_single,
                               interpret_multi,
                               interpret_fail) {
+  labels_input <- labels
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
@@ -180,7 +181,7 @@ inner_is_subtotal <- function(labels,
   labels_chr <- as.character(labels)
   pool_labels <- pool_labels_for_subtotal(intervals = intervals_all)
   if (length(pool_labels) < 2L) {
-    return(set_labels_names(rep(FALSE, length(labels_chr)), labels))
+    return(copy_labels_names(rep(FALSE, length(labels_chr)), labels_input))
   }
   intervals_pool <- intervals(
     labels = pool_labels,
@@ -191,5 +192,5 @@ inner_is_subtotal <- function(labels,
   )
   subtotal_labels <- subtotal_labels_from_pool(intervals = intervals_pool)
   is_subtotal <- labels_chr %in% subtotal_labels
-  set_labels_names(is_subtotal, labels)
+  copy_labels_names(is_subtotal, labels_input)
 }

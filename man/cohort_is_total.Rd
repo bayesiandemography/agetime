@@ -30,6 +30,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Logical vector with the same length as \code{labels}.
+If \code{labels} has names, the result has the same names.
 }
 \description{
 Find categories representing totals in cohort labels.

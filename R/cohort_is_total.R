@@ -7,6 +7,7 @@
 #' @inheritParams cohort_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [cohort_is_open_left()] Identify cohorts open on left
@@ -60,6 +61,7 @@ cohort_is_total <- function(labels,
 #' @inheritParams cohort_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [age_is_missing()] Age equivalent of `cohort_is_missing()`
@@ -105,6 +107,7 @@ cohort_is_missing <- function(labels,
 #' @inheritParams cohort_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [age_is_open_right()] Identify age groups open on right

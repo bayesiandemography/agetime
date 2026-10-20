@@ -38,6 +38,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Logical vector with the same length as \code{labels}.
+If \code{labels} has names, the result has the same names.
 }
 \description{
 Find cohorts that are open on the left or right.

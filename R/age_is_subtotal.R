@@ -13,6 +13,7 @@
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [period_is_subtotal()] Period equivalent of `age_is_subtotal()`

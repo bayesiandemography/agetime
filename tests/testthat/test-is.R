@@ -132,15 +132,19 @@ test_that("is functions accept factor input with the same results", {
   expect_values(period_is_open_right(x), period_is_open_right(c("2020-2030", "2030+")))
 })
 
-test_that("is_total() and is_missing() names match is_open() and extractors", {
+test_that("is_total() and is_missing() names match is_open() and extractors, and keep input names", {
   x <- c(a = "0-4", b = "5-9", c = "0-4", d = "Total")
   expect_identical(names(age_is_total(x)), names(age_is_open_right(x)))
   expect_identical(names(age_is_total(x)), names(age_lower(x)))
 
+  expect_identical(names(age_is_total(x)), c("a", "b", "c", "d"))
+  expect_identical(names(age_is_subtotal(x)), c("a", "b", "c", "d"))
+
   x <- c("5to9", "10--14", "5to9")
-  expect_identical(names(age_is_total(x)), x)
-  expect_identical(names(age_is_open_right(x)), x)
-  expect_identical(names(age_lower(x)), x)
+  expect_null(names(age_is_total(x)))
+  expect_null(names(age_is_open_right(x)))
+  expect_null(names(age_is_subtotal(x)))
+  expect_null(names(age_lower(x)))
 
   x <- c(a = "0-4", b = NA_character_, c = "missing")
   expect_identical(names(age_is_missing(x)), names(age_lower(x)))

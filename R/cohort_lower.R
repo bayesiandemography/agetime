@@ -10,8 +10,12 @@
 #'
 #' `cohort_mid()` assigns open cohorts (e.g., `"<2000"`)
 #' honorary midpoints, which are useful for plotting.
-#' These midpoints use half the median width of
-#' the closed intervals in `labels`.
+#' An interval that is open on the right gets a midpoint
+#' half the width of the closed cohort with the highest lower limit,
+#' and an interval that is open on the left gets a midpoint
+#' half the width of the closed cohort with the lowest upper limit.
+#' If `labels` has no closed cohorts, `cohort_mid()`
+#' throws an error.
 #'
 #' @section Rules for interpreting inputs:
 #'
@@ -54,6 +58,7 @@
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
 #' @return Numeric vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #' @examples
 #' labels <- c("2025-2030", "<2025", "2030-2035")
 #' cohort_lower(labels) # [2025, 2030)

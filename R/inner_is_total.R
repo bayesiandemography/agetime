@@ -19,6 +19,7 @@ inner_is_open <- function(labels,
                           interpret_fail,
                           check_open_left,
                           check_open_right) {
+  labels_input <- labels
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
@@ -35,7 +36,7 @@ inner_is_open <- function(labels,
   is_open_right <- check_open_right & get_is_open_right(intervals)
   is_open <- is_open_left | is_open_right
   i <- get_i_x_to_xunu(intervals)
-  set_labels_names(is_open[i], labels)
+  copy_labels_names(is_open[i], labels_input)
 }
 #' Inner Is Total
 #'
@@ -54,6 +55,7 @@ inner_is_total <- function(labels,
                            interpret_single,
                            interpret_multi,
                            interpret_fail) {
+  labels_input <- labels
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
@@ -68,7 +70,7 @@ inner_is_total <- function(labels,
   )
   is_total <- get_is_total(intervals)
   i <- get_i_x_to_xunu(intervals)
-  set_labels_names(is_total[i], labels)
+  copy_labels_names(is_total[i], labels_input)
 }
 
 #' Inner Is Missing
@@ -87,6 +89,7 @@ inner_is_missing <- function(labels,
                              interpret_single,
                              interpret_multi,
                              interpret_fail) {
+  labels_input <- labels
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
@@ -101,5 +104,5 @@ inner_is_missing <- function(labels,
   )
   is_missing <- get_is_na(intervals)
   i <- get_i_x_to_xunu(intervals)
-  set_labels_names(is_missing[i], labels)
+  copy_labels_names(is_missing[i], labels_input)
 }

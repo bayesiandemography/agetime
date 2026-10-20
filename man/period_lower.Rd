@@ -54,6 +54,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 }
 \value{
 Numeric vector with the same length as \code{labels}.
+If \code{labels} has names, the result has the same names.
 }
 \description{
 Calculate lower limits, upper limits,
@@ -66,8 +67,12 @@ See below for examples.
 
 \code{period_mid()} assigns open periods (e.g., \code{"2025+"})
 honorary midpoints, which are useful for plotting.
-These midpoints use half the median width of
-the closed intervals in \code{labels}.
+An interval that is open on the right gets a midpoint
+half the width of the closed period with the highest lower limit,
+and an interval that is open on the left gets a midpoint
+half the width of the closed period with the lowest upper limit.
+If \code{labels} has no closed periods, \code{period_mid()}
+throws an error.
 }
 \section{Rules for interpreting inputs}{
 

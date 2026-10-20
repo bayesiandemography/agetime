@@ -9,14 +9,19 @@
 #'
 #' `age_mid()` assigns open age groups (e.g., `"100+"`)
 #' honorary midpoints, which are useful for plotting.
-#' These midpoints use half the median width of
-#' the closed intervals in `labels`.
+#' An open age group gets a midpoint half the width of the
+#' closed age group with the highest lower limit, so that,
+#' for instance, the midpoint of `"100+"` is `102.5` when
+#' the other age groups are five-year groups.
+#' If `labels` has no closed age groups, `age_mid()`
+#' throws an error.
 #'
 #' @param labels Vector of age group labels.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
 #' @return Numeric vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [period_lower()] Period equivalent of `age_lower()`

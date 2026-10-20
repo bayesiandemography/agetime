@@ -10,8 +10,12 @@
 #'
 #' `period_mid()` assigns open periods (e.g., `"2025+"`)
 #' honorary midpoints, which are useful for plotting.
-#' These midpoints use half the median width of
-#' the closed intervals in `labels`.
+#' An interval that is open on the right gets a midpoint
+#' half the width of the closed period with the highest lower limit,
+#' and an interval that is open on the left gets a midpoint
+#' half the width of the closed period with the lowest upper limit.
+#' If `labels` has no closed periods, `period_mid()`
+#' throws an error.
 #'
 #' @section Rules for interpreting inputs:
 #'
@@ -54,6 +58,7 @@
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
 #' @return Numeric vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [age_lower()] Age equivalent of `period_lower()`

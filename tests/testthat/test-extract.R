@@ -222,18 +222,51 @@ test_that("extract functions accept factor input", {
   expect_values(cohort_lower(x_cohort), cohort_lower(cohort_multi))
 })
 
-test_that("extract functions name results with original label strings", {
+test_that("extract functions give unnamed results for unnamed labels", {
   x <- age_messy
-  expect_identical(names(age_lower(x)), x)
-  expect_identical(names(age_upper(x)), x)
-  expect_identical(names(age_width(x)), x)
-  expect_identical(names(age_mid(x)), x)
+  expect_null(names(age_lower(x)))
+  expect_null(names(age_upper(x)))
+  expect_null(names(age_width(x)))
+  expect_null(names(age_mid(x)))
+  expect_null(names(age_lower(factor(x))))
 
   x <- period_messy
-  expect_identical(names(period_lower(x)), x)
-  expect_identical(names(period_upper(x)), x)
+  expect_null(names(period_lower(x)))
+  expect_null(names(period_upper(x)))
 
   x <- cohort_messy
-  expect_identical(names(cohort_lower(x)), x)
-  expect_identical(names(cohort_upper(x)), x)
+  expect_null(names(cohort_lower(x)))
+  expect_null(names(cohort_upper(x)))
+})
+
+test_that("extract functions keep names of named labels", {
+  x <- c(a = "0-4", b = "5-9", c = "10+")
+  expect_identical(names(age_lower(x)), c("a", "b", "c"))
+  expect_identical(names(age_upper(x)), c("a", "b", "c"))
+  expect_identical(names(age_width(x)), c("a", "b", "c"))
+  expect_identical(names(age_mid(x)), c("a", "b", "c"))
+
+  x <- c(p = "2020-2024", q = "2025")
+  expect_identical(names(period_lower(x)), c("p", "q"))
+  expect_identical(names(cohort_upper(x)), c("p", "q"))
+})
+
+test_that("mid functions give open intervals half the width of the nearest closed interval", {
+  expect_identical(age_mid(c("0", "1-4", "5-9", "80+")), c(0.5, 3, 7.5, 82.5))
+  expect_identical(age_mid(c("0", "1", "2", "90+")), c(0.5, 1.5, 2.5, 90.5))
+  expect_identical(age_mid(c("60-69", "70-79", "80+")), c(65, 75, 85))
+  expect_identical(age_mid(c("80+", "70-79")), c(85, 75))
+  expect_identical(age_mid(c("0-4", NA, "Total", "5+")), c(2.5, NA, NA, 7.5))
+  expect_identical(cohort_mid(c("<2000", "2000-2004", "2005+")), c(1998, 2002, 2007))
+  expect_identical(period_mid(c("<2000", "2000", "2001+")), c(1999.5, 2000.5, 2001.5))
+})
+
+test_that("mid functions throw error when there are no closed intervals", {
+  expect_error(age_mid("90+"),
+               "Can't calculate midpoint of open age group \"90\\+\".")
+  expect_error(age_mid(c("90+", NA)),
+               "No closed age groups to take a width from.")
+  expect_error(cohort_mid(c("<2000", "2000+")),
+               "Can't calculate midpoint of open cohort")
+  expect_identical(age_mid(character()), numeric())
 })

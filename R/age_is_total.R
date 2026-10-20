@@ -5,6 +5,7 @@
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [period_is_total()] Period equivalent of `age_is_total()`
@@ -53,6 +54,7 @@ age_is_total <- function(labels,
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [period_is_missing()] Period equivalent of `age_is_missing()`
@@ -86,6 +88,7 @@ age_is_missing <- function(labels,
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `labels`.
+#' If `labels` has names, the result has the same names.
 #'
 #' @seealso
 #' - [cohort_is_open_left()] Identify cohorts open on left
