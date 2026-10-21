@@ -288,7 +288,7 @@ norm_plus <- function(x, interpret_single = "lower", allow_older = TRUE) {
 #' @noRd
 norm_range <- function(x) {
   x <- sub("^(\\d+)to(\\d+)$", "\\1-\\2", x, perl = TRUE)
-  x <- sub("^(\\d+)[-\\._:/_]+(\\d+)$", "\\1-\\2", x, perl = TRUE)
+  x <- sub("^(\\d+)[-_:/]+(\\d+)$", "\\1-\\2", x, perl = TRUE)
   x
 }
 

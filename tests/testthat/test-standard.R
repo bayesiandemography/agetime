@@ -237,3 +237,9 @@ test_that("'older' and 'younger' are recognized for ages but not periods or coho
   expect_error(cohort_standard("1990 or younger"), "Don't know how to interpret")
   expect_error(period_standard("2000 and older"), "Don't know how to interpret")
 })
+
+test_that("decimal labels are not treated as ranges", {
+  expect_error(age_standard("5.5"), "Don't know how to interpret label \"5.5\"")
+  expect_error(period_standard("2020.5"), "Don't know how to interpret label \"2020.5\"")
+  expect_identical(age_standard(c("5_9", "5:9", "5/9", "5--9")), rep("5-9", 4))
+})
