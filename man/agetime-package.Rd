@@ -105,6 +105,8 @@ labels for age groups, periods, and cohorts.
 Useful links:
 \itemize{
   \item \url{https://bayesiandemography.github.io/agetime/}
+  \item \url{https://github.com/bayesiandemography/agetime}
+  \item Report bugs at \url{https://github.com/bayesiandemography/agetime/issues}
 }
 
 }

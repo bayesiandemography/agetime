@@ -1,4 +1,4 @@
-# agetime (development version)
+# agetime 0.3.0
 
 ## New features
 
@@ -46,8 +46,19 @@
   `"2000 or more"` now starts at 1999, the lower limit of `"2000"`,
   and `"before 2000"` ends at 1999. The symbols `"<"` and `"+"` still
   refer to boundaries.
+- Errors from `age_coarsen()`, `age_coarsen_to()`, and their variants
+  now distinguish labels that would be split from labels that are not
+  fully covered by the new intervals, show the range covered by the new
+  intervals, and suggest fixes such as setting `open_right = TRUE`.
+- Errors now report the function the user called, such as
+  `age_standard()`, rather than an internal helper.
 
 ## Bug fixes
+
+- `age_coarsen_five()`, and other coarsening functions based on
+  widths, now give an informative error when all labels are open and
+  `open_right` or `open_left` is `FALSE`. Previously they gave the
+  error "missing value where TRUE/FALSE needed".
 
 - Labels such as `"2000 or less"`, `"2000 and under"`,
   `"2000 and below"`, and `"up to 2000"` now include 2000. Previously
@@ -59,6 +70,10 @@
   in age labels.
 - agetime no longer needs dplyr, which was used without being listed
   in Imports.
+- Labels containing decimals, such as `"5.5"`, now give the error
+  "Don't know how to interpret label". Previously `"."` was treated as
+  a range separator, so `"5.5"` was read as `"5-5"` and gave a
+  misleading error about a one-year age group.
 
 ## Dependencies
 
