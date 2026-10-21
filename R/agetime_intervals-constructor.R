@@ -77,15 +77,23 @@ intervals_inner <- function(labels,
   i_x_to_xu <- match(labels, labels_unique)
   i_xun_to_xunu <- match(labels_unique_norm, labels_unique_norm_unique)
   i <- i_xun_to_xunu[i_x_to_xu]
-  m <- vapply(labels_unique_norm_unique,
-    FUN = x_label,
-    FUN.VALUE = c(NA_real_, NA_real_),
-    label_parsers = label_parsers,
-    interpret_fail = interpret_fail,
-    interpret_multi = interpret_multi,
-    label_type = label_type
+  labels_orig <- labels_unique[match(labels_unique_norm_unique, labels_unique_norm)]
+  m <- mapply(x_label,
+    label = labels_unique_norm_unique,
+    label_orig = labels_orig,
+    MoreArgs = list(
+      label_parsers = label_parsers,
+      interpret_fail = interpret_fail,
+      interpret_multi = interpret_multi,
+      label_type = label_type
+    ),
+    SIMPLIFY = FALSE
   )
-  m <- t(m)
+  m <- matrix(as.numeric(unlist(m, use.names = FALSE)),
+    ncol = 2L,
+    byrow = TRUE,
+    dimnames = list(labels_unique_norm_unique, NULL)
+  )
   ans <- list(
     labels_unique = labels_unique,
     labels_unique_norm_unique = labels_unique_norm_unique,

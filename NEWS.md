@@ -52,6 +52,9 @@
   intervals, and suggest fixes such as setting `open_right = TRUE`.
 - Errors now report the function the user called, such as
   `age_standard()`, rather than an internal helper.
+- Errors and warnings about labels that cannot be parsed now quote
+  the label as supplied, such as `"Age not stated4"`, rather than the
+  internal normalized form, such as `"notstated4"`.
 
 ## Bug fixes
 

@@ -94,7 +94,9 @@ make_label_parsers_period <- function(interpret_single,
 }
 #' Parse One Label to Interval
 #'
-#' @param label Single label string.
+#' @param label Single normalized label string.
+#' @param label_orig The label as supplied by the user, before
+#' normalization. Used in messages.
 #' @param label_parsers List of label parser functions.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param interpret_multi Rule for multi-year labels: `"include"`
@@ -104,6 +106,7 @@ make_label_parsers_period <- function(interpret_single,
 #'
 #' @noRd
 x_label <- function(label,
+                    label_orig,
                     label_parsers,
                     interpret_fail,
                     interpret_multi,
@@ -121,7 +124,7 @@ x_label <- function(label,
       if (is.finite(l) && is.finite(u) && l >= u) {
         if (l == u && is_two_value_label(label)) {
           msg <- c(
-            "Label {.val {label}} describes a zero-width {label_name(label_type)}.",
+            "Label {.val {label_orig}} describes a zero-width {label_name(label_type)}.",
             i = parsed_i,
             i = paste0(
               "Write one-year {label_name(label_type)}s as a single year, ",
@@ -129,7 +132,7 @@ x_label <- function(label,
             )
           )
         } else {
-          msg <- c("Label {.val {label}} invalid.")
+          msg <- c("Label {.val {label_orig}} invalid.")
           if (l == u) {
             msg <- c(msg, i = "Lower limit equals upper limit.")
           } else {
@@ -141,7 +144,7 @@ x_label <- function(label,
       }
       if (is_one_year_range_label(label = label, l = l, u = u)) {
         msg <- c(
-          "Label {.val {label}} describes a one-year {label_name(label_type)}.",
+          "Label {.val {label_orig}} describes a one-year {label_name(label_type)}.",
           i = parsed_i,
           i = paste0(
             "Write one-year {label_name(label_type)}s as a single year, ",
@@ -153,7 +156,7 @@ x_label <- function(label,
             msg,
             i = paste0(
               "Or set {.arg interpret_multi} to {.val {\"exclude\"}} ",
-              "if {.val {label}} is meant to be two years?"
+              "if {.val {label_orig}} is meant to be two years?"
             )
           )
         }
@@ -162,7 +165,7 @@ x_label <- function(label,
       return(val)
     }
   }
-  msg <- "Don't know how to interpret label {.val {label}}."
+  msg <- "Don't know how to interpret label {.val {label_orig}}."
   x_label_fail(msg = msg, interpret_fail = interpret_fail)
 }
 
@@ -200,11 +203,11 @@ is_one_year_range_label <- function(label, l, u) {
 #' @noRd
 msg_i_parsed_interval <- function(label_type) {
   if (identical(label_type, "age")) {
-    "{.val {label}} is the interval [{l}, {u})."
+    "{.val {label_orig}} is the interval [{l}, {u})."
   } else {
     paste0(
       "With {.arg interpret_multi} = {.val {interpret_multi}}, ",
-      "{.val {label}} is the interval [{l}, {u})."
+      "{.val {label_orig}} is the interval [{l}, {u})."
     )
   }
 }

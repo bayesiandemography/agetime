@@ -95,6 +95,9 @@ Rules that new formats must follow:
 - Messages name the problem and suggest a fix, using cli bullets. For
   instance, coarsening errors say whether a label would be split or is not
   fully covered, and assertion errors list each failed condition.
+- Parse messages quote labels as the user supplied them, not their
+  normalized forms. `intervals_inner()` passes the original label to
+  `x_label()` as `label_orig`.
 
 ## Implementation conventions
 
