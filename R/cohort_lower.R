@@ -44,6 +44,13 @@
 #' In a multi-year label, the first number is always the lower
 #' limit, whatever the value of `interpret_single`.
 #'
+#' If `interpret_multi` is `NULL` (the default), multi-year
+#' labels are interpreted using `"at_upper"`. However, if a label
+#' has a width of 4, 9, 14, ... years under `"at_upper"`, such as
+#' `"2020-2024"`, the label was probably written using
+#' `"below_upper"`, and `agetime` gives a message. Supplying a value
+#' for `interpret_multi` silences the message.
+#'
 #' A two-value label cannot describe a one-year cohort.
 #' With `interpret_multi = "at_upper"`, `"2010-2011"` would be
 #' `[2010, 2011)` and `"2010-2010"` would be empty; both are
@@ -71,9 +78,11 @@
 #' 2020 is the upper limit. See below for details.
 #' @param interpret_multi How to interpret the second number
 #' in a multi-year label, such as `"2020-2025"`. With
-#' `"at_upper"` (the default), the second number is the upper
+#' `"at_upper"`, the second number is the upper
 #' limit of the cohort. With `"below_upper"`, the second
 #' number is one year below the upper limit.
+#' The default, `NULL`, behaves like `"at_upper"`, but gives
+#' a message if labels look like they use `"below_upper"`.
 #' See below for details.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
@@ -110,7 +119,8 @@
 #' cohort_upper("2025", interpret_single = "upper")
 #' cohort_width("2025", interpret_single = "upper")
 #'
-#' ## 'interpret_multi' is "at_upper" (the default)
+#' ## 'interpret_multi' is "at_upper"
+#' ## (the default, NULL, behaves like "at_upper")
 #' cohort_upper("2025-2030")
 #' cohort_width("2025-2030")
 #'
@@ -128,10 +138,16 @@
 # When length(labels) == 0, returns numeric(0).
 cohort_lower <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("at_upper", "below_upper"),
+                         interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "cohort",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_lower(
     labels = labels,
@@ -147,10 +163,16 @@ cohort_lower <- function(labels,
 #' @rdname cohort_lower
 cohort_mid <- function(labels,
                        interpret_single = c("lower", "upper"),
-                       interpret_multi = c("at_upper", "below_upper"),
+                       interpret_multi = NULL,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "cohort",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_mid(
     labels = labels,
@@ -166,10 +188,16 @@ cohort_mid <- function(labels,
 #' @rdname cohort_lower
 cohort_upper <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("at_upper", "below_upper"),
+                         interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "cohort",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_upper(
     labels = labels,
@@ -186,10 +214,16 @@ cohort_upper <- function(labels,
 cohort_width <- function(labels,
                          ## redundant, but keep so interface constant
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("at_upper", "below_upper"),
+                         interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "cohort",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
     labels = labels,

@@ -66,6 +66,12 @@
   limit, and with `"below_upper"`, it is one year below. The old
   values are no longer accepted. Labels are interpreted and formatted
   exactly as before.
+- The default for `interpret_multi` in period and cohort functions is
+  now `NULL`. `NULL` behaves like `"at_upper"`, but gives a message
+  when a multi-year label has a width of 4, 9, 14, ... years, such as
+  `"1990-1994"`, since the label was probably written using the
+  `"below_upper"` convention. Supplying a value for `interpret_multi`
+  silences the message.
 - The `include_x` argument of `age_extend()`, `period_extend()`, and
   `cohort_extend()` is now called `include_labels`, to match the
   `labels` argument.

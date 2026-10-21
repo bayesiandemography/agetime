@@ -44,6 +44,13 @@
 #' In a multi-year label, the first number is always the lower
 #' limit, whatever the value of `interpret_single`.
 #'
+#' If `interpret_multi` is `NULL` (the default), multi-year
+#' labels are interpreted using `"at_upper"`. However, if a label
+#' has a width of 4, 9, 14, ... years under `"at_upper"`, such as
+#' `"2020-2024"`, the label was probably written using
+#' `"below_upper"`, and `agetime` gives a message. Supplying a value
+#' for `interpret_multi` silences the message.
+#'
 #' A two-value label cannot describe a one-year period.
 #' With `interpret_multi = "at_upper"`, `"2010-2011"` would be
 #' `[2010, 2011)` and `"2010-2010"` would be empty; both are
@@ -71,9 +78,11 @@
 #' 2020 is the upper limit. See below for details.
 #' @param interpret_multi How to interpret the second number
 #' in a multi-year label, such as `"2020-2025"`. With
-#' `"at_upper"` (the default), the second number is the upper
+#' `"at_upper"`, the second number is the upper
 #' limit of the period. With `"below_upper"`, the second
 #' number is one year below the upper limit.
+#' The default, `NULL`, behaves like `"at_upper"`, but gives
+#' a message if labels look like they use `"below_upper"`.
 #' See below for details.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
@@ -117,7 +126,8 @@
 #' period_upper("2025", interpret_single = "upper")
 #' period_width("2025", interpret_single = "upper")
 #'
-#' ## 'interpret_multi' is "at_upper" (the default)
+#' ## 'interpret_multi' is "at_upper"
+#' ## (the default, NULL, behaves like "at_upper")
 #' period_upper("2025-2030")
 #' period_width("2025-2030")
 #'
@@ -135,10 +145,16 @@
 # When length(labels) == 0, returns numeric(0).
 period_lower <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("at_upper", "below_upper"),
+                         interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_lower(
     labels = labels,
@@ -154,10 +170,16 @@ period_lower <- function(labels,
 #' @rdname period_lower
 period_mid <- function(labels,
                        interpret_single = c("lower", "upper"),
-                       interpret_multi = c("at_upper", "below_upper"),
+                       interpret_multi = NULL,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_mid(
     labels = labels,
@@ -173,10 +195,16 @@ period_mid <- function(labels,
 #' @rdname period_lower
 period_upper <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("at_upper", "below_upper"),
+                         interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_upper(
     labels = labels,
@@ -193,10 +221,16 @@ period_upper <- function(labels,
 period_width <- function(labels,
                          ## redundant, but keep so interface constant
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("at_upper", "below_upper"),
+                         interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
     labels = labels,

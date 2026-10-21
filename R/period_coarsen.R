@@ -85,12 +85,18 @@ period_coarsen <- function(labels,
                           open_left = NULL,
                           open_right = NULL,
                           interpret_single = c("lower", "upper"),
-                          interpret_multi = c("at_upper", "below_upper"),
+                          interpret_multi = NULL,
                           interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen(
     labels = labels,
@@ -152,10 +158,16 @@ period_coarsen <- function(labels,
 period_coarsen_to <- function(labels,
                               to,
                               interpret_single = c("lower", "upper"),
-                              interpret_multi = c("at_upper", "below_upper"),
+                              interpret_multi = NULL,
                               interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = to,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen_to(
     labels = labels,
@@ -214,7 +226,7 @@ period_coarsen_to <- function(labels,
 #' period_coarsen_five(labels, offset = 2)
 #'
 #' ## let inclusion of open period depend on labels
-#' period_coarsen_five(c("<2020", "2020-2024"))
+#' period_coarsen_five(c("<2020", "2020-2025"))
 #'
 #' ## insist on an open period
 #' period_coarsen_five(c("2010", "2020-2025"), open_right = TRUE)
@@ -227,12 +239,18 @@ period_coarsen_five <- function(labels,
                                open_left = NULL,
                                open_right = NULL,
                                interpret_single = c("lower", "upper"),
-                               interpret_multi = c("at_upper", "below_upper"),
+                               interpret_multi = NULL,
                                interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen_width(
     labels = labels,
@@ -255,12 +273,18 @@ period_coarsen_ten <- function(labels,
                               open_left = NULL,
                               open_right = NULL,
                               interpret_single = c("lower", "upper"),
-                              interpret_multi = c("at_upper", "below_upper"),
+                              interpret_multi = NULL,
                               interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen_width(
     labels = labels,

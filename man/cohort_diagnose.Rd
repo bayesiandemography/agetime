@@ -18,7 +18,7 @@ cohort_diagnose(
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("at_upper", "below_upper"),
+  interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 
@@ -33,7 +33,7 @@ cohort_assert(
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("at_upper", "below_upper"),
+  interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 
@@ -48,7 +48,7 @@ cohort_diagnose_values(
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("at_upper", "below_upper"),
+  interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 
@@ -63,7 +63,7 @@ cohort_assert_values(
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("at_upper", "below_upper"),
+  interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -110,9 +110,11 @@ label, such as \code{"2020"}. With \code{"lower"} (the default),
 
 \item{interpret_multi}{How to interpret the second number
 in a multi-year label, such as \code{"2020-2025"}. With
-\code{"at_upper"} (the default), the second number is the upper
+\code{"at_upper"}, the second number is the upper
 limit of the cohort. With \code{"below_upper"}, the second
 number is one year below the upper limit.
+The default, \code{NULL}, behaves like \code{"at_upper"}, but gives
+a message if labels look like they use \code{"below_upper"}.
 See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
@@ -176,6 +178,13 @@ Multi-year cohorts:\tabular{lll}{
 
 In a multi-year label, the first number is always the lower
 limit, whatever the value of \code{interpret_single}.
+
+If \code{interpret_multi} is \code{NULL} (the default), multi-year
+labels are interpreted using \code{"at_upper"}. However, if a label
+has a width of 4, 9, 14, ... years under \code{"at_upper"}, such as
+\code{"2020-2024"}, the label was probably written using
+\code{"below_upper"}, and \code{agetime} gives a message. Supplying a value
+for \code{interpret_multi} silences the message.
 
 A two-value label cannot describe a one-year cohort.
 With \code{interpret_multi = "at_upper"}, \code{"2010-2011"} would be

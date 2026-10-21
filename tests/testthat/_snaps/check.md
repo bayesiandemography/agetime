@@ -20,7 +20,8 @@
 ---
 
     Code
-      cohort_assert(c("2000-2004", "2005-2009"), has_open_left = TRUE)
+      cohort_assert(c("2000-2004", "2005-2009"), has_open_left = TRUE,
+      interpret_multi = "at_upper")
     Condition
       Error in `cohort_assert()`:
       ! Cohort labels fail check `has_open_left`.

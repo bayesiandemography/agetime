@@ -36,10 +36,16 @@
 # When length(labels) == 0, returns logical(0).
 period_is_total <- function(labels,
                             interpret_single = c("lower", "upper"),
-                            interpret_multi = c("at_upper", "below_upper"),
+                            interpret_multi = NULL,
                             interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
     labels = labels,
@@ -78,10 +84,16 @@ period_is_total <- function(labels,
 # When length(labels) == 0, returns logical(0).
 period_is_missing <- function(labels,
                               interpret_single = c("lower", "upper"),
-                              interpret_multi = c("at_upper", "below_upper"),
+                              interpret_multi = NULL,
                               interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_is_missing(
     labels = labels,
@@ -127,10 +139,16 @@ period_is_missing <- function(labels,
 # When length(labels) == 0, returns logical(0).
 period_is_open_left <- function(labels,
                                 interpret_single = c("lower", "upper"),
-                                interpret_multi = c("at_upper", "below_upper"),
+                                interpret_multi = NULL,
                                 interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
     labels = labels,
@@ -150,10 +168,16 @@ period_is_open_left <- function(labels,
 # When length(labels) == 0, returns logical(0).
 period_is_open_right <- function(labels,
                                  interpret_single = c("lower", "upper"),
-                                 interpret_multi = c("at_upper", "below_upper"),
+                                 interpret_multi = NULL,
                                  interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
     labels = labels,

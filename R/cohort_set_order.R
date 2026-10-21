@@ -40,10 +40,16 @@
 cohort_set_order <- function(labels,
                              decreasing = FALSE,
                              interpret_single = c("lower", "upper"),
-                             interpret_multi = c("at_upper", "below_upper"),
+                             interpret_multi = NULL,
                              interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
-  interpret_multi <- match.arg(interpret_multi)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "cohort",
+    interpret_single = interpret_single
+  )
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_set_order(
     labels = labels,

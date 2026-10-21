@@ -316,7 +316,7 @@ test_that("assert error messages name each failed condition and give comments", 
     error = TRUE
   )
   expect_snapshot(
-    cohort_assert(c("2000-2004", "2005-2009"), has_open_left = TRUE),
+    cohort_assert(c("2000-2004", "2005-2009"), has_open_left = TRUE, interpret_multi = "at_upper"),
     error = TRUE
   )
 })

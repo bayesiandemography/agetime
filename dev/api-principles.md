@@ -55,6 +55,12 @@ levels. The `_values` variants check only the values present.
 - `open_left` and `open_right` default to explicit values in `labels`
   functions, and to `NULL` in `coarsen` functions, where `NULL` keeps the
   open ends that `labels` already has.
+- `interpret_multi` defaults to `NULL`, which behaves like `"at_upper"`
+  but gives a message for multi-year labels with widths of 4, 9, 14, ...
+  years. Exported functions resolve it with `resolve_interpret_multi()`,
+  passing every set of labels the call reads, so the message appears
+  at most once per call. Internal functions always receive
+  `"at_upper"` or `"below_upper"`.
 
 ## Parsing labels
 
