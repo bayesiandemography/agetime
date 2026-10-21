@@ -1,0 +1,390 @@
+---
+title: "Troubleshooting"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
+vignette: >
+  %\VignetteIndexEntry{Troubleshooting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r libs}
+library(agetime)
+library(dplyr, warn.conflicts = FALSE)
+```
+
+This vignette describes problems that users commonly run into
+when working with age, period, and cohort labels, and explains
+how to solve them.
+
+
+# Reading labels
+
+## "Don't know how to interpret label"
+
+### Problem
+
+A label is not in any format that `agetime` recognizes.
+
+```{r unparsed-problem, error = TRUE}
+x <- c("0-4", "5-9", "Age not stated4", "85+ (a)")
+age_standard(x)
+```
+
+### Solution
+
+First, find the labels that cannot be parsed. Setting `interpret_fail`
+to `"silent"` turns unparsable labels into `NA`, so they can be
+compared with labels that really are missing.
+
+```{r unparsed-find}
+lower <- age_lower(x, interpret_fail = "silent")
+is_missing <- age_is_missing(x, interpret_fail = "silent")
+x[is.na(lower) & !is_missing]
+```
+
+Then clean the labels before passing them to `agetime`. Labels in published
+tables often carry footnote markers, such as the `4` in `"Age not stated4"`
+and the `(a)` in `"85+ (a)"`.
+
+```{r unparsed-clean}
+x_clean <- x |>
+  sub(pattern = " \\(.*\\)$", replacement = "") |>
+  sub(pattern = "([a-z])[0-9]+$", replacement = "\\1")
+age_standard(x_clean)
+```
+
+### Discussion
+
+`agetime` recognizes many common formats, including:
+
+- ranges such as `"5-9"`, `"5 to 9"`, `"5--9"`, and `"5-9 years"`;
+- open age groups such as `"85+"`, `"85 and over"`, `"85 or more"`,
+  `"85 years and older"`, and `"85 & over"`;
+- age groups starting at 0, such as `"Under 5"`, `"less than 5"`, `"<5"`,
+  and `"Infant"`;
+- totals such as `"Total"` and `"All ages"`, and missing values such
+  as `"Not stated"`, `"Unknown"`, and `"Age not stated"`.
+
+Case, spaces, and leading zeros do not matter. Labels containing decimals,
+such as `"2.5"`, are not recognized.
+
+
+## Numbers that are lower limits of wider age groups
+
+### Problem
+
+Ages are stored as numbers, such as `0`, `5`, `10`, ..., `85`, where
+each number is the lower limit of a five-year age group, and `85` is the
+lower limit of an open age group. `agetime` reads each number as a
+single year of age.
+
+```{r numbers-problem}
+age <- c(0, 5, 10, 80, 85)
+age_upper(age)
+```
+
+### Solution
+
+Treat the numbers as single years, coarsen them to five-year groups, and
+then make the last group open.
+
+```{r numbers-solution}
+age |>
+  age_coarsen_five() |>
+  age_set_open_right(at = 85)
+```
+
+For life-table age groups, where the numbers are `0`, `1`, `5`, `10`, ...,
+use `age_coarsen_life()` in place of `age_coarsen_five()`.
+
+
+## One-year periods written as ranges
+
+### Problem
+
+A period label such as `"2020-2021"` gives an error.
+
+```{r one-year-problem, error = TRUE}
+period_standard("2020-2021")
+```
+
+### Solution
+
+By default, period and cohort functions read `"2020-2021"` as the
+interval from the start of 2020 to the start of 2021, which is a single
+year. `agetime` asks for single years to be written as `"2020"`.
+If the data provider meant two years, 2020 and 2021, set `interpret_multi`
+to `"exclude"`.
+
+```{r one-year-solution}
+period_standard("2020-2021", interpret_multi = "exclude")
+```
+
+### See Also
+
+- The section on rules for interpreting inputs in `?period_lower`
+
+
+## Financial and academic years
+
+### Problem
+
+Labels such as `"2019/20"` and `"2020/21"`, used for financial or
+academic years that start part-way through a calendar year,
+are not recognized.
+
+```{r fiscal-problem, error = TRUE}
+period_standard(c("2019/20", "2020/21"))
+```
+
+### Solution
+
+Label each year by the calendar year in which it ends, and set
+`interpret_single` to `"upper"`. With `"upper"`, the label `"2020"`
+describes the year ending at 2020.
+
+```{r fiscal-solution}
+fy <- c("2019/20", "2020/21")
+fy_end <- as.character(as.integer(substr(fy, 1L, 4L)) + 1L)
+fy_end
+period_lower(fy_end, interpret_single = "upper")
+period_upper(fy_end, interpret_single = "upper")
+```
+
+### Discussion
+
+`agetime` represents periods using whole years, so a financial year
+running from July to June is approximated by the year in which it ends.
+
+
+## "Under", "less than", and "or earlier"
+
+### Problem
+
+Labels such as `"Under 5"`, `"<2000"`, and `"2000 or earlier"` mean
+different things in different contexts.
+
+### Solution
+
+`agetime` uses the following rules:
+
+- For ages, `"Under 5"`, `"less than 5"`, and `"<5"` all describe the
+  age group from 0 to 4. Ages cannot be negative, so these age groups
+  are closed.
+- For periods and cohorts, `"before 2000"`, `"under 2000"`, and `"<2000"`
+  describe everything before the start of 2000. `"2000 or earlier"` and
+  `"up to 2000"` include 2000.
+- For periods and cohorts, words such as `"or earlier"` and `"or more"`
+  refer to the one-year label next to them, so their meaning depends on
+  `interpret_single`. The symbols `"<"` and `"+"` refer to boundaries,
+  and do not depend on `interpret_single`.
+
+```{r under}
+age_standard(c("Under 5", "<5"))
+cohort_standard(c("Under 2000", "2000 or earlier"))
+period_standard(c("2000 or more", "2000+"), interpret_single = "upper")
+```
+
+### Discussion
+
+`"or older"` and `"or younger"` are recognized for ages, but not for periods
+or cohorts, where they are ambiguous: an older cohort is an earlier one.
+
+### See Also
+
+- The section on rules for interpreting inputs in `?period_lower`
+  and `?cohort_lower`
+
+
+# Checking labels
+
+## Different labels for the same age group
+
+### Problem
+
+`age_assert()` or `age_diagnose()` reports an overlap, even though
+the age groups look distinct.
+
+```{r synonyms-problem, error = TRUE}
+x <- c("0", "infant", "1-4", "5+")
+age_assert(x, no_overlap = TRUE)
+```
+
+### Solution
+
+Two different labels, `"0"` and `"infant"`, describe the same age group.
+Standardize the labels first.
+
+```{r synonyms-solution}
+x |>
+  age_standard() |>
+  age_assert(no_overlap = TRUE)
+```
+
+### Discussion
+
+Repeated copies of the same label, as in a data frame with one row per
+age group and sex, do not count as overlapping.
+
+
+## Totals and missing values
+
+### Problem
+
+A check fails, or a coarsening function gives an error, because the
+labels include a total or a missing value.
+
+```{r totals-problem, error = TRUE}
+x <- c("0-4", "5-9", "Total")
+age_assert(x, no_total = TRUE)
+```
+
+### Solution
+
+Remove totals and missing values before checking or coarsening, using
+`age_is_total()` and `age_is_missing()`.
+
+```{r totals-solution}
+df <- tibble(
+  age = c("0-4", "5-9", "Total", "Not stated"),
+  count = c(10, 20, 35, 5)
+)
+
+df |>
+  filter(!age_is_total(age), !age_is_missing(age))
+```
+
+### See Also
+
+- `vignette("cookbook")`, sections on dropping totals and
+  not-stated categories
+
+
+## Checks that pass when they should fail
+
+### Problem
+
+`age_assert()` passes on a subset of a factor, such as a group in a grouped
+data frame, even though the subset does not meet the condition.
+
+### Solution
+
+For factors, the `diagnose` and `assert` functions check levels, including
+unused levels. Use `age_diagnose_values()` or `age_assert_values()` to
+check only the values that are present.
+
+### See Also
+
+- `vignette("cookbook")`, section on validating labels based on values,
+  not levels
+
+
+# Transforming labels
+
+## Coarsening fails
+
+### Problem
+
+`age_coarsen()`, `age_coarsen_to()`, or one of their variants gives an
+error.
+
+```{r coarsen-problem, error = TRUE}
+x <- c("0-4", "5-9", "12")
+age_coarsen(x, breaks = c(0, 7, 10))
+```
+
+### Solution
+
+The error message distinguishes two problems:
+
+- A label *would be split* when it overlaps two or more new age groups,
+  as `"5-9"` overlaps `"0-6"` and `"7-9"`. Move the breaks so that they
+  fall between the old age groups.
+- A label is *not fully covered* when it lies partly or wholly outside the
+  new age groups, as `"12"` lies above 10. Add breaks, or, for
+  `age_coarsen()`, set `open_right = TRUE`.
+
+```{r coarsen-solution}
+age_coarsen(x, breaks = c(0, 10), open_right = TRUE)
+```
+
+With `age_coarsen_to()`, every label must lie inside one of the labels in
+`to`. Add labels to `to`, or remove labels that should not be included.
+
+
+## Unused levels disappear from tables
+
+### Problem
+
+After adding levels with a `fill` function, `count()` or `summarise()`
+still leaves out age groups with no observations.
+
+### Solution
+
+Tidyverse functions drop unused factor levels by default. Use
+`.drop = FALSE`.
+
+### See Also
+
+- `vignette("cookbook")`, section on including levels that don't appear in
+  the data
+
+
+## Results are factors, not character vectors
+
+### Problem
+
+`age_coarsen()`, `age_fill()`, `age_set_open_right()`, and `age_set_order()`
+return factors, which can be unexpected.
+
+### Solution
+
+These functions return factors so that levels, including unused ones, are
+kept in the right order. Use `as.character()` if a character vector is
+needed. `age_standard()` returns a character vector when its input is a
+character vector, and a factor when its input is a factor.
+
+
+## Midpoints of open age groups
+
+### Problem
+
+`age_mid()` gives an error for an open age group within a grouped
+calculation.
+
+```{r mid-problem, error = TRUE}
+df <- tibble(
+  sex = c("F", "F", "M"),
+  age = c("80-84", "85+", "85+")
+)
+
+df |>
+  mutate(mid = age_mid(age), .by = sex)
+```
+
+### Solution
+
+`age_mid()` gives an open age group a midpoint based on the width of the
+nearest closed age group. In the group `sex = "M"`, there is no closed age
+group. Calculate midpoints before grouping.
+
+```{r mid-solution}
+df |>
+  mutate(mid = age_mid(age))
+```
+
+
+# More information
+
+- `vignette("agetime")` for a quick start
+- `vignette("cookbook")` for task-oriented recipes
