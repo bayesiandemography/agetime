@@ -31,7 +31,8 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-URL: https://bayesiandemography.github.io/agetime/
+URL: https://bayesiandemography.github.io/agetime/, https://github.com/bayesiandemography/agetime
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 Config/roxygen2/version: 8.1.0
+BugReports: https://github.com/bayesiandemography/agetime/issues
