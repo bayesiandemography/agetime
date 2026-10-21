@@ -8,8 +8,8 @@
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Standardized labels as character vector or factor.
 #'
@@ -33,7 +33,7 @@ inner_standard <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
-  format_multi <- if (label_type == "age") "exclude" else "include"
+  format_multi <- if (label_type == "age") "below_upper" else "at_upper"
   labels_std <- construct_labels_intervals(
     intervals = intervals,
     "lower",

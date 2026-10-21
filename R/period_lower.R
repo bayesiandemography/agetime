@@ -19,6 +19,9 @@
 #'
 #' @section Rules for interpreting inputs:
 #'
+#' "Lower" and "upper" refer to the lower and upper limits of
+#' a period, as returned by `period_lower()` and `period_upper()`.
+#'
 #' Single-year periods:
 #'
 #' | `interpret_single`| *Rule*       | *Example* |
@@ -35,14 +38,17 @@
 #'
 #' | `interpret_multi`| *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
-#' | `"include"` | `"a-<a+n>" -> [a,a+n)` | `"2020-2025" -> [2020,2025)` |
-#' | `"exclude"` | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
+#' | `"at_upper"` | `"a-b" -> [a,b)` | `"2020-2025" -> [2020,2025)` |
+#' | `"below_upper"` | `"a-b" -> [a,b+1)` | `"2020-2024" -> [2020,2025)` |
+#'
+#' In a multi-year label, the first number is always the lower
+#' limit, whatever the value of `interpret_single`.
 #'
 #' A two-value label cannot describe a one-year period.
-#' With `interpret_multi = "include"`, `"2010-2011"` would be
+#' With `interpret_multi = "at_upper"`, `"2010-2011"` would be
 #' `[2010, 2011)` and `"2010-2010"` would be empty; both are
 #' rejected. Use `"2010"`, or `"2010-2012"` for two years.
-#' With `interpret_multi = "exclude"`,
+#' With `interpret_multi = "below_upper"`,
 #' `"2010-2011"` is two years `[2010, 2012)` and is accepted.
 #'
 #' Open periods:
@@ -59,14 +65,16 @@
 #' | `"2000 or more"`, `"2000 and over"` | `[2000,Inf)` | `[1999,Inf)` |
 #'
 #' @param labels Vector of period labels.
-#' @param interpret_single How to interpret
-#' labels for single-year periods.
-#' Choices are `"lower"` (the default) and `"upper"`.
+#' @param interpret_single How to interpret a single-year
+#' label, such as `"2020"`. With `"lower"` (the default),
+#' 2020 is the lower limit of the period. With `"upper"`,
+#' 2020 is the upper limit. See below for details.
+#' @param interpret_multi How to interpret the second number
+#' in a multi-year label, such as `"2020-2025"`. With
+#' `"at_upper"` (the default), the second number is the upper
+#' limit of the period. With `"below_upper"`, the second
+#' number is one year below the upper limit.
 #' See below for details.
-#' @param interpret_multi How to interpret
-#' labels for multi-year periods.
-#' Choices are `"include"` (the default) and
-#' `"exclude"`. See below for details.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
@@ -109,13 +117,13 @@
 #' period_upper("2025", interpret_single = "upper")
 #' period_width("2025", interpret_single = "upper")
 #'
-#' ## 'interpret_multi' is "include" (the default)
+#' ## 'interpret_multi' is "at_upper" (the default)
 #' period_upper("2025-2030")
 #' period_width("2025-2030")
 #'
-#' ## 'interpret_multi' is "exclude"
-#' period_upper("2025-2030", interpret_multi = "exclude")
-#' period_width("2025-2030", interpret_multi = "exclude")
+#' ## 'interpret_multi' is "below_upper"
+#' period_upper("2025-2030", interpret_multi = "below_upper")
+#' period_width("2025-2030", interpret_multi = "below_upper")
 #'
 #' ## no action when 'interpret_fail' is "silent"
 #' period_lower(
@@ -127,7 +135,7 @@
 # When length(labels) == 0, returns numeric(0).
 period_lower <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("include", "exclude"),
+                         interpret_multi = c("at_upper", "below_upper"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -146,7 +154,7 @@ period_lower <- function(labels,
 #' @rdname period_lower
 period_mid <- function(labels,
                        interpret_single = c("lower", "upper"),
-                       interpret_multi = c("include", "exclude"),
+                       interpret_multi = c("at_upper", "below_upper"),
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -165,7 +173,7 @@ period_mid <- function(labels,
 #' @rdname period_lower
 period_upper <- function(labels,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("include", "exclude"),
+                         interpret_multi = c("at_upper", "below_upper"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -185,7 +193,7 @@ period_upper <- function(labels,
 period_width <- function(labels,
                          ## redundant, but keep so interface constant
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("include", "exclude"),
+                         interpret_multi = c("at_upper", "below_upper"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)

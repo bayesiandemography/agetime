@@ -12,7 +12,7 @@ period_labels(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -23,7 +23,7 @@ period_labels_one(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -34,7 +34,7 @@ period_labels_five(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -45,7 +45,7 @@ period_labels_ten(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -67,9 +67,11 @@ single-year period. Choices are \code{"lower"}
 (the default) and \code{"upper"}. See below for
 details.}
 
-\item{format_multi}{How to format label for
-multi-year period. Choices are \code{"include"}
-(the default) and \code{"exclude"}. See below for details.}
+\item{format_multi}{How to format the second number
+in a label for a multi-year period. With \code{"at_upper"}
+(the default), the second number is the upper limit of
+the period. With \code{"below_upper"}, the second number is
+one year below the upper limit. See below for details.}
 
 \item{include_total}{Whether to include a
 \code{"Total"} category. Default is \code{FALSE}.}
@@ -101,8 +103,8 @@ Create a new set of period labels.
 
 \strong{Multi-year periods}\tabular{lll}{
    \code{format_multi} \tab \emph{Rule} \tab \emph{Example} \cr
-   \code{"include"} \tab \verb{[a,a+n) -> "a-<a+n>"} \tab \verb{[2020,2025) -> "2020-2025"} \cr
-   \code{"exclude"} \tab \verb{[a,a+n) -> "a-<a+n-1>"} \tab \verb{[2020,2025) -> "2020-2024"} \cr
+   \code{"at_upper"} \tab \verb{[a,b) -> "a-b"} \tab \verb{[2020,2025) -> "2020-2025"} \cr
+   \code{"below_upper"} \tab \verb{[a,b) -> "a-<b-1>"} \tab \verb{[2020,2025) -> "2020-2024"} \cr
 }
 
 
@@ -139,11 +141,11 @@ period_labels_ten(
   lower_last = 2021
 )
 
-## ten-year periods, 'format_multi' is "exclude",
+## ten-year periods, 'format_multi' is "below_upper",
 period_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  format_multi = "exclude"
+  format_multi = "below_upper"
 )
 
 ## include total and NA

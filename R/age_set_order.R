@@ -52,7 +52,7 @@ age_set_order <- function(labels,
     decreasing = decreasing,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }

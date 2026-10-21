@@ -40,7 +40,7 @@ age_is_total <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -75,7 +75,7 @@ age_is_missing <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -112,7 +112,7 @@ age_is_open_right <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail,
     check_open_left = FALSE,
     check_open_right = TRUE

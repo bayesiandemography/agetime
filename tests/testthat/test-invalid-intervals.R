@@ -30,19 +30,19 @@ test_that("zero-width range labels are rejected", {
     regexp = "describes a zero-width period"
   )
   expect_error(
-    period_upper("2010-2010", interpret_multi = "include"),
-    regexp = "interpret_multi.*include"
+    period_upper("2010-2010", interpret_multi = "at_upper"),
+    regexp = "interpret_multi.*at_upper"
   )
   expect_error(
-    period_upper("2010-2010", interpret_multi = "include"),
+    period_upper("2010-2010", interpret_multi = "at_upper"),
     regexp = "single year"
   )
-  err_include <- tryCatch(
-    period_upper("2010-2010", interpret_multi = "include"),
+  err_at_upper <- tryCatch(
+    period_upper("2010-2010", interpret_multi = "at_upper"),
     error = identity
   )
-  expect_false(grepl("meant to be two years", conditionMessage(err_include)))
-  expect_false(grepl("Lower limit equals upper limit", conditionMessage(err_include)))
+  expect_false(grepl("meant to be two years", conditionMessage(err_at_upper)))
+  expect_false(grepl("Lower limit equals upper limit", conditionMessage(err_at_upper)))
 
   expect_error(age_lower("5-4"), regexp = "describes a zero-width age group")
   err_age <- tryCatch(age_lower("5-4"), error = identity)
@@ -56,59 +56,59 @@ test_that("valid range labels still parse", {
   expect_values(cohort_lower("2025-2030"), 2025)
 })
 
-test_that("one-year period ranges are rejected under include", {
+test_that("one-year period ranges are rejected under at_upper", {
   expect_error(
     period_lower("2010-2011"),
     regexp = "describes a one-year period"
   )
   expect_error(
     period_lower("2010-2011"),
-    regexp = "interpret_multi.*include"
+    regexp = "interpret_multi.*at_upper"
   )
   expect_error(
     period_lower("2010-2011"),
-    regexp = "exclude"
+    regexp = "below_upper"
   )
 })
 
-test_that("one-year period ranges are accepted as two years under exclude", {
-  expect_values(period_lower("2010-2011", interpret_multi = "exclude"), 2010)
-  expect_values(period_upper("2010-2011", interpret_multi = "exclude"), 2012)
-  expect_values(period_width("2010-2011", interpret_multi = "exclude"), 2)
+test_that("one-year period ranges are accepted as two years under below_upper", {
+  expect_values(period_lower("2010-2011", interpret_multi = "below_upper"), 2010)
+  expect_values(period_upper("2010-2011", interpret_multi = "below_upper"), 2012)
+  expect_values(period_width("2010-2011", interpret_multi = "below_upper"), 2)
 })
 
-test_that("equal-endpoint period ranges are rejected under exclude", {
+test_that("equal-endpoint period ranges are rejected under below_upper", {
   expect_error(
-    period_lower("2010-2010", interpret_multi = "exclude"),
+    period_lower("2010-2010", interpret_multi = "below_upper"),
     regexp = "describes a one-year period"
   )
   expect_error(
-    period_lower("2010-2010", interpret_multi = "exclude"),
+    period_lower("2010-2010", interpret_multi = "below_upper"),
     regexp = "single year"
   )
   err <- tryCatch(
-    period_lower("2010-2010", interpret_multi = "exclude"),
+    period_lower("2010-2010", interpret_multi = "below_upper"),
     error = identity
   )
   expect_false(grepl("meant to be two years", conditionMessage(err)))
 })
 
-test_that("single-year and two-year include period labels still parse", {
+test_that("single-year and two-year at_upper period labels still parse", {
   expect_values(period_lower("2010"), 2010)
   expect_values(period_upper("2010"), 2011)
   expect_values(period_lower("2010-2012"), 2010)
   expect_values(period_upper("2010-2012"), 2012)
 })
 
-test_that("one-year cohort ranges are rejected under include", {
+test_that("one-year cohort ranges are rejected under at_upper", {
   expect_error(
     cohort_lower("2010-2011"),
     regexp = "describes a one-year cohort"
   )
 })
 
-test_that("one-year cohort ranges are accepted as two years under exclude", {
-  expect_values(cohort_width("2010-2011", interpret_multi = "exclude"), 2)
+test_that("one-year cohort ranges are accepted as two years under below_upper", {
+  expect_values(cohort_width("2010-2011", interpret_multi = "below_upper"), 2)
 })
 
 test_that("age 0-1 still parses as two years", {

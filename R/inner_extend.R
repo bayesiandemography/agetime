@@ -6,8 +6,8 @@
 #' @param include_labels Whether to include original `labels` in output.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Extended label vector (or factor).
 #'

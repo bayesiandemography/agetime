@@ -29,18 +29,18 @@ label_parser_na <- function(label) {
 #' Label Parser Range
 #'
 #' @param label Single label string.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @returns Length-2 numeric vector for range labels, or `NULL`.
 #'
-#' With `interpret_multi = "exclude"`, the parsed upper bound is
+#' With `interpret_multi = "below_upper"`, the parsed upper bound is
 #' incremented by 1.
 #'
 #' @noRd
 
 label_parser_range <- function(label, interpret_multi) {
   interpret_multi <- match.arg(interpret_multi,
-    choices = c("include", "exclude")
+    choices = c("at_upper", "below_upper")
   )
   m <- regexec("^(\\d+)-(\\d+)$", label, perl = TRUE)
   mm <- regmatches(label, m)[[1L]]
@@ -49,7 +49,7 @@ label_parser_range <- function(label, interpret_multi) {
   }
   l <- as.double(mm[[2L]])
   u <- as.double(mm[[3L]])
-  if (interpret_multi == "exclude") {
+  if (interpret_multi == "below_upper") {
     u <- u + 1
   }
   c(l, u)

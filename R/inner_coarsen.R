@@ -80,8 +80,8 @@ coarsen_minimal_levels <- function(levels_breaks,
 #' to infer from `labels`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param minimal_levels Whether to omit break levels with no mapped input.
 #' @param preserve_input_type Whether to return character for non-factor input.
@@ -206,8 +206,8 @@ inner_coarsen <- function(labels,
 #' to infer from `labels`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Coarsened labels as a factor or character vector.
 #'
@@ -317,8 +317,8 @@ inner_coarsen_width <- function(labels,
 #' @param to Vector of labels giving the target classification.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Recoded labels as a factor.
 #'

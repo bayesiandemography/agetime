@@ -3,8 +3,8 @@
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns List with interval matrix `m` and index vector `i`.
 #'
@@ -36,8 +36,8 @@ inner_low_mid_up_width <- function(labels,
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of lower bounds.
 #'
@@ -64,8 +64,8 @@ inner_lower <- function(labels,
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of interval midpoints.
 #'
@@ -149,8 +149,8 @@ mid_intervals <- function(m, label_type, call) {
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of upper bounds.
 #'
@@ -178,8 +178,8 @@ inner_upper <- function(labels,
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Numeric vector of interval widths.
 #'

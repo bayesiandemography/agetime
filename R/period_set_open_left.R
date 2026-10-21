@@ -32,7 +32,7 @@
 period_set_open_left <- function(labels,
                                     at,
                                     interpret_single = c("lower", "upper"),
-                                    interpret_multi = c("include", "exclude"),
+                                    interpret_multi = c("at_upper", "below_upper"),
                                     interpret_fail = c(
                                       "error", "warn", "silent"
                                     )) {

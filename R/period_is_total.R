@@ -36,7 +36,7 @@
 # When length(labels) == 0, returns logical(0).
 period_is_total <- function(labels,
                             interpret_single = c("lower", "upper"),
-                            interpret_multi = c("include", "exclude"),
+                            interpret_multi = c("at_upper", "below_upper"),
                             interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -78,7 +78,7 @@ period_is_total <- function(labels,
 # When length(labels) == 0, returns logical(0).
 period_is_missing <- function(labels,
                               interpret_single = c("lower", "upper"),
-                              interpret_multi = c("include", "exclude"),
+                              interpret_multi = c("at_upper", "below_upper"),
                               interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -127,7 +127,7 @@ period_is_missing <- function(labels,
 # When length(labels) == 0, returns logical(0).
 period_is_open_left <- function(labels,
                                 interpret_single = c("lower", "upper"),
-                                interpret_multi = c("include", "exclude"),
+                                interpret_multi = c("at_upper", "below_upper"),
                                 interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -150,7 +150,7 @@ period_is_open_left <- function(labels,
 # When length(labels) == 0, returns logical(0).
 period_is_open_right <- function(labels,
                                  interpret_single = c("lower", "upper"),
-                                 interpret_multi = c("include", "exclude"),
+                                 interpret_multi = c("at_upper", "below_upper"),
                                  interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)

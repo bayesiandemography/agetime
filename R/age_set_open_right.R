@@ -34,7 +34,7 @@ age_set_open_right <- function(labels,
     make_open_right = TRUE,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }

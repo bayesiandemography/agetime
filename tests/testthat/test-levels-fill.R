@@ -80,7 +80,7 @@ test_that("levels-fill functions preserve total, all, and NA labels", {
 test_that("cohort_fill() preserves original open-left values", {
   ans <- cohort_fill_five(
     c("2010-2014", "2000-2004", "less than 1990"),
-    interpret_multi = "ex"
+    interpret_multi = "below"
   )
   expect_identical(
     as.character(ans),
@@ -180,15 +180,15 @@ test_that("period/cohort fill-ten errors for indivisible gaps", {
   )
 })
 
-test_that("period/cohort fill-ten respect interpret_multi exclude", {
+test_that("period/cohort fill-ten respect interpret_multi below_upper", {
   x <- c("2010-2019", "2030-2039")
   expected <- c("2010-2019", "2020-2029", "2030-2039")
   expect_identical(
-    levels(period_fill_ten(x, interpret_multi = "exclude")),
+    levels(period_fill_ten(x, interpret_multi = "below_upper")),
     expected
   )
   expect_identical(
-    levels(cohort_fill_ten(x, interpret_multi = "exclude")),
+    levels(cohort_fill_ten(x, interpret_multi = "below_upper")),
     expected
   )
 })

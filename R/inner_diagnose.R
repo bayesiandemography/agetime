@@ -3,8 +3,8 @@
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param on Universe to check: `"levels"` or `"values"`.
 #' @param no_overlap Run the no-overlap check?
@@ -66,8 +66,8 @@ inner_assert <- function(labels,
 #' @param labels Vector of labels.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param on Universe to check: `"levels"` or `"values"`.
 #' @param no_overlap Run the no-overlap check?

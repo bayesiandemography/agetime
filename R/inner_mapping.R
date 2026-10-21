@@ -45,8 +45,8 @@ mapping_empty <- function(format, name_x, name_y) {
 #' @param name_y Name for the `labels_y` side of the mapping.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Mapping object in requested `format`.
 #'

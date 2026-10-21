@@ -43,7 +43,7 @@ test_that("inner_coarsen() with no unique labels uses minimal empty levels", {
       is_open_right = FALSE,
       label_type = "age",
       interpret_single = "lower",
-      interpret_multi = "exclude",
+      interpret_multi = "below_upper",
       interpret_fail = "error",
       minimal_levels = TRUE,
       preserve_input_type = TRUE
@@ -58,7 +58,7 @@ test_that("inner_coarsen() with no unique labels uses minimal empty levels", {
       is_open_right = TRUE,
       label_type = "age",
       interpret_single = "lower",
-      interpret_multi = "exclude",
+      interpret_multi = "below_upper",
       interpret_fail = "error",
       minimal_levels = TRUE,
       preserve_input_type = FALSE

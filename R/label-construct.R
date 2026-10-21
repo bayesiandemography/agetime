@@ -5,10 +5,10 @@
 #'
 #' @param intervals An `agetime_intervals` object.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"at_upper"` or `"below_upper"`.
 #' @returns Character vector of labels for parsed intervals.
 #'
-#' When `format_multi = "exclude"`, range labels are rendered with the displayed
+#' When `format_multi = "below_upper"`, range labels are rendered with the displayed
 #' upper bound reduced by 1 from the internal interval upper bound.
 #'
 #' @noRd
@@ -41,9 +41,9 @@ construct_labels_intervals <- function(intervals,
   } else {
     cli::cli_abort("Internal error: 'format_single' invalid.")
   }
-  if (format_multi == "include") {
+  if (format_multi == "at_upper") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
-  } else if (format_multi == "exclude") {
+  } else if (format_multi == "below_upper") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
   } else {
     cli::cli_abort("Internal error: 'format_multi' invalid.")
@@ -61,12 +61,12 @@ construct_labels_intervals <- function(intervals,
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"at_upper"` or `"below_upper"`.
 #' @param include_total Whether to append `"Total"`.
 #' @param include_na Whether to append `NA`.
 #' @returns Character vector of labels for breaks.
 #'
-#' When `format_multi = "exclude"`, range labels are rendered with the displayed
+#' When `format_multi = "below_upper"`, range labels are rendered with the displayed
 #' upper bound reduced by 1 from the interval break upper bound.
 #'
 #' @noRd
@@ -100,7 +100,7 @@ construct_labels_breaks <- function(breaks,
   } else {
     ans[is_one] <- upper[is_one]
   }
-  if (format_multi == "exclude") {
+  if (format_multi == "below_upper") {
     ans[is_multi] <- paste(lower[is_multi],
       upper[is_multi] - 1L,
       sep = "-"

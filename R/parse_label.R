@@ -1,8 +1,8 @@
 #' Make Label Parsers
 #'
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param allow_openleft Whether to allow open-left labels in parsing.
 #' @param allow_openright Whether to allow open-right labels in parsing.
 #' @returns List of parser functions.
@@ -50,7 +50,7 @@ make_label_parsers <- function(interpret_single,
 make_label_parsers_age <- function() {
   make_label_parsers(
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     allow_openleft = FALSE,
     allow_openright = TRUE
   )
@@ -58,8 +58,8 @@ make_label_parsers_age <- function() {
 #' Make Label Parsers Cohort
 #'
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @returns List of parser functions for cohort labels.
 #'
 #' @noRd
@@ -76,8 +76,8 @@ make_label_parsers_cohort <- function(interpret_single,
 #' Make Label Parsers Period
 #'
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @returns List of parser functions for period labels.
 #'
 #' @noRd
@@ -99,8 +99,8 @@ make_label_parsers_period <- function(interpret_single,
 #' normalization. Used in messages.
 #' @param label_parsers List of label parser functions.
 #' @param interpret_fail How to handle unparsable labels.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @returns Length-2 numeric interval vector for one label.
 #'
@@ -151,11 +151,11 @@ x_label <- function(label,
             "e.g. {.val {as.character(l)}}?"
           )
         )
-        if (identical(interpret_multi, "include")) {
+        if (identical(interpret_multi, "at_upper")) {
           msg <- c(
             msg,
             i = paste0(
-              "Or set {.arg interpret_multi} to {.val {\"exclude\"}} ",
+              "Or set {.arg interpret_multi} to {.val {\"below_upper\"}} ",
               "if {.val {label_orig}} is meant to be two years?"
             )
           )

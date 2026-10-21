@@ -62,7 +62,7 @@ age_is_subtotal <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }

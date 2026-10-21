@@ -124,10 +124,10 @@ By default, period and cohort functions read `"2020-2021"` as the
 interval from the start of 2020 to the start of 2021, which is a single
 year. `agetime` asks for single years to be written as `"2020"`.
 If the data provider meant two years, 2020 and 2021, set `interpret_multi`
-to `"exclude"`.
+to `"below_upper"`.
 
 ```{r one-year-solution}
-period_standard("2020-2021", interpret_multi = "exclude")
+period_standard("2020-2021", interpret_multi = "below_upper")
 ```
 
 ### See Also

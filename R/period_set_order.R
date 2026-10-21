@@ -40,7 +40,7 @@
 period_set_order <- function(labels,
                              decreasing = FALSE,
                              interpret_single = c("lower", "upper"),
-                             interpret_multi = c("include", "exclude"),
+                             interpret_multi = c("at_upper", "below_upper"),
                              interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)

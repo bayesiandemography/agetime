@@ -15,8 +15,8 @@
 #'
 #' | `format_multi` | *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
-#' | `"include"` | `[a,a+n) -> "a-<a+n>"` | `[2020,2025) -> "2020-2025"` |
-#' | `"exclude"` | `[a,a+n) -> "a-<a+n-1>"` | `[2020,2025) -> "2020-2024"` |
+#' | `"at_upper"` | `[a,b) -> "a-b"` | `[2020,2025) -> "2020-2025"` |
+#' | `"below_upper"` | `[a,b) -> "a-<b-1>"` | `[2020,2025) -> "2020-2024"` |
 #'
 #' **Open periods**
 #'
@@ -46,9 +46,11 @@
 #' single-year period. Choices are `"lower"`
 #' (the default) and `"upper"`. See below for
 #' details.
-#' @param format_multi How to format label for
-#' multi-year period. Choices are `"include"`
-#' (the default) and `"exclude"`. See below for details.
+#' @param format_multi How to format the second number
+#' in a label for a multi-year period. With `"at_upper"`
+#' (the default), the second number is the upper limit of
+#' the period. With `"below_upper"`, the second number is
+#' one year below the upper limit. See below for details.
 #'
 #' @return Character vector.
 #'
@@ -88,11 +90,11 @@
 #'   lower_last = 2021
 #' )
 #'
-#' ## ten-year periods, 'format_multi' is "exclude",
+#' ## ten-year periods, 'format_multi' is "below_upper",
 #' period_labels_ten(
 #'   lower_first = 2000,
 #'   lower_last = 2010,
-#'   format_multi = "exclude"
+#'   format_multi = "below_upper"
 #' )
 #'
 #' ## include total and NA
@@ -107,7 +109,7 @@ period_labels <- function(breaks,
                           open_left = FALSE,
                           open_right = FALSE,
                           format_single = c("lower", "upper"),
-                          format_multi = c("include", "exclude"),
+                          format_multi = c("at_upper", "below_upper"),
                           include_total = FALSE,
                           include_na = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
@@ -132,7 +134,7 @@ period_labels_one <- function(lower_first,
                               open_left = FALSE,
                               open_right = FALSE,
                               format_single = c("lower", "upper"),
-                              format_multi = c("include", "exclude"),
+                              format_multi = c("at_upper", "below_upper"),
                               include_total = FALSE,
                               include_na = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
@@ -159,7 +161,7 @@ period_labels_five <- function(lower_first,
                                open_left = FALSE,
                                open_right = FALSE,
                                format_single = c("lower", "upper"),
-                               format_multi = c("include", "exclude"),
+                               format_multi = c("at_upper", "below_upper"),
                                include_total = FALSE,
                                include_na = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
@@ -186,7 +188,7 @@ period_labels_ten <- function(lower_first,
                               open_left = FALSE,
                               open_right = FALSE,
                               format_single = c("lower", "upper"),
-                              format_multi = c("include", "exclude"),
+                              format_multi = c("at_upper", "below_upper"),
                               include_total = FALSE,
                               include_na = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")

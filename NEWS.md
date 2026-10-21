@@ -58,6 +58,14 @@
   now distinguish labels that would be split from labels that are not
   fully covered by the new intervals, show the range covered by the new
   intervals, and suggest fixes such as setting `open_right = TRUE`.
+- The values of `interpret_multi` and `format_multi` in period and
+  cohort functions are now `"at_upper"` and `"below_upper"`, which
+  replace `"include"` and `"exclude"`. The new names say where the
+  second number in a label such as `"2020-2025"` sits relative to the
+  upper limit of the interval: with `"at_upper"`, 2025 is the upper
+  limit, and with `"below_upper"`, it is one year below. The old
+  values are no longer accepted. Labels are interpreted and formatted
+  exactly as before.
 - The `include_x` argument of `age_extend()`, `period_extend()`, and
   `cohort_extend()` is now called `include_labels`, to match the
   `labels` argument.

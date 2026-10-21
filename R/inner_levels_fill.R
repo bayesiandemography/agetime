@@ -34,7 +34,7 @@ inner_levels_fill_prep <- function(labels,
 #' @param breaks Increasing vector of break points.
 #' @param is_ordered Whether output factor should be ordered.
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param format_multi Rule for multi-year labels: `"include"` or `"exclude"`.
+#' @param format_multi Rule for multi-year labels: `"at_upper"` or `"below_upper"`.
 #' @returns Empty factor when `levels` is empty, else `NULL`.
 #'
 #' @noRd
@@ -100,8 +100,8 @@ inner_levels_fill_factor <- function(labels,
 #' @param width Interval width.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @param interpret_multi Rule for multi-year labels: `"include"`
-#' or `"exclude"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @returns Factor with gap levels filled.
 #'
@@ -267,7 +267,7 @@ inner_levels_fill_life <- function(labels,
     breaks = NULL,
     is_ordered = prep$is_ordered,
     format_single = "lower",
-    format_multi = "exclude"
+    format_multi = "below_upper"
   )
   if (!is.null(empty)) {
     return(empty)
@@ -278,7 +278,7 @@ inner_levels_fill_life <- function(labels,
     labels = levels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
   val <- label_non_life(intervals)
@@ -321,7 +321,7 @@ inner_levels_fill_life <- function(labels,
       labels_gap <- inner_labels(
         breaks = breaks_gap,
         format_single = "lower",
-        format_multi = "exclude",
+        format_multi = "below_upper",
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,

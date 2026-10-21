@@ -61,7 +61,7 @@ test_that("cohort_set_open_left() can add an unobserved open level", {
   ans <- cohort_set_open_left(
     c("2000-2004", "2010-2014"),
     at = 1990,
-    interpret_multi = "ex"
+    interpret_multi = "below"
   )
   expect_identical(as.character(ans), c("2000-2004", "2010-2014"))
   expect_identical(levels(ans), c("<1990", "2000-2004", "2010-2014"))
@@ -111,7 +111,7 @@ test_that("inner_levels_set_open() errors when no open direction is specified", 
       make_open_right = FALSE,
       label_type = "age",
       interpret_single = "lower",
-      interpret_multi = "exclude",
+      interpret_multi = "below_upper",
       interpret_fail = "error"
     ),
     "Internal error: no open direction specified."

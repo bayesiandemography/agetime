@@ -8,7 +8,7 @@ test_that("inner_coarsen_width() uses upper bounds for open-left start", {
     is_open_right = FALSE,
     label_type = "cohort",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
 
@@ -21,7 +21,7 @@ test_that("inner_coarsen_width() aligns open-left start with offset", {
     labels = x,
     label_type = "cohort",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
   expect_true(agetime:::int_is_open_left(intervals))
@@ -43,7 +43,7 @@ test_that("inner_coarsen_width() aligns open-left start with offset", {
       is_open_right = FALSE,
       label_type = "cohort",
       interpret_single = "lower",
-      interpret_multi = "exclude",
+      interpret_multi = "below_upper",
       interpret_fail = "error"
     ),
     "Can't coarsen cohorts."

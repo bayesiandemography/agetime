@@ -107,7 +107,7 @@ cohort_diagnose <- function(labels,
                          has_open_left = FALSE,
                          has_open_right = FALSE,
                          interpret_single = c("lower", "upper"),
-                         interpret_multi = c("include", "exclude"),
+                         interpret_multi = c("at_upper", "below_upper"),
                          interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -144,7 +144,7 @@ cohort_assert <- function(labels,
                           has_open_left = FALSE,
                           has_open_right = FALSE,
                           interpret_single = c("lower", "upper"),
-                          interpret_multi = c("include", "exclude"),
+                          interpret_multi = c("at_upper", "below_upper"),
                           interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -181,7 +181,7 @@ cohort_diagnose_values <- function(labels,
                                    has_open_left = FALSE,
                                    has_open_right = FALSE,
                                    interpret_single = c("lower", "upper"),
-                                   interpret_multi = c("include", "exclude"),
+                                   interpret_multi = c("at_upper", "below_upper"),
                                    interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -218,7 +218,7 @@ cohort_assert_values <- function(labels,
                                  has_open_left = FALSE,
                                  has_open_right = FALSE,
                                  interpret_single = c("lower", "upper"),
-                                 interpret_multi = c("include", "exclude"),
+                                 interpret_multi = c("at_upper", "below_upper"),
                                  interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)

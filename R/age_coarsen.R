@@ -70,7 +70,7 @@ age_coarsen <- function(labels,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail,
     minimal_levels = FALSE,
     preserve_input_type = FALSE
@@ -127,7 +127,7 @@ age_coarsen_to <- function(labels,
     to = to,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -193,7 +193,7 @@ age_coarsen_five <- function(labels,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -213,7 +213,7 @@ age_coarsen_ten <- function(labels,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -243,7 +243,7 @@ age_coarsen_life <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
   l <- get_lower(intervals)
@@ -273,7 +273,7 @@ age_coarsen_life <- function(labels,
     is_open_right = open_right,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail,
     minimal_levels = TRUE,
     preserve_input_type = TRUE

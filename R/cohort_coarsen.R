@@ -85,7 +85,7 @@ cohort_coarsen <- function(labels,
                           open_left = NULL,
                           open_right = NULL,
                           interpret_single = c("lower", "upper"),
-                          interpret_multi = c("include", "exclude"),
+                          interpret_multi = c("at_upper", "below_upper"),
                           interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
@@ -152,7 +152,7 @@ cohort_coarsen <- function(labels,
 cohort_coarsen_to <- function(labels,
                               to,
                               interpret_single = c("lower", "upper"),
-                              interpret_multi = c("include", "exclude"),
+                              interpret_multi = c("at_upper", "below_upper"),
                               interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -227,7 +227,7 @@ cohort_coarsen_five <- function(labels,
                                open_left = NULL,
                                open_right = NULL,
                                interpret_single = c("lower", "upper"),
-                               interpret_multi = c("include", "exclude"),
+                               interpret_multi = c("at_upper", "below_upper"),
                                interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
@@ -254,7 +254,7 @@ cohort_coarsen_ten <- function(labels,
                               open_left = NULL,
                               open_right = NULL,
                               interpret_single = c("lower", "upper"),
-                              interpret_multi = c("include", "exclude"),
+                              interpret_multi = c("at_upper", "below_upper"),
                               interpret_fail = c("error", "warn", "silent")) {
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")

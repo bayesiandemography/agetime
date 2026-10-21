@@ -3,7 +3,7 @@ test_that("inner_diagnose_no_gap() passes for contiguous intervals", {
     labels = c("0-4", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_no_gap(intervals, on = "levels")
@@ -18,7 +18,7 @@ test_that("inner_diagnose_no_na() passes when there is no NA", {
     labels = c("0-4", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_no_na(intervals, on = "levels")
@@ -33,7 +33,7 @@ test_that("inner_diagnose_has_zero() passes when zero is present", {
     labels = c("5-9", "0-4"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_has_zero(intervals, on = "levels")
@@ -48,7 +48,7 @@ test_that("inner_diagnose_has_open_right() passes when open-right interval is pr
     labels = c("5-9", "60+"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_has_open_right(intervals, on = "levels")
@@ -63,7 +63,7 @@ test_that("inner_diagnose_has_open_left() passes when open-left cohort is presen
     labels = c("2020-2025", "<2020"),
     label_type = "cohort",
     interpret_single = "lower",
-    interpret_multi = "include",
+    interpret_multi = "at_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_has_open_left(intervals, on = "levels")
@@ -78,7 +78,7 @@ test_that("inner_diagnose_has_open_right() passes when open-right period is pres
     labels = c("2020-2030", "2030+"),
     label_type = "period",
     interpret_single = "lower",
-    interpret_multi = "include",
+    interpret_multi = "at_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_has_open_right(intervals, on = "levels")
@@ -93,7 +93,7 @@ test_that("inner_diagnose_valid_life() passes for valid labels", {
     labels = c("0", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error"
   )
   val <- agetime:::inner_diagnose_valid_life(intervals, on = "levels")
@@ -108,7 +108,7 @@ test_that("inner_diagnose() skips checks when all flags are FALSE", {
     labels = c("0-4", "5-9"),
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = "error",
     on = "levels",
     no_overlap = FALSE,

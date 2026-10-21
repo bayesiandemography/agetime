@@ -64,7 +64,7 @@ age_lower <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -78,7 +78,7 @@ age_mid <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -92,7 +92,7 @@ age_upper <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }
@@ -106,7 +106,7 @@ age_width <- function(labels,
     labels = labels,
     label_type = "age",
     interpret_single = "lower",
-    interpret_multi = "exclude",
+    interpret_multi = "below_upper",
     interpret_fail = interpret_fail
   )
 }

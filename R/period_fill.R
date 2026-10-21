@@ -57,7 +57,7 @@
 period_fill <- function(labels,
                                breaks = NULL,
                                interpret_single = c("lower", "upper"),
-                               interpret_multi = c("include", "exclude"),
+                               interpret_multi = c("at_upper", "below_upper"),
                                interpret_fail = c("error", "warn", "silent")) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- match.arg(interpret_multi)
@@ -77,7 +77,7 @@ period_fill <- function(labels,
 #' @export
 period_fill_one <- function(labels,
                                    interpret_single = c("lower", "upper"),
-                                   interpret_multi = c("include", "exclude"),
+                                   interpret_multi = c("at_upper", "below_upper"),
                                    interpret_fail = c(
                                      "error", "warn", "silent"
                                    )) {
@@ -99,7 +99,7 @@ period_fill_one <- function(labels,
 #' @export
 period_fill_five <- function(labels,
                                     interpret_single = c("lower", "upper"),
-                                    interpret_multi = c("include", "exclude"),
+                                    interpret_multi = c("at_upper", "below_upper"),
                                     interpret_fail = c(
                                       "error", "warn", "silent"
                                     )) {
@@ -121,7 +121,7 @@ period_fill_five <- function(labels,
 #' @export
 period_fill_ten <- function(labels,
                                    interpret_single = c("lower", "upper"),
-                                   interpret_multi = c("include", "exclude"),
+                                   interpret_multi = c("at_upper", "below_upper"),
                                    interpret_fail = c(
                                      "error", "warn", "silent"
                                    )) {

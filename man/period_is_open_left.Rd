@@ -8,29 +8,31 @@
 period_is_open_left(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("include", "exclude"),
+  interpret_multi = c("at_upper", "below_upper"),
   interpret_fail = c("error", "warn", "silent")
 )
 
 period_is_open_right(
   labels,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("include", "exclude"),
+  interpret_multi = c("at_upper", "below_upper"),
   interpret_fail = c("error", "warn", "silent")
 )
 }
 \arguments{
 \item{labels}{Vector of period labels.}
 
-\item{interpret_single}{How to interpret
-labels for single-year periods.
-Choices are \code{"lower"} (the default) and \code{"upper"}.
-See below for details.}
+\item{interpret_single}{How to interpret a single-year
+label, such as \code{"2020"}. With \code{"lower"} (the default),
+2020 is the lower limit of the period. With \code{"upper"},
+2020 is the upper limit. See below for details.}
 
-\item{interpret_multi}{How to interpret
-labels for multi-year periods.
-Choices are \code{"include"} (the default) and
-\code{"exclude"}. See below for details.}
+\item{interpret_multi}{How to interpret the second number
+in a multi-year label, such as \code{"2020-2025"}. With
+\code{"at_upper"} (the default), the second number is the upper
+limit of the period. With \code{"below_upper"}, the second
+number is one year below the upper limit.
+See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -54,6 +56,9 @@ Find periods that are open on the left or right.
 \section{Rules for interpreting inputs}{
 
 
+"Lower" and "upper" refer to the lower and upper limits of
+a period, as returned by \code{period_lower()} and \code{period_upper()}.
+
 Single-year periods:\tabular{lll}{
    \code{interpret_single} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"lower"} \tab \verb{"a" -> [a,a+1)} \tab \verb{"2020" -> [2020,2021)} \cr
@@ -68,16 +73,19 @@ and the "upper" convention for non-calendar years
 
 Multi-year periods:\tabular{lll}{
    \code{interpret_multi} \tab \emph{Rule} \tab \emph{Example} \cr
-   \code{"include"} \tab \verb{"a-<a+n>" -> [a,a+n)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
-   \code{"exclude"} \tab \verb{"a-<a+n-1>" -> [a,a+n)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
+   \code{"at_upper"} \tab \verb{"a-b" -> [a,b)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
+   \code{"below_upper"} \tab \verb{"a-b" -> [a,b+1)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
 }
 
 
+In a multi-year label, the first number is always the lower
+limit, whatever the value of \code{interpret_single}.
+
 A two-value label cannot describe a one-year period.
-With \code{interpret_multi = "include"}, \code{"2010-2011"} would be
+With \code{interpret_multi = "at_upper"}, \code{"2010-2011"} would be
 \verb{[2010, 2011)} and \code{"2010-2010"} would be empty; both are
 rejected. Use \code{"2010"}, or \code{"2010-2012"} for two years.
-With \code{interpret_multi = "exclude"},
+With \code{interpret_multi = "below_upper"},
 \code{"2010-2011"} is two years \verb{[2010, 2012)} and is accepted.
 
 Open periods:

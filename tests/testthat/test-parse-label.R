@@ -7,7 +7,7 @@ test_that("x_label() warns and returns NA for an uninterpretable label", {
       label_orig = "young people",
       label_parsers = parsers,
       interpret_fail = "warn",
-      interpret_multi = "exclude",
+      interpret_multi = "below_upper",
       label_type = "age"
     ),
     "Don't know how to interpret label"
