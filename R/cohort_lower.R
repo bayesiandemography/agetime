@@ -45,6 +45,19 @@
 #' With `interpret_multi = "exclude"`,
 #' `"2010-2011"` is two years `[2010, 2012)` and is accepted.
 #'
+#' Open cohorts:
+#'
+#' The symbols `"<"` and `"+"` refer to boundaries, so
+#' `"<2000"` is `[-Inf,2000)` and `"2000+"` is `[2000,Inf)`.
+#' Words refer to the one-year cohort with the label next to them,
+#' so their meaning depends on `interpret_single`.
+#'
+#' | *Label* | `"lower"` | `"upper"` |
+#' |---------------|-------------|-------------|
+#' | `"before 2000"`, `"under 2000"` | `[-Inf,2000)` | `[-Inf,1999)` |
+#' | `"2000 or earlier"`, `"up to 2000"` | `[-Inf,2001)` | `[-Inf,2000)` |
+#' | `"2000 or more"`, `"2000 and over"` | `[2000,Inf)` | `[1999,Inf)` |
+#'
 #' @param labels Vector of cohort labels.
 #' @param interpret_single How to interpret
 #' labels for single-year cohorts.

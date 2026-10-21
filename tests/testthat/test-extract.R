@@ -136,9 +136,15 @@ test_that("cohort extract functions handle open-right labels", {
   expect_values(wd, c(5, Inf))
 })
 
-test_that("age_lower() rejects open-left labels", {
-  expect_error(age_lower("<5"), "Don't know how to interpret label")
-  expect_values(age_lower("<5", interpret_fail = "silent"), NA_real_)
+test_that("age functions treat '<N' as the age group from 0 to N - 1", {
+  expect_values(age_lower("<5"), 0)
+  expect_values(age_upper("<5"), 5)
+  expect_identical(age_standard("<5"), "0-4")
+})
+
+test_that("period and cohort functions treat '<N' as open on the left", {
+  expect_values(cohort_lower("<2000"), -Inf)
+  expect_values(period_upper("<2000"), 2000)
 })
 
 test_that("cohort extract functions return expected values for mixed labels", {

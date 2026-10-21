@@ -79,6 +79,18 @@ With \code{interpret_multi = "include"}, \code{"2010-2011"} would be
 rejected. Use \code{"2010"}, or \code{"2010-2012"} for two years.
 With \code{interpret_multi = "exclude"},
 \code{"2010-2011"} is two years \verb{[2010, 2012)} and is accepted.
+
+Open cohorts:
+
+The symbols \code{"<"} and \code{"+"} refer to boundaries, so
+\code{"<2000"} is \verb{[-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
+Words refer to the one-year cohort with the label next to them,
+so their meaning depends on \code{interpret_single}.\tabular{lll}{
+   \emph{Label} \tab \code{"lower"} \tab \code{"upper"} \cr
+   \code{"before 2000"}, \code{"under 2000"} \tab \verb{[-Inf,2000)} \tab \verb{[-Inf,1999)} \cr
+   \code{"2000 or earlier"}, \code{"up to 2000"} \tab \verb{[-Inf,2001)} \tab \verb{[-Inf,2000)} \cr
+   \code{"2000 or more"}, \code{"2000 and over"} \tab \verb{[2000,Inf)} \tab \verb{[1999,Inf)} \cr
+}
 }
 
 \examples{

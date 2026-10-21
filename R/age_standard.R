@@ -26,7 +26,7 @@
 #' - [age_labels()] Create age group labels
 #'
 #' @examples
-#' labels <- c("5to9", "10--14", "100plus", "all")
+#' labels <- c("Under 5", "5to9", "10--14", "100plus", "all")
 #' age_standard(labels)
 #' @export
 

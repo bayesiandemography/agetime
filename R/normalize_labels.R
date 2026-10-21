@@ -7,12 +7,18 @@
 #' @param use_years Whether to apply `norm_years()`.
 #' @param use_apostrophes Whether to apply `norm_apostrophes()`.
 #' @param use_whitespace Whether to apply `norm_whitespace()`.
+#' @param use_age_prefix Whether to apply `norm_age_prefix()`.
+#' @param use_under Whether to apply `norm_under()`.
 #' @param use_lessthan Whether to apply `norm_lessthan()`.
 #' @param use_plus Whether to apply `norm_plus()`.
 #' @param use_range Whether to apply `norm_range()`.
 #' @param use_total Whether to apply `norm_total()`.
 #' @param use_na Whether to apply `norm_na()`.
 #' @param use_infant Whether to apply `norm_infant()`.
+#' @param use_older Whether `norm_plus()` recognizes `"or older"`
+#' and `"and older"`.
+#' @param interpret_single Rule for one-year labels, used by
+#' `norm_lessthan()` and `norm_plus()`: `"lower"` or `"upper"`.
 #' @returns List of normalizer functions in application order.
 #'
 #' @noRd
@@ -23,12 +29,16 @@ make_labels_normalizers <- function(use_tolower,
                                     use_years,
                                     use_apostrophes,
                                     use_whitespace,
+                                    use_age_prefix,
+                                    use_under,
                                     use_lessthan,
                                     use_plus,
                                     use_range,
                                     use_total,
                                     use_na,
-                                    use_infant) {
+                                    use_infant,
+                                    use_older = FALSE,
+                                    interpret_single = "lower") {
   ans <- list()
   if (use_tolower) {
     ans <- append(ans, norm_tolower)
@@ -51,11 +61,25 @@ make_labels_normalizers <- function(use_tolower,
   if (use_whitespace) {
     ans <- append(ans, norm_whitespace)
   }
+  if (use_age_prefix) {
+    ans <- append(ans, norm_age_prefix)
+  }
+  if (use_under) {
+    ans <- append(ans, norm_under)
+  }
   if (use_lessthan) {
-    ans <- append(ans, norm_lessthan)
+    norm_lessthan_single <- function(x) {
+      norm_lessthan(x = x, interpret_single = interpret_single)
+    }
+    ans <- append(ans, norm_lessthan_single)
   }
   if (use_plus) {
-    ans <- append(ans, norm_plus)
+    norm_plus_single <- function(x) {
+      norm_plus(x = x,
+                interpret_single = interpret_single,
+                allow_older = use_older)
+    }
+    ans <- append(ans, norm_plus_single)
   }
   if (use_range) {
     ans <- append(ans, norm_range)
@@ -86,21 +110,25 @@ make_labels_normalizers_age <- function() {
     use_years = TRUE,
     use_apostrophes = TRUE,
     use_whitespace = TRUE,
+    use_age_prefix = TRUE,
+    use_under = TRUE,
     use_lessthan = FALSE,
     use_plus = TRUE,
     use_range = TRUE,
     use_total = TRUE,
     use_na = TRUE,
-    use_infant = TRUE
+    use_infant = TRUE,
+    use_older = TRUE
   )
 }
 
 #' Make Labels Normalizers Cohort
 #'
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @returns List of normalizers for cohort labels.
 #'
 #' @noRd
-make_labels_normalizers_cohort <- function() {
+make_labels_normalizers_cohort <- function(interpret_single) {
   make_labels_normalizers(
     use_tolower = TRUE,
     use_wordnum = FALSE,
@@ -109,21 +137,25 @@ make_labels_normalizers_cohort <- function() {
     use_years = FALSE,
     use_apostrophes = TRUE,
     use_whitespace = TRUE,
+    use_age_prefix = FALSE,
+    use_under = FALSE,
     use_lessthan = TRUE,
     use_plus = TRUE,
     use_range = TRUE,
     use_total = TRUE,
     use_na = TRUE,
-    use_infant = FALSE
+    use_infant = FALSE,
+    interpret_single = interpret_single
   )
 }
 
 #' Make Labels Normalizers Period
 #'
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @returns List of normalizers for period labels.
 #'
 #' @noRd
-make_labels_normalizers_period <- function() {
+make_labels_normalizers_period <- function(interpret_single) {
   make_labels_normalizers(
     use_tolower = TRUE,
     use_wordnum = FALSE,
@@ -132,12 +164,15 @@ make_labels_normalizers_period <- function() {
     use_years = FALSE,
     use_apostrophes = TRUE,
     use_whitespace = TRUE,
+    use_age_prefix = FALSE,
+    use_under = FALSE,
     use_lessthan = TRUE,
     use_plus = TRUE,
     use_range = TRUE,
     use_total = TRUE,
     use_na = TRUE,
-    use_infant = FALSE
+    use_infant = FALSE,
+    interpret_single = interpret_single
   )
 }
 

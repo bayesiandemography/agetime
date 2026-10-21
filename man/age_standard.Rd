@@ -29,7 +29,7 @@ Convert age group labels to the default \pkg{agetime} format for age.
 }
 
 \examples{
-labels <- c("5to9", "10--14", "100plus", "all")
+labels <- c("Under 5", "5to9", "10--14", "100plus", "all")
 age_standard(labels)
 }
 \seealso{
