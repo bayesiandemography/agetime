@@ -50,7 +50,7 @@ For labels with irregular widths, use `age_labels()`, `period_labels()`, or `coh
 
 ```{r labels-from-scratch-irregular}
 age_labels(
-  breaks = c(0, 20, 65, 100),
+  breaks = c(0, 20, 65, 100)
 )
 cohort_labels(
   breaks = c(2000, 2010, 2030),
@@ -390,7 +390,7 @@ df |>
 
 ### See Also
 
-- [Drop NA and not-stated from a dataset](#drop-missing)
+- [Drop "Not stated" categories from a dataset](#drop-missing)
 
 
 ## Drop "Not stated" categories from a dataset {#drop-missing}
@@ -612,7 +612,7 @@ df |>
 
 ### Discussion
 
-The width of an open interval is undefined.
+The width of an open interval is `Inf`.
 
 ### See Also
 

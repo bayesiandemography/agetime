@@ -90,6 +90,7 @@ age_coarsen_five(x)
 ```
 
 Use the `age_fill` functions to add intermediate levels:
+
 ```{r fill}
 x |>
   age_coarsen_five() |>
