@@ -87,9 +87,18 @@ df |>
   mutate(age = age_standard(age))
 ```
 
+The `standard` functions recognize the formats commonly found in published tables, including totals and not-stated categories.
+
+```{r standard-published}
+age_standard(c("All ages", "Under 1", "1-4 years", "Age 5 to 9",
+               "10-14yrs", "85 years and over", "Not stated"))
+```
+
 ### Discussion
 
 If the `labels` argument is a factor, then the `standard` functions standardize the factor levels along with the values.
+
+Not-stated categories become `NA`. To remove them, see [Drop "Not stated" categories from a dataset](#drop-missing).
 
 
 ### See Also
@@ -688,10 +697,23 @@ df |>
 
 ### Discussion
 
-If any of the age groups in `labels` do not map uniquely on to an age group in `to`, then `age_coarsen_to()` throws an error.
+Every age group in `labels` must lie inside exactly one age group in `to`. Otherwise `age_coarsen_to()` throws an error, which distinguishes two problems:
+
+- an age group *would be split* when it overlaps two or more age groups in `to`, as `"5-9"` overlaps `"0-6"` and `"7-14"`;
+- an age group is *not fully covered* when part of it lies outside all the age groups in `to`, as `"20"` lies above `"7-14"`.
+
+```{r recode-classification-error, error = TRUE}
+age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
+```
 
 ### See Also
 
 - [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
 - [Build a mapping between age groups](#build-a-mapping-between-age-groups)
 - `period_coarsen_to()`, `cohort_coarsen_to()`
+
+
+# More information
+
+- `vignette("agetime")` for a quick start
+- `vignette("troubleshooting")` for solutions to common problems
