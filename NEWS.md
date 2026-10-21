@@ -19,6 +19,12 @@
   `"before 2000"` and `"2000 or more"`, and cohort labels now recognize
   words such as `"2000 or more"`.
 
+- `age_diagnose()`, `age_assert()`, and their `_values()` variants
+  have a new `no_open_right` check, and the period and cohort
+  equivalents have new `no_open_left` and `no_open_right` checks.
+  These check that no interval is open, and complement the existing
+  `has_open_left` and `has_open_right` checks.
+
 ## Changes to behaviour
 
 - `age_lower()`, `age_upper()`, `age_mid()`, `age_width()`, the

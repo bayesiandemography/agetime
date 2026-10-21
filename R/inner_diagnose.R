@@ -11,6 +11,8 @@
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
 #' @param no_na Run the no-NA check?
+#' @param no_open_left Run the no-open-left check?
+#' @param no_open_right Run the no-open-right check?
 #' @param has_zero Run the has-zero check?
 #' @param has_open_left Run the has-open-left check?
 #' @param has_open_right Run the has-open-right check?
@@ -31,6 +33,8 @@ inner_assert <- function(labels,
                          no_gap,
                          no_total,
                          no_na,
+                         no_open_left,
+                         no_open_right,
                          has_zero,
                          has_open_left,
                          has_open_right,
@@ -47,6 +51,8 @@ inner_assert <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = no_open_left,
+    no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
@@ -68,6 +74,8 @@ inner_assert <- function(labels,
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
 #' @param no_na Run the no-NA check?
+#' @param no_open_left Run the no-open-left check?
+#' @param no_open_right Run the no-open-right check?
 #' @param has_zero Run the has-zero check?
 #' @param has_open_left Run the has-open-left check?
 #' @param has_open_right Run the has-open-right check?
@@ -87,6 +95,8 @@ inner_diagnose <- function(labels,
                         no_gap,
                         no_total,
                         no_na,
+                        no_open_left,
+                        no_open_right,
                         has_zero,
                         has_open_left,
                         has_open_right,
@@ -131,6 +141,18 @@ inner_diagnose <- function(labels,
     details_list <- c(
       details_list,
       list(inner_diagnose_no_na(intervals = intervals, on = on))
+    )
+  }
+  if (isTRUE(no_open_left)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_no_open_left(intervals = intervals, on = on))
+    )
+  }
+  if (isTRUE(no_open_right)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_no_open_right(intervals = intervals, on = on))
     )
   }
   if (isTRUE(has_zero)) {
@@ -360,6 +382,72 @@ inner_diagnose_no_na <- function(intervals, on) {
   }
   tibble::tibble_row(
     condition = "no_na",
+    passed = passed,
+    comment = comment
+  )
+}
+#' Inner Diagnose No Open Left
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+
+inner_diagnose_no_open_left <- function(intervals, on) {
+  int_is_empty <- int_is_empty(intervals)
+  if (int_is_empty) {
+    passed <- TRUE
+  } else {
+    m <- get_m(intervals)
+    is_open_left <- is.infinite(m[, 1L]) & is.finite(m[, 2L])
+    passed <- !any(is_open_left)
+  }
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
+    labels_unique <- get_labels_unique(intervals)
+    i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+    i_open <- match(TRUE, is_open_left)
+    i_xu <- match(i_open, i_xun_to_xunu)
+    lab <- labels_unique[[i_xu]]
+    comment <- sprintf("Example among %s: '%s'", on, lab)
+  }
+  tibble::tibble_row(
+    condition = "no_open_left",
+    passed = passed,
+    comment = comment
+  )
+}
+#' Inner Diagnose No Open Right
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+
+inner_diagnose_no_open_right <- function(intervals, on) {
+  int_is_empty <- int_is_empty(intervals)
+  if (int_is_empty) {
+    passed <- TRUE
+  } else {
+    m <- get_m(intervals)
+    is_open_right <- is.finite(m[, 1L]) & is.infinite(m[, 2L])
+    passed <- !any(is_open_right)
+  }
+  if (identical(passed, TRUE)) {
+    comment <- NA_character_
+  } else {
+    labels_unique <- get_labels_unique(intervals)
+    i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+    i_open <- match(TRUE, is_open_right)
+    i_xu <- match(i_open, i_xun_to_xunu)
+    lab <- labels_unique[[i_xu]]
+    comment <- sprintf("Example among %s: '%s'", on, lab)
+  }
+  tibble::tibble_row(
+    condition = "no_open_right",
     passed = passed,
     comment = comment
   )

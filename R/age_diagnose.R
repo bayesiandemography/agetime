@@ -11,7 +11,7 @@
 #' - Not overlapping
 #' - Not having gaps
 #' - Having totals, NAs, or zeros
-#' - Having open age groups
+#' - Having, or not having, open age groups
 #' - Valid for an abridged life table
 #'
 #' If `labels` is a factor, `age_diagnose()` and `age_assert()`
@@ -41,6 +41,9 @@
 #' @param no_total Check that there is no total category.
 #' Default is `FALSE` (don't check).
 #' @param no_na Check that there is no `NA` category.
+#' Default is `FALSE` (don't check).
+#' @param no_open_right Check that no age group
+#' is open on the right (has no upper limit).
 #' Default is `FALSE` (don't check).
 #' @param has_zero Check that at least one
 #' age group has a lower limit of zero.
@@ -105,6 +108,7 @@ age_diagnose <- function(labels,
                       no_gap = FALSE,
                       no_total = FALSE,
                       no_na = FALSE,
+                      no_open_right = FALSE,
                       has_zero = FALSE,
                       has_open_right = FALSE,
                       valid_life = FALSE,
@@ -121,6 +125,8 @@ age_diagnose <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = FALSE,
+    no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
     has_open_right = has_open_right,
@@ -135,6 +141,7 @@ age_assert <- function(labels,
                        no_gap = FALSE,
                        no_total = FALSE,
                        no_na = FALSE,
+                       no_open_right = FALSE,
                        has_zero = FALSE,
                        has_open_right = FALSE,
                        valid_life = FALSE,
@@ -151,6 +158,8 @@ age_assert <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = FALSE,
+    no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
     has_open_right = has_open_right,
@@ -165,6 +174,7 @@ age_diagnose_values <- function(labels,
                                 no_gap = FALSE,
                                 no_total = FALSE,
                                 no_na = FALSE,
+                                no_open_right = FALSE,
                                 has_zero = FALSE,
                                 has_open_right = FALSE,
                                 valid_life = FALSE,
@@ -181,6 +191,8 @@ age_diagnose_values <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = FALSE,
+    no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
     has_open_right = has_open_right,
@@ -195,6 +207,7 @@ age_assert_values <- function(labels,
                               no_gap = FALSE,
                               no_total = FALSE,
                               no_na = FALSE,
+                              no_open_right = FALSE,
                               has_zero = FALSE,
                               has_open_right = FALSE,
                               valid_life = FALSE,
@@ -211,6 +224,8 @@ age_assert_values <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = FALSE,
+    no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
     has_open_right = has_open_right,

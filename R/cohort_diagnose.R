@@ -11,7 +11,7 @@
 #' - Not overlapping
 #' - Not having gaps
 #' - Having totals or NAs
-#' - Having open cohorts
+#' - Having, or not having, open cohorts
 #'
 #' If `labels` is a factor, `cohort_diagnose()` and `cohort_assert()`
 #' check levels, including unused levels, rather than values.
@@ -35,6 +35,12 @@
 #' @param no_total Check that there is no total category.
 #' Default is `FALSE` (don't check).
 #' @param no_na Check that there is no `NA` category.
+#' Default is `FALSE` (don't check).
+#' @param no_open_left Check that no cohort
+#' is open on the left (has no lower limit).
+#' Default is `FALSE` (don't check).
+#' @param no_open_right Check that no cohort
+#' is open on the right (has no upper limit).
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least
 #' one cohort is open on the left (has no lower limit).
@@ -96,6 +102,8 @@ cohort_diagnose <- function(labels,
                          no_gap = FALSE,
                          no_total = FALSE,
                          no_na = FALSE,
+                         no_open_left = FALSE,
+                         no_open_right = FALSE,
                          has_open_left = FALSE,
                          has_open_right = FALSE,
                          interpret_single = c("lower", "upper"),
@@ -115,6 +123,8 @@ cohort_diagnose <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = no_open_left,
+    no_open_right = no_open_right,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
@@ -129,6 +139,8 @@ cohort_assert <- function(labels,
                           no_gap = FALSE,
                           no_total = FALSE,
                           no_na = FALSE,
+                          no_open_left = FALSE,
+                          no_open_right = FALSE,
                           has_open_left = FALSE,
                           has_open_right = FALSE,
                           interpret_single = c("lower", "upper"),
@@ -148,6 +160,8 @@ cohort_assert <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = no_open_left,
+    no_open_right = no_open_right,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
@@ -162,6 +176,8 @@ cohort_diagnose_values <- function(labels,
                                    no_gap = FALSE,
                                    no_total = FALSE,
                                    no_na = FALSE,
+                                   no_open_left = FALSE,
+                                   no_open_right = FALSE,
                                    has_open_left = FALSE,
                                    has_open_right = FALSE,
                                    interpret_single = c("lower", "upper"),
@@ -181,6 +197,8 @@ cohort_diagnose_values <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = no_open_left,
+    no_open_right = no_open_right,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
@@ -195,6 +213,8 @@ cohort_assert_values <- function(labels,
                                  no_gap = FALSE,
                                  no_total = FALSE,
                                  no_na = FALSE,
+                                 no_open_left = FALSE,
+                                 no_open_right = FALSE,
                                  has_open_left = FALSE,
                                  has_open_right = FALSE,
                                  interpret_single = c("lower", "upper"),
@@ -214,6 +234,8 @@ cohort_assert_values <- function(labels,
     no_gap = no_gap,
     no_total = no_total,
     no_na = no_na,
+    no_open_left = no_open_left,
+    no_open_right = no_open_right,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,

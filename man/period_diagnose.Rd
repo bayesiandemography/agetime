@@ -13,6 +13,8 @@ period_diagnose(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_left = FALSE,
+  no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
@@ -26,6 +28,8 @@ period_assert(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_left = FALSE,
+  no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
@@ -39,6 +43,8 @@ period_diagnose_values(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_left = FALSE,
+  no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
@@ -52,6 +58,8 @@ period_assert_values(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_left = FALSE,
+  no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   interpret_single = c("lower", "upper"),
@@ -76,6 +84,14 @@ Default is \code{FALSE} (don't check).}
 Default is \code{FALSE} (don't check).}
 
 \item{no_na}{Check that there is no \code{NA} category.
+Default is \code{FALSE} (don't check).}
+
+\item{no_open_left}{Check that no period
+is open on the left (has no lower limit).
+Default is \code{FALSE} (don't check).}
+
+\item{no_open_right}{Check that no period
+is open on the right (has no upper limit).
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least one period
@@ -120,7 +136,7 @@ Conditions include:
 \item Not overlapping
 \item Not having gaps
 \item Having totals or NAs
-\item Having open periods
+\item Having, or not having, open periods
 }
 
 If \code{labels} is a factor, \code{period_diagnose()} and \code{period_assert()}

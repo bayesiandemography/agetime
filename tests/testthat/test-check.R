@@ -175,6 +175,53 @@ test_that("has_open_right check passes when x includes a right-open period", {
   expect_diagnose_result(val, "has_open_right", TRUE)
 })
 
+test_that("no_open_right check passes when all age groups are closed", {
+  val <- age_diagnose(age_closed, no_open_right = TRUE)
+  expect_diagnose_result(val, "no_open_right", TRUE)
+})
+
+test_that("no_open_right check fails when x includes an open age group", {
+  val <- age_diagnose(c("0-4", "5+"), no_open_right = TRUE)
+  expect_diagnose_result(val, "no_open_right", FALSE)
+  expect_match(val$details$comment, "'5\\+'")
+})
+
+test_that("no_open_right check does not treat totals or NA as open", {
+  val <- age_diagnose(c("0-4", "Total", NA), no_open_right = TRUE)
+  expect_diagnose_result(val, "no_open_right", TRUE)
+})
+
+test_that("no_open_left check passes when all cohorts are closed on the left", {
+  val <- cohort_diagnose(c("2020-2025", "2025+"), no_open_left = TRUE)
+  expect_diagnose_result(val, "no_open_left", TRUE)
+})
+
+test_that("no_open_left check fails when x includes a left-open period", {
+  val <- period_diagnose(c("<2020", "2020-2025"), no_open_left = TRUE)
+  expect_diagnose_result(val, "no_open_left", FALSE)
+})
+
+test_that("no_open_right checks levels, and no_open_right in _values() checks values", {
+  x <- factor("0-4", levels = c("0-4", "5+"))
+  expect_false(age_diagnose(x, no_open_right = TRUE)$ok)
+  expect_true(age_diagnose_values(x, no_open_right = TRUE)$ok)
+})
+
+test_that("age_assert() reports a failed no_open_right check", {
+  expect_error(
+    age_assert(c("0-4", "5+"), no_open_right = TRUE),
+    "no_open_right"
+  )
+  expect_error(
+    period_assert(c("2020-2025", "2025+"), no_open_right = TRUE),
+    "no_open_right"
+  )
+  expect_error(
+    cohort_assert_values(c("<2000", "2000-2005"), no_open_left = TRUE),
+    "no_open_left"
+  )
+})
+
 test_that("valid_life passes for life-table labels even when there is a gap", {
   val <- age_diagnose(age_life_gap, valid_life = TRUE)
   expect_diagnose_result(val, "valid_life", TRUE)

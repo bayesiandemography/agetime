@@ -13,6 +13,7 @@ age_diagnose(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_right = FALSE,
   has_zero = FALSE,
   has_open_right = FALSE,
   valid_life = FALSE,
@@ -25,6 +26,7 @@ age_assert(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_right = FALSE,
   has_zero = FALSE,
   has_open_right = FALSE,
   valid_life = FALSE,
@@ -37,6 +39,7 @@ age_diagnose_values(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_right = FALSE,
   has_zero = FALSE,
   has_open_right = FALSE,
   valid_life = FALSE,
@@ -49,6 +52,7 @@ age_assert_values(
   no_gap = FALSE,
   no_total = FALSE,
   no_na = FALSE,
+  no_open_right = FALSE,
   has_zero = FALSE,
   has_open_right = FALSE,
   valid_life = FALSE,
@@ -72,6 +76,10 @@ Default is \code{FALSE} (don't check).}
 Default is \code{FALSE} (don't check).}
 
 \item{no_na}{Check that there is no \code{NA} category.
+Default is \code{FALSE} (don't check).}
+
+\item{no_open_right}{Check that no age group
+is open on the right (has no upper limit).
 Default is \code{FALSE} (don't check).}
 
 \item{has_zero}{Check that at least one
@@ -110,7 +118,7 @@ Conditions include:
 \item Not overlapping
 \item Not having gaps
 \item Having totals, NAs, or zeros
-\item Having open age groups
+\item Having, or not having, open age groups
 \item Valid for an abridged life table
 }
 

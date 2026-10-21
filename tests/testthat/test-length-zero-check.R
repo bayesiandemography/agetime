@@ -26,6 +26,9 @@ test_that("universal checks pass on length-0 input", {
   expect_true(age_diagnose(x, no_total = TRUE)$ok)
   expect_true(age_diagnose(x, no_na = TRUE)$ok)
   expect_true(age_diagnose(x, valid_life = TRUE)$ok)
+  expect_true(age_diagnose(x, no_open_right = TRUE)$ok)
+  expect_true(period_diagnose(x, no_open_left = TRUE)$ok)
+  expect_true(cohort_diagnose(x, no_open_right = TRUE)$ok)
 
   expect_true(period_diagnose(x, no_overlap = TRUE)$ok)
   expect_true(period_diagnose(x, no_gap = TRUE)$ok)
