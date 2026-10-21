@@ -47,12 +47,12 @@ test_that("age_set_open_right() relabels already-open groups", {
 test_that("cohort_set_open_left() relabels groups to left-open cohorts", {
   x <- c("2020-2024", "<2000", "2015")
 
-  ans <- cohort_set_open_left(x, at = 2020)
+  ans <- cohort_set_open_left(x, at = 2020, interpret_multi = "at_upper")
   expect_s3_class(ans, "factor")
   expect_identical(as.character(ans), c("2020-2024", "<2020", "<2020"))
   expect_identical(levels(ans), c("<2020", "2020-2024"))
 
-  ans <- cohort_set_open_left(x, at = 2005)
+  ans <- cohort_set_open_left(x, at = 2005, interpret_multi = "at_upper")
   expect_identical(as.character(ans), c("2020-2024", "<2005", "2015"))
   expect_identical(levels(ans), c("<2005", "2015", "2020-2024"))
 })
@@ -69,7 +69,7 @@ test_that("cohort_set_open_left() can add an unobserved open level", {
 
 test_that("cohort_set_open_left() errors when breakpoint splits", {
   expect_error(
-    cohort_set_open_left(c("2010-2019", "2015"), at = 2015),
+    cohort_set_open_left(c("2010-2019", "2015"), at = 2015, interpret_multi = "at_upper"),
     "Interval .2010-2019. would be split"
   )
 })
@@ -77,7 +77,7 @@ test_that("cohort_set_open_left() errors when breakpoint splits", {
 test_that("cohort_set_open_right() relabels groups to right-open cohorts", {
   x <- c("2020-2024", "2025-2029", "2030")
 
-  ans <- cohort_set_open_right(x, at = 2030)
+  ans <- cohort_set_open_right(x, at = 2030, interpret_multi = "at_upper")
   expect_s3_class(ans, "factor")
   expect_identical(as.character(ans), c("2020-2024", "2025-2029", "2030+"))
   expect_identical(levels(ans), c("2020-2024", "2025-2029", "2030+"))
@@ -86,7 +86,7 @@ test_that("cohort_set_open_right() relabels groups to right-open cohorts", {
 test_that("period_set_open_left() relabels groups to left-open periods", {
   x <- c("2010-2020", "2025-2029")
 
-  ans <- period_set_open_left(x, at = 2020)
+  ans <- period_set_open_left(x, at = 2020, interpret_multi = "at_upper")
   expect_s3_class(ans, "factor")
   expect_identical(as.character(ans), c("<2020", "2025-2029"))
   expect_identical(levels(ans), c("<2020", "2025-2029"))
@@ -95,7 +95,7 @@ test_that("period_set_open_left() relabels groups to left-open periods", {
 test_that("period_set_open_right() relabels groups to right-open periods", {
   x <- c("2020-2024", "2025-2029", "2030")
 
-  ans <- period_set_open_right(x, at = 2030)
+  ans <- period_set_open_right(x, at = 2030, interpret_multi = "at_upper")
   expect_s3_class(ans, "factor")
   expect_identical(as.character(ans), c("2020-2024", "2025-2029", "2030+"))
   expect_identical(levels(ans), c("2020-2024", "2025-2029", "2030+"))

@@ -43,10 +43,10 @@ test_that("cohort_set_open_left() with length-0 factor relabels levels", {
   lev <- c("2010-2014", "2025-2029")
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
-  out <- cohort_set_open_left(fx, at = 2025)
+  out <- cohort_set_open_left(fx, at = 2025, interpret_multi = "at_upper")
   expect_identical(
     out,
-    factor(levels = levels(cohort_set_open_left(f_ref, at = 2025)))
+    factor(levels = levels(cohort_set_open_left(f_ref, at = 2025, interpret_multi = "at_upper")))
   )
   expect_identical(length(out), 0L)
   expect_identical(levels(out), c("<2025", "2025-2029"))

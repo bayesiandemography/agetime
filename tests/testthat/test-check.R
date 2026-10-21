@@ -96,7 +96,7 @@ test_that("no_overlap check fails for synonyms describing the same interval", {
   expect_match(val$details$comment, "'0' and 'infant' describe the same interval")
   val <- age_diagnose(c("0-4", "0 to 4", "5+"), no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", FALSE)
-  val <- cohort_diagnose(c("<2000", "before 2000", "2000-2004"), no_overlap = TRUE)
+  val <- cohort_diagnose(c("<2000", "before 2000", "2000-2004"), no_overlap = TRUE, interpret_multi = "at_upper")
   expect_diagnose_result(val, "no_overlap", FALSE)
 })
 

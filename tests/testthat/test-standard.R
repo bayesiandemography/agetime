@@ -31,7 +31,7 @@ test_that("age_standard() errors on invalid intervals by default", {
 })
 
 test_that("period_standard() standardizes messy character labels", {
-  ans <- period_standard(period_messy)
+  ans <- period_standard(period_messy, interpret_multi = "at_upper")
   expect_type(ans, "character")
   expect_false(is.factor(ans))
   expect_identical(ans, c("2025-2030", "1910-1914", "2022"))
@@ -67,7 +67,7 @@ test_that("period_standard() silently converts invalid labels to NA", {
 })
 
 test_that("cohort_standard() standardizes messy character labels", {
-  ans <- cohort_standard(cohort_messy)
+  ans <- cohort_standard(cohort_messy, interpret_multi = "at_upper")
   expect_type(ans, "character")
   expect_false(is.factor(ans))
   expect_identical(ans, c("2025-2030", "1910-1914", "<2022"))

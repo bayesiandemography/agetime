@@ -167,7 +167,7 @@ test_that("period_fill_ten() and cohort_fill_ten() fill gaps", {
 test_that("period/cohort fill-ten errors for indivisible gaps", {
   x <- c("2010-2019", "2030-2039")
   msg <- tryCatch(
-    period_fill_ten(x),
+    period_fill_ten(x, interpret_multi = "at_upper"),
     error = function(e) conditionMessage(e)
   )
   expect_match(
@@ -175,7 +175,7 @@ test_that("period/cohort fill-ten errors for indivisible gaps", {
     "Gap between .2010-2019. and .2030-2039. is not divisible by 10"
   )
   expect_error(
-    cohort_fill_ten(x),
+    cohort_fill_ten(x, interpret_multi = "at_upper"),
     "Gap between .2010-2019. and .2030-2039. is not divisible by 10"
   )
 })

@@ -209,7 +209,7 @@ test_that("cohort_coarsen() omits open_right by default for closed labels", {
 test_that("cohort_coarsen_five() infers open_left from labels by default", {
   x <- c("<2020", "2020-2024")
   expect_values(
-    cohort_coarsen_five(x),
+    cohort_coarsen_five(x, interpret_multi = "at_upper"),
     c("<2020", "2020-2025")
   )
 })
@@ -217,7 +217,7 @@ test_that("cohort_coarsen_five() infers open_left from labels by default", {
 test_that("cohort_coarsen_five() can suppress inferred open_left", {
   x <- c("<2020", "2020-2024")
   expect_error(
-    cohort_coarsen_five(x, open_left = FALSE),
+    cohort_coarsen_five(x, open_left = FALSE, interpret_multi = "at_upper"),
     regexp = "contains cohort open on the left: \"<2020\""
   )
 })

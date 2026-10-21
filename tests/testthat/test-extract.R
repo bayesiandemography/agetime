@@ -237,12 +237,12 @@ test_that("extract functions give unnamed results for unnamed labels", {
   expect_null(names(age_lower(factor(x))))
 
   x <- period_messy
-  expect_null(names(period_lower(x)))
-  expect_null(names(period_upper(x)))
+  expect_null(names(period_lower(x, interpret_multi = "at_upper")))
+  expect_null(names(period_upper(x, interpret_multi = "at_upper")))
 
   x <- cohort_messy
-  expect_null(names(cohort_lower(x)))
-  expect_null(names(cohort_upper(x)))
+  expect_null(names(cohort_lower(x, interpret_multi = "at_upper")))
+  expect_null(names(cohort_upper(x, interpret_multi = "at_upper")))
 })
 
 test_that("extract functions keep names of named labels", {
@@ -253,8 +253,8 @@ test_that("extract functions keep names of named labels", {
   expect_identical(names(age_mid(x)), c("a", "b", "c"))
 
   x <- c(p = "2020-2024", q = "2025")
-  expect_identical(names(period_lower(x)), c("p", "q"))
-  expect_identical(names(cohort_upper(x)), c("p", "q"))
+  expect_identical(names(period_lower(x, interpret_multi = "at_upper")), c("p", "q"))
+  expect_identical(names(cohort_upper(x, interpret_multi = "at_upper")), c("p", "q"))
 })
 
 test_that("mid functions give open intervals half the width of the nearest closed interval", {
@@ -263,7 +263,7 @@ test_that("mid functions give open intervals half the width of the nearest close
   expect_identical(age_mid(c("60-69", "70-79", "80+")), c(65, 75, 85))
   expect_identical(age_mid(c("80+", "70-79")), c(85, 75))
   expect_identical(age_mid(c("0-4", NA, "Total", "5+")), c(2.5, NA, NA, 7.5))
-  expect_identical(cohort_mid(c("<2000", "2000-2004", "2005+")), c(1998, 2002, 2007))
+  expect_identical(cohort_mid(c("<2000", "2000-2004", "2005+"), interpret_multi = "at_upper"), c(1998, 2002, 2007))
   expect_identical(period_mid(c("<2000", "2000", "2001+")), c(1999.5, 2000.5, 2001.5))
 })
 

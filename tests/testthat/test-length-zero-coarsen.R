@@ -103,7 +103,7 @@ test_that("period_coarsen() with length-0 input returns empty factor with levels
 test_that("period_coarsen() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = c("2000-2004", "2005-2009"))
   expect_identical(
-    period_coarsen(fx, breaks = c(2000, 2010, 2020)),
+    period_coarsen(fx, breaks = c(2000, 2010, 2020), interpret_multi = "at_upper"),
     factor(character(0), levels = c("2000-2010", "2010-2020"))
   )
 })
@@ -125,7 +125,7 @@ test_that("cohort_coarsen() with length-0 input and open_right adds level", {
 test_that("cohort_coarsen() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = c("2000-2004", "2005-2009"))
   expect_identical(
-    cohort_coarsen(fx, breaks = c(2000, 2010, 2020)),
+    cohort_coarsen(fx, breaks = c(2000, 2010, 2020), interpret_multi = "at_upper"),
     factor(character(0), levels = c("2000-2010", "2010-2020"))
   )
 })
@@ -139,8 +139,8 @@ test_that("period_coarsen_five() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
   expect_identical(
-    levels(period_coarsen_five(fx)),
-    levels(period_coarsen_five(f_ref))
+    levels(period_coarsen_five(fx, interpret_multi = "at_upper")),
+    levels(period_coarsen_five(f_ref, interpret_multi = "at_upper"))
   )
 })
 
@@ -153,8 +153,8 @@ test_that("cohort_coarsen_five() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
   expect_identical(
-    levels(cohort_coarsen_five(fx)),
-    levels(cohort_coarsen_five(f_ref))
+    levels(cohort_coarsen_five(fx, interpret_multi = "at_upper")),
+    levels(cohort_coarsen_five(f_ref, interpret_multi = "at_upper"))
   )
 })
 
@@ -182,8 +182,8 @@ test_that("period_coarsen_ten() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
   expect_identical(
-    levels(period_coarsen_ten(fx)),
-    levels(period_coarsen_ten(f_ref))
+    levels(period_coarsen_ten(fx, interpret_multi = "at_upper")),
+    levels(period_coarsen_ten(f_ref, interpret_multi = "at_upper"))
   )
 })
 
@@ -196,8 +196,8 @@ test_that("cohort_coarsen_ten() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
   expect_identical(
-    levels(cohort_coarsen_ten(fx)),
-    levels(cohort_coarsen_ten(f_ref))
+    levels(cohort_coarsen_ten(fx, interpret_multi = "at_upper")),
+    levels(cohort_coarsen_ten(f_ref, interpret_multi = "at_upper"))
   )
 })
 

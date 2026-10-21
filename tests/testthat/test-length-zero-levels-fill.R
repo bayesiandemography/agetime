@@ -78,7 +78,7 @@ test_that("cohort_fill_five() with length-0 factor updates levels", {
   fx <- factor(character(0), levels = lev)
   f_ref <- factor(lev, levels = lev)
   expect_identical(
-    levels(cohort_fill_five(fx)),
-    levels(cohort_fill_five(f_ref))
+    levels(cohort_fill_five(fx, interpret_multi = "at_upper")),
+    levels(cohort_fill_five(f_ref, interpret_multi = "at_upper"))
   )
 })
