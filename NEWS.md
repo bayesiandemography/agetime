@@ -53,6 +53,9 @@
 - The `include_x` argument of `age_extend()`, `period_extend()`, and
   `cohort_extend()` is now called `include_labels`, to match the
   `labels` argument.
+- In `age_mapping()`, `period_mapping()`, and `cohort_mapping()`,
+  the `relation` values `"is-contained-in"` and `"overlaps-with"` are
+  now `"is_contained_in"` and `"overlaps_with"`.
 - Errors now report the function the user called, such as
   `age_standard()`, rather than an internal helper.
 - Errors and warnings about labels that cannot be parsed now quote

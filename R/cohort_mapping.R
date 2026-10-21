@@ -25,8 +25,8 @@
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | Endpoints equal  |
 #' | `"contains"` | Endpoints of `labels_y` inside endpoints of `labels_x`  |
-#' | `"is-contained-in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
-#' | `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
+#' | `"is_contained_in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
+#' | `"overlaps_with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
@@ -35,7 +35,7 @@
 #' @param labels_y Vector of cohort labels or `NULL`.
 #' @param relation Relationship between
 #' labels. Choices are `"equals"` (the default),
-#' `"contains"`, `"is-contained-in"`, and `"overlaps-with"`.
+#' `"contains"`, `"is_contained_in"`, and `"overlaps_with"`.
 #' See below for details and examples.
 #' @param format Format of
 #' return value. Choices are `"tibble"`
@@ -57,8 +57,8 @@
 #' cohort_mapping(labels_x = x, labels_y = y)
 #' cohort_mapping(labels_x = x, labels_y = y, format = "matrix")
 #' cohort_mapping(labels_x = x, labels_y = y, relation = "contains")
-#' cohort_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
-#' cohort_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
+#' cohort_mapping(labels_x = x, labels_y = y, relation = "is_contained_in")
+#' cohort_mapping(labels_x = x, labels_y = y, relation = "overlaps_with")
 #'
 #' # sparse tibble vs dense matrix
 #' x <- c("2020-2025", "2030-2035")
@@ -77,8 +77,8 @@ cohort_mapping <- function(labels_x,
                            relation = c(
                              "equals",
                              "contains",
-                             "is-contained-in",
-                             "overlaps-with"
+                             "is_contained_in",
+                             "overlaps_with"
                            ),
                            format = c("tibble", "matrix"),
                            name_x = "x",

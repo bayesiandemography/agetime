@@ -636,14 +636,14 @@ classif_broad <- age_labels(breaks = c(0, 15, 65, 85))
 age_mapping(
   labels_x = classif_fine,
   labels_y = classif_broad,
-  relation = "is-contained-in"
+  relation = "is_contained_in"
 )
 ```
 
 ### Discussion
 
 Other possible values for `relation` are `"equals"`, `"contains"`, and
-`"overlaps-with"`.
+`"overlaps_with"`.
 
 To represent the mapping as a matrix rather than a data frame, set `format` to `"matrix"`,
 
@@ -651,7 +651,7 @@ To represent the mapping as a matrix rather than a data frame, set `format` to `
 age_mapping(
   labels_x = classif_fine,
   labels_y = classif_broad,
-  relation = "is-contained-in",
+  relation = "is_contained_in",
   format = "matrix"
 )
 ```

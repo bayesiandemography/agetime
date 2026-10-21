@@ -25,15 +25,15 @@
 #' |:--------|-----------------------------------------------|
 #' | `"equals"` | Endpoints equal  |
 #' | `"contains"` | Endpoints of `labels_y` inside endpoints of `labels_x`  |
-#' | `"is-contained-in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
-#' | `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
+#' | `"is_contained_in"`| Endpoints of `labels_x` inside endpoints of `labels_y`  |
+#' | `"overlaps_with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 #'
 #' @inheritParams age_lower
 #' @param labels_x Vector of age group labels.
 #' @param labels_y Vector of age group labels or `NULL`.
 #' @param relation Relationship between
 #' labels. Choices are `"equals"` (the default),
-#' `"contains"`, `"is-contained-in"`, and `"overlaps-with"`.
+#' `"contains"`, `"is_contained_in"`, and `"overlaps_with"`.
 #' See below for details and examples.
 #' @param format Format of
 #' return value. Choices are `"tibble"`
@@ -55,8 +55,8 @@
 #' age_mapping(labels_x = x, labels_y = y)
 #' age_mapping(labels_x = x, labels_y = y, format = "matrix")
 #' age_mapping(labels_x = x, labels_y = y, relation = "contains")
-#' age_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
-#' age_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
+#' age_mapping(labels_x = x, labels_y = y, relation = "is_contained_in")
+#' age_mapping(labels_x = x, labels_y = y, relation = "overlaps_with")
 #'
 #' # sparse tibble vs dense matrix
 #' x <- c("0-4", "10-14")
@@ -75,8 +75,8 @@ age_mapping <- function(labels_x,
                         relation = c(
                           "equals",
                           "contains",
-                          "is-contained-in",
-                          "overlaps-with"
+                          "is_contained_in",
+                          "overlaps_with"
                         ),
                         format = c("tibble", "matrix"),
                         name_x = "x",

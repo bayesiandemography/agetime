@@ -69,28 +69,28 @@ test_that("age_mapping() with contains finds intervals in x that contain y", {
   expect_same_mapping_formats(x, y, relation = "contains")
 })
 
-test_that("age_mapping() with is-contained-in finds intervals in x inside y", {
+test_that("age_mapping() with is_contained_in finds intervals in x inside y", {
   x <- c("10--14", "0--9")
   y <- c("0-4", "5-9", "10-14")
 
   expect_mapping_tibble(
-    age_mapping(x, y, relation = "is-contained-in"),
+    age_mapping(x, y, relation = "is_contained_in"),
     "10--14",
     "10-14"
   )
-  expect_same_mapping_formats(x, y, relation = "is-contained-in")
+  expect_same_mapping_formats(x, y, relation = "is_contained_in")
 })
 
-test_that("age_mapping() with overlaps-with finds overlapping intervals", {
+test_that("age_mapping() with overlaps_with finds overlapping intervals", {
   x <- c("10--14", "0--9")
   y <- c("0-4", "5-9", "10-14")
 
   expect_mapping_tibble(
-    age_mapping(x, y, relation = "overlaps-with"),
+    age_mapping(x, y, relation = "overlaps_with"),
     c("0--9", "0--9", "10--14"),
     c("0-4", "5-9", "10-14")
   )
-  expect_same_mapping_formats(x, y, relation = "overlaps-with")
+  expect_same_mapping_formats(x, y, relation = "overlaps_with")
 })
 
 test_that("age_mapping() maps x onto itself when y is NULL", {
@@ -135,7 +135,7 @@ test_that("age_mapping() uses name_x and name_y for tibble and matrix", {
   tb <- age_mapping(
     x,
     y,
-    relation = "is-contained-in",
+    relation = "is_contained_in",
     name_x = "age",
     name_y = "age_broad"
   )
@@ -146,7 +146,7 @@ test_that("age_mapping() uses name_x and name_y for tibble and matrix", {
   mx <- age_mapping(
     x,
     y,
-    relation = "is-contained-in",
+    relation = "is_contained_in",
     format = "matrix",
     name_x = "age",
     name_y = "age_broad"
@@ -158,7 +158,7 @@ test_that("age_mapping() coerces numeric and factor names", {
   tb <- age_mapping(
     "0-4",
     "0-9",
-    relation = "is-contained-in",
+    relation = "is_contained_in",
     name_x = 1,
     name_y = factor("broad")
   )

@@ -7,7 +7,7 @@
 age_mapping(
   labels_x,
   labels_y = NULL,
-  relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+  relation = c("equals", "contains", "is_contained_in", "overlaps_with"),
   format = c("tibble", "matrix"),
   name_x = "x",
   name_y = "y",
@@ -21,7 +21,7 @@ age_mapping(
 
 \item{relation}{Relationship between
 labels. Choices are \code{"equals"} (the default),
-\code{"contains"}, \code{"is-contained-in"}, and \code{"overlaps-with"}.
+\code{"contains"}, \code{"is_contained_in"}, and \code{"overlaps_with"}.
 See below for details and examples.}
 
 \item{format}{Format of
@@ -64,8 +64,8 @@ example below.
    \code{relation} \tab Endpoints of \code{labels_x} and \code{labels_y} \cr
    \code{"equals"} \tab Endpoints equal \cr
    \code{"contains"} \tab Endpoints of \code{labels_y} inside endpoints of \code{labels_x} \cr
-   \code{"is-contained-in"} \tab Endpoints of \code{labels_x} inside endpoints of \code{labels_y} \cr
-   \code{"overlaps-with"} \tab Endpoint of \code{labels_x} in \code{labels_y}, or reverse \cr
+   \code{"is_contained_in"} \tab Endpoints of \code{labels_x} inside endpoints of \code{labels_y} \cr
+   \code{"overlaps_with"} \tab Endpoint of \code{labels_x} in \code{labels_y}, or reverse \cr
 }
 }
 
@@ -75,8 +75,8 @@ y <- c("5-9", "0-4", "6-14")
 age_mapping(labels_x = x, labels_y = y)
 age_mapping(labels_x = x, labels_y = y, format = "matrix")
 age_mapping(labels_x = x, labels_y = y, relation = "contains")
-age_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
-age_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
+age_mapping(labels_x = x, labels_y = y, relation = "is_contained_in")
+age_mapping(labels_x = x, labels_y = y, relation = "overlaps_with")
 
 # sparse tibble vs dense matrix
 x <- c("0-4", "10-14")

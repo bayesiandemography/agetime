@@ -123,7 +123,7 @@ construct_coarsen_to_mapping <- function(intervals_labels, intervals_to) {
 #' @param intervals_x,intervals_y Objects of class "agetime_intervals"
 #' constructed from two label vectors.
 #' @param relation `"equals"`,
-#' `"contains"`, `"is-contained-in"`, or `"overlaps-with"`.
+#' `"contains"`, `"is_contained_in"`, or `"overlaps_with"`.
 #' @param format Type of return value.
 #' @param name_x Name for the `labels_x` side of the mapping.
 #' @param name_y Name for the `labels_y` side of the mapping.
@@ -155,11 +155,11 @@ construct_mapping <- function(intervals_x,
     mxy <- does_m1_contain_m2(m1 = mx, m2 = my)
     mxy[is_total_x, ] <- TRUE
     mxy[!is_na_x & !is_total_x, is_total_y] <- FALSE
-  } else if (relation == "is-contained-in") {
+  } else if (relation == "is_contained_in") {
     mxy <- is_m1_inside_m2(m1 = mx, m2 = my)
     mxy[is_total_x, !is_na_y] <- FALSE
     mxy[, is_total_y] <- TRUE
-  } else if (relation == "overlaps-with") {
+  } else if (relation == "overlaps_with") {
     mxy <- does_m1_overlap_m2(m1 = mx, m2 = my)
     mxy[is_total_x, ] <- TRUE
     mxy[, is_total_y] <- TRUE
