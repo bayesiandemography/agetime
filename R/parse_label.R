@@ -219,10 +219,10 @@ msg_i_parsed_interval <- function(label_type) {
 x_label_fail <- function(msg, interpret_fail) {
   envir <- parent.frame()
   if (interpret_fail == "error") {
-    cli::cli_abort(msg, .envir = envir)
+    cli::cli_abort(msg, .envir = envir, call = user_frame())
   }
   if (interpret_fail == "warn") {
-    cli::cli_warn(msg, .envir = envir)
+    cli::cli_warn(msg, .envir = envir, call = user_frame())
   }
   c(NA_real_, NA_real_)
 }

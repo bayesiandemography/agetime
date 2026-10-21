@@ -215,7 +215,7 @@ inner_levels_fill <- function(labels,
             ),
             .envir = msg_envir
           )
-          cli::cli_abort(msg)
+          cli::cli_abort(msg, call = user_frame())
         }
         breaks_gap <- seq.int(
           from = u_prev,
@@ -283,7 +283,7 @@ inner_levels_fill_life <- function(labels,
   )
   val <- label_non_life(intervals)
   if (!is.null(val)) {
-    cli::cli_abort("Label {.val {val}} is not valid for a life table.")
+    cli::cli_abort("Label {.val {val}} is not valid for a life table.", call = user_frame())
   }
   m <- get_m(intervals)
   n <- nrow(m)

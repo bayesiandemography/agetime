@@ -76,16 +76,16 @@ label_name <- function(label_type) {
 
 to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
   if (is.data.frame(labels)) {
-    cli::cli_abort("{.arg {nm_labels}} is a data frame.")
+    cli::cli_abort("{.arg {nm_labels}} is a data frame.", call = user_frame())
   }
   if (is.list(labels)) {
-    cli::cli_abort("{.arg {nm_labels}} is a list.")
+    cli::cli_abort("{.arg {nm_labels}} is a list.", call = user_frame())
   }
   if (!is.null(dim(labels))) {
-    cli::cli_abort("{.arg {nm_labels}} is not a vector.")
+    cli::cli_abort("{.arg {nm_labels}} is not a vector.", call = user_frame())
   }
   if (identical(length(labels), 0L) && !length_zero_ok) {
-    cli::cli_abort("{.arg {nm_labels}} has length 0.")
+    cli::cli_abort("{.arg {nm_labels}} has length 0.", call = user_frame())
   }
   if (is.factor(labels)) {
     return(labels)
@@ -94,7 +94,7 @@ to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
   if (is.null(labels_char)) {
     cli::cli_abort(c("{.arg {nm_labels}} is not a vector of labels.",
       i = "{.arg {nm_labels}} has class {.cls {class(labels)}}."
-    ))
+    ), call = user_frame())
   }
   labels_char
 }
@@ -114,4 +114,27 @@ to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
 copy_labels_names <- function(x, labels) {
   names(x) <- names(labels)
   x
+}
+
+
+#' Find the Frame of the User-Facing Function
+#'
+#' Return the frame of the outermost \pkg{agetime} function on the
+#' call stack, which is the function the user called. Used so that
+#' error messages report, for instance, `age_coarsen()` rather than
+#' an internal helper.
+#'
+#' @returns An environment.
+#'
+#' @noRd
+user_frame <- function() {
+  ns <- topenv(environment(user_frame))
+  n <- sys.nframe()
+  for (i in seq_len(n - 1L)) {
+    env_fun <- environment(sys.function(i))
+    if (is.environment(env_fun) && identical(topenv(env_fun), ns)) {
+      return(sys.frame(i))
+    }
+  }
+  parent.frame()
 }

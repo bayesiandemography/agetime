@@ -33,7 +33,7 @@ inner_extend <- function(labels,
   if (identical(length(labels), 0L)) {
     cli::cli_abort(c("{.arg labels} has length 0.",
       i = "Supply at least one label to extend from?"
-    ))
+    ), call = user_frame())
   }
   check_n(
     n = n,
@@ -66,11 +66,11 @@ inner_extend <- function(labels,
   )
   is_open <- get_is_open(intervals_tail)
   if (is_open) {
-    cli::cli_abort("Final interval {.val {tail}} is open.")
+    cli::cli_abort("Final interval {.val {tail}} is open.", call = user_frame())
   }
   is_na <- get_is_na(intervals_tail)
   if (is_na) {
-    cli::cli_abort("Final interval is {.val {NA}}.")
+    cli::cli_abort("Final interval is {.val {NA}}.", call = user_frame())
   }
   is_total <- get_is_total(intervals_tail)
   if (is_total) {
@@ -79,7 +79,7 @@ inner_extend <- function(labels,
         "Extend ordinary {label_name(label_type)}s ",
         "and then add total if needed?"
       )
-    ))
+    ), call = user_frame())
   }
   if (!has_width) {
     width <- get_width(intervals_tail)

@@ -109,21 +109,21 @@ test_that("age_coarsen_to() errors when to has nested intervals", {
 test_that("age_coarsen_to() errors when a label would be split", {
   expect_error(
     age_coarsen_to("0-9", to = c("0-4", "5-9")),
-    regexp = "cannot each lie in exactly one new age group"
+    regexp = "Age group \"0-9\" would be split by the labels in `to`."
   )
 })
 
 test_that("age_coarsen_to() errors when a label is not covered", {
   expect_error(
     age_coarsen_to("10", to = c("0-4", "5-9")),
-    regexp = "cannot each lie in exactly one new age group"
+    regexp = "Age group \"10\" is not fully covered by the labels in `to`."
   )
 })
 
 test_that("age_coarsen_to() errors when Total is missing from to", {
   expect_error(
     age_coarsen_to(c("0", "Total"), to = c("0-4", "5-9")),
-    regexp = "cannot each lie in exactly one new age group"
+    regexp = "`to` has no category for \"Total\"."
   )
 })
 

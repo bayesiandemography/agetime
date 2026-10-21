@@ -134,7 +134,7 @@ test_that("age_coarsen_life() recodes 86+ to 85+", {
 test_that("age_coarsen_life() errors for 0-4", {
   expect_error(
     age_coarsen_life("0-4"),
-    "cannot each lie in exactly one new age group"
+    "Age group \"0-4\" would be split by the new age groups."
   )
 })
 
@@ -220,4 +220,28 @@ test_that("cohort_coarsen_five() can suppress inferred open_left", {
     cohort_coarsen_five(x, open_left = FALSE),
     regexp = "contains cohort open on the left: \"<2020\""
   )
+})
+
+test_that("coarsen error messages describe each problem and suggest fixes", {
+  expect_snapshot(age_coarsen(c("3", "7", "12"), breaks = c(5, 10)), error = TRUE)
+  expect_snapshot(
+    age_coarsen(c("0-4", "5-9", "10-14", "15-19", "20-24", "25+"),
+                breaks = c(2, 7, 12, 17, 22, 27)),
+    error = TRUE
+  )
+  expect_snapshot(period_coarsen(c("2000", "2010"), breaks = c(2005, 2015)), error = TRUE)
+  expect_snapshot(age_coarsen_to(c("0-4", "10-14", NA), to = c("0-2", "3-9")), error = TRUE)
+})
+
+test_that("errors from parsing and checks report the function the user called", {
+  expect_error(age_standard(c("0-4", "young")), class = "rlang_error")
+  cnd <- tryCatch(age_standard(c("0-4", "young")), error = function(e) e)
+  expect_identical(deparse(cnd$call[[1]]), "age_standard")
+  cnd <- tryCatch(age_coarsen_five("90+", open_right = FALSE), error = function(e) e)
+  expect_identical(deparse(cnd$call[[1]]), "age_coarsen_five")
+})
+
+test_that("age_coarsen_five() gives a clear error when all labels are open and open_right is FALSE", {
+  expect_error(age_coarsen_five("90+", open_right = FALSE),
+               "`labels` contains age group open on the right")
 })

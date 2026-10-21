@@ -1,6 +1,39 @@
 # mapping-construct.R
 # Build label-to-label mapping matrices and coarsen containment maps.
 # Used by inner_mapping.R and inner_coarsen.R.
+#' Construct Matrix of Intervals From Breaks
+#'
+#' @param breaks Increasing vector of break points.
+#' @param is_open_left Whether to include an open-left interval.
+#' @param is_open_right Whether to include an open-right interval.
+#' @param include_total Whether to include a row for a total category.
+#' @param include_na Whether to include a row for an NA category.
+#' @returns Two-column matrix of lower and upper limits, with
+#' `NA` rows for total and NA categories.
+#'
+#' @noRd
+construct_m_breaks <- function(breaks,
+                               is_open_left,
+                               is_open_right,
+                               include_total,
+                               include_na) {
+  n <- length(breaks)
+  ans <- cbind(breaks[-n], breaks[-1])
+  if (is_open_left) {
+    ans <- rbind(c(-Inf, breaks[[1L]]), ans)
+  }
+  if (is_open_right) {
+    ans <- rbind(ans, c(breaks[[n]], Inf))
+  }
+  if (include_total) {
+    ans <- rbind(ans, c(NA_real_, NA_real_))
+  }
+  if (include_na) {
+    ans <- rbind(ans, c(NA_real_, NA_real_))
+  }
+  ans
+}
+
 #' Construct Coarsen Mapping
 #'
 #' @param breaks Increasing vector of break points.
@@ -26,34 +59,15 @@ construct_coarsen_mapping <- function(breaks,
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   is_total <- get_is_total(intervals)
   is_na <- get_is_na(intervals)
-  n <- length(breaks)
-  m_br <- cbind(breaks[-n], breaks[-1])
-  if (is_open_left) {
-    m_br <- rbind(
-      c(-Inf, breaks[[1L]]),
-      m_br
-    )
-  }
-  if (is_open_right) {
-    m_br <- rbind(
-      m_br,
-      c(breaks[[n]], Inf)
-    )
-  }
-  if (include_total) {
-    m_br <- rbind(
-      m_br,
-      c(NA_real_, NA_real_)
-    )
-    i_total <- nrow(m_br)
-  }
-  if (include_na) {
-    m_br <- rbind(
-      m_br,
-      c(NA_real_, NA_real_)
-    )
-    i_na <- nrow(m_br)
-  }
+  m_br <- construct_m_breaks(
+    breaks = breaks,
+    is_open_left = is_open_left,
+    is_open_right = is_open_right,
+    include_total = include_total,
+    include_na = include_na
+  )
+  i_total <- if (include_total) nrow(m_br) - as.integer(include_na) else NULL
+  i_na <- if (include_na) nrow(m_br) else NULL
   ans <- does_m1_contain_m2(m1 = m_br, m2 = m_int)
   if (include_total) {
     ans[, is_total] <- FALSE

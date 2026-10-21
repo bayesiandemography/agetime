@@ -148,9 +148,21 @@ inner_coarsen <- function(labels,
       include_na = int_has_na,
       intervals = intervals
     )
+    m_new <- construct_m_breaks(
+      breaks = breaks,
+      is_open_left = is_open_left,
+      is_open_right = is_open_right,
+      include_total = int_has_total,
+      include_na = int_has_na
+    )
+    rownames(m_new) <- levels_breaks
+    m_old <- get_m(intervals)[get_i_xun_to_xunu(intervals), , drop = FALSE]
     check_m_contains(
       m_contains = m_contains,
-      label_type = label_type
+      m_new = m_new,
+      m_old = m_old,
+      label_type = label_type,
+      source = "breaks"
     )
     i_new <- apply(m_contains, 2L, which)
   }
@@ -239,6 +251,12 @@ inner_coarsen_width <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
+  )
+  check_coarsen_open_flags(
+    is_open_left = is_open_left,
+    is_open_right = is_open_right,
+    intervals = intervals,
+    label_type = label_type
   )
   is_open_left_resolved <- resolve_open_left(
     is_open_left = is_open_left,
@@ -330,7 +348,7 @@ inner_coarsen_to <- function(labels,
     cli::cli_abort(c(
       "{.arg to} has no labels.",
       i = "Supply at least one label to coarsen to?"
-    ))
+    ), call = user_frame())
   }
   intervals_to <- intervals(
     labels = to,
@@ -363,9 +381,14 @@ inner_coarsen_to <- function(labels,
     intervals_labels = intervals_labels,
     intervals_to = intervals_to
   )
+  m_new <- get_m(intervals_to)[get_i_xun_to_xunu(intervals_to), , drop = FALSE]
+  m_old <- get_m(intervals_labels)[get_i_xun_to_xunu(intervals_labels), , drop = FALSE]
   check_m_contains(
     m_contains = m_contains,
-    label_type = label_type
+    m_new = m_new,
+    m_old = m_old,
+    label_type = label_type,
+    source = "to"
   )
   i_new <- apply(m_contains, 2L, which)
   if (length(labels) > 0L) {

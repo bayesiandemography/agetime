@@ -99,16 +99,24 @@ test_that("check_m_contains() passes when old labels map uniquely", {
   expect_invisible(agetime:::check_m_contains(m_contains, "age"))
 })
 
-test_that("check_m_contains() errors when old labels do not map uniquely", {
-  m_contains <- matrix(
-    c(1L, 1L, 0L, 0L),
-    nrow = 2L,
-    ncol = 2L,
-    dimnames = list(c("0-9", "10-19"), c("0-4", "10-14"))
-  )
-  expect_error(
-    agetime:::check_m_contains(m_contains, "age"),
-    "cannot each lie in exactly one new age group"
+test_that("check_m_contains() returns TRUE when every old label fits", {
+  m_contains <- matrix(c(TRUE, FALSE, FALSE, TRUE), nrow = 2L,
+                       dimnames = list(c("0-9", "10-19"), c("0-4", "10-14")))
+  expect_true(agetime:::check_m_contains(m_contains,
+                                         m_new = rbind(c(0, 10), c(10, 20)),
+                                         m_old = rbind(c(0, 5), c(10, 15)),
+                                         label_type = "age"))
+})
+
+test_that("check_m_contains() distinguishes split labels from labels not covered", {
+  m_contains <- matrix(FALSE, nrow = 2L, ncol = 2L,
+                       dimnames = list(c("0-6", "7-9"), c("5-9", "10-14")))
+  expect_snapshot(
+    agetime:::check_m_contains(m_contains,
+                               m_new = rbind(c(0, 7), c(7, 10)),
+                               m_old = rbind(c(5, 10), c(10, 15)),
+                               label_type = "age"),
+    error = TRUE
   )
 })
 

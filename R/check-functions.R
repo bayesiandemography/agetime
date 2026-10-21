@@ -8,7 +8,7 @@ check_breaks <- function(breaks) {
   if (length(breaks) < 2L) {
     cli::cli_abort(c("{.arg breaks} has length {.val {length(breaks)}}.",
       i = "Use at least two break points?"
-    ))
+    ), call = user_frame())
   }
   check_incr_nonneg_integers(
     x = breaks,
@@ -28,15 +28,15 @@ check_flag <- function(x, nm_x) {
   if (length(x) != 1L) {
     cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
       i = "Supply a single value?"
-    ))
+    ), call = user_frame())
   }
   if (is.na(x)) {
-    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.")
+    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.", call = user_frame())
   }
   if (!(x %in% c(TRUE, FALSE, 1L, 0L))) {
     cli::cli_abort(c("{.arg {nm_x}} is {.val {x}}.",
       i = "Use {.val {TRUE}} or {.val {FALSE}}?"
-    ))
+    ), call = user_frame())
   }
   invisible(TRUE)
 }
@@ -121,7 +121,7 @@ check_in_limits_intervals <- function(x,
         "Use values within the range covered by ",
         "{label_name(label_type)}s in {.arg {nm_intervals}}?"
       )
-    ))
+    ), call = user_frame())
   }
   invisible(TRUE)
 }
@@ -139,16 +139,16 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   if (length(x) < min_length) {
     cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
       i = "Use at least {min_length} value{?s}?"
-    ))
+    ), call = user_frame())
   }
   if (!is.numeric(x)) {
     cli::cli_abort(c("{.arg {nm_x}} is non-numeric.",
       i = "{.arg {nm_x}} has class {.cls {class(x)}}."
-    ))
+    ), call = user_frame())
   }
   n_na <- sum(is.na(x))
   if (n_na > 0L) {
-    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.")
+    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.", call = user_frame())
   }
   is_integerish <- abs(x - round(x)) < eps
   i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
@@ -156,11 +156,11 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
     cli::cli_abort(paste0(
       "{.arg {nm_x}} has value {.val {x[[i_not_integerish]]}} ",
       "that is not a whole number."
-    ))
+    ), call = user_frame())
   }
   n_neg <- sum(x < 0L)
   if (n_neg > 0L) {
-    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.")
+    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.", call = user_frame())
   }
   is_non_incr <- diff(x) <= 0L
   i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
@@ -174,7 +174,7 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
       "{.arg {nm_x}} has non-increasing values: {.val {x_non}}.",
       .envir = msg_envir
     )
-    cli::cli_abort(msg)
+    cli::cli_abort(msg, call = user_frame())
   }
   invisible(TRUE)
 }
@@ -205,7 +205,7 @@ check_coarsen_open_flags <- function(is_open_left,
         i = "{.arg open_left} is {.val {FALSE}}.",
         i = "Remove open-left labels from {.arg labels}?",
         i = "Or unset {.arg open_left}, or pass {.val {TRUE}}?"
-      ))
+      ), call = user_frame())
     }
   }
   if (!is.null(is_open_right) && !isTRUE(is_open_right)) {
@@ -218,7 +218,7 @@ check_coarsen_open_flags <- function(is_open_left,
         i = "{.arg open_right} is {.val {FALSE}}.",
         i = "Remove open-right labels from {.arg labels}?",
         i = "Or unset {.arg open_right}, or pass {.val {TRUE}}?"
-      ))
+      ), call = user_frame())
     }
   }
   invisible(TRUE)
@@ -226,43 +226,146 @@ check_coarsen_open_flags <- function(is_open_left,
 
 #' Check if Any Labels Do Not Fit into New Set
 #'
-#' @param m_contains Containment matrix from modified breaks to original labels.
+#' Every old label must lie in exactly one new interval. A label
+#' that lies in none either overlaps two or more new intervals
+#' (it would be split), or lies partly or wholly outside the new
+#' intervals (it is not fully covered). A total or `NA` label that
+#' does not fit has no matching category in `to`. The error message describes
+#' each problem separately, and suggests fixes.
+#'
+#' @param m_contains Containment matrix from new intervals (rows)
+#' to old labels (columns).
+#' @param m_new Two-column matrix of new intervals, one row per
+#' row of `m_contains`.
+#' @param m_old Two-column matrix of old intervals, one row per
+#' column of `m_contains`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @returns Return value used internally.
+#' @param source Where the new intervals come from: `"breaks"`
+#' (`*_coarsen()` and variants) or `"to"` (`*_coarsen_to()`).
+#' @returns `TRUE`, invisibly, or an error.
 #'
 #' @noRd
-check_m_contains <- function(m_contains, label_type) {
-  labels_old <- colnames(m_contains)
-  colsum <- colSums(m_contains)
-  is_not_fit <- colsum != 1L
-  if (any(is_not_fit)) {
-    labels_not_fit <- labels_old[is_not_fit]
-    n <- length(labels_not_fit)
-    msg_envir <- list2env(
-      list(
-        n = n,
-        labels_not_fit = labels_not_fit,
-        label_type = label_type
-      ),
-      parent = environment()
-    )
-    msg <- cli::format_inline(
-      paste0(
-        "{cli::qty(n)} label{?s} {.val {labels_not_fit}} ",
-        "cannot each lie in exactly one new {label_name(label_type)}."
-      ),
-      .envir = msg_envir
-    )
-    cli::cli_abort(c(
-      msg,
-      i = paste0(
-        "Make sure that every old {label_name(label_type)} ",
-        "lies in exactly one new {label_name(label_type)}?"
-      )
-    ))
+check_m_contains <- function(m_contains,
+                             m_new,
+                             m_old,
+                             label_type,
+                             source = c("breaks", "to")) {
+  source <- match.arg(source)
+  is_not_fit <- colSums(m_contains) != 1L
+  if (!any(is_not_fit)) {
+    return(invisible(TRUE))
   }
-  invisible(TRUE)
+  labels_old <- colnames(m_contains)
+  labels_new <- rownames(m_contains)
+  overlaps <- does_m1_overlap_m2(m1 = m_new, m2 = m_old)
+  overlaps[is.na(overlaps)] <- FALSE
+  n_overlap <- colSums(overlaps)
+  is_special <- is_not_fit & is.na(m_old[, 1L]) & is.na(m_old[, 2L])
+  is_split <- is_not_fit & !is_special & n_overlap > 1L
+  is_outside <- is_not_fit & !is_special & !is_split
+  nm <- label_name(label_type)
+  nm_cap <- paste0(toupper(substr(nm, 1L, 1L)), substring(nm, 2L))
+  new_desc <- if (source == "breaks") paste0("the new ", nm, "s") else "the labels in {.arg to}"
+  env <- new.env(parent = environment())
+  bullets <- character()
+  if (any(is_split)) {
+    i_first <- which(is_split)[[1L]]
+    env$split_labels <- describe_labels_shown(labels_old[is_split])
+    env$split_n <- sum(is_split)
+    env$split_more <- describe_labels_more(labels_old[is_split])
+    env$split_first <- labels_old[[i_first]]
+    env$split_over <- labels_new[overlaps[, i_first]]
+    bullets <- c(
+      bullets,
+      x = paste0("{cli::qty(split_n)}", nm_cap, "{?s} {.val {split_labels}}{split_more} ",
+                 "would be split by ", new_desc, "."),
+      i = "{.val {split_first}} overlaps {.val {split_over}}."
+    )
+  }
+  if (any(is_outside)) {
+    env$outside_labels <- describe_labels_shown(labels_old[is_outside])
+    env$outside_n <- sum(is_outside)
+    env$outside_more <- describe_labels_more(labels_old[is_outside])
+    bullets <- c(
+      bullets,
+      x = paste0("{cli::qty(outside_n)}", nm_cap, "{?s} {.val {outside_labels}}{outside_more} ",
+                 "{cli::qty(outside_n)}{?is/are} not fully covered by ", new_desc, ".")
+    )
+    is_interval <- !is.na(m_new[, 1L]) & !is.na(m_new[, 2L])
+    if (source == "breaks" && any(is_interval)) {
+      lower_new <- min(m_new[is_interval, 1L])
+      upper_new <- max(m_new[is_interval, 2L])
+      env$cover <- paste0("[", lower_new, ", ", upper_new, ")")
+      bullets <- c(bullets, i = paste0("New ", nm, "s cover {cover}."))
+      m_outside <- m_old[is_outside, , drop = FALSE]
+      if (any(m_outside[, 2L] > upper_new, na.rm = TRUE)) {
+        bullets <- c(bullets, i = paste0(
+          "Set {.code open_right = TRUE} to include ", nm, "s above ", upper_new, "?"
+        ))
+      }
+      if (any(m_outside[, 1L] < lower_new, na.rm = TRUE)) {
+        hint <- if (label_type == "age") {
+          "Add a lower break?"
+        } else {
+          "Set {.code open_left = TRUE}, or add a lower break?"
+        }
+        bullets <- c(bullets, i = hint)
+      }
+    }
+    if (source == "to") {
+      bullets <- c(bullets, i = "Add labels to {.arg to} that cover {cli::qty(outside_n)}{?it/them}?")
+    }
+  }
+  if (any(is_special)) {
+    env$special_labels <- labels_old[is_special]
+    env$special_labels[is.na(env$special_labels)] <- "NA"
+    env$special_n <- sum(is_special)
+    bullets <- c(
+      bullets,
+      x = paste0("{.arg to} has no category for {.val {special_labels}}."),
+      i = "Add {cli::qty(special_n)}{?it/them} to {.arg to}?"
+    )
+  }
+  cli::cli_abort(
+    c(paste0("Can't coarsen ", nm, "s."), bullets),
+    .envir = env,
+    call = user_frame()
+  )
 }
+
+
+#' Labels to Show in an Error Message
+#'
+#' At most three labels are shown. If there are more,
+#' `describe_labels_more()` gives the remaining count.
+#'
+#' @param labels Character vector of labels.
+#' @returns Character vector, or a `cli_vec` without a final "and"
+#' when some labels are left out.
+#'
+#' @noRd
+describe_labels_shown <- function(labels) {
+  if (length(labels) <= 3L) {
+    return(labels)
+  }
+  cli::cli_vec(labels[1:3], style = list("vec-last" = ", "))
+}
+
+
+#' Count of Labels Left Out of an Error Message
+#'
+#' @param labels Character vector of labels.
+#' @returns A string such as `", and 2 others"`, or `""`.
+#'
+#' @noRd
+describe_labels_more <- function(labels) {
+  n_more <- length(labels) - 3L
+  if (n_more <= 0L) {
+    return("")
+  }
+  paste0(", and ", n_more, " other", if (n_more > 1L) "s" else "")
+}
+
 
 #' Check That Target Labels Do Not Overlap
 #'
@@ -295,7 +398,7 @@ check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
     cli::cli_abort(c(
       "{.arg to} has overlapping {ln}s {.val {lab1}} and {.val {lab2}}.",
       i = "Supply {ln}s in {.arg to} that do not overlap?"
-    ))
+    ), call = user_frame())
   }
   invisible(TRUE)
 }
@@ -325,38 +428,38 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
   if (!is.numeric(n)) {
     cli::cli_abort(c("{.arg {nm_n}} is non-numeric.",
       i = "{.arg {nm_n}} has class {.cls {class(n)}}."
-    ))
+    ), call = user_frame())
   }
   if (length(n) != 1L) {
     cli::cli_abort(c("{.arg {nm_n}} has length {.val {length(n)}}.",
       i = "Supply a single value?"
-    ))
+    ), call = user_frame())
   }
   if (is.na(n)) {
-    cli::cli_abort("{.arg {nm_n}} is {.val {NA}}.")
+    cli::cli_abort("{.arg {nm_n}} is {.val {NA}}.", call = user_frame())
   }
   if (is.infinite(n)) {
-    cli::cli_abort("{.arg {nm_n}} is {.val {n}}.")
+    cli::cli_abort("{.arg {nm_n}} is {.val {n}}.", call = user_frame())
   }
   if (!isTRUE(all.equal(round(n), n))) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
       i = "Use a whole number?"
-    ))
+    ), call = user_frame())
   }
   if (!is.null(min) && (n < min)) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
       i = "Use a value of at least {.val {min}}?"
-    ))
+    ), call = user_frame())
   }
   if (!is.null(max) && (n > max)) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
       i = "Use a value of at most {.val {max}}?"
-    ))
+    ), call = user_frame())
   }
   if (!is.null(divisible_by) && (n %% divisible_by != 0L)) {
     cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
       i = "Use a value divisible by {.val {divisible_by}}?"
-    ))
+    ), call = user_frame())
   }
   invisible(TRUE)
 }
@@ -381,7 +484,7 @@ check_diff_divisible <- function(x, y, nm_x, nm_y, divisible_by) {
         "Use values whose difference is divisible by ",
         "{.val {divisible_by}}?"
       )
-    ))
+    ), call = user_frame())
   }
   invisible(TRUE)
 }
@@ -435,7 +538,7 @@ check_not_in_intervals <- function(x,
           ),
           i = value_msg,
           i = interval_msg
-        ))
+        ), call = user_frame())
       }
     }
   }
@@ -454,12 +557,12 @@ check_not_in_intervals <- function(x,
 check_x_lt_y <- function(x, y, nm_x, nm_y) {
   if (x >= y) {
     if (x == y) {
-      cli::cli_abort("{.arg {nm_x}} equals {.arg {nm_y}} ({.val {x}}).")
+      cli::cli_abort("{.arg {nm_x}} equals {.arg {nm_y}} ({.val {x}}).", call = user_frame())
     } else {
       cli::cli_abort(paste0(
         "{.arg {nm_x}} ({.val {x}}) is greater than ",
         "{.arg {nm_y}} ({.val {y}})."
-      ))
+      ), call = user_frame())
     }
   }
   invisible(TRUE)
@@ -476,22 +579,22 @@ check_mapping_name <- function(x, nm_x) {
   if (length(x) != 1L) {
     cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
       i = "Supply a single name?"
-    ))
+    ), call = user_frame())
   }
   if (!(is.character(x) || is.numeric(x) || is.factor(x))) {
     cli::cli_abort(c("{.arg {nm_x}} is {.obj_type_friendly {x}}.",
       i = "Use a character, numeric, or factor name?"
-    ))
+    ), call = user_frame())
   }
   x <- as.character(x)
   if (is.na(x)) {
-    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.")
+    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.", call = user_frame())
   }
   x <- trimws(x)
   if (!nzchar(x)) {
     cli::cli_abort(c("{.arg {nm_x}} is an empty string.",
       i = "Supply a non-empty name?"
-    ))
+    ), call = user_frame())
   }
   x
 }
@@ -510,7 +613,7 @@ check_mapping_names <- function(name_x, name_y) {
     cli::cli_abort(c(
       "{.arg name_x} and {.arg name_y} are both {.val {name_x}}.",
       i = "Supply two different names?"
-    ))
+    ), call = user_frame())
   }
   list(name_x = name_x, name_y = name_y)
 }

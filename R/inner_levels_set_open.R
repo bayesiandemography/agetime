@@ -70,7 +70,7 @@ inner_levels_set_open <- function(labels,
       "Interval {.val {lab_split}} would be split.",
       .envir = msg_envir
     )
-    cli::cli_abort(msg)
+    cli::cli_abort(msg, call = user_frame())
   }
   if (make_open_left) {
     is_le_open <- !is.na(u) & (u <= open_boundary)

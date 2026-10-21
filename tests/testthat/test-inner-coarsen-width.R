@@ -46,6 +46,6 @@ test_that("inner_coarsen_width() aligns open-left start with offset", {
       interpret_multi = "exclude",
       interpret_fail = "error"
     ),
-    "cannot each lie in exactly one new cohort"
+    "Can't coarsen cohorts."
   )
 })
