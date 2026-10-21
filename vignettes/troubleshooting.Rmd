@@ -135,13 +135,14 @@ period_standard("2020-2021", interpret_multi = "exclude")
 - The section on rules for interpreting inputs in `?period_lower`
 
 
-## Financial and academic years
+## Financial and academic years: "Lower limit greater than upper limit"
 
 ### Problem
 
-Labels such as `"2019/20"` and `"2020/21"`, used for financial or
+Labels such as `"2019/20"` or `"2019-20"`, used for financial or
 academic years that start part-way through a calendar year,
-are not recognized.
+give an error. `agetime` reads them as ranges that end before
+they start.
 
 ```{r fiscal-problem, error = TRUE}
 period_standard(c("2019/20", "2020/21"))
@@ -149,22 +150,31 @@ period_standard(c("2019/20", "2020/21"))
 
 ### Solution
 
-Label each year by the calendar year in which it ends, and set
-`interpret_single` to `"upper"`. With `"upper"`, the label `"2020"`
-describes the year ending at 2020.
+`agetime` does not read these labels directly. Instead, label each
+year by the calendar year in which it ends, and set `interpret_single`
+to `"upper"`. With `"upper"`, the label `"2020"` describes the year
+ending at 2020.
 
 ```{r fiscal-solution}
-fy <- c("2019/20", "2020/21")
+fy <- c("2019/20", "2020-21", "1999/00")
 fy_end <- as.character(as.integer(substr(fy, 1L, 4L)) + 1L)
 fy_end
 period_lower(fy_end, interpret_single = "upper")
 period_upper(fy_end, interpret_single = "upper")
 ```
 
+The same approach works for cohorts, such as people born in a
+particular financial year.
+
 ### Discussion
 
 `agetime` represents periods using whole years, so a financial year
 running from July to June is approximated by the year in which it ends.
+
+### See Also
+
+- The section on rules for interpreting inputs in `?period_lower`
+  and `?cohort_lower`
 
 
 ## "Under", "less than", and "or earlier"
