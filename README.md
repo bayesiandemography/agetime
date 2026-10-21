@@ -18,6 +18,23 @@ coverage](https://codecov.io/gh/bayesiandemography/agetime/branch/main/graph/bad
 
 Work with age, period, and cohort labels.
 
+## Installation
+
+Install the released version from CRAN:
+
+``` r
+install.packages("agetime")
+```
+
+Or install the development version from GitHub:
+
+``` r
+# install.packages("pak")
+pak::pak("bayesiandemography/agetime")
+```
+
+## Overview
+
 Functions for
 
 - cleaning,
@@ -63,4 +80,9 @@ df |>
 #> 2 15-39   200
 ```
 
-See `?agetime` for a full list of functions grouped by task.
+## Learn more
+
+- `vignette("agetime")` for a quick start
+- `vignette("cookbook")` for task-oriented recipes
+- `vignette("troubleshooting")` for solutions to common problems
+- `?agetime` for a full list of functions grouped by task
