@@ -36,6 +36,7 @@ test_that("'Total' followed by another total synonym is a total", {
          "Total (all ages)", "Total: all ages")
   expect_identical(age_is_total(x), rep(TRUE, 5L))
   expect_true(period_is_total("Total, all periods"))
+  expect_identical(period_is_total(c("All years", "Total (all years)")), c(TRUE, TRUE))
   expect_identical(cohort_standard("Total, all cohorts"), "Total")
 })
 

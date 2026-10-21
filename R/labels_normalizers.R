@@ -24,7 +24,9 @@ TOTAL_TOKENS <- c(
   "allcohort",
   "allcohorts",
   "allperiod",
-  "allperiods"
+  "allperiods",
+  "allyear",
+  "allyears"
 )
 
 INFANT_TOKENS <- c(

@@ -16,7 +16,7 @@
   `"and earlier"`, `"or before"`, and `"and before"` for intervals that
   are open on the left.
 - Totals written with a qualifier, such as `"Total, all ages"` and
-  `"Total (all ages)"`, are now recognized.
+  `"Total (all ages)"`, are now recognized, as is `"All years"`.
 - Period labels now recognize words for open intervals, such as
   `"before 2000"` and `"2000 or more"`, and cohort labels now recognize
   words such as `"2000 or more"`.
