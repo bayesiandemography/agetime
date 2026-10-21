@@ -8,7 +8,7 @@ age_extend(
   labels,
   n = 1L,
   width = NULL,
-  include_x = TRUE,
+  include_labels = TRUE,
   interpret_fail = c("error", "warn", "silent")
 )
 }
@@ -21,7 +21,7 @@ Default is \code{1}.}
 \item{width}{Width of the age groups
 to be added.}
 
-\item{include_x}{Should the return value
+\item{include_labels}{Should the return value
 include \code{labels}? Default is \code{TRUE}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
@@ -44,7 +44,7 @@ but a value can be specified through the
 labels <- c("0-4", "5-9")
 age_extend(labels, n = 2)
 age_extend(labels, n = 2, width = 10)
-age_extend(labels, n = 2, include_x = FALSE)
+age_extend(labels, n = 2, include_labels = FALSE)
 }
 \seealso{
 \itemize{

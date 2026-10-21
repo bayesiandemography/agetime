@@ -3,7 +3,7 @@
 #' @param labels Vector of labels.
 #' @param n Number of intervals to extend by.
 #' @param width Interval width.
-#' @param include_x Whether to include original `labels` in output.
+#' @param include_labels Whether to include original `labels` in output.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
 #' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param interpret_multi Rule for multi-year labels: `"include"`
@@ -19,7 +19,7 @@
 inner_extend <- function(labels,
                          n,
                          width,
-                         include_x,
+                         include_labels,
                          label_type,
                          interpret_single,
                          interpret_multi,
@@ -53,8 +53,8 @@ inner_extend <- function(labels,
     )
   }
   check_flag(
-    x = include_x,
-    nm_x = "include_x"
+    x = include_labels,
+    nm_x = "include_labels"
   )
   tail <- as.character(labels[[length(labels)]])
   intervals_tail <- intervals(
@@ -100,7 +100,7 @@ inner_extend <- function(labels,
     include_na = FALSE
   )
   if (is_factor) {
-    if (include_x) {
+    if (include_labels) {
       ans <- c(as.character(labels), ans)
       levels <- unique(c(levels(labels), ans))
       ans <- factor(ans, levels = levels)
@@ -108,7 +108,7 @@ inner_extend <- function(labels,
       ans <- factor(ans)
     }
   } else {
-    if (include_x) {
+    if (include_labels) {
       ans <- c(labels, ans)
     }
   }

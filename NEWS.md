@@ -50,6 +50,9 @@
   now distinguish labels that would be split from labels that are not
   fully covered by the new intervals, show the range covered by the new
   intervals, and suggest fixes such as setting `open_right = TRUE`.
+- The `include_x` argument of `age_extend()`, `period_extend()`, and
+  `cohort_extend()` is now called `include_labels`, to match the
+  `labels` argument.
 - Errors now report the function the user called, such as
   `age_standard()`, rather than an internal helper.
 - Errors and warnings about labels that cannot be parsed now quote

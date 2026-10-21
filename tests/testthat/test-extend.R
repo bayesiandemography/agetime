@@ -21,9 +21,9 @@ test_that("age_extend() uses explicit width", {
   )
 })
 
-test_that("age_extend() with include_x = FALSE returns only new groups", {
+test_that("age_extend() with include_labels = FALSE returns only new groups", {
   x <- c("0-4", "5-9")
-  ans <- age_extend(x, n = 2, include_x = FALSE)
+  ans <- age_extend(x, n = 2, include_labels = FALSE)
 
   expect_type(ans, "character")
   expect_identical(length(ans), 2L)
@@ -39,7 +39,7 @@ test_that("age_extend() returns factor with updated levels for factor input", {
   expect_identical(as.character(ans), as.character(age_extend(x, n = 2)))
   expect_identical(levels(ans), c("0-4", "5-9", "10-14", "15-19"))
 
-  ans_new <- age_extend(fx, n = 2, include_x = FALSE)
+  ans_new <- age_extend(fx, n = 2, include_labels = FALSE)
   expect_s3_class(ans_new, "factor")
   expect_identical(as.character(ans_new), c("10-14", "15-19"))
   expect_identical(levels(ans_new), c("10-14", "15-19"))

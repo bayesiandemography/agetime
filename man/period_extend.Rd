@@ -8,7 +8,7 @@ period_extend(
   labels,
   n = 1L,
   width = NULL,
-  include_x = TRUE,
+  include_labels = TRUE,
   interpret_single = c("lower", "upper"),
   interpret_multi = c("include", "exclude"),
   interpret_fail = c("error", "warn", "silent")
@@ -23,7 +23,7 @@ Default is \code{1}.}
 \item{width}{Width of the periods
 to be added.}
 
-\item{include_x}{Should the return value
+\item{include_labels}{Should the return value
 include \code{labels}? Default is \code{TRUE}.}
 
 \item{interpret_single}{How to interpret
@@ -98,7 +98,7 @@ so their meaning depends on \code{interpret_single}.\tabular{lll}{
 labels <- c("2020-2025", "2025-2030")
 period_extend(labels, n = 2)
 period_extend(labels, n = 2, width = 10)
-period_extend(labels, n = 2, include_x = FALSE)
+period_extend(labels, n = 2, include_labels = FALSE)
 }
 \seealso{
 \itemize{

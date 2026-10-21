@@ -14,7 +14,7 @@
 #' Default is `1`.
 #' @param width Width of the cohorts
 #' to be added.
-#' @param include_x Should the return value
+#' @param include_labels Should the return value
 #' include `labels`? Default is `TRUE`.
 #' @return Character vector or factor.
 #'
@@ -26,14 +26,14 @@
 #' labels <- c("2020-2025", "2025-2030")
 #' cohort_extend(labels, n = 2)
 #' cohort_extend(labels, n = 2, width = 10)
-#' cohort_extend(labels, n = 2, include_x = FALSE)
+#' cohort_extend(labels, n = 2, include_labels = FALSE)
 #' @export
 
 # When length(labels) == 0, throws an error (no interval to extend from).
 cohort_extend <- function(labels,
                           n = 1L,
                           width = NULL,
-                          include_x = TRUE,
+                          include_labels = TRUE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = c("include", "exclude"),
                           interpret_fail = c("error", "warn", "silent")) {
@@ -44,7 +44,7 @@ cohort_extend <- function(labels,
     labels = labels,
     n = n,
     width = width,
-    include_x = include_x,
+    include_labels = include_labels,
     label_type = "cohort",
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,

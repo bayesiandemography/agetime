@@ -12,7 +12,7 @@
 #' Default is `1`.
 #' @param width Width of the age groups
 #' to be added.
-#' @param include_x Should the return value
+#' @param include_labels Should the return value
 #' include `labels`? Default is `TRUE`.
 #' @return Character vector or factor.
 #'
@@ -24,21 +24,21 @@
 #' labels <- c("0-4", "5-9")
 #' age_extend(labels, n = 2)
 #' age_extend(labels, n = 2, width = 10)
-#' age_extend(labels, n = 2, include_x = FALSE)
+#' age_extend(labels, n = 2, include_labels = FALSE)
 #' @export
 
 # When length(labels) == 0, throws an error (no interval to extend from).
 age_extend <- function(labels,
                        n = 1L,
                        width = NULL,
-                       include_x = TRUE,
+                       include_labels = TRUE,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_extend(
     labels = labels,
     n = n,
     width = width,
-    include_x = include_x,
+    include_labels = include_labels,
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "exclude",
