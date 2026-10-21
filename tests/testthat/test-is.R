@@ -31,6 +31,18 @@ test_that("cohort_is_total() identifies Total and ALL labels", {
   expect_values(cohort_is_total(cohort_with_na), c(FALSE, FALSE, FALSE))
 })
 
+test_that("'Total' followed by another total synonym is a total", {
+  x <- c("Total, all ages", "Total all ages", "TOTAL - ALL AGES",
+         "Total (all ages)", "Total: all ages")
+  expect_identical(age_is_total(x), rep(TRUE, 5L))
+  expect_true(period_is_total("Total, all periods"))
+  expect_identical(cohort_standard("Total, all cohorts"), "Total")
+})
+
+test_that("'Total' followed by something other than a total synonym is not a total", {
+  expect_false(age_is_total("Total, 0-14", interpret_fail = "silent"))
+})
+
 test_that("age_is_missing() identifies NA and missing-label tokens", {
   x <- c("0-4", NA, "not stated", "Total", "missing")
   ans <- age_is_missing(x)

@@ -297,12 +297,17 @@ norm_range <- function(x) {
 
 #' Norm Total
 #'
+#' "total" followed by another total synonym, as in
+#' "Total, all ages" or "Total (all ages)", is also a total.
+#'
 #' @param x Vector of labels.
 #' @returns Labels with total synonyms normalized to `"total"`.
 #'
 #' @noRd
 norm_total <- function(x) {
-  x[x %in% TOTAL_TOKENS] <- "total"
+  rest <- sub("^total[,:;-]?\\(?(.*?)\\)?$", "\\1", x, perl = TRUE)
+  is_total <- x %in% TOTAL_TOKENS | (startsWith(x, "total") & rest %in% TOTAL_TOKENS)
+  x[is_total] <- "total"
   x
 }
 
