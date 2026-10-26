@@ -7,6 +7,8 @@
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
+#' The return value is always a factor, even when
+#' `labels` is a character vector.
 #' 
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
@@ -107,8 +109,7 @@ period_coarsen <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
-    minimal_levels = FALSE,
-    preserve_input_type = FALSE
+    minimal_levels = FALSE
   )
 }
 
@@ -199,13 +200,15 @@ period_coarsen_to <- function(labels,
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
+#' The return value is always a factor, even when
+#' `labels` is a character vector.
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param offset Parameter controlling
 #' alignment of periods. Default is `0`.
-#' @inherit age_standard return
+#' @return Factor with the same length as `labels`.
 #' @inheritParams period_coarsen
 #'
 #' @seealso

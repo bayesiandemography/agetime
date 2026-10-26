@@ -35,7 +35,7 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Character vector or factor with the same length as \code{labels}.
+Factor with the same length as \code{labels}.
 }
 \description{
 Define new age groups that contain existing
@@ -53,6 +53,8 @@ age groups.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.
+The return value is always a factor, even when
+\code{labels} is a character vector.
 }
 \section{Abridged and complete life tables}{
 

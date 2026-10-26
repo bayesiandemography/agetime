@@ -12,12 +12,13 @@ labels for age groups, periods, and cohorts.
 \section{Functions}{
 
 
-\strong{Extract lower limits, upper limits, widths, midpoints}\tabular{lll}{
+\strong{Extract lower limits, upper limits, widths, midpoints, intervals}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_lower]{age_lower()}} \tab \code{\link[=period_lower]{period_lower()}} \tab \code{\link[=cohort_lower]{cohort_lower()}} \cr
    \code{\link[=age_upper]{age_upper()}} \tab \code{\link[=period_upper]{period_upper()}} \tab \code{\link[=cohort_upper]{cohort_upper()}} \cr
    \code{\link[=age_width]{age_width()}} \tab \code{\link[=period_width]{period_width()}} \tab \code{\link[=cohort_width]{cohort_width()}} \cr
    \code{\link[=age_mid]{age_mid()}} \tab \code{\link[=period_mid]{period_mid()}} \tab \code{\link[=cohort_mid]{cohort_mid()}} \cr
+   \code{\link[=age_interval]{age_interval()}} \tab \code{\link[=period_interval]{period_interval()}} \tab \code{\link[=cohort_interval]{cohort_interval()}} \cr
 }
 
 

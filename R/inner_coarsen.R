@@ -84,8 +84,7 @@ coarsen_minimal_levels <- function(levels_breaks,
 #' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
 #' @param minimal_levels Whether to omit break levels with no mapped input.
-#' @param preserve_input_type Whether to return character for non-factor input.
-#' @returns Coarsened labels as a factor or character vector.
+#' @returns Coarsened labels as a factor.
 #'
 #' @noRd
 inner_coarsen <- function(labels,
@@ -96,10 +95,8 @@ inner_coarsen <- function(labels,
                          interpret_single,
                          interpret_multi,
                          interpret_fail,
-                         minimal_levels,
-                         preserve_input_type) {
-  is_factor <- is.factor(labels)
-  is_ordered <- is_factor && is.ordered(labels)
+                         minimal_levels) {
+  is_ordered <- is.factor(labels) && is.ordered(labels)
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
@@ -184,9 +181,6 @@ inner_coarsen <- function(labels,
   } else {
     levels_output <- levels_breaks
   }
-  if (preserve_input_type && !is_factor) {
-    return(ans)
-  }
   factor(
     x = ans,
     levels = levels_output,
@@ -209,7 +203,7 @@ inner_coarsen <- function(labels,
 #' @param interpret_multi Rule for multi-year labels: `"at_upper"`
 #' or `"below_upper"`.
 #' @param interpret_fail How to handle unparsable labels.
-#' @returns Coarsened labels as a factor or character vector.
+#' @returns Coarsened labels as a factor.
 #'
 #' Computes aligned breaks from `width` and `offset` using existing interval
 #' bounds before calling `inner_coarsen()`.
@@ -230,13 +224,8 @@ inner_coarsen_width <- function(labels,
     nm_labels = "labels",
     length_zero_ok = TRUE
   )
-  if (identical(length(labels), 0L)) {
-    if (is.factor(labels) && nlevels(labels) == 0L) {
-      return(factor(levels = character(), ordered = is_ordered))
-    }
-    if (!is.factor(labels)) {
-      return(character(0))
-    }
+  if (identical(length(labels), 0L) && nlevels(labels) == 0L) {
+    return(factor(levels = character(), ordered = is_ordered))
   }
   check_n(
     n = offset,
@@ -306,8 +295,7 @@ inner_coarsen_width <- function(labels,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
-    minimal_levels = TRUE,
-    preserve_input_type = TRUE
+    minimal_levels = TRUE
   )
 }
 

@@ -52,8 +52,8 @@ test_that("age_coarsen_five() recodes to five-year age groups", {
   x <- c("1-3", "87-89", "0", "91+", "total", "52")
   ans <- age_coarsen_five(x)
 
-  expect_type(ans, "character")
-  expect_values(ans, c("0-4", "85-89", "0-4", "90+", "Total", "50-54"))
+  expect_s3_class(ans, "factor")
+  expect_values(as.character(ans), c("0-4", "85-89", "0-4", "90+", "Total", "50-54"))
 })
 
 test_that("age_coarsen_five() infers open top from labels by default", {
@@ -155,12 +155,16 @@ test_that("age_coarsen_five() recodes all declared factor levels", {
   expect_identical(levels(ans), c("0-4", "5-9", "20-24", "40+"))
 })
 
-test_that("age_coarsen_five() returns character for character input", {
-  x <- c("0-1", "44+")
+test_that("width-based coarsen functions return factors for character input", {
+  x <- c("5-9", "44+", "0-1")
   ans <- age_coarsen_five(x)
-
-  expect_type(ans, "character")
-  expect_identical(ans, c("0-4", "40+"))
+  expect_identical(ans, factor(c("5-9", "40+", "0-4"), levels = c("0-4", "5-9", "40+")))
+  expect_s3_class(age_coarsen_ten(x), "factor")
+  expect_s3_class(age_coarsen_life(c("1-4", "44+")), "factor")
+  expect_s3_class(period_coarsen_five(c("2001", "2010")), "factor")
+  expect_s3_class(period_coarsen_ten(c("2001", "2010")), "factor")
+  expect_s3_class(cohort_coarsen_five(c("2001", "2010")), "factor")
+  expect_s3_class(cohort_coarsen_ten(c("2001", "2010")), "factor")
 })
 
 test_that("age_coarsen_five() preserves ordered factor level order", {

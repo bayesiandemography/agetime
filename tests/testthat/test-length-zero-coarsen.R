@@ -1,4 +1,4 @@
-# *_coarsen(): empty character -> character() for width-based helpers, factor()
+# *_coarsen(): empty character -> factor() for width-based helpers, factor()
 # with levels for breaks-based coarsen. Empty factor with no levels -> factor().
 # Empty factor with levels -> levels still coarsened.
 # *_coarsen_to(): empty character or factor with no levels -> factor with
@@ -30,8 +30,8 @@ test_that("age_coarsen() with length-0 factor updates levels", {
   )
 })
 
-test_that("age_coarsen_five() with length-0 input returns empty character", {
-  expect_identical(age_coarsen_five(character(0)), character(0))
+test_that("age_coarsen_five() with length-0 input returns empty factor", {
+  expect_identical(age_coarsen_five(character(0)), factor())
 })
 
 test_that("inner_coarsen() with no unique labels uses minimal empty levels", {
@@ -45,10 +45,9 @@ test_that("inner_coarsen() with no unique labels uses minimal empty levels", {
       interpret_single = "lower",
       interpret_multi = "below_upper",
       interpret_fail = "error",
-      minimal_levels = TRUE,
-      preserve_input_type = TRUE
+      minimal_levels = TRUE
     ),
-    character(0)
+    factor()
   )
   expect_identical(
     agetime:::inner_coarsen(
@@ -60,8 +59,7 @@ test_that("inner_coarsen() with no unique labels uses minimal empty levels", {
       interpret_single = "lower",
       interpret_multi = "below_upper",
       interpret_fail = "error",
-      minimal_levels = TRUE,
-      preserve_input_type = FALSE
+      minimal_levels = TRUE
     ),
     factor(levels = "10+")
   )
@@ -78,8 +76,8 @@ test_that("age_coarsen_five() with length-0 factor updates levels", {
   )
 })
 
-test_that("age_coarsen_life() with length-0 input returns empty character", {
-  expect_identical(age_coarsen_life(character(0)), character(0))
+test_that("age_coarsen_life() with length-0 input returns empty factor", {
+  expect_identical(age_coarsen_life(character(0)), factor())
   expect_identical(age_coarsen_life(factor()), factor())
   lev <- c("0", "1-4", "5-9", "50-54")
   fx <- factor(character(0), levels = lev)
@@ -130,8 +128,8 @@ test_that("cohort_coarsen() with length-0 factor updates levels", {
   )
 })
 
-test_that("period_coarsen_five() with length-0 input returns empty character", {
-  expect_identical(period_coarsen_five(character(0)), character(0))
+test_that("period_coarsen_five() with length-0 input returns empty factor", {
+  expect_identical(period_coarsen_five(character(0)), factor())
 })
 
 test_that("period_coarsen_five() with length-0 factor updates levels", {
@@ -144,8 +142,8 @@ test_that("period_coarsen_five() with length-0 factor updates levels", {
   )
 })
 
-test_that("cohort_coarsen_five() with length-0 input returns empty character", {
-  expect_identical(cohort_coarsen_five(character(0)), character(0))
+test_that("cohort_coarsen_five() with length-0 input returns empty factor", {
+  expect_identical(cohort_coarsen_five(character(0)), factor())
 })
 
 test_that("cohort_coarsen_five() with length-0 factor updates levels", {
@@ -158,8 +156,8 @@ test_that("cohort_coarsen_five() with length-0 factor updates levels", {
   )
 })
 
-test_that("age_coarsen_ten() with length-0 input returns empty character", {
-  expect_identical(age_coarsen_ten(character(0)), character(0))
+test_that("age_coarsen_ten() with length-0 input returns empty factor", {
+  expect_identical(age_coarsen_ten(character(0)), factor())
 })
 
 test_that("age_coarsen_ten() with length-0 factor updates levels", {
@@ -173,8 +171,8 @@ test_that("age_coarsen_ten() with length-0 factor updates levels", {
   )
 })
 
-test_that("period_coarsen_ten() with length-0 input returns empty character", {
-  expect_identical(period_coarsen_ten(character(0)), character(0))
+test_that("period_coarsen_ten() with length-0 input returns empty factor", {
+  expect_identical(period_coarsen_ten(character(0)), factor())
 })
 
 test_that("period_coarsen_ten() with length-0 factor updates levels", {
@@ -187,8 +185,8 @@ test_that("period_coarsen_ten() with length-0 factor updates levels", {
   )
 })
 
-test_that("cohort_coarsen_ten() with length-0 input returns empty character", {
-  expect_identical(cohort_coarsen_ten(character(0)), character(0))
+test_that("cohort_coarsen_ten() with length-0 input returns empty factor", {
+  expect_identical(cohort_coarsen_ten(character(0)), factor())
 })
 
 test_that("cohort_coarsen_ten() with length-0 factor updates levels", {

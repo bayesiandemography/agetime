@@ -33,6 +33,11 @@
 
 ## Changes to behaviour
 
+- `age_coarsen_five()`, `age_coarsen_ten()`, `age_coarsen_life()`,
+  and their period and cohort equivalents now always return a factor,
+  as `age_coarsen()` and `age_coarsen_to()` already did. Previously
+  they returned a character vector when `labels` was a character
+  vector.
 - `age_lower()`, `age_upper()`, `age_mid()`, `age_width()`, the
   `age_is_*()` functions, and their period and cohort equivalents no
   longer name their results with the label strings. Results keep the

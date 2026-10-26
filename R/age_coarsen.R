@@ -7,6 +7,8 @@
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
+#' The return value is always a factor, even when
+#' `labels` is a character vector.
 #'
 #' @inheritParams age_lower
 #' @param breaks Boundaries between age groups.
@@ -72,8 +74,7 @@ age_coarsen <- function(labels,
     interpret_single = "lower",
     interpret_multi = "below_upper",
     interpret_fail = interpret_fail,
-    minimal_levels = FALSE,
-    preserve_input_type = FALSE
+    minimal_levels = FALSE
   )
 }
 
@@ -152,11 +153,13 @@ age_coarsen_to <- function(labels,
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
+#' The return value is always a factor, even when
+#' `labels` is a character vector.
 #'
 #' @inheritSection age_diagnose Abridged and complete life tables
 #' @inheritParams age_lower
 #' @inheritParams age_coarsen
-#' @inherit age_standard return
+#' @return Factor with the same length as `labels`.
 #'
 #' @inheritSection age_coarsen The `open_right` argument
 #'
@@ -231,13 +234,8 @@ age_coarsen_life <- function(labels,
     length_zero_ok = TRUE
   )
   interpret_fail <- match.arg(interpret_fail)
-  if (identical(length(labels), 0L)) {
-    if (is.factor(labels) && nlevels(labels) == 0L) {
-      return(factor(levels = character(), ordered = is_ordered))
-    }
-    if (!is.factor(labels)) {
-      return(character(0))
-    }
+  if (identical(length(labels), 0L) && nlevels(labels) == 0L) {
+    return(factor(levels = character(), ordered = is_ordered))
   }
   intervals <- intervals(
     labels = labels,
@@ -275,7 +273,6 @@ age_coarsen_life <- function(labels,
     interpret_single = "lower",
     interpret_multi = "below_upper",
     interpret_fail = interpret_fail,
-    minimal_levels = TRUE,
-    preserve_input_type = TRUE
+    minimal_levels = TRUE
   )
 }
