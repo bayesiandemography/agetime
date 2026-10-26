@@ -15,7 +15,7 @@
 #'
 #' If `labels` is a factor, `period_diagnose()` and `period_assert()`
 #' check levels, including unused levels, rather than values.
-#' To check the values of a factor, use `period_diagnose_values()`
+#' To check values rather than levels, use `period_diagnose_values()`
 #' or `period_assert_values()`. Checking values rather than levels
 #' is sometimes useful when working with subsets of factors,
 #' such as when working with grouped data.

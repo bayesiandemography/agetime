@@ -119,12 +119,12 @@ Conditions include:
 \item Not having gaps
 \item Having totals, NAs, or zeros
 \item Having, or not having, open age groups
-\item Valid for an abridged life table
+\item Only including age groups used by an abridged life table
 }
 
 If \code{labels} is a factor, \code{age_diagnose()} and \code{age_assert()}
 check levels, including unused levels, rather than values.
-To check the values of a factor, use \code{age_diagnose_values()}
+To check values rather than levels, use \code{age_diagnose_values()}
 or \code{age_assert_values()}. Checking values rather than levels
 is sometimes useful when working with subsets of factors,
 such as when working with grouped data.

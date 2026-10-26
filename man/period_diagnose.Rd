@@ -145,7 +145,7 @@ Conditions include:
 
 If \code{labels} is a factor, \code{period_diagnose()} and \code{period_assert()}
 check levels, including unused levels, rather than values.
-To check the values of a factor, use \code{period_diagnose_values()}
+To check values rather than levels, use \code{period_diagnose_values()}
 or \code{period_assert_values()}. Checking values rather than levels
 is sometimes useful when working with subsets of factors,
 such as when working with grouped data.

@@ -12,11 +12,11 @@
 #' - Not having gaps
 #' - Having totals, NAs, or zeros
 #' - Having, or not having, open age groups
-#' - Valid for an abridged life table
+#' - Only including age groups used by an abridged life table
 #'
 #' If `labels` is a factor, `age_diagnose()` and `age_assert()`
 #' check levels, including unused levels, rather than values.
-#' To check the values of a factor, use `age_diagnose_values()`
+#' To check values rather than levels, use `age_diagnose_values()`
 #' or `age_assert_values()`. Checking values rather than levels
 #' is sometimes useful when working with subsets of factors,
 #' such as when working with grouped data.
