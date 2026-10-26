@@ -74,8 +74,6 @@ cohorts, and are typically wider than the existing cohorts.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.
-The return value is always a factor, even when
-\code{labels} is a character vector.
 }
 \section{Rules for interpreting inputs}{
 

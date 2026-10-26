@@ -28,8 +28,11 @@ provided that no intervals in \code{labels} fall within them.
 
 If \code{labels} is a factor, its levels are modified
 along with its elements.
-The return value is always a factor. Levels are the unique
-labels in \code{to}, including unused labels.
+
+Levels of the return value come from \code{to}. If \code{to} is a factor,
+the levels are the levels of \code{to}, in the same order, including
+levels that do not appear in \code{to}. Otherwise, the levels are the
+unique values of \code{to}, in the order in which they first appear.
 }
 \examples{
 labels <- c("0", "1", "5", "10", "11")

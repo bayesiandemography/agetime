@@ -7,8 +7,6 @@
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
-#' The return value is always a factor, even when
-#' `labels` is a character vector.
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
@@ -124,8 +122,11 @@ cohort_coarsen <- function(labels,
 #'
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
-#' The return value is always a factor. Levels are the unique
-#' labels in `to`, including unused labels.
+#'
+#' Levels of the return value come from `to`. If `to` is a factor,
+#' the levels are the levels of `to`, in the same order, including
+#' levels that do not appear in `to`. Otherwise, the levels are the
+#' unique values of `to`, in the order in which they first appear.
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
@@ -200,8 +201,6 @@ cohort_coarsen_to <- function(labels,
 #' 
 #' If `labels` is a factor, its levels are modified
 #' along with its elements.
-#' The return value is always a factor, even when
-#' `labels` is a character vector.
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
