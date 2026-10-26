@@ -5,13 +5,14 @@
 #'
 #' @section Functions:
 #'
-#' **Extract lower limits, upper limits, widths, midpoints**
-#' |                  |                  |                  |
-#' |------------------|------------------|------------------|
-#' | [age_lower()]    | [period_lower()] | [cohort_lower()] |
-#' | [age_upper()]    | [period_upper()] | [cohort_upper()] |
-#' | [age_width()]    | [period_width()] | [cohort_width()] |
-#' | [age_mid()]      | [period_mid()]   | [cohort_mid()]   |
+#' **Extract lower limits, upper limits, widths, midpoints, intervals**
+#' |                  |                     |                     |
+#' |------------------|---------------------|---------------------|
+#' | [age_lower()]    | [period_lower()]    | [cohort_lower()]    |
+#' | [age_upper()]    | [period_upper()]    | [cohort_upper()]    |
+#' | [age_width()]    | [period_width()]    | [cohort_width()]    |
+#' | [age_mid()]      | [period_mid()]      | [cohort_mid()]      |
+#' | [age_interval()] | [period_interval()] | [cohort_interval()] |
 #'
 #' **Identify open intervals, totals, and missing values**
 #'
