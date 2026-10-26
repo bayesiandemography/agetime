@@ -10,7 +10,7 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Having totals or NAs
+#' - Not having totals or NAs
 #' - Having, or not having, open cohorts
 #'
 #' If `labels` is a factor, `cohort_diagnose()` and `cohort_assert()`

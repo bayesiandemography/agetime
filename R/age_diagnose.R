@@ -10,8 +10,9 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Having totals, NAs, or zeros
+#' - Not having totals or NAs
 #' - Having, or not having, open age groups
+#' - Having an age group that starts at zero
 #' - Only including age groups used by an abridged life table
 #'
 #' If `labels` is a factor, `age_diagnose()` and `age_assert()`
@@ -45,11 +46,11 @@
 #' @param no_open_right Check that no age group
 #' is open on the right (has no upper limit).
 #' Default is `FALSE` (don't check).
-#' @param has_zero Check that at least one
-#' age group has a lower limit of zero.
-#' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least one age
 #' group is open on the right (has no upper limit).
+#' Default is `FALSE` (don't check).
+#' @param has_zero Check that at least one
+#' age group has a lower limit of zero.
 #' Default is `FALSE` (don't check).
 #' @param valid_life Check that all labels are
 #' valid for an abridged life table.
@@ -78,8 +79,8 @@
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
 #'   no_na = TRUE,
-#'   has_zero = TRUE,
 #'   has_open_right = TRUE,
+#'   has_zero = TRUE,
 #'   valid_life = TRUE
 #' )
 #'
@@ -109,8 +110,8 @@ age_diagnose <- function(labels,
                       no_total = FALSE,
                       no_na = FALSE,
                       no_open_right = FALSE,
-                      has_zero = FALSE,
                       has_open_right = FALSE,
+                      has_zero = FALSE,
                       valid_life = FALSE,
                       interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -142,8 +143,8 @@ age_assert <- function(labels,
                        no_total = FALSE,
                        no_na = FALSE,
                        no_open_right = FALSE,
-                       has_zero = FALSE,
                        has_open_right = FALSE,
+                       has_zero = FALSE,
                        valid_life = FALSE,
                        interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -175,8 +176,8 @@ age_diagnose_values <- function(labels,
                                 no_total = FALSE,
                                 no_na = FALSE,
                                 no_open_right = FALSE,
-                                has_zero = FALSE,
                                 has_open_right = FALSE,
+                                has_zero = FALSE,
                                 valid_life = FALSE,
                                 interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
@@ -208,8 +209,8 @@ age_assert_values <- function(labels,
                               no_total = FALSE,
                               no_na = FALSE,
                               no_open_right = FALSE,
-                              has_zero = FALSE,
                               has_open_right = FALSE,
+                              has_zero = FALSE,
                               valid_life = FALSE,
                               interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)

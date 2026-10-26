@@ -155,12 +155,6 @@ inner_diagnose <- function(labels,
       list(inner_diagnose_no_open_right(intervals = intervals, on = on))
     )
   }
-  if (isTRUE(has_zero)) {
-    details_list <- c(
-      details_list,
-      list(inner_diagnose_has_zero(intervals = intervals, on = on))
-    )
-  }
   if (isTRUE(has_open_left)) {
     details_list <- c(
       details_list,
@@ -171,6 +165,12 @@ inner_diagnose <- function(labels,
     details_list <- c(
       details_list,
       list(inner_diagnose_has_open_right(intervals = intervals, on = on))
+    )
+  }
+  if (isTRUE(has_zero)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_has_zero(intervals = intervals, on = on))
     )
   }
   if (isTRUE(valid_life)) {

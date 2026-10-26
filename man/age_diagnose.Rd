@@ -14,8 +14,8 @@ age_diagnose(
   no_total = FALSE,
   no_na = FALSE,
   no_open_right = FALSE,
-  has_zero = FALSE,
   has_open_right = FALSE,
+  has_zero = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -27,8 +27,8 @@ age_assert(
   no_total = FALSE,
   no_na = FALSE,
   no_open_right = FALSE,
-  has_zero = FALSE,
   has_open_right = FALSE,
+  has_zero = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -40,8 +40,8 @@ age_diagnose_values(
   no_total = FALSE,
   no_na = FALSE,
   no_open_right = FALSE,
-  has_zero = FALSE,
   has_open_right = FALSE,
+  has_zero = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -53,8 +53,8 @@ age_assert_values(
   no_total = FALSE,
   no_na = FALSE,
   no_open_right = FALSE,
-  has_zero = FALSE,
   has_open_right = FALSE,
+  has_zero = FALSE,
   valid_life = FALSE,
   interpret_fail = c("error", "warn", "silent")
 )
@@ -82,12 +82,12 @@ Default is \code{FALSE} (don't check).}
 is open on the right (has no upper limit).
 Default is \code{FALSE} (don't check).}
 
-\item{has_zero}{Check that at least one
-age group has a lower limit of zero.
-Default is \code{FALSE} (don't check).}
-
 \item{has_open_right}{Check that at least one age
 group is open on the right (has no upper limit).
+Default is \code{FALSE} (don't check).}
+
+\item{has_zero}{Check that at least one
+age group has a lower limit of zero.
 Default is \code{FALSE} (don't check).}
 
 \item{valid_life}{Check that all labels are
@@ -117,8 +117,9 @@ Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Having totals, NAs, or zeros
+\item Not having totals or NAs
 \item Having, or not having, open age groups
+\item Having an age group that starts at zero
 \item Only including age groups used by an abridged life table
 }
 
@@ -151,8 +152,8 @@ age_diagnose(
   no_gap = TRUE,
   no_total = TRUE,
   no_na = TRUE,
-  has_zero = TRUE,
   has_open_right = TRUE,
+  has_zero = TRUE,
   valid_life = TRUE
 )
 

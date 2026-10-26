@@ -140,7 +140,7 @@ Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Having totals or NAs
+\item Not having totals or NAs
 \item Having, or not having, open cohorts
 }
 

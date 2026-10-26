@@ -10,7 +10,7 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Having totals or NAs
+#' - Not having totals or NAs
 #' - Having, or not having, open periods
 #'
 #' If `labels` is a factor, `period_diagnose()` and `period_assert()`
