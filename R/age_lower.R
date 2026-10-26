@@ -1,8 +1,8 @@
 ## HAS_TESTS
-#' Limits, Widths, and Midpoints from Age Group Labels
+#' Limits, Widths, Midpoints, and Intervals from Age Group Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints from age group labels
+#' widths, midpoints, and intervals from age group labels.
 #'
 #' Lower and upper limits can be used
 #' to filter on age. See below for examples.
@@ -16,11 +16,19 @@
 #' If `labels` has no closed age groups, `age_mid()`
 #' throws an error.
 #'
+#' `age_interval()` describes each age group using
+#' interval notation. For instance, `"[5, 10)"`
+#' includes age 5 but not age 10, and `"[100, Inf)"` has
+#' no upper limit. `age_interval()` is useful for checking
+#' how labels are being interpreted.
+#'
 #' @param labels Vector of age group labels.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
-#' @return Numeric vector with the same length as `labels`.
+#' @return `age_interval()` returns a character vector,
+#' and the other functions return a numeric vector.
+#' The result has the same length as `labels`.
 #' If `labels` has names, the result has the same names.
 #'
 #' @seealso
@@ -33,6 +41,7 @@
 #' age_upper(labels)
 #' age_width(labels)
 #' age_mid(labels)
+#' age_interval(labels)
 #'
 #' ## use 'age_lower()' to filter on age
 #' library(dplyr, warn.conflicts = FALSE)
@@ -103,6 +112,20 @@ age_width <- function(labels,
                       interpret_fail = c("error", "warn", "silent")) {
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
+    labels = labels,
+    label_type = "age",
+    interpret_single = "lower",
+    interpret_multi = "below_upper",
+    interpret_fail = interpret_fail
+  )
+}
+
+#' @export
+#' @rdname age_lower
+age_interval <- function(labels,
+                         interpret_fail = c("error", "warn", "silent")) {
+  interpret_fail <- match.arg(interpret_fail)
+  inner_interval(
     labels = labels,
     label_type = "age",
     interpret_single = "lower",

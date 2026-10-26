@@ -2,6 +2,10 @@
 
 ## New features
 
+- New functions `age_interval()`, `period_interval()`, and
+  `cohort_interval()` describe labels using interval notation, such as
+  `"[2020, 2025)"`, which is useful for checking how labels are being
+  interpreted.
 - Age labels such as `"Under 16"`, `"less than 5"`, and `"<5"` are now
   recognized, and describe the age group starting at 0. For instance,
   `"Under 16"` becomes `"0-15"`, and `"Under 1"` becomes `"0"`.

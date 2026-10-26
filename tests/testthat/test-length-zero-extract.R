@@ -64,3 +64,12 @@ test_that("cohort_mid() with length-0 input returns numeric(0)", {
   expect_identical(cohort_mid(character(0)), numeric(0))
   expect_identical(cohort_mid(factor()), numeric(0))
 })
+
+test_that("interval functions with length-0 input return character(0)", {
+  expect_identical(age_interval(character(0)), character(0))
+  expect_identical(age_interval(factor()), character(0))
+  expect_identical(period_interval(character(0)), character(0))
+  expect_identical(period_interval(factor()), character(0))
+  expect_identical(cohort_interval(character(0)), character(0))
+  expect_identical(cohort_interval(factor()), character(0))
+})

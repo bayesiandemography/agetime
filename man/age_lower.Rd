@@ -5,7 +5,8 @@
 \alias{age_mid}
 \alias{age_upper}
 \alias{age_width}
-\title{Limits, Widths, and Midpoints from Age Group Labels}
+\alias{age_interval}
+\title{Limits, Widths, Midpoints, and Intervals from Age Group Labels}
 \usage{
 age_lower(labels, interpret_fail = c("error", "warn", "silent"))
 
@@ -14,6 +15,8 @@ age_mid(labels, interpret_fail = c("error", "warn", "silent"))
 age_upper(labels, interpret_fail = c("error", "warn", "silent"))
 
 age_width(labels, interpret_fail = c("error", "warn", "silent"))
+
+age_interval(labels, interpret_fail = c("error", "warn", "silent"))
 }
 \arguments{
 \item{labels}{Vector of age group labels.}
@@ -23,12 +26,14 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Numeric vector with the same length as \code{labels}.
+\code{age_interval()} returns a character vector,
+and the other functions return a numeric vector.
+The result has the same length as \code{labels}.
 If \code{labels} has names, the result has the same names.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints from age group labels
+widths, midpoints, and intervals from age group labels.
 }
 \details{
 Lower and upper limits can be used
@@ -42,6 +47,12 @@ for instance, the midpoint of \code{"100+"} is \code{102.5} when
 the other age groups are five-year groups.
 If \code{labels} has no closed age groups, \code{age_mid()}
 throws an error.
+
+\code{age_interval()} describes each age group using
+interval notation. For instance, \code{"[5, 10)"}
+includes age 5 but not age 10, and \code{"[100, Inf)"} has
+no upper limit. \code{age_interval()} is useful for checking
+how labels are being interpreted.
 }
 \examples{
 labels <- c("5-9", "10-14", "100+")
@@ -49,6 +60,7 @@ age_lower(labels)
 age_upper(labels)
 age_width(labels)
 age_mid(labels)
+age_interval(labels)
 
 ## use 'age_lower()' to filter on age
 library(dplyr, warn.conflicts = FALSE)

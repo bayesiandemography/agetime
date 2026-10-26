@@ -100,7 +100,7 @@ With \code{interpret_multi = "below_upper"},
 Open cohorts:
 
 The symbols \code{"<"} and \code{"+"} refer to boundaries, so
-\code{"<2000"} is \verb{[-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
+\code{"<2000"} is \verb{(-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
 Words refer to the one-year cohort with the label next to them,
 so their meaning depends on \code{interpret_single}.\tabular{lll}{
    \emph{Label} \tab \code{"lower"} \tab \code{"upper"} \cr

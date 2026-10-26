@@ -5,7 +5,8 @@
 \alias{period_mid}
 \alias{period_upper}
 \alias{period_width}
-\title{Limits, Widths, and Midpoints from Period Labels}
+\alias{period_interval}
+\title{Limits, Widths, Midpoints, and Intervals from Period Labels}
 \usage{
 period_lower(
   labels,
@@ -34,6 +35,13 @@ period_width(
   interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
+
+period_interval(
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = NULL,
+  interpret_fail = c("error", "warn", "silent")
+)
 }
 \arguments{
 \item{labels}{Vector of period labels.}
@@ -57,12 +65,14 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Numeric vector with the same length as \code{labels}.
+\code{period_interval()} returns a character vector,
+and the other functions return a numeric vector.
+The result has the same length as \code{labels}.
 If \code{labels} has names, the result has the same names.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints from period labels.
+widths, midpoints, and intervals from period labels.
 }
 \details{
 Lower and upper limits can be used
@@ -77,6 +87,12 @@ and an interval that is open on the left gets a midpoint
 half the width of the closed period with the lowest upper limit.
 If \code{labels} has no closed periods, \code{period_mid()}
 throws an error.
+
+\code{period_interval()} describes each period using
+interval notation. For instance, \code{"[2020, 2025)"}
+includes 2020 but not 2025, and \code{"(-Inf, 2000)"} has
+no lower limit. \code{period_interval()} is useful for checking
+how labels are being interpreted.
 }
 \section{Rules for interpreting inputs}{
 
@@ -123,7 +139,7 @@ With \code{interpret_multi = "below_upper"},
 Open periods:
 
 The symbols \code{"<"} and \code{"+"} refer to boundaries, so
-\code{"<2000"} is \verb{[-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
+\code{"<2000"} is \verb{(-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
 Words refer to the one-year period with the label next to them,
 so their meaning depends on \code{interpret_single}.\tabular{lll}{
    \emph{Label} \tab \code{"lower"} \tab \code{"upper"} \cr
@@ -139,6 +155,7 @@ period_lower(labels)
 period_upper(labels)
 period_width(labels)
 period_mid(labels)
+period_interval(labels)
 
 ## use 'period_lower()' to filter on period
 library(dplyr, warn.conflicts = FALSE)
@@ -159,20 +176,24 @@ period_mid(c("2020-2025", "2025-2030", "2030+")) # 2032.5
 period_lower("2025")
 period_upper("2025")
 period_width("2025")
+period_interval("2025")
 
 ## 'interpret_single' is "upper"
 period_lower("2025", interpret_single = "upper")
 period_upper("2025", interpret_single = "upper")
 period_width("2025", interpret_single = "upper")
+period_interval("2025", interpret_single = "upper")
 
 ## 'interpret_multi' is "at_upper"
 ## (the default, NULL, behaves like "at_upper")
 period_upper("2025-2030")
 period_width("2025-2030")
+period_interval("2025-2030")
 
 ## 'interpret_multi' is "below_upper"
 period_upper("2025-2030", interpret_multi = "below_upper")
 period_width("2025-2030", interpret_multi = "below_upper")
+period_interval("2025-2030", interpret_multi = "below_upper")
 
 ## no action when 'interpret_fail' is "silent"
 period_lower(

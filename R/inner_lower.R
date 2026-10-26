@@ -205,3 +205,69 @@ inner_width <- function(labels,
   w <- u - l
   copy_labels_names(w[i], labels)
 }
+
+
+#' Inner Interval
+#'
+#' @param labels Vector of labels.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
+#' @param interpret_multi Rule for multi-year labels: `"at_upper"`
+#' or `"below_upper"`.
+#' @param interpret_fail How to handle unparsable labels.
+#' @returns Character vector of intervals, such as `"[2020, 2025)"`.
+#'
+#' @noRd
+inner_interval <- function(labels,
+                           label_type,
+                           interpret_single,
+                           interpret_multi,
+                           interpret_fail) {
+  l <- inner_low_mid_up_width(
+    labels = labels,
+    label_type = label_type,
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+  m <- l$m
+  i <- l$i
+  interval <- format_interval(lower = m[, 1L], upper = m[, 2L])
+  copy_labels_names(interval[i], labels)
+}
+
+
+#' Format Intervals Using Interval Notation
+#'
+#' Write intervals as, for instance, `"[2020, 2025)"`. An
+#' infinite limit is written `-Inf` or `Inf`, with a round
+#' bracket, as in `"(-Inf, 2000)"`. Numbers are never written
+#' in scientific notation.
+#'
+#' @param lower Numeric vector of lower limits.
+#' @param upper Numeric vector of upper limits.
+#' @returns Character vector, with `NA` wherever
+#' `lower` or `upper` is `NA`.
+#'
+#' @noRd
+format_interval <- function(lower, upper) {
+  open <- ifelse(is.infinite(lower), "(", "[")
+  lower <- format_limit(lower)
+  upper <- format_limit(upper)
+  ans <- paste0(open, lower, ", ", upper, ")", recycle0 = TRUE)
+  ans[is.na(lower) | is.na(upper)] <- NA_character_
+  ans
+}
+
+
+#' Format Limits of Intervals
+#'
+#' @param x Numeric vector.
+#' @returns Character vector, with `NA` wherever `x` is `NA`.
+#'
+#' @noRd
+format_limit <- function(x) {
+  ans <- vapply(x, format, "", scientific = FALSE, trim = TRUE)
+  ans[is.na(x)] <- NA_character_
+  ans
+}

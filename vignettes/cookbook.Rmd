@@ -332,6 +332,47 @@ df |>
 - [Validate labels](#validate-labels) for checking factor levels, not values
 
 
+## See the intervals implied by a set of labels {#see-intervals}
+
+### Problem
+
+Check how `agetime` is interpreting a set of labels. For instance, does `"2020"` refer to the year starting in 2020 or the year ending in 2020, and does `"2020-2024"` include 2024?
+
+### Solution
+
+Use the `interval` functions, which describe each label using interval notation.
+
+```{r see-intervals}
+age_interval(c("0", "1-4", "5-9", "100+"))
+
+period_interval(c("2018", "2019", "2020-2025"))
+```
+
+To see how the interpretation changes, vary `interpret_single` and `interpret_multi`.
+
+```{r see-intervals-interpret}
+## years running from 1 July to 30 June,
+## labelled by the year in which they end
+period_interval(c("2019", "2020"), interpret_single = "upper")
+
+## second number in "2020-2024" is the last year
+## in the interval, rather than the upper limit
+cohort_interval(c("2015-2019", "2020-2024"), interpret_multi = "below_upper")
+```
+
+### Discussion
+
+In interval notation, a square bracket means that the interval includes the limit, and a round bracket means that the interval excludes it. Age `"5-9"`, for instance, is `"[5, 10)"`, which includes people who have reached their 5th birthday but not their 10th. The limit of an open interval is written `-Inf` or `Inf`, as in `"[100, Inf)"`.
+
+The `interval` functions return descriptions of labels, not labels, and other `agetime` functions cannot read them.
+
+### See Also
+
+- `?age_interval`, `?period_interval`, and `?cohort_interval`
+- The `lower`, `upper`, `width`, and `mid` functions (e.g. `period_lower()`) return the limits, widths, and midpoints of intervals as numbers
+- [Validate labels](#validate-labels)
+
+
 # Analyse data
 
 ## Filter rows by age, period, or cohort

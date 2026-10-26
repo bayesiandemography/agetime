@@ -1,8 +1,8 @@
 ## HAS_TESTS
-#' Limits, Widths, and Midpoints from Period Labels
+#' Limits, Widths, Midpoints, and Intervals from Period Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints from period labels.
+#' widths, midpoints, and intervals from period labels.
 #'
 #' Lower and upper limits can be used
 #' to filter on periods.
@@ -16,6 +16,12 @@
 #' half the width of the closed period with the lowest upper limit.
 #' If `labels` has no closed periods, `period_mid()`
 #' throws an error.
+#'
+#' `period_interval()` describes each period using
+#' interval notation. For instance, `"[2020, 2025)"`
+#' includes 2020 but not 2025, and `"(-Inf, 2000)"` has
+#' no lower limit. `period_interval()` is useful for checking
+#' how labels are being interpreted.
 #'
 #' @section Rules for interpreting inputs:
 #'
@@ -61,7 +67,7 @@
 #' Open periods:
 #'
 #' The symbols `"<"` and `"+"` refer to boundaries, so
-#' `"<2000"` is `[-Inf,2000)` and `"2000+"` is `[2000,Inf)`.
+#' `"<2000"` is `(-Inf,2000)` and `"2000+"` is `[2000,Inf)`.
 #' Words refer to the one-year period with the label next to them,
 #' so their meaning depends on `interpret_single`.
 #'
@@ -87,7 +93,9 @@
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
-#' @return Numeric vector with the same length as `labels`.
+#' @return `period_interval()` returns a character vector,
+#' and the other functions return a numeric vector.
+#' The result has the same length as `labels`.
 #' If `labels` has names, the result has the same names.
 #'
 #' @seealso
@@ -100,6 +108,7 @@
 #' period_upper(labels)
 #' period_width(labels)
 #' period_mid(labels)
+#' period_interval(labels)
 #'
 #' ## use 'period_lower()' to filter on period
 #' library(dplyr, warn.conflicts = FALSE)
@@ -120,20 +129,24 @@
 #' period_lower("2025")
 #' period_upper("2025")
 #' period_width("2025")
+#' period_interval("2025")
 #'
 #' ## 'interpret_single' is "upper"
 #' period_lower("2025", interpret_single = "upper")
 #' period_upper("2025", interpret_single = "upper")
 #' period_width("2025", interpret_single = "upper")
+#' period_interval("2025", interpret_single = "upper")
 #'
 #' ## 'interpret_multi' is "at_upper"
 #' ## (the default, NULL, behaves like "at_upper")
 #' period_upper("2025-2030")
 #' period_width("2025-2030")
+#' period_interval("2025-2030")
 #'
 #' ## 'interpret_multi' is "below_upper"
 #' period_upper("2025-2030", interpret_multi = "below_upper")
 #' period_width("2025-2030", interpret_multi = "below_upper")
+#' period_interval("2025-2030", interpret_multi = "below_upper")
 #'
 #' ## no action when 'interpret_fail' is "silent"
 #' period_lower(
@@ -233,6 +246,31 @@ period_width <- function(labels,
   )
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
+    labels = labels,
+    label_type = "period",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+}
+
+
+#' @export
+#' @rdname period_lower
+period_interval <- function(labels,
+                            interpret_single = c("lower", "upper"),
+                            interpret_multi = NULL,
+                            interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "period",
+    interpret_single = interpret_single
+  )
+  interpret_fail <- match.arg(interpret_fail)
+  inner_interval(
     labels = labels,
     label_type = "period",
     interpret_single = interpret_single,

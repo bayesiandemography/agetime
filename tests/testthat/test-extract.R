@@ -276,3 +276,73 @@ test_that("mid functions throw error when there are no closed intervals", {
                "Can't calculate midpoint of open cohort")
   expect_identical(age_mid(character()), numeric())
 })
+
+test_that("interval functions describe closed and open intervals", {
+  expect_identical(age_interval(c("0", "5-9", "100+")),
+                   c("[0, 1)", "[5, 10)", "[100, Inf)"))
+  expect_identical(cohort_interval(c("<2000", "2000-2005", "2005+")),
+                   c("(-Inf, 2000)", "[2000, 2005)", "[2005, Inf)"))
+  expect_identical(period_interval(c("<2000", "2000", "2001+")),
+                   c("(-Inf, 2000)", "[2000, 2001)", "[2001, Inf)"))
+})
+
+test_that("interval functions agree with lower and upper functions", {
+  x <- c("<2000", "2000-2005", "2005", "2006+")
+  expect_identical(
+    period_interval(x, interpret_single = "upper"),
+    paste0(c("(", "[", "[", "["),
+           period_lower(x, interpret_single = "upper"), ", ",
+           period_upper(x, interpret_single = "upper"), ")")
+  )
+})
+
+test_that("interval functions respect interpret_single", {
+  expect_identical(period_interval("2020"), "[2020, 2021)")
+  expect_identical(period_interval("2020", interpret_single = "upper"), "[2019, 2020)")
+  expect_identical(cohort_interval("2020", interpret_single = "upper"), "[2019, 2020)")
+})
+
+test_that("interval functions respect interpret_multi", {
+  expect_identical(cohort_interval("2020-2025"), "[2020, 2025)")
+  expect_identical(cohort_interval("2020-2024", interpret_multi = "below_upper"),
+                   "[2020, 2025)")
+  expect_identical(period_interval("2020-2024", interpret_multi = "below_upper"),
+                   "[2020, 2025)")
+})
+
+test_that("interval functions give the default interpret_multi message", {
+  expect_message(period_interval("2020-2024"), "interpret_multi")
+  expect_message(cohort_interval("2020-2024"), "interpret_multi")
+})
+
+test_that("interval functions return NA for NA, Total, and invalid labels", {
+  expect_identical(age_interval(c("0-4", NA, "Total")),
+                   c("[0, 5)", NA, NA))
+  expect_identical(cohort_interval(c("2000", NA, "Total")),
+                   c("[2000, 2001)", NA, NA))
+  expect_identical(period_interval(c("2000", "long time ago"), interpret_fail = "silent"),
+                   c("[2000, 2001)", NA))
+  expect_error(age_interval("young people"))
+})
+
+test_that("interval functions work when there are no closed intervals", {
+  expect_identical(age_interval("90+"), "[90, Inf)")
+  expect_identical(cohort_interval(c("<2000", "2000+")),
+                   c("(-Inf, 2000)", "[2000, Inf)"))
+})
+
+test_that("interval functions accept factors and keep names", {
+  x <- factor(c("5-9", "0-4", "5-9"), levels = c("0-4", "5-9"))
+  expect_identical(age_interval(x), c("[5, 10)", "[0, 5)", "[5, 10)"))
+  x <- c(a = "0-4", b = "100+")
+  expect_identical(age_interval(x), c(a = "[0, 5)", b = "[100, Inf)"))
+  expect_null(names(age_interval(c("0-4", "100+"))))
+})
+
+test_that("format_interval() never uses scientific notation", {
+  expect_identical(format_interval(lower = 1e5, upper = Inf), "[100000, Inf)")
+  expect_identical(format_interval(lower = c(0.5, NA), upper = c(1, 2)),
+                   c("[0.5, 1)", NA))
+  expect_identical(format_interval(lower = numeric(), upper = numeric()),
+                   character())
+})

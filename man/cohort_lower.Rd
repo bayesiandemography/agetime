@@ -5,7 +5,8 @@
 \alias{cohort_mid}
 \alias{cohort_upper}
 \alias{cohort_width}
-\title{Limits, Widths, and Midpoints from  Cohort Labels}
+\alias{cohort_interval}
+\title{Limits, Widths, Midpoints, and Intervals from Cohort Labels}
 \usage{
 cohort_lower(
   labels,
@@ -34,6 +35,13 @@ cohort_width(
   interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
+
+cohort_interval(
+  labels,
+  interpret_single = c("lower", "upper"),
+  interpret_multi = NULL,
+  interpret_fail = c("error", "warn", "silent")
+)
 }
 \arguments{
 \item{labels}{Vector of cohort labels.}
@@ -57,12 +65,14 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Numeric vector with the same length as \code{labels}.
+\code{cohort_interval()} returns a character vector,
+and the other functions return a numeric vector.
+The result has the same length as \code{labels}.
 If \code{labels} has names, the result has the same names.
 }
 \description{
 Calculate lower limits, upper limits,
-widths, and midpoints from cohort labels.
+widths, midpoints, and intervals from cohort labels.
 }
 \details{
 Lower and upper limits can be used
@@ -77,6 +87,12 @@ and an interval that is open on the left gets a midpoint
 half the width of the closed cohort with the lowest upper limit.
 If \code{labels} has no closed cohorts, \code{cohort_mid()}
 throws an error.
+
+\code{cohort_interval()} describes each cohort using
+interval notation. For instance, \code{"[2020, 2025)"}
+includes 2020 but not 2025, and \code{"(-Inf, 2000)"} has
+no lower limit. \code{cohort_interval()} is useful for checking
+how labels are being interpreted.
 }
 \section{Rules for interpreting inputs}{
 
@@ -123,7 +139,7 @@ With \code{interpret_multi = "below_upper"},
 Open cohorts:
 
 The symbols \code{"<"} and \code{"+"} refer to boundaries, so
-\code{"<2000"} is \verb{[-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
+\code{"<2000"} is \verb{(-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
 Words refer to the one-year cohort with the label next to them,
 so their meaning depends on \code{interpret_single}.\tabular{lll}{
    \emph{Label} \tab \code{"lower"} \tab \code{"upper"} \cr
@@ -139,6 +155,7 @@ cohort_lower(labels) # [2025, 2030)
 cohort_upper(labels) # [2024, 2030)
 cohort_width(labels) # 5
 cohort_mid(labels) # 2027.5
+cohort_interval(labels)
 library(dplyr, warn.conflicts = FALSE)
 df <- tribble(
   ~cohort, ~count,
@@ -157,20 +174,24 @@ cohort_mid(c("<2000", "2000-2005", "2005-2010")) # 1997.5
 cohort_lower("2025")
 cohort_upper("2025")
 cohort_width("2025")
+cohort_interval("2025")
 
 ## 'interpret_single' is "upper"
 cohort_lower("2025", interpret_single = "upper")
 cohort_upper("2025", interpret_single = "upper")
 cohort_width("2025", interpret_single = "upper")
+cohort_interval("2025", interpret_single = "upper")
 
 ## 'interpret_multi' is "at_upper"
 ## (the default, NULL, behaves like "at_upper")
 cohort_upper("2025-2030")
 cohort_width("2025-2030")
+cohort_interval("2025-2030")
 
 ## 'interpret_multi' is "below_upper"
 cohort_upper("2025-2030", interpret_multi = "below_upper")
 cohort_width("2025-2030", interpret_multi = "below_upper")
+cohort_interval("2025-2030", interpret_multi = "below_upper")
 
 ## no action when 'interpret_fail' is "silent"
 cohort_lower(

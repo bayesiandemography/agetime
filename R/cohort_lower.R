@@ -1,8 +1,8 @@
 ## HAS_TESTS
-#' Limits, Widths, and Midpoints from  Cohort Labels
+#' Limits, Widths, Midpoints, and Intervals from Cohort Labels
 #'
 #' Calculate lower limits, upper limits,
-#' widths, and midpoints from cohort labels.
+#' widths, midpoints, and intervals from cohort labels.
 #'
 #' Lower and upper limits can be used
 #' to filter on cohorts.
@@ -16,6 +16,12 @@
 #' half the width of the closed cohort with the lowest upper limit.
 #' If `labels` has no closed cohorts, `cohort_mid()`
 #' throws an error.
+#'
+#' `cohort_interval()` describes each cohort using
+#' interval notation. For instance, `"[2020, 2025)"`
+#' includes 2020 but not 2025, and `"(-Inf, 2000)"` has
+#' no lower limit. `cohort_interval()` is useful for checking
+#' how labels are being interpreted.
 #'
 #' @section Rules for interpreting inputs:
 #'
@@ -61,7 +67,7 @@
 #' Open cohorts:
 #'
 #' The symbols `"<"` and `"+"` refer to boundaries, so
-#' `"<2000"` is `[-Inf,2000)` and `"2000+"` is `[2000,Inf)`.
+#' `"<2000"` is `(-Inf,2000)` and `"2000+"` is `[2000,Inf)`.
 #' Words refer to the one-year cohort with the label next to them,
 #' so their meaning depends on `interpret_single`.
 #'
@@ -87,7 +93,9 @@
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
-#' @return Numeric vector with the same length as `labels`.
+#' @return `cohort_interval()` returns a character vector,
+#' and the other functions return a numeric vector.
+#' The result has the same length as `labels`.
 #' If `labels` has names, the result has the same names.
 #' @examples
 #' labels <- c("2025-2030", "<2025", "2030-2035")
@@ -95,6 +103,7 @@
 #' cohort_upper(labels) # [2024, 2030)
 #' cohort_width(labels) # 5
 #' cohort_mid(labels) # 2027.5
+#' cohort_interval(labels)
 #' library(dplyr, warn.conflicts = FALSE)
 #' df <- tribble(
 #'   ~cohort, ~count,
@@ -113,20 +122,24 @@
 #' cohort_lower("2025")
 #' cohort_upper("2025")
 #' cohort_width("2025")
+#' cohort_interval("2025")
 #'
 #' ## 'interpret_single' is "upper"
 #' cohort_lower("2025", interpret_single = "upper")
 #' cohort_upper("2025", interpret_single = "upper")
 #' cohort_width("2025", interpret_single = "upper")
+#' cohort_interval("2025", interpret_single = "upper")
 #'
 #' ## 'interpret_multi' is "at_upper"
 #' ## (the default, NULL, behaves like "at_upper")
 #' cohort_upper("2025-2030")
 #' cohort_width("2025-2030")
+#' cohort_interval("2025-2030")
 #'
 #' ## 'interpret_multi' is "below_upper"
 #' cohort_upper("2025-2030", interpret_multi = "below_upper")
 #' cohort_width("2025-2030", interpret_multi = "below_upper")
+#' cohort_interval("2025-2030", interpret_multi = "below_upper")
 #'
 #' ## no action when 'interpret_fail' is "silent"
 #' cohort_lower(
@@ -226,6 +239,31 @@ cohort_width <- function(labels,
   )
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
+    labels = labels,
+    label_type = "cohort",
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi,
+    interpret_fail = interpret_fail
+  )
+}
+
+
+#' @export
+#' @rdname cohort_lower
+cohort_interval <- function(labels,
+                            interpret_single = c("lower", "upper"),
+                            interpret_multi = NULL,
+                            interpret_fail = c("error", "warn", "silent")) {
+  interpret_single <- match.arg(interpret_single)
+  interpret_multi <- resolve_interpret_multi(
+    interpret_multi = interpret_multi,
+    labels = labels,
+    labels_other = NULL,
+    label_type = "cohort",
+    interpret_single = interpret_single
+  )
+  interpret_fail <- match.arg(interpret_fail)
+  inner_interval(
     labels = labels,
     label_type = "cohort",
     interpret_single = interpret_single,
