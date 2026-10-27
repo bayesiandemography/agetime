@@ -47,12 +47,13 @@ period_interval(
 \item{labels}{Vector of period labels.}
 
 \item{interpret_single}{How to interpret a label for a single year,
-such as \code{"2020"}: \code{"lower"} (the default) or \code{"upper"}.
+such as \code{"2020"}. Choices are \code{"lower"} (the default) and \code{"upper"}.
 See below for details.}
 
 \item{interpret_multi}{How to interpret a label
-that refers to multiple years e.g. \code{"2020-2025"}. See below
-for details.}
+that refers to multiple years, such as \code{"2020-2025"}.
+Choices are \code{NULL} (the default), \code{"at_upper"},
+and \code{"below_upper"}. See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -138,8 +139,7 @@ silences this message.
 
 A period that is open on the left has no lower limit,
 and a period that is open on the right has no upper limit.
-Labels for open periods are typically unambiguous,
-and are not affected by \code{interpret_single}
+Labels for open periods are not affected by \code{interpret_single}
 or \code{interpret_multi}.
 
 Some examples of open periods:\tabular{ll}{
@@ -212,6 +212,14 @@ period_lower(periods)
 \seealso{
 \itemize{
 \item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{period_lower()}
+\item \code{\link[=age_upper]{age_upper()}} Age equivalent of \code{period_upper()}
+\item \code{\link[=age_mid]{age_mid()}} Age equivalent of \code{period_mid()}
+\item \code{\link[=age_width]{age_width()}} Age equivalent of \code{period_width()}
+\item \code{\link[=age_interval]{age_interval()}} Age equivalent of \code{period_interval()}
 \item \code{\link[=cohort_lower]{cohort_lower()}} Cohort equivalent of \code{period_lower()}
+\item \code{\link[=cohort_upper]{cohort_upper()}} Cohort equivalent of \code{period_upper()}
+\item \code{\link[=cohort_mid]{cohort_mid()}} Cohort equivalent of \code{period_mid()}
+\item \code{\link[=cohort_width]{cohort_width()}} Cohort equivalent of \code{period_width()}
+\item \code{\link[=cohort_interval]{cohort_interval()}} Cohort equivalent of \code{period_interval()}
 }
 }

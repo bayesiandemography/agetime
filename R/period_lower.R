@@ -72,8 +72,7 @@
 #'
 #' A period that is open on the left has no lower limit,
 #' and a period that is open on the right has no upper limit.
-#' Labels for open periods are typically unambiguous,
-#' and are not affected by `interpret_single`
+#' Labels for open periods are not affected by `interpret_single`
 #' or `interpret_multi`.
 #'
 #' Some examples of open periods:
@@ -88,11 +87,12 @@
 #'
 #' @param labels Vector of period labels.
 #' @param interpret_single How to interpret a label for a single year,
-#' such as `"2020"`: `"lower"` (the default) or `"upper"`.
+#' such as `"2020"`. Choices are `"lower"` (the default) and `"upper"`.
 #' See below for details.
 #' @param interpret_multi How to interpret a label
-#' that refers to multiple years e.g. `"2020-2025"`. See below
-#' for details.
+#' that refers to multiple years, such as `"2020-2025"`.
+#' Choices are `NULL` (the default), `"at_upper"`,
+#' and `"below_upper"`. See below for details.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
@@ -103,7 +103,15 @@
 #'
 #' @seealso
 #' - [age_lower()] Age equivalent of `period_lower()`
+#' - [age_upper()] Age equivalent of `period_upper()`
+#' - [age_mid()] Age equivalent of `period_mid()`
+#' - [age_width()] Age equivalent of `period_width()`
+#' - [age_interval()] Age equivalent of `period_interval()`
 #' - [cohort_lower()] Cohort equivalent of `period_lower()`
+#' - [cohort_upper()] Cohort equivalent of `period_upper()`
+#' - [cohort_mid()] Cohort equivalent of `period_mid()`
+#' - [cohort_width()] Cohort equivalent of `period_width()`
+#' - [cohort_interval()] Cohort equivalent of `period_interval()`
 #'
 #' @examples
 #' labels <- c("2025-2030", "2020-2025", "2030-2035")

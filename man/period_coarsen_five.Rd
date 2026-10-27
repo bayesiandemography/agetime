@@ -38,12 +38,13 @@ Optional. See below for details.}
 Optional. See below for details.}
 
 \item{interpret_single}{How to interpret a label for a single year,
-such as \code{"2020"}: \code{"lower"} (the default) or \code{"upper"}.
+such as \code{"2020"}. Choices are \code{"lower"} (the default) and \code{"upper"}.
 See below for details.}
 
 \item{interpret_multi}{How to interpret a label
-that refers to multiple years e.g. \code{"2020-2025"}. See below
-for details.}
+that refers to multiple years, such as \code{"2020-2025"}.
+Choices are \code{NULL} (the default), \code{"at_upper"},
+and \code{"below_upper"}. See below for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -121,8 +122,7 @@ silences this message.
 
 A period that is open on the left has no lower limit,
 and a period that is open on the right has no upper limit.
-Labels for open periods are typically unambiguous,
-and are not affected by \code{interpret_single}
+Labels for open periods are not affected by \code{interpret_single}
 or \code{interpret_multi}.
 
 Some examples of open periods:\tabular{ll}{
