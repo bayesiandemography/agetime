@@ -1,7 +1,7 @@
 #' Create New Age Group Labels
 #'
 #' Create a new set of age group labels.
-#' 
+#'
 #' @inheritSection age_standard Rules for formatting output
 #'
 #' @inheritSection age_diagnose Abridged and complete life tables

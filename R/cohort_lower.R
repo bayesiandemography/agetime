@@ -68,7 +68,7 @@
 #' Supplying an explicit value for `interpret_multi`
 #' silences this message.
 #'
-#' **Open cohorts**
+#' **Open**
 #'
 #' A cohort that is open on the left has no lower limit,
 #' and a cohort that is open on the right has no upper limit.

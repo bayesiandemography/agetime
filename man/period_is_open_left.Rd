@@ -98,7 +98,7 @@ widths 4, 9, 14, \dots, then \pkg{agetime} emits a message.
 Supplying an explicit value for \code{interpret_multi}
 silences this message.
 
-\strong{Open periods}
+\strong{Open}
 
 A period that is open on the left has no lower limit,
 and a period that is open on the right has no upper limit.

@@ -51,7 +51,7 @@ cohort_labels_ten(
 )
 }
 \arguments{
-\item{breaks}{Boundaries between cohorts
+\item{breaks}{Boundaries between cohorts.
 A numeric vector.}
 
 \item{open_left}{Whether first cohort

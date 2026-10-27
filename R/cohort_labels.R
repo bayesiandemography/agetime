@@ -2,7 +2,7 @@
 #' Create New Cohort Labels
 #'
 #' Create a new set of cohort labels.
-#' 
+#'
 #' @section Rules for formatting output:
 #'
 #' **Single-year cohorts**
@@ -26,8 +26,7 @@
 #' | open on left | `(-Inf,a) -> "<a"` | `(-Inf,2020) -> "<2020"` |
 #' | open on right | `[a,Inf) -> "a+"` | `[2020,Inf) -> "2020+"` |
 #'
-#' 
-#' @param breaks Boundaries between cohorts
+#' @param breaks Boundaries between cohorts.
 #' A numeric vector.
 #' @param lower_first Lower limit of
 #' first cohort. Non-negative number.

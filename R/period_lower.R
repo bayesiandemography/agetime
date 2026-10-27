@@ -68,7 +68,7 @@
 #' Supplying an explicit value for `interpret_multi`
 #' silences this message.
 #'
-#' **Open periods**
+#' **Open**
 #'
 #' A period that is open on the left has no lower limit,
 #' and a period that is open on the right has no upper limit.
