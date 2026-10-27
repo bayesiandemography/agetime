@@ -2,10 +2,15 @@
 #'
 #' Add new equal-width period labels to the end of an existing set.
 #'
-#' By default, the width of the new periods
-#' is derived from the last element of `labels`,
-#' but a value can be specified through the
-#' `width` argument.
+#' The new periods start at the highest upper limit
+#' of the periods in `labels`, including unused levels
+#' if `labels` is a factor. By default, the width
+#' of the new periods is the width of the period
+#' with the highest upper limit, but a value can be
+#' specified through the `width` argument.
+#'
+#' `labels` cannot include totals, missing values,
+#' or periods that are open on the right.
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
@@ -16,7 +21,10 @@
 #' to be added.
 #' @param include_labels Should the return value
 #' include `labels`? Default is `TRUE`.
-#' @return Character vector or factor.
+#' @return A factor if `labels` is a factor, and
+#' a character vector otherwise. If `labels` is a factor,
+#' the new periods are added as levels, after the
+#' existing levels.
 #'
 #' @seealso
 #' - [age_extend()] Age equivalent of `period_extend()`

@@ -46,16 +46,24 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 }
 \value{
-Character vector or factor.
+A factor if \code{labels} is a factor, and
+a character vector otherwise. If \code{labels} is a factor,
+the new cohorts are added as levels, after the
+existing levels.
 }
 \description{
 Add new equal-width cohort labels to the end of an existing set.
 }
 \details{
-By default, the width of the new cohorts
-is derived from the last element of \code{labels},
-but a value can be specified through the
-\code{width} argument.
+The new cohorts start at the highest upper limit
+of the cohorts in \code{labels}, including unused levels
+if \code{labels} is a factor. By default, the width
+of the new cohorts is the width of the cohort
+with the highest upper limit, but a value can be
+specified through the \code{width} argument.
+
+\code{labels} cannot include totals, missing values,
+or cohorts that are open on the right.
 }
 \section{Rules for interpreting inputs}{
 

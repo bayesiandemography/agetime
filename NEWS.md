@@ -101,6 +101,20 @@
 
 ## Bug fixes
 
+- `age_extend()`, `period_extend()`, and `cohort_extend()` now start
+  the new intervals at the highest upper limit among the existing
+  intervals. Previously they extended from the last element of
+  `labels`, so that, for instance, `age_extend(c("5-9", "0-4"))` added
+  a second `"5-9"`. For factors, the functions now use the levels,
+  including unused levels, rather than the values. They also now give
+  an error if `labels` includes a total, a missing value, or an
+  interval that is open on the right, wherever it appears, rather than
+  only when it is the last element.
+- `age_extend()`, `period_extend()`, and `cohort_extend()`, applied to
+  a factor, now give new levels in the order in which they are
+  created, rather than in alphabetical order, and keep ordered factors
+  ordered.
+
 - `age_coarsen_five()`, and other coarsening functions based on
   widths, now give an informative error when all labels are open and
   `open_right` or `open_left` is `FALSE`. Previously they gave the
