@@ -30,7 +30,7 @@ Optional. See below for details.}
 label, that is, a label consisting of a year and nothing
 else, such as \code{"2020"}. With \code{"lower"} (the default),
 2020 is the lower limit of the cohort. With \code{"upper"},
-2020 is the upper limit. See below for details.}
+2020 is the upper limit.}
 
 \item{interpret_multi}{How to interpret the second number
 in a multi-year label, such as \code{"2020-2025"}. With
@@ -38,8 +38,7 @@ in a multi-year label, such as \code{"2020-2025"}. With
 limit of the cohort. With \code{"below_upper"}, the second
 number is one year below the upper limit.
 The default, \code{NULL}, behaves like \code{"at_upper"}, but gives
-a message if labels look like they use \code{"below_upper"}.
-See below for details.}
+a message if labels look like they use \code{"below_upper"}.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),

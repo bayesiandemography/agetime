@@ -82,7 +82,7 @@
 #' label, that is, a label consisting of a year and nothing
 #' else, such as `"2020"`. With `"lower"` (the default),
 #' 2020 is the lower limit of the period. With `"upper"`,
-#' 2020 is the upper limit. See below for details.
+#' 2020 is the upper limit.
 #' @param interpret_multi How to interpret the second number
 #' in a multi-year label, such as `"2020-2025"`. With
 #' `"at_upper"`, the second number is the upper
@@ -90,7 +90,6 @@
 #' number is one year below the upper limit.
 #' The default, `NULL`, behaves like `"at_upper"`, but gives
 #' a message if labels look like they use `"below_upper"`.
-#' See below for details.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
