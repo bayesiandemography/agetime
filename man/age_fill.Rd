@@ -32,10 +32,8 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Add intermediate age groups.
-
-The return value is a factor, and the intermediate
-age groups are added as factor levels.
+Add intermediate age groups. The return value is a factor,
+and the intermediate age groups are added as factor levels.
 \itemize{
 \item \code{age_fill()} adds age groups specified by \code{breaks}.
 \item \code{age_fill_one()} adds age groups with width 1.

@@ -43,7 +43,8 @@ period_fill_ten(
 Boundaries for existing periods can be omitted.}
 
 \item{interpret_single}{How to interpret a single-year
-label, such as \code{"2020"}. With \code{"lower"} (the default),
+label, that is, a label consisting of a year and nothing
+else, such as \code{"2020"}. With \code{"lower"} (the default),
 2020 is the lower limit of the period. With \code{"upper"},
 2020 is the upper limit. See below for details.}
 
@@ -64,9 +65,8 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 Factor with the same length as \code{labels}.
 }
 \description{
-Add intermediate periods.
-
-The return value is a factor, and the intermediate
+Add intermediate periods. The return value is a factor,
+and the intermediate
 periods are added as factor levels.
 \itemize{
 \item \code{period_fill()} adds periods specified by \code{breaks}.
@@ -81,7 +81,10 @@ periods are added as factor levels.
 "Lower" and "upper" refer to the lower and upper limits of
 a period, as returned by \code{period_lower()} and \code{period_upper()}.
 
-Single-year periods:\tabular{lll}{
+Single-year periods:
+
+A single-year label consists of a year and nothing else,
+such as \code{"2020"}.\tabular{lll}{
    \code{interpret_single} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"lower"} \tab \verb{"a" -> [a,a+1)} \tab \verb{"2020" -> [2020,2021)} \cr
    \code{"upper"} \tab \verb{"a" -> [a-1,a)} \tab \verb{"2020" -> [2019,2020)} \cr
@@ -117,17 +120,15 @@ rejected. Use \code{"2010"}, or \code{"2010-2012"} for two years.
 With \code{interpret_multi = "below_upper"},
 \code{"2010-2011"} is two years \verb{[2010, 2012)} and is accepted.
 
-Open periods:
-
-The symbols \code{"<"} and \code{"+"} refer to boundaries, so
-\code{"<2000"} is \verb{(-Inf,2000)} and \code{"2000+"} is \verb{[2000,Inf)}.
-Words refer to the one-year period with the label next to them,
-so their meaning depends on \code{interpret_single}.\tabular{lll}{
-   \emph{Label} \tab \code{"lower"} \tab \code{"upper"} \cr
-   \code{"before 2000"}, \code{"under 2000"} \tab \verb{[-Inf,2000)} \tab \verb{[-Inf,1999)} \cr
-   \code{"2000 or earlier"}, \code{"up to 2000"} \tab \verb{[-Inf,2001)} \tab \verb{[-Inf,2000)} \cr
-   \code{"2000 or more"}, \code{"2000 and over"} \tab \verb{[2000,Inf)} \tab \verb{[1999,Inf)} \cr
+Open periods:\tabular{ll}{
+   \emph{Label} \tab \emph{Interval} \cr
+   \code{"<2000"}, \code{"before 2000"}, \code{"under 2000"} \tab \verb{(-Inf,2000)} \cr
+   \code{"2000 or earlier"}, \code{"up to 2000"} \tab \verb{(-Inf,2001)} \cr
+   \code{"2000+"}, \code{"2000 or more"}, \code{"2000 or later"} \tab \verb{[2000,Inf)} \cr
 }
+
+
+Labels starting with \code{"-"}, such as \code{"-2000"}, are not accepted.
 }
 
 \examples{

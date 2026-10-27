@@ -1,9 +1,8 @@
 #' Fill in Gaps in Cohort Levels
 #'
 #' @description
-#' Add intermediate cohorts.
-#'
-#' The return value is a factor, and the intermediate
+#' Add intermediate cohorts. The return value
+#' is a factor, and the intermediate
 #' cohorts are added as factor levels.
 #'
 #' - `cohort_fill()` adds cohorts specified by `breaks`.

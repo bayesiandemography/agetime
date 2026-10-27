@@ -1,9 +1,8 @@
 #' Fill in Gaps in Period Levels
 #'
 #' @description
-#' Add intermediate periods.
-#'
-#' The return value is a factor, and the intermediate
+#' Add intermediate periods. The return value is a factor,
+#' and the intermediate
 #' periods are added as factor levels.
 #'
 #' - `period_fill()` adds periods specified by `breaks`.
