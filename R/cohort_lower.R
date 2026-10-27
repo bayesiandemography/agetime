@@ -146,6 +146,10 @@
 #'   labels = c("2000-2005", "long time ago"),
 #'   interpret_fail = "silent"
 #' )
+#'
+#' ## names of 'labels' are kept
+#' cohorts <- c(parents = "1960-1970", children = "1990-2000")
+#' cohort_lower(cohorts)
 #' @export
 
 # When length(labels) == 0, returns numeric(0).

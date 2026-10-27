@@ -153,6 +153,10 @@
 #'   labels = c("2000-2005", "long time ago"),
 #'   interpret_fail = "silent"
 #' )
+#'
+#' ## names of 'labels' are kept
+#' periods <- c(base = "2020", forecast = "2025-2030")
+#' period_lower(periods)
 #' @export
 
 # When length(labels) == 0, returns numeric(0).

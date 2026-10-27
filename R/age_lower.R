@@ -63,6 +63,10 @@
 #'   labels = c("0-4", "young people", "50plus"),
 #'   interpret_fail = "silent"
 #' )
+#'
+#' ## names of 'labels' are kept
+#' pop <- c(young = "0-14", working = "15-64", old = "65+")
+#' age_lower(pop)
 #' @export
 
 # When length(labels) == 0, returns numeric(0).

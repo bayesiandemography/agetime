@@ -82,6 +82,10 @@ age_lower(
   labels = c("0-4", "young people", "50plus"),
   interpret_fail = "silent"
 )
+
+## names of 'labels' are kept
+pop <- c(young = "0-14", working = "15-64", old = "65+")
+age_lower(pop)
 }
 \seealso{
 \itemize{
