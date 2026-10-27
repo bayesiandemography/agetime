@@ -21,8 +21,8 @@ If \code{labels} has names, the result has the same names.
 Find categories representing subtotals in age group labels.
 }
 \details{
-A subtotal is a label representing the same interval as two or more
-smaller intervals in the same set. For example, in
+A subtotal is a label whose interval can be divided into the
+intervals of two or more other labels in the same set. For example, in
 \code{c("0-4", "5-9", "10-14", "0-9", "Total")},
 \code{"0-9"} is a subtotal because it represents the same interval as \code{"0-4"} and \code{"5-9"}.
 

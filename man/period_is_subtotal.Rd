@@ -40,8 +40,8 @@ If \code{labels} has names, the result has the same names.
 Find categories representing subtotals in period labels.
 }
 \details{
-A subtotal is a label representing the same interval as two or more
-smaller intervals in the same set. For example, in
+A subtotal is a label whose interval can be divided into the
+intervals of two or more other labels in the same set. For example, in
 \code{c("2020-2025", "2025-2030", "2030-2035", "2020-2030", "Total")},
 \code{"2020-2030"} is a subtotal because it represents the same interval as \code{"2020-2025"} and \code{"2025-2030"}.
 

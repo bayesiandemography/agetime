@@ -2,8 +2,8 @@
 #'
 #' Find categories representing subtotals in age group labels.
 #'
-#' A subtotal is a label representing the same interval as two or more
-#' smaller intervals in the same set. For example, in
+#' A subtotal is a label whose interval can be divided into the
+#' intervals of two or more other labels in the same set. For example, in
 #' `c("0-4", "5-9", "10-14", "0-9", "Total")`,
 #' `"0-9"` is a subtotal because it represents the same interval as `"0-4"` and `"5-9"`.
 #'
