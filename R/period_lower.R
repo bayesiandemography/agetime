@@ -14,8 +14,6 @@
 #' half the width of the closed period with the highest lower limit,
 #' and an interval that is open on the left gets a midpoint
 #' half the width of the closed period with the lowest upper limit.
-#' If `labels` has no closed periods, `period_mid()`
-#' throws an error.
 #'
 #' `period_interval()` describes each period using
 #' interval notation. For instance, `"[2020, 2025)"`
@@ -25,49 +23,60 @@
 #'
 #' @section Rules for interpreting inputs:
 #'
-#' "Lower" and "upper" refer to the lower and upper limits of
-#' a period, as returned by `period_lower()` and `period_upper()`.
+#' **Single-year**
 #'
-#' Single-year periods:
+#' Labels for single-year periods sometimes refer to
+#' the lower limits of periods, and sometimes
+#' refer to upper limits. For instance, the label `"2020"`
+#' is sometimes used to refer to the period that
+#' starts at midnight on 1 January 2020
+#' and ends at midnight on 1 January 2021,
+#' and is sometimes used to refer to the
+#' period that starts at midnight on 1 July 2019
+#' and ends at midnight on 1 July 2020.
 #'
-#' A single-year label consists of a year and nothing else,
-#' such as `"2020"`.
+#' The `interpret_single` argument can be used to distinguish
+#' between the two conventions:
 #'
 #' | `interpret_single`| *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
 #' | `"lower"` | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
 #' | `"upper"` | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 #'
-#' Data providers typically use the "lower" convention
-#' for calendar years (1 January to 31 December),
-#' and the "upper" convention for non-calendar years
-#' (e.g., 1 July to 30 June).
+#' **Multi-year**
 #'
-#' Multi-year periods:
+#' In labels for multi-year periods, the second number is
+#' sometimes the upper limit of the period, and sometimes
+#' the upper limit minus 1. For instance, the period
+#' that starts at midnight on 1 January 2020 and ends
+#' at midnight on 1 January 2025 is sometimes labelled
+#' `"2020-2025"` and is sometimes labelled `"2020-2024"`.
+#'
+#' The `interpret_multi` argument can be used to distinguish
+#' between the two conventions:
 #'
 #' | `interpret_multi`| *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
 #' | `"at_upper"` | `"a-b" -> [a,b)` | `"2020-2025" -> [2020,2025)` |
 #' | `"below_upper"` | `"a-b" -> [a,b+1)` | `"2020-2024" -> [2020,2025)` |
 #'
-#' In a multi-year label, the first number is always the lower
-#' limit, whatever the value of `interpret_single`.
+#' If `interpret_multi` is `NULL` (the default), then multi-year
+#' labels are interpreted using the `"at_upper"` convention.
+#' If, however, the `"at_upper"` convention
+#' leads to intervals with
+#' widths 4, 9, 14, \dots, then \pkg{agetime} emits a message.
+#' Supplying an explicit value for `interpret_multi`
+#' silences this message.
 #'
-#' If `interpret_multi` is `NULL` (the default), multi-year
-#' labels are interpreted using `"at_upper"`. However, if a label
-#' has a width of 4, 9, 14, ... years under `"at_upper"`, such as
-#' `"2020-2024"`, the label was probably written using
-#' `"below_upper"`, and `agetime` gives a message. Supplying a value
-#' for `interpret_multi` silences the message.
+#' **Open periods**
 #'
-#' A two-value label cannot describe a one-year period.
-#' With `interpret_multi = "at_upper"`, `"2010-2011"` would be
-#' `[2010, 2011)` and `"2010-2010"` would be empty; both are
-#' rejected. Use `"2010"`, or `"2010-2012"` for two years.
-#' With `interpret_multi = "below_upper"`,
-#' `"2010-2011"` is two years `[2010, 2012)` and is accepted.
+#' A period that is open on the left has no lower limit,
+#' and a period that is open on the right has no upper limit.
+#' Labels for open periods are typically unambiguous,
+#' and are not affected by `interpret_single`
+#' or `interpret_multi`.
 #'
-#' Open periods:
+#' Some examples of open periods:
 #'
 #' | *Label* | *Interval* |
 #' |---------------|-------------|
@@ -78,18 +87,12 @@
 #' Labels starting with `"-"`, such as `"-2000"`, are not accepted.
 #'
 #' @param labels Vector of period labels.
-#' @param interpret_single How to interpret a single-year
-#' label, that is, a label consisting of a year and nothing
-#' else, such as `"2020"`. With `"lower"` (the default),
-#' 2020 is the lower limit of the period. With `"upper"`,
-#' 2020 is the upper limit.
-#' @param interpret_multi How to interpret the second number
-#' in a multi-year label, such as `"2020-2025"`. With
-#' `"at_upper"`, the second number is the upper
-#' limit of the period. With `"below_upper"`, the second
-#' number is one year below the upper limit.
-#' The default, `NULL`, behaves like `"at_upper"`, but gives
-#' a message if labels look like they use `"below_upper"`.
+#' @param interpret_single How to interpret a label for a single year,
+#' such as `"2020"`: `"lower"` (the default) or `"upper"`.
+#' See below for details.
+#' @param interpret_multi How to interpret a label
+#' that refers to multiple years e.g. `"2020-2025"`. See below
+#' for details.
 #' @param interpret_fail Action if element of `labels`
 #' cannot be interpreted. Choices are `"error"` (the default),
 #' `"warn"`, and `"silent"`.
@@ -120,7 +123,7 @@
 #' )
 #' df
 #' df |> filter(period_lower(period) >= 2025)
-#' 
+#'
 #' ## midpoint of open periods
 #' period_mid(c("2020-2030", "2030-2040", "2040+")) # 2045
 #' period_mid(c("2020-2025", "2025-2030", "2030+")) # 2032.5

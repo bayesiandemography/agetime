@@ -46,19 +46,13 @@ cohort_interval(
 \arguments{
 \item{labels}{Vector of cohort labels.}
 
-\item{interpret_single}{How to interpret a single-year
-label, that is, a label consisting of a year and nothing
-else, such as \code{"2020"}. With \code{"lower"} (the default),
-2020 is the lower limit of the cohort. With \code{"upper"},
-2020 is the upper limit.}
+\item{interpret_single}{How to interpret a label for a single year,
+such as \code{"2020"}: \code{"lower"} (the default) or \code{"upper"}.
+See below for details.}
 
-\item{interpret_multi}{How to interpret the second number
-in a multi-year label, such as \code{"2020-2025"}. With
-\code{"at_upper"}, the second number is the upper
-limit of the cohort. With \code{"below_upper"}, the second
-number is one year below the upper limit.
-The default, \code{NULL}, behaves like \code{"at_upper"}, but gives
-a message if labels look like they use \code{"below_upper"}.}
+\item{interpret_multi}{How to interpret a label
+that refers to multiple years e.g. \code{"2020-2025"}. See below
+for details.}
 
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
@@ -85,8 +79,6 @@ An interval that is open on the right gets a midpoint
 half the width of the closed cohort with the highest lower limit,
 and an interval that is open on the left gets a midpoint
 half the width of the closed cohort with the lowest upper limit.
-If \code{labels} has no closed cohorts, \code{cohort_mid()}
-throws an error.
 
 \code{cohort_interval()} describes each cohort using
 interval notation. For instance, \code{"[2020, 2025)"}
@@ -97,49 +89,60 @@ how labels are being interpreted.
 \section{Rules for interpreting inputs}{
 
 
-"Lower" and "upper" refer to the lower and upper limits of
-a cohort, as returned by \code{cohort_lower()} and \code{cohort_upper()}.
+\strong{Single-year}
 
-Single-year cohorts:
+Labels for single-year cohorts sometimes refer to
+the lower limits of cohorts, and sometimes
+refer to upper limits. For instance, the label \code{"2020"}
+is sometimes used to refer to the cohort that
+starts at midnight on 1 January 2020
+and ends at midnight on 1 January 2021,
+and is sometimes used to refer to the
+cohort that starts at midnight on 1 July 2019
+and ends at midnight on 1 July 2020.
 
-A single-year label consists of a year and nothing else,
-such as \code{"2020"}.\tabular{lll}{
+The \code{interpret_single} argument can be used to distinguish
+between the two conventions:\tabular{lll}{
    \code{interpret_single} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"lower"} \tab \verb{"a" -> [a,a+1)} \tab \verb{"2020" -> [2020,2021)} \cr
    \code{"upper"} \tab \verb{"a" -> [a-1,a)} \tab \verb{"2020" -> [2019,2020)} \cr
 }
 
 
-Data providers typically use the "lower" convention
-for calendar years (1 January to 31 December),
-and the "upper" convention for non-calendar years
-(e.g., 1 July to 30 June).
+\strong{Multi-year}
 
-Multi-year cohorts:\tabular{lll}{
+In labels for multi-year cohorts, the second number is
+sometimes the upper limit of the cohort, and sometimes
+the upper limit minus 1. For instance, the cohort
+that starts at midnight on 1 January 2020 and ends
+at midnight on 1 January 2025 is sometimes labelled
+\code{"2020-2025"} and is sometimes labelled \code{"2020-2024"}.
+
+The \code{interpret_multi} argument can be used to distinguish
+between the two conventions:\tabular{lll}{
    \code{interpret_multi} \tab \emph{Rule} \tab \emph{Example} \cr
    \code{"at_upper"} \tab \verb{"a-b" -> [a,b)} \tab \verb{"2020-2025" -> [2020,2025)} \cr
    \code{"below_upper"} \tab \verb{"a-b" -> [a,b+1)} \tab \verb{"2020-2024" -> [2020,2025)} \cr
 }
 
 
-In a multi-year label, the first number is always the lower
-limit, whatever the value of \code{interpret_single}.
+If \code{interpret_multi} is \code{NULL} (the default), then multi-year
+labels are interpreted using the \code{"at_upper"} convention.
+If, however, the \code{"at_upper"} convention
+leads to intervals with
+widths 4, 9, 14, \dots, then \pkg{agetime} emits a message.
+Supplying an explicit value for \code{interpret_multi}
+silences this message.
 
-If \code{interpret_multi} is \code{NULL} (the default), multi-year
-labels are interpreted using \code{"at_upper"}. However, if a label
-has a width of 4, 9, 14, ... years under \code{"at_upper"}, such as
-\code{"2020-2024"}, the label was probably written using
-\code{"below_upper"}, and \code{agetime} gives a message. Supplying a value
-for \code{interpret_multi} silences the message.
+\strong{Open cohorts}
 
-A two-value label cannot describe a one-year cohort.
-With \code{interpret_multi = "at_upper"}, \code{"2010-2011"} would be
-\verb{[2010, 2011)} and \code{"2010-2010"} would be empty; both are
-rejected. Use \code{"2010"}, or \code{"2010-2012"} for two years.
-With \code{interpret_multi = "below_upper"},
-\code{"2010-2011"} is two years \verb{[2010, 2012)} and is accepted.
+A cohort that is open on the left has no lower limit,
+and a cohort that is open on the right has no upper limit.
+Labels for open cohorts are typically unambiguous,
+and are not affected by \code{interpret_single}
+or \code{interpret_multi}.
 
-Open cohorts:\tabular{ll}{
+Some examples of open cohorts:\tabular{ll}{
    \emph{Label} \tab \emph{Interval} \cr
    \code{"<2000"}, \code{"before 2000"}, \code{"under 2000"} \tab \verb{(-Inf,2000)} \cr
    \code{"2000 or earlier"}, \code{"up to 2000"} \tab \verb{(-Inf,2001)} \cr
@@ -152,10 +155,10 @@ Labels starting with \code{"-"}, such as \code{"-2000"}, are not accepted.
 
 \examples{
 labels <- c("2025-2030", "<2025", "2030-2035")
-cohort_lower(labels) # [2025, 2030)
-cohort_upper(labels) # [2024, 2030)
-cohort_width(labels) # 5
-cohort_mid(labels) # 2027.5
+cohort_lower(labels)
+cohort_upper(labels)
+cohort_width(labels)
+cohort_mid(labels)
 cohort_interval(labels)
 library(dplyr, warn.conflicts = FALSE)
 df <- tribble(
@@ -203,4 +206,10 @@ cohort_lower(
 ## names of 'labels' are kept
 cohorts <- c(parents = "1960-1970", children = "1990-2000")
 cohort_lower(cohorts)
+}
+\seealso{
+\itemize{
+\item \code{\link[=age_lower]{age_lower()}} Age equivalent of \code{cohort_lower()}
+\item \code{\link[=period_lower]{period_lower()}} Period equivalent of \code{cohort_lower()}
+}
 }
