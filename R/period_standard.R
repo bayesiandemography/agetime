@@ -18,15 +18,10 @@
 #' @inherit age_standard return
 #'
 #' @seealso
-#' To create a new set of period labels, use
-#' [period_labels_one()], [period_labels_five()], [period_labels_ten()],
-#' or [period_labels()]. To clean existing labels, use
-#' [period_standard()]. To map labels onto an existing set of
-#' labels, use [period_coarsen_to()].
-#'
 #' - [age_standard()] Age equivalent of `period_standard()`
 #' - [cohort_standard()] Cohort equivalent of `period_standard()`
 #' - [period_labels()] Create period labels
+#' - [period_coarsen_to()] Map labels onto an existing set of labels
 #'
 #' @examples
 #' labels <- c("2025to2030", "1910--1915", " 2022 ", "all")

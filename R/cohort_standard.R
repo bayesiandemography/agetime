@@ -18,15 +18,10 @@
 #' @inherit age_standard return
 #'
 #' @seealso
-#' To create a new set of cohort labels, use
-#' [cohort_labels_one()], [cohort_labels_five()], [cohort_labels_ten()],
-#' or [cohort_labels()]. To clean existing labels, use
-#' [cohort_standard()]. To map labels onto an existing set of
-#' labels, use [cohort_coarsen_to()].
-#'
 #' - [age_standard()] Age equivalent of `cohort_standard()`
 #' - [period_standard()] Period equivalent of `cohort_standard()`
 #' - [cohort_labels()] Create cohort labels
+#' - [cohort_coarsen_to()] Map labels onto an existing set of labels
 #'
 #' @examples
 #' labels <- c("2025to2030", "1910--1915", " < 2022 ", "all")

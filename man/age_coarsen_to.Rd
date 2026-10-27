@@ -43,14 +43,11 @@ age_coarsen_to(labels, to)
 age_coarsen_to(c("0", "1"), to)
 }
 \seealso{
-To create a new set of age group labels, use
-\code{\link[=age_labels_one]{age_labels_one()}}, \code{\link[=age_labels_five]{age_labels_five()}}, \code{\link[=age_labels_life]{age_labels_life()}},
-or \code{\link[=age_labels]{age_labels()}}. To clean existing labels, use
-\code{\link[=age_standard]{age_standard()}}. To map labels onto an existing set of
-labels, use \code{\link[=age_coarsen_to]{age_coarsen_to()}}.
 \itemize{
 \item \code{\link[=age_coarsen]{age_coarsen()}} Coarsen using break points
 \item \code{\link[=age_mapping]{age_mapping()}} Inspect the relationship between two sets of labels
+\item \code{\link[=age_labels]{age_labels()}} Create age group labels
+\item \code{\link[=age_standard]{age_standard()}} Clean existing labels
 \item \code{\link[=period_coarsen_to]{period_coarsen_to()}} Period equivalent of \code{age_coarsen_to()}
 \item \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} Cohort equivalent of \code{age_coarsen_to()}
 }

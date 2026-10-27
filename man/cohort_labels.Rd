@@ -164,12 +164,9 @@ cohort_labels_ten(
 )
 }
 \seealso{
-To create a new set of cohort labels, use
-\code{\link[=cohort_labels_one]{cohort_labels_one()}}, \code{\link[=cohort_labels_five]{cohort_labels_five()}}, \code{\link[=cohort_labels_ten]{cohort_labels_ten()}},
-or \code{\link[=cohort_labels]{cohort_labels()}}. To clean existing labels, use
-\code{\link[=cohort_standard]{cohort_standard()}}. To map labels onto an existing set of
-labels, use \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}}.
 \itemize{
+\item \code{\link[=cohort_standard]{cohort_standard()}} Clean existing labels
+\item \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} Map labels onto an existing set of labels
 \item \code{\link[=age_labels]{age_labels()}} Age equivalent of \code{cohort_labels()}
 \item \code{\link[=period_labels]{period_labels()}} Period equivalent of \code{cohort_labels()}
 }

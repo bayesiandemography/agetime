@@ -33,14 +33,10 @@ labels <- c("Under 5", "5to9", "10--14", "100plus", "all")
 age_standard(labels)
 }
 \seealso{
-To create a new set of age group labels, use
-\code{\link[=age_labels_one]{age_labels_one()}}, \code{\link[=age_labels_five]{age_labels_five()}}, \code{\link[=age_labels_life]{age_labels_life()}},
-or \code{\link[=age_labels]{age_labels()}}. To clean existing labels, use
-\code{\link[=age_standard]{age_standard()}}. To map labels onto an existing set of
-labels, use \code{\link[=age_coarsen_to]{age_coarsen_to()}}.
 \itemize{
 \item \code{\link[=period_standard]{period_standard()}} Period equivalent of \code{age_standard()}
 \item \code{\link[=cohort_standard]{cohort_standard()}} Cohort equivalent of \code{age_standard()}
 \item \code{\link[=age_labels]{age_labels()}} Create age group labels
+\item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Map labels onto an existing set of labels
 }
 }

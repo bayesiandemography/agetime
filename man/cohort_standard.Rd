@@ -109,14 +109,10 @@ labels <- c("2025to2030", "1910--1915", " < 2022 ", "all")
 cohort_standard(labels)
 }
 \seealso{
-To create a new set of cohort labels, use
-\code{\link[=cohort_labels_one]{cohort_labels_one()}}, \code{\link[=cohort_labels_five]{cohort_labels_five()}}, \code{\link[=cohort_labels_ten]{cohort_labels_ten()}},
-or \code{\link[=cohort_labels]{cohort_labels()}}. To clean existing labels, use
-\code{\link[=cohort_standard]{cohort_standard()}}. To map labels onto an existing set of
-labels, use \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}}.
 \itemize{
 \item \code{\link[=age_standard]{age_standard()}} Age equivalent of \code{cohort_standard()}
 \item \code{\link[=period_standard]{period_standard()}} Period equivalent of \code{cohort_standard()}
 \item \code{\link[=cohort_labels]{cohort_labels()}} Create cohort labels
+\item \code{\link[=cohort_coarsen_to]{cohort_coarsen_to()}} Map labels onto an existing set of labels
 }
 }
