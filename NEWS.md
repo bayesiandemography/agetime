@@ -24,6 +24,9 @@
 - Period labels now recognize words for open intervals, such as
   `"before 2000"` and `"2000 or more"`, and cohort labels now recognize
   words such as `"2000 or more"`.
+- Period and cohort labels such as `"2000 or later"` and
+  `"2000 and later"` are now recognized, and describe the interval
+  starting at 2000.
 
 - `age_diagnose()`, `age_assert()`, and their `_values()` variants
   have a new `no_open_right` check, and the period and cohort
@@ -57,12 +60,15 @@
   failed condition and describe the problem, for instance
   "Age group labels fail check `no_gap`.", rather than printing a
   table.
-- For periods and cohorts, words for open intervals now refer to the
-  one-year label next to them, so their meaning depends on
-  `interpret_single`. With `interpret_single = "upper"`,
-  `"2000 or more"` now starts at 1999, the lower limit of `"2000"`,
-  and `"before 2000"` ends at 1999. The symbols `"<"` and `"+"` still
-  refer to boundaries.
+- Clarified that `interpret_single` applies only to single-year
+  labels, that is, labels consisting of a year and nothing else, such
+  as `"2020"`. Labels for open periods and cohorts are read the same
+  way whatever the value of `interpret_single`. For instance,
+  `"2000 or more"`, like `"2000+"`, always starts at 2000, and
+  `"before 2000"`, like `"<2000"`, always ends at 2000.
+- Period and cohort labels starting with `"-"`, such as `"-2000"`, now
+  give an error saying that negative values are not accepted.
+  Previously `"-2000"` was read as `"<2000"`.
 - Errors from `age_coarsen()`, `age_coarsen_to()`, and their variants
   now distinguish labels that would be split from labels that are not
   fully covered by the new intervals, show the range covered by the new

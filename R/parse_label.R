@@ -165,6 +165,20 @@ x_label <- function(label,
       return(val)
     }
   }
+  if (startsWith(label, "-")) {
+    msg <- c(
+      "Can't interpret label {.val {label_orig}}.",
+      i = "Labels starting with {.val -} are not accepted, since negative values are not allowed."
+    )
+    if (!identical(label_type, "age")) {
+      year <- sub("^-+", "", label)
+      msg <- c(
+        msg,
+        i = "For a {label_name(label_type)} that is open on the left, use {.val {paste0(\"<\", year)}}?"
+      )
+    }
+    return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
+  }
   msg <- "Don't know how to interpret label {.val {label_orig}}."
   x_label_fail(msg = msg, interpret_fail = interpret_fail)
 }

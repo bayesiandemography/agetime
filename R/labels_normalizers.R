@@ -165,77 +165,43 @@ norm_apostrophes <- function(x) {
 #' @noRd
 norm_whitespace <- function(x) gsub("\\s+", "", x, perl = TRUE)
 
-#' Shift a Year Given in a Label
-#'
-#' Helper for `norm_lessthan()` and `norm_plus()`.
-#' Words such as `"before"`, `"or earlier"`, and `"or more"` refer
-#' to the year *label* next to them, while the symbols `"<"` and
-#' `"+"` refer to a *boundary*. Converting words to symbols
-#' therefore depends on how one-year labels are interpreted:
-#' with `"lower"`, the label `"2000"` is `[2000, 2001)`, and with
-#' `"upper"`, it is `[1999, 2000)`.
-#'
-#' @param year Numeric vector of years taken from labels.
-#' @param side `"lower"` to return the lower limit of the
-#' one-year interval with label `year`, or `"upper"` to
-#' return its upper limit.
-#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
-#' @returns Character vector of boundaries.
-#'
-#' @noRd
-label_year_to_boundary <- function(year, side, interpret_single) {
-  if (interpret_single == "lower") {
-    ans <- if (side == "lower") year else year + 1
-  } else {
-    ans <- if (side == "lower") year - 1 else year
-  }
-  format(ans, scientific = FALSE, trim = TRUE)
-}
-
 #' Norm Lessthan
 #'
 #' Convert words for intervals that are open on the left to `"<"`.
 #'
 #' - Prefixes `"before"`, `"under"`, `"less than"`, and `"lt"`
-#'   exclude the year that follows, so `"before 2000"` ends at
-#'   the lower limit of `"2000"`.
+#'   exclude the year that follows, so `"before 2000"` becomes
+#'   `"<2000"`.
 #' - Prefix `"up to"`, and suffixes such as `"or earlier"` and
-#'   `"or less"`, include the year, so `"2000 or earlier"` ends
-#'   at the upper limit of `"2000"`.
+#'   `"or less"`, include the year, so `"2000 or earlier"` becomes
+#'   `"<2001"`.
 #'
-#' With `interpret_single = "lower"`, `"before 2000"` becomes
-#' `"<2000"` and `"2000 or earlier"` becomes `"<2001"`. With
-#' `"upper"`, they become `"<1999"` and `"<2000"`.
-#' The symbol `"<"` is left unchanged.
+#' The symbol `"<"` is left unchanged. Labels starting with
+#' `"-"` are also left unchanged, and so fail to parse.
 #'
 #' @param x Vector of labels.
-#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @returns Labels with less-than synonyms normalized to `<`.
 #'
 #' @noRd
-norm_lessthan <- function(x, interpret_single = "lower") {
-  interpret_single <- match.arg(interpret_single, choices = c("lower", "upper"))
+norm_lessthan <- function(x) {
   p_prefix_excl <- "^(before|under|lessthan|lt)(\\d+)$"
   p_prefix_incl <- "^(upto)(\\d+)$"
   p_suffix_incl <- paste0(
     "^(\\d+)(orless|andunder|andbelow|andless|",
     "orearlier|andearlier|orbefore|andbefore)$"
   )
-  replace <- function(x, p, i_year, side) {
+  replace <- function(x, p, i_year, shift) {
     is_match <- !is.na(x) & grepl(p, x, perl = TRUE)
     if (any(is_match)) {
       year <- as.double(sub(p, paste0("\\", i_year), x[is_match], perl = TRUE))
-      boundary <- label_year_to_boundary(year = year,
-                                         side = side,
-                                         interpret_single = interpret_single)
+      boundary <- format(year + shift, scientific = FALSE, trim = TRUE)
       x[is_match] <- paste0("<", boundary)
     }
     x
   }
-  x <- replace(x, p = p_prefix_excl, i_year = 2L, side = "lower")
-  x <- replace(x, p = p_prefix_incl, i_year = 2L, side = "upper")
-  x <- replace(x, p = p_suffix_incl, i_year = 1L, side = "upper")
-  x <- sub("^[-_]", "<", x, perl = TRUE)
+  x <- replace(x, p = p_prefix_excl, i_year = 2L, shift = 0)
+  x <- replace(x, p = p_prefix_incl, i_year = 2L, shift = 1)
+  x <- replace(x, p = p_suffix_incl, i_year = 1L, shift = 1)
   x <- sub("^<+", "<", x, perl = TRUE)
   x
 }
@@ -244,40 +210,34 @@ norm_lessthan <- function(x, interpret_single = "lower") {
 #'
 #' Convert words for intervals that are open on the right,
 #' such as `"or more"` and `"and over"`, to `"+"`. The words
-#' include the year or age that precedes them, so the interval
-#' starts at the lower limit of that label. For ages, and for
-#' periods and cohorts with `interpret_single = "lower"`,
-#' `"2000 or more"` becomes `"2000+"`. For periods and cohorts with
-#' `"upper"`, it becomes `"1999+"`. The symbol `"+"`, and
-#' trailing `"-"` or `"_"`, are left unchanged.
+#' include the year or age that precedes them, so `"2000 or more"`
+#' becomes `"2000+"`. The symbol `"+"`, and trailing `"-"` or `"_"`,
+#' are left unchanged.
 #'
 #' `"or older"` and `"and older"` are only recognized when
 #' `allow_older` is `TRUE` (ages). For cohorts, an older cohort
 #' is an earlier one, so these words would be misleading.
+#' `"or later"` and `"and later"` are only recognized when
+#' `allow_later` is `TRUE` (periods and cohorts).
 #'
 #' @param x Vector of labels.
-#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param allow_older Whether to recognize `"or older"` and `"and older"`.
+#' @param allow_later Whether to recognize `"or later"` and `"and later"`.
 #' @returns Labels with plus-style synonyms normalized to `+`.
 #'
 #' @noRd
-norm_plus <- function(x, interpret_single = "lower", allow_older = TRUE) {
-  interpret_single <- match.arg(interpret_single, choices = c("lower", "upper"))
+norm_plus <- function(x, allow_older = TRUE, allow_later = FALSE) {
   words <- c("andabove", "andmore", "andover", "andup",
              "ormore", "orover", "orabove",
              "&above", "&over", "&up", "plus")
   if (allow_older) {
     words <- c(words, "andolder", "orolder", "&older")
   }
-  p <- paste0("^(\\d+)(", paste(words, collapse = "|"), ")$")
-  is_match <- !is.na(x) & grepl(p, x, perl = TRUE)
-  if (any(is_match)) {
-    year <- as.double(sub(p, "\\1", x[is_match], perl = TRUE))
-    boundary <- label_year_to_boundary(year = year,
-                                       side = "lower",
-                                       interpret_single = interpret_single)
-    x[is_match] <- paste0(boundary, "+")
+  if (allow_later) {
+    words <- c(words, "andlater", "orlater", "&later")
   }
+  p <- paste0("^(\\d+)(", paste(words, collapse = "|"), ")$")
+  x <- sub(p, "\\1+", x, perl = TRUE)
   x <- sub("[-_]+$", "+", x, perl = TRUE)
   x
 }

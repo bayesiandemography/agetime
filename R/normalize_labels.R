@@ -17,8 +17,8 @@
 #' @param use_infant Whether to apply `norm_infant()`.
 #' @param use_older Whether `norm_plus()` recognizes `"or older"`
 #' and `"and older"`.
-#' @param interpret_single Rule for one-year labels, used by
-#' `norm_lessthan()` and `norm_plus()`: `"lower"` or `"upper"`.
+#' @param use_later Whether `norm_plus()` recognizes `"or later"`
+#' and `"and later"`.
 #' @returns List of normalizer functions in application order.
 #'
 #' @noRd
@@ -38,7 +38,7 @@ make_labels_normalizers <- function(use_tolower,
                                     use_na,
                                     use_infant,
                                     use_older = FALSE,
-                                    interpret_single = "lower") {
+                                    use_later = FALSE) {
   ans <- list()
   if (use_tolower) {
     ans <- append(ans, norm_tolower)
@@ -68,18 +68,15 @@ make_labels_normalizers <- function(use_tolower,
     ans <- append(ans, norm_under)
   }
   if (use_lessthan) {
-    norm_lessthan_single <- function(x) {
-      norm_lessthan(x = x, interpret_single = interpret_single)
-    }
-    ans <- append(ans, norm_lessthan_single)
+    ans <- append(ans, norm_lessthan)
   }
   if (use_plus) {
-    norm_plus_single <- function(x) {
+    norm_plus_inner <- function(x) {
       norm_plus(x = x,
-                interpret_single = interpret_single,
-                allow_older = use_older)
+                allow_older = use_older,
+                allow_later = use_later)
     }
-    ans <- append(ans, norm_plus_single)
+    ans <- append(ans, norm_plus_inner)
   }
   if (use_range) {
     ans <- append(ans, norm_range)
@@ -124,11 +121,10 @@ make_labels_normalizers_age <- function() {
 
 #' Make Labels Normalizers Cohort
 #'
-#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @returns List of normalizers for cohort labels.
 #'
 #' @noRd
-make_labels_normalizers_cohort <- function(interpret_single) {
+make_labels_normalizers_cohort <- function() {
   make_labels_normalizers(
     use_tolower = TRUE,
     use_wordnum = FALSE,
@@ -145,17 +141,16 @@ make_labels_normalizers_cohort <- function(interpret_single) {
     use_total = TRUE,
     use_na = TRUE,
     use_infant = FALSE,
-    interpret_single = interpret_single
+    use_later = TRUE
   )
 }
 
 #' Make Labels Normalizers Period
 #'
-#' @param interpret_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @returns List of normalizers for period labels.
 #'
 #' @noRd
-make_labels_normalizers_period <- function(interpret_single) {
+make_labels_normalizers_period <- function() {
   make_labels_normalizers(
     use_tolower = TRUE,
     use_wordnum = FALSE,
@@ -172,7 +167,7 @@ make_labels_normalizers_period <- function(interpret_single) {
     use_total = TRUE,
     use_na = TRUE,
     use_infant = FALSE,
-    interpret_single = interpret_single
+    use_later = TRUE
   )
 }
 

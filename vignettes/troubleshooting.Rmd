@@ -177,6 +177,58 @@ running from July to June is approximated by the year in which it ends.
   and `?cohort_lower`
 
 
+## Non-calendar years next to open intervals: "2020" and "2020+"
+
+### Problem
+
+With non-calendar years, such as financial years running from July to
+June, labels such as `"2020"` and `"2020+"` can look as if they overlap,
+or a set of labels can appear to have a gap.
+
+### Solution
+
+Use `period_interval()` to see how `agetime` reads the labels.
+
+```{r noncalendar-intervals}
+period_interval(c("2019", "2020", "2020+"), interpret_single = "upper")
+```
+
+With `interpret_single = "upper"`, `"2020"` is the year ending at 2020,
+that is, `[2019, 2020)`, which might be July 2019 to June 2020. An open
+label such as `"2020+"` starts at 2020, which might be July 2020. So
+`"2020"` and `"2020+"` do not overlap.
+
+Some data providers use `"2020+"` to mean the year ending in 2020 and
+all later years. Labels such as `"2018"`, `"2019"`, and `"2020+"` then
+appear to have a gap, since nothing covers the year ending in 2020.
+
+```{r noncalendar-gap}
+labels <- c("2018", "2019", "2020+")
+period_diagnose(labels, no_gap = TRUE, interpret_single = "upper")
+```
+
+To fix this, change `"2020+"` to `"2019+"`, which starts where the year
+ending in 2020 starts.
+
+```{r noncalendar-fix}
+labels[labels == "2020+"] <- "2019+"
+period_interval(labels, interpret_single = "upper")
+```
+
+### Discussion
+
+`agetime` reads open labels such as `"2020+"`, `"2020 or more"`, and
+`"<2020"` in the same way whatever the value of `interpret_single`, so
+that they always describe the same interval.
+
+### See Also
+
+- [Financial and academic years](#financial-and-academic-years-lower-limit-greater-than-upper-limit)
+- `period_interval()` and `cohort_interval()`
+- The section on rules for interpreting inputs in `?period_lower`
+  and `?cohort_lower`
+
+
 ## "Under", "less than", and "or earlier"
 
 ### Problem
@@ -194,21 +246,23 @@ different things in different contexts.
 - For periods and cohorts, `"before 2000"`, `"under 2000"`, and `"<2000"`
   describe everything before the start of 2000. `"2000 or earlier"` and
   `"up to 2000"` include 2000.
-- For periods and cohorts, words such as `"or earlier"` and `"or more"`
-  refer to the one-year label next to them, so their meaning depends on
-  `interpret_single`. The symbols `"<"` and `"+"` refer to boundaries,
-  and do not depend on `interpret_single`.
+- For periods and cohorts, `"2000+"`, `"2000 or more"`, and
+  `"2000 or later"` describe everything from the start of 2000 on.
 
 ```{r under}
 age_standard(c("Under 5", "<5"))
 cohort_standard(c("Under 2000", "2000 or earlier"))
-period_standard(c("2000 or more", "2000+"), interpret_single = "upper")
+period_standard(c("2000 or more", "2000 or later", "2000+"))
 ```
 
 ### Discussion
 
 `"or older"` and `"or younger"` are recognized for ages, but not for periods
 or cohorts, where they are ambiguous: an older cohort is an earlier one.
+
+`"after 2000"` is not recognized. Read literally, it describes
+everything from the start of 2001 on, but it is often used to mean
+2000 and later years.
 
 ### See Also
 

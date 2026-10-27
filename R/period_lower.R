@@ -30,6 +30,9 @@
 #'
 #' Single-year periods:
 #'
+#' A single-year label consists of a year and nothing else,
+#' such as `"2020"`.
+#'
 #' | `interpret_single`| *Rule*       | *Example* |
 #' |---------------|-------------|-------------|
 #' | `"lower"` | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
@@ -66,20 +69,18 @@
 #'
 #' Open periods:
 #'
-#' The symbols `"<"` and `"+"` refer to boundaries, so
-#' `"<2000"` is `(-Inf,2000)` and `"2000+"` is `[2000,Inf)`.
-#' Words refer to the one-year period with the label next to them,
-#' so their meaning depends on `interpret_single`.
+#' | *Label* | *Interval* |
+#' |---------------|-------------|
+#' | `"<2000"`, `"before 2000"`, `"under 2000"` | `(-Inf,2000)` |
+#' | `"2000 or earlier"`, `"up to 2000"` | `(-Inf,2001)` |
+#' | `"2000+"`, `"2000 or more"`, `"2000 or later"` | `[2000,Inf)` |
 #'
-#' | *Label* | `"lower"` | `"upper"` |
-#' |---------------|-------------|-------------|
-#' | `"before 2000"`, `"under 2000"` | `[-Inf,2000)` | `[-Inf,1999)` |
-#' | `"2000 or earlier"`, `"up to 2000"` | `[-Inf,2001)` | `[-Inf,2000)` |
-#' | `"2000 or more"`, `"2000 and over"` | `[2000,Inf)` | `[1999,Inf)` |
+#' Labels starting with `"-"`, such as `"-2000"`, are not accepted.
 #'
 #' @param labels Vector of period labels.
 #' @param interpret_single How to interpret a single-year
-#' label, such as `"2020"`. With `"lower"` (the default),
+#' label, that is, a label consisting of a year and nothing
+#' else, such as `"2020"`. With `"lower"` (the default),
 #' 2020 is the lower limit of the period. With `"upper"`,
 #' 2020 is the upper limit. See below for details.
 #' @param interpret_multi How to interpret the second number

@@ -19,17 +19,13 @@ intervals <- function(labels,
     labels_normalizers <- make_labels_normalizers_age()
     label_parsers <- make_label_parsers_age()
   } else if (label_type == "cohort") {
-    labels_normalizers <- make_labels_normalizers_cohort(
-      interpret_single = interpret_single
-    )
+    labels_normalizers <- make_labels_normalizers_cohort()
     label_parsers <- make_label_parsers_cohort(
       interpret_single = interpret_single,
       interpret_multi = interpret_multi
     )
   } else {
-    labels_normalizers <- make_labels_normalizers_period(
-      interpret_single = interpret_single
-    )
+    labels_normalizers <- make_labels_normalizers_period()
     label_parsers <- make_label_parsers_period(
       interpret_single = interpret_single,
       interpret_multi = interpret_multi

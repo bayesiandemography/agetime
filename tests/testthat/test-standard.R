@@ -195,40 +195,54 @@ test_that("suffixes such as 'or earlier' include the year, prefixes such as 'bef
          "1900 or less", "1900 and under", "1900 and below", "1900 and less")
   expect_identical(cohort_standard(x), rep("<1901", length(x)))
   expect_identical(period_standard(x), rep("<1901", length(x)))
-  expect_identical(cohort_standard(x, interpret_single = "upper"), rep("<1900", length(x)))
-  expect_identical(period_standard(x, interpret_single = "upper"), rep("<1900", length(x)))
+  expect_identical(cohort_standard(x, interpret_single = "upper"), rep("<1901", length(x)))
+  expect_identical(period_standard(x, interpret_single = "upper"), rep("<1901", length(x)))
   y <- c("before 1900", "under 1900", "less than 1900", "<1900")
   expect_identical(cohort_standard(y), rep("<1900", length(y)))
   expect_identical(period_standard(y), rep("<1900", length(y)))
 })
 
-test_that("'N or earlier' gives the same upper limit as the single-year label 'N'", {
+test_that("'N or earlier' ends at N + 1, whatever the value of interpret_single", {
   for (s in c("lower", "upper")) {
-    expect_identical(period_upper("2000 or earlier", interpret_single = s),
-                     period_upper("2000", interpret_single = s))
-    expect_identical(cohort_upper("2000 or earlier", interpret_single = s),
-                     cohort_upper("2000", interpret_single = s))
+    expect_identical(period_upper("2000 or earlier", interpret_single = s), 2001)
+    expect_identical(cohort_upper("2000 or earlier", interpret_single = s), 2001)
   }
 })
 
 test_that("'up to' includes the year", {
   expect_identical(cohort_standard("up to 1900"), "<1901")
-  expect_identical(period_standard("up to 1900", interpret_single = "upper"), "<1900")
+  expect_identical(period_standard("up to 1900", interpret_single = "upper"), "<1901")
 })
 
-test_that("with 'upper', word forms refer to year labels, and symbols to boundaries", {
-  s <- "upper"
-  expect_identical(period_standard("before 2000", interpret_single = s), "<1999")
-  expect_identical(period_standard("2000 or more", interpret_single = s), "1999+")
-  expect_identical(cohort_standard("2000 and over", interpret_single = s), "1999+")
-  expect_identical(period_standard("2000+", interpret_single = s), "2000+")
-  expect_identical(period_standard("<2000", interpret_single = s), "<2000")
+test_that("open labels do not depend on interpret_single", {
+  x <- c("before 2000", "<2000", "2000 or earlier", "2000 or more",
+         "2000 and over", "2000 or later", "2000 and later", "2000+", "2000-")
+  expected <- c("<2000", "<2000", "<2001", "2000+",
+                "2000+", "2000+", "2000+", "2000+", "2000+")
   for (s in c("lower", "upper")) {
-    expect_identical(period_lower("2000 or more", interpret_single = s),
-                     period_lower("2000", interpret_single = s))
-    expect_identical(cohort_upper("before 2000", interpret_single = s),
-                     cohort_lower("2000", interpret_single = s))
+    expect_identical(period_standard(x, interpret_single = s), expected)
+    expect_identical(cohort_standard(x, interpret_single = s), expected)
   }
+})
+
+test_that("'or later' is recognized for periods and cohorts but not ages", {
+  expect_identical(period_standard(c("2000 or later", "2000 & later")), c("2000+", "2000+"))
+  expect_identical(cohort_standard("2000 and later"), "2000+")
+  expect_error(age_standard("85 or later"), "Don't know how to interpret")
+})
+
+test_that("'after' is not recognized", {
+  expect_error(period_standard("after 2000"), "Don't know how to interpret")
+  expect_error(cohort_standard("after 2000"), "Don't know how to interpret")
+})
+
+test_that("labels starting with '-' are rejected", {
+  expect_error(period_standard("-2000"), "negative values are not allowed")
+  expect_error(cohort_lower(c("1990", "-2000")), "open on the left, use \"<2000\"")
+  expect_error(age_lower("-5"), "negative values are not allowed")
+  expect_warning(ans <- period_lower("-2000", interpret_fail = "warn"),
+                 "negative values are not allowed")
+  expect_identical(ans, NA_real_)
 })
 
 test_that("'older' and 'younger' are recognized for ages but not periods or cohorts", {
