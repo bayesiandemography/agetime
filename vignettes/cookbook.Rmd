@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette provides recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem and gives a solution. For an overview of the `agetime` package, see `vignette("agetime")`.
+This vignette provides recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem and gives a solution. For an overview of the `agetime` package, see [Get started](agetime.html).
 
 ```{r libs}
 library(agetime)
