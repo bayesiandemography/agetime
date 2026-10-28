@@ -50,8 +50,8 @@ df |>
 
 ```{r filter-total-open}
 df <- tibble(
-  period   = c("<2000", "2000-2010", "2010-2015", "Total"),
-  count = c(5, 2, 6, 13)
+  period = c("<2000", "2000-2010", "2010-2015", "Total"),
+  count  = c(5, 2, 6, 13)
 )
 
 df |>
