@@ -774,4 +774,4 @@ age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
 # More information
 
 - [Get started](agetime.html) for a quick start
-- `vignette("troubleshooting")` for solutions to common problems
+- [Troubleshooting](troubleshooting.html) for solutions to common problems
