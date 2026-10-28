@@ -159,6 +159,6 @@ Most functions have age, period, and cohort equivalents. For instance:
 ## More information
 
 - `?agetime` for a full list of functions
-- `vignette("cookbook")` for suggestions for performing common label-related tasks
-- `vignette("troubleshooting")` for solutions to common problems
+- [Cookbook](cookbook.html) for suggestions for performing common label-related tasks
+- [Troubleshooting](troubleshooting.html) for solutions to common problems
 - Package website: <https://bayesiandemography.github.io/agetime/>

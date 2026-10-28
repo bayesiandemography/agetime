@@ -330,8 +330,8 @@ df |>
 
 ### See Also
 
-- `vignette("cookbook")`, sections on dropping totals and
-  not-stated categories
+- Cookbook: [Drop totals from a dataset](cookbook.html#drop-totals) and
+  [Drop "Not stated" categories from a dataset](cookbook.html#drop-missing)
 
 
 ## Checks that pass when they should fail
@@ -349,8 +349,7 @@ check only the values that are present.
 
 ### See Also
 
-- `vignette("cookbook")`, section on validating labels based on values,
-  not levels
+- Cookbook: [Check the values in a factor, ignoring unused levels](cookbook.html#validate-labels-values)
 
 
 # Transforming labels
@@ -400,8 +399,7 @@ Tidyverse functions drop unused factor levels by default. Use
 
 ### See Also
 
-- `vignette("cookbook")`, section on including levels that don't appear in
-  the data
+- Cookbook: [Include levels that don't appear in the data](cookbook.html#fill-levels)
 
 
 ## Results are factors, not character vectors
@@ -450,5 +448,5 @@ df |>
 
 # More information
 
-- `vignette("agetime")` for a quick start
-- `vignette("cookbook")` for task-oriented recipes
+- [Get started](agetime.html) for a quick start
+- [Cookbook](cookbook.html) for task-oriented recipes
