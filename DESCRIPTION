@@ -30,7 +30,8 @@ Suggests:
     ggplot2,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyr
 Config/testthat/edition: 3
 URL: https://bayesiandemography.github.io/agetime/, https://github.com/bayesiandemography/agetime
 VignetteBuilder: knitr

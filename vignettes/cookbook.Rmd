@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette is a collection of short recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem, gives a solution, and, where useful, adds a discussion and pointers to related recipes and help pages. The recipes are self-contained, so you can read them in any order. For an overview of the package, see `vignette("agetime")`.
+This vignette provides recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem and gives a solution, plus pointers to related recipes and help pages. For an overview of the package, see `vignette("agetime")`.
 
 ```{r libs}
 library(agetime)
@@ -33,7 +33,7 @@ set.seed(0)
 
 ### Problem
 
-You need a set of age group, period, or cohort labels, but don't have any data to take them from.
+You need a new set of age group, period, or cohort labels.
 
 ### Solution
 
@@ -61,7 +61,7 @@ cohort_labels(
 
 ### Discussion
 
-There is no universally accepted set of conventions on how age, period, and cohort labels should be formatted, but `agetime` tries to reflect common practices.
+There is no universally accepted set of conventions on how age, period, and cohort labels should be formatted. `agetime` tries to reflect common practices in demography and official statistics.
 
 ### See Also
 
@@ -130,7 +130,7 @@ period_extend(recent, n = 2)
 
 ### Problem
 
-You want an open interval at one end of your labels, with a limit that you choose. The labels might already have an open interval with a different limit, or they might not have one at all.
+You want an open interval at one end of your labels, with a limit specified by you. The labels might already have an open interval with a different limit, or they might not have one at all.
 
 An open interval is one that has no lower limit (e.g. `"<2000"`) or no upper limit (e.g. `"85+"`).
 
@@ -175,7 +175,7 @@ labels_age |>
 
 ### Problem
 
-You want an age variable that sorts in age order. Raw age group labels don't:
+Raw age group sort in alphabetical order:
 
 ```{r sort-age-wrong}
 df <- tibble(
@@ -186,6 +186,8 @@ df <- tibble(
 df |>
   arrange(age) ## "10-14" comes before "5-9"!!
 ```
+
+You want an age variable that sorts in age order.
 
 ### Solution
 
@@ -202,7 +204,7 @@ If `labels` is not a factor, `age_set_order()` turns it into one.
 
 ### See Also
 
-- `period_set_order()` and `cohort_set_order()` permanently modify period and cohort variables.
+- Use `period_set_order()` and `cohort_set_order()` to make period and cohort labels sort in the right order.
 - [Order by age when working interactively](#sort-age-interactive)
 - The `set_open`, `coarsen`, and `fill` functions, like the `set_order` functions, always return factors
 
@@ -243,6 +245,18 @@ all_ages |>
   left_join(observed, by = "age")
 ```
 
+Alternatively, to fill gaps between the age groups in the data, use a `fill` function, then `complete()` from the `tidyr` package.
+
+```{r skeleton-complete}
+library(tidyr)
+
+observed |>
+  mutate(age = age_fill_five(age)) |>
+  complete(age, fill = list(n = 0))
+```
+
+`complete()` sorts character vectors alphabetically, so `age` needs to be a factor, as it is here.
+
 ### Discussion
 
 `age_labels_life()` creates the labels used by an abridged life table,
@@ -253,6 +267,7 @@ all_ages |>
 - Periods and cohorts have equivalent `labels` functions.
 - The `fill` functions (e.g. `age_fill_five()`) add intermediate levels to a factor.
 - [Create an age variable that sorts properly](#sort-age-permanently)
+- [Include levels that don't appear in the data](#fill-levels)
 
 
 ## Validate labels {#validate-labels}
@@ -507,7 +522,7 @@ df |>
 - [Create an age variable that sorts properly](#sort-age-permanently)
 
 
-## Include levels that don't appear in the data
+## Include levels that don't appear in the data {#fill-levels}
 
 ### Problem
 
