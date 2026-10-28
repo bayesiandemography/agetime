@@ -32,7 +32,7 @@ set.seed(0)
 
 ### Problem
 
-Create a new set of age group, cohort, or period labels.
+You need a set of age group, period, or cohort labels, but don't have any data to take them from.
 
 ### Solution
 
@@ -71,7 +71,7 @@ There is no universally accepted set of conventions on how age, period, and coho
 
 ### Problem
 
-Convert age, period, or cohort labels to the default `agetime` style.
+Your age, period, or cohort labels come in a mix of formats, such as `"5to9"`, `"10--14"`, and `"100plus"`, and you want them all in one consistent format.
 
 ### Solution
 
@@ -110,7 +110,7 @@ Not-stated categories become `NA`. To remove them, see [Drop "Not stated" catego
 
 ### Problem
 
-Take a sequence of periods and extend it forward in time.
+You have labels for past periods, and you need labels for future periods, for use in a forecast.
 
 ### Solution
 
@@ -129,7 +129,7 @@ period_extend(recent, n = 2)
 
 ### Problem
 
-Move the starting point of existing open age groups, open periods, or open cohorts, or specify a new open age group, open period, or open cohort.
+You want an open interval at one end of your labels, with a limit that you choose. The labels might already have an open interval with a different limit, or they might not have one at all.
 
 An open interval is one that has no lower limit (e.g. `"<2000"`) or no upper limit (e.g. `"85+"`).
 
@@ -174,7 +174,7 @@ labels_age |>
 
 ### Problem
 
-Raw age group labels don't sort properly:
+You want an age variable that sorts in age order. Raw age group labels don't:
 
 ```{r sort-age-wrong}
 df <- tibble(
@@ -210,7 +210,7 @@ If `labels` is not a factor, `age_set_order()` turns it into one.
 
 ### Problem
 
-Ensure that a table includes all age groups, including age groups with no observations.
+You are building a table, and you want it to show every age group, including age groups with no observations.
 
 ### Solution
 
@@ -258,8 +258,7 @@ all_ages |>
 
 ### Problem
 
-Check that a label vector meets expectations, either for a report or to
-stop a pipeline.
+You want to check that a set of labels meets your expectations, such as having no gaps, and either report any problems or stop a pipeline.
 
 ### Solution
 
@@ -295,7 +294,7 @@ The `assert` functions return their input invisibly when checks pass. Returning 
 
 ### Problem
 
-When `labels` is a factor, the `diagnose` and `assert` functions check factor *levels*, including unused levels, rather than the values themselves. For instance, if we have
+Your labels are a factor, and you want to check the values that actually appear, not the factor levels. The `diagnose` and `assert` functions check factor *levels*, including unused levels. For instance, if we have
 ```
 labels <- factor(c("0-4", "5-9"))
 ```
@@ -336,7 +335,7 @@ df |>
 
 ### Problem
 
-Check how `agetime` is interpreting a set of labels. For instance, does `"2020"` refer to the year starting in 2020 or the year ending in 2020, and does `"2020-2024"` include 2024?
+You are not sure how `agetime` is interpreting a set of labels. For instance, does `"2020"` refer to the year starting in 2020 or the year ending in 2020, and does `"2020-2024"` include 2024?
 
 ### Solution
 
@@ -379,7 +378,7 @@ The `interval` functions return descriptions of labels, not labels, and other `a
 
 ### Problem
 
-Select rows based on ages, periods, or cohorts.
+You want to keep only the rows for certain ages, periods, or cohorts, such as people aged 65 and over, but the labels are strings, so you can't compare them with numbers.
 
 ### Solution
 
@@ -418,7 +417,7 @@ df |>
 
 ### Problem
 
-Remove rows containing age, period, or cohort totals.
+Your dataset includes rows for totals, such as `"All ages"`, alongside the rows for individual categories, and you want to remove the totals.
 
 ### Solution
 
@@ -447,7 +446,7 @@ df |>
 
 ### Problem
 
-Remove rows where data on age, period, or cohort is not stated or missing.
+Your dataset includes rows where age, period, or cohort is not stated or missing, and you want to remove them.
 
 ### Solution
 
@@ -476,7 +475,7 @@ df |>
 
 ### Problem
 
-Sorting on raw age group labels gets ages in the wrong order.
+You are exploring a dataset interactively, and you want to sort by age, but sorting on raw age group labels gets ages in the wrong order.
 
 ```{r sort-age-wrong-interactive}
 df <- tibble(
@@ -511,7 +510,7 @@ df |>
 
 ### Problem
 
-Some age groups, periods, or cohorts don't appear in the data. Tabulations and other calculations don't account for these levels, leading to gaps in the output.
+Some age groups, periods, or cohorts don't appear in your data, and you want them to appear in your output. Tabulations and other calculations leave them out, leading to gaps.
 
 ```{r fill-gaps-problem}
 df <- tibble(
@@ -573,7 +572,7 @@ If `labels` is not a factor, the `fill` functions turn it into one.
 
 ### Problem
 
-The data use one-year age groups. You want to aggregate to five-year age groups.
+Your data use one-year age groups, and you want to aggregate to five-year age groups.
 
 ### Solution
 
@@ -607,7 +606,7 @@ For irregular age groups, use `age_coarsen()`. To aggregate to (abridged) life-t
 
 ### Problem
 
-Plots that use non-numeric age groups, periods, or cohorts on the x-axis often look terrible, with overlapping labels and points instead of smooth curves. Sometimes ages are also in the wrong order, e.g. "100+" after "10-14" and "5-9" after "50-54".
+You want to plot age, period, or cohort on the x-axis. But plots that use non-numeric age groups, periods, or cohorts on the x-axis often look terrible, with overlapping labels and points instead of smooth curves. Sometimes ages are also in the wrong order, e.g. "100+" after "10-14" and "5-9" after "50-54".
 
 ```{r mid-plot-problem, fig.width = 5, fig.height = 3.5}
 df <- tibble(
@@ -641,7 +640,7 @@ ggplot(df, aes(x = age_mid(age), y = rate)) +
 
 ### Problem
 
-Calculate annual rates from data with multi-year periods
+Your data use multi-year periods, and you want annual rates rather than rates per period.
 
 ### Solution
 
@@ -674,7 +673,7 @@ The width of an open interval is `Inf`.
 
 ### Problem
 
-Create a lookup table showing the relationship between two age classifications.
+You have two age classifications, and you want a lookup table showing how the age groups in one relate to the age groups in the other.
 
 ### Solution
 
@@ -718,7 +717,7 @@ age_mapping(
 
 ### Problem
 
-You want to switch to the coarser age groups used by a different age variable.
+You have two age variables, and you want to switch the finer one to the coarser age groups used by the other.
 
 ### Solution
 
