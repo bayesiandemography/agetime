@@ -346,7 +346,7 @@ df |>
 
 ### See Also
 
-- [Check for gaps, overlaps, and other problems](#validate-labels) for checking factor levels, not values
+- [Check for gaps, overlaps, and other problems](#validate-labels), which checks factor levels
 
 
 ## See the intervals implied by a set of labels {#see-intervals}
