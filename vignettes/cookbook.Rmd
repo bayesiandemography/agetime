@@ -1,11 +1,11 @@
 ---
-title: "Cookbook for agetime Package"
+title: "Cookbook"
 output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 2
 vignette: >
-  %\VignetteIndexEntry{Cookbook for agetime Package}
+  %\VignetteIndexEntry{Cookbook}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
+This vignette is a collection of short recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem, gives a solution, and, where useful, adds a discussion and pointers to related recipes and help pages. The recipes are self-contained, so you can read them in any order. For an overview of the package, see `vignette("agetime")`.
 
 ```{r libs}
 library(agetime)
