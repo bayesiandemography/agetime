@@ -175,7 +175,7 @@ labels_age |>
 
 ### Problem
 
-Raw age group sort in alphabetical order:
+Raw age group labels sort in alphabetical order:
 
 ```{r sort-age-wrong}
 df <- tibble(
