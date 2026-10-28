@@ -396,7 +396,7 @@ The `interval` functions return descriptions of labels, not labels, and other `a
 
 ### Problem
 
-You want to keep only the rows for certain ages, periods, or cohorts, such as people aged 65 and over, but the labels are strings, so you can't compare them with numbers.
+You want to keep rows from your dataset for certain ages, periods, or cohorts, and discard the rest. But the age, period, and cohort labels are strings, so you can't compare them with numbers.
 
 ### Solution
 
@@ -435,11 +435,11 @@ df |>
 
 ### Problem
 
-Your dataset includes rows for totals, such as `"All ages"`, alongside the rows for individual categories, and you want to remove the totals.
+Your dataset includes rows for totals, such as `"All ages"`, which you want to remove.
 
 ### Solution
 
-Use `age_is_total()`, `period_is_total()`, or `cohort_is_total()` to identify rows with totals and then filter. 
+Use `age_is_total()`, `period_is_total()`, or `cohort_is_total()` to identify rows with totals, and then filter. 
 
 ```{r drop-totals}
 df <- tibble(
@@ -493,7 +493,7 @@ df |>
 
 ### Problem
 
-You are exploring a dataset interactively, and you want to sort by age, but sorting on raw age group labels gets ages in the wrong order.
+You are exploring a dataset interactively, and you want to sort on age, but the age labels are sorted in alphabetical order.
 
 ```{r sort-age-wrong-interactive}
 df <- tibble(
@@ -519,16 +519,16 @@ df |>
   arrange(age_lower(age_group))
 ```
 
-### See Also
+### Discussion
 
-- [Create an age variable that sorts properly](#sort-age-permanently)
+If you want the variable itself to sort in age order, use `age_set_order()`, `period_set_order()`, or `cohort_set_order()`. See [Create an age variable that sorts properly](#sort-age-permanently).
 
 
 ## Include levels that don't appear in the data {#fill-levels}
 
 ### Problem
 
-Some age groups, periods, or cohorts don't appear in your data, and you want them to appear in your output. Tabulations and other calculations leave them out, leading to gaps.
+Some age groups, periods, or cohorts don't appear in your data, but you want them to appear in tabulations.
 
 ```{r fill-gaps-problem}
 df <- tibble(
@@ -557,19 +557,16 @@ df |>
   count(age, wt = respondents, .drop = FALSE)
 ```
 
-Note that tidyverse functions such as `count()` and `summarise()` drop unused levels by default. If `.drop = FALSE` is not included in the call to `count()`, then the extra level added by `age_fill_five()` does not appear in the results,
+### Discussion
+
+The `fill` functions change the levels of `labels`, not the values. If `labels` is not a factor, the `fill` functions turn it into one.
+
+Tidyverse functions such as `count()` and `summarise()` drop unused levels by default. If `.drop = FALSE` is not included in the call to `count()`, then the extra level added by `age_fill_five()` does not appear in the results,
 ```{r fill-no-drop}
 df |>
   mutate(age = age_fill_five(age)) |>
   count(age, wt = respondents)
 ```
-
-
-### Discussion
-
-The `fill` functions change the levels of `labels`, not the values. 
-If `labels` is not a factor, the `fill` functions turn it into one.
-
 
 ### See Also
 
@@ -610,125 +607,14 @@ deaths |>
 
 ### Discussion
 
-For irregular age groups, use `age_coarsen()`. To aggregate to (abridged) life-table ages, use `age_coarsen_life()`.
+For irregular age groups, use `age_coarsen()`. To borrow categories from another set of labels, use `age_coarsen_to()`. To aggregate to (abridged) life-table ages, use `age_coarsen_life()`.
 
 ### See Also
 
-- [Recode labels into another classification](#recode-into-classification)
+- [Adopt coarser age groups from another age variable](#recode-into-classification)
 - `period_coarsen_five()`, `cohort_coarsen_five()`
 - `period_coarsen()`, `cohort_coarsen()`
 - `age_coarsen_to()`, `period_coarsen_to()`, `cohort_coarsen_to()`
-
-
-## Use age, period, or cohort on the x-axis of a plot {#plot-nicer}
-
-### Problem
-
-You want to plot age, period, or cohort on the x-axis. But plots that use non-numeric age groups, periods, or cohorts on the x-axis often look terrible, with overlapping labels and points instead of smooth curves. Sometimes ages are also in the wrong order, e.g. "100+" after "10-14" and "5-9" after "50-54".
-
-```{r mid-plot-problem, fig.width = 5, fig.height = 3.5}
-df <- tibble(
-  age = age_labels_five(),
-  rate = 10 + 0.1 * (1:21)^2 + rnorm(21)
-)
-
-ggplot(df, aes(x = age, y = rate)) +
-  geom_point()
-```
-
-
-
-### Solution
-
-Convert age, period, or cohort to a continuous variable by using `age_mid()`, `period_mid()`, or `cohort_mid()` to calculate midpoints.
-
-```{r mid-plot-solution, fig.width = 5, fig.height = 3.5}
-ggplot(df, aes(x = age_mid(age), y = rate)) +
-  geom_line()
-```
-
-### See Also
-
-- [Create an age variable that sorts properly](#sort-age-permanently)
-- `period_mid()`, `cohort_mid()`
-
-
-
-## Calculate annual rates
-
-### Problem
-
-Your data use multi-year periods, and you want annual rates rather than rates per period.
-
-### Solution
-
-Use `period_width()`.
-
-```{r width}
-df <- tibble(
-  period = c("2010-2020", "2020-2023", "2023-2030"),
-  departures = c(2000, 50, 3000)
-)
-
-df |>
-  mutate(
-    n_year = period_width(period),
-    annual_rate = departures / n_year
-  )
-```
-
-### Discussion
-
-The width of an open interval is `Inf`.
-
-### See Also
-
-- [Use age, period, or cohort on the x-axis of a plot](#plot-nicer)
-- `age_width()`, `cohort_width()`
-
-
-## Build a mapping between age groups
-
-### Problem
-
-You have two age classifications, and you want a lookup table showing how the age groups in one relate to the age groups in the other.
-
-### Solution
-
-Use `age_mapping()`.
-
-```{r mapping}
-classif_fine <- age_labels_life()
-classif_broad <- age_labels(breaks = c(0, 15, 65, 85))
-age_mapping(
-  labels_x = classif_fine,
-  labels_y = classif_broad,
-  relation = "is_contained_in"
-)
-```
-
-### Discussion
-
-Other possible values for `relation` are `"equals"`, `"contains"`, and
-`"overlaps_with"`.
-
-To represent the mapping as a matrix rather than a data frame, set `format` to `"matrix"`,
-
-```{r mapping-matrix}
-age_mapping(
-  labels_x = classif_fine,
-  labels_y = classif_broad,
-  relation = "is_contained_in",
-  format = "matrix"
-)
-```
-
-
-### See Also
-
-- [Recode labels into another classification](#recode-into-classification)
-- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
-- `age_coarsen_to()`, `period_mapping()`, `cohort_mapping()`
 
 
 ## Adopt coarser age groups from another age variable {#recode-into-classification}
@@ -769,6 +655,116 @@ age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
 - [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
 - [Build a mapping between age groups](#build-a-mapping-between-age-groups)
 - `period_coarsen_to()`, `cohort_coarsen_to()`
+
+
+## Build a mapping between age groups
+
+### Problem
+
+You have two age classifications, and you want a lookup table showing how the age groups in one classification relate to the age groups in the other.
+
+### Solution
+
+Use `age_mapping()`.
+
+```{r mapping}
+classif_fine <- age_labels_life()
+classif_broad <- age_labels(breaks = c(0, 15, 65, 85))
+age_mapping(
+  labels_x = classif_fine,
+  labels_y = classif_broad,
+  relation = "is_contained_in"
+)
+```
+
+### Discussion
+
+Other possible values for `relation` are `"equals"`, `"contains"`, and
+`"overlaps_with"`.
+
+To represent the mapping as a matrix rather than a data frame, set `format` to `"matrix"`,
+
+```{r mapping-matrix}
+age_mapping(
+  labels_x = classif_fine,
+  labels_y = classif_broad,
+  relation = "is_contained_in",
+  format = "matrix"
+)
+```
+
+
+### See Also
+
+- [Adopt coarser age groups from another age variable](#recode-into-classification)
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- `age_coarsen_to()`, `period_mapping()`, `cohort_mapping()`
+
+
+## Use age, period, or cohort on the x-axis of a plot {#plot-nicer}
+
+### Problem
+
+You want to construct a plot with age, period, or cohort on the x-axis. But plots that use non-numeric age, period, or cohort labels on the x-axis often look terrible, and get categories in the wrong order.
+
+```{r mid-plot-problem, fig.width = 5, fig.height = 3.5}
+df <- tibble(
+  age = age_labels_five(),
+  rate = 10 + 0.1 * (1:21)^2 + rnorm(21)
+)
+
+ggplot(df, aes(x = age, y = rate)) +
+  geom_point()
+```
+
+
+### Solution
+
+Convert age, period, or cohort to a continuous variable by using `age_mid()`, `period_mid()`, or `cohort_mid()`.
+
+```{r mid-plot-solution, fig.width = 5, fig.height = 3.5}
+ggplot(df, aes(x = age_mid(age), y = rate)) +
+  geom_line()
+```
+
+### See Also
+
+- [Create an age variable that sorts properly](#sort-age-permanently)
+- `period_mid()`, `cohort_mid()`
+
+
+
+## Calculate annual rates
+
+### Problem
+
+Your data use multi-year periods, and you want annual rates.
+
+### Solution
+
+Use `period_width()`.
+
+```{r width}
+df <- tibble(
+  period = c("2010-2020", "2020-2023", "2023-2030"),
+  departures = c(2000, 50, 3000)
+)
+
+df |>
+  mutate(
+    n_year = period_width(period),
+    annual_rate = departures / n_year
+  )
+```
+
+### Discussion
+
+The width of an open interval is `Inf`.
+
+### See Also
+
+- [Use age, period, or cohort on the x-axis of a plot](#plot-nicer)
+- `age_width()`, `cohort_width()`
 
 
 # More information
