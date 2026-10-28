@@ -32,11 +32,13 @@ Functions for
 - coarsening, and
 - creating new labels.
 
+``` r
+library(agetime)
+```
+
 Create a new set of labels.
 
 ``` r
-library(agetime)
-
 period_labels_five(lower_first = 2001, lower_last = 2026)
 #> [1] "2001-2006" "2006-2011" "2011-2016" "2016-2021" "2021-2026" "2026-2031"
 ```
@@ -45,9 +47,7 @@ Standardize existing labels.
 
 ``` r
 x <- c("2003 to 2005", "2012--2015", "2000-2005")
-
-x |>
-  period_standard()
+period_standard(x)
 #> [1] "2003-2005" "2012-2015" "2000-2005"
 ```
 

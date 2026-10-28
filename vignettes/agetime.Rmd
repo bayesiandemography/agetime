@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Working with age group, period, and cohort labels is often awkward and error-prone. The `agetime` package makes it easier. This vignette introduces some of the basic functions. The vignette focuses on age group labels, but equivalent functions also exist for period and cohort labels.
+Working with age group, period, and cohort labels can be awkward and error-prone. The `agetime` package makes it easier.
 
 ## Infer intervals from labels
 
@@ -50,15 +50,15 @@ df |>
 
 ```{r filter-total-open}
 df <- tibble(
-  age   = c("15-64", "0-14", "65+", "All"),
+  period   = c("<2000", "2000-2010", "2010-2015", "Total"),
   count = c(5, 2, 6, 13)
 )
 
 df |>
-  filter(!age_is_total(age))
+  filter(!period_is_total(period))
 
 df |>
-  filter(age_is_open_right(age))
+  filter(period_is_open_right(period))
 ```
 
 ## Standardize messy labels
@@ -72,11 +72,10 @@ age_standard(x)
 
 ## Create a regular series of labels
 
-The `age_labels` functions generate labels from scratch.
+The `cohort_labels` functions generate labels from scratch.
 
 ```{r labels}
-age_labels_five(lower_first = 0, lower_last = 20)
-age_labels_life(lower_last = 60) ## life table age groups
+cohort_labels_five(lower_first = 2000, lower_last = 2015)
 ```
 
 ## Manipulate levels
@@ -99,24 +98,22 @@ x |>
 
 ## Check and assert
 
-Check whether age labels conform to expectations:
+Check whether period labels conform to expectations:
 
 ```{r check}
-lab <- age_labels_five(
-  lower_first = 0,
-  lower_last = 85,
-  open_right = TRUE
+lab <- period_labels_five(
+  lower_first = 2000,
+  lower_last = 2020
 )
-age_diagnose(
+period_diagnose(
   lab,
   no_overlap = TRUE,
   no_gap = TRUE,
-  has_zero = TRUE,
-  has_open_right = TRUE
+  no_open_right = TRUE
 )
 ```
 
-`age_assert()` throws an error if a check fails.
+`period_assert()` throws an error if a check fails.
 
 ## Create mappings
 
@@ -134,9 +131,9 @@ age_mapping(
 ```
 
 
-## Period and cohort
+## Age, period, and cohort
 
-Age group functions have period and cohort equivalents. For instance:
+Most functions have age, period, and cohort equivalents. For instance:
 
 | Age                 | Period                 | Cohort                 |
 |---------------------|------------------------|------------------------|
@@ -148,15 +145,15 @@ Age group functions have period and cohort equivalents. For instance:
 
 ## Function tasks
 
-`agetime` functions fall into five groups, defined by their tasks:
+`agetime` functions fall into five groups:
 
-| Task | Examples | Return value |
+| Task | Examples (`age`/`period`/`cohort` omitted) | Return value |
 |-------------------------------------------|---------------------------------------------------------------|----------------------------------|
-| Extract limits or identify special labels | `age_lower()`, `age_upper()`, `age_mid()`, `age_width()`, `age_is_total()` | Numeric or logical |
-| Create a new series, or reformat existing labels | `age_labels_five()`, `age_standard()`, `age_extend()` | Character, or same type as `labels` |
-| Recode values and set factor levels | `age_coarsen()`, `age_fill()`, `age_set_open_right()`, `age_set_order()` | Factor |
-| Validate labels | `age_diagnose()`, `age_assert()` | Diagnostics, or `labels` |
-| Relate two sets of labels | `age_mapping()` | Tibble or matrix |
+| Extract limits or identify special labels | `_lower()`, `_upper()`, `_mid()`, `_width()`, `_is_total()` | Numeric or logical |
+| Create a new series, or reformat existing labels | `_interval()`, `_labels_five()`, `_standard()`, `_extend()` | Character, or same type as `labels` |
+| Recode values and set factor levels | `_coarsen()`, `_fill()`, `_set_open_right()`, `_set_order()` | Factor |
+| Validate labels | `_diagnose()`, `_assert()` | Diagnostics, or `labels` |
+| Relate two sets of labels | `_mapping()` | Tibble or matrix |
 
 
 ## More information
