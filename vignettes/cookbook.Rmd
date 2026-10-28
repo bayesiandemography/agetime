@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This vignette provides recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem and gives a solution, plus pointers to related recipes and help pages. For an overview of the package, see `vignette("agetime")`.
+This vignette provides recipes for common tasks involving age group, period, and cohort labels. Each recipe describes a problem and gives a solution. For an overview of the `agetime` package, see `vignette("agetime")`.
 
 ```{r libs}
 library(agetime)
@@ -368,8 +368,8 @@ period_interval(c("2018", "2019", "2020-2025"))
 To see how the interpretation changes, vary `interpret_single` and `interpret_multi`.
 
 ```{r see-intervals-interpret}
-## years running from 1 July to 30 June,
-## labelled by the year in which they end
+## years running from 1 July to 30 June, with
+## labels giving the year in which they end
 period_interval(c("2019", "2020"), interpret_single = "upper")
 
 ## second number in "2020-2024" is the last year
