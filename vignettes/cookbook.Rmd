@@ -270,7 +270,9 @@ observed |>
 - [Include levels that don't appear in the data](#fill-levels)
 
 
-## Validate labels {#validate-labels}
+# Check labels
+
+## Check for gaps, overlaps, and other problems {#validate-labels}
 
 ### Problem
 
@@ -303,10 +305,10 @@ The `assert` functions return their input invisibly when checks pass. Returning 
 ### See Also
 
 - `?age_diagnose`, `?period_diagnose`, or `?cohort_diagnose` for the full set of conditions
-- When working with subsets of factors, you might want to [validate labels - based on values, not levels](#validate-labels-values)
+- When working with subsets of factors, you might want to [check the values in a factor, ignoring unused levels](#validate-labels-values)
 
 
-## Validate labels - based on values, not levels {#validate-labels-values}
+## Check the values in a factor, ignoring unused levels {#validate-labels-values}
 
 ### Problem
 
@@ -344,7 +346,7 @@ df |>
 
 ### See Also
 
-- [Validate labels](#validate-labels) for checking factor levels, not values
+- [Check for gaps, overlaps, and other problems](#validate-labels) for checking factor levels, not values
 
 
 ## See the intervals implied by a set of labels {#see-intervals}
@@ -385,7 +387,7 @@ The `interval` functions return descriptions of labels, not labels, and other `a
 
 - `?age_interval`, `?period_interval`, and `?cohort_interval`
 - The `lower`, `upper`, `width`, and `mid` functions (e.g. `period_lower()`) return the limits, widths, and midpoints of intervals as numbers
-- [Validate labels](#validate-labels)
+- [Check for gaps, overlaps, and other problems](#validate-labels)
 
 
 # Analyse data
