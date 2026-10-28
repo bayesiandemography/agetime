@@ -668,8 +668,8 @@ You have two age classifications, and you want a lookup table showing how the ag
 Use `age_mapping()`.
 
 ```{r mapping}
-classif_fine <- age_labels_life()
-classif_broad <- age_labels(breaks = c(0, 15, 65, 85))
+classif_fine <- age_labels_ten(lower_last = 60)
+classif_broad <- age_labels(breaks = c(0, 20, 60), open_right = TRUE)
 age_mapping(
   labels_x = classif_fine,
   labels_y = classif_broad,
