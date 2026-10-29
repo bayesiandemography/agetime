@@ -134,10 +134,10 @@ use `age_coarsen_life()` in place of `age_coarsen_five()`.
 ### Discussion
 
 `agetime` reads a number on its own as a single year of age. Without
-coarsening, `5` is the age group `"5"`, with upper limit 6, not 10.
+coarsening, `5` is the interval from age 5 up to age 6, not up to age 10.
 
 ```{r lower-limits-single}
-age_upper(age)
+age_interval(age)
 ```
 
 ### See Also
