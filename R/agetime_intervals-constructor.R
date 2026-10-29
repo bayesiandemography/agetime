@@ -79,12 +79,14 @@ intervals_inner <- function(labels,
     label_orig = labels_orig,
     MoreArgs = list(
       label_parsers = label_parsers,
-      interpret_fail = interpret_fail,
       interpret_multi = interpret_multi,
       label_type = label_type
     ),
     SIMPLIFY = FALSE
   )
+  fails <- lapply(m, attr, which = "fail", exact = TRUE)
+  fails <- fails[!vapply(fails, is.null, TRUE)]
+  signal_label_fails(fails = fails, interpret_fail = interpret_fail)
   m <- matrix(as.numeric(unlist(m, use.names = FALSE)),
     ncol = 2L,
     byrow = TRUE,

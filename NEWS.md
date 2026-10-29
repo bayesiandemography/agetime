@@ -36,6 +36,9 @@
 
 ## Changes to behaviour
 
+- When several labels cannot be interpreted, the error or warning now
+  lists all of them, rather than stopping at the first. Long lists are
+  truncated.
 - `age_coarsen_five()`, `age_coarsen_ten()`, `age_coarsen_life()`,
   and their period and cohort equivalents now always return a factor,
   as `age_coarsen()` and `age_coarsen_to()` already did. Previously

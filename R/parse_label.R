@@ -98,17 +98,17 @@ make_label_parsers_period <- function(interpret_single,
 #' @param label_orig The label as supplied by the user, before
 #' normalization. Used in messages.
 #' @param label_parsers List of label parser functions.
-#' @param interpret_fail How to handle unparsable labels.
 #' @param interpret_multi Rule for multi-year labels: `"at_upper"`
 #' or `"below_upper"`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @returns Length-2 numeric interval vector for one label.
+#' @returns Length-2 numeric interval vector for one label. If the
+#' label cannot be parsed, `c(NA_real_, NA_real_)` with a `"fail"`
+#' attribute, which `signal_label_fails()` turns into a message.
 #'
 #' @noRd
 x_label <- function(label,
                     label_orig,
                     label_parsers,
-                    interpret_fail,
                     interpret_multi,
                     label_type) {
   na <- c(NA_real_, NA_real_)
@@ -140,7 +140,7 @@ x_label <- function(label,
           }
           msg <- c(msg, i = parsed_i)
         }
-        return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
+        return(x_label_fail(msg = msg, label_orig = label_orig))
       }
       if (is_one_year_range_label(label = label, l = l, u = u)) {
         msg <- c(
@@ -160,7 +160,7 @@ x_label <- function(label,
             )
           )
         }
-        return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
+        return(x_label_fail(msg = msg, label_orig = label_orig))
       }
       return(val)
     }
@@ -177,10 +177,10 @@ x_label <- function(label,
         i = "For a {label_name(label_type)} that is open on the left, use {.val {paste0(\"<\", year)}}?"
       )
     }
-    return(x_label_fail(msg = msg, interpret_fail = interpret_fail))
+    return(x_label_fail(msg = msg, label_orig = label_orig))
   }
   msg <- "Don't know how to interpret label {.val {label_orig}}."
-  x_label_fail(msg = msg, interpret_fail = interpret_fail)
+  x_label_fail(msg = msg, label_orig = label_orig, unknown = TRUE)
 }
 
 #' Is Two-Value Label
@@ -226,20 +226,65 @@ msg_i_parsed_interval <- function(label_type) {
   }
 }
 
-#' Handle a Label Parse Failure
+#' Record a Label Parse Failure
 #'
-#' @param msg Error or warning message.
-#' @param interpret_fail How to handle unparsable labels.
-#' @returns `c(NA_real_, NA_real_)` when not aborting.
+#' @param msg Error or warning message, with placeholders to be
+#' interpolated in the calling frame.
+#' @param label_orig The label as supplied by the user.
+#' @param unknown Whether the label is in no recognized format, as
+#' opposed to being recognized but invalid.
+#' @returns `c(NA_real_, NA_real_)` with a `"fail"` attribute.
 #'
 #' @noRd
-x_label_fail <- function(msg, interpret_fail) {
-  envir <- parent.frame()
-  if (interpret_fail == "error") {
+x_label_fail <- function(msg, label_orig, unknown = FALSE) {
+  fail <- list(
+    msg = msg,
+    envir = parent.frame(),
+    label_orig = label_orig,
+    unknown = unknown
+  )
+  structure(c(NA_real_, NA_real_), fail = fail)
+}
+
+#' Signal Label Parse Failures
+#'
+#' Signals all parse failures at once, so that users can fix every
+#' unparsable label in one pass. If every failure is a label in no
+#' recognized format, the labels are listed together. Otherwise the
+#' first failure is shown in full, followed by a list of the others.
+#'
+#' @param fails List of `"fail"` attributes from `x_label_fail()`.
+#' @param interpret_fail How to handle unparsable labels.
+#' @returns `NULL`, invisibly, unless aborting.
+#'
+#' @noRd
+signal_label_fails <- function(fails, interpret_fail) {
+  if (identical(interpret_fail, "silent") || length(fails) == 0L) {
+    return(invisible(NULL))
+  }
+  labels_fail <- vapply(fails, function(fail) fail$label_orig, "")
+  is_unknown <- vapply(fails, function(fail) fail$unknown, TRUE)
+  n_fail <- length(fails)
+  if (n_fail > 1L && all(is_unknown)) {
+    labels_fail <- cli::cli_vec(labels_fail, list("vec-trunc" = 5))
+    msg <- "Don't know how to interpret {n_fail} labels: {.val {labels_fail}}."
+    envir <- environment()
+  } else {
+    msg <- fails[[1L]]$msg
+    envir <- fails[[1L]]$envir
+    if (n_fail > 1L) {
+      envir <- new.env(parent = envir)
+      envir$n_other <- n_fail - 1L
+      envir$labels_other <- cli::cli_vec(labels_fail[-1L], list("vec-trunc" = 5))
+      msg <- c(
+        msg,
+        i = "Also can't interpret {n_other} other label{?s}: {.val {labels_other}}."
+      )
+    }
+  }
+  if (identical(interpret_fail, "error")) {
     cli::cli_abort(msg, .envir = envir, call = user_frame())
   }
-  if (interpret_fail == "warn") {
-    cli::cli_warn(msg, .envir = envir, call = user_frame())
-  }
-  c(NA_real_, NA_real_)
+  cli::cli_warn(msg, .envir = envir, call = user_frame())
+  invisible(NULL)
 }
