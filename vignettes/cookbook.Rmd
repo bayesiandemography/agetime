@@ -107,6 +107,45 @@ Not-stated categories become `NA`. To remove them, see [Drop "Not stated" catego
 - The help pages for `age_standard()`, `period_standard()`, and `cohort_standard()` describe `agetime` formatting rules
 
 
+## Convert lower limits to age group labels {#lower-limits}
+
+### Problem
+
+Your data store age groups as numbers, such as `0`, `5`, `10`, ..., `85`,
+where each number is the lower limit of a five-year age group, and `85` is
+the lower limit of an open age group. You want age group labels such as
+`"0-4"` and `"85+"`.
+
+### Solution
+
+Treat the numbers as single years, coarsen them to five-year groups, and
+then make the last group open.
+
+```{r lower-limits}
+age <- c(0, 5, 10, 80, 85)
+age |>
+  age_coarsen_five() |>
+  age_set_open_right(at = 85)
+```
+
+For life-table age groups, where the numbers are `0`, `1`, `5`, `10`, ...,
+use `age_coarsen_life()` in place of `age_coarsen_five()`.
+
+### Discussion
+
+`agetime` reads a number on its own as a single year of age. Without
+coarsening, `5` is the age group `"5"`, with upper limit 6, not 10.
+
+```{r lower-limits-single}
+age_upper(age)
+```
+
+### See Also
+
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [Specify an open-ended age group, period, or cohort](#specify-an-open-ended-age-group-period-or-cohort)
+
+
 ## Create labels for a forecast {#extend}
 
 ### Problem

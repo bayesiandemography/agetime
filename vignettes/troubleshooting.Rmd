@@ -69,35 +69,6 @@ Case, spaces, and leading zeros do not matter. Labels containing decimals,
 such as `"2.5"`, are not recognized.
 
 
-## Numbers that are lower limits of wider age groups
-
-### Problem
-
-Ages are stored as numbers, such as `0`, `5`, `10`, ..., `85`, where
-each number is the lower limit of a five-year age group, and `85` is the
-lower limit of an open age group. `agetime` reads each number as a
-single year of age.
-
-```{r numbers-problem}
-age <- c(0, 5, 10, 80, 85)
-age_upper(age)
-```
-
-### Solution
-
-Treat the numbers as single years, coarsen them to five-year groups, and
-then make the last group open.
-
-```{r numbers-solution}
-age |>
-  age_coarsen_five() |>
-  age_set_open_right(at = 85)
-```
-
-For life-table age groups, where the numbers are `0`, `1`, `5`, `10`, ...,
-use `age_coarsen_life()` in place of `age_coarsen_five()`.
-
-
 ## One-year periods written as ranges
 
 ### Problem
