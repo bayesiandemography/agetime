@@ -22,9 +22,8 @@ library(agetime)
 library(dplyr, warn.conflicts = FALSE)
 ```
 
-This vignette describes problems that users commonly run into
-when working with age, period, and cohort labels, and explains
-how to solve them.
+This vignette describes errors and difficulties you might
+encounter when using `agetime`, and suggests solutions.
 
 
 # Reading labels
@@ -33,7 +32,7 @@ how to solve them.
 
 ### Problem
 
-A label is not in any format that `agetime` recognizes.
+A label is not in a format that `agetime` recognizes.
 
 ```{r unparsed-problem, error = TRUE}
 x <- c("0-4", "5-9", "Age not stated4", "85+ (a)")
@@ -42,24 +41,15 @@ age_standard(x)
 
 ### Solution
 
-First, find the labels that cannot be parsed. Setting `interpret_fail`
-to `"silent"` turns unparsable labels into `NA`, so they can be
-compared with labels that really are missing.
-
-```{r unparsed-find}
-lower <- age_lower(x, interpret_fail = "silent")
-is_missing <- age_is_missing(x, interpret_fail = "silent")
-x[is.na(lower) & !is_missing]
-```
-
-Then clean the labels before passing them to `agetime`. Labels in published
-tables often carry footnote markers, such as the `4` in `"Age not stated4"`
-and the `(a)` in `"85+ (a)"`.
+The error message lists the labels that cannot be interpreted. Clean
+these labels before passing them to `agetime`. Labels in published tables
+often carry footnote markers, such as the `4` in `"Age not stated4"` and
+the `(a)` in `"85+ (a)"`.
 
 ```{r unparsed-clean}
-x_clean <- x |>
-  sub(pattern = " \\(.*\\)$", replacement = "") |>
-  sub(pattern = "([a-z])[0-9]+$", replacement = "\\1")
+x_clean <- x
+x_clean[x_clean == "Age not stated4"] <- "Age not stated"
+x_clean[x_clean == "85+ (a)"] <- "85+"
 age_standard(x_clean)
 ```
 
