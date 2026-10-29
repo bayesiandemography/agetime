@@ -146,6 +146,46 @@ age_upper(age)
 - [Specify an open-ended age group, period, or cohort](#specify-an-open-ended-age-group-period-or-cohort)
 
 
+## Adopt coarser age groups from another age variable {#recode-into-classification}
+
+### Problem
+
+You have two age variables, and you want to switch the finer one to the coarser age groups used by the other.
+
+### Solution
+
+Use `age_coarsen_to()`.
+
+```{r recode-classification}
+df <- tibble(
+  age = c("0", "1", "5", "10", "11"),
+  n = c(3, 1, 4, 6, 7)
+)
+age_wide <- c("0-4", "5-14")
+
+df |>
+  mutate(age = age_coarsen_to(age, to = age_wide)) |>
+  count(age, wt = n)
+```
+
+### Discussion
+
+Every age group in `labels` must lie inside exactly one age group in `to`. Otherwise `age_coarsen_to()` throws an error, which distinguishes two problems:
+
+- an age group *would be split* when it overlaps two or more age groups in `to`, as `"5-9"` overlaps `"0-6"` and `"7-14"`;
+- an age group is *not fully covered* when part of it lies outside all the age groups in `to`, as `"20"` lies above `"7-14"`.
+
+```{r recode-classification-error, error = TRUE}
+age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
+```
+
+### See Also
+
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [Build a mapping between age groups](#build-a-mapping-between-age-groups)
+- `period_coarsen_to()`, `cohort_coarsen_to()`
+
+
 ## Create labels for a forecast {#extend}
 
 ### Problem
@@ -654,46 +694,6 @@ For irregular age groups, use `age_coarsen()`. To borrow categories from another
 - `period_coarsen_five()`, `cohort_coarsen_five()`
 - `period_coarsen()`, `cohort_coarsen()`
 - `age_coarsen_to()`, `period_coarsen_to()`, `cohort_coarsen_to()`
-
-
-## Adopt coarser age groups from another age variable {#recode-into-classification}
-
-### Problem
-
-You have two age variables, and you want to switch the finer one to the coarser age groups used by the other.
-
-### Solution
-
-Use `age_coarsen_to()`.
-
-```{r recode-classification}
-df <- tibble(
-  age = c("0", "1", "5", "10", "11"),
-  n = c(3, 1, 4, 6, 7)
-)
-age_wide <- c("0-4", "5-14")
-
-df |>
-  mutate(age = age_coarsen_to(age, to = age_wide)) |>
-  count(age, wt = n)
-```
-
-### Discussion
-
-Every age group in `labels` must lie inside exactly one age group in `to`. Otherwise `age_coarsen_to()` throws an error, which distinguishes two problems:
-
-- an age group *would be split* when it overlaps two or more age groups in `to`, as `"5-9"` overlaps `"0-6"` and `"7-14"`;
-- an age group is *not fully covered* when part of it lies outside all the age groups in `to`, as `"20"` lies above `"7-14"`.
-
-```{r recode-classification-error, error = TRUE}
-age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
-```
-
-### See Also
-
-- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
-- [Build a mapping between age groups](#build-a-mapping-between-age-groups)
-- `period_coarsen_to()`, `cohort_coarsen_to()`
 
 
 ## Build a mapping between age groups
