@@ -83,9 +83,9 @@
 #'
 #' |                |                   |                   |
 #' |----------------|-------------------|-------------------|
-#' | [age_diagnose()]  | [period_diagnose()]  | [cohort_diagnose()]  |
+#' | [age_diagnose_levels()]  | [period_diagnose_levels()]  | [cohort_diagnose_levels()]  |
 #' | [age_diagnose_values()]  | [period_diagnose_values()]  | [cohort_diagnose_values()]  |
-#' | [age_assert()] | [period_assert()] | [cohort_assert()] |
+#' | [age_assert_levels()] | [period_assert_levels()] | [cohort_assert_levels()] |
 #' | [age_assert_values()] | [period_assert_values()] | [cohort_assert_values()] |
 #'
 #' **Create mappings between labels**

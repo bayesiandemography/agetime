@@ -42,6 +42,8 @@ intervals of two or more other labels in the same set. For example, in
 
 Subtotals are distinct from grand total labels such as \code{"Total"} or \code{"All"},
 which are identified by \code{\link[=cohort_is_total]{cohort_is_total()}}.
+
+If \code{labels} is a factor, unused levels are ignored.
 }
 \section{Rules for interpreting inputs}{
 

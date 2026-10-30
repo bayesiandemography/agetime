@@ -133,3 +133,10 @@ test_that("children_can_rebuild_parent() needs two or more children", {
   children <- matrix(c(91, Inf), ncol = 2, byrow = TRUE)
   expect_false(agetime:::children_can_rebuild_parent(parent, children))
 })
+
+test_that("age_is_subtotal() ignores unused factor levels", {
+  labs <- factor("0-4", levels = c("0-4", "0", "1-4"))
+  expect_values(age_is_subtotal(labs), FALSE)
+  labs <- factor(c("0-4", "0", "1-4"), levels = c("0-4", "0", "1-4", "5-9"))
+  expect_values(age_is_subtotal(labs), c(TRUE, FALSE, FALSE))
+})

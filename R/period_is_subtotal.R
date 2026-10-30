@@ -10,6 +10,8 @@
 #' Subtotals are distinct from grand total labels such as `"Total"` or `"All"`,
 #' which are identified by [period_is_total()].
 #'
+#' If `labels` is a factor, unused levels are ignored.
+#'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower

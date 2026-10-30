@@ -359,11 +359,11 @@ You want to check that a set of labels meets your expectations, such as having n
 
 ### Solution
 
-Use the `diagnose` functions for diagnostics. Use the `assert` functions to throw an error as soon as a condition is violated.
+Use the `diagnose_values` functions for diagnostics. Use the `assert_values` functions to throw an error as soon as a condition is violated.
 
 ```{r validate}
 lab <- c("2020-2025", "2025-2030", "2030-2035")
-period_diagnose(lab, no_gap = TRUE, no_overlap = TRUE)
+period_diagnose_values(lab, no_gap = TRUE, no_overlap = TRUE)
 
 pop <- tibble(
   age = c("0-4", "5-9", "10-14"),
@@ -371,7 +371,7 @@ pop <- tibble(
 )
 
 pop |>
-  mutate(age = age_assert(age, has_zero = TRUE, no_gap = TRUE))
+  mutate(age = age_assert_values(age, has_zero = TRUE, no_gap = TRUE))
 ```
 
 ### Discussion
@@ -380,52 +380,78 @@ The `diagnose` functions return a list with an `ok` flag and details.
 
 The `assert` functions return their input invisibly when checks pass. Returning their inputs allows them to be used in pipelines.
 
+The `values` functions treat each element of `labels` as a separate group, so a label that appears more than once counts as overlapping.
 
 ### See Also
 
-- `?age_diagnose`, `?period_diagnose`, or `?cohort_diagnose` for the full set of conditions
-- When working with subsets of factors, you might want to [check the values in a factor, ignoring unused levels](#validate-labels-values)
+- `?age_diagnose_levels`, `?period_diagnose_levels`, or `?cohort_diagnose_levels` for the full set of conditions
+- [Check labels within groups of a data frame](#validate-labels-groups)
+- [Check the levels of a factor](#validate-labels-levels)
 
 
-## Check the values in a factor, ignoring unused levels {#validate-labels-values}
+## Check labels within groups of a data frame {#validate-labels-groups}
 
 ### Problem
 
-Your labels are a factor, and you want to check the values that actually appear, not the factor levels. The `diagnose` and `assert` functions check factor *levels*, including unused levels. For instance, if we have
-```
-labels <- factor(c("0-4", "5-9"))
-```
-then the check
-```
-age_assert(labels[2], has_zero = TRUE)
-```
-will pass because it is applied to the levels of `labels[2]` (i.e. `c("0-4", "5-9")`) and not the value (`"5-9"`).
+Your data frame has one row for each combination of age group and another variable, such as sex, and you want to check the age groups for each sex. Checking the whole column fails, because each age group appears more than once.
 
-This means, for instance, that the following test will pass, even though the `"M"` group does not have any age groups starting with 0.
-
-```{r validate-values-problem}
+```{r validate-groups-problem, error = TRUE}
 df <- tibble(
-  age = factor(c("0-4", "5-9", "5-9")),
-  gender = c("F", "F", "M")
-) |>
-group_by(gender)
+  age = c("0-4", "5-9", "0-4", "5-9"),
+  sex = c("F", "F", "M", "M"),
+  count = c(51, 49, 53, 50)
+)
 
 df |>
-  mutate(age = age_assert(age, has_zero = TRUE))
+  mutate(age = age_assert_values(age, no_overlap = TRUE))
 ```
 
 ### Solution
 
-To check the values of a factor, rather than the levels, use the `diagnose_values` and `assert_values` functions.
+Group the data first, for instance using `group_by()`.
 
-```{r validate-values-solution, error = TRUE}
+```{r validate-groups-solution}
 df |>
-  mutate(age = age_assert_values(age, has_zero = TRUE))
+  group_by(sex) |>
+  mutate(age = age_assert_values(age, no_overlap = TRUE, has_zero = TRUE))
 ```
+
+### Discussion
+
+Every check is applied separately to each group. For instance, `has_zero = TRUE` checks that each sex has an age group starting at zero.
 
 ### See Also
 
-- [Check for gaps, overlaps, and other problems](#validate-labels), which checks factor levels
+- [Check for gaps, overlaps, and other problems](#validate-labels)
+
+
+## Check the levels of a factor {#validate-labels-levels}
+
+### Problem
+
+Your labels are a factor, and you want to check the levels, including levels that do not appear in the data.
+
+### Solution
+
+Use the `diagnose_levels` and `assert_levels` functions.
+
+```{r validate-levels}
+age <- factor(
+  c("0-4", "0-4", "5-9"),
+  levels = c("0-4", "5-9", "10+")
+)
+
+age_diagnose_levels(age, no_overlap = TRUE, has_open_right = TRUE)
+age_diagnose_values(age, no_overlap = TRUE, has_open_right = TRUE)
+```
+
+### Discussion
+
+The `levels` functions throw an error if `labels` is not a factor.
+
+### See Also
+
+- [Include levels that don't appear in the data](#fill-levels)
 
 
 ## See the intervals implied by a set of labels {#see-intervals}

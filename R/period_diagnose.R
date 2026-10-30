@@ -1,10 +1,14 @@
 #' Diagnostics and Assertions for Periods
 #'
 #' @description
-#' `period_diagnose()` reports whether period labels
-#' meet conditions.
+#' Check whether period labels meet conditions.
+#' The `diagnose` functions report on each condition, and the
+#' `assert` functions throw an error if a condition is not met.
 #'
-#' `period_assert()` throws an error if conditions are not met.
+#' - `period_diagnose_levels()` and `period_assert_levels()` check the
+#'   levels of a factor, including unused levels.
+#' - `period_diagnose_values()` and `period_assert_values()` check the
+#'   elements of `labels`, treating each element as a separate period.
 #'
 #' Conditions include:
 #'
@@ -13,20 +17,12 @@
 #' - Not having totals or NAs
 #' - Having, or not having, open periods
 #'
-#' If `labels` is a factor, `period_diagnose()` and `period_assert()`
-#' check levels, including unused levels, rather than values.
-#' To check values rather than levels, use `period_diagnose_values()`
-#' or `period_assert_values()`. Checking values rather than levels
-#' is sometimes useful when working with subsets of factors,
-#' such as when working with grouped data.
-#'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
 #' @inheritParams period_lower
 #' @param no_overlap Check that no periods overlap.
 #' Different labels that describe the same interval,
 #' such as `"2020-2025"` and `"2020 to 2025"`, count as overlapping.
-#' Repeated copies of the same label do not.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all periods between
 #' the earliest and latest periods are included.
@@ -49,16 +45,15 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `period_diagnose()` and `period_diagnose_values()` return a list
+#' - `period_diagnose_levels()` and `period_diagnose_values()` return a list
 #'   with a logical flag called `ok` and a [tibble][tibble::tibble()]
 #'   called `details`.
-#' - `period_assert()` and `period_assert_values()` return `labels`
+#' - `period_assert_levels()` and `period_assert_values()` return `labels`
 #'   invisibly, or raise an error.
 #'
 #' @seealso
-#' - [period_diagnose_values()] Check observed values only
-#' - [age_diagnose()] Age equivalent of `period_diagnose()`
-#' - [cohort_diagnose()] Cohort equivalent of `period_diagnose()`
+#' - [age_diagnose_levels()] Age equivalent of `period_diagnose_levels()`
+#' - [cohort_diagnose_levels()] Cohort equivalent of `period_diagnose_levels()`
 #'
 #' @examples
 #' lab <- period_labels_five(
@@ -68,7 +63,7 @@
 #' lab
 #'
 #' ## get info on everything
-#' period_diagnose(
+#' period_diagnose_values(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
@@ -77,25 +72,38 @@
 #' )
 #'
 #' ## throw error if overlap or gap
-#' period_assert(
+#' period_assert_values(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE
 #' )
 #'
-#' ## factor with unused levels
+#' ## repeated labels count as overlapping...
+#' df <- data.frame(
+#'   period = c("2020-2025", "2025-2030", "2020-2025", "2025-2030"),
+#'   sex = c("F", "F", "M", "M")
+#' )
+#' period_diagnose_values(df$period, no_overlap = TRUE)
+#'
+#' ## ...so check within groups
+#' library(dplyr, warn.conflicts = FALSE)
+#' df |>
+#'   group_by(sex) |>
+#'   mutate(period = period_assert_values(period, no_overlap = TRUE))
+#'
+#' ## factor with unused level
 #' fac <- factor(
 #'   x = "2020-2025",
 #'   levels = c("2020-2025", "2030-2035")
 #' )
 #' fac
-#' period_diagnose(fac, no_gap = TRUE)
+#' period_diagnose_levels(fac, no_gap = TRUE)
 #' period_diagnose_values(fac, no_gap = TRUE)
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals,
 # and NA are vacuously satisfied.
-period_diagnose <- function(labels,
+period_diagnose_levels <- function(labels,
                          no_overlap = FALSE,
                          no_gap = FALSE,
                          no_total = FALSE,
@@ -136,9 +144,9 @@ period_diagnose <- function(labels,
   )
 }
 
-#' @rdname period_diagnose
+#' @rdname period_diagnose_levels
 #' @export
-period_assert <- function(labels,
+period_assert_levels <- function(labels,
                           no_overlap = FALSE,
                           no_gap = FALSE,
                           no_total = FALSE,
@@ -179,7 +187,7 @@ period_assert <- function(labels,
   )
 }
 
-#' @rdname period_diagnose
+#' @rdname period_diagnose_levels
 #' @export
 period_diagnose_values <- function(labels,
                                    no_overlap = FALSE,
@@ -222,7 +230,7 @@ period_diagnose_values <- function(labels,
   )
 }
 
-#' @rdname period_diagnose
+#' @rdname period_diagnose_levels
 #' @export
 period_assert_values <- function(labels,
                                  no_overlap = FALSE,

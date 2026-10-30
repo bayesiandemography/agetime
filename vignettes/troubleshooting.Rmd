@@ -173,29 +173,56 @@ labelling convention, open periods are fairly rare.
 
 ### Problem
 
-`age_assert()` or `age_diagnose()` reports an overlap, even though
-the age groups look distinct.
+`age_assert_values()` or `age_diagnose_values()` reports an overlap,
+even though the age groups look distinct.
 
 ```{r synonyms-problem, error = TRUE}
 x <- c("0", "infant", "1-4", "5+")
-age_assert(x, no_overlap = TRUE)
+age_assert_values(x, no_overlap = TRUE)
 ```
 
 ### Solution
 
 Two different labels, `"0"` and `"infant"`, describe the same age group.
-Standardize the labels first.
+Standardizing the labels makes this visible.
 
 ```{r synonyms-solution}
-x |>
-  age_standard() |>
-  age_assert(no_overlap = TRUE)
+age_standard(x)
 ```
 
-### Discussion
+If both refer to the same people, combine or drop one of them.
 
-Repeated copies of the same label, as in a data frame with one row per
-age group and sex, do not count as overlapping.
+
+## Overlaps in a data frame with repeated age groups
+
+### Problem
+
+`age_assert_values()` reports an overlap in a column of a data frame
+where each age group appears once for each sex, region, or year.
+
+```{r repeats-problem, error = TRUE}
+df <- tibble(
+  age = c("0-4", "5-9", "0-4", "5-9"),
+  sex = c("F", "F", "M", "M")
+)
+df |>
+  mutate(age = age_assert_values(age, no_overlap = TRUE))
+```
+
+### Solution
+
+The `values` functions treat each element as a separate age group,
+so repeated labels overlap. Check within groups instead.
+
+```{r repeats-solution}
+df |>
+  group_by(sex) |>
+  mutate(age = age_assert_values(age, no_overlap = TRUE))
+```
+
+### See Also
+
+- Cookbook: [Check labels within groups of a data frame](cookbook.html#validate-labels-groups)
 
 
 ## Totals and missing values
@@ -207,7 +234,7 @@ labels include a total or a missing value.
 
 ```{r totals-problem, error = TRUE}
 x <- c("0-4", "5-9", "Total")
-age_assert(x, no_total = TRUE)
+age_assert_values(x, no_total = TRUE)
 ```
 
 ### Solution
@@ -229,24 +256,6 @@ df |>
 
 - Cookbook: [Drop totals from a dataset](cookbook.html#drop-totals) and
   [Drop "Not stated" categories from a dataset](cookbook.html#drop-missing)
-
-
-## Checks that pass when they should fail
-
-### Problem
-
-`age_assert()` passes on a subset of a factor, such as a group in a grouped
-data frame, even though the subset does not meet the condition.
-
-### Solution
-
-For factors, the `diagnose` and `assert` functions check levels, including
-unused levels. Use `age_diagnose_values()` or `age_assert_values()` to
-check only the values that are present.
-
-### See Also
-
-- Cookbook: [Check the values in a factor, ignoring unused levels](cookbook.html#validate-labels-values)
 
 
 # Transforming labels

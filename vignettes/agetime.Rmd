@@ -105,7 +105,7 @@ lab <- period_labels_five(
   lower_first = 2000,
   lower_last = 2020
 )
-period_diagnose(
+period_diagnose_values(
   lab,
   no_overlap = TRUE,
   no_gap = TRUE,
@@ -113,7 +113,9 @@ period_diagnose(
 )
 ```
 
-`period_assert()` throws an error if a check fails.
+`period_assert_values()` throws an error if a check fails.
+`period_diagnose_levels()` and `period_assert_levels()` check
+the levels of a factor, including unused levels.
 
 ## Create mappings
 
@@ -152,7 +154,7 @@ Most functions have age, period, and cohort equivalents. For instance:
 | Extract limits or identify special labels | `_lower()`, `_upper()`, `_mid()`, `_width()`, `_is_total()` | Numeric or logical |
 | Create a new series, or reformat existing labels | `_interval()`, `_labels_five()`, `_standard()`, `_extend()` | Character, or same type as `labels` |
 | Recode values and set factor levels | `_coarsen()`, `_fill()`, `_set_open_right()`, `_set_order()` | Factor |
-| Validate labels | `_diagnose()`, `_assert()` | Diagnostics, or `labels` |
+| Validate labels | `_diagnose_values()`, `_assert_values()` | Diagnostics, or `labels` |
 | Relate two sets of labels | `_mapping()` | Tibble or matrix |
 
 

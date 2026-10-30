@@ -10,6 +10,8 @@
 #' Subtotals are distinct from grand total labels such as `"Total"` or `"All"`,
 #' which are identified by [age_is_total()].
 #'
+#' If `labels` is a factor, unused levels are ignored.
+#'
 #' @inheritParams age_lower
 #'
 #' @return Logical vector with the same length as `labels`.

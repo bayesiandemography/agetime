@@ -1,10 +1,14 @@
 #' Diagnostics and Assertions for Cohorts
 #'
 #' @description
-#' `cohort_diagnose()` reports whether cohort labels
-#' meet conditions.
+#' Check whether cohort labels meet conditions.
+#' The `diagnose` functions report on each condition, and the
+#' `assert` functions throw an error if a condition is not met.
 #'
-#' `cohort_assert()` throws an error if conditions are not met.
+#' - `cohort_diagnose_levels()` and `cohort_assert_levels()` check the
+#'   levels of a factor, including unused levels.
+#' - `cohort_diagnose_values()` and `cohort_assert_values()` check the
+#'   elements of `labels`, treating each element as a separate cohort.
 #'
 #' Conditions include:
 #'
@@ -13,20 +17,12 @@
 #' - Not having totals or NAs
 #' - Having, or not having, open cohorts
 #'
-#' If `labels` is a factor, `cohort_diagnose()` and `cohort_assert()`
-#' check levels, including unused levels, rather than values.
-#' To check values rather than levels, use `cohort_diagnose_values()`
-#' or `cohort_assert_values()`. Checking values rather than levels
-#' is sometimes useful when working with subsets of factors,
-#' such as when working with grouped data.
-#'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
 #' @inheritParams cohort_lower
 #' @param no_overlap Check that no cohorts overlap.
 #' Different labels that describe the same interval,
 #' such as `"<2000"` and `"before 2000"`, count as overlapping.
-#' Repeated copies of the same label do not.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all cohorts between
 #' the earliest and latest cohort are
@@ -50,16 +46,15 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `cohort_diagnose()` and `cohort_diagnose_values()` return a list
+#' - `cohort_diagnose_levels()` and `cohort_diagnose_values()` return a list
 #'   with a logical flag called `ok` and a [tibble][tibble::tibble()]
 #'   called `details`.
-#' - `cohort_assert()` and `cohort_assert_values()` return `labels`
+#' - `cohort_assert_levels()` and `cohort_assert_values()` return `labels`
 #'   invisibly, or raise an error.
 #'
 #' @seealso
-#' - [cohort_diagnose_values()] Check observed values only
-#' - [age_diagnose()] Age equivalent of `cohort_diagnose()`
-#' - [period_diagnose()] Period equivalent of `cohort_diagnose()`
+#' - [age_diagnose_levels()] Age equivalent of `cohort_diagnose_levels()`
+#' - [period_diagnose_levels()] Period equivalent of `cohort_diagnose_levels()`
 #'
 #' @examples
 #' lab <- cohort_labels_five(
@@ -69,7 +64,7 @@
 #' lab
 #'
 #' ## get info on everything
-#' cohort_diagnose(
+#' cohort_diagnose_values(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
@@ -80,24 +75,37 @@
 #' )
 #'
 #' ## throw error if overlap or gap
-#' cohort_assert(
+#' cohort_assert_values(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE
 #' )
 #'
-#' ## factor with unused levels
+#' ## repeated labels count as overlapping...
+#' df <- data.frame(
+#'   cohort = c("2020-2025", "2025-2030", "2020-2025", "2025-2030"),
+#'   sex = c("F", "F", "M", "M")
+#' )
+#' cohort_diagnose_values(df$cohort, no_overlap = TRUE)
+#'
+#' ## ...so check within groups
+#' library(dplyr, warn.conflicts = FALSE)
+#' df |>
+#'   group_by(sex) |>
+#'   mutate(cohort = cohort_assert_values(cohort, no_overlap = TRUE))
+#'
+#' ## factor with unused level
 #' fac <- factor(
 #'   x = "2020-2025",
 #'   levels = c("2020-2025", "2030-2035")
 #' )
 #' fac
-#' cohort_diagnose(fac, no_gap = TRUE)
+#' cohort_diagnose_levels(fac, no_gap = TRUE)
 #' cohort_diagnose_values(fac, no_gap = TRUE)
 #' @export
 # When length(labels) == 0, checks on overlap, gaps, totals,
 # and NA are vacuously satisfied and has_open_* checks fail.
-cohort_diagnose <- function(labels,
+cohort_diagnose_levels <- function(labels,
                          no_overlap = FALSE,
                          no_gap = FALSE,
                          no_total = FALSE,
@@ -138,9 +146,9 @@ cohort_diagnose <- function(labels,
   )
 }
 
-#' @rdname cohort_diagnose
+#' @rdname cohort_diagnose_levels
 #' @export
-cohort_assert <- function(labels,
+cohort_assert_levels <- function(labels,
                           no_overlap = FALSE,
                           no_gap = FALSE,
                           no_total = FALSE,
@@ -181,7 +189,7 @@ cohort_assert <- function(labels,
   )
 }
 
-#' @rdname cohort_diagnose
+#' @rdname cohort_diagnose_levels
 #' @export
 cohort_diagnose_values <- function(labels,
                                    no_overlap = FALSE,
@@ -224,7 +232,7 @@ cohort_diagnose_values <- function(labels,
   )
 }
 
-#' @rdname cohort_diagnose
+#' @rdname cohort_diagnose_levels
 #' @export
 cohort_assert_values <- function(labels,
                                  no_overlap = FALSE,

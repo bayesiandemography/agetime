@@ -171,6 +171,9 @@ inner_is_subtotal <- function(labels,
   if (length(labels) == 0L) {
     return(logical(0))
   }
+  if (is.factor(labels)) {
+    labels <- droplevels(labels)
+  }
   intervals_all <- intervals(
     labels = labels,
     label_type = label_type,

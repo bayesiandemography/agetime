@@ -1,10 +1,14 @@
 #' Diagnostics and Assertions for Age Groups
 #'
 #' @description
-#' `age_diagnose()` reports whether age group labels
-#' meet conditions.
+#' Check whether age group labels meet conditions.
+#' The `diagnose` functions report on each condition, and the
+#' `assert` functions throw an error if a condition is not met.
 #'
-#' `age_assert()` throws an error if conditions are not met.
+#' - `age_diagnose_levels()` and `age_assert_levels()` check the
+#'   levels of a factor, including unused levels.
+#' - `age_diagnose_values()` and `age_assert_values()` check the
+#'   elements of `labels`, treating each element as a separate age group.
 #'
 #' Conditions include:
 #'
@@ -14,13 +18,6 @@
 #' - Having, or not having, open age groups
 #' - Having an age group that starts at zero
 #' - Only including age groups used by an abridged life table
-#'
-#' If `labels` is a factor, `age_diagnose()` and `age_assert()`
-#' check levels, including unused levels, rather than values.
-#' To check values rather than levels, use `age_diagnose_values()`
-#' or `age_assert_values()`. Checking values rather than levels
-#' is sometimes useful when working with subsets of factors,
-#' such as when working with grouped data.
 #'
 #' @section Abridged and complete life tables:
 #'
@@ -34,7 +31,6 @@
 #' @param no_overlap Check that no age groups overlap.
 #' Different labels that describe the same interval,
 #' such as `"0"` and `"infant"`, count as overlapping.
-#' Repeated copies of the same label do not.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all ages between the
 #' youngest and oldest age groups are included.
@@ -57,23 +53,22 @@
 #' Default is `FALSE` (don't check).
 #'
 #' @return
-#' - `age_diagnose()` and `age_diagnose_values()` return a list with
+#' - `age_diagnose_levels()` and `age_diagnose_values()` return a list with
 #'   a logical flag called `ok` and a [tibble][tibble::tibble()]
 #'   called `details`.
-#' - `age_assert()` and `age_assert_values()` return `labels`
+#' - `age_assert_levels()` and `age_assert_values()` return `labels`
 #'   invisibly, or raise an error.
 #'
 #' @seealso
-#' - [age_diagnose_values()] Check observed values only
-#' - [period_diagnose()] Period equivalent of `age_diagnose()`
-#' - [cohort_diagnose()] Cohort equivalent of `age_diagnose()`
+#' - [period_diagnose_levels()] Period equivalent of `age_diagnose_levels()`
+#' - [cohort_diagnose_levels()] Cohort equivalent of `age_diagnose_levels()`
 #'
 #' @examples
 #' lab <- age_labels_life()
 #' lab
 #'
 #' ## get info on everything
-#' age_diagnose(
+#' age_diagnose_values(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
@@ -85,26 +80,39 @@
 #' )
 #'
 #' ## throw error if overlap or gap
-#' age_assert(
+#' age_assert_values(
 #'   labels = lab,
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE
 #' )
 #'
-#' ## factor with unused overlapping level
+#' ## repeated labels count as overlapping...
+#' df <- data.frame(
+#'   age = c("0-4", "5-9", "0-4", "5-9"),
+#'   sex = c("F", "F", "M", "M")
+#' )
+#' age_diagnose_values(df$age, no_overlap = TRUE)
+#'
+#' ## ...so check within groups
+#' library(dplyr, warn.conflicts = FALSE)
+#' df |>
+#'   group_by(sex) |>
+#'   mutate(age = age_assert_values(age, no_overlap = TRUE))
+#'
+#' ## factor with unused level
 #' fac <- factor(
 #'   x = "0-4",
 #'   levels = c("0-4", "3-7")
 #' )
 #' fac
-#' age_diagnose(fac, no_overlap = TRUE)
+#' age_diagnose_levels(fac, no_overlap = TRUE)
 #' age_diagnose_values(fac, no_overlap = TRUE)
 #' @export
 
 # When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
 # validity are vacuously satisfied. Checks that require at
 # least one interval (has_*) fail.
-age_diagnose <- function(labels,
+age_diagnose_levels <- function(labels,
                       no_overlap = FALSE,
                       no_gap = FALSE,
                       no_total = FALSE,
@@ -135,9 +143,9 @@ age_diagnose <- function(labels,
   )
 }
 
-#' @rdname age_diagnose
+#' @rdname age_diagnose_levels
 #' @export
-age_assert <- function(labels,
+age_assert_levels <- function(labels,
                        no_overlap = FALSE,
                        no_gap = FALSE,
                        no_total = FALSE,
@@ -168,7 +176,7 @@ age_assert <- function(labels,
   )
 }
 
-#' @rdname age_diagnose
+#' @rdname age_diagnose_levels
 #' @export
 age_diagnose_values <- function(labels,
                                 no_overlap = FALSE,
@@ -201,7 +209,7 @@ age_diagnose_values <- function(labels,
   )
 }
 
-#' @rdname age_diagnose
+#' @rdname age_diagnose_levels
 #' @export
 age_assert_values <- function(labels,
                               no_overlap = FALSE,

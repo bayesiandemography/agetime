@@ -81,139 +81,142 @@ expect_diagnose_result <- function(val, condition, passed, ok = NULL) {
 }
 
 test_that("no_overlap check passes for non-overlapping age groups", {
-  val <- age_diagnose(age_closed, no_overlap = TRUE)
+  val <- age_diagnose_values(age_closed, no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", TRUE)
 })
 
 test_that("no_overlap check fails for overlapping age groups", {
-  val <- age_diagnose(age_overlap, no_overlap = TRUE)
+  val <- age_diagnose_values(age_overlap, no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", FALSE)
 })
 
 test_that("no_overlap check fails for synonyms describing the same interval", {
-  val <- age_diagnose(c("0", "infant", "1-4", "5+"), no_overlap = TRUE)
+  val <- age_diagnose_values(c("0", "infant", "1-4", "5+"), no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", FALSE)
   expect_match(val$details$comment, "'0' and 'infant' describe the same interval")
-  val <- age_diagnose(c("0-4", "0 to 4", "5+"), no_overlap = TRUE)
+  val <- age_diagnose_values(c("0-4", "0 to 4", "5+"), no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", FALSE)
-  val <- cohort_diagnose(c("<2000", "before 2000", "2000-2004"), no_overlap = TRUE, interpret_multi = "at_upper")
+  val <- cohort_diagnose_values(c("<2000", "before 2000", "2000-2004"), no_overlap = TRUE, interpret_multi = "at_upper")
   expect_diagnose_result(val, "no_overlap", FALSE)
 })
 
-test_that("no_overlap check passes for repeated labels", {
-  val <- age_diagnose(c("0", "0", "1-4", "1-4", "5+"), no_overlap = TRUE)
+test_that("no_overlap check fails for repeated values but not repeated levels", {
+  x <- c("0", "0", "1-4", "1-4", "5+")
+  val <- age_diagnose_values(x, no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", FALSE)
+  val <- age_diagnose_levels(factor(x), no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", TRUE)
 })
 
 test_that("no_overlap check ignores synonyms for NA, and unparsed labels", {
-  val <- age_diagnose(c("unknown", "NA", "0-4"), no_overlap = TRUE)
+  val <- age_diagnose_values(c("unknown", "NA", "0-4"), no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", TRUE)
-  val <- age_diagnose(c("0-4", "young", "old"), no_overlap = TRUE, interpret_fail = "silent")
+  val <- age_diagnose_values(c("0-4", "young", "old"), no_overlap = TRUE, interpret_fail = "silent")
   expect_diagnose_result(val, "no_overlap", TRUE)
 })
 
 test_that("no_overlap check for synonyms uses levels or values", {
   x <- factor(c("0", "1-4"), levels = c("0", "infant", "1-4"))
-  val <- age_diagnose(x, no_overlap = TRUE)
+  val <- age_diagnose_levels(x, no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", FALSE)
   val <- age_diagnose_values(x, no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", TRUE)
 })
 
 test_that("no_gap check passes for contiguous age groups", {
-  val <- age_diagnose(age_closed, no_gap = TRUE)
+  val <- age_diagnose_values(age_closed, no_gap = TRUE)
   expect_diagnose_result(val, "no_gap", TRUE)
 })
 
 test_that("no_gap check fails when there is a gap", {
-  val <- age_diagnose(age_life_gap, no_gap = TRUE)
+  val <- age_diagnose_values(age_life_gap, no_gap = TRUE)
   expect_diagnose_result(val, "no_gap", FALSE)
 })
 
 test_that("no_total check fails when x includes Total", {
-  val <- age_diagnose(age_with_total, no_total = TRUE)
+  val <- age_diagnose_values(age_with_total, no_total = TRUE)
   expect_diagnose_result(val, "no_total", FALSE)
 })
 
 test_that("no_na check fails when x includes NA", {
-  val <- age_diagnose(age_with_na, no_na = TRUE)
+  val <- age_diagnose_values(age_with_na, no_na = TRUE)
   expect_diagnose_result(val, "no_na", FALSE)
 })
 
 test_that("has_zero check passes when a group starts at zero", {
-  val <- age_diagnose(age_closed, has_zero = TRUE)
+  val <- age_diagnose_values(age_closed, has_zero = TRUE)
   expect_diagnose_result(val, "has_zero", TRUE)
 })
 
 test_that("has_zero check fails when no group starts at zero", {
-  val <- age_diagnose(age_no_zero, has_zero = TRUE)
+  val <- age_diagnose_values(age_no_zero, has_zero = TRUE)
   expect_diagnose_result(val, "has_zero", FALSE)
 })
 
 test_that("has_open_right check passes when x includes an open age group", {
-  val <- age_diagnose(age_mixed, has_open_right = TRUE)
+  val <- age_diagnose_values(age_mixed, has_open_right = TRUE)
   expect_diagnose_result(val, "has_open_right", TRUE)
 })
 
 test_that("has_open_right check fails when all age groups are closed", {
-  val <- age_diagnose(age_closed, has_open_right = TRUE)
+  val <- age_diagnose_values(age_closed, has_open_right = TRUE)
   expect_diagnose_result(val, "has_open_right", FALSE)
 })
 
 test_that("has_open_left check passes when x includes a left-open cohort", {
-  val <- cohort_diagnose(cohort_multi, has_open_left = TRUE)
+  val <- cohort_diagnose_values(cohort_multi, has_open_left = TRUE)
   expect_diagnose_result(val, "has_open_left", TRUE)
 })
 
 test_that("has_open_left check fails when all cohorts are closed on the left", {
-  val <- cohort_diagnose(c("2020-2025", "2025-2030"), has_open_left = TRUE)
+  val <- cohort_diagnose_values(c("2020-2025", "2025-2030"), has_open_left = TRUE)
   expect_diagnose_result(val, "has_open_left", FALSE)
 })
 
 test_that("has_open_right check passes when x includes a right-open period", {
-  val <- period_diagnose(c("2020-2030", "2030+"), has_open_right = TRUE)
+  val <- period_diagnose_values(c("2020-2030", "2030+"), has_open_right = TRUE)
   expect_diagnose_result(val, "has_open_right", TRUE)
 })
 
 test_that("no_open_right check passes when all age groups are closed", {
-  val <- age_diagnose(age_closed, no_open_right = TRUE)
+  val <- age_diagnose_values(age_closed, no_open_right = TRUE)
   expect_diagnose_result(val, "no_open_right", TRUE)
 })
 
 test_that("no_open_right check fails when x includes an open age group", {
-  val <- age_diagnose(c("0-4", "5+"), no_open_right = TRUE)
+  val <- age_diagnose_values(c("0-4", "5+"), no_open_right = TRUE)
   expect_diagnose_result(val, "no_open_right", FALSE)
   expect_match(val$details$comment, "'5\\+'")
 })
 
 test_that("no_open_right check does not treat totals or NA as open", {
-  val <- age_diagnose(c("0-4", "Total", NA), no_open_right = TRUE)
+  val <- age_diagnose_values(c("0-4", "Total", NA), no_open_right = TRUE)
   expect_diagnose_result(val, "no_open_right", TRUE)
 })
 
 test_that("no_open_left check passes when all cohorts are closed on the left", {
-  val <- cohort_diagnose(c("2020-2025", "2025+"), no_open_left = TRUE)
+  val <- cohort_diagnose_values(c("2020-2025", "2025+"), no_open_left = TRUE)
   expect_diagnose_result(val, "no_open_left", TRUE)
 })
 
 test_that("no_open_left check fails when x includes a left-open period", {
-  val <- period_diagnose(c("<2020", "2020-2025"), no_open_left = TRUE)
+  val <- period_diagnose_values(c("<2020", "2020-2025"), no_open_left = TRUE)
   expect_diagnose_result(val, "no_open_left", FALSE)
 })
 
 test_that("no_open_right checks levels, and no_open_right in _values() checks values", {
   x <- factor("0-4", levels = c("0-4", "5+"))
-  expect_false(age_diagnose(x, no_open_right = TRUE)$ok)
+  expect_false(age_diagnose_levels(x, no_open_right = TRUE)$ok)
   expect_true(age_diagnose_values(x, no_open_right = TRUE)$ok)
 })
 
-test_that("age_assert() reports a failed no_open_right check", {
+test_that("age_assert_values() reports a failed no_open_right check", {
   expect_error(
-    age_assert(c("0-4", "5+"), no_open_right = TRUE),
+    age_assert_values(c("0-4", "5+"), no_open_right = TRUE),
     "no_open_right"
   )
   expect_error(
-    period_assert(c("2020-2025", "2025+"), no_open_right = TRUE),
+    period_assert_values(c("2020-2025", "2025+"), no_open_right = TRUE),
     "no_open_right"
   )
   expect_error(
@@ -223,92 +226,92 @@ test_that("age_assert() reports a failed no_open_right check", {
 })
 
 test_that("valid_life passes for life-table labels even when there is a gap", {
-  val <- age_diagnose(age_life_gap, valid_life = TRUE)
+  val <- age_diagnose_values(age_life_gap, valid_life = TRUE)
   expect_diagnose_result(val, "valid_life", TRUE)
-  expect_false(age_diagnose(age_life_gap, no_gap = TRUE)$ok)
+  expect_false(age_diagnose_values(age_life_gap, no_gap = TRUE)$ok)
 })
 
 test_that("valid_life check fails for non-life-table age groups", {
-  val <- age_diagnose(age_invalid_life, valid_life = TRUE)
+  val <- age_diagnose_values(age_invalid_life, valid_life = TRUE)
   expect_diagnose_result(val, "valid_life", FALSE)
 })
 
 test_that("period checks pass for contiguous non-overlapping periods", {
   expect_diagnose_result(
-    period_diagnose(period_multi, no_overlap = TRUE),
+    period_diagnose_values(period_multi, no_overlap = TRUE),
     "no_overlap", TRUE
   )
   expect_diagnose_result(
-    period_diagnose(period_multi, no_gap = TRUE),
+    period_diagnose_values(period_multi, no_gap = TRUE),
     "no_gap", TRUE
   )
   expect_diagnose_result(
-    period_diagnose(period_multi, no_total = TRUE),
+    period_diagnose_values(period_multi, no_total = TRUE),
     "no_total", TRUE
   )
   expect_diagnose_result(
-    period_diagnose(period_multi, no_na = TRUE),
+    period_diagnose_values(period_multi, no_na = TRUE),
     "no_na", TRUE
   )
 })
 
 test_that("period no_gap check fails when there is a gap", {
-  val <- period_diagnose(period_gap, no_gap = TRUE)
+  val <- period_diagnose_values(period_gap, no_gap = TRUE)
   expect_diagnose_result(val, "no_gap", FALSE)
 })
 
 test_that("period no_overlap check fails for overlapping periods", {
-  val <- period_diagnose(period_overlap, no_overlap = TRUE)
+  val <- period_diagnose_values(period_overlap, no_overlap = TRUE)
   expect_diagnose_result(val, "no_overlap", FALSE)
 })
 
 test_that("period no_total and no_na checks fail for special labels", {
   expect_diagnose_result(
-    period_diagnose(period_with_total, no_total = TRUE),
+    period_diagnose_values(period_with_total, no_total = TRUE),
     "no_total", FALSE
   )
   expect_diagnose_result(
-    period_diagnose(period_with_na, no_na = TRUE),
+    period_diagnose_values(period_with_na, no_na = TRUE),
     "no_na", FALSE
   )
 })
 
 test_that("cohort checks pass for contiguous non-overlapping cohorts", {
   expect_diagnose_result(
-    cohort_diagnose(cohort_multi, no_overlap = TRUE),
+    cohort_diagnose_values(cohort_multi, no_overlap = TRUE),
     "no_overlap", TRUE
   )
   expect_diagnose_result(
-    cohort_diagnose(cohort_multi, no_gap = TRUE),
+    cohort_diagnose_values(cohort_multi, no_gap = TRUE),
     "no_gap", TRUE
   )
   expect_diagnose_result(
-    cohort_diagnose(cohort_multi, no_total = TRUE),
+    cohort_diagnose_values(cohort_multi, no_total = TRUE),
     "no_total", TRUE
   )
   expect_diagnose_result(
-    cohort_diagnose(cohort_multi, no_na = TRUE),
+    cohort_diagnose_values(cohort_multi, no_na = TRUE),
     "no_na", TRUE
   )
 })
 
 test_that("cohort no_gap check fails when there is a gap", {
-  val <- cohort_diagnose(period_gap, no_gap = TRUE)
+  val <- cohort_diagnose_values(period_gap, no_gap = TRUE)
   expect_diagnose_result(val, "no_gap", FALSE)
 })
 
-test_that("age_assert succeeds and fails as expected", {
-  expect_invisible(age_assert(age_closed, no_overlap = TRUE))
-  expect_error(age_assert(age_overlap, no_overlap = TRUE),
+test_that("age_assert_values succeeds and fails as expected", {
+  expect_invisible(age_assert_values(age_closed, no_overlap = TRUE))
+  expect_error(age_assert_values(age_overlap, no_overlap = TRUE),
                "Age group labels fail check `no_overlap`.")
-  expect_invisible(age_assert(age_life_gap, valid_life = TRUE))
-  expect_error(age_assert(age_life_gap, no_gap = TRUE),
+  expect_invisible(age_assert_values(age_life_gap, valid_life = TRUE))
+  expect_error(age_assert_values(age_life_gap, no_gap = TRUE),
                "Age group labels fail check `no_gap`.")
 })
 
 test_that("assert error messages name each failed condition and give comments", {
   expect_snapshot(
-    age_assert(c("0-4", "3-7", "10-14"), no_overlap = TRUE, no_gap = TRUE),
+    age_assert_values(c("0-4", "3-7", "10-14"), no_overlap = TRUE, no_gap = TRUE),
     error = TRUE
   )
   expect_snapshot(
@@ -316,7 +319,7 @@ test_that("assert error messages name each failed condition and give comments", 
     error = TRUE
   )
   expect_snapshot(
-    cohort_assert(c("2000-2004", "2005-2009"), has_open_left = TRUE, interpret_multi = "at_upper"),
+    cohort_assert_values(c("2000-2004", "2005-2009"), has_open_left = TRUE, interpret_multi = "at_upper"),
     error = TRUE
   )
 })

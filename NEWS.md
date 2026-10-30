@@ -28,7 +28,7 @@
   `"2000 and later"` are now recognized, and describe the interval
   starting at 2000.
 
-- `age_diagnose()`, `age_assert()`, and their `_values()` variants
+- The diagnose and assert functions
   have a new `no_open_right` check, and the period and cohort
   equivalents have new `no_open_left` and `no_open_right` checks.
   These check that no interval is open, and complement the existing
@@ -54,12 +54,21 @@
   instance, `age_mid(c("0", "1-4", "5-9", "80+"))` gives `82.5` for
   `"80+"`. If there are no closed intervals, the functions throw an
   error, rather than returning `Inf`.
-- The `no_overlap` condition in `age_diagnose()`, `age_assert()`, and
-  their variants now fails when different labels describe the same
-  interval, such as `"0"` and `"infant"`. Repeated copies of the same
-  label still pass.
-- Error messages from `age_assert()`, `period_assert()`,
-  `cohort_assert()`, and their `_values()` variants now name each
+- `age_diagnose()` and `age_assert()` have been renamed
+  `age_diagnose_levels()` and `age_assert_levels()`, and similarly for
+  periods and cohorts, so that every diagnose and assert function says
+  whether it checks levels or values. The `_levels()` functions now
+  throw an error if `labels` is not a factor. To check a character
+  vector, use the `_values()` functions.
+- The `no_overlap` condition now fails when different labels describe
+  the same interval, such as `"0"` and `"infant"`. In the `_values()`
+  functions, it also fails when the same label appears more than
+  once, since each element is treated as a separate group. To check a
+  column where labels repeat, such as one row per age group and sex,
+  check within groups, for instance using `dplyr::group_by()`.
+- `age_is_subtotal()`, `period_is_subtotal()`, and
+  `cohort_is_subtotal()` now ignore unused factor levels.
+- Error messages from the assert functions now name each
   failed condition and describe the problem, for instance
   "Age group labels fail check `no_gap`.", rather than printing a
   table.

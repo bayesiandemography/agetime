@@ -101,12 +101,21 @@ inner_diagnose <- function(labels,
                         has_open_left,
                         has_open_right,
                         valid_life) {
+  on <- match.arg(on, choices = c("levels", "values"))
+  if (identical(on, "levels") && !is.factor(labels)) {
+    cli::cli_abort(c("{.arg labels} is not a factor.",
+      i = paste(
+        "To check each element of {.arg labels}, use",
+        "{.fn {label_type}_diagnose_values} or {.fn {label_type}_assert_values}."
+      ),
+      i = "To treat the distinct values of {.arg labels} as levels, use {.fn factor}."
+    ), call = user_frame())
+  }
   labels <- to_character_or_factor(
     labels = labels,
     nm_labels = "labels",
     length_zero_ok = TRUE
   )
-  on <- match.arg(on, choices = c("levels", "values"))
   labels_for_intervals <- labels
   if (identical(on, "values") && is.factor(labels)) {
     labels_for_intervals <- droplevels(labels)
@@ -210,8 +219,14 @@ inner_diagnose <- function(labels,
 inner_diagnose_no_overlap <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   synonyms <- NULL
+  repeated <- NULL
+  if (!int_is_empty && identical(on, "values")) {
+    repeated <- find_repeated(intervals)
+  }
   if (int_is_empty) {
     passed <- TRUE
+  } else if (!is.null(repeated)) {
+    passed <- FALSE
   } else {
     m <- get_m(intervals)
     is_total <- get_is_total(intervals)
@@ -224,6 +239,15 @@ inner_diagnose_no_overlap <- function(intervals, on) {
   }
   if (identical(passed, TRUE)) {
     comment <- NA_character_
+  } else if (!is.null(repeated)) {
+    comment <- sprintf(
+      paste(
+        "Example of overlap among values: '%s' appears %d times.",
+        "To allow repeats, such as one per sex, check within groups,",
+        "for instance using dplyr::group_by()"
+      ),
+      repeated[["label"]], repeated[["n"]]
+    )
   } else if (!is.null(synonyms)) {
     comment <- sprintf(
       "Example of overlap among %s: '%s' and '%s' describe the same interval",
@@ -248,6 +272,41 @@ inner_diagnose_no_overlap <- function(intervals, on) {
     comment = comment
   )
 }
+#' Find Repeated Labels
+#'
+#' Used when checking values, where each element of `labels`
+#' is treated as a separate group, so that repeated copies
+#' of the same label overlap. Labels for missing values and
+#' unparsed labels are ignored, since these do not describe
+#' intervals.
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @returns `NULL` if there are no repeats, or a list with
+#' the first repeated label and the number of times it appears.
+#'
+#' @noRd
+find_repeated <- function(intervals) {
+  labels_unique <- get_labels_unique(intervals)
+  i_x_to_xu <- get_i_x_to_xu(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+  m <- get_m(intervals)
+  is_na <- get_is_na(intervals)
+  is_total <- get_is_total(intervals)
+  is_unparsed <- is.na(m[, 1L]) & is.na(m[, 2L]) & !is_total
+  is_ignore <- (is_na | is_unparsed)[i_xun_to_xunu][i_x_to_xu]
+  i_x_to_xu <- i_x_to_xu[!is_ignore]
+  is_dup <- duplicated(i_x_to_xu)
+  if (!any(is_dup)) {
+    return(NULL)
+  }
+  i_xu <- i_x_to_xu[[match(TRUE, is_dup)]]
+  list(
+    label = labels_unique[[i_xu]],
+    n = sum(i_x_to_xu == i_xu)
+  )
+}
+
+
 #' Find Labels That Describe the Same Interval
 #'
 #' Two different labels, such as `"0"` and `"infant"`, are

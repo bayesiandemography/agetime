@@ -110,7 +110,7 @@ test_that("inner_diagnose() skips checks when all flags are FALSE", {
     interpret_single = "lower",
     interpret_multi = "below_upper",
     interpret_fail = "error",
-    on = "levels",
+    on = "values",
     no_overlap = FALSE,
     no_gap = FALSE,
     no_total = FALSE,

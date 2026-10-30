@@ -89,9 +89,9 @@ labels for age groups, periods, and cohorts.
 
 \strong{Characterise labels or make assertions}\tabular{lll}{
     \tab  \tab  \cr
-   \code{\link[=age_diagnose]{age_diagnose()}} \tab \code{\link[=period_diagnose]{period_diagnose()}} \tab \code{\link[=cohort_diagnose]{cohort_diagnose()}} \cr
+   \code{\link[=age_diagnose_levels]{age_diagnose_levels()}} \tab \code{\link[=period_diagnose_levels]{period_diagnose_levels()}} \tab \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}} \cr
    \code{\link[=age_diagnose_values]{age_diagnose_values()}} \tab \code{\link[=period_diagnose_values]{period_diagnose_values()}} \tab \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} \cr
-   \code{\link[=age_assert]{age_assert()}} \tab \code{\link[=period_assert]{period_assert()}} \tab \code{\link[=cohort_assert]{cohort_assert()}} \cr
+   \code{\link[=age_assert_levels]{age_assert_levels()}} \tab \code{\link[=period_assert_levels]{period_assert_levels()}} \tab \code{\link[=cohort_assert_levels]{cohort_assert_levels()}} \cr
    \code{\link[=age_assert_values]{age_assert_values()}} \tab \code{\link[=period_assert_values]{period_assert_values()}} \tab \code{\link[=cohort_assert_values]{cohort_assert_values()}} \cr
 }
 
