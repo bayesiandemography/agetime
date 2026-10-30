@@ -65,6 +65,7 @@ age_standard(x_clean)
 
 Case, spaces, and leading zeros are ignored.
 
+
 ## One-year periods written as ranges
 
 ### Problem
@@ -136,28 +137,28 @@ The same approach works for cohorts.
 
 When the labels for single-year periods are based on the upper limits
 of the periods, the labels can appear to overlap with open intervals.
-For instance, the upper-limit convention can lead to the series
-`"2019", "2020", "2020+"`.
+In the series `"2019", "2020", "2020+"`, for instance, the label `"2020"`
+appears to overlap with the label `"2020+"`.
 
 ### Solution
 
-Although it looks strange, a series such as `"2019", "2020", "2020+"`
-is in fact valid, if it is based on the upper-limit convention.
+Although they look strange, series such as `"2019", "2020", "2020+"`
+are in fact valid, if they use the upper-limit convention.
 To see what is going on, use `period_interval()`.
 
 ```{r noncalendar-intervals}
 period_interval(c("2019", "2020", "2020+"), interpret_single = "upper")
 ```
 
-The `"2020"` label could refer, for instance, to the period
+The `"2020"` label might refer, for instance, to the period
 that starts at midnight on 1 July 2019 and ends at midnight on 1 July 2020,
 while the `"2020+"` label refers to the period that starts
 at midnight on 1 July 2020.
 
 ### Discussion
 
-In series that use the upper-limit labelling convention,
-open periods are rare.
+Series that use the upper-limit labelling convention and that
+have open periods or cohorts are rare.
 
 ### See Also
 
@@ -190,10 +191,12 @@ Standardizing the labels makes this visible.
 age_standard(x)
 ```
 
-If both refer to the same people, combine or drop one of them.
+You will then need to decide what to do about the repeated
+values. See [Overlaps in a data frame with repeated age
+groups](#overlap-df) for one possible approach.
 
 
-## Overlaps in a data frame with repeated age groups
+## Overlaps in a data frame with repeated age groups {#overlap-df}
 
 ### Problem
 
@@ -211,8 +214,7 @@ df |>
 
 ### Solution
 
-The `values` functions treat each element as a separate age group,
-so repeated labels overlap. Check within groups instead.
+Check within groups.
 
 ```{r repeats-solution}
 df |>
