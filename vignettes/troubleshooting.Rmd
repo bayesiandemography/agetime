@@ -111,7 +111,7 @@ period_standard("2019/20")
 
 ### Solution
 
-Extract the start date and pass to `agetime`
+Calculate the end year and pass it to `agetime`
 with `interpret_single` set to `"upper"`.
 
 ```{r fiscal-solution}
@@ -137,7 +137,7 @@ The same approach works for cohorts.
 When the labels for single-year periods are based on the upper limits
 of the periods, the labels can appear to overlap with open intervals.
 For instance, the upper-limit convention can lead to the series
-n`"2019", "2020", "2020+"`. 
+`"2019", "2020", "2020+"`.
 
 ### Solution
 
@@ -152,12 +152,12 @@ period_interval(c("2019", "2020", "2020+"), interpret_single = "upper")
 The `"2020"` label could refer, for instance, to the period
 that starts at midnight on 1 July 2019 and ends at midnight on 1 July 2020,
 while the `"2020+"` label refers to the period that starts
-on midnight on 1 July 2020.
+at midnight on 1 July 2020.
 
 ### Discussion
 
-Thankfully, in series that use the "upper limit"
-labelling convention, open periods are fairly rare.
+In series that use the upper-limit labelling convention,
+open periods are rare.
 
 ### See Also
 
