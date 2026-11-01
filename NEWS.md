@@ -10,6 +10,11 @@
   recognized, and describe the age group starting at 0. For instance,
   `"Under 16"` becomes `"0-15"`, and `"Under 1"` becomes `"0"`.
   Period and cohort labels such as `"<2000"` are still open on the left.
+- Age labels such as `"5 or younger"`, `"5 and younger"`, and
+  `"5 years or younger"` are now recognized, and describe ages from 0
+  through 5. For instance, `"5 or younger"` becomes `"0-5"`, and
+  `"0 or younger"` becomes `"0"`. These words are not recognized for
+  periods or cohorts.
 - Age labels may now start with `"age"`, `"ages"`, or `"aged"`, as in
   `"Age 0-4"` or `"Age not stated"`.
 - Age labels may now have year words attached to numbers, as in
@@ -113,21 +118,14 @@
 
 ## Bug fixes
 
-- `no_overlap` no longer reports a total, such as `"Total"` or
-  `"All ages"`, as overlapping the other labels. Totals are still
-  reported by `no_total`. Totals are ignored by `no_overlap`, in
-  the same way as missing values, so repeated totals, and different
-  labels for the total, such as `"Total"` and `"All ages"`, also
-  pass `no_overlap`.
+- `no_overlap` now ignores totals, such as `"Total"` or `"All ages"`,
+  in the same way as missing values, including repeated totals and
+  different labels for the total. Totals are reported by `no_total`.
 - `no_gap` no longer passes automatically when the labels include a
   total. A gap is reported even if a total is also present.
 - `valid_life`, and `age_fill_life()`, now name the label that is not
   a life-table age group. Previously, when two labels were synonyms,
   such as `"0"` and `"infant"`, they could name the other label.
-- Age labels such as `"5 or younger"`, `"5 and younger"`, and
-  `"5 years or younger"` are recognized. They describe ages from 0
-  through 5, standardized to `"0-5"`. `"0 or younger"` is `"0"`.
-  These words are still not recognized for periods or cohorts.
 - Errors about intervals that are open, and errors about a gap that
   is not divisible by a width, now quote the label as supplied.
   For instance, `"up to 1990"` is quoted as `"up to 1990"`, rather
@@ -136,7 +134,6 @@
   internal error when the only labels are totals or missing values.
   They now fail with the comment "No intervals among values." (or
   levels), and no longer describe a total as the lowest interval.
-
 - `age_extend()`, `period_extend()`, and `cohort_extend()` now start
   the new intervals at the highest upper limit among the existing
   intervals. Previously they extended from the last element of

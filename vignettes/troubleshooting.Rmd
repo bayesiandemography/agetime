@@ -233,11 +233,9 @@ df |>
 
 ### Problem
 
-`no_total` fails when the labels include a total. `age_extend()`
-gives an error if `labels` includes a total or a missing value.
-`age_coarsen()` and `age_coarsen_five()` keep totals and missing
-values. `age_coarsen_to()` gives an error unless `to` has a
-matching total or missing value.
+A check fails, or a function such as `age_extend()` or
+`age_coarsen_to()` gives an error, because the labels include a total
+or a missing value.
 
 ```{r totals-problem, error = TRUE}
 x <- c("0-4", "5-9", "Total")
@@ -258,6 +256,12 @@ df <- tibble(
 df |>
   filter(!age_is_total(age), !age_is_missing(age))
 ```
+
+### Discussion
+
+`age_coarsen()`, `age_coarsen_five()`, and similar functions keep
+totals and missing values as separate categories, so they do not need
+to be removed first.
 
 ### See Also
 

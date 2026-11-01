@@ -247,17 +247,9 @@ df |>
   group_by(sex) |>
   mutate(cohort = cohort_assert_values(cohort, no_overlap = TRUE))
 
-## a total is not an overlap
+## totals are reported by 'no_total', not 'no_overlap'
 x <- c("2020-2025", "2025-2030", "Total")
-cohort_diagnose_values(x, no_overlap = TRUE)
-cohort_diagnose_levels(factor(x), no_overlap = TRUE)
-cohort_assert_values(x, no_overlap = TRUE)
-
-## use 'no_total' to report a total
-cohort_diagnose_values(x, no_total = TRUE)
-
-## other overlaps are still reported
-cohort_diagnose_values(c("2020-2025", "2023-2028", "Total"), no_overlap = TRUE)
+cohort_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
 
 ## factor with unused level
 fac <- factor(

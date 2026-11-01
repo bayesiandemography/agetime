@@ -99,17 +99,9 @@
 #'   group_by(sex) |>
 #'   mutate(age = age_assert_values(age, no_overlap = TRUE))
 #'
-#' ## a total is not an overlap
+#' ## totals are reported by 'no_total', not 'no_overlap'
 #' x <- c("0-4", "5-9", "Total")
-#' age_diagnose_values(x, no_overlap = TRUE)
-#' age_diagnose_levels(factor(x), no_overlap = TRUE)
-#' age_assert_values(x, no_overlap = TRUE)
-#'
-#' ## use 'no_total' to report a total
-#' age_diagnose_values(x, no_total = TRUE)
-#'
-#' ## other overlaps are still reported
-#' age_diagnose_values(c("0-4", "3-7", "Total"), no_overlap = TRUE)
+#' age_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
 #'
 #' ## factor with unused level
 #' fac <- factor(

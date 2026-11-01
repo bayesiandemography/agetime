@@ -40,7 +40,7 @@ make_labels_normalizers <- function(use_tolower,
                                     use_infant,
                                     use_older = FALSE,
                                     use_later = FALSE,
-                                    use_younger) {
+                                    use_younger = FALSE) {
   ans <- list()
   if (use_tolower) {
     ans <- append(ans, norm_tolower)
