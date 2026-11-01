@@ -100,9 +100,6 @@
 #' ## use 'no_total' to report a total
 #' period_diagnose_values(x, no_total = TRUE)
 #'
-#' ## a repeated total is an overlap
-#' period_diagnose_values(c("Total", "Total"), no_overlap = TRUE)
-#'
 #' ## other overlaps are still reported
 #' period_diagnose_values(c("2020-2025", "2023-2028", "Total"), no_overlap = TRUE)
 #'

@@ -277,7 +277,7 @@ inner_diagnose_no_overlap <- function(intervals, on) {
 #'
 #' Used when checking values, where each element of `labels`
 #' is treated as a separate group, so that repeated copies
-#' of the same label overlap. Labels for missing values and
+#' of the same label overlap. Totals, missing values, and
 #' unparsed labels are ignored, since these do not describe
 #' intervals.
 #'
@@ -293,8 +293,8 @@ find_repeated <- function(intervals) {
   m <- get_m(intervals)
   is_na <- get_is_na(intervals)
   is_total <- get_is_total(intervals)
-  is_unparsed <- is.na(m[, 1L]) & is.na(m[, 2L]) & !is_total
-  is_ignore <- (is_na | is_unparsed)[i_xun_to_xunu][i_x_to_xu]
+  is_unparsed <- is.na(m[, 1L]) & is.na(m[, 2L])
+  is_ignore <- (is_na | is_total | is_unparsed)[i_xun_to_xunu][i_x_to_xu]
   i_x_to_xu <- i_x_to_xu[!is_ignore]
   is_dup <- duplicated(i_x_to_xu)
   if (!any(is_dup)) {
@@ -526,6 +526,8 @@ inner_diagnose_has_zero <- function(intervals, on) {
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   lower <- m[, 1L]
+  ## totals, missing values, and unparsed labels are not intervals
+  has_interval <- any(!is.na(m[, 1L]) | !is.na(m[, 2L]))
   if (int_is_empty) {
     passed <- FALSE
   } else {
@@ -535,6 +537,8 @@ inner_diagnose_has_zero <- function(intervals, on) {
     comment <- NA_character_
   } else if (int_is_empty) {
     comment <- sprintf("No %s.", on)
+  } else if (!has_interval) {
+    comment <- sprintf("No intervals among %s.", on)
   } else {
     i_min <- which.min(lower)
     i_xu <- match(i_min, i_xun_to_xunu)
@@ -562,6 +566,8 @@ inner_diagnose_has_open_left <- function(intervals, on) {
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   lower <- m[, 1L]
   is_open_left <- is.infinite(lower) & is.finite(m[, 2L])
+  ## totals, missing values, and unparsed labels are not intervals
+  has_interval <- any(!is.na(m[, 1L]) | !is.na(m[, 2L]))
   if (int_is_empty) {
     passed <- FALSE
   } else {
@@ -571,6 +577,8 @@ inner_diagnose_has_open_left <- function(intervals, on) {
     comment <- NA_character_
   } else if (int_is_empty) {
     comment <- sprintf("No %s.", on)
+  } else if (!has_interval) {
+    comment <- sprintf("No intervals among %s.", on)
   } else {
     i_min <- which.min(ifelse(is.finite(lower), lower, Inf))
     i_xu <- match(i_min, i_xun_to_xunu)
@@ -599,6 +607,8 @@ inner_diagnose_has_open_right <- function(intervals, on) {
   lower <- m[, 1L]
   upper <- m[, 2L]
   is_open_right <- is.finite(lower) & is.infinite(upper)
+  ## totals, missing values, and unparsed labels are not intervals
+  has_interval <- any(!is.na(m[, 1L]) | !is.na(m[, 2L]))
   if (int_is_empty) {
     passed <- FALSE
   } else {
@@ -608,6 +618,8 @@ inner_diagnose_has_open_right <- function(intervals, on) {
     comment <- NA_character_
   } else if (int_is_empty) {
     comment <- sprintf("No %s.", on)
+  } else if (!has_interval) {
+    comment <- sprintf("No intervals among %s.", on)
   } else {
     i_max <- which.max(upper)
     i_xu <- match(i_max, i_xun_to_xunu)

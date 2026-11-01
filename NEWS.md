@@ -115,8 +115,10 @@
 
 - `no_overlap` no longer reports a total, such as `"Total"` or
   `"All ages"`, as overlapping the other labels. Totals are still
-  reported by `no_total`. In the `_values()` functions, a repeated
-  total still fails `no_overlap`.
+  reported by `no_total`. Totals are ignored by `no_overlap`, in
+  the same way as missing values, so repeated totals, and different
+  labels for the total, such as `"Total"` and `"All ages"`, also
+  pass `no_overlap`.
 - `no_gap` no longer passes automatically when the labels include a
   total. A gap is reported even if a total is also present.
 - `valid_life`, and `age_fill_life()`, now name the label that is not
@@ -130,6 +132,10 @@
   is not divisible by a width, now quote the label as supplied.
   For instance, `"up to 1990"` is quoted as `"up to 1990"`, rather
   than as `"<1991"`.
+- `has_zero`, `has_open_left`, and `has_open_right` no longer give an
+  internal error when the only labels are totals or missing values.
+  They now fail with the comment "No intervals among values." (or
+  levels), and no longer describe a total as the lowest interval.
 
 - `age_extend()`, `period_extend()`, and `cohort_extend()` now start
   the new intervals at the highest upper limit among the existing

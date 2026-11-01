@@ -354,3 +354,32 @@ test_that("assert error messages name each failed condition and give comments", 
     error = TRUE
   )
 })
+
+test_that("has_* checks fail cleanly when there are no intervals", {
+  for (x in list("Total", "Not stated", c("Total", "Not stated"))) {
+    val <- age_diagnose_values(x, has_zero = TRUE, has_open_right = TRUE)
+    expect_identical(val$details$passed, c(FALSE, FALSE))
+    expect_identical(
+      val$details$comment,
+      rep("No intervals among values.", 2L)
+    )
+  }
+  val <- period_diagnose_values("Total", has_open_left = TRUE)
+  expect_identical(val$details$passed, FALSE)
+  expect_identical(val$details$comment, "No intervals among values.")
+  val <- cohort_diagnose_levels(factor("Total"), has_open_right = TRUE)
+  expect_identical(val$details$comment, "No intervals among levels.")
+})
+
+test_that("has_* comments name an interval, not a total", {
+  val <- period_diagnose_values(c("Total", "2020-2025"), has_open_left = TRUE)
+  expect_identical(
+    val$details$comment,
+    "Lowest interval among values: '2020-2025'"
+  )
+  val <- age_diagnose_values(c("Total", "5-9"), has_open_right = TRUE)
+  expect_identical(
+    val$details$comment,
+    "Highest interval among values: '5-9'"
+  )
+})

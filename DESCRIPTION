@@ -13,7 +13,7 @@ Authors@R:
              email = "junni@bayesiandemography.com"))
 Description: Work with vectors of age, period, and
     cohort labels. Infer the intervals underlying
-    labels, and use this informtion to
+    labels, and use this information to
     validate, reformat, and manipulate the labels.
     Common tasks such as filtering on age or
     combining datasets become easier and safer.

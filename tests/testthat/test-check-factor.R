@@ -73,11 +73,24 @@ test_that("repeated values count as overlapping", {
   expect_false(
     cohort_diagnose_values(c("2020-2025", "2020-2025"), no_overlap = TRUE)$ok
   )
-  expect_false(age_diagnose_values(c("Total", "Total"), no_overlap = TRUE)$ok)
 })
 
 test_that("levels cannot repeat, so factor(c(0, 0)) passes _levels()", {
   expect_true(age_diagnose_levels(factor(c(0, 0)), no_overlap = TRUE)$ok)
+})
+
+test_that("totals do not count as overlapping, even when repeated", {
+  expect_true(age_diagnose_values(c("0-4", "Total"), no_overlap = TRUE)$ok)
+  expect_true(age_diagnose_values(c("Total", "Total"), no_overlap = TRUE)$ok)
+  expect_true(
+    age_diagnose_values(c("0-4", "Total", "All ages"), no_overlap = TRUE)$ok
+  )
+  expect_true(
+    age_diagnose_levels(factor(c("Total", "All ages")), no_overlap = TRUE)$ok
+  )
+  expect_false(
+    age_diagnose_values(c("0-4", "Total", "Total"), no_total = TRUE)$ok
+  )
 })
 
 test_that("repeated missing or unparsed values do not count as overlapping", {
