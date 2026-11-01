@@ -226,6 +226,20 @@ test_that("cohort_coarsen_five() can suppress inferred open_left", {
   )
 })
 
+test_that("coarsen errors quote open labels as supplied", {
+  msg <- tryCatch(
+    period_coarsen(
+      c("before 2000", "up to 1990", "2000-2010"),
+      breaks = c(2000, 2010),
+      open_left = FALSE
+    ),
+    error = function(e) conditionMessage(e)
+  )
+  expect_match(msg, "before 2000")
+  expect_match(msg, "up to 1990")
+  expect_false(grepl("<1991", msg, fixed = TRUE))
+})
+
 test_that("coarsen error messages describe each problem and suggest fixes", {
   expect_snapshot(age_coarsen(c("3", "7", "12"), breaks = c(5, 10)), error = TRUE)
   expect_snapshot(

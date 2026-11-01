@@ -232,3 +232,17 @@ test_that("age_fill_life() errors for non-life-table labels", {
     "Label .0-4. is not valid for a life table"
   )
 })
+
+test_that("age_fill_life() names the invalid label when synonyms are present", {
+  expect_error(
+    age_fill_life(c("0", "infant", "3-7")),
+    "Label .3-7. is not valid for a life table"
+  )
+})
+
+test_that("age_fill_five() quotes labels as supplied", {
+  expect_error(
+    age_fill_five(c("5 to 9", "21 to 24")),
+    "Gap between .5 to 9. and .21 to 24."
+  )
+})

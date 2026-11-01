@@ -113,6 +113,24 @@
 
 ## Bug fixes
 
+- `no_overlap` no longer reports a total, such as `"Total"` or
+  `"All ages"`, as overlapping the other labels. Totals are still
+  reported by `no_total`. In the `_values()` functions, a repeated
+  total still fails `no_overlap`.
+- `no_gap` no longer passes automatically when the labels include a
+  total. A gap is reported even if a total is also present.
+- `valid_life`, and `age_fill_life()`, now name the label that is not
+  a life-table age group. Previously, when two labels were synonyms,
+  such as `"0"` and `"infant"`, they could name the other label.
+- Age labels such as `"5 or younger"`, `"5 and younger"`, and
+  `"5 years or younger"` are recognized. They describe ages from 0
+  through 5, standardized to `"0-5"`. `"0 or younger"` is `"0"`.
+  These words are still not recognized for periods or cohorts.
+- Errors about intervals that are open, and errors about a gap that
+  is not divisible by a width, now quote the label as supplied.
+  For instance, `"up to 1990"` is quoted as `"up to 1990"`, rather
+  than as `"<1991"`.
+
 - `age_extend()`, `period_extend()`, and `cohort_extend()` now start
   the new intervals at the highest upper limit among the existing
   intervals. Previously they extended from the last element of

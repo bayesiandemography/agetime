@@ -195,10 +195,13 @@ check_coarsen_open_flags <- function(is_open_left,
                                     intervals,
                                     label_type) {
   ln <- label_name(label_type)
+  labels_as_supplied <- function(is_open) {
+    get_labels_unique(intervals)[match(which(is_open), get_i_xun_to_xunu(intervals))]
+  }
   if (!is.null(is_open_left) && !isTRUE(is_open_left)) {
     is_orl <- get_is_open_left(intervals)
     if (any(is_orl)) {
-      labels_open <- get_labels_unique_norm_unique(intervals)[is_orl]
+      labels_open <- labels_as_supplied(is_orl)
       n <- length(labels_open)
       cli::cli_abort(c(
         "{.arg labels} contains {cli::qty(n)} {ln}{?s} open on the left: {.val {labels_open}}.",
@@ -211,7 +214,7 @@ check_coarsen_open_flags <- function(is_open_left,
   if (!is.null(is_open_right) && !isTRUE(is_open_right)) {
     is_orr <- get_is_open_right(intervals)
     if (any(is_orr)) {
-      labels_open <- get_labels_unique_norm_unique(intervals)[is_orr]
+      labels_open <- labels_as_supplied(is_orr)
       n <- length(labels_open)
       cli::cli_abort(c(
         "{.arg labels} contains {cli::qty(n)} {ln}{?s} open on the right: {.val {labels_open}}.",

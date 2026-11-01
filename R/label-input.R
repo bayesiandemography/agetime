@@ -12,6 +12,7 @@
 label_non_life <- function(intervals) {
   m <- get_m(intervals)
   labels <- get_labels_unique(intervals)
+  i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   n <- nrow(m)
   is_equal <- function(x, y) {
     isTRUE(all.equal(x, y, check.attributes = FALSE))
@@ -19,7 +20,9 @@ label_non_life <- function(intervals) {
   for (i in seq_len(n)) {
     l <- m[i, 1L]
     u <- m[i, 2L]
-    label <- labels[[i]]
+    ## m is indexed by unique normalized labels, which is shorter
+    ## than labels_unique when two labels are synonyms
+    label <- labels[[match(i, i_xun_to_xunu)]]
     if (is.na(l)) {
       NULL
     } else if (is.infinite(l)) {

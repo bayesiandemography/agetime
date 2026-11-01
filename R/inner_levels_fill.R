@@ -198,8 +198,8 @@ inner_levels_fill <- function(labels,
         breaks_gap <- c(u_prev, breaks_internal, l_curr)
       } else if (has_width) {
         if (diff %% width != 0L) {
-          label_curr <- labels_norm[[i]]
-          label_prev <- labels_norm[[i - 1L]]
+          label_curr <- labels_display[[i]]
+          label_prev <- labels_display[[i - 1L]]
           msg_envir <- list2env(
             list(
               label_prev = label_prev,

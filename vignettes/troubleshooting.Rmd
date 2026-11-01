@@ -60,6 +60,8 @@ age_standard(x_clean)
   `"85 years and older"`, and `"85 & over"`;
 - age groups starting at 0, such as `"Under 5"`, `"less than 5"`, `"<5"`,
   and `"Infant"`;
+- ages from 0 up to and including a stated age, such as `"5 or younger"`
+  and `"5 and younger"`, which become `"0-5"`;
 - totals such as `"Total"` and `"All ages"`, and
 - missing values such as `"Not stated"`, `"Unknown"`, and `"Age not stated"`.
 
@@ -231,8 +233,11 @@ df |>
 
 ### Problem
 
-A check fails, or a coarsening function gives an error, because the
-labels include a total or a missing value.
+`no_total` fails when the labels include a total. `age_extend()`
+gives an error if `labels` includes a total or a missing value.
+`age_coarsen()` and `age_coarsen_five()` keep totals and missing
+values. `age_coarsen_to()` gives an error unless `to` has a
+matching total or missing value.
 
 ```{r totals-problem, error = TRUE}
 x <- c("0-4", "5-9", "Total")
@@ -241,7 +246,7 @@ age_assert_values(x, no_total = TRUE)
 
 ### Solution
 
-Remove totals and missing values before checking or coarsening, using
+Remove totals and missing values when they should not be included, using
 `age_is_total()` and `age_is_missing()`.
 
 ```{r totals-solution}

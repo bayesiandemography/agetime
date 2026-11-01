@@ -115,6 +115,19 @@ test_that("no_overlap check ignores synonyms for NA, and unparsed labels", {
   expect_diagnose_result(val, "no_overlap", TRUE)
 })
 
+test_that("no_overlap check ignores totals, which no_total reports", {
+  val <- age_diagnose_values(c("0-4", "5-9", "Total"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", TRUE)
+  val <- age_diagnose_values(c("0-4", "5-9", "All ages"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", TRUE)
+  val <- period_diagnose_values(c("2000-2005", "2005-2010", "Total"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", TRUE)
+  val <- age_diagnose_values(c("0-4", "3-7", "Total"), no_overlap = TRUE)
+  expect_diagnose_result(val, "no_overlap", FALSE)
+  fac <- factor(c("0-4", "5-9"), levels = c("0-4", "5-9", "Total"))
+  expect_true(age_diagnose_levels(fac, no_overlap = TRUE)$ok)
+})
+
 test_that("no_overlap check for synonyms uses levels or values", {
   x <- factor(c("0", "1-4"), levels = c("0", "infant", "1-4"))
   val <- age_diagnose_levels(x, no_overlap = TRUE)
@@ -131,6 +144,17 @@ test_that("no_gap check passes for contiguous age groups", {
 test_that("no_gap check fails when there is a gap", {
   val <- age_diagnose_values(age_life_gap, no_gap = TRUE)
   expect_diagnose_result(val, "no_gap", FALSE)
+})
+
+test_that("no_gap check still fails when a total is present", {
+  val <- age_diagnose_values(c("0-4", "10-14", "Total"), no_gap = TRUE)
+  expect_diagnose_result(val, "no_gap", FALSE)
+  val <- age_diagnose_values(c("0-4", "5-9", "Total"), no_gap = TRUE)
+  expect_diagnose_result(val, "no_gap", TRUE)
+  val <- period_diagnose_values(c("2000-2005", "2010-2015", "Total"), no_gap = TRUE)
+  expect_diagnose_result(val, "no_gap", FALSE)
+  fac <- factor("0-4", levels = c("0-4", "10-14", "Total"))
+  expect_false(age_diagnose_levels(fac, no_gap = TRUE)$ok)
 })
 
 test_that("no_total check fails when x includes Total", {
@@ -234,6 +258,13 @@ test_that("valid_life passes for life-table labels even when there is a gap", {
 test_that("valid_life check fails for non-life-table age groups", {
   val <- age_diagnose_values(age_invalid_life, valid_life = TRUE)
   expect_diagnose_result(val, "valid_life", FALSE)
+})
+
+test_that("valid_life names the invalid label when synonyms are present", {
+  val <- age_diagnose_values(c("0", "infant", "3-7"), valid_life = TRUE)
+  expect_diagnose_result(val, "valid_life", FALSE)
+  expect_match(val$details$comment, "3-7")
+  expect_false(grepl("infant", val$details$comment, fixed = TRUE))
 })
 
 test_that("period checks pass for contiguous non-overlapping periods", {

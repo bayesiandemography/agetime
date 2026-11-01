@@ -19,6 +19,7 @@
 #' and `"and older"`.
 #' @param use_later Whether `norm_plus()` recognizes `"or later"`
 #' and `"and later"`.
+#' @param use_younger Whether to apply `norm_younger()`.
 #' @returns List of normalizer functions in application order.
 #'
 #' @noRd
@@ -38,7 +39,8 @@ make_labels_normalizers <- function(use_tolower,
                                     use_na,
                                     use_infant,
                                     use_older = FALSE,
-                                    use_later = FALSE) {
+                                    use_later = FALSE,
+                                    use_younger) {
   ans <- list()
   if (use_tolower) {
     ans <- append(ans, norm_tolower)
@@ -78,6 +80,9 @@ make_labels_normalizers <- function(use_tolower,
     }
     ans <- append(ans, norm_plus_inner)
   }
+  if (use_younger) {
+    ans <- append(ans, norm_younger)
+  }
   if (use_range) {
     ans <- append(ans, norm_range)
   }
@@ -115,7 +120,8 @@ make_labels_normalizers_age <- function() {
     use_total = TRUE,
     use_na = TRUE,
     use_infant = TRUE,
-    use_older = TRUE
+    use_older = TRUE,
+    use_younger = TRUE
   )
 }
 
@@ -141,7 +147,8 @@ make_labels_normalizers_cohort <- function() {
     use_total = TRUE,
     use_na = TRUE,
     use_infant = FALSE,
-    use_later = TRUE
+    use_later = TRUE,
+    use_younger = FALSE
   )
 }
 
@@ -167,7 +174,8 @@ make_labels_normalizers_period <- function() {
     use_total = TRUE,
     use_na = TRUE,
     use_infant = FALSE,
-    use_later = TRUE
+    use_later = TRUE,
+    use_younger = FALSE
   )
 }
 

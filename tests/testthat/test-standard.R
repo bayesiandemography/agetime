@@ -247,9 +247,17 @@ test_that("labels starting with '-' are rejected", {
 
 test_that("'older' and 'younger' are recognized for ages but not periods or cohorts", {
   expect_identical(age_standard(c("85 or older", "85 and older", "85 &older")), rep("85+", 3))
+  expect_identical(
+    age_standard(c("5 or younger", "5 and younger", "5 & younger", "5 years or younger")),
+    rep("0-5", 4)
+  )
+  expect_identical(age_standard("0 or younger"), "0")
+  expect_identical(age_lower("5 or younger"), 0)
+  expect_identical(age_upper("5 or younger"), 6)
   expect_error(cohort_standard("1990 or older"), "Don't know how to interpret")
   expect_error(cohort_standard("1990 or younger"), "Don't know how to interpret")
   expect_error(period_standard("2000 and older"), "Don't know how to interpret")
+  expect_error(period_standard("2000 or younger"), "Don't know how to interpret")
 })
 
 test_that("decimal labels are not treated as ranges", {

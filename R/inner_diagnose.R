@@ -231,8 +231,9 @@ inner_diagnose_no_overlap <- function(intervals, on) {
     m <- get_m(intervals)
     is_total <- get_is_total(intervals)
     m_overlap <- does_m1_overlap_m2(m1 = m, m2 = m)
-    m_overlap[is_total, ] <- TRUE
-    m_overlap[, is_total] <- TRUE
+    ## totals are not intervals; no_total reports them
+    m_overlap[is_total, ] <- FALSE
+    m_overlap[, is_total] <- FALSE
     m_overlap[row(m_overlap) >= col(m_overlap)] <- FALSE
     synonyms <- find_synonyms(intervals)
     passed <- !any(m_overlap, na.rm = TRUE) && is.null(synonyms)
@@ -353,8 +354,7 @@ find_synonyms <- function(intervals) {
 
 inner_diagnose_no_gap <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
-  int_has_total <- int_has_total(intervals)
-  if (int_is_empty || int_has_total) {
+  if (int_is_empty) {
     passed <- TRUE
   } else {
     m <- get_m(intervals)

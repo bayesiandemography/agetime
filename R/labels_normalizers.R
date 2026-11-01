@@ -206,6 +206,28 @@ norm_lessthan <- function(x) {
   x
 }
 
+#' Norm Younger
+#'
+#' For ages, `"N or younger"`, `"N and younger"`, and `"N & younger"`
+#' include age `N` and every younger age, so `"5 or younger"` becomes
+#' `"0-5"` and `"0 or younger"` becomes `"0"`.
+#'
+#' @param x Vector of labels, after whitespace has been removed.
+#' @returns Labels with younger-than synonyms converted to ranges.
+#'
+#' @noRd
+norm_younger <- function(x) {
+  p <- "^(\\d+)(oryounger|andyounger|&younger)$"
+  is_match <- !is.na(x) & grepl(p, x, perl = TRUE)
+  if (!any(is_match)) {
+    return(x)
+  }
+  n <- suppressWarnings(as.integer(sub(p, "\\1", x[is_match], perl = TRUE)))
+  val <- ifelse(is.na(n), x[is_match], ifelse(n == 0L, "0", paste0("0-", n)))
+  x[is_match] <- val
+  x
+}
+
 #' Norm Plus
 #'
 #' Convert words for intervals that are open on the right,
