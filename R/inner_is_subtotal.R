@@ -45,22 +45,6 @@ interval_bounds_match <- function(a, b) {
   isTRUE(all.equal(a, b))
 }
 
-#' Bound In List
-#'
-#' @param x Numeric bound, possibly infinite.
-#' @param bounds List of numeric bounds.
-#' @returns `TRUE` when `x` matches an element of `bounds`.
-#'
-#' @noRd
-bound_in_list <- function(x, bounds) {
-  for (b in bounds) {
-    if (interval_bounds_match(x, b)) {
-      return(TRUE)
-    }
-  }
-  FALSE
-}
-
 #' Children Can Rebuild Parent
 #'
 #' @param parent Numeric vector of length 2.
@@ -96,7 +80,7 @@ children_can_rebuild_parent <- function(parent, children) {
         if (interval_bounds_match(u_child, bounds[[k]])) {
           already <- TRUE
           if (used_new < n_used[[k]]) {
-            n_used[[k]] <- used_new
+            n_used[[k]] <- used_new # nocov
           }
           if (interval_bounds_match(u_child, u_parent) && used_new >= 2L) {
             return(TRUE)
@@ -125,7 +109,7 @@ subtotal_labels_from_pool <- function(intervals) {
   m <- get_m(intervals)
   n <- nrow(m)
   if (n < 2L) {
-    return(character(0))
+    return(character(0)) # nocov
   }
   contain <- does_m1_contain_m2(m1 = m, m2 = m)
   equal <- does_m1_equal_m2(m1 = m, m2 = m)

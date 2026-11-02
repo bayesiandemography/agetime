@@ -140,3 +140,11 @@ test_that("age_is_subtotal() ignores unused factor levels", {
   labs <- factor(c("0-4", "0", "1-4"), levels = c("0-4", "0", "1-4", "5-9"))
   expect_values(age_is_subtotal(labs), c(TRUE, FALSE, FALSE))
 })
+
+test_that("age_is_subtotal() is FALSE when there are no intervals", {
+  expect_values(age_is_subtotal(c("Total", "Not stated")), c(FALSE, FALSE))
+})
+
+test_that("age_is_subtotal() is FALSE when labels are synonyms for one interval", {
+  expect_values(age_is_subtotal(c("0", "infant")), c(FALSE, FALSE))
+})

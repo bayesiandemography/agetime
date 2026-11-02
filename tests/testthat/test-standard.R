@@ -265,3 +265,8 @@ test_that("decimal labels are not treated as ranges", {
   expect_error(period_standard("2020.5"), "Don't know how to interpret label \"2020.5\"")
   expect_identical(age_standard(c("5_9", "5:9", "5/9", "5--9")), rep("5-9", 4))
 })
+
+test_that("age_standard() treats '0-0' like other one-year ranges", {
+  expect_error(age_standard("0-0"), "describes a one-year age group")
+  expect_error(age_standard("1-1"), "describes a one-year age group")
+})

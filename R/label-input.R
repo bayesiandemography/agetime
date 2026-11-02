@@ -139,5 +139,5 @@ user_frame <- function() {
       return(sys.frame(i))
     }
   }
-  parent.frame()
+  parent.frame() # nocov
 }

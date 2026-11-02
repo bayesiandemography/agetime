@@ -52,23 +52,6 @@ get_is_one <- function(intervals) {
   is.finite(l) & is.finite(u) & (abs(u - l - 1) < tol)
 }
 
-#' Detect Any Open Interval
-#'
-#' @param intervals An `agetime_intervals` object.
-#' @returns `TRUE` if any interval has an infinite bound, otherwise `FALSE`.
-#'
-#' Returns `TRUE` when any interval bound is infinite.
-#' This is used in extension logic on single-label
-#' interval objects.
-#'
-#' @noRd
-get_is_open <- function(intervals) {
-  m <- get_m(intervals)
-  l <- m[, 1L]
-  u <- m[, 2L]
-  is.infinite(l) || is.infinite(u)
-}
-
 #' Get Is Open Left
 #'
 #' @param intervals An `agetime_intervals` object.
@@ -169,17 +152,4 @@ get_m <- function(intervals) {
 get_upper <- function(intervals) {
   m <- get_m(intervals)
   m[, 2L]
-}
-
-#' Get Width
-#'
-#' @param intervals An `agetime_intervals` object.
-#' @returns Numeric interval widths.
-#'
-#' @noRd
-get_width <- function(intervals) {
-  m <- get_m(intervals)
-  l <- m[, 1L]
-  u <- m[, 2L]
-  u - l
 }

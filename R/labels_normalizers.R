@@ -36,8 +36,7 @@ INFANT_TOKENS <- c(
   "lessthan1",
   "under1",
   "lessthanone",
-  "in1styear",
-  "0-0"
+  "in1styear"
 )
 
 

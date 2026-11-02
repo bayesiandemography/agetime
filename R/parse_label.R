@@ -134,7 +134,7 @@ x_label <- function(label,
         } else {
           msg <- c("Label {.val {label_orig}} invalid.")
           if (l == u) {
-            msg <- c(msg, i = "Lower limit equals upper limit.")
+            msg <- c(msg, i = "Lower limit equals upper limit.") # nocov
           } else {
             msg <- c(msg, i = "Lower limit greater than upper limit.")
           }

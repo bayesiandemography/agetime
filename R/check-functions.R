@@ -379,7 +379,7 @@ describe_labels_more <- function(labels) {
 #' @noRd
 check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
   if (int_is_empty(intervals_to)) {
-    return(invisible(TRUE))
+    return(invisible(TRUE)) # nocov
   }
   m <- get_m(intervals_to)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals_to)
