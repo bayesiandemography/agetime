@@ -244,8 +244,9 @@ age_assert_values(x, no_total = TRUE)
 
 ### Solution
 
-Remove totals and missing values when they should not be included, using
-`age_is_total()` and `age_is_missing()`.
+Use `age_is_total()` and `age_is_missing()` to find the
+labels for totals or missing values. If appropriate,
+remove the associated rows.
 
 ```{r totals-solution}
 df <- tibble(
@@ -287,11 +288,13 @@ age_coarsen(x, breaks = c(0, 7, 10))
 
 The error message distinguishes two problems:
 
-- A label *would be split* when it overlaps two or more new age groups,
-  as `"5-9"` overlaps `"0-6"` and `"7-9"`. Move the breaks so that they
+- A label *would be split* when it overlaps two or more new age groups.
+  In the case above, `"5-9"` overlaps `"0-6"` and `"7-9"`.
+  When a label would be split, move the breaks so that they
   fall between the old age groups.
 - A label is *not fully covered* when it lies partly or wholly outside the
-  new age groups, as `"12"` lies above 10. Add breaks, or, for
+  new age groups. In the case above, `"12"` lies above 10.
+  When a label is not fully covered, add breaks, or, for
   `age_coarsen()`, set `open_right = TRUE`.
 
 ```{r coarsen-solution}
@@ -306,13 +309,36 @@ With `age_coarsen_to()`, every label must lie inside one of the labels in
 
 ### Problem
 
-After adding levels with a `fill` function, `count()` or `summarise()`
-still leaves out age groups with no observations.
+You used a `fill` function to add age, period, or cohort
+levels, but tidyverse functions `count()` or `summarise()`
+drop these levels if they have no observations.
+
+```{r unused-problem}
+df <- tibble(
+  age = c("0-4", "10-14", "0-4"),
+  respondents = c(10, 20, 5)
+) |>
+  mutate(age = age_fill(age))
+
+levels(df$age)
+
+df |>
+  count(age)
+```
 
 ### Solution
 
 Tidyverse functions drop unused factor levels by default. Use
-`.drop = FALSE`.
+`.drop = FALSE` to retain the unused levels.
+
+```{r unused-solution}
+df |>
+  count(age, .drop = FALSE)
+
+df |>
+  group_by(age, .drop = FALSE) |>
+  summarise(respondents = sum(respondents))
+```
 
 ### See Also
 
@@ -324,14 +350,25 @@ Tidyverse functions drop unused factor levels by default. Use
 ### Problem
 
 `age_coarsen()`, `age_fill()`, `age_set_open_right()`, and `age_set_order()`
-return factors, which can be unexpected.
+return factors. They do this because factor levels can contain
+useful information, such as labels that do not appear in the data.
+But sometimes the task calls for a character vector, not a factor.
+
+```{r factors-problem}
+x <- c("0", "1-4", "5-9")
+x |>
+  age_coarsen_five()
+```
 
 ### Solution
 
-These functions return factors so that levels, including unused ones, are
-kept in the right order. Use `as.character()` if a character vector is
-needed. `age_standard()` returns a character vector when its input is a
-character vector, and a factor when its input is a factor.
+Call `as.character()` on the result.
+
+```{r factors-solution}
+x |>
+  age_coarsen_five() |>
+  as.character()
+```
 
 
 ## Midpoints of open age groups
@@ -348,7 +385,8 @@ df <- tibble(
 )
 
 df |>
-  mutate(mid = age_mid(age), .by = sex)
+  group_by(sex) |>
+  mutate(mid = age_mid(age))
 ```
 
 ### Solution
