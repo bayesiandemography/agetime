@@ -3,15 +3,16 @@
 <url><loc>https://bayesiandemography.github.io/agetime/LICENSE-text.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/LICENSE.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/articles/agetime.html</loc></url>
-<url><loc>https://bayesiandemography.github.io/agetime/articles/api-principles.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/articles/cookbook.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/articles/index.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/articles/troubleshooting.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/authors.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/index.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/news/index.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_coarsen_five.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.html</loc></url>
-<url><loc>https://bayesiandemography.github.io/agetime/reference/age_diagnose.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_extend.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_fill.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_is_missing.html</loc></url>
@@ -28,7 +29,7 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_five.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.html</loc></url>
-<url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_extend.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_fill.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_is_missing.html</loc></url>
@@ -45,7 +46,7 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_coarsen_five.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.html</loc></url>
-<url><loc>https://bayesiandemography.github.io/agetime/reference/period_diagnose.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_extend.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_fill.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_is_missing.html</loc></url>

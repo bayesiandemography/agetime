@@ -1,4 +1,9 @@
-# Cookbook for agetime Package
+# Cookbook
+
+This vignette provides recipes for common tasks involving age group,
+period, and cohort labels. Each recipe describes a problem and gives a
+solution. For an overview of the `agetime` package, see [Get
+started](https://bayesiandemography.github.io/agetime/articles/agetime.md).
 
 ``` r
 
@@ -14,7 +19,7 @@ set.seed(0)
 
 #### Problem
 
-Create a new set of age group, cohort, or period labels.
+You need a new set of age group, period, or cohort labels.
 
 #### Solution
 
@@ -46,7 +51,7 @@ and specify the breaks.
 ``` r
 
 age_labels(
-  breaks = c(0, 20, 65, 100),
+  breaks = c(0, 20, 65, 100)
 )
 #> [1] "0-19"  "20-64" "65-99" "100+"
 cohort_labels(
@@ -59,8 +64,8 @@ cohort_labels(
 #### Discussion
 
 There is no universally accepted set of conventions on how age, period,
-and cohort labels should be formatted, but `agetime` tries to reflect
-common practices.
+and cohort labels should be formatted. `agetime` tries to reflect common
+practices in demography and official statistics.
 
 #### See Also
 
@@ -75,7 +80,9 @@ common practices.
 
 #### Problem
 
-Convert age, period, or cohort labels to the default `agetime` style.
+Your age, period, or cohort labels come in a mix of formats, such as
+`"5to9"`, `"10--14"`, and `"100plus"`, and you want them all in one
+consistent format.
 
 #### Solution
 
@@ -103,10 +110,23 @@ df |>
 #> 4 0        22
 ```
 
+The `standard` functions recognize the formats commonly found in
+published tables, including totals and not-stated categories.
+
+``` r
+
+age_standard(c("All ages", "Under 1", "1-4 years", "Age 5 to 9",
+               "10-14yrs", "85 years and over", "Not stated"))
+#> [1] "Total" "0"     "1-4"   "5-9"   "10-14" "85+"   NA
+```
+
 #### Discussion
 
 If the `labels` argument is a factor, then the `standard` functions
 standardize the factor levels along with the values.
+
+Not-stated categories become `NA`. To remove them, see [Drop “Not
+stated” categories from a dataset](#drop-missing).
 
 #### See Also
 
@@ -117,11 +137,121 @@ standardize the factor levels along with the values.
   [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
   describe `agetime` formatting rules
 
+### Convert lower limits to age group labels
+
+#### Problem
+
+Your data store age groups as numbers, such as `0`, `5`, `10`, …, `85`,
+where each number is the lower limit of a five-year age group, and `85`
+is the lower limit of an open age group. You want age group labels such
+as `"0-4"` and `"85+"`.
+
+#### Solution
+
+Treat the numbers as single years, coarsen them to five-year groups, and
+then make the last group open.
+
+``` r
+
+age <- c(0, 5, 10, 80, 85)
+age |>
+  age_coarsen_five() |>
+  age_set_open_right(at = 85)
+#> [1] 0-4   5-9   10-14 80-84 85+  
+#> Levels: 0-4 5-9 10-14 80-84 85+
+```
+
+For life-table age groups, where the numbers are `0`, `1`, `5`, `10`, …,
+use
+[`age_coarsen_life()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_five.md)
+in place of
+[`age_coarsen_five()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_five.md).
+
+#### Discussion
+
+`agetime` reads a number on its own as a single year of age. Without
+coarsening, `5` is the interval from age 5 up to age 6, not up to age
+10.
+
+``` r
+
+age_interval(age)
+#> [1] "[0, 1)"   "[5, 6)"   "[10, 11)" "[80, 81)" "[85, 86)"
+```
+
+#### See Also
+
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [Specify an open-ended age group, period, or
+  cohort](#specify-an-open-ended-age-group-period-or-cohort)
+
+### Adopt coarser age groups from another age variable
+
+#### Problem
+
+You have two age variables, and you want to switch the finer one to the
+coarser age groups used by the other.
+
+#### Solution
+
+Use
+[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md).
+
+``` r
+
+df <- tibble(
+  age = c("0", "1", "5", "10", "11"),
+  n = c(3, 1, 4, 6, 7)
+)
+age_wide <- c("0-4", "5-14")
+
+df |>
+  mutate(age = age_coarsen_to(age, to = age_wide)) |>
+  count(age, wt = n)
+#> # A tibble: 2 × 2
+#>   age       n
+#>   <fct> <dbl>
+#> 1 0-4       4
+#> 2 5-14     17
+```
+
+#### Discussion
+
+Every age group in `labels` must lie inside exactly one age group in
+`to`. Otherwise
+[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
+throws an error, which distinguishes two problems:
+
+- an age group *would be split* when it overlaps two or more age groups
+  in `to`, as `"5-9"` overlaps `"0-6"` and `"7-14"`;
+- an age group is *not fully covered* when part of it lies outside all
+  the age groups in `to`, as `"20"` lies above `"7-14"`.
+
+``` r
+
+age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
+#> Error in `age_coarsen_to()`:
+#> ! Can't coarsen age groups.
+#> ✖ Age group "5-9" would be split by the labels in `to`.
+#> ℹ "5-9" overlaps "0-6" and "7-14".
+#> ✖ Age group "20" is not fully covered by the labels in `to`.
+#> ℹ Add labels to `to` that cover it?
+```
+
+#### See Also
+
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [Build a mapping between age
+  groups](#build-a-mapping-between-age-groups)
+- [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md),
+  [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
+
 ### Create labels for a forecast
 
 #### Problem
 
-Take a sequence of periods and extend it forward in time.
+You have labels for past periods, and you need labels for future
+periods, for use in a forecast.
 
 #### Solution
 
@@ -146,9 +276,9 @@ period_extend(recent, n = 2)
 
 #### Problem
 
-Move the starting point of existing open age groups, open periods, or
-open cohorts, or specify a new open age group, open period, or open
-cohort.
+You want an open interval at one end of your labels, with a limit
+specified by you. The labels might already have an open interval with a
+different limit, or they might not have one at all.
 
 An open interval is one that has no lower limit (e.g. `"<2000"`) or no
 upper limit (e.g. `"85+"`).
@@ -204,7 +334,7 @@ labels_age |>
 
 #### Problem
 
-Raw age group labels don’t sort properly:
+Raw age group labels sort in alphabetical order:
 
 ``` r
 
@@ -222,6 +352,8 @@ df |>
 #> 2 10-14    33
 #> 3 5-9      15
 ```
+
+You want an age variable that sorts in age order.
 
 #### Solution
 
@@ -245,10 +377,11 @@ turns it into one.
 
 #### See Also
 
-- [`period_set_order()`](https://bayesiandemography.github.io/agetime/reference/period_set_order.md)
+- Use
+  [`period_set_order()`](https://bayesiandemography.github.io/agetime/reference/period_set_order.md)
   and
   [`cohort_set_order()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_order.md)
-  permanently modify period and cohort variables.
+  to make period and cohort labels sort in the right order.
 - [Order by age when working interactively](#sort-age-interactive)
 - The `set_open`, `coarsen`, and `fill` functions, like the `set_order`
   functions, always return factors
@@ -257,8 +390,8 @@ turns it into one.
 
 #### Problem
 
-Ensure that a table includes all age groups, including age groups with
-no observations.
+You are building a table, and you want it to show every age group,
+including age groups with no observations.
 
 #### Solution
 
@@ -300,6 +433,30 @@ all_ages |>
 #> 5 20-24    NA
 ```
 
+Alternatively, to fill gaps between the age groups in the data, use a
+`fill` function, then
+[`complete()`](https://tidyr.tidyverse.org/reference/complete.html) from
+the `tidyr` package.
+
+``` r
+
+library(tidyr)
+
+observed |>
+  mutate(age = age_fill_five(age)) |>
+  complete(age, fill = list(n = 0))
+#> # A tibble: 3 × 2
+#>   age       n
+#>   <fct> <dbl>
+#> 1 0-4      30
+#> 2 5-9       0
+#> 3 10-14    25
+```
+
+[`complete()`](https://tidyr.tidyverse.org/reference/complete.html)
+sorts character vectors alphabetically, so `age` needs to be a factor,
+as it is here.
+
 #### Discussion
 
 [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
@@ -313,23 +470,27 @@ creates the labels used by an abridged life table, `"0"`, `"1-4"`,
   (e.g. [`age_fill_five()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md))
   add intermediate levels to a factor.
 - [Create an age variable that sorts properly](#sort-age-permanently)
+- [Include levels that don’t appear in the data](#fill-levels)
 
-### Validate labels
+## Check labels
+
+### Check for gaps, overlaps, and other problems
 
 #### Problem
 
-Check that a label vector meets expectations, either for a report or to
-stop a pipeline.
+You want to check that a set of labels meets your expectations, such as
+having no gaps, and either report any problems or stop a pipeline.
 
 #### Solution
 
-Use the `diagnose` functions for diagnostics. Use the `assert` functions
-to throw an error as soon as a condition is violated.
+Use the `diagnose_values` functions for diagnostics. Use the
+`assert_values` functions to throw an error as soon as a condition is
+violated.
 
 ``` r
 
 lab <- c("2020-2025", "2025-2030", "2030-2035")
-period_diagnose(lab, no_gap = TRUE, no_overlap = TRUE)
+period_diagnose_values(lab, no_gap = TRUE, no_overlap = TRUE)
 #> $ok
 #> [1] TRUE
 #> 
@@ -346,7 +507,7 @@ pop <- tibble(
 )
 
 pop |>
-  mutate(age = age_assert(age, has_zero = TRUE, no_gap = TRUE))
+  mutate(age = age_assert_values(age, has_zero = TRUE, no_gap = TRUE))
 #> # A tibble: 3 × 2
 #>   age   count
 #>   <chr> <dbl>
@@ -362,77 +523,184 @@ The `diagnose` functions return a list with an `ok` flag and details.
 The `assert` functions return their input invisibly when checks pass.
 Returning their inputs allows them to be used in pipelines.
 
+The `values` functions treat each element of `labels` as a separate
+group, so a label that appears more than once counts as overlapping.
+
 #### See Also
 
-- [`?age_diagnose`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md),
-  [`?period_diagnose`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md),
+- [`?age_diagnose_levels`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md),
+  [`?period_diagnose_levels`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md),
   or
-  [`?cohort_diagnose`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md)
+  [`?cohort_diagnose_levels`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
   for the full set of conditions
-- When working with subsets of factors, you might want to [validate
-  labels - based on values, not levels](#validate-labels-values)
+- [Check labels within groups of a data frame](#validate-labels-groups)
+- [Check the levels of a factor](#validate-labels-levels)
 
-### Validate labels - based on values, not levels
+### Check labels within groups of a data frame
 
 #### Problem
 
-When `labels` is a factor, the `diagnose` and `assert` functions check
-factor *levels*, including unused levels, rather than the values
-themselves. For instance, if we have
-
-    labels <- factor(c("0-4", "5-9"))
-
-then the check
-
-    age_assert(labels[2], has_zero = TRUE)
-
-will pass because it is applied to the levels of `labels[2]`
-(i.e. `c("0-4", "5-9")`) and not the value (`"5-9"`).
-
-This means, for instance, that the following test will pass, even though
-the `"M"` group does not have any age groups starting with 0.
+Your data frame has one row for each combination of age group and
+another variable, such as sex, and you want to check the age groups for
+each sex. Checking the whole column fails, because each age group
+appears more than once.
 
 ``` r
 
 df <- tibble(
-  age = factor(c("0-4", "5-9", "5-9")),
-  gender = c("F", "F", "M")
-) |>
-group_by(gender)
+  age = c("0-4", "5-9", "0-4", "5-9"),
+  sex = c("F", "F", "M", "M"),
+  count = c(51, 49, 53, 50)
+)
 
 df |>
-  mutate(age = age_assert(age, has_zero = TRUE))
-#> # A tibble: 3 × 2
-#> # Groups:   gender [2]
-#>   age   gender
-#>   <fct> <chr> 
-#> 1 0-4   F     
-#> 2 5-9   F     
-#> 3 5-9   M
+  mutate(age = age_assert_values(age, no_overlap = TRUE))
+#> Error in `mutate()`:
+#> ℹ In argument: `age = age_assert_values(age, no_overlap = TRUE)`.
+#> Caused by error in `age_assert_values()`:
+#> ! Age group labels fail check `no_overlap`.
+#> ✖ `no_overlap`: Example of overlap among values: '0-4' appears 2 times. To
+#>   allow repeats, such as one per sex, check within groups, for instance using
+#>   dplyr::group_by().
 ```
 
 #### Solution
 
-To check the values of a factor, rather than the levels, use the
-`diagnose_values` and `assert_values` functions.
+Group the data first, for instance using
+[`group_by()`](https://dplyr.tidyverse.org/reference/group_by.html).
 
 ``` r
 
 df |>
-  mutate(age = age_assert_values(age, has_zero = TRUE))
-#> Error in `mutate()`:
-#> ℹ In argument: `age = age_assert_values(age, has_zero = TRUE)`.
-#> ℹ In group 2: `gender = "M"`.
-#> Caused by error in `throw_assert_error()`:
-#> ! Assertion failed.
-#>   <pillar> <tibble[,3]> # A tibble: 1 × 3 condition passed comment <chr> <lgl>
-#>   <chr> 1 has_zero FALSE Lowest interval among values: '5-9'
+  group_by(sex) |>
+  mutate(age = age_assert_values(age, no_overlap = TRUE, has_zero = TRUE))
+#> # A tibble: 4 × 3
+#> # Groups:   sex [2]
+#>   age   sex   count
+#>   <chr> <chr> <dbl>
+#> 1 0-4   F        51
+#> 2 5-9   F        49
+#> 3 0-4   M        53
+#> 4 5-9   M        50
 ```
+
+#### Discussion
+
+Every check is applied separately to each group. For instance,
+`has_zero = TRUE` checks that each sex has an age group starting at
+zero.
 
 #### See Also
 
-- [Validate labels](#validate-labels) for checking factor levels, not
-  values
+- [Check for gaps, overlaps, and other problems](#validate-labels)
+
+### Check the levels of a factor
+
+#### Problem
+
+Your labels are a factor, and you want to check the levels, including
+levels that do not appear in the data.
+
+#### Solution
+
+Use the `diagnose_levels` and `assert_levels` functions.
+
+``` r
+
+age <- factor(
+  c("0-4", "0-4", "5-9"),
+  levels = c("0-4", "5-9", "10+")
+)
+
+age_diagnose_levels(age, no_overlap = TRUE, has_open_right = TRUE)
+#> $ok
+#> [1] TRUE
+#> 
+#> $details
+#> # A tibble: 2 × 3
+#>   condition      passed comment
+#>   <chr>          <lgl>  <chr>  
+#> 1 no_overlap     TRUE   NA     
+#> 2 has_open_right TRUE   NA
+age_diagnose_values(age, no_overlap = TRUE, has_open_right = TRUE)
+#> $ok
+#> [1] FALSE
+#> 
+#> $details
+#> # A tibble: 2 × 3
+#>   condition      passed comment                                                 
+#>   <chr>          <lgl>  <chr>                                                   
+#> 1 no_overlap     FALSE  Example of overlap among values: '0-4' appears 2 times.…
+#> 2 has_open_right FALSE  Highest interval among values: '5-9'
+```
+
+#### Discussion
+
+The `levels` functions throw an error if `labels` is not a factor.
+
+#### See Also
+
+- [Include levels that don’t appear in the data](#fill-levels)
+
+### See the intervals implied by a set of labels
+
+#### Problem
+
+You are not sure how `agetime` is interpreting a set of labels. For
+instance, does `"2020"` refer to the year starting in 2020 or the year
+ending in 2020, and does `"2020-2024"` include 2024?
+
+#### Solution
+
+Use the `interval` functions, which describe each label using interval
+notation.
+
+``` r
+
+age_interval(c("0", "1-4", "5-9", "100+"))
+#> [1] "[0, 1)"     "[1, 5)"     "[5, 10)"    "[100, Inf)"
+
+period_interval(c("2018", "2019", "2020-2025"))
+#> [1] "[2018, 2019)" "[2019, 2020)" "[2020, 2025)"
+```
+
+To see how the interpretation changes, vary `interpret_single` and
+`interpret_multi`.
+
+``` r
+
+## years running from 1 July to 30 June, with
+## labels giving the year in which they end
+period_interval(c("2019", "2020"), interpret_single = "upper")
+#> [1] "[2018, 2019)" "[2019, 2020)"
+
+## second number in "2020-2024" is the last year
+## in the interval, rather than the upper limit
+cohort_interval(c("2015-2019", "2020-2024"), interpret_multi = "below_upper")
+#> [1] "[2015, 2020)" "[2020, 2025)"
+```
+
+#### Discussion
+
+In interval notation, a square bracket means that the interval includes
+the limit, and a round bracket means that the interval excludes it. Age
+`"5-9"`, for instance, is `"[5, 10)"`, which includes people who have
+reached their 5th birthday but not their 10th. The limit of an open
+interval is written `-Inf` or `Inf`, as in `"[100, Inf)"`.
+
+The `interval` functions return descriptions of labels, not labels, and
+other `agetime` functions cannot read them.
+
+#### See Also
+
+- [`?age_interval`](https://bayesiandemography.github.io/agetime/reference/age_lower.md),
+  [`?period_interval`](https://bayesiandemography.github.io/agetime/reference/period_lower.md),
+  and
+  [`?cohort_interval`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
+- The `lower`, `upper`, `width`, and `mid` functions
+  (e.g. [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md))
+  return the limits, widths, and midpoints of intervals as numbers
+- [Check for gaps, overlaps, and other problems](#validate-labels)
 
 ## Analyse data
 
@@ -440,7 +708,9 @@ df |>
 
 #### Problem
 
-Select rows based on ages, periods, or cohorts.
+You want to keep rows from your dataset for certain ages, periods, or
+cohorts, and discard the rest. But the age, period, and cohort labels
+are strings, so you can’t compare them with numbers.
 
 #### Solution
 
@@ -491,7 +761,8 @@ df |>
 
 #### Problem
 
-Remove rows containing age, period, or cohort totals.
+Your dataset includes rows for totals, such as `"All ages"`, which you
+want to remove.
 
 #### Solution
 
@@ -500,7 +771,7 @@ Use
 [`period_is_total()`](https://bayesiandemography.github.io/agetime/reference/period_is_total.md),
 or
 [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
-to identify rows with totals and then filter.
+to identify rows with totals, and then filter.
 
 ``` r
 
@@ -530,14 +801,14 @@ recognize synonyms for totals (e.g. `"all"`) and ignore case
 
 #### See Also
 
-- [Drop NA and not-stated from a dataset](#drop-missing)
+- [Drop “Not stated” categories from a dataset](#drop-missing)
 
 ### Drop “Not stated” categories from a dataset
 
 #### Problem
 
-Remove rows where data on age, period, or cohort is not stated or
-missing.
+Your dataset includes rows where age, period, or cohort is not stated or
+missing, and you want to remove them.
 
 #### Solution
 
@@ -581,7 +852,8 @@ look for `NA`s, but also for text equivalents, such as `"Not stated"`,
 
 #### Problem
 
-Sorting on raw age group labels gets ages in the wrong order.
+You are exploring a dataset interactively, and you want to sort on age,
+but the age labels are sorted in alphabetical order.
 
 ``` r
 
@@ -621,17 +893,21 @@ df |>
 #> 3 10-14        15
 ```
 
-#### See Also
+#### Discussion
 
-- [Create an age variable that sorts properly](#sort-age-permanently)
+If you want the variable itself to sort in age order, use
+[`age_set_order()`](https://bayesiandemography.github.io/agetime/reference/age_set_order.md),
+[`period_set_order()`](https://bayesiandemography.github.io/agetime/reference/period_set_order.md),
+or
+[`cohort_set_order()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_order.md).
+See [Create an age variable that sorts properly](#sort-age-permanently).
 
 ### Include levels that don’t appear in the data
 
 #### Problem
 
-Some age groups, periods, or cohorts don’t appear in the data.
-Tabulations and other calculations don’t account for these levels,
-leading to gaps in the output.
+Some age groups, periods, or cohorts don’t appear in your data, but you
+want them to appear in tabulations.
 
 ``` r
 
@@ -674,7 +950,12 @@ df |>
 #> 3 10-14    20
 ```
 
-Note that tidyverse functions such as
+#### Discussion
+
+The `fill` functions change the levels of `labels`, not the values. If
+`labels` is not a factor, the `fill` functions turn it into one.
+
+Tidyverse functions such as
 [`count()`](https://dplyr.tidyverse.org/reference/count.html) and
 [`summarise()`](https://dplyr.tidyverse.org/reference/summarise.html)
 drop unused levels by default. If `.drop = FALSE` is not included in the
@@ -694,11 +975,6 @@ df |>
 #> 1 0-4      15
 #> 2 10-14    20
 ```
-
-#### Discussion
-
-The `fill` functions change the levels of `labels`, not the values. If
-`labels` is not a factor, the `fill` functions turn it into one.
 
 #### See Also
 
@@ -721,8 +997,8 @@ The `fill` functions change the levels of `labels`, not the values. If
 
 #### Problem
 
-The data use one-year age groups. You want to aggregate to five-year age
-groups.
+Your data use one-year age groups, and you want to aggregate to
+five-year age groups.
 
 #### Solution
 
@@ -751,23 +1027,25 @@ deaths |>
   count(age, wt = n)
 #> # A tibble: 3 × 2
 #>   age       n
-#>   <chr> <dbl>
+#>   <fct> <dbl>
 #> 1 0-4       6
-#> 2 10-14    13
-#> 3 5-9       9
+#> 2 5-9       9
+#> 3 10-14    13
 ```
 
 #### Discussion
 
 For irregular age groups, use
 [`age_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen.md).
+To borrow categories from another set of labels, use
+[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md).
 To aggregate to (abridged) life-table ages, use
 [`age_coarsen_life()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_five.md).
 
 #### See Also
 
-- [Recode labels into another
-  classification](#recode-into-classification)
+- [Adopt coarser age groups from another age
+  variable](#recode-into-classification)
 - [`period_coarsen_five()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_five.md),
   [`cohort_coarsen_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_five.md)
 - [`period_coarsen()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen.md),
@@ -776,14 +1054,83 @@ To aggregate to (abridged) life-table ages, use
   [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md),
   [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
 
+### Build a mapping between age groups
+
+#### Problem
+
+You have two age classifications, and you want a lookup table showing
+how the age groups in one classification relate to the age groups in the
+other.
+
+#### Solution
+
+Use
+[`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md).
+
+``` r
+
+classif_fine <- age_labels_ten(lower_last = 60)
+classif_broad <- age_labels(breaks = c(0, 20, 60), open_right = TRUE)
+age_mapping(
+  labels_x = classif_fine,
+  labels_y = classif_broad,
+  relation = "is_contained_in"
+)
+#> # A tibble: 7 × 2
+#>   x     y    
+#>   <chr> <chr>
+#> 1 0-9   0-19 
+#> 2 10-19 0-19 
+#> 3 20-29 20-59
+#> 4 30-39 20-59
+#> 5 40-49 20-59
+#> 6 50-59 20-59
+#> 7 60+   60+
+```
+
+#### Discussion
+
+Other possible values for `relation` are `"equals"`, `"contains"`, and
+`"overlaps_with"`.
+
+To represent the mapping as a matrix rather than a data frame, set
+`format` to `"matrix"`,
+
+``` r
+
+age_mapping(
+  labels_x = classif_fine,
+  labels_y = classif_broad,
+  relation = "is_contained_in",
+  format = "matrix"
+)
+#>        y
+#> x       0-19 20-59 60+
+#>   0-9      1     0   0
+#>   10-19    1     0   0
+#>   20-29    0     1   0
+#>   30-39    0     1   0
+#>   40-49    0     1   0
+#>   50-59    0     1   0
+#>   60+      0     0   1
+```
+
+#### See Also
+
+- [Adopt coarser age groups from another age
+  variable](#recode-into-classification)
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md),
+  [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md),
+  [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
+
 ### Use age, period, or cohort on the x-axis of a plot
 
 #### Problem
 
-Plots that use non-numeric age groups, periods, or cohorts on the x-axis
-often look terrible, with overlapping labels and points instead of
-smooth curves. Sometimes ages are also in the wrong order, e.g. “100+”
-after “10-14” and “5-9” after “50-54”.
+You want to construct a plot with age, period, or cohort on the x-axis.
+But plots that use non-numeric age, period, or cohort labels on the
+x-axis often look terrible, and get categories in the wrong order.
 
 ``` r
 
@@ -804,8 +1151,7 @@ Convert age, period, or cohort to a continuous variable by using
 [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md),
 [`period_mid()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md),
 or
-[`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
-to calculate midpoints.
+[`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md).
 
 ``` r
 
@@ -825,7 +1171,7 @@ ggplot(df, aes(x = age_mid(age), y = rate)) +
 
 #### Problem
 
-Calculate annual rates from data with multi-year periods
+Your data use multi-year periods, and you want annual rates.
 
 #### Solution
 
@@ -835,7 +1181,7 @@ Use
 ``` r
 
 df <- tibble(
-  period = c("2010-2020", "2020-2024", "2024-2030"),
+  period = c("2010-2020", "2020-2023", "2023-2030"),
   departures = c(2000, 50, 3000)
 )
 
@@ -848,13 +1194,13 @@ df |>
 #>   period    departures n_year annual_rate
 #>   <chr>          <dbl>  <dbl>       <dbl>
 #> 1 2010-2020       2000     10       200  
-#> 2 2020-2024         50      4        12.5
-#> 3 2024-2030       3000      6       500
+#> 2 2020-2023         50      3        16.7
+#> 3 2023-2030       3000      7       429.
 ```
 
 #### Discussion
 
-The width of an open interval is undefined.
+The width of an open interval is `Inf`.
 
 #### See Also
 
@@ -862,135 +1208,10 @@ The width of an open interval is undefined.
 - [`age_width()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md),
   [`cohort_width()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
 
-### Build a mapping between age groups
+## More information
 
-#### Problem
-
-Create a lookup table showing the relationship between two age
-classifications.
-
-#### Solution
-
-Use
-[`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md).
-
-``` r
-
-classif_fine <- age_labels_life()
-classif_broad <- age_labels(breaks = c(0, 15, 65, 85))
-age_mapping(
-  labels_x = classif_fine,
-  labels_y = classif_broad,
-  relation = "is-contained-in"
-)
-#> # A tibble: 22 × 2
-#>    x     y    
-#>    <chr> <chr>
-#>  1 0     0-14 
-#>  2 1-4   0-14 
-#>  3 5-9   0-14 
-#>  4 10-14 0-14 
-#>  5 15-19 15-64
-#>  6 20-24 15-64
-#>  7 25-29 15-64
-#>  8 30-34 15-64
-#>  9 35-39 15-64
-#> 10 40-44 15-64
-#> # ℹ 12 more rows
-```
-
-#### Discussion
-
-Other possible values for `relation` are `"equals"`, `"contains"`, and
-`"overlaps-with"`.
-
-To represent the mapping as a matrix rather than a data frame, set
-`format` to `"matrix"`,
-
-``` r
-
-age_mapping(
-  labels_x = classif_fine,
-  labels_y = classif_broad,
-  relation = "is-contained-in",
-  format = "matrix"
-)
-#>        y
-#> x       0-14 15-64 65-84 85+
-#>   0        1     0     0   0
-#>   1-4      1     0     0   0
-#>   5-9      1     0     0   0
-#>   10-14    1     0     0   0
-#>   15-19    0     1     0   0
-#>   20-24    0     1     0   0
-#>   25-29    0     1     0   0
-#>   30-34    0     1     0   0
-#>   35-39    0     1     0   0
-#>   40-44    0     1     0   0
-#>   45-49    0     1     0   0
-#>   50-54    0     1     0   0
-#>   55-59    0     1     0   0
-#>   60-64    0     1     0   0
-#>   65-69    0     0     1   0
-#>   70-74    0     0     1   0
-#>   75-79    0     0     1   0
-#>   80-84    0     0     1   0
-#>   85-89    0     0     0   1
-#>   90-94    0     0     0   1
-#>   95-99    0     0     0   1
-#>   100+     0     0     0   1
-```
-
-#### See Also
-
-- [Recode labels into another
-  classification](#recode-into-classification)
-- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
-- [`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md),
-  [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md),
-  [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
-
-### Adopt coarser age groups from another age variable
-
-#### Problem
-
-You want to switch to the coarser age groups used by a different age
-variable.
-
-#### Solution
-
-Use
-[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md).
-
-``` r
-
-df <- tibble(
-  age = c("0", "1", "5", "10", "11"),
-  n = c(3, 1, 4, 6, 7)
-)
-age_wide <- c("0-4", "5-14")
-
-df |>
-  mutate(age = age_coarsen_to(age, to = age_wide)) |>
-  count(age, wt = n)
-#> # A tibble: 2 × 2
-#>   age       n
-#>   <fct> <dbl>
-#> 1 0-4       4
-#> 2 5-14     17
-```
-
-#### Discussion
-
-If any of the age groups in `labels` do not map uniquely on to an age
-group in `to`, then
-[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
-throws an error.
-
-#### See Also
-
-- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
-- [Build a mapping between age
-  groups](#build-a-mapping-between-age-groups)
-- [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md),
-  [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
+- [Get
+  started](https://bayesiandemography.github.io/agetime/articles/agetime.md)
+  for a quick start
+- [Troubleshooting](https://bayesiandemography.github.io/agetime/articles/troubleshooting.md)
+  for solutions to common problems

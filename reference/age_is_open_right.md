@@ -22,7 +22,8 @@ age_is_open_right(labels, interpret_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Logical vector with the same length as `labels`.
+Logical vector with the same length as `labels`. If `labels` has names,
+the result has the same names.
 
 ## See also
 
@@ -52,8 +53,5 @@ Logical vector with the same length as `labels`.
 ``` r
 labels <- c("20+", "infant", "100+", "60to79", "80 years or more")
 age_is_open_right(labels)
-#>              20+           infant             100+           60to79 
-#>             TRUE            FALSE             TRUE            FALSE 
-#> 80 years or more 
-#>             TRUE 
+#> [1]  TRUE FALSE  TRUE FALSE  TRUE
 ```

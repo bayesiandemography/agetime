@@ -14,7 +14,7 @@ cohort_set_open_left(
   labels,
   at,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("include", "exclude"),
+  interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 
@@ -22,7 +22,7 @@ cohort_set_open_right(
   labels,
   at,
   interpret_single = c("lower", "upper"),
-  interpret_multi = c("include", "exclude"),
+  interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
 )
 ```
@@ -40,13 +40,14 @@ cohort_set_open_right(
 
 - interpret_single:
 
-  How to interpret labels for single-year cohorts. Choices are `"lower"`
-  (the default) and `"upper"`. See below for details.
+  How to interpret a label for a single year, such as `"2020"`. Choices
+  are `"lower"` (the default) and `"upper"`. See below for details.
 
 - interpret_multi:
 
-  How to interpret labels for multi-year cohorts. Choices are
-  `"include"` (the default) and `"exclude"`. See below for details.
+  How to interpret a label that refers to multiple years, such as
+  `"2020-2025"`. Choices are `NULL` (the default), `"at_upper"`, and
+  `"below_upper"`. See below for details.
 
 - interpret_fail:
 
@@ -59,7 +60,17 @@ Factor with the same length as `labels`.
 
 ## Rules for interpreting inputs
 
-Single-year cohorts:
+**Single-year**
+
+Labels for single-year cohorts sometimes refer to the lower limits of
+cohorts, and sometimes refer to upper limits. For instance, the label
+`"2020"` is sometimes used to refer to the cohort that starts at
+midnight on 1 January 2020 and ends at midnight on 1 January 2021, and
+is sometimes used to refer to the cohort that starts at midnight on 1
+July 2019 and ends at midnight on 1 July 2020.
+
+The `interpret_single` argument can be used to distinguish between the
+two conventions:
 
 |                    |                  |                         |
 |--------------------|------------------|-------------------------|
@@ -67,23 +78,45 @@ Single-year cohorts:
 | `"lower"`          | `"a" -> [a,a+1)` | `"2020" -> [2020,2021)` |
 | `"upper"`          | `"a" -> [a-1,a)` | `"2020" -> [2019,2020)` |
 
-Data providers typically use the "lower" convention for calendar years
-(1 January to 31 December), and the "upper" convention for non-calendar
-years (e.g., 1 July to 30 June).
+**Multi-year**
 
-Multi-year cohorts:
+In labels for multi-year cohorts, the second number is sometimes the
+upper limit of the cohort, and sometimes the upper limit minus 1. For
+instance, the cohort that starts at midnight on 1 January 2020 and ends
+at midnight on 1 January 2025 is sometimes labelled `"2020-2025"` and is
+sometimes labelled `"2020-2024"`.
 
-|                   |                          |                              |
-|-------------------|--------------------------|------------------------------|
-| `interpret_multi` | *Rule*                   | *Example*                    |
-| `"include"`       | `"a-<a+n>" -> [a,a+n)`   | `"2020-2025" -> [2020,2025)` |
-| `"exclude"`       | `"a-<a+n-1>" -> [a,a+n)` | `"2020-2024" -> [2020,2025)` |
+The `interpret_multi` argument can be used to distinguish between the
+two conventions:
 
-A two-value label cannot describe a one-year cohort. With
-`interpret_multi = "include"`, `"2010-2011"` would be `[2010, 2011)` and
-`"2010-2010"` would be empty; both are rejected. Use `"2010"`, or
-`"2010-2012"` for two years. With `interpret_multi = "exclude"`,
-`"2010-2011"` is two years `[2010, 2012)` and is accepted.
+|                   |                    |                              |
+|-------------------|--------------------|------------------------------|
+| `interpret_multi` | *Rule*             | *Example*                    |
+| `"at_upper"`      | `"a-b" -> [a,b)`   | `"2020-2025" -> [2020,2025)` |
+| `"below_upper"`   | `"a-b" -> [a,b+1)` | `"2020-2024" -> [2020,2025)` |
+
+If `interpret_multi` is `NULL` (the default), then multi-year labels are
+interpreted using the `"at_upper"` convention. If, however, the
+`"at_upper"` convention leads to intervals with widths 4, 9, 14, ...,
+then agetime emits a message. Supplying an explicit value for
+`interpret_multi` silences this message.
+
+**Open**
+
+A cohort that is open on the left has no lower limit, and a cohort that
+is open on the right has no upper limit. Labels for open cohorts are not
+affected by `interpret_single` or `interpret_multi`.
+
+Some examples of open cohorts:
+
+|                                                |               |
+|------------------------------------------------|---------------|
+| *Label*                                        | *Interval*    |
+| `"<2000"`, `"before 2000"`, `"under 2000"`     | `(-Inf,2000)` |
+| `"2000 or earlier"`, `"up to 2000"`            | `(-Inf,2001)` |
+| `"2000+"`, `"2000 or more"`, `"2000 or later"` | `[2000,Inf)`  |
+
+Labels starting with `"-"`, such as `"-2000"`, are not accepted.
 
 ## See also
 
@@ -105,19 +138,19 @@ A two-value label cannot describe a one-year cohort. With
 ## Examples
 
 ``` r
-labels <- c("2020-2024", "<2000", "2015")
+labels <- c("2020-2025", "<2000", "2015")
 cohort_set_open_left(labels, at = 2020)
-#> [1] 2020-2024 <2020     <2020    
-#> Levels: <2020 2020-2024
+#> [1] 2020-2025 <2020     <2020    
+#> Levels: <2020 2020-2025
 cohort_set_open_left(labels, at = 2005)
-#> [1] 2020-2024 <2005     2015     
-#> Levels: <2005 2015 2020-2024
-cohort_set_open_left(c("2000-2004", "2010-2014"), at = 1990)
-#> [1] 2000-2004 2010-2014
-#> Levels: <1990 2000-2004 2010-2014
+#> [1] 2020-2025 <2005     2015     
+#> Levels: <2005 2015 2020-2025
+cohort_set_open_left(c("2000-2005", "2010-2015"), at = 1990)
+#> [1] 2000-2005 2010-2015
+#> Levels: <1990 2000-2005 2010-2015
 
-labels <- c("2020-2024", "2025-2029", "2030")
+labels <- c("2020-2025", "2025-2030", "2030")
 cohort_set_open_right(labels, at = 2030)
-#> [1] 2020-2024 2025-2029 2030+    
-#> Levels: 2020-2024 2025-2029 2030+
+#> [1] 2020-2025 2025-2030 2030+    
+#> Levels: 2020-2025 2025-2030 2030+
 ```

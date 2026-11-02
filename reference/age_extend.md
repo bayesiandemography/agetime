@@ -9,7 +9,7 @@ age_extend(
   labels,
   n = 1L,
   width = NULL,
-  include_x = TRUE,
+  include_labels = TRUE,
   interpret_fail = c("error", "warn", "silent")
 )
 ```
@@ -28,7 +28,7 @@ age_extend(
 
   Width of the age groups to be added.
 
-- include_x:
+- include_labels:
 
   Should the return value include `labels`? Default is `TRUE`.
 
@@ -39,13 +39,20 @@ age_extend(
 
 ## Value
 
-Character vector or factor.
+A factor if `labels` is a factor, and a character vector otherwise. If
+`labels` is a factor, the new age groups are added as levels, after the
+existing levels.
 
 ## Details
 
-By default, the width of the new age groups is derived from the last
-element of `labels`, but a value can be specified through the `width`
+The new age groups start at the highest upper limit of the age groups in
+`labels`, including unused levels if `labels` is a factor. By default,
+the width of the new age groups is the width of the age group with the
+highest upper limit, but a value can be specified through the `width`
 argument.
+
+`labels` cannot include totals, missing values, or age groups that are
+open on the right.
 
 ## See also
 
@@ -63,6 +70,6 @@ age_extend(labels, n = 2)
 #> [1] "0-4"   "5-9"   "10-14" "15-19"
 age_extend(labels, n = 2, width = 10)
 #> [1] "0-4"   "5-9"   "10-19" "20-29"
-age_extend(labels, n = 2, include_x = FALSE)
+age_extend(labels, n = 2, include_labels = FALSE)
 #> [1] "10-14" "15-19"
 ```

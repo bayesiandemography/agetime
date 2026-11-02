@@ -21,7 +21,8 @@ age_is_total(labels, interpret_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Logical vector with the same length as `labels`.
+Logical vector with the same length as `labels`. If `labels` has names,
+the result has the same names.
 
 ## See also
 
@@ -45,16 +46,13 @@ Logical vector with the same length as `labels`.
 ``` r
 labels <- c("0-4", "5-9", "0-64", "Total")
 age_is_total(labels)
-#>   0-4   5-9  0-64 Total 
-#> FALSE FALSE FALSE  TRUE 
+#> [1] FALSE FALSE FALSE  TRUE
 age_is_subtotal(labels)
-#>   0-4   5-9  0-64 Total 
-#> FALSE FALSE FALSE FALSE 
+#> [1] FALSE FALSE FALSE FALSE
 
 labels <- c("overall", "20-24", "Total", "100+", "ALL")
 age_is_total(labels)
-#> overall   20-24   Total    100+     ALL 
-#>    TRUE   FALSE    TRUE   FALSE    TRUE 
+#> [1]  TRUE FALSE  TRUE FALSE  TRUE
 
 ## use to filter data
 library(dplyr, warn.conflicts = FALSE)

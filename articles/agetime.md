@@ -1,10 +1,7 @@
 # Quick start
 
-Working with age group, period, and cohort labels is often awkward and
-error-prone. The `agetime` package makes it easier. This vignette
-introduces some of the basic functions. The vignette focuses on age
-group labels, but equivalent functions also exist for period and cohort
-labels.
+Working with age group, period, and cohort labels can be awkward and
+error-prone. The `agetime` package makes it easier.
 
 ## Infer intervals from labels
 
@@ -17,17 +14,13 @@ library(agetime)
 
 x <- c("0", "1-4", "5-9", "10+")
 age_lower(x)
-#>   0 1-4 5-9 10+ 
-#>   0   1   5  10
+#> [1]  0  1  5 10
 age_upper(x)
-#>   0 1-4 5-9 10+ 
-#>   1   5  10 Inf
+#> [1]   1   5  10 Inf
 age_mid(x)
-#>    0  1-4  5-9  10+ 
-#>  0.5  3.0  7.5 12.0
+#> [1]  0.5  3.0  7.5 12.5
 age_width(x)
-#>   0 1-4 5-9 10+ 
-#>   1   4   5 Inf
+#> [1]   1   4   5 Inf
 ```
 
 Use the lower limit to filter rows:
@@ -57,25 +50,23 @@ df |>
 ``` r
 
 df <- tibble(
-  age   = c("15-64", "0-14", "65+", "All"),
-  count = c(5, 2, 6, 13)
+  period = c("<2000", "2000-2010", "2010-2015", "Total"),
+  count  = c(5, 2, 6, 13)
 )
 
 df |>
-  filter(!age_is_total(age))
+  filter(!period_is_total(period))
 #> # A tibble: 3 × 2
-#>   age   count
-#>   <chr> <dbl>
-#> 1 15-64     5
-#> 2 0-14      2
-#> 3 65+       6
+#>   period    count
+#>   <chr>     <dbl>
+#> 1 <2000         5
+#> 2 2000-2010     2
+#> 3 2010-2015     6
 
 df |>
-  filter(age_is_open_right(age))
-#> # A tibble: 1 × 2
-#>   age   count
-#>   <chr> <dbl>
-#> 1 65+       6
+  filter(period_is_open_right(period))
+#> # A tibble: 0 × 2
+#> # ℹ 2 variables: period <chr>, count <dbl>
 ```
 
 ## Standardize messy labels
@@ -92,15 +83,12 @@ age_standard(x)
 
 ## Create a regular series of labels
 
-The `age_labels` functions generate labels from scratch.
+The `cohort_labels` functions generate labels from scratch.
 
 ``` r
 
-age_labels_five(lower_first = 0, lower_last = 20)
-#> [1] "0-4"   "5-9"   "10-14" "15-19" "20+"
-age_labels_life(lower_last = 60) ## life table age groups
-#>  [1] "0"     "1-4"   "5-9"   "10-14" "15-19" "20-24" "25-29" "30-34" "35-39"
-#> [10] "40-44" "45-49" "50-54" "55-59" "60+"
+cohort_labels_five(lower_first = 2000, lower_last = 2015)
+#> [1] "2000-2005" "2005-2010" "2010-2015" "2015-2020"
 ```
 
 ## Manipulate levels
@@ -114,7 +102,8 @@ age_coarsen(x, breaks = c(0, 15, 55))
 #> [1] 0-14  0-14  0-14  15-54
 #> Levels: 0-14 15-54
 age_coarsen_five(x)
-#> [1] "0-4"   "5-9"   "10-14" "50-54"
+#> [1] 0-4   5-9   10-14 50-54
+#> Levels: 0-4 5-9 10-14 50-54
 ```
 
 Use the `age_fill` functions to add intermediate levels:
@@ -130,37 +119,38 @@ x |>
 
 ## Check and assert
 
-Check whether age labels conform to expectations:
+Check whether period labels conform to expectations:
 
 ``` r
 
-lab <- age_labels_five(
-  lower_first = 0,
-  lower_last = 85,
-  open_right = TRUE
+lab <- period_labels_five(
+  lower_first = 2000,
+  lower_last = 2020
 )
-age_diagnose(
+period_diagnose_values(
   lab,
   no_overlap = TRUE,
   no_gap = TRUE,
-  has_zero = TRUE,
-  has_open_right = TRUE
+  no_open_right = TRUE
 )
 #> $ok
 #> [1] TRUE
 #> 
 #> $details
-#> # A tibble: 4 × 3
-#>   condition      passed comment
-#>   <chr>          <lgl>  <chr>  
-#> 1 no_overlap     TRUE   NA     
-#> 2 no_gap         TRUE   NA     
-#> 3 has_zero       TRUE   NA     
-#> 4 has_open_right TRUE   NA
+#> # A tibble: 3 × 3
+#>   condition     passed comment
+#>   <chr>         <lgl>  <chr>  
+#> 1 no_overlap    TRUE   NA     
+#> 2 no_gap        TRUE   NA     
+#> 3 no_open_right TRUE   NA
 ```
 
-[`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md)
+[`period_assert_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
 throws an error if a check fails.
+[`period_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
+and
+[`period_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
+check the levels of a factor, including unused levels.
 
 ## Create mappings
 
@@ -183,9 +173,9 @@ age_mapping(
 #>   0--9     1   1     0
 ```
 
-## Period and cohort
+## Age, period, and cohort
 
-Age group functions have period and cohort equivalents. For instance:
+Most functions have age, period, and cohort equivalents. For instance:
 
 | Age | Period | Cohort |
 |----|----|----|
@@ -196,23 +186,22 @@ Age group functions have period and cohort equivalents. For instance:
 
 ## Function tasks
 
-`agetime` functions fall into five groups, defined by their tasks:
+`agetime` functions fall into five groups:
 
-| Task | Examples | Return value |
+| Task | Examples (`age`/`period`/`cohort` omitted) | Return value |
 |----|----|----|
-| Extract limits or identify special labels | [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md), [`age_upper()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md), [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md), [`age_width()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md), [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md) | Numeric or logical |
-| Create a new series, or reformat existing labels | [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md), [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md), [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md) | Character, or same type as `labels` |
-| Recode values and set factor levels | [`age_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen.md), [`age_fill()`](https://bayesiandemography.github.io/agetime/reference/age_fill.md), [`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md), [`age_set_order()`](https://bayesiandemography.github.io/agetime/reference/age_set_order.md) | Factor |
-| Validate labels | [`age_diagnose()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md), [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md) | Diagnostics, or `labels` |
-| Relate two sets of labels | [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md) | Tibble or matrix |
+| Extract limits or identify special labels | `_lower()`, `_upper()`, `_mid()`, `_width()`, `_is_total()` | Numeric or logical |
+| Create a new series, or reformat existing labels | `_interval()`, `_labels_five()`, `_standard()`, `_extend()` | Character, or same type as `labels` |
+| Recode values and set factor levels | `_coarsen()`, `_fill()`, `_set_open_right()`, `_set_order()` | Factor |
+| Validate labels | `_diagnose_values()`, `_assert_values()` | Diagnostics, or `labels` |
+| Relate two sets of labels | `_mapping()` | Tibble or matrix |
 
 ## More information
 
 - [`?agetime`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
   for a full list of functions
-- [`vignette("cookbook")`](https://bayesiandemography.github.io/agetime/articles/cookbook.md)
+- [Cookbook](https://bayesiandemography.github.io/agetime/articles/cookbook.md)
   for suggestions for performing common label-related tasks
-- [`vignette("api-principles")`](https://bayesiandemography.github.io/agetime/articles/api-principles.md)
-  for an AI-written summary of principles underlying the interface for
-  the package
+- [Troubleshooting](https://bayesiandemography.github.io/agetime/articles/troubleshooting.md)
+  for solutions to common problems
 - Package website: <https://bayesiandemography.github.io/agetime/>

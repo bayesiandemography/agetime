@@ -21,18 +21,21 @@ age_is_subtotal(labels, interpret_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Logical vector with the same length as `labels`.
+Logical vector with the same length as `labels`. If `labels` has names,
+the result has the same names.
 
 ## Details
 
-A subtotal is a label representing the same interval as two or more
-smaller intervals in the same set. For example, in
+A subtotal is a label whose interval can be divided into the intervals
+of two or more other labels in the same set. For example, in
 `c("0-4", "5-9", "10-14", "0-9", "Total")`, `"0-9"` is a subtotal
 because it represents the same interval as `"0-4"` and `"5-9"`.
 
 Subtotals are distinct from grand total labels such as `"Total"` or
 `"All"`, which are identified by
 [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md).
+
+If `labels` is a factor, unused levels are ignored.
 
 ## See also
 
@@ -62,36 +65,30 @@ labels <- c(
   "Total"
 )
 age_is_subtotal(labels)
-#>   0-4   5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
-#> 65-69 70-74 75-79 80-84 85-89 90-94 95-99  100+  0-14 15-64   65+ Total 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE 
+#>  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#> [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+#> [25] FALSE
 age_is_total(labels)
-#>   0-4   5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
-#> 65-69 70-74 75-79 80-84 85-89 90-94 95-99  100+  0-14 15-64   65+ Total 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE 
+#>  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#> [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#> [25]  TRUE
 
 ## overlapping alternative groupings still count
 age_is_subtotal(c("90+", "90", "91+", "95+", "90-94"))
-#>   90+    90   91+   95+ 90-94 
-#>  TRUE FALSE FALSE FALSE FALSE 
+#> [1]  TRUE FALSE FALSE FALSE FALSE
 
 ## subtotals must fully cover range
 labels_no_20_24 <- setdiff(labels, "20-24")
 age_is_subtotal(labels_no_20_24) ## "15-64" not subtotal
-#>   0-4   5-9 10-14 15-19 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 65-69 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
-#> 70-74 75-79 80-84 85-89 90-94 95-99  100+  0-14 15-64   65+ Total 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE 
+#>  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#> [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE  TRUE FALSE
 
 ## subtotals can overlap
 labels_064 <- c(labels, "0-64")
 age_is_subtotal(labels_064)
-#>   0-4   5-9 10-14 15-19 20-24 25-29 30-34 35-39 40-44 45-49 50-54 55-59 60-64 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE 
-#> 65-69 70-74 75-79 80-84 85-89 90-94 95-99  100+  0-14 15-64   65+ Total  0-64 
-#> FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE 
+#>  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+#> [13] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE
+#> [25] FALSE  TRUE
 
 ## use to filter data
 library(dplyr, warn.conflicts = FALSE)

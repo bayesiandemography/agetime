@@ -17,7 +17,7 @@ Create a mapping depicting the relationship between `labels_x` and
 age_mapping(
   labels_x,
   labels_y = NULL,
-  relation = c("equals", "contains", "is-contained-in", "overlaps-with"),
+  relation = c("equals", "contains", "is_contained_in", "overlaps_with"),
   format = c("tibble", "matrix"),
   name_x = "x",
   name_y = "y",
@@ -38,7 +38,7 @@ age_mapping(
 - relation:
 
   Relationship between labels. Choices are `"equals"` (the default),
-  `"contains"`, `"is-contained-in"`, and `"overlaps-with"`. See below
+  `"contains"`, `"is_contained_in"`, and `"overlaps_with"`. See below
   for details and examples.
 
 - format:
@@ -77,8 +77,8 @@ include matches and non-matches. See the example below.
 | `relation` | Endpoints of `labels_x` and `labels_y` |
 | `"equals"` | Endpoints equal |
 | `"contains"` | Endpoints of `labels_y` inside endpoints of `labels_x` |
-| `"is-contained-in"` | Endpoints of `labels_x` inside endpoints of `labels_y` |
-| `"overlaps-with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
+| `"is_contained_in"` | Endpoints of `labels_x` inside endpoints of `labels_y` |
+| `"overlaps_with"` | Endpoint of `labels_x` in `labels_y`, or reverse |
 
 ## See also
 
@@ -112,14 +112,14 @@ age_mapping(labels_x = x, labels_y = y, relation = "contains")
 #>   x     y    
 #>   <chr> <chr>
 #> 1 0-4   0-4  
-age_mapping(labels_x = x, labels_y = y, relation = "is-contained-in")
+age_mapping(labels_x = x, labels_y = y, relation = "is_contained_in")
 #> # A tibble: 3 × 2
 #>   x     y    
 #>   <chr> <chr>
 #> 1 5-7   5-9  
 #> 2 0-4   0-4  
 #> 3 10    6-14 
-age_mapping(labels_x = x, labels_y = y, relation = "overlaps-with")
+age_mapping(labels_x = x, labels_y = y, relation = "overlaps_with")
 #> # A tibble: 4 × 2
 #>   x     y    
 #>   <chr> <chr>

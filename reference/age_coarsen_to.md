@@ -34,8 +34,12 @@ Intervals in `to` must not overlap. Gaps in `to` are allowed, provided
 that no intervals in `labels` fall within them.
 
 If `labels` is a factor, its levels are modified along with its
-elements. The return value is always a factor. Levels are the unique
-labels in `to`, including unused labels.
+elements.
+
+Levels of the return value come from `to`. If `to` is a factor, the
+levels are the levels of `to`, in the same order, including levels that
+do not appear in `to`. Otherwise, the levels are the unique values of
+`to`, in the order in which they first appear.
 
 ## See also
 
@@ -44,6 +48,12 @@ labels in `to`, including unused labels.
 
 - [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
   Inspect the relationship between two sets of labels
+
+- [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
+  Create age group labels
+
+- [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
+  Clean existing labels
 
 - [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md)
   Period equivalent of `age_coarsen_to()`

@@ -10,7 +10,7 @@ cohort_labels(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -21,7 +21,7 @@ cohort_labels_one(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -32,7 +32,7 @@ cohort_labels_five(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -43,7 +43,7 @@ cohort_labels_ten(
   open_left = FALSE,
   open_right = FALSE,
   format_single = c("lower", "upper"),
-  format_multi = c("include", "exclude"),
+  format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
   include_na = FALSE
 )
@@ -53,7 +53,7 @@ cohort_labels_ten(
 
 - breaks:
 
-  Boundaries between cohorts A numeric vector.
+  Boundaries between cohorts. A numeric vector.
 
 - open_left:
 
@@ -72,8 +72,10 @@ cohort_labels_ten(
 
 - format_multi:
 
-  How to format label for multi-year cohort. Choices are `"include"`
-  (the default) and `"exclude"`. See below for details.
+  How to format the second number in a label for a multi-year cohort.
+  With `"at_upper"` (the default), the second number is the upper limit
+  of the cohort. With `"below_upper"`, the second number is one year
+  below the upper limit. See below for details.
 
 - include_total:
 
@@ -107,11 +109,11 @@ Character vector.
 
 **Multi-year cohorts**
 
-|                |                          |                              |
-|----------------|--------------------------|------------------------------|
-| `format_multi` | *Rule*                   | *Example*                    |
-| `"include"`    | `[a,a+n) -> "a-<a+n>"`   | `[2020,2025) -> "2020-2025"` |
-| `"exclude"`    | `[a,a+n) -> "a-<a+n-1>"` | `[2020,2025) -> "2020-2024"` |
+|                 |                      |                              |
+|-----------------|----------------------|------------------------------|
+| `format_multi`  | *Rule*               | *Example*                    |
+| `"at_upper"`    | `[a,b) -> "a-b"`     | `[2020,2025) -> "2020-2025"` |
+| `"below_upper"` | `[a,b) -> "a-<b-1>"` | `[2020,2025) -> "2020-2024"` |
 
 **Open cohorts**
 
@@ -122,6 +124,12 @@ Character vector.
 | open on right   | `[a,Inf) -> "a+"`  | `[2020,Inf) -> "2020+"`  |
 
 ## See also
+
+- [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
+  Clean existing labels
+
+- [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
+  Map labels onto an existing set of labels
 
 - [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   Age equivalent of `cohort_labels()`
@@ -173,11 +181,11 @@ cohort_labels_ten(
 )
 #> [1] "2000-2010" "2010-2020"
 
-## ten-year cohorts, 'format_multi' is "exclude",
+## ten-year cohorts, 'format_multi' is "below_upper",
 cohort_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
-  format_multi = "exclude"
+  format_multi = "below_upper"
 )
 #> [1] "2000-2009" "2010-2019"
 

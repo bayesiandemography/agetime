@@ -1,7 +1,7 @@
-# Limits, Widths, and Midpoints from Age Group Labels
+# Limits, Widths, Midpoints, and Intervals from Age Group Labels
 
-Calculate lower limits, upper limits, widths, and midpoints from age
-group labels
+Calculate lower limits, upper limits, widths, midpoints, and intervals
+from age group labels.
 
 ## Usage
 
@@ -13,6 +13,8 @@ age_mid(labels, interpret_fail = c("error", "warn", "silent"))
 age_upper(labels, interpret_fail = c("error", "warn", "silent"))
 
 age_width(labels, interpret_fail = c("error", "warn", "silent"))
+
+age_interval(labels, interpret_fail = c("error", "warn", "silent"))
 ```
 
 ## Arguments
@@ -28,7 +30,9 @@ age_width(labels, interpret_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Numeric vector with the same length as `labels`.
+`age_interval()` returns a character vector, and the other functions
+return a numeric vector. The result has the same length as `labels`. If
+`labels` has names, the result has the same names.
 
 ## Details
 
@@ -36,8 +40,16 @@ Lower and upper limits can be used to filter on age. See below for
 examples.
 
 `age_mid()` assigns open age groups (e.g., `"100+"`) honorary midpoints,
-which are useful for plotting. These midpoints use half the median width
-of the closed intervals in `labels`.
+which are useful for plotting. An open age group gets a midpoint half
+the width of the closed age group with the highest lower limit, so that,
+for instance, the midpoint of `"100+"` is `102.5` when the other age
+groups are five-year groups. If `labels` has no closed age groups,
+`age_mid()` throws an error.
+
+`age_interval()` describes each age group using interval notation. For
+instance, `"[5, 10)"` includes age 5 but not age 10, and `"[100, Inf)"`
+has no upper limit. `age_interval()` is useful for checking how labels
+are being interpreted.
 
 ## See also
 
@@ -52,17 +64,15 @@ of the closed intervals in `labels`.
 ``` r
 labels <- c("5-9", "10-14", "100+")
 age_lower(labels)
-#>   5-9 10-14  100+ 
-#>     5    10   100 
+#> [1]   5  10 100
 age_upper(labels)
-#>   5-9 10-14  100+ 
-#>    10    15   Inf 
+#> [1]  10  15 Inf
 age_width(labels)
-#>   5-9 10-14  100+ 
-#>     5     5   Inf 
+#> [1]   5   5 Inf
 age_mid(labels)
-#>   5-9 10-14  100+ 
-#>   7.5  12.5 102.5 
+#> [1]   7.5  12.5 102.5
+age_interval(labels)
+#> [1] "[5, 10)"    "[10, 15)"   "[100, Inf)"
 
 ## use 'age_lower()' to filter on age
 library(dplyr, warn.conflicts = FALSE)
@@ -88,17 +98,20 @@ df |> filter(age_lower(age) >= 10)
 
 ## midpoint of open intervals
 age_mid(c("80-89", "90-99", "100+")) # 105
-#> 80-89 90-99  100+ 
-#>    85    95   105 
+#> [1]  85  95 105
 age_mid(c("90-94", "95-99", "100+")) # 102.5
-#> 90-94 95-99  100+ 
-#>  92.5  97.5 102.5 
+#> [1]  92.5  97.5 102.5
 
 ## no action when 'interpret_fail' is "silent"
 age_lower(
   labels = c("0-4", "young people", "50plus"),
   interpret_fail = "silent"
 )
-#>          0-4 young people       50plus 
-#>            0           NA           50 
+#> [1]  0 NA 50
+
+## names of 'labels' are kept
+pop <- c(young = "0-14", working = "15-64", old = "65+")
+age_lower(pop)
+#>   young working     old 
+#>       0      15      65 
 ```

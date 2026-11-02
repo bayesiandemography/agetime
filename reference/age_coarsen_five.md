@@ -49,7 +49,7 @@ age_coarsen_life(
 
 ## Value
 
-Character vector or factor with the same length as `labels`.
+Factor with the same length as `labels`.
 
 ## Details
 
@@ -115,15 +115,20 @@ By default, the return value has an open age group if and only if
 ``` r
 labels <- c("1-3", "16-19", "0", "31+", "total", "22")
 age_coarsen_five(labels)
-#> [1] "0-4"   "15-19" "0-4"   "30+"   "Total" "20-24"
+#> [1] 0-4   15-19 0-4   30+   Total 20-24
+#> Levels: 0-4 15-19 20-24 30+ Total
 age_coarsen_ten(labels)
-#> [1] "0-9"   "10-19" "0-9"   "30+"   "Total" "20-29"
+#> [1] 0-9   10-19 0-9   30+   Total 20-29
+#> Levels: 0-9 10-19 20-29 30+ Total
 age_coarsen_life(labels)
-#> [1] "1-4"   "15-19" "0"     "30+"   "Total" "20-24"
+#> [1] 1-4   15-19 0     30+   Total 20-24
+#> Levels: 0 1-4 15-19 20-24 30+ Total
 
 labels_no_open <- c("1-3", "16-19", "0", "total", "22")
 age_coarsen_five(labels_no_open)
-#> [1] "0-4"   "15-19" "0-4"   "Total" "20-24"
+#> [1] 0-4   15-19 0-4   Total 20-24
+#> Levels: 0-4 15-19 20-24 Total
 age_coarsen_five(labels_no_open, open_right = TRUE)
-#> [1] "0-4"   "15-19" "0-4"   "Total" "20+"  
+#> [1] 0-4   15-19 0-4   Total 20+  
+#> Levels: 0-4 15-19 20+ Total
 ```

@@ -1,9 +1,7 @@
 # Fill in Gaps in Age Group Levels
 
-Add intermediate age groups.
-
-The return value is a factor, and the intermediate age groups are added
-as factor levels.
+Add intermediate age groups. The return value is a factor, and the
+intermediate age groups are added as factor levels.
 
 - `age_fill()` adds age groups specified by `breaks`.
 

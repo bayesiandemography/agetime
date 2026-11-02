@@ -4,7 +4,7 @@ Functions for working with labels for age groups, periods, and cohorts.
 
 ## Functions
 
-**Extract lower limits, upper limits, widths, midpoints**
+**Extract lower limits, upper limits, widths, midpoints, intervals**
 
 |  |  |  |
 |----|----|----|
@@ -13,6 +13,7 @@ Functions for working with labels for age groups, periods, and cohorts.
 | [`age_upper()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md) | [`period_upper()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md) | [`cohort_upper()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md) |
 | [`age_width()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md) | [`period_width()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md) | [`cohort_width()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md) |
 | [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md) | [`period_mid()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md) | [`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md) |
+| [`age_interval()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md) | [`period_interval()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md) | [`cohort_interval()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md) |
 
 **Identify open intervals, totals, and missing values**
 
@@ -92,10 +93,10 @@ Functions for working with labels for age groups, periods, and cohorts.
 |  |  |  |
 |----|----|----|
 |  |  |  |
-| [`age_diagnose()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md) | [`period_diagnose()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md) | [`cohort_diagnose()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md) |
-| [`age_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md) | [`period_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md) | [`cohort_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md) |
-| [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md) | [`period_assert()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md) | [`cohort_assert()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md) |
-| [`age_assert_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md) | [`period_assert_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md) | [`cohort_assert_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md) |
+| [`age_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md) | [`period_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md) | [`cohort_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md) |
+| [`age_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md) | [`period_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md) | [`cohort_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md) |
+| [`age_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md) | [`period_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md) | [`cohort_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md) |
+| [`age_assert_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md) | [`period_assert_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md) | [`cohort_assert_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md) |
 
 **Create mappings between labels**
 
@@ -110,6 +111,10 @@ Useful links:
 
 - <https://bayesiandemography.github.io/agetime/>
 
+- <https://github.com/bayesiandemography/agetime>
+
+- Report bugs at <https://github.com/bayesiandemography/agetime/issues>
+
 ## Author
 
 **Maintainer**: John Bryant <john@bayesiandemography.com>
@@ -119,3 +124,7 @@ Authors:
 - John Bryant <john@bayesiandemography.com>
 
 - Junni Zhang <junni@bayesiandemography.com>
+
+Other contributors:
+
+- Bayesian Demography Limited \[copyright holder\]

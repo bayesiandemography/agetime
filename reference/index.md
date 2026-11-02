@@ -10,10 +10,10 @@
   : Coarsen to Specialised Age Groups
 - [`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
   : Coarsen Age Groups to a Target Classification
-- [`age_diagnose()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md)
-  [`age_assert()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md)
-  [`age_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md)
-  [`age_assert_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose.md)
+- [`age_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
+  [`age_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
+  [`age_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
+  [`age_assert_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
   : Diagnostics and Assertions for Age Groups
 - [`age_extend()`](https://bayesiandemography.github.io/agetime/reference/age_extend.md)
   : Extend a Set of Age Group Labels
@@ -41,7 +41,8 @@
   [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_upper()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_width()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
-  : Limits, Widths, and Midpoints from Age Group Labels
+  [`age_interval()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
+  : Limits, Widths, Midpoints, and Intervals from Age Group Labels
 - [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
   : Mapping Between Age Group Labels
 - [`age_set_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_set_open_right.md)
@@ -60,10 +61,10 @@
   : Coarsen to Cohorts with Equal Widths
 - [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
   : Coarsen Cohorts to a Target Classification
-- [`cohort_diagnose()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md)
-  [`cohort_assert()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md)
-  [`cohort_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md)
-  [`cohort_assert_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose.md)
+- [`cohort_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
+  [`cohort_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
+  [`cohort_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
+  [`cohort_assert_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
   : Diagnostics and Assertions for Cohorts
 - [`cohort_extend()`](https://bayesiandemography.github.io/agetime/reference/cohort_extend.md)
   : Extend a Set of Cohort Labels
@@ -90,7 +91,8 @@
   [`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_upper()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_width()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
-  : Limits, Widths, and Midpoints from Cohort Labels
+  [`cohort_interval()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
+  : Limits, Widths, Midpoints, and Intervals from Cohort Labels
 - [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
   : Mapping Between Cohort Labels
 - [`cohort_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_open_left.md)
@@ -107,10 +109,10 @@
   : Coarsen to Periods with Equal Widths
 - [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md)
   : Coarsen Periods to a Target Classification
-- [`period_diagnose()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md)
-  [`period_assert()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md)
-  [`period_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md)
-  [`period_assert_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose.md)
+- [`period_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
+  [`period_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
+  [`period_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
+  [`period_assert_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
   : Diagnostics and Assertions for Periods
 - [`period_extend()`](https://bayesiandemography.github.io/agetime/reference/period_extend.md)
   : Extend a Set of Period Labels
@@ -137,7 +139,8 @@
   [`period_mid()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_upper()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_width()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
-  : Limits, Widths, and Midpoints from Period Labels
+  [`period_interval()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
+  : Limits, Widths, Midpoints, and Intervals from Period Labels
 - [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md)
   : Mapping Between Period Labels
 - [`period_set_open_left()`](https://bayesiandemography.github.io/agetime/reference/period_set_open_left.md)

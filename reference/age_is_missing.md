@@ -22,7 +22,8 @@ age_is_missing(labels, interpret_fail = c("error", "warn", "silent"))
 
 ## Value
 
-Logical vector with the same length as `labels`.
+Logical vector with the same length as `labels`. If `labels` has names,
+the result has the same names.
 
 ## See also
 
@@ -43,6 +44,5 @@ Logical vector with the same length as `labels`.
 ``` r
 labels <- c("0-4", NA, "not stated", "Total", "missing")
 age_is_missing(labels)
-#>        0-4       <NA> not stated      Total    missing 
-#>      FALSE       TRUE       TRUE      FALSE       TRUE 
+#> [1] FALSE  TRUE  TRUE FALSE  TRUE
 ```

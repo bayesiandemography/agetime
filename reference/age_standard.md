@@ -43,10 +43,13 @@ Character vector or factor with the same length as `labels`.
 - [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   Create age group labels
 
+- [`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
+  Map labels onto an existing set of labels
+
 ## Examples
 
 ``` r
-labels <- c("5to9", "10--14", "100plus", "all")
+labels <- c("Under 5", "5to9", "10--14", "100plus", "all")
 age_standard(labels)
-#> [1] "5-9"   "10-14" "100+"  "Total"
+#> [1] "0-4"   "5-9"   "10-14" "100+"  "Total"
 ```
