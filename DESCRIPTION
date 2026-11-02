@@ -1,7 +1,7 @@
 Package: agetime
 Type: Package
 Title: Work with Age, Period, and Cohort Labels
-Version: 0.3.0
+Version: 1.0.0
 Authors@R: 
     c(person(given = "John",
              family = "Bryant",
@@ -10,7 +10,9 @@ Authors@R:
       person(given = "Junni",
              family = "Zhang",
              role = "aut",
-             email = "junni@bayesiandemography.com"))
+             email = "junni@163.com"),
+      person(given = "Bayesian Demography Limited",
+             role = "cph"))
 Description: Work with vectors of age, period, and
     cohort labels. Infer the intervals underlying
     labels, and use this information to

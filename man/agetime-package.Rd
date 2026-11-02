@@ -120,4 +120,9 @@ Authors:
   \item Junni Zhang \email{junni@bayesiandemography.com}
 }
 
+Other contributors:
+\itemize{
+  \item Bayesian Demography Limited [copyright holder]
+}
+
 }
