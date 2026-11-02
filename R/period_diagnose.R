@@ -5,16 +5,17 @@
 #' The `diagnose` functions report on each condition, and the
 #' `assert` functions throw an error if a condition is not met.
 #'
-#' - `period_diagnose_levels()` and `period_assert_levels()` check the
-#'   levels of a factor, including unused levels.
 #' - `period_diagnose_values()` and `period_assert_values()` check the
-#'   elements of `labels`, treating each element as a separate period.
+#'   elements of `labels`.
+#' - `period_diagnose_levels()` and `period_assert_levels()` check
+#'   the levels of `labels`, including any unused levels.
+#'   Both functions require `labels` to be a factor.
 #'
 #' Conditions include:
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Not having totals or NAs
+#' - Not having totals or missing values
 #' - Having, or not having, open periods
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
@@ -23,25 +24,34 @@
 #' @param no_overlap Check that no periods overlap.
 #' Different labels that describe the same interval,
 #' such as `"2020-2025"` and `"2020 to 2025"`, count as overlapping.
+#' Totals and missing values, as defined by [period_is_total()]
+#' and [period_is_missing()], are removed before checks
+#' for overlaps are performed.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all periods between
 #' the earliest and latest periods are included.
 #' Default is `FALSE` (don't check).
-#' @param no_total Check that there is no total category.
+#' @param no_total Check that there is no "total" category,
+#' as defined by [period_is_total()].
 #' Default is `FALSE` (don't check).
-#' @param no_na Check that there is no `NA` category.
+#' @param no_missing Check that there is no "missing" category,
+#' as defined by [period_is_missing()].
 #' Default is `FALSE` (don't check).
 #' @param no_open_left Check that no period
-#' is open on the left (has no lower limit).
+#' is open on the left (has no lower limit),
+#' as defined by [period_is_open_left()].
 #' Default is `FALSE` (don't check).
 #' @param no_open_right Check that no period
-#' is open on the right (has no upper limit).
+#' is open on the right (has no upper limit),
+#' as defined by [period_is_open_right()].
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least one period
-#' is open on the left (has no lower limit).
+#' is open on the left (has no lower limit),
+#' as defined by [period_is_open_left()].
 #' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least one period
-#' is open on the right (has no upper limit).
+#' is open on the right (has no upper limit),
+#' as defined by [period_is_open_right()].
 #' Default is `FALSE` (don't check).
 #'
 #' @return
@@ -52,8 +62,10 @@
 #'   invisibly, or raise an error.
 #'
 #' @seealso
-#' - [age_diagnose_levels()] Age equivalent of `period_diagnose_levels()`
-#' - [cohort_diagnose_levels()] Cohort equivalent of `period_diagnose_levels()`
+#' - [age_assert_values()], [age_assert_levels()]
+#' - [age_diagnose_values()], [age_diagnose_levels()]
+#' - [cohort_assert_values()], [cohort_assert_levels()]
+#' - [cohort_diagnose_values()], [cohort_diagnose_levels()]
 #'
 #' @examples
 #' lab <- period_labels_five(
@@ -68,7 +80,7 @@
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
-#'   no_na = TRUE
+#'   no_missing = TRUE
 #' )
 #'
 #' ## throw error if overlap or gap
@@ -91,10 +103,6 @@
 #'   group_by(sex) |>
 #'   mutate(period = period_assert_values(period, no_overlap = TRUE))
 #'
-#' ## totals are reported by 'no_total', not 'no_overlap'
-#' x <- c("2020-2025", "2025-2030", "Total")
-#' period_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
-#'
 #' ## factor with unused level
 #' fac <- factor(
 #'   x = "2020-2025",
@@ -111,7 +119,7 @@ period_diagnose_levels <- function(labels,
                          no_overlap = FALSE,
                          no_gap = FALSE,
                          no_total = FALSE,
-                         no_na = FALSE,
+                         no_missing = FALSE,
                          no_open_left = FALSE,
                          no_open_right = FALSE,
                          has_open_left = FALSE,
@@ -138,7 +146,7 @@ period_diagnose_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
@@ -154,7 +162,7 @@ period_assert_levels <- function(labels,
                           no_overlap = FALSE,
                           no_gap = FALSE,
                           no_total = FALSE,
-                          no_na = FALSE,
+                          no_missing = FALSE,
                           no_open_left = FALSE,
                           no_open_right = FALSE,
                           has_open_left = FALSE,
@@ -181,7 +189,7 @@ period_assert_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
@@ -197,7 +205,7 @@ period_diagnose_values <- function(labels,
                                    no_overlap = FALSE,
                                    no_gap = FALSE,
                                    no_total = FALSE,
-                                   no_na = FALSE,
+                                   no_missing = FALSE,
                                    no_open_left = FALSE,
                                    no_open_right = FALSE,
                                    has_open_left = FALSE,
@@ -224,7 +232,7 @@ period_diagnose_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
@@ -240,7 +248,7 @@ period_assert_values <- function(labels,
                                  no_overlap = FALSE,
                                  no_gap = FALSE,
                                  no_total = FALSE,
-                                 no_na = FALSE,
+                                 no_missing = FALSE,
                                  no_open_left = FALSE,
                                  no_open_right = FALSE,
                                  has_open_left = FALSE,
@@ -267,7 +275,7 @@ period_assert_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,

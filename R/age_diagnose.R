@@ -5,16 +5,17 @@
 #' The `diagnose` functions report on each condition, and the
 #' `assert` functions throw an error if a condition is not met.
 #'
-#' - `age_diagnose_levels()` and `age_assert_levels()` check the
-#'   levels of a factor, including unused levels.
 #' - `age_diagnose_values()` and `age_assert_values()` check the
-#'   elements of `labels`, treating each element as a separate age group.
+#'   elements of `labels`.
+#' - `age_diagnose_levels()` and `age_assert_levels()` check
+#'   the levels of `labels`, including any unused levels.
+#'   Both functions require `labels` to be a factor.
 #'
 #' Conditions include:
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Not having totals or NAs
+#' - Not having totals or missing values
 #' - Having, or not having, open age groups
 #' - Having an age group that starts at zero
 #' - Only including age groups used by an abridged life table
@@ -31,19 +32,26 @@
 #' @param no_overlap Check that no age groups overlap.
 #' Different labels that describe the same interval,
 #' such as `"0"` and `"infant"`, count as overlapping.
+#' Totals and missing values, as defined by [age_is_total()]
+#' and [age_is_missing()], are removed before checks
+#' for overlaps are performed.
 #' Default is `FALSE` (don't check).
 #' @param no_gap Check that all ages between the
 #' youngest and oldest age groups are included.
 #' Default is `FALSE` (don't check).
-#' @param no_total Check that there is no total category.
+#' @param no_total Check that there is no "total" category,
+#' as defined by [age_is_total()].
 #' Default is `FALSE` (don't check).
-#' @param no_na Check that there is no `NA` category.
+#' @param no_missing Check that there is no "missing" category,
+#' as defined by [age_is_missing()].
 #' Default is `FALSE` (don't check).
 #' @param no_open_right Check that no age group
-#' is open on the right (has no upper limit).
+#' is open on the right (has no upper limit),
+#' as defined by [age_is_open_right()].
 #' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least one age
-#' group is open on the right (has no upper limit).
+#' group is open on the right (has no upper limit),
+#' as defined by [age_is_open_right()].
 #' Default is `FALSE` (don't check).
 #' @param has_zero Check that at least one
 #' age group has a lower limit of zero.
@@ -60,8 +68,10 @@
 #'   invisibly, or raise an error.
 #'
 #' @seealso
-#' - [period_diagnose_levels()] Period equivalent of `age_diagnose_levels()`
-#' - [cohort_diagnose_levels()] Cohort equivalent of `age_diagnose_levels()`
+#' - [period_assert_values()], [period_assert_levels()]
+#' - [period_diagnose_values()], [period_diagnose_levels()]
+#' - [cohort_assert_values()], [cohort_assert_levels()]
+#' - [cohort_diagnose_values()], [cohort_diagnose_levels()]
 #'
 #' @examples
 #' lab <- age_labels_life()
@@ -73,7 +83,7 @@
 #'   no_overlap = TRUE,
 #'   no_gap = TRUE,
 #'   no_total = TRUE,
-#'   no_na = TRUE,
+#'   no_missing = TRUE,
 #'   has_open_right = TRUE,
 #'   has_zero = TRUE,
 #'   valid_life = TRUE
@@ -99,10 +109,6 @@
 #'   group_by(sex) |>
 #'   mutate(age = age_assert_values(age, no_overlap = TRUE))
 #'
-#' ## totals are reported by 'no_total', not 'no_overlap'
-#' x <- c("0-4", "5-9", "Total")
-#' age_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
-#'
 #' ## factor with unused level
 #' fac <- factor(
 #'   x = "0-4",
@@ -120,7 +126,7 @@ age_diagnose_levels <- function(labels,
                       no_overlap = FALSE,
                       no_gap = FALSE,
                       no_total = FALSE,
-                      no_na = FALSE,
+                      no_missing = FALSE,
                       no_open_right = FALSE,
                       has_open_right = FALSE,
                       has_zero = FALSE,
@@ -137,7 +143,7 @@ age_diagnose_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
@@ -153,7 +159,7 @@ age_assert_levels <- function(labels,
                        no_overlap = FALSE,
                        no_gap = FALSE,
                        no_total = FALSE,
-                       no_na = FALSE,
+                       no_missing = FALSE,
                        no_open_right = FALSE,
                        has_open_right = FALSE,
                        has_zero = FALSE,
@@ -170,7 +176,7 @@ age_assert_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
@@ -186,7 +192,7 @@ age_diagnose_values <- function(labels,
                                 no_overlap = FALSE,
                                 no_gap = FALSE,
                                 no_total = FALSE,
-                                no_na = FALSE,
+                                no_missing = FALSE,
                                 no_open_right = FALSE,
                                 has_open_right = FALSE,
                                 has_zero = FALSE,
@@ -203,7 +209,7 @@ age_diagnose_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
@@ -219,7 +225,7 @@ age_assert_values <- function(labels,
                               no_overlap = FALSE,
                               no_gap = FALSE,
                               no_total = FALSE,
-                              no_na = FALSE,
+                              no_missing = FALSE,
                               no_open_right = FALSE,
                               has_open_right = FALSE,
                               has_zero = FALSE,
@@ -236,7 +242,7 @@ age_assert_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,

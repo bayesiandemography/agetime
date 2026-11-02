@@ -385,7 +385,7 @@ check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals_to)
   m_xu <- m[i_xun_to_xunu, , drop = FALSE]
   is_skip <- get_is_total(intervals_to)[i_xun_to_xunu] |
-    get_is_na(intervals_to)[i_xun_to_xunu]
+    get_is_missing(intervals_to)[i_xun_to_xunu]
   m_overlap <- does_m1_overlap_m2(m1 = m_xu, m2 = m_xu)
   m_overlap[is_skip, ] <- FALSE
   m_overlap[, is_skip] <- FALSE

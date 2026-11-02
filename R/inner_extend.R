@@ -80,9 +80,9 @@ inner_extend <- function(labels,
       i = "Remove totals first with {.code {fix}}?"
     ), call = user_frame())
   }
-  is_na <- get_is_na(intervals)
-  if (any(is_na) || anyNA(labels)) {
-    label <- if (any(is_na)) labels_orig[is_na][[1L]] else NA
+  is_missing <- get_is_missing(intervals)
+  if (any(is_missing) || anyNA(labels)) {
+    label <- if (any(is_missing)) labels_orig[is_missing][[1L]] else NA
     fix <- paste0("labels[!", label_type, "_is_missing(labels)]")
     cli::cli_abort(c(
       "Can't extend {nm}s: {.arg labels} includes a missing value ({.val {label}}).",

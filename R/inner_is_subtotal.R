@@ -9,9 +9,9 @@ pool_labels_for_subtotal <- function(intervals) {
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   m <- get_m(intervals)
   is_total <- get_is_total(intervals)
-  is_na <- get_is_na(intervals)
-  is_unparseable <- is.na(m[, 1L]) & is.na(m[, 2L]) & !is_total & !is_na
-  eligible_xunu <- !is_total & !is_na & !is_unparseable
+  is_missing <- get_is_missing(intervals)
+  is_unparseable <- is.na(m[, 1L]) & is.na(m[, 2L]) & !is_total & !is_missing
+  eligible_xunu <- !is_total & !is_missing & !is_unparseable
   if (!any(eligible_xunu)) {
     return(character(0))
   }

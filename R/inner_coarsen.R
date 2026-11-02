@@ -124,7 +124,7 @@ inner_coarsen <- function(labels,
     intervals = intervals
   )
   int_has_total <- int_has_total(intervals)
-  int_has_na <- int_has_na(intervals)
+  int_has_missing <- int_has_missing(intervals)
   levels_breaks <- construct_labels_breaks(
     breaks = breaks,
     is_open_left = is_open_left,
@@ -132,7 +132,7 @@ inner_coarsen <- function(labels,
     format_single = interpret_single,
     format_multi = interpret_multi,
     include_total = int_has_total,
-    include_na = int_has_na
+    include_na = int_has_missing
   )
   i_new <- integer(0)
   if (length(get_labels_unique(intervals)) > 0L) {
@@ -142,7 +142,7 @@ inner_coarsen <- function(labels,
       is_open_left = is_open_left,
       is_open_right = is_open_right,
       include_total = int_has_total,
-      include_na = int_has_na,
+      include_na = int_has_missing,
       intervals = intervals
     )
     m_new <- construct_m_breaks(
@@ -150,7 +150,7 @@ inner_coarsen <- function(labels,
       is_open_left = is_open_left,
       is_open_right = is_open_right,
       include_total = int_has_total,
-      include_na = int_has_na
+      include_na = int_has_missing
     )
     rownames(m_new) <- levels_breaks
     m_old <- get_m(intervals)[get_i_xun_to_xunu(intervals), , drop = FALSE]

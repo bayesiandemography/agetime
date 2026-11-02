@@ -12,7 +12,7 @@ period_diagnose_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -27,7 +27,7 @@ period_assert_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -42,7 +42,7 @@ period_diagnose_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -57,7 +57,7 @@ period_assert_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -73,32 +73,41 @@ period_assert_values(
 \item{no_overlap}{Check that no periods overlap.
 Different labels that describe the same interval,
 such as \code{"2020-2025"} and \code{"2020 to 2025"}, count as overlapping.
+Totals and missing values, as defined by \code{\link[=period_is_total]{period_is_total()}}
+and \code{\link[=period_is_missing]{period_is_missing()}}, are removed before checks
+for overlaps are performed.
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all periods between
 the earliest and latest periods are included.
 Default is \code{FALSE} (don't check).}
 
-\item{no_total}{Check that there is no total category.
+\item{no_total}{Check that there is no "total" category,
+as defined by \code{\link[=period_is_total]{period_is_total()}}.
 Default is \code{FALSE} (don't check).}
 
-\item{no_na}{Check that there is no \code{NA} category.
+\item{no_missing}{Check that there is no "missing" category,
+as defined by \code{\link[=period_is_missing]{period_is_missing()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{no_open_left}{Check that no period
-is open on the left (has no lower limit).
+is open on the left (has no lower limit),
+as defined by \code{\link[=period_is_open_left]{period_is_open_left()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{no_open_right}{Check that no period
-is open on the right (has no upper limit).
+is open on the right (has no upper limit),
+as defined by \code{\link[=period_is_open_right]{period_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least one period
-is open on the left (has no lower limit).
+is open on the left (has no lower limit),
+as defined by \code{\link[=period_is_open_left]{period_is_open_left()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least one period
-is open on the right (has no upper limit).
+is open on the right (has no upper limit),
+as defined by \code{\link[=period_is_open_right]{period_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret a label for a single year,
@@ -128,17 +137,18 @@ Check whether period labels meet conditions.
 The \code{diagnose} functions report on each condition, and the
 \code{assert} functions throw an error if a condition is not met.
 \itemize{
-\item \code{period_diagnose_levels()} and \code{period_assert_levels()} check the
-levels of a factor, including unused levels.
 \item \code{period_diagnose_values()} and \code{period_assert_values()} check the
-elements of \code{labels}, treating each element as a separate period.
+elements of \code{labels}.
+\item \code{period_diagnose_levels()} and \code{period_assert_levels()} check
+the levels of \code{labels}, including any unused levels.
+Both functions require \code{labels} to be a factor.
 }
 
 Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Not having totals or NAs
+\item Not having totals or missing values
 \item Having, or not having, open periods
 }
 }
@@ -221,7 +231,7 @@ period_diagnose_values(
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
-  no_na = TRUE
+  no_missing = TRUE
 )
 
 ## throw error if overlap or gap
@@ -244,10 +254,6 @@ df |>
   group_by(sex) |>
   mutate(period = period_assert_values(period, no_overlap = TRUE))
 
-## totals are reported by 'no_total', not 'no_overlap'
-x <- c("2020-2025", "2025-2030", "Total")
-period_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
-
 ## factor with unused level
 fac <- factor(
   x = "2020-2025",
@@ -259,7 +265,9 @@ period_diagnose_values(fac, no_gap = TRUE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=age_diagnose_levels]{age_diagnose_levels()}} Age equivalent of \code{period_diagnose_levels()}
-\item \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}} Cohort equivalent of \code{period_diagnose_levels()}
+\item \code{\link[=age_assert_values]{age_assert_values()}}, \code{\link[=age_assert_levels]{age_assert_levels()}}
+\item \code{\link[=age_diagnose_values]{age_diagnose_values()}}, \code{\link[=age_diagnose_levels]{age_diagnose_levels()}}
+\item \code{\link[=cohort_assert_values]{cohort_assert_values()}}, \code{\link[=cohort_assert_levels]{cohort_assert_levels()}}
+\item \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}}, \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}}
 }
 }

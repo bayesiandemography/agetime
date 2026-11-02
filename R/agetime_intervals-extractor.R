@@ -27,13 +27,13 @@ get_i_x_to_xunu <- function(intervals) {
   i_xun_to_xunu[i_x_to_xu]
 }
 
-#' Get Is Na
+#' Get Is Missing
 #'
 #' @param intervals An `agetime_intervals` object.
 #' @returns Logical vector indicating missing labels.
 #'
 #' @noRd
-get_is_na <- function(intervals) {
+get_is_missing <- function(intervals) {
   labels <- get_labels_unique_norm_unique(intervals)
   is.na(labels)
 }

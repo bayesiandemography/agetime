@@ -20,15 +20,15 @@ construct_labels_intervals <- function(intervals,
   is_open_left <- get_is_open_left(intervals)
   is_open_right <- get_is_open_right(intervals)
   is_total <- get_is_total(intervals)
-  is_na <- get_is_na(intervals)
+  is_missing <- get_is_missing(intervals)
   m <- get_m(intervals)
   l <- m[, 1L]
   u <- m[, 2L]
-  is_unparseable <- is.na(l) & is.na(u) & !is_na & !is_total
+  is_unparseable <- is.na(l) & is.na(u) & !is_missing & !is_total
   is_valid <- (
     is_one | is_multi |
       is_open_left | is_open_right |
-      is_total | is_na | is_unparseable
+      is_total | is_missing | is_unparseable
   )
   if (any(!is_valid)) {
     cli::cli_abort("Internal error: Invalid interval.")
@@ -51,7 +51,7 @@ construct_labels_intervals <- function(intervals,
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"
-  ans[is_na] <- NA_character_
+  ans[is_missing] <- NA_character_
   ans[is_unparseable] <- NA_character_
   ans
 }

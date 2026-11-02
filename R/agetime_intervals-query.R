@@ -31,16 +31,16 @@ int_is_open_right <- function(intervals) {
   is_open_right <- get_is_open_right(intervals)
   any(is_open_right)
 }
-#' Int Has Na
+#' Int Has Missing
 #'
 #' @param intervals An `agetime_intervals` object.
 #' @returns Return value used internally.
 #'
 #' @noRd
 
-int_has_na <- function(intervals) {
-  is_na <- get_is_na(intervals)
-  any(is_na)
+int_has_missing <- function(intervals) {
+  is_missing <- get_is_missing(intervals)
+  any(is_missing)
 }
 #' Int Has Total
 #'

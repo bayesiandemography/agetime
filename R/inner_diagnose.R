@@ -10,7 +10,7 @@
 #' @param no_overlap Run the no-overlap check?
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
-#' @param no_na Run the no-NA check?
+#' @param no_missing Run the no-missing check?
 #' @param no_open_left Run the no-open-left check?
 #' @param no_open_right Run the no-open-right check?
 #' @param has_zero Run the has-zero check?
@@ -32,7 +32,7 @@ inner_assert <- function(labels,
                          no_overlap,
                          no_gap,
                          no_total,
-                         no_na,
+                         no_missing,
                          no_open_left,
                          no_open_right,
                          has_zero,
@@ -50,7 +50,7 @@ inner_assert <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
-    no_na = no_na,
+    no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = has_zero,
@@ -73,7 +73,7 @@ inner_assert <- function(labels,
 #' @param no_overlap Run the no-overlap check?
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
-#' @param no_na Run the no-NA check?
+#' @param no_missing Run the no-missing check?
 #' @param no_open_left Run the no-open-left check?
 #' @param no_open_right Run the no-open-right check?
 #' @param has_zero Run the has-zero check?
@@ -94,7 +94,7 @@ inner_diagnose <- function(labels,
                         no_overlap,
                         no_gap,
                         no_total,
-                        no_na,
+                        no_missing,
                         no_open_left,
                         no_open_right,
                         has_zero,
@@ -146,10 +146,10 @@ inner_diagnose <- function(labels,
       list(inner_diagnose_no_total(intervals = intervals, on = on))
     )
   }
-  if (isTRUE(no_na)) {
+  if (isTRUE(no_missing)) {
     details_list <- c(
       details_list,
-      list(inner_diagnose_no_na(intervals = intervals, on = on))
+      list(inner_diagnose_no_missing(intervals = intervals, on = on))
     )
   }
   if (isTRUE(no_open_left)) {
@@ -291,10 +291,10 @@ find_repeated <- function(intervals) {
   i_x_to_xu <- get_i_x_to_xu(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   m <- get_m(intervals)
-  is_na <- get_is_na(intervals)
+  is_missing <- get_is_missing(intervals)
   is_total <- get_is_total(intervals)
   is_unparsed <- is.na(m[, 1L]) & is.na(m[, 2L])
-  is_ignore <- (is_na | is_total | is_unparsed)[i_xun_to_xunu][i_x_to_xu]
+  is_ignore <- (is_missing | is_total | is_unparsed)[i_xun_to_xunu][i_x_to_xu]
   i_x_to_xu <- i_x_to_xu[!is_ignore]
   is_dup <- duplicated(i_x_to_xu)
   if (!any(is_dup)) {
@@ -325,10 +325,10 @@ find_synonyms <- function(intervals) {
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   m <- get_m(intervals)
-  is_na <- get_is_na(intervals)
+  is_missing <- get_is_missing(intervals)
   is_total <- get_is_total(intervals)
   is_unparsed <- is.na(m[, 1L]) & is.na(m[, 2L])
-  is_ignore <- (is_na | is_total | is_unparsed)[i_xun_to_xunu]
+  is_ignore <- (is_missing | is_total | is_unparsed)[i_xun_to_xunu]
   ## different labels with the same normalized label, or
   ## different normalized labels with the same interval
   key <- vctrs::vec_group_id(vctrs::data_frame(lower = m[, 1L], upper = m[, 2L]))
@@ -426,21 +426,27 @@ inner_diagnose_no_total <- function(intervals, on) {
 #' @noRd
 
 
-inner_diagnose_no_na <- function(intervals, on) {
+inner_diagnose_no_missing <- function(intervals, on) {
   int_is_empty <- int_is_empty(intervals)
   if (int_is_empty) {
     passed <- TRUE
   } else {
-    is_na <- get_is_na(intervals)
-    passed <- !any(is_na)
+    is_missing <- get_is_missing(intervals)
+    passed <- !any(is_missing)
   }
   if (identical(passed, TRUE)) {
     comment <- NA_character_
   } else {
-    comment <- sprintf("%s include NA.", on_sentence_start(on))
+    labels_unique <- get_labels_unique(intervals)
+    i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+    lab <- labels_unique[[match(which(is_missing)[[1L]], i_xun_to_xunu)]]
+    comment <- sprintf(
+      "%s include missing value: '%s'",
+      on_sentence_start(on), lab
+    )
   }
   tibble::tibble_row(
-    condition = "no_na",
+    condition = "no_missing",
     passed = passed,
     comment = comment
   )

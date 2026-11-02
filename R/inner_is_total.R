@@ -102,7 +102,7 @@ inner_is_missing <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
-  is_missing <- get_is_na(intervals)
+  is_missing <- get_is_missing(intervals)
   i <- get_i_x_to_xunu(intervals)
   copy_labels_names(is_missing[i], labels_input)
 }

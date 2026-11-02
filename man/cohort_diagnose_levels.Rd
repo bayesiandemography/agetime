@@ -12,7 +12,7 @@ cohort_diagnose_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -27,7 +27,7 @@ cohort_assert_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -42,7 +42,7 @@ cohort_diagnose_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -57,7 +57,7 @@ cohort_assert_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
   has_open_left = FALSE,
@@ -73,6 +73,9 @@ cohort_assert_values(
 \item{no_overlap}{Check that no cohorts overlap.
 Different labels that describe the same interval,
 such as \code{"<2000"} and \code{"before 2000"}, count as overlapping.
+Totals and missing values, as defined by \code{\link[=cohort_is_total]{cohort_is_total()}}
+and \code{\link[=cohort_is_missing]{cohort_is_missing()}}, are removed before checks
+for overlaps are performed.
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all cohorts between
@@ -80,26 +83,32 @@ the earliest and latest cohort are
 included.
 Default is \code{FALSE} (don't check).}
 
-\item{no_total}{Check that there is no total category.
+\item{no_total}{Check that there is no "total" category,
+as defined by \code{\link[=cohort_is_total]{cohort_is_total()}}.
 Default is \code{FALSE} (don't check).}
 
-\item{no_na}{Check that there is no \code{NA} category.
+\item{no_missing}{Check that there is no "missing" category,
+as defined by \code{\link[=cohort_is_missing]{cohort_is_missing()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{no_open_left}{Check that no cohort
-is open on the left (has no lower limit).
+is open on the left (has no lower limit),
+as defined by \code{\link[=cohort_is_open_left]{cohort_is_open_left()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{no_open_right}{Check that no cohort
-is open on the right (has no upper limit).
+is open on the right (has no upper limit),
+as defined by \code{\link[=cohort_is_open_right]{cohort_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_left}{Check that at least
-one cohort is open on the left (has no lower limit).
+one cohort is open on the left (has no lower limit),
+as defined by \code{\link[=cohort_is_open_left]{cohort_is_open_left()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least
-one cohort is open on the right (has no upper limit).
+one cohort is open on the right (has no upper limit),
+as defined by \code{\link[=cohort_is_open_right]{cohort_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{interpret_single}{How to interpret a label for a single year,
@@ -129,17 +138,18 @@ Check whether cohort labels meet conditions.
 The \code{diagnose} functions report on each condition, and the
 \code{assert} functions throw an error if a condition is not met.
 \itemize{
-\item \code{cohort_diagnose_levels()} and \code{cohort_assert_levels()} check the
-levels of a factor, including unused levels.
 \item \code{cohort_diagnose_values()} and \code{cohort_assert_values()} check the
-elements of \code{labels}, treating each element as a separate cohort.
+elements of \code{labels}.
+\item \code{cohort_diagnose_levels()} and \code{cohort_assert_levels()} check
+the levels of \code{labels}, including any unused levels.
+Both functions require \code{labels} to be a factor.
 }
 
 Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Not having totals or NAs
+\item Not having totals or missing values
 \item Having, or not having, open cohorts
 }
 }
@@ -222,7 +232,7 @@ cohort_diagnose_values(
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
-  no_na = TRUE,
+  no_missing = TRUE,
   has_open_left = TRUE,
   has_open_right = TRUE
 )
@@ -247,10 +257,6 @@ df |>
   group_by(sex) |>
   mutate(cohort = cohort_assert_values(cohort, no_overlap = TRUE))
 
-## totals are reported by 'no_total', not 'no_overlap'
-x <- c("2020-2025", "2025-2030", "Total")
-cohort_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
-
 ## factor with unused level
 fac <- factor(
   x = "2020-2025",
@@ -262,7 +268,9 @@ cohort_diagnose_values(fac, no_gap = TRUE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=age_diagnose_levels]{age_diagnose_levels()}} Age equivalent of \code{cohort_diagnose_levels()}
-\item \code{\link[=period_diagnose_levels]{period_diagnose_levels()}} Period equivalent of \code{cohort_diagnose_levels()}
+\item \code{\link[=age_assert_values]{age_assert_values()}}, \code{\link[=age_assert_levels]{age_assert_levels()}}
+\item \code{\link[=age_diagnose_values]{age_diagnose_values()}}, \code{\link[=age_diagnose_levels]{age_diagnose_levels()}}
+\item \code{\link[=period_assert_values]{period_assert_values()}}, \code{\link[=period_assert_levels]{period_assert_levels()}}
+\item \code{\link[=period_diagnose_values]{period_diagnose_values()}}, \code{\link[=period_diagnose_levels]{period_diagnose_levels()}}
 }
 }

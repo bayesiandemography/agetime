@@ -65,6 +65,11 @@
   whether it checks levels or values. The `_levels()` functions now
   throw an error if `labels` is not a factor. To check a character
   vector, use the `_values()` functions.
+- The `no_na` argument of the diagnose and assert functions has been
+  renamed `no_missing`, to match `age_is_missing()` and its period
+  and cohort equivalents. The check covers labels such as
+  `"Not stated"` and `"Unknown"`, not just `NA`, and its message now
+  quotes the missing label.
 - The `no_overlap` condition now fails when different labels describe
   the same interval, such as `"0"` and `"infant"`. In the `_values()`
   functions, it also fails when the same label appears more than

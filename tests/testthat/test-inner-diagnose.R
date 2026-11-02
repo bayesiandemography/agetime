@@ -13,7 +13,7 @@ test_that("inner_diagnose_no_gap() passes for contiguous intervals", {
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_diagnose_no_na() passes when there is no NA", {
+test_that("inner_diagnose_no_missing() passes when there is no NA", {
   intervals <- intervals(
     labels = c("0-4", "5-9"),
     label_type = "age",
@@ -21,9 +21,9 @@ test_that("inner_diagnose_no_na() passes when there is no NA", {
     interpret_multi = "below_upper",
     interpret_fail = "error"
   )
-  val <- agetime:::inner_diagnose_no_na(intervals, on = "levels")
+  val <- agetime:::inner_diagnose_no_missing(intervals, on = "levels")
 
-  expect_identical(val$condition, "no_na")
+  expect_identical(val$condition, "no_missing")
   expect_identical(val$passed, TRUE)
   expect_identical(val$comment, NA_character_)
 })
@@ -114,7 +114,7 @@ test_that("inner_diagnose() skips checks when all flags are FALSE", {
     no_overlap = FALSE,
     no_gap = FALSE,
     no_total = FALSE,
-    no_na = FALSE,
+    no_missing = FALSE,
     no_open_left = FALSE,
     no_open_right = FALSE,
     has_zero = FALSE,

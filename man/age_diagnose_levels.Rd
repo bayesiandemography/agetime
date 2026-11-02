@@ -12,7 +12,7 @@ age_diagnose_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_right = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
@@ -25,7 +25,7 @@ age_assert_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_right = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
@@ -38,7 +38,7 @@ age_diagnose_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_right = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
@@ -51,7 +51,7 @@ age_assert_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
-  no_na = FALSE,
+  no_missing = FALSE,
   no_open_right = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
@@ -65,24 +65,31 @@ age_assert_values(
 \item{no_overlap}{Check that no age groups overlap.
 Different labels that describe the same interval,
 such as \code{"0"} and \code{"infant"}, count as overlapping.
+Totals and missing values, as defined by \code{\link[=age_is_total]{age_is_total()}}
+and \code{\link[=age_is_missing]{age_is_missing()}}, are removed before checks
+for overlaps are performed.
 Default is \code{FALSE} (don't check).}
 
 \item{no_gap}{Check that all ages between the
 youngest and oldest age groups are included.
 Default is \code{FALSE} (don't check).}
 
-\item{no_total}{Check that there is no total category.
+\item{no_total}{Check that there is no "total" category,
+as defined by \code{\link[=age_is_total]{age_is_total()}}.
 Default is \code{FALSE} (don't check).}
 
-\item{no_na}{Check that there is no \code{NA} category.
+\item{no_missing}{Check that there is no "missing" category,
+as defined by \code{\link[=age_is_missing]{age_is_missing()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{no_open_right}{Check that no age group
-is open on the right (has no upper limit).
+is open on the right (has no upper limit),
+as defined by \code{\link[=age_is_open_right]{age_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least one age
-group is open on the right (has no upper limit).
+group is open on the right (has no upper limit),
+as defined by \code{\link[=age_is_open_right]{age_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
 \item{has_zero}{Check that at least one
@@ -111,17 +118,18 @@ Check whether age group labels meet conditions.
 The \code{diagnose} functions report on each condition, and the
 \code{assert} functions throw an error if a condition is not met.
 \itemize{
-\item \code{age_diagnose_levels()} and \code{age_assert_levels()} check the
-levels of a factor, including unused levels.
 \item \code{age_diagnose_values()} and \code{age_assert_values()} check the
-elements of \code{labels}, treating each element as a separate age group.
+elements of \code{labels}.
+\item \code{age_diagnose_levels()} and \code{age_assert_levels()} check
+the levels of \code{labels}, including any unused levels.
+Both functions require \code{labels} to be a factor.
 }
 
 Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Not having totals or NAs
+\item Not having totals or missing values
 \item Having, or not having, open age groups
 \item Having an age group that starts at zero
 \item Only including age groups used by an abridged life table
@@ -148,7 +156,7 @@ age_diagnose_values(
   no_overlap = TRUE,
   no_gap = TRUE,
   no_total = TRUE,
-  no_na = TRUE,
+  no_missing = TRUE,
   has_open_right = TRUE,
   has_zero = TRUE,
   valid_life = TRUE
@@ -174,10 +182,6 @@ df |>
   group_by(sex) |>
   mutate(age = age_assert_values(age, no_overlap = TRUE))
 
-## totals are reported by 'no_total', not 'no_overlap'
-x <- c("0-4", "5-9", "Total")
-age_diagnose_values(x, no_overlap = TRUE, no_total = TRUE)
-
 ## factor with unused level
 fac <- factor(
   x = "0-4",
@@ -189,7 +193,9 @@ age_diagnose_values(fac, no_overlap = TRUE)
 }
 \seealso{
 \itemize{
-\item \code{\link[=period_diagnose_levels]{period_diagnose_levels()}} Period equivalent of \code{age_diagnose_levels()}
-\item \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}} Cohort equivalent of \code{age_diagnose_levels()}
+\item \code{\link[=period_assert_values]{period_assert_values()}}, \code{\link[=period_assert_levels]{period_assert_levels()}}
+\item \code{\link[=period_diagnose_values]{period_diagnose_values()}}, \code{\link[=period_diagnose_levels]{period_diagnose_levels()}}
+\item \code{\link[=cohort_assert_values]{cohort_assert_values()}}, \code{\link[=cohort_assert_levels]{cohort_assert_levels()}}
+\item \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}}, \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}}
 }
 }

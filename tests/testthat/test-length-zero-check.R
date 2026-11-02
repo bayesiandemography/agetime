@@ -24,7 +24,7 @@ test_that("universal checks pass on length-0 input", {
   expect_true(age_diagnose_values(x, no_overlap = TRUE)$ok)
   expect_true(age_diagnose_values(x, no_gap = TRUE)$ok)
   expect_true(age_diagnose_values(x, no_total = TRUE)$ok)
-  expect_true(age_diagnose_values(x, no_na = TRUE)$ok)
+  expect_true(age_diagnose_values(x, no_missing = TRUE)$ok)
   expect_true(age_diagnose_values(x, valid_life = TRUE)$ok)
   expect_true(age_diagnose_values(x, no_open_right = TRUE)$ok)
   expect_true(period_diagnose_values(x, no_open_left = TRUE)$ok)
@@ -33,19 +33,19 @@ test_that("universal checks pass on length-0 input", {
   expect_true(period_diagnose_values(x, no_overlap = TRUE)$ok)
   expect_true(period_diagnose_values(x, no_gap = TRUE)$ok)
   expect_true(period_diagnose_values(x, no_total = TRUE)$ok)
-  expect_true(period_diagnose_values(x, no_na = TRUE)$ok)
+  expect_true(period_diagnose_values(x, no_missing = TRUE)$ok)
 
   expect_true(cohort_diagnose_values(x, no_overlap = TRUE)$ok)
   expect_true(cohort_diagnose_values(x, no_gap = TRUE)$ok)
   expect_true(cohort_diagnose_values(x, no_total = TRUE)$ok)
-  expect_true(cohort_diagnose_values(x, no_na = TRUE)$ok)
+  expect_true(cohort_diagnose_values(x, no_missing = TRUE)$ok)
 })
 
 test_that("universal checks pass on empty factor input", {
   x <- factor()
   expect_true(age_diagnose_levels(x, no_overlap = TRUE)$ok)
   expect_true(period_diagnose_levels(x, no_total = TRUE)$ok)
-  expect_true(cohort_diagnose_levels(x, no_na = TRUE)$ok)
+  expect_true(cohort_diagnose_levels(x, no_missing = TRUE)$ok)
   expect_true(age_diagnose_values(x, no_overlap = TRUE)$ok)
 })
 
@@ -68,7 +68,7 @@ test_that("universal asserts succeed on length-0 input", {
   expect_invisible(age_assert_values(character(0), no_overlap = TRUE))
   expect_invisible(age_assert_values(character(0), no_gap = TRUE))
   expect_invisible(period_assert_values(character(0), no_total = TRUE))
-  expect_invisible(cohort_assert_values(character(0), no_na = TRUE))
+  expect_invisible(cohort_assert_values(character(0), no_missing = TRUE))
 })
 
 test_that("no checks requested passes on length-0 input", {

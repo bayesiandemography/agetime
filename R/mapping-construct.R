@@ -58,7 +58,7 @@ construct_coarsen_mapping <- function(breaks,
   labels_unique <- get_labels_unique(intervals)
   i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
   is_total <- get_is_total(intervals)
-  is_na <- get_is_na(intervals)
+  is_missing <- get_is_missing(intervals)
   m_br <- construct_m_breaks(
     breaks = breaks,
     is_open_left = is_open_left,
@@ -74,8 +74,8 @@ construct_coarsen_mapping <- function(breaks,
     ans[i_total, ] <- is_total
   }
   if (include_na) {
-    ans[, is_na] <- FALSE
-    ans[i_na, ] <- is_na
+    ans[, is_missing] <- FALSE
+    ans[i_na, ] <- is_missing
   }
   rownames(ans) <- levels_breaks
   ans <- ans[, i_xun_to_xunu, drop = FALSE]
@@ -96,18 +96,18 @@ construct_coarsen_to_mapping <- function(intervals_labels, intervals_to) {
   m_to <- get_m(intervals_to)
   is_total_labels <- get_is_total(intervals_labels)
   is_total_to <- get_is_total(intervals_to)
-  is_na_labels <- get_is_na(intervals_labels)
-  is_na_to <- get_is_na(intervals_to)
+  is_missing_labels <- get_is_missing(intervals_labels)
+  is_missing_to <- get_is_missing(intervals_to)
   ans <- does_m1_contain_m2(m1 = m_to, m2 = m_labels)
   ans[is_total_to, ] <- FALSE
   ans[, is_total_labels] <- FALSE
   if (any(is_total_to) && any(is_total_labels)) {
     ans[is_total_to, is_total_labels] <- TRUE
   }
-  ans[is_na_to, ] <- FALSE
-  ans[, is_na_labels] <- FALSE
-  if (any(is_na_to) && any(is_na_labels)) {
-    ans[is_na_to, is_na_labels] <- TRUE
+  ans[is_missing_to, ] <- FALSE
+  ans[, is_missing_labels] <- FALSE
+  if (any(is_missing_to) && any(is_missing_labels)) {
+    ans[is_missing_to, is_missing_labels] <- TRUE
   }
   ans[is.na(ans)] <- FALSE
   i_xun_to_xunu_labels <- get_i_xun_to_xunu(intervals_labels)
@@ -138,8 +138,8 @@ construct_mapping <- function(intervals_x,
                               name_y) {
   labels_x <- get_labels_unique(intervals_x)
   labels_y <- get_labels_unique(intervals_y)
-  is_na_x <- get_is_na(intervals_x)
-  is_na_y <- get_is_na(intervals_y)
+  is_missing_x <- get_is_missing(intervals_x)
+  is_missing_y <- get_is_missing(intervals_y)
   is_total_x <- get_is_total(intervals_x)
   is_total_y <- get_is_total(intervals_y)
   i_xun_to_xunu_x <- get_i_xun_to_xunu(intervals_x)
@@ -149,15 +149,15 @@ construct_mapping <- function(intervals_x,
   if (relation == "equals") {
     mxy <- does_m1_equal_m2(m1 = mx, m2 = my)
     mxy[is_total_x, is_total_y] <- TRUE
-    mxy[is_total_x, !is_na_y & !is_total_y] <- FALSE
-    mxy[!is_na_x & !is_total_x, is_total_y] <- FALSE
+    mxy[is_total_x, !is_missing_y & !is_total_y] <- FALSE
+    mxy[!is_missing_x & !is_total_x, is_total_y] <- FALSE
   } else if (relation == "contains") {
     mxy <- does_m1_contain_m2(m1 = mx, m2 = my)
     mxy[is_total_x, ] <- TRUE
-    mxy[!is_na_x & !is_total_x, is_total_y] <- FALSE
+    mxy[!is_missing_x & !is_total_x, is_total_y] <- FALSE
   } else if (relation == "is_contained_in") {
     mxy <- is_m1_inside_m2(m1 = mx, m2 = my)
-    mxy[is_total_x, !is_na_y] <- FALSE
+    mxy[is_total_x, !is_missing_y] <- FALSE
     mxy[, is_total_y] <- TRUE
   } else if (relation == "overlaps_with") {
     mxy <- does_m1_overlap_m2(m1 = mx, m2 = my)

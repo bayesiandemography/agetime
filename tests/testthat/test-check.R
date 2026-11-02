@@ -162,9 +162,24 @@ test_that("no_total check fails when x includes Total", {
   expect_diagnose_result(val, "no_total", FALSE)
 })
 
-test_that("no_na check fails when x includes NA", {
-  val <- age_diagnose_values(age_with_na, no_na = TRUE)
-  expect_diagnose_result(val, "no_na", FALSE)
+test_that("no_missing check fails when x includes NA", {
+  val <- age_diagnose_values(age_with_na, no_missing = TRUE)
+  expect_diagnose_result(val, "no_missing", FALSE)
+})
+
+test_that("no_missing check quotes the missing label as supplied", {
+  val <- age_diagnose_values(c("0-4", "Not stated"), no_missing = TRUE)
+  expect_identical(
+    val$details$comment,
+    "Values include missing value: 'Not stated'"
+  )
+  val <- age_diagnose_values(c("0-4", NA), no_missing = TRUE)
+  expect_identical(val$details$comment, "Values include missing value: 'NA'")
+  val <- age_diagnose_levels(factor("0-4", levels = c("0-4", "Unknown")), no_missing = TRUE)
+  expect_identical(
+    val$details$comment,
+    "Levels include missing value: 'Unknown'"
+  )
 })
 
 test_that("has_zero check passes when a group starts at zero", {
@@ -281,8 +296,8 @@ test_that("period checks pass for contiguous non-overlapping periods", {
     "no_total", TRUE
   )
   expect_diagnose_result(
-    period_diagnose_values(period_multi, no_na = TRUE),
-    "no_na", TRUE
+    period_diagnose_values(period_multi, no_missing = TRUE),
+    "no_missing", TRUE
   )
 })
 
@@ -296,14 +311,14 @@ test_that("period no_overlap check fails for overlapping periods", {
   expect_diagnose_result(val, "no_overlap", FALSE)
 })
 
-test_that("period no_total and no_na checks fail for special labels", {
+test_that("period no_total and no_missing checks fail for special labels", {
   expect_diagnose_result(
     period_diagnose_values(period_with_total, no_total = TRUE),
     "no_total", FALSE
   )
   expect_diagnose_result(
-    period_diagnose_values(period_with_na, no_na = TRUE),
-    "no_na", FALSE
+    period_diagnose_values(period_with_na, no_missing = TRUE),
+    "no_missing", FALSE
   )
 })
 
@@ -321,8 +336,8 @@ test_that("cohort checks pass for contiguous non-overlapping cohorts", {
     "no_total", TRUE
   )
   expect_diagnose_result(
-    cohort_diagnose_values(cohort_multi, no_na = TRUE),
-    "no_na", TRUE
+    cohort_diagnose_values(cohort_multi, no_missing = TRUE),
+    "no_missing", TRUE
   )
 })
 
