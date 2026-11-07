@@ -117,7 +117,7 @@ Useful links:
 Authors:
 \itemize{
   \item John Bryant \email{john@bayesiandemography.com}
-  \item Junni Zhang \email{junni@bayesiandemography.com}
+  \item Junni Zhang \email{junnizhang@163.com}
 }
 
 Other contributors:

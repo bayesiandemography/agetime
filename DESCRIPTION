@@ -10,7 +10,7 @@ Authors@R:
       person(given = "Junni",
              family = "Zhang",
              role = "aut",
-             email = "junni@163.com"),
+             email = "junnizhang@163.com"),
       person(given = "Bayesian Demography Limited",
              role = "cph"))
 Description: Work with vectors of age, period, and
