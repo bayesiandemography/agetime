@@ -123,7 +123,7 @@ Authors:
 
 - John Bryant <john@bayesiandemography.com>
 
-- Junni Zhang <junni@bayesiandemography.com>
+- Junni Zhang <junnizhang@163.com>
 
 Other contributors:
 

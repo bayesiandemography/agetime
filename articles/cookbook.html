@@ -168,7 +168,7 @@ categories.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_standard.html">age_standard</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"All ages"</span>, <span class="st">"Under 1"</span>, <span class="st">"1-4 years"</span>, <span class="st">"Age 5 to 9"</span>,</span>
 <span>               <span class="st">"10-14yrs"</span>, <span class="st">"85 years and over"</span>, <span class="st">"Not stated"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Total" "0"     "1-4"   "5-9"   "10-14" "85+"   NA</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] "Total"   "0"       "1-4"     "5-9"     "10-14"   "85+"     "Missing"</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="discussion-1">Discussion<a class="anchor" aria-label="anchor" href="#discussion-1"></a>
@@ -176,7 +176,8 @@ categories.</p>
 <p>If the <code>labels</code> argument is a factor, then the
 <code>standard</code> functions standardize the factor levels along with
 the values.</p>
-<p>Not-stated categories become <code>NA</code>. To remove them, see <a href="#drop-missing">Drop “Not stated” categories from a
+<p>Not-stated categories become <code>"Missing"</code>. To remove them,
+see <a href="#drop-missing">Drop “Not stated” categories from a
 dataset</a>.</p>
 </div>
 <div class="section level4">
@@ -1249,6 +1250,24 @@ other.</p>
 <span><span class="co">#&gt;   40-49    0     1   0</span></span>
 <span><span class="co">#&gt;   50-59    0     1   0</span></span>
 <span><span class="co">#&gt;   60+      0     0   1</span></span></code></pre></div>
+<p>Totals and missing values are treated as categories in their own
+right. A total contains, and overlaps with, every other category,
+including missing values. A missing value matches other missing values,
+under every relation, but is unrelated to any age group.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/age_mapping.html">age_mapping</a></span><span class="op">(</span></span>
+<span>  labels_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"Not stated"</span>, <span class="st">"Total"</span><span class="op">)</span>,</span>
+<span>  labels_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-9"</span>, <span class="st">"Missing"</span>, <span class="st">"Total"</span><span class="op">)</span>,</span>
+<span>  relation <span class="op">=</span> <span class="st">"is_contained_in"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
+<span><span class="co">#&gt;   x          y      </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 0-4        0-9    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> Not stated Missing</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 0-4        Total  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> Not stated Total  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Total      Total</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="see-also-17">See Also<a class="anchor" aria-label="anchor" href="#see-also-17"></a>
@@ -1275,7 +1294,7 @@ groups</a></li>
 x-axis. But plots that use non-numeric age, period, or cohort labels on
 the x-axis often look terrible, and get categories in the wrong
 order.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  age <span class="op">=</span> <span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rate <span class="op">=</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">21</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">21</span><span class="op">)</span></span>
@@ -1291,7 +1310,7 @@ order.</p>
 <p>Convert age, period, or cohort to a continuous variable by using
 <code><a href="../reference/age_lower.html">age_mid()</a></code>, <code><a href="../reference/period_lower.html">period_mid()</a></code>, or
 <code><a href="../reference/cohort_lower.html">cohort_mid()</a></code>.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="../reference/age_lower.html">age_mid</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="cookbook_files/figure-html/mid-plot-solution-1.png" class="r-plt" alt="" width="480"></p>
@@ -1320,7 +1339,7 @@ properly</a></li>
 <h4 id="solution-20">Solution<a class="anchor" aria-label="anchor" href="#solution-20"></a>
 </h4>
 <p>Use <code><a href="../reference/period_lower.html">period_width()</a></code>.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2010-2020"</span>, <span class="st">"2020-2023"</span>, <span class="st">"2023-2030"</span><span class="op">)</span>,</span>
 <span>  departures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">50</span>, <span class="fl">3000</span><span class="op">)</span></span>

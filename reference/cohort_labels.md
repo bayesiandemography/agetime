@@ -12,7 +12,7 @@ cohort_labels(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 cohort_labels_one(
@@ -23,7 +23,7 @@ cohort_labels_one(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 cohort_labels_five(
@@ -34,7 +34,7 @@ cohort_labels_five(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 cohort_labels_ten(
@@ -45,7 +45,7 @@ cohort_labels_ten(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 ```
 
@@ -81,9 +81,9 @@ cohort_labels_ten(
 
   Whether to include a `"Total"` category. Default is `FALSE`.
 
-- include_na:
+- include_missing:
 
-  Whether to include an `NA` category. Default is `FALSE`.
+  Whether to include a `"Missing"` category. Default is `FALSE`.
 
 - lower_first:
 
@@ -189,12 +189,12 @@ cohort_labels_ten(
 )
 #> [1] "2000-2009" "2010-2019"
 
-## include total and NA
+## include total and missing
 cohort_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
   include_total = TRUE,
-  include_na = TRUE
+  include_missing = TRUE
 )
-#> [1] "2000-2010" "2010-2020" "Total"     NA         
+#> [1] "2000-2010" "2010-2020" "Missing"   "Total"    
 ```

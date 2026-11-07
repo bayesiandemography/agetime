@@ -9,7 +9,7 @@ age_labels(
   breaks,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_one(
@@ -17,7 +17,7 @@ age_labels_one(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_five(
@@ -25,7 +25,7 @@ age_labels_five(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_ten(
@@ -33,14 +33,14 @@ age_labels_ten(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_life(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 ```
 
@@ -59,9 +59,9 @@ age_labels_life(
 
   Whether to include a `"Total"` category.
 
-- include_na:
+- include_missing:
 
-  Whether to include an `NA` category.
+  Whether to include a `"Missing"` category.
 
 - lower_first:
 
@@ -152,13 +152,13 @@ age_labels_one(
 #> [16] "30" "31" "32" "33" "34" "35" "36" "37" "38" "39" "40" "41" "42" "43" "44"
 #> [31] "45" "46" "47" "48" "49"
 
-## include total and NA
+## include total and missing
 age_labels_five(
   lower_last = 20,
   include_total = TRUE,
-  include_na = TRUE
+  include_missing = TRUE
 )
-#> [1] "0-4"   "5-9"   "10-14" "15-19" "20+"   "Total" NA     
+#> [1] "0-4"     "5-9"     "10-14"   "15-19"   "20+"     "Missing" "Total"  
 
 ## arbitrary age groups
 age_labels(

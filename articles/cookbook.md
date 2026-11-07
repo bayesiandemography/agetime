@@ -117,7 +117,7 @@ published tables, including totals and not-stated categories.
 
 age_standard(c("All ages", "Under 1", "1-4 years", "Age 5 to 9",
                "10-14yrs", "85 years and over", "Not stated"))
-#> [1] "Total" "0"     "1-4"   "5-9"   "10-14" "85+"   NA
+#> [1] "Total"   "0"       "1-4"     "5-9"     "10-14"   "85+"     "Missing"
 ```
 
 #### Discussion
@@ -125,7 +125,7 @@ age_standard(c("All ages", "Under 1", "1-4 years", "Age 5 to 9",
 If the `labels` argument is a factor, then the `standard` functions
 standardize the factor levels along with the values.
 
-Not-stated categories become `NA`. To remove them, see [Drop “Not
+Not-stated categories become `"Missing"`. To remove them, see [Drop “Not
 stated” categories from a dataset](#drop-missing).
 
 #### See Also
@@ -1113,6 +1113,28 @@ age_mapping(
 #>   40-49    0     1   0
 #>   50-59    0     1   0
 #>   60+      0     0   1
+```
+
+Totals and missing values are treated as categories in their own right.
+A total contains, and overlaps with, every other category, including
+missing values. A missing value matches other missing values, under
+every relation, but is unrelated to any age group.
+
+``` r
+
+age_mapping(
+  labels_x = c("0-4", "Not stated", "Total"),
+  labels_y = c("0-9", "Missing", "Total"),
+  relation = "is_contained_in"
+)
+#> # A tibble: 5 × 2
+#>   x          y      
+#>   <chr>      <chr>  
+#> 1 0-4        0-9    
+#> 2 Not stated Missing
+#> 3 0-4        Total  
+#> 4 Not stated Total  
+#> 5 Total      Total
 ```
 
 #### See Also
