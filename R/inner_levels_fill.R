@@ -59,7 +59,7 @@ inner_levels_fill_empty <- function(levels,
       is_open_left = FALSE,
       is_open_right = FALSE,
       include_total = FALSE,
-      include_na = FALSE
+      include_missing = FALSE
     )
     return(factor(
       x = character(0),
@@ -232,7 +232,7 @@ inner_levels_fill <- function(labels,
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,
-        include_na = FALSE
+        include_missing = FALSE
       )
       levels_extra[[i - 1L]] <- labels_gap
     }
@@ -325,7 +325,7 @@ inner_levels_fill_life <- function(labels,
         is_open_left = FALSE,
         is_open_right = FALSE,
         include_total = FALSE,
-        include_na = FALSE
+        include_missing = FALSE
       )
       levels_extra[[i - 1L]] <- labels_gap
     }

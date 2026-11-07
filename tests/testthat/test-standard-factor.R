@@ -41,3 +41,10 @@ test_that("cohort_standard() preserves factor for non-empty x", {
   expect_identical(as.character(ans), c("2025-2030", "<2022"))
   expect_identical(levels(ans), c("2025-2030", "<2022"))
 })
+
+test_that("age_standard() merges missing-value levels into 'Missing'", {
+  x <- factor(c("0-4", NA, "unknown"), exclude = NULL)
+  ans <- age_standard(x)
+  expect_identical(levels(ans), c("0-4", "Missing"))
+  expect_identical(as.character(ans), c("0-4", "Missing", "Missing"))
+})

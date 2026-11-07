@@ -232,7 +232,7 @@ check_coarsen_open_flags <- function(is_open_left,
 #' Every old label must lie in exactly one new interval. A label
 #' that lies in none either overlaps two or more new intervals
 #' (it would be split), or lies partly or wholly outside the new
-#' intervals (it is not fully covered). A total or `NA` label that
+#' intervals (it is not fully covered). A total or missing label that
 #' does not fit has no matching category in `to`. The error message describes
 #' each problem separately, and suggests fixes.
 #'

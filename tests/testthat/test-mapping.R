@@ -214,3 +214,40 @@ test_that("period/cohort mappings match equals on shared fixtures", {
     c("2025-2030", "2030-2035")
   )
 })
+
+test_that("age_mapping() treats missing values as a separate category", {
+  x <- c("0-4", "not stated", "Total")
+  y <- c("0-9", "0-4", "Missing", "Total")
+  m <- function(relation) {
+    age_mapping(x, y, relation = relation, format = "matrix")
+  }
+  expect_identical(
+    unname(m("equals")),
+    rbind(c(0L, 1L, 0L, 0L), c(0L, 0L, 1L, 0L), c(0L, 0L, 0L, 1L))
+  )
+  expect_identical(
+    unname(m("contains")),
+    rbind(c(0L, 1L, 0L, 0L), c(0L, 0L, 1L, 0L), c(1L, 1L, 1L, 1L))
+  )
+  expect_identical(
+    unname(m("is_contained_in")),
+    rbind(c(1L, 1L, 0L, 1L), c(0L, 0L, 1L, 1L), c(0L, 0L, 0L, 1L))
+  )
+  expect_identical(
+    unname(m("overlaps_with")),
+    rbind(c(1L, 1L, 0L, 1L), c(0L, 0L, 1L, 1L), c(1L, 1L, 1L, 1L))
+  )
+})
+
+test_that("age_mapping() tibble matches NA labels to each other only", {
+  ans <- age_mapping(c("0-4", NA), c("0-4", "0-9", NA))
+  expect_identical(ans$x, c("0-4", NA))
+  expect_identical(ans$y, c("0-4", NA))
+})
+
+test_that("age_mapping() treats unparseable labels as non-matches", {
+  ans <- age_mapping(c("0-4", "junk"), "0-4",
+    interpret_fail = "silent", format = "matrix"
+  )
+  expect_identical(unname(ans[, 1L]), c(1L, 0L))
+})

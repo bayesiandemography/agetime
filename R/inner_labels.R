@@ -6,7 +6,7 @@
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
-#' @param include_na Whether to append `NA`.
+#' @param include_missing Whether to append `"Missing"`.
 #' @param require_divisible_bounds Whether `lower_first` and `lower_last`
 #' must themselves be divisible by 5.
 #' @returns Character vector of labels.
@@ -19,10 +19,10 @@ inner_labels <- function(breaks,
                          is_open_left,
                          is_open_right,
                          include_total,
-                         include_na) {
+                         include_missing) {
   check_breaks(breaks)
   check_flag(x = include_total, nm_x = "include_total")
-  check_flag(x = include_na, nm_x = "include_na")
+  check_flag(x = include_missing, nm_x = "include_missing")
   construct_labels_breaks(
     breaks = breaks,
     format_single = format_single,
@@ -30,7 +30,7 @@ inner_labels <- function(breaks,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 #' Inner Labels One
@@ -42,7 +42,7 @@ inner_labels <- function(breaks,
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
-#' @param include_na Whether to append `NA`.
+#' @param include_missing Whether to append `"Missing"`.
 #' @param require_divisible_bounds Whether `lower_first` and `lower_last`
 #' must themselves be divisible by 5.
 #' @returns Character vector of labels.
@@ -56,7 +56,7 @@ inner_labels_one <- function(lower_first,
                              is_open_left,
                              is_open_right,
                              include_total,
-                             include_na) {
+                             include_missing) {
   check_n(
     n = lower_first,
     nm_n = "lower_first",
@@ -78,7 +78,7 @@ inner_labels_one <- function(lower_first,
     nm_y = "lower_last"
   )
   check_flag(x = include_total, nm_x = "include_total")
-  check_flag(x = include_na, nm_x = "include_na")
+  check_flag(x = include_missing, nm_x = "include_missing")
   to <- lower_last + if (is_open_right) 0L else 1L
   breaks <- seq.int(
     from = lower_first,
@@ -92,7 +92,7 @@ inner_labels_one <- function(lower_first,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 #' Inner Labels Five
@@ -104,7 +104,7 @@ inner_labels_one <- function(lower_first,
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
-#' @param include_na Whether to append `NA`.
+#' @param include_missing Whether to append `"Missing"`.
 #' @returns Character vector of labels.
 #'
 #' @noRd
@@ -117,7 +117,7 @@ inner_labels_five <- function(lower_first,
                               is_open_left,
                               is_open_right,
                               include_total,
-                              include_na,
+                              include_missing,
                               require_divisible_bounds) {
   check_n(
     n = lower_first,
@@ -147,7 +147,7 @@ inner_labels_five <- function(lower_first,
     divisible_by = 5L
   )
   check_flag(x = include_total, nm_x = "include_total")
-  check_flag(x = include_na, nm_x = "include_na")
+  check_flag(x = include_missing, nm_x = "include_missing")
   to <- lower_last + if (is_open_right) 0L else 5L
   breaks <- seq.int(
     from = lower_first,
@@ -161,7 +161,7 @@ inner_labels_five <- function(lower_first,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 #' Inner Labels Ten
@@ -173,7 +173,7 @@ inner_labels_five <- function(lower_first,
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
-#' @param include_na Whether to append `NA`.
+#' @param include_missing Whether to append `"Missing"`.
 #' @param require_divisible_bounds Whether `lower_first` and `lower_last`
 #' must themselves be divisible by 10.
 #' @returns Character vector of labels.
@@ -187,7 +187,7 @@ inner_labels_ten <- function(lower_first,
                              is_open_left,
                              is_open_right,
                              include_total,
-                             include_na,
+                             include_missing,
                              require_divisible_bounds) {
   check_n(
     n = lower_first,
@@ -217,7 +217,7 @@ inner_labels_ten <- function(lower_first,
     divisible_by = 10L
   )
   check_flag(x = include_total, nm_x = "include_total")
-  check_flag(x = include_na, nm_x = "include_na")
+  check_flag(x = include_missing, nm_x = "include_missing")
   to <- lower_last + if (is_open_right) 0L else 10L
   breaks <- seq.int(
     from = lower_first,
@@ -231,6 +231,6 @@ inner_labels_ten <- function(lower_first,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }

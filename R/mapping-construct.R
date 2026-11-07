@@ -7,16 +7,16 @@
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to include a row for a total category.
-#' @param include_na Whether to include a row for an NA category.
+#' @param include_missing Whether to include a row for a missing category.
 #' @returns Two-column matrix of lower and upper limits, with
-#' `NA` rows for total and NA categories.
+#' `NA` rows for total and missing categories.
 #'
 #' @noRd
 construct_m_breaks <- function(breaks,
                                is_open_left,
                                is_open_right,
                                include_total,
-                               include_na) {
+                               include_missing) {
   n <- length(breaks)
   ans <- cbind(breaks[-n], breaks[-1])
   if (is_open_left) {
@@ -28,7 +28,7 @@ construct_m_breaks <- function(breaks,
   if (include_total) {
     ans <- rbind(ans, c(NA_real_, NA_real_))
   }
-  if (include_na) {
+  if (include_missing) {
     ans <- rbind(ans, c(NA_real_, NA_real_))
   }
   ans
@@ -41,7 +41,7 @@ construct_m_breaks <- function(breaks,
 #' @param is_open_left Whether to include an open-left interval.
 #' @param is_open_right Whether to include an open-right interval.
 #' @param include_total Whether to append `"Total"`.
-#' @param include_na Whether to append `NA`.
+#' @param include_missing Whether to append `"Missing"`.
 #' @param intervals An `agetime_intervals` object.
 #' @returns Logical matrix mapping new labels to original labels.
 #'
@@ -52,7 +52,7 @@ construct_coarsen_mapping <- function(breaks,
                                      is_open_left,
                                      is_open_right,
                                      include_total,
-                                     include_na,
+                                     include_missing,
                                      intervals) {
   m_int <- get_m(intervals)
   labels_unique <- get_labels_unique(intervals)
@@ -64,16 +64,16 @@ construct_coarsen_mapping <- function(breaks,
     is_open_left = is_open_left,
     is_open_right = is_open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
-  i_total <- if (include_total) nrow(m_br) - as.integer(include_na) else NULL
-  i_na <- if (include_na) nrow(m_br) else NULL
+  i_total <- if (include_total) nrow(m_br) - as.integer(include_missing) else NULL
+  i_na <- if (include_missing) nrow(m_br) else NULL
   ans <- does_m1_contain_m2(m1 = m_br, m2 = m_int)
   if (include_total) {
     ans[, is_total] <- FALSE
     ans[i_total, ] <- is_total
   }
-  if (include_na) {
+  if (include_missing) {
     ans[, is_missing] <- FALSE
     ans[i_na, ] <- is_missing
   }
@@ -169,6 +169,12 @@ construct_mapping <- function(intervals_x,
       "{.arg relation}."
     ))
   }
+  ## missing values form their own category: they match each
+  ## other under every relation, are disjoint from intervals,
+  ## and lie inside totals (set above). Remaining NAs, from
+  ## missing or unparseable labels, are non-matches.
+  mxy[is_missing_x, is_missing_y] <- TRUE
+  mxy[is.na(mxy)] <- FALSE
   mxy <- mxy[i_xun_to_xunu_x, , drop = FALSE]
   mxy <- mxy[, i_xun_to_xunu_y, drop = FALSE]
   dn <- list(labels_x, labels_y)

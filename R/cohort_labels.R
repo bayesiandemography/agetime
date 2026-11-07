@@ -40,8 +40,8 @@
 #' Default is `FALSE`.
 #' @param include_total Whether to include a
 #' `"Total"` category. Default is `FALSE`.
-#' @param include_na Whether to include
-#' an `NA` category. Default is `FALSE`.
+#' @param include_missing Whether to include
+#' a `"Missing"` category. Default is `FALSE`.
 #' @param format_single How to format label for
 #' single-year cohort. Choices are `"lower"`
 #' (the default) and `"upper"`. See below for
@@ -100,12 +100,12 @@
 #'   format_multi = "below_upper"
 #' )
 #'
-#' ## include total and NA
+#' ## include total and missing
 #' cohort_labels_ten(
 #'   lower_first = 2000,
 #'   lower_last = 2010,
 #'   include_total = TRUE,
-#'   include_na = TRUE
+#'   include_missing = TRUE
 #' )
 #' @export
 cohort_labels <- function(breaks,
@@ -114,7 +114,7 @@ cohort_labels <- function(breaks,
                           format_single = c("lower", "upper"),
                           format_multi = c("at_upper", "below_upper"),
                           include_total = FALSE,
-                          include_na = FALSE) {
+                          include_missing = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
   check_flag(x = open_right, nm_x = "open_right")
   format_single <- match.arg(format_single)
@@ -126,7 +126,7 @@ cohort_labels <- function(breaks,
     is_open_left = open_left,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 
@@ -139,7 +139,7 @@ cohort_labels_one <- function(lower_first,
                               format_single = c("lower", "upper"),
                               format_multi = c("at_upper", "below_upper"),
                               include_total = FALSE,
-                              include_na = FALSE) {
+                              include_missing = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
   check_flag(x = open_right, nm_x = "open_right")
   format_single <- match.arg(format_single)
@@ -152,7 +152,7 @@ cohort_labels_one <- function(lower_first,
     is_open_left = open_left,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 
@@ -166,7 +166,7 @@ cohort_labels_five <- function(lower_first,
                                format_single = c("lower", "upper"),
                                format_multi = c("at_upper", "below_upper"),
                                include_total = FALSE,
-                               include_na = FALSE) {
+                               include_missing = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
   check_flag(x = open_right, nm_x = "open_right")
   format_single <- match.arg(format_single)
@@ -179,7 +179,7 @@ cohort_labels_five <- function(lower_first,
     is_open_left = open_left,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na,
+    include_missing = include_missing,
     require_divisible_bounds = FALSE
   )
 }
@@ -193,7 +193,7 @@ cohort_labels_ten <- function(lower_first,
                               format_single = c("lower", "upper"),
                               format_multi = c("at_upper", "below_upper"),
                               include_total = FALSE,
-                              include_na = FALSE) {
+                              include_missing = FALSE) {
   check_flag(x = open_left, nm_x = "open_left")
   check_flag(x = open_right, nm_x = "open_right")
   format_single <- match.arg(format_single)
@@ -206,7 +206,7 @@ cohort_labels_ten <- function(lower_first,
     is_open_left = open_left,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na,
+    include_missing = include_missing,
     require_divisible_bounds = FALSE
   )
 }

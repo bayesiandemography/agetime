@@ -17,8 +17,8 @@
 #' last age group.
 #' @param include_total Whether to include a
 #' `"Total"` category.
-#' @param include_na Whether to include
-#' an `NA` category.
+#' @param include_missing Whether to include
+#' a `"Missing"` category.
 #' @return Character vector.
 #'
 #' @seealso
@@ -51,11 +51,11 @@
 #'   open_right = FALSE
 #' )
 #'
-#' ## include total and NA
+#' ## include total and missing
 #' age_labels_five(
 #'   lower_last = 20,
 #'   include_total = TRUE,
-#'   include_na = TRUE
+#'   include_missing = TRUE
 #' )
 #'
 #' ## arbitrary age groups
@@ -71,7 +71,7 @@
 age_labels <- function(breaks,
                        open_right = TRUE,
                        include_total = FALSE,
-                       include_na = FALSE) {
+                       include_missing = FALSE) {
   check_flag(x = open_right, nm_x = "open_right")
   inner_labels(
     breaks = breaks,
@@ -80,7 +80,7 @@ age_labels <- function(breaks,
     is_open_left = FALSE,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 
@@ -90,7 +90,7 @@ age_labels_one <- function(lower_first = 0,
                            lower_last = 100,
                            open_right = TRUE,
                            include_total = FALSE,
-                           include_na = FALSE) {
+                           include_missing = FALSE) {
   check_flag(x = open_right, nm_x = "open_right")
   inner_labels_one(
     lower_first = lower_first,
@@ -100,7 +100,7 @@ age_labels_one <- function(lower_first = 0,
     is_open_left = FALSE,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }
 
@@ -111,7 +111,7 @@ age_labels_five <- function(lower_first = 0,
                             lower_last = 100,
                             open_right = TRUE,
                             include_total = FALSE,
-                            include_na = FALSE) {
+                            include_missing = FALSE) {
   check_flag(x = open_right, nm_x = "open_right")
   inner_labels_five(
     lower_first = lower_first,
@@ -121,7 +121,7 @@ age_labels_five <- function(lower_first = 0,
     is_open_left = FALSE,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na,
+    include_missing = include_missing,
     require_divisible_bounds = TRUE
   )
 }
@@ -132,7 +132,7 @@ age_labels_ten <- function(lower_first = 0,
                            lower_last = 100,
                            open_right = TRUE,
                            include_total = FALSE,
-                           include_na = FALSE) {
+                           include_missing = FALSE) {
   check_flag(x = open_right, nm_x = "open_right")
   inner_labels_ten(
     lower_first = lower_first,
@@ -142,7 +142,7 @@ age_labels_ten <- function(lower_first = 0,
     is_open_left = FALSE,
     is_open_right = open_right,
     include_total = include_total,
-    include_na = include_na,
+    include_missing = include_missing,
     require_divisible_bounds = TRUE
   )
 }
@@ -153,7 +153,7 @@ age_labels_ten <- function(lower_first = 0,
 age_labels_life <- function(lower_last = 100,
                             open_right = TRUE,
                             include_total = FALSE,
-                            include_na = FALSE) {
+                            include_missing = FALSE) {
   check_n(
     n = lower_last,
     nm_n = "lower_last",
@@ -163,7 +163,7 @@ age_labels_life <- function(lower_last = 100,
   )
   check_flag(x = open_right, nm_x = "open_right")
   check_flag(x = include_total, nm_x = "include_total")
-  check_flag(x = include_na, nm_x = "include_na")
+  check_flag(x = include_missing, nm_x = "include_missing")
   s <- seq(
     from = 5L,
     to = lower_last,
@@ -174,6 +174,6 @@ age_labels_life <- function(lower_last = 100,
     breaks = breaks,
     open_right = open_right,
     include_total = include_total,
-    include_na = include_na
+    include_missing = include_missing
   )
 }

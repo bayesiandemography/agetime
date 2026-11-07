@@ -29,7 +29,8 @@
 # length and ordered attribute. Element values and levels(labels)
 # are standardized.
 # When length(labels) == 0, returns character(0); for factors, standardized
-# levels are still applied. With interpret_fail = "silent", unparseable labels
+# levels are still applied. Missing values become "Missing". With
+# interpret_fail = "silent", unparseable labels
 # become NA.
 age_standard <- function(labels,
                          interpret_fail = c("error", "warn", "silent")) {

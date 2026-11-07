@@ -10,8 +10,8 @@ test_that("age_standard() leaves standard labels unchanged", {
   expect_identical(ans, age_closed)
 })
 
-test_that("age_standard() preserves NA and Total", {
-  expect_identical(age_standard(age_with_na), c("5-9", NA, "10-14"))
+test_that("age_standard() standardizes missing and Total", {
+  expect_identical(age_standard(age_with_na), c("5-9", "Missing", "10-14"))
   expect_identical(age_standard(age_with_total), c("5-9", "Total", "10-14"))
 })
 
@@ -42,10 +42,10 @@ test_that("period_standard() leaves standard labels unchanged", {
   expect_identical(ans, period_multi)
 })
 
-test_that("period_standard() preserves NA and Total", {
+test_that("period_standard() standardizes missing and Total", {
   expect_identical(
     period_standard(period_with_na),
-    c("2020-2025", NA, "2025-2030")
+    c("2020-2025", "Missing", "2025-2030")
   )
   expect_identical(
     period_standard(period_with_total),
@@ -78,10 +78,10 @@ test_that("cohort_standard() leaves standard labels unchanged", {
   expect_identical(ans, cohort_multi)
 })
 
-test_that("cohort_standard() preserves NA and Total", {
+test_that("cohort_standard() standardizes missing and Total", {
   expect_identical(
     cohort_standard(cohort_with_na),
-    c("2025-2030", NA, "2030-2035")
+    c("2025-2030", "Missing", "2030-2035")
   )
   expect_identical(
     cohort_standard(cohort_with_total),
@@ -166,7 +166,7 @@ test_that("age_standard() treats 'under N' as the age group from 0 to N - 1", {
 test_that("age_standard() removes leading 'age', 'ages', and 'aged'", {
   expect_identical(
     age_standard(c("Age 0-4", "Ages 5-9", "aged 15-19", "Age not stated", "Age unknown")),
-    c("0-4", "5-9", "15-19", NA, NA)
+    c("0-4", "5-9", "15-19", "Missing", "Missing")
   )
   expect_error(age_standard("agenda"), "Don't know how to interpret label \"agenda\"")
 })
@@ -269,4 +269,20 @@ test_that("decimal labels are not treated as ranges", {
 test_that("age_standard() treats '0-0' like other one-year ranges", {
   expect_error(age_standard("0-0"), "describes a one-year age group")
   expect_error(age_standard("1-1"), "describes a one-year age group")
+})
+
+test_that("age_standard() distinguishes missing values from unparseable labels", {
+  ans <- age_standard(
+    c("0-4", "not stated", NA, "young people"),
+    interpret_fail = "silent"
+  )
+  expect_identical(ans, c("0-4", "Missing", "Missing", NA))
+})
+
+test_that("age_standard() output is stable when standardized again", {
+  x <- c("0-4", "unknown", "all ages")
+  ans <- age_standard(x)
+  expect_identical(ans, c("0-4", "Missing", "Total"))
+  expect_identical(age_standard(ans), ans)
+  expect_true(age_is_missing("Missing"))
 })

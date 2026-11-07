@@ -51,7 +51,7 @@ construct_labels_intervals <- function(intervals,
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")
   ans[is_total] <- "Total"
-  ans[is_missing] <- NA_character_
+  ans[is_missing] <- "Missing"
   ans[is_unparseable] <- NA_character_
   ans
 }
@@ -63,7 +63,7 @@ construct_labels_intervals <- function(intervals,
 #' @param format_single Rule for one-year labels: `"lower"` or `"upper"`.
 #' @param format_multi Rule for multi-year labels: `"at_upper"` or `"below_upper"`.
 #' @param include_total Whether to append `"Total"`.
-#' @param include_na Whether to append `NA`.
+#' @param include_missing Whether to append `"Missing"`.
 #' @returns Character vector of labels for breaks.
 #'
 #' When `format_multi = "below_upper"`, range labels are rendered with the displayed
@@ -76,7 +76,7 @@ construct_labels_breaks <- function(breaks,
                                     format_single,
                                     format_multi,
                                     include_total,
-                                    include_na) {
+                                    include_missing) {
   lower <- breaks[-length(breaks)]
   upper <- breaks[-1L]
   if (is_open_left) {
@@ -114,8 +114,8 @@ construct_labels_breaks <- function(breaks,
   if (include_total) {
     ans <- c(ans, "Total")
   }
-  if (include_na) {
-    ans <- c(ans, NA)
+  if (include_missing) {
+    ans <- c(ans, "Missing")
   }
   ans
 }

@@ -14,7 +14,7 @@ period_labels(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 period_labels_one(
@@ -25,7 +25,7 @@ period_labels_one(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 period_labels_five(
@@ -36,7 +36,7 @@ period_labels_five(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 period_labels_ten(
@@ -47,7 +47,7 @@ period_labels_ten(
   format_single = c("lower", "upper"),
   format_multi = c("at_upper", "below_upper"),
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 }
 \arguments{
@@ -76,8 +76,8 @@ one year below the upper limit. See below for details.}
 \item{include_total}{Whether to include a
 \code{"Total"} category. Default is \code{FALSE}.}
 
-\item{include_na}{Whether to include
-an \code{NA} category. Default is \code{FALSE}.}
+\item{include_missing}{Whether to include
+a \code{"Missing"} category. Default is \code{FALSE}.}
 
 \item{lower_first}{Lower limit of first period.
 Non-negative number.}
@@ -148,12 +148,12 @@ period_labels_ten(
   format_multi = "below_upper"
 )
 
-## include total and NA
+## include total and missing
 period_labels_ten(
   lower_first = 2000,
   lower_last = 2010,
   include_total = TRUE,
-  include_na = TRUE
+  include_missing = TRUE
 )
 }
 \seealso{

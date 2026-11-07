@@ -12,7 +12,7 @@ age_labels(
   breaks,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_one(
@@ -20,7 +20,7 @@ age_labels_one(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_five(
@@ -28,7 +28,7 @@ age_labels_five(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_ten(
@@ -36,14 +36,14 @@ age_labels_ten(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 
 age_labels_life(
   lower_last = 100,
   open_right = TRUE,
   include_total = FALSE,
-  include_na = FALSE
+  include_missing = FALSE
 )
 }
 \arguments{
@@ -57,8 +57,8 @@ Default is \code{TRUE}.}
 \item{include_total}{Whether to include a
 \code{"Total"} category.}
 
-\item{include_na}{Whether to include
-an \code{NA} category.}
+\item{include_missing}{Whether to include
+a \code{"Missing"} category.}
 
 \item{lower_first}{Lower limit of
 first age group.}
@@ -116,11 +116,11 @@ age_labels_one(
   open_right = FALSE
 )
 
-## include total and NA
+## include total and missing
 age_labels_five(
   lower_last = 20,
   include_total = TRUE,
-  include_na = TRUE
+  include_missing = TRUE
 )
 
 ## arbitrary age groups

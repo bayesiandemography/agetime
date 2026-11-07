@@ -15,7 +15,7 @@ test_that("construct_coarsen_mapping() adds an open-left row", {
     format_single = "lower",
     format_multi = "below_upper",
     include_total = FALSE,
-    include_na = FALSE
+    include_missing = FALSE
   )
   m_open <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
@@ -23,7 +23,7 @@ test_that("construct_coarsen_mapping() adds an open-left row", {
     is_open_left = TRUE,
     is_open_right = FALSE,
     include_total = FALSE,
-    include_na = FALSE,
+    include_missing = FALSE,
     intervals = intervals
   )
   levels_closed <- agetime:::construct_labels_breaks(
@@ -33,7 +33,7 @@ test_that("construct_coarsen_mapping() adds an open-left row", {
     format_single = "lower",
     format_multi = "below_upper",
     include_total = FALSE,
-    include_na = FALSE
+    include_missing = FALSE
   )
   m_closed <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
@@ -41,7 +41,7 @@ test_that("construct_coarsen_mapping() adds an open-left row", {
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,
-    include_na = FALSE,
+    include_missing = FALSE,
     intervals = intervals
   )
 
@@ -52,7 +52,7 @@ test_that("construct_coarsen_mapping() adds an open-left row", {
   expect_false(any(m_open["2025-2029", , drop = FALSE]))
 })
 
-test_that("construct_coarsen_mapping() maps NA only when include_na is TRUE", {
+test_that("construct_coarsen_mapping() maps NA only when include_missing is TRUE", {
   x <- c("0-4", "5-9", NA)
   intervals <- intervals(
     labels = x,
@@ -69,7 +69,7 @@ test_that("construct_coarsen_mapping() maps NA only when include_na is TRUE", {
     format_single = "lower",
     format_multi = "below_upper",
     include_total = FALSE,
-    include_na = TRUE
+    include_missing = TRUE
   )
   m_with_na <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
@@ -77,13 +77,13 @@ test_that("construct_coarsen_mapping() maps NA only when include_na is TRUE", {
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,
-    include_na = TRUE,
+    include_missing = TRUE,
     intervals = intervals
   )
-  i_na_row <- which(is.na(rownames(m_with_na)))
+  i_na_row <- which(rownames(m_with_na) == "Missing")
   i_na_col <- which(is.na(colnames(m_with_na)))
 
-  expect_identical(rownames(m_with_na), c("0-9", NA))
+  expect_identical(rownames(m_with_na), c("0-9", "Missing"))
   expect_identical(ncol(m_with_na), 3L)
   expect_true(m_with_na["0-9", "0-4"])
   expect_true(m_with_na["0-9", "5-9"])
@@ -92,7 +92,7 @@ test_that("construct_coarsen_mapping() maps NA only when include_na is TRUE", {
   expect_false(any(m_with_na[-i_na_row, i_na_col, drop = FALSE]))
 })
 
-test_that("construct_coarsen_mapping() omits NA row when include_na is FALSE", {
+test_that("construct_coarsen_mapping() omits NA row when include_missing is FALSE", {
   x <- c("0-4", "5-9")
   intervals <- intervals(
     labels = x,
@@ -109,7 +109,7 @@ test_that("construct_coarsen_mapping() omits NA row when include_na is FALSE", {
     format_single = "lower",
     format_multi = "below_upper",
     include_total = FALSE,
-    include_na = FALSE
+    include_missing = FALSE
   )
   m <- agetime:::construct_coarsen_mapping(
     breaks = breaks,
@@ -117,7 +117,7 @@ test_that("construct_coarsen_mapping() omits NA row when include_na is FALSE", {
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,
-    include_na = FALSE,
+    include_missing = FALSE,
     intervals = intervals
   )
 

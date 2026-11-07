@@ -263,3 +263,9 @@ test_that("age_coarsen_five() gives a clear error when all labels are open and o
   expect_error(age_coarsen_five("90+", open_right = FALSE),
                "`labels` contains age group open on the right")
 })
+
+test_that("age_coarsen() maps missing values to 'Missing'", {
+  ans <- age_coarsen(c("0-4", "5-9", NA, "Total"), breaks = c(0, 10))
+  expect_identical(as.character(ans), c("0-9", "0-9", "Missing", "Total"))
+  expect_identical(levels(ans), c("0-9", "Total", "Missing"))
+})

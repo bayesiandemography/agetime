@@ -15,7 +15,7 @@
 #' intervals in `labels` (the levels, if `labels` is a factor).
 #' If `width` is `NULL`, width is inferred from the interval
 #' with the highest upper limit, using the narrowest interval
-#' if there is a tie. `labels` cannot include totals, `NA`s,
+#' if there is a tie. `labels` cannot include totals, missing values,
 #' or intervals that are open on the right.
 #'
 #' @noRd
@@ -131,7 +131,7 @@ inner_extend <- function(labels,
     is_open_left = FALSE,
     is_open_right = FALSE,
     include_total = FALSE,
-    include_na = FALSE
+    include_missing = FALSE
   )
   if (is_factor) {
     is_ordered <- is.ordered(labels)

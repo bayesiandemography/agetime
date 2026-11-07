@@ -72,13 +72,13 @@ test_that("age_labels_life() can omit open top", {
   )
 })
 
-test_that("age_labels_five() can include Total and NA", {
+test_that("age_labels_five() can include Total and Missing", {
   ans <- age_labels_five(
     lower_last = 20,
     include_total = TRUE,
-    include_na = TRUE
+    include_missing = TRUE
   )
-  expect_identical(ans, c("0-4", "5-9", "10-14", "15-19", "20+", "Total", NA))
+  expect_identical(ans, c("0-4", "5-9", "10-14", "15-19", "20+", "Total", "Missing"))
 })
 
 test_that("period_labels_five() creates five-year period labels", {
@@ -106,15 +106,15 @@ test_that("period_labels_one() respects format_single = upper", {
   )
 })
 
-test_that("period_labels_ten() can include Total and NA", {
+test_that("period_labels_ten() can include Total and Missing", {
   expect_identical(
     period_labels_ten(
       lower_first = 2000,
       lower_last = 2010,
       include_total = TRUE,
-      include_na = TRUE
+      include_missing = TRUE
     ),
-    c("2000-2010", "2010-2020", "Total", NA)
+    c("2000-2010", "2010-2020", "Total", "Missing")
   )
 })
 
@@ -160,15 +160,15 @@ test_that("cohort_labels_five() can start with a left-open cohort", {
   )
 })
 
-test_that("cohort_labels_ten() can include Total and NA", {
+test_that("cohort_labels_ten() can include Total and Missing", {
   expect_identical(
     cohort_labels_ten(
       lower_first = 2000,
       lower_last = 2010,
       include_total = TRUE,
-      include_na = TRUE
+      include_missing = TRUE
     ),
-    c("2000-2010", "2010-2020", "Total", NA)
+    c("2000-2010", "2010-2020", "Total", "Missing")
   )
 })
 
