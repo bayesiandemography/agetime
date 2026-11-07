@@ -78,7 +78,7 @@ test_that("age_labels_five() can include Total and Missing", {
     include_total = TRUE,
     include_missing = TRUE
   )
-  expect_identical(ans, c("0-4", "5-9", "10-14", "15-19", "20+", "Total", "Missing"))
+  expect_identical(ans, c("0-4", "5-9", "10-14", "15-19", "20+", "Missing", "Total"))
 })
 
 test_that("period_labels_five() creates five-year period labels", {
@@ -114,7 +114,7 @@ test_that("period_labels_ten() can include Total and Missing", {
       include_total = TRUE,
       include_missing = TRUE
     ),
-    c("2000-2010", "2010-2020", "Total", "Missing")
+    c("2000-2010", "2010-2020", "Missing", "Total")
   )
 })
 
@@ -168,7 +168,7 @@ test_that("cohort_labels_ten() can include Total and Missing", {
       include_total = TRUE,
       include_missing = TRUE
     ),
-    c("2000-2010", "2010-2020", "Total", "Missing")
+    c("2000-2010", "2010-2020", "Missing", "Total")
   )
 })
 

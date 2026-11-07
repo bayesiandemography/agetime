@@ -25,10 +25,10 @@ construct_m_breaks <- function(breaks,
   if (is_open_right) {
     ans <- rbind(ans, c(breaks[[n]], Inf))
   }
-  if (include_total) {
+  if (include_missing) {
     ans <- rbind(ans, c(NA_real_, NA_real_))
   }
-  if (include_missing) {
+  if (include_total) {
     ans <- rbind(ans, c(NA_real_, NA_real_))
   }
   ans
@@ -66,16 +66,16 @@ construct_coarsen_mapping <- function(breaks,
     include_total = include_total,
     include_missing = include_missing
   )
-  i_total <- if (include_total) nrow(m_br) - as.integer(include_missing) else NULL
-  i_na <- if (include_missing) nrow(m_br) else NULL
+  i_missing <- if (include_missing) nrow(m_br) - as.integer(include_total) else NULL
+  i_total <- if (include_total) nrow(m_br) else NULL
   ans <- does_m1_contain_m2(m1 = m_br, m2 = m_int)
+  if (include_missing) {
+    ans[, is_missing] <- FALSE
+    ans[i_missing, ] <- is_missing
+  }
   if (include_total) {
     ans[, is_total] <- FALSE
     ans[i_total, ] <- is_total
-  }
-  if (include_missing) {
-    ans[, is_missing] <- FALSE
-    ans[i_na, ] <- is_missing
   }
   rownames(ans) <- levels_breaks
   ans <- ans[, i_xun_to_xunu, drop = FALSE]

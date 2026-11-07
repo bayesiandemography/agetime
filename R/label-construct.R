@@ -111,11 +111,11 @@ construct_labels_breaks <- function(breaks,
       sep = "-"
     )
   }
-  if (include_total) {
-    ans <- c(ans, "Total")
-  }
   if (include_missing) {
     ans <- c(ans, "Missing")
+  }
+  if (include_total) {
+    ans <- c(ans, "Total")
   }
   ans
 }

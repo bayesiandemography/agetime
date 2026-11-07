@@ -156,3 +156,26 @@ test_that("construct_mapping() errors for an invalid relation", {
     'Internal error: "bogus" is not a valid value for `relation`.'
   )
 })
+
+test_that("construct_coarsen_mapping() puts missing row before total row", {
+  intervals <- agetime:::intervals(
+    labels = c("0-4", "Total", NA),
+    label_type = "age",
+    interpret_single = "lower",
+    interpret_multi = "below_upper",
+    interpret_fail = "error"
+  )
+  ans <- agetime:::construct_coarsen_mapping(
+    breaks = c(0, 10),
+    levels_breaks = c("0-9", "Missing", "Total"),
+    is_open_left = FALSE,
+    is_open_right = FALSE,
+    include_total = TRUE,
+    include_missing = TRUE,
+    intervals = intervals
+  )
+  expect_true(ans["Missing", 3L])
+  expect_true(ans["Total", 2L])
+  expect_false(ans["Missing", 2L])
+  expect_false(ans["Total", 3L])
+})
