@@ -120,7 +120,8 @@ test_that("inner_diagnose() skips checks when all flags are FALSE", {
     has_zero = FALSE,
     has_open_left = FALSE,
     has_open_right = FALSE,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = FALSE
   )
 
   expect_true(val$ok)

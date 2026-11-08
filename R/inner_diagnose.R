@@ -39,6 +39,7 @@ inner_assert <- function(labels,
                          has_open_left,
                          has_open_right,
                          valid_life,
+                         valid_tree,
                          call = parent.frame()) {
   val <- inner_diagnose(
     labels = labels,
@@ -56,7 +57,8 @@ inner_assert <- function(labels,
     has_zero = has_zero,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = valid_life
+    valid_life = valid_life,
+    valid_tree = valid_tree
   )
   throw_assert_error(val = val, label_type = label_type, call = call)
   invisible(labels)
@@ -100,7 +102,8 @@ inner_diagnose <- function(labels,
                         has_zero,
                         has_open_left,
                         has_open_right,
-                        valid_life) {
+                        valid_life,
+                        valid_tree) {
   on <- match.arg(on, choices = c("levels", "values"))
   if (identical(on, "levels") && !is.factor(labels)) {
     cli::cli_abort(c("{.arg labels} is not a factor.",
@@ -186,6 +189,16 @@ inner_diagnose <- function(labels,
     details_list <- c(
       details_list,
       list(inner_diagnose_valid_life(intervals = intervals, on = on))
+    )
+  }
+  if (isTRUE(valid_tree)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_valid_tree(
+        intervals = intervals,
+        on = on,
+        label_type = label_type
+      ))
     )
   }
   details <- if (length(details_list) == 0L) {
@@ -710,4 +723,55 @@ throw_assert_error <- function(val, label_type, call) {
     cli::cli_abort(c(msg, bullets), call = call)
   }
   invisible(NULL)
+}
+
+
+#' Inner Diagnose Valid Tree
+#'
+#' Check that labels form a reporting tree: any two intervals
+#' either do not overlap or one contains the other, and the
+#' leaves (intervals containing no other interval) cover the span
+#' of all intervals without gaps. Together, these imply that each
+#' internal node is exactly divided by its children. Missing,
+#' total, and unparsed labels are set aside. Repeated labels and
+#' synonyms describe the same node, so are allowed.
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+inner_diagnose_valid_tree <- function(intervals, on, label_type) {
+  passed <- TRUE
+  comment <- NA_character_
+  if (!int_is_empty(intervals)) {
+    m <- get_m(intervals)
+    is_missing <- get_is_missing(intervals)
+    is_total <- get_is_total(intervals)
+    is_unparsed <- !is_missing & !is_total & (is.na(m[, 1L]) | is.na(m[, 2L]))
+    labels_unique <- get_labels_unique(intervals)
+    i_xun_to_xunu <- get_i_xun_to_xunu(intervals)
+    i_keep <- which(!is_missing & !is_total & !is_unparsed)
+    m_keep <- m[i_keep, , drop = FALSE]
+    label_keep <- function(k) labels_unique[[match(i_keep[[k]], i_xun_to_xunu)]]
+    noun <- paste0(label_name(label_type), "s")
+    comment <- tree_diagnose_comment(
+      m = m_keep,
+      label_keep = label_keep,
+      noun = noun
+    )
+    passed <- is.na(comment)
+    if (!passed && any(is_total)) {
+      comment <- sprintf(
+        "%s. If a total means %s not stated, recode it to 'Missing'",
+        comment, label_type
+      )
+    }
+  }
+  tibble::tibble_row(
+    condition = "valid_tree",
+    passed = passed,
+    comment = comment
+  )
 }

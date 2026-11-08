@@ -77,3 +77,35 @@ test_that("tree_order() keeps related internal nodes together", {
 test_that("tree_order() handles zero rows", {
   expect_identical(tree_order(matrix(numeric(), ncol = 2L)), integer())
 })
+
+
+## 'tree_diagnose_comment' -----------------------------------------------------
+
+test_that("tree_diagnose_comment() returns NA for a valid tree or no rows", {
+  lab <- function(k) as.character(k)
+  m <- rbind(c(0, 5), c(5, 15), c(0, 15), c(15, Inf), c(5, 10), c(10, 15))
+  expect_identical(tree_diagnose_comment(m, lab, "age groups"), NA_character_)
+  expect_identical(
+    tree_diagnose_comment(matrix(numeric(), ncol = 2L), lab, "age groups"),
+    NA_character_
+  )
+})
+
+test_that("tree_diagnose_comment() reports first problem, in order of checks", {
+  lab <- function(k) c("a", "b", "c", "d")[[k]]
+  ## overlap reported ahead of gap
+  m <- rbind(c(0, 10), c(5, 15), c(20, 25), c(0, 25))
+  expect_match(tree_diagnose_comment(m, lab, "age groups"), "'a' and 'b' overlap")
+  ## lower limit ahead of gap
+  m <- rbind(c(5, 10), c(15, 20), c(0, 20))
+  expect_match(tree_diagnose_comment(m, lab, "age groups"), "lower limit of 'c'")
+  ## gap ahead of upper limit
+  m <- rbind(c(0, 5), c(10, 15), c(0, 20))
+  expect_match(tree_diagnose_comment(m, lab, "age groups"), "between 'a' and 'b'")
+})
+
+test_that("tree_diagnose_comment() treats equal leaves as one leaf", {
+  lab <- function(k) as.character(k)
+  m <- rbind(c(0, 5), c(0, 5), c(5, 10), c(0, 10))
+  expect_identical(tree_diagnose_comment(m, lab, "age groups"), NA_character_)
+})

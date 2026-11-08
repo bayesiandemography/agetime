@@ -9,3 +9,9 @@
   groups inside it), then missing values. Leaves can lie at different
   depths. Overlapping labels that do not nest, and totals, are
   errors.
+- The diagnose and assert functions for ages, periods, and cohorts
+  (for instance `age_diagnose_values()` and `age_assert_levels()`)
+  have a new condition, `valid_tree`, which checks that labels form a
+  reporting tree: labels nest, and the most detailed labels cover the
+  full span with no gaps, so that every broader label is divided
+  exactly into narrower ones.

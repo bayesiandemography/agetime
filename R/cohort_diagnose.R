@@ -20,6 +20,27 @@
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
+#' @section Reporting trees:
+#'
+#' In a reporting tree, records are tabulated at different levels of
+#' detail. A census table, for instance, might have detailed
+#' cohorts, some broader cohorts for records with less detailed
+#' information, and a category for records with no information.
+#' The cohorts nest: any two either do not overlap, or one
+#' contains the other. The most detailed cohorts (the leaves of
+#' the tree) cover the full span, so that every broader cohort is
+#' divided exactly into narrower ones. Leaves do not need to be
+#' the same distance from the root: some broader cohorts can be
+#' divided further than others.
+#'
+#' Some tables use a label such as `"Total"` to mean that the
+#' cohort is not stated. Recode such labels to `"Missing"`,
+#' for instance using `x[cohort_is_total(x)] <- "Missing"`,
+#' so that they are not treated as totals (for instance
+#' by `no_total`).
+#'
+#' To check trees separately for each group, use [dplyr::group_by()].
+#'
 #' @inheritParams cohort_lower
 #' @param no_overlap Check that no cohorts overlap.
 #' Different labels that describe the same interval,
@@ -53,6 +74,18 @@
 #' @param has_open_right Check that at least
 #' one cohort is open on the right (has no upper limit),
 #' as defined by [cohort_is_open_right()].
+#' Default is `FALSE` (don't check).
+#' @param valid_tree Check that cohorts form a reporting tree:
+#' any two cohorts either do not overlap, or one contains the other,
+#' and the most detailed cohorts (those containing no other cohort)
+#' cover the full span of the cohorts, with no gaps.
+#' Totals and missing values, as defined by [cohort_is_total()]
+#' and [cohort_is_missing()], are removed before the check.
+#' Unlike `no_overlap`, repeated labels, and different labels
+#' that describe the same interval, are allowed.
+#' Whether the span is open on the left or right is checked by
+#' `has_open_left` and `has_open_right`.
+#' See the section on reporting trees.
 #' Default is `FALSE` (don't check).
 #'
 #' @return
@@ -126,6 +159,7 @@ cohort_diagnose_levels <- function(labels,
                          no_open_right = FALSE,
                          has_open_left = FALSE,
                          has_open_right = FALSE,
+                         valid_tree = FALSE,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
@@ -154,7 +188,8 @@ cohort_diagnose_levels <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }
 
@@ -169,6 +204,7 @@ cohort_assert_levels <- function(labels,
                           no_open_right = FALSE,
                           has_open_left = FALSE,
                           has_open_right = FALSE,
+                          valid_tree = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = NULL,
                           interpret_fail = c("error", "warn", "silent")) {
@@ -197,7 +233,8 @@ cohort_assert_levels <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }
 
@@ -212,6 +249,7 @@ cohort_diagnose_values <- function(labels,
                                    no_open_right = FALSE,
                                    has_open_left = FALSE,
                                    has_open_right = FALSE,
+                                   valid_tree = FALSE,
                                    interpret_single = c("lower", "upper"),
                                    interpret_multi = NULL,
                                    interpret_fail = c("error", "warn", "silent")) {
@@ -240,7 +278,8 @@ cohort_diagnose_values <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }
 
@@ -255,6 +294,7 @@ cohort_assert_values <- function(labels,
                                  no_open_right = FALSE,
                                  has_open_left = FALSE,
                                  has_open_right = FALSE,
+                                 valid_tree = FALSE,
                                  interpret_single = c("lower", "upper"),
                                  interpret_multi = NULL,
                                  interpret_fail = c("error", "warn", "silent")) {
@@ -283,6 +323,7 @@ cohort_assert_values <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }

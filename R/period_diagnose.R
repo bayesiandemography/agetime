@@ -20,6 +20,27 @@
 #'
 #' @inheritSection period_lower Rules for interpreting inputs
 #'
+#' @section Reporting trees:
+#'
+#' In a reporting tree, records are tabulated at different levels of
+#' detail. A census table, for instance, might have detailed
+#' periods, some broader periods for records with less detailed
+#' information, and a category for records with no information.
+#' The periods nest: any two either do not overlap, or one
+#' contains the other. The most detailed periods (the leaves of
+#' the tree) cover the full span, so that every broader period is
+#' divided exactly into narrower ones. Leaves do not need to be
+#' the same distance from the root: some broader periods can be
+#' divided further than others.
+#'
+#' Some tables use a label such as `"Total"` to mean that the
+#' period is not stated. Recode such labels to `"Missing"`,
+#' for instance using `x[period_is_total(x)] <- "Missing"`,
+#' so that they are not treated as totals (for instance
+#' by `no_total`).
+#'
+#' To check trees separately for each group, use [dplyr::group_by()].
+#'
 #' @inheritParams period_lower
 #' @param no_overlap Check that no periods overlap.
 #' Different labels that describe the same interval,
@@ -52,6 +73,18 @@
 #' @param has_open_right Check that at least one period
 #' is open on the right (has no upper limit),
 #' as defined by [period_is_open_right()].
+#' Default is `FALSE` (don't check).
+#' @param valid_tree Check that periods form a reporting tree:
+#' any two periods either do not overlap, or one contains the other,
+#' and the most detailed periods (those containing no other period)
+#' cover the full span of the periods, with no gaps.
+#' Totals and missing values, as defined by [period_is_total()]
+#' and [period_is_missing()], are removed before the check.
+#' Unlike `no_overlap`, repeated labels, and different labels
+#' that describe the same interval, are allowed.
+#' Whether the span is open on the left or right is checked by
+#' `has_open_left` and `has_open_right`.
+#' See the section on reporting trees.
 #' Default is `FALSE` (don't check).
 #'
 #' @return
@@ -124,6 +157,7 @@ period_diagnose_levels <- function(labels,
                          no_open_right = FALSE,
                          has_open_left = FALSE,
                          has_open_right = FALSE,
+                         valid_tree = FALSE,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
                          interpret_fail = c("error", "warn", "silent")) {
@@ -152,7 +186,8 @@ period_diagnose_levels <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }
 
@@ -167,6 +202,7 @@ period_assert_levels <- function(labels,
                           no_open_right = FALSE,
                           has_open_left = FALSE,
                           has_open_right = FALSE,
+                          valid_tree = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = NULL,
                           interpret_fail = c("error", "warn", "silent")) {
@@ -195,7 +231,8 @@ period_assert_levels <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }
 
@@ -210,6 +247,7 @@ period_diagnose_values <- function(labels,
                                    no_open_right = FALSE,
                                    has_open_left = FALSE,
                                    has_open_right = FALSE,
+                                   valid_tree = FALSE,
                                    interpret_single = c("lower", "upper"),
                                    interpret_multi = NULL,
                                    interpret_fail = c("error", "warn", "silent")) {
@@ -238,7 +276,8 @@ period_diagnose_values <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }
 
@@ -253,6 +292,7 @@ period_assert_values <- function(labels,
                                  no_open_right = FALSE,
                                  has_open_left = FALSE,
                                  has_open_right = FALSE,
+                                 valid_tree = FALSE,
                                  interpret_single = c("lower", "upper"),
                                  interpret_multi = NULL,
                                  interpret_fail = c("error", "warn", "silent")) {
@@ -281,6 +321,7 @@ period_assert_values <- function(labels,
     has_zero = FALSE,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
-    valid_life = FALSE
+    valid_life = FALSE,
+    valid_tree = valid_tree
   )
 }

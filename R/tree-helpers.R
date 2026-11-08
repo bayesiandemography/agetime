@@ -88,3 +88,74 @@ tree_order <- function(m) {
   ord_internal <- i_internal[order(upper[i_internal], -lower[i_internal], i_internal)]
   c(ord_leaf, ord_internal)
 }
+
+
+## HAS_TESTS
+#' Describe the First Way in Which Intervals Fail to Form a Tree
+#'
+#' Checks, in order: (1) intervals nest, (2) leaves reach the
+#' lowest lower limit, (3) there are no gaps between leaves,
+#' (4) leaves reach the highest upper limit.
+#'
+#' @param m Matrix with 2 columns, giving lower and upper limits,
+#' with no NA rows.
+#' @param label_keep Function returning the label for row `k` of `m`.
+#' @param noun Plural noun for messages, eg "age groups".
+#'
+#' @returns `NA_character_` if the intervals form a tree,
+#' otherwise a string starting "Example: ".
+#'
+#' @noRd
+tree_diagnose_comment <- function(m, label_keep, noun) {
+  if (identical(nrow(m), 0L)) {
+    return(NA_character_)
+  }
+  pairs <- tree_find_partial_overlaps(m)
+  if (nrow(pairs) > 0L) {
+    return(sprintf(
+      "Example: '%s' and '%s' overlap, but neither contains the other",
+      label_keep(pairs[1L, 1L]), label_keep(pairs[1L, 2L])
+    ))
+  }
+  lower <- m[, 1L]
+  upper <- m[, 2L]
+  i_leaf <- which(tree_is_leaf(m))
+  i_leaf <- i_leaf[!duplicated(m[i_leaf, , drop = FALSE])]
+  i_leaf <- i_leaf[order(lower[i_leaf])]
+  n_leaf <- length(i_leaf)
+  span_lower <- min(lower)
+  span_upper <- max(upper)
+  ## narrowest interval containing [a, b)
+  find_container <- function(a, b) {
+    is_cont <- lower <= a & upper >= b
+    i <- which(is_cont)
+    i[order(upper[i] - lower[i], -lower[i])][[1L]]
+  }
+  if (lower[[i_leaf[[1L]]]] > span_lower) {
+    i_node <- find_container(span_lower, lower[[i_leaf[[1L]]]])
+    return(sprintf(
+      "Example: most detailed %s do not reach lower limit of '%s'",
+      noun, label_keep(i_node)
+    ))
+  }
+  if (n_leaf > 1L) {
+    upper_leaf <- upper[i_leaf[-n_leaf]]
+    lower_next <- lower[i_leaf[-1L]]
+    is_gap <- upper_leaf < lower_next
+    if (any(is_gap)) {
+      k <- match(TRUE, is_gap)
+      return(sprintf(
+        "Example: gap among most detailed %s between '%s' and '%s'",
+        noun, label_keep(i_leaf[[k]]), label_keep(i_leaf[[k + 1L]])
+      ))
+    }
+  }
+  if (upper[[i_leaf[[n_leaf]]]] < span_upper) {
+    i_node <- find_container(upper[[i_leaf[[n_leaf]]]], span_upper)
+    return(sprintf(
+      "Example: most detailed %s do not reach upper limit of '%s'",
+      noun, label_keep(i_node)
+    ))
+  }
+  NA_character_
+}

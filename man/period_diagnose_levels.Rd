@@ -17,6 +17,7 @@ period_diagnose_levels(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
@@ -32,6 +33,7 @@ period_assert_levels(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
@@ -47,6 +49,7 @@ period_diagnose_values(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
@@ -62,6 +65,7 @@ period_assert_values(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
   interpret_fail = c("error", "warn", "silent")
@@ -110,6 +114,19 @@ is open on the right (has no upper limit),
 as defined by \code{\link[=period_is_open_right]{period_is_open_right()}}.
 Default is \code{FALSE} (don't check).}
 
+\item{valid_tree}{Check that periods form a reporting tree:
+any two periods either do not overlap, or one contains the other,
+and the most detailed periods (those containing no other period)
+cover the full span of the periods, with no gaps.
+Totals and missing values, as defined by \code{\link[=period_is_total]{period_is_total()}}
+and \code{\link[=period_is_missing]{period_is_missing()}}, are removed before the check.
+Unlike \code{no_overlap}, repeated labels, and different labels
+that describe the same interval, are allowed.
+Whether the span is open on the left or right is checked by
+\code{has_open_left} and \code{has_open_right}.
+See the section on reporting trees.
+Default is \code{FALSE} (don't check).}
+
 \item{interpret_single}{How to interpret a label for a single year,
 such as \code{"2020"}. Choices are \code{"lower"} (the default) and \code{"upper"}.
 See below for details.}
@@ -152,6 +169,29 @@ Conditions include:
 \item Having, or not having, open periods
 }
 }
+\section{Reporting trees}{
+
+
+In a reporting tree, records are tabulated at different levels of
+detail. A census table, for instance, might have detailed
+periods, some broader periods for records with less detailed
+information, and a category for records with no information.
+The periods nest: any two either do not overlap, or one
+contains the other. The most detailed periods (the leaves of
+the tree) cover the full span, so that every broader period is
+divided exactly into narrower ones. Leaves do not need to be
+the same distance from the root: some broader periods can be
+divided further than others.
+
+Some tables use a label such as \code{"Total"} to mean that the
+period is not stated. Recode such labels to \code{"Missing"},
+for instance using \code{x[period_is_total(x)] <- "Missing"},
+so that they are not treated as totals (for instance
+by \code{no_total}).
+
+To check trees separately for each group, use \code{\link[dplyr:group_by]{dplyr::group_by()}}.
+}
+
 \section{Rules for interpreting inputs}{
 
 
