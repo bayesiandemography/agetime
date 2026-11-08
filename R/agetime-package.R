@@ -79,6 +79,7 @@
 #' | [age_labels_five()] | [period_labels_five()]  | [cohort_labels_five()]  |
 #' | [age_labels_ten()]  | [period_labels_ten()]   | [cohort_labels_ten()]   |
 #' | [age_labels_life()] |                         |                         |
+#' | [age_labels_tree()] |                         |                         |
 #'
 #' **Characterise labels or make assertions**
 #'

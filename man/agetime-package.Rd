@@ -85,6 +85,7 @@ labels for age groups, periods, and cohorts.
    \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \cr
    \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \cr
    \code{\link[=age_labels_life]{age_labels_life()}} \tab  \tab  \cr
+   \code{\link[=age_labels_tree]{age_labels_tree()}} \tab  \tab  \cr
 }
 
 

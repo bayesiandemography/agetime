@@ -15,3 +15,8 @@
   reporting tree: labels nest, and the most detailed labels cover the
   full span with no gaps, so that every broader label is divided
   exactly into narrower ones.
+- New function `age_labels_tree()` creates labels for a reporting
+  tree: detailed age groups from `breaks`, broader age groups given
+  as labels (nesting to any depth), and `"Missing"` for age not
+  stated (included by default). Labels are returned in the same
+  order as `age_set_order_tree()`.
