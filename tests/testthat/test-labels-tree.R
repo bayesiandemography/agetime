@@ -90,3 +90,72 @@ test_that("age_labels_tree() checks breaks, open_right, and include_missing", {
   expect_error(age_labels_tree(breaks_census, include_missing = "yes"),
                "`include_missing`")
 })
+
+
+## period and cohort ----------------------------------------------------------
+
+test_that("period_labels_tree() creates open-left tree", {
+  ans <- period_labels_tree(breaks = seq(2000, 2020, 5), nodes = "<2010",
+                            open_left = TRUE)
+  expect_identical(
+    ans,
+    c("<2000", "2000-2005", "2005-2010", "2010-2015", "2015-2020",
+      "<2010", "Missing")
+  )
+})
+
+test_that("period_labels_tree() interprets and formats nodes using format_multi", {
+  ans <- period_labels_tree(breaks = seq(2000, 2020, 5),
+                            nodes = c("2010-2019", "2000-2009"),
+                            format_multi = "below_upper")
+  expect_identical(
+    ans,
+    c("2000-2004", "2005-2009", "2010-2014", "2015-2019",
+      "2000-2009", "2010-2019", "Missing")
+  )
+  expect_error(
+    period_labels_tree(breaks = seq(2000, 2020, 5), nodes = "2000-2009"),
+    "does not line up"
+  )
+})
+
+test_that("period_labels_tree() works with single-year leaves and format_single", {
+  ans <- period_labels_tree(breaks = 2000:2004, nodes = "2000-2002")
+  expect_identical(ans, c("2000", "2001", "2002", "2003", "2000-2002", "Missing"))
+  ans <- period_labels_tree(breaks = 2000:2004, nodes = "2000-2002",
+                            format_single = "upper", include_missing = FALSE)
+  expect_identical(ans, c("2001", "2002", "2003", "2004", "2000-2002"))
+})
+
+test_that("cohort_labels_tree() creates open-left tree, with three levels", {
+  ans <- cohort_labels_tree(breaks = seq(1940, 2000, 10),
+                            nodes = c("<1960", "1960-2000", "1980-2000"),
+                            open_left = TRUE)
+  expect_identical(
+    ans,
+    c("<1940", "1940-1950", "1950-1960", "1960-1970", "1970-1980",
+      "1980-1990", "1990-2000", "<1960", "1980-2000", "1960-2000", "Missing")
+  )
+  expect_identical(
+    cohort_assert_values(ans, valid_tree = TRUE, interpret_multi = "at_upper"),
+    ans
+  )
+  expect_identical(
+    levels(cohort_set_order_tree(ans, interpret_multi = "at_upper")),
+    ans
+  )
+})
+
+test_that("period_labels_tree() and cohort_labels_tree() throw errors", {
+  expect_snapshot(
+    period_labels_tree(breaks = seq(2000, 2020, 5), nodes = "<2010"),
+    error = TRUE
+  )
+  expect_snapshot(
+    cohort_labels_tree(breaks = seq(1940, 2000, 10), nodes = "1945-1960"),
+    error = TRUE
+  )
+  expect_error(period_labels_tree(seq(2000, 2020, 5), open_left = NA), "`open_left` is")
+  expect_error(cohort_labels_tree(seq(2000, 2020, 5), format_multi = "x"),
+               "should be one of")
+})

@@ -80,5 +80,7 @@ levels(age_set_order_tree(labels))
 \itemize{
 \item \code{\link[=age_set_order]{age_set_order()}} Order age groups by lower limit
 \item \code{\link[=age_is_missing]{age_is_missing()}} Identify labels for missing values
+\item \code{\link[=period_set_order_tree]{period_set_order_tree()}} Period equivalent of \code{age_set_order_tree()}
+\item \code{\link[=cohort_set_order_tree]{cohort_set_order_tree()}} Cohort equivalent of \code{age_set_order_tree()}
 }
 }

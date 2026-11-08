@@ -58,3 +58,8 @@ test_that("age_set_order_tree() preserves ordered on length-0 factor", {
   expect_true(is.ordered(out))
   expect_identical(levels(out), c("0-4", "5-9", "10-14", "0-14"))
 })
+
+test_that("period_set_order_tree() and cohort_set_order_tree() with length-0 input return empty factor", {
+  expect_identical(period_set_order_tree(character(0)), factor())
+  expect_identical(cohort_set_order_tree(factor()), factor())
+})

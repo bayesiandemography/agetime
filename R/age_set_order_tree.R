@@ -53,6 +53,8 @@
 #' @seealso
 #' - [age_set_order()] Order age groups by lower limit
 #' - [age_is_missing()] Identify labels for missing values
+#' - [period_set_order_tree()] Period equivalent of `age_set_order_tree()`
+#' - [cohort_set_order_tree()] Cohort equivalent of `age_set_order_tree()`
 #'
 #' @examples
 #' labels <- c("Missing", "15+", "0-14", "70+", "60-69", "50-59",

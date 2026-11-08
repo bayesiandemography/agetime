@@ -74,7 +74,7 @@ labels for age groups, periods, and cohorts.
 \strong{Put levels in order}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_set_order]{age_set_order()}} \tab \code{\link[=period_set_order]{period_set_order()}} \tab \code{\link[=cohort_set_order]{cohort_set_order()}} \cr
-   \code{\link[=age_set_order_tree]{age_set_order_tree()}} \tab  \tab  \cr
+   \code{\link[=age_set_order_tree]{age_set_order_tree()}} \tab \code{\link[=period_set_order_tree]{period_set_order_tree()}} \tab \code{\link[=cohort_set_order_tree]{cohort_set_order_tree()}} \cr
 }
 
 
@@ -85,7 +85,7 @@ labels for age groups, periods, and cohorts.
    \code{\link[=age_labels_five]{age_labels_five()}} \tab \code{\link[=period_labels_five]{period_labels_five()}} \tab \code{\link[=cohort_labels_five]{cohort_labels_five()}} \cr
    \code{\link[=age_labels_ten]{age_labels_ten()}} \tab \code{\link[=period_labels_ten]{period_labels_ten()}} \tab \code{\link[=cohort_labels_ten]{cohort_labels_ten()}} \cr
    \code{\link[=age_labels_life]{age_labels_life()}} \tab  \tab  \cr
-   \code{\link[=age_labels_tree]{age_labels_tree()}} \tab  \tab  \cr
+   \code{\link[=age_labels_tree]{age_labels_tree()}} \tab \code{\link[=period_labels_tree]{period_labels_tree()}} \tab \code{\link[=cohort_labels_tree]{cohort_labels_tree()}} \cr
 }
 
 

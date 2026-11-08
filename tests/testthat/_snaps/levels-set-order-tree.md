@@ -41,3 +41,23 @@
       i If a total means age not stated, recode it to "Missing" first, e.g. `age[age_is_total(age)] <- "Missing"`.
       i If a total is a sum over other age groups, remove it.
 
+# period_set_order_tree() and cohort_set_order_tree() throw errors
+
+    Code
+      period_set_order_tree(c("2000-2010", "2005-2015"), interpret_multi = "at_upper")
+    Condition
+      Error in `period_set_order_tree()`:
+      ! Periods do not form a tree.
+      i '2000-2010' and '2005-2015' overlap, but neither contains the other.
+
+---
+
+    Code
+      cohort_set_order_tree(c("1950-1960", "Total"), interpret_multi = "at_upper")
+    Condition
+      Error in `cohort_set_order_tree()`:
+      ! Cohorts include a total, so do not form a reporting tree.
+      i Total: "Total".
+      i If a total means cohort not stated, recode it to "Missing" first, e.g. `cohort[cohort_is_total(cohort)] <- "Missing"`.
+      i If a total is a sum over other cohorts, remove it.
+

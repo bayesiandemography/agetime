@@ -125,3 +125,42 @@ test_that("age_set_order_tree() throws error with totals", {
     error = TRUE
   )
 })
+
+
+## period and cohort ----------------------------------------------------------
+
+test_that("period_set_order_tree() orders open-left tree", {
+  x <- c("2015-2020", "2010-2015", "<2000", "2000-2010", "<2010", "Missing")
+  ans <- period_set_order_tree(x)
+  expect_identical(as.character(ans), x)
+  expect_identical(
+    levels(ans),
+    c("<2000", "2000-2010", "2010-2015", "2015-2020", "<2010", "Missing")
+  )
+})
+
+test_that("period_set_order_tree() respects interpret_multi", {
+  x <- c("2000-2004", "2005-2009", "2000-2009")
+  ans <- period_set_order_tree(x, interpret_multi = "below_upper")
+  expect_identical(levels(ans), c("2000-2004", "2005-2009", "2000-2009"))
+})
+
+test_that("cohort_set_order_tree() orders open-left tree", {
+  x <- c("1960-1970", "<1940", "1940-1950", "1950-1960", "<1960", "Missing")
+  ans <- cohort_set_order_tree(x)
+  expect_identical(
+    levels(ans),
+    c("<1940", "1940-1950", "1950-1960", "1960-1970", "<1960", "Missing")
+  )
+})
+
+test_that("period_set_order_tree() and cohort_set_order_tree() throw errors", {
+  expect_snapshot(
+    period_set_order_tree(c("2000-2010", "2005-2015"), interpret_multi = "at_upper"),
+    error = TRUE
+  )
+  expect_snapshot(
+    cohort_set_order_tree(c("1950-1960", "Total"), interpret_multi = "at_upper"),
+    error = TRUE
+  )
+})

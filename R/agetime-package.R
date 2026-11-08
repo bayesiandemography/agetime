@@ -68,7 +68,7 @@
 #' |                     |                         |                         |
 #' |---------------------|-------------------------|-------------------------|
 #' | [age_set_order()] | [period_set_order()] | [cohort_set_order()] |
-#' | [age_set_order_tree()] |  |  |
+#' | [age_set_order_tree()] | [period_set_order_tree()] | [cohort_set_order_tree()] |
 #'
 #' **Create new labels**
 #'
@@ -79,7 +79,7 @@
 #' | [age_labels_five()] | [period_labels_five()]  | [cohort_labels_five()]  |
 #' | [age_labels_ten()]  | [period_labels_ten()]   | [cohort_labels_ten()]   |
 #' | [age_labels_life()] |                         |                         |
-#' | [age_labels_tree()] |                         |                         |
+#' | [age_labels_tree()] | [period_labels_tree()] | [cohort_labels_tree()] |
 #'
 #' **Characterise labels or make assertions**
 #'

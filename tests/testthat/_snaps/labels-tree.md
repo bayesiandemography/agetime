@@ -114,3 +114,21 @@
       ! Broad age groups do not form a tree.
       i "0-29" and "20-39" overlap, but neither contains the other.
 
+# period_labels_tree() and cohort_labels_tree() throw errors
+
+    Code
+      period_labels_tree(breaks = seq(2000, 2020, 5), nodes = "<2010")
+    Condition
+      Error in `period_labels_tree()`:
+      ! Broad period "<2010" does not line up with `breaks`.
+      i "<2010" is open, but the most detailed periods are not open on the left.
+
+---
+
+    Code
+      cohort_labels_tree(breaks = seq(1940, 2000, 10), nodes = "1945-1960")
+    Condition
+      Error in `cohort_labels_tree()`:
+      ! Broad cohort "1945-1960" does not line up with `breaks`.
+      i "1945-1960" is interpreted as [1945, 1960), and 1945 is not one of the `breaks`: 1940, 1950, 1960, 1970, 1980, 1990, and 2000.
+
