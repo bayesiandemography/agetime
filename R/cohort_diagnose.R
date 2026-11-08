@@ -87,6 +87,18 @@
 #' `has_open_left` and `has_open_right`.
 #' See the section on reporting trees.
 #' Default is `FALSE` (don't check).
+#' @param x_arg Name of `labels`, used in error messages
+#' from the `assert` functions.
+#' Defaults to the expression supplied for `labels`.
+#' Functions that call an `assert` function can
+#' supply their own name.
+#' @param call Execution environment of the function
+#' to be named in error messages from the `assert` functions.
+#' The default is the `assert` function itself, so that errors
+#' name, for instance, `cohort_assert_values()`. A function that
+#' calls an `assert` function can supply
+#' `call = rlang::current_env()`, so that errors name that
+#' function instead.
 #'
 #' @return
 #' - `cohort_diagnose_levels()` and `cohort_diagnose_values()` return a list
@@ -207,7 +219,9 @@ cohort_assert_levels <- function(labels,
                           valid_tree = FALSE,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = NULL,
-                          interpret_fail = c("error", "warn", "silent")) {
+                          interpret_fail = c("error", "warn", "silent"),
+                          x_arg = rlang::caller_arg(labels),
+                          call = rlang::current_env()) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -234,7 +248,9 @@ cohort_assert_levels <- function(labels,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
     valid_life = FALSE,
-    valid_tree = valid_tree
+    valid_tree = valid_tree,
+    x_arg = x_arg,
+    call = call
   )
 }
 
@@ -297,7 +313,9 @@ cohort_assert_values <- function(labels,
                                  valid_tree = FALSE,
                                  interpret_single = c("lower", "upper"),
                                  interpret_multi = NULL,
-                                 interpret_fail = c("error", "warn", "silent")) {
+                                 interpret_fail = c("error", "warn", "silent"),
+                                 x_arg = rlang::caller_arg(labels),
+                                 call = rlang::current_env()) {
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -324,6 +342,8 @@ cohort_assert_values <- function(labels,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
     valid_life = FALSE,
-    valid_tree = valid_tree
+    valid_tree = valid_tree,
+    x_arg = x_arg,
+    call = call
   )
 }

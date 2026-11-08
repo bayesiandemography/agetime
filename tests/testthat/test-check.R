@@ -349,10 +349,10 @@ test_that("cohort no_gap check fails when there is a gap", {
 test_that("age_assert_values succeeds and fails as expected", {
   expect_invisible(age_assert_values(age_closed, no_overlap = TRUE))
   expect_error(age_assert_values(age_overlap, no_overlap = TRUE),
-               "Age group labels fail check `no_overlap`.")
+               "Age group labels in `age_overlap` fail check `no_overlap`.")
   expect_invisible(age_assert_values(age_life_gap, valid_life = TRUE))
   expect_error(age_assert_values(age_life_gap, no_gap = TRUE),
-               "Age group labels fail check `no_gap`.")
+               "Age group labels in `age_life_gap` fail check `no_gap`.")
 })
 
 test_that("assert error messages name each failed condition and give comments", {

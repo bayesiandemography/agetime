@@ -32,7 +32,9 @@ age_assert_levels(
   has_zero = FALSE,
   valid_life = FALSE,
   valid_tree = FALSE,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 
 age_diagnose_values(
@@ -60,7 +62,9 @@ age_assert_values(
   has_zero = FALSE,
   valid_life = FALSE,
   valid_tree = FALSE,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 }
 \arguments{
@@ -120,6 +124,20 @@ Default is \code{FALSE} (don't check).}
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
+
+\item{x_arg}{Name of \code{labels}, used in error messages
+from the \code{assert} functions.
+Defaults to the expression supplied for \code{labels}.
+Functions that call an \code{assert} function can
+supply their own name.}
+
+\item{call}{Execution environment of the function
+to be named in error messages from the \code{assert} functions.
+The default is the \code{assert} function itself, so that errors
+name, for instance, \code{age_assert_values()}. A function that
+calls an \code{assert} function can supply
+\code{call = rlang::current_env()}, so that errors name that
+function instead.}
 }
 \value{
 \itemize{

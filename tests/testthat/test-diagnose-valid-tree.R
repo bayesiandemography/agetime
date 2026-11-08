@@ -159,3 +159,49 @@ test_that("valid_tree works for cohorts, including open left", {
     factor(x)
   )
 })
+
+
+## 'x_arg' and 'call' in assert functions -------------------------------------
+
+test_that("assert functions name themselves by default", {
+  age <- c("0-4", "5-9", "0-14")
+  err <- expect_error(age_assert_values(age, valid_tree = TRUE))
+  expect_identical(err$call[[1L]], quote(age_assert_values))
+  expect_match(conditionMessage(err), "Age group labels in `age` fail check")
+})
+
+test_that("assert functions use 'x_arg' and 'call' supplied by calling function", {
+  foo <- function(data) {
+    age_assert_values(data$age, valid_tree = TRUE,
+                      x_arg = "age", call = rlang::current_env())
+  }
+  err <- expect_error(foo(data.frame(age = c("0-4", "5-9", "0-14"))))
+  expect_identical(err$call, quote(foo(data.frame(age = c("0-4", "5-9", "0-14")))))
+  expect_match(conditionMessage(err), "Age group labels in `age` fail check")
+})
+
+test_that("assert functions apply 'call' to errors raised while parsing labels", {
+  foo <- function(x) age_assert_values(x, valid_tree = TRUE, call = rlang::current_env())
+  err <- expect_error(foo(c("0-4", "foo")), "Don't know how to interpret")
+  expect_identical(err$call, quote(foo(c("0-4", "foo"))))
+  bar <- function(x) {
+    age_assert_levels(x, valid_tree = TRUE, x_arg = "age", call = rlang::current_env())
+  }
+  err <- expect_error(bar("0-4"), "`age` is not a factor")
+  expect_identical(err$call, quote(bar("0-4")))
+})
+
+test_that("period and cohort assert functions use 'x_arg' and 'call'", {
+  foo <- function(x) {
+    period_assert_values(x, no_total = TRUE, x_arg = "time",
+                         call = rlang::current_env())
+  }
+  err <- expect_error(foo(c("2020", "Total")), "Period labels in `time`")
+  expect_identical(err$call, quote(foo(c("2020", "Total"))))
+  bar <- function(x) {
+    cohort_assert_levels(x, no_total = TRUE, x_arg = "cohort",
+                         call = rlang::current_env())
+  }
+  err <- expect_error(bar(factor(c("2020", "Total"))), "Cohort labels in `cohort`")
+  expect_identical(err$call, quote(bar(factor(c("2020", "Total")))))
+})

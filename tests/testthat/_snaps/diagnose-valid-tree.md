@@ -4,6 +4,6 @@
       age_assert_values(c("0-4", "5-9", "0-14"), valid_tree = TRUE)
     Condition
       Error in `age_assert_values()`:
-      ! Age group labels fail check `valid_tree`.
+      ! Age group labels in `c("0-4", "5-9", "0-14")` fail check `valid_tree`.
       x `valid_tree`: Example: most detailed age groups do not reach upper limit of '0-14'.
 

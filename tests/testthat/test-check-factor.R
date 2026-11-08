@@ -131,7 +131,7 @@ test_that("age_assert_values() preserves the original factor", {
   fac <- factor("0-4", levels = c("0-4", "3-7"))
   expect_error(
     age_assert_levels(fac, no_overlap = TRUE),
-    "Age group labels fail check `no_overlap`."
+    "Age group labels in `fac` fail check `no_overlap`."
   )
   expect_identical(age_assert_values(fac, no_overlap = TRUE), fac)
 })
@@ -164,6 +164,6 @@ test_that("period_assert_levels() checks levels and returns labels invisibly", {
   fac <- factor("2020-2025", levels = c("2020-2025", "2030-2035"))
   expect_error(
     period_assert_levels(fac, no_gap = TRUE),
-    "Period labels fail check `no_gap`."
+    "Period labels in `fac` fail check `no_gap`."
   )
 })

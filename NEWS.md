@@ -16,6 +16,14 @@
   reporting tree: labels nest, and the most detailed labels cover the
   full span with no gaps, so that every broader label is divided
   exactly into narrower ones.
+- The assert functions (for instance `age_assert_values()` and
+  `cohort_assert_levels()`) have new arguments `x_arg` and `call`,
+  for use inside other functions. Error messages now name the labels
+  being checked, as in "Age group labels in `age` fail check
+  `no_gap`". By default, errors name the assert function; a calling
+  function can supply `call = rlang::current_env()` so that errors,
+  including errors from parsing labels, name that function instead.
+  agetime now imports rlang (previously an indirect dependency).
 - New functions `age_labels_tree()`, `period_labels_tree()`, and
   `cohort_labels_tree()` create labels for a reporting tree: detailed
   labels from `breaks`, broader labels given through `nodes` (nesting

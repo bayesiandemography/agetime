@@ -40,27 +40,38 @@ inner_assert <- function(labels,
                          has_open_right,
                          valid_life,
                          valid_tree,
-                         call = parent.frame()) {
-  val <- inner_diagnose(
-    labels = labels,
-    label_type = label_type,
-    interpret_single = interpret_single,
-    interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail,
-    on = on,
-    no_overlap = no_overlap,
-    no_gap = no_gap,
-    no_total = no_total,
-    no_missing = no_missing,
-    no_open_left = no_open_left,
-    no_open_right = no_open_right,
-    has_zero = has_zero,
-    has_open_left = has_open_left,
-    has_open_right = has_open_right,
-    valid_life = valid_life,
-    valid_tree = valid_tree
+                         x_arg,
+                         call) {
+  val <- withCallingHandlers(
+    inner_diagnose(
+      labels = labels,
+      label_type = label_type,
+      interpret_single = interpret_single,
+      interpret_multi = interpret_multi,
+      interpret_fail = interpret_fail,
+      on = on,
+      no_overlap = no_overlap,
+      no_gap = no_gap,
+      no_total = no_total,
+      no_missing = no_missing,
+      no_open_left = no_open_left,
+      no_open_right = no_open_right,
+      has_zero = has_zero,
+      has_open_left = has_open_left,
+      has_open_right = has_open_right,
+      valid_life = valid_life,
+      valid_tree = valid_tree,
+      x_arg = x_arg
+    ),
+    error = function(cnd) {
+      ## report errors raised while parsing or checking
+      ## inputs as coming from 'call', eg the function
+      ## that called the assert function
+      cnd$call <- rlang::frame_call(call)
+      stop(cnd)
+    }
   )
-  throw_assert_error(val = val, label_type = label_type, call = call)
+  throw_assert_error(val = val, label_type = label_type, x_arg = x_arg, call = call)
   invisible(labels)
 }
 #' Inner Diagnose
@@ -103,15 +114,16 @@ inner_diagnose <- function(labels,
                         has_open_left,
                         has_open_right,
                         valid_life,
-                        valid_tree) {
+                        valid_tree,
+                        x_arg = "labels") {
   on <- match.arg(on, choices = c("levels", "values"))
   if (identical(on, "levels") && !is.factor(labels)) {
-    cli::cli_abort(c("{.arg labels} is not a factor.",
+    cli::cli_abort(c("{.arg {x_arg}} is not a factor.",
       i = paste(
-        "To check each element of {.arg labels}, use",
+        "To check each element of {.arg {x_arg}}, use",
         "{.fn {label_type}_diagnose_values} or {.fn {label_type}_assert_values}."
       ),
-      i = "To treat the distinct values of {.arg labels} as levels, use {.fn factor}."
+      i = "To treat the distinct values of {.arg {x_arg}} as levels, use {.fn factor}."
     ), call = user_frame())
   }
   labels <- to_character_or_factor(
@@ -702,12 +714,13 @@ on_sentence_start <- function(on) {
 #'
 #' @param val Result object from `inner_diagnose()`.
 #' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
-#' @param call Environment of the user-facing function,
-#' used to report where the error occurred.
+#' @param x_arg Name of the labels, used in the message.
+#' @param call Environment of the function to name in the
+#' error, usually the caller of the assert function.
 #' @returns `NULL`, invisibly, or aborts when checks fail.
 #'
 #' @noRd
-throw_assert_error <- function(val, label_type, call) {
+throw_assert_error <- function(val, label_type, x_arg, call) {
   if (!val$ok) {
     details <- val$details[!val$details$passed, , drop = FALSE]
     conditions <- details$condition
@@ -717,7 +730,7 @@ throw_assert_error <- function(val, label_type, call) {
     label <- label_name(label_type)
     label <- paste0(toupper(substr(label, 1L, 1L)), substring(label, 2L))
     n <- length(conditions)
-    msg <- paste0(label, " labels fail {cli::qty(n)}check{?s} {.arg {conditions}}.")
+    msg <- paste0(label, " labels in {.arg {x_arg}} fail {cli::qty(n)}check{?s} {.arg {conditions}}.")
     bullets <- paste0("{.arg {conditions[[", seq_len(n), "]]}}: {comments[[", seq_len(n), "]]}")
     names(bullets) <- rep("x", times = n)
     cli::cli_abort(c(msg, bullets), call = call)

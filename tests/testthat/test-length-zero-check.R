@@ -52,15 +52,15 @@ test_that("universal checks pass on empty factor input", {
 test_that("has_* asserts fail cleanly on length-0 input", {
   expect_error(
     age_assert_values(character(0), has_zero = TRUE),
-    "Age group labels fail check `has_zero`."
+    "Age group labels in `character\\(0\\)` fail check `has_zero`."
   )
   expect_error(
     age_assert_values(character(0), has_open_right = TRUE),
-    "Age group labels fail check `has_open_right`."
+    "Age group labels in `character\\(0\\)` fail check `has_open_right`."
   )
   expect_error(
     cohort_assert_values(character(0), has_open_left = TRUE),
-    "Cohort labels fail check `has_open_left`."
+    "Cohort labels in `character\\(0\\)` fail check `has_open_left`."
   )
 })
 
