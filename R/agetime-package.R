@@ -68,6 +68,7 @@
 #' |                     |                         |                         |
 #' |---------------------|-------------------------|-------------------------|
 #' | [age_set_order()] | [period_set_order()] | [cohort_set_order()] |
+#' | [age_set_order_tree()] |  |  |
 #'
 #' **Create new labels**
 #'

@@ -37,3 +37,24 @@ test_that("cohort_set_order() with length-0 factor sorts levels", {
     levels(cohort_set_order(f_ref))
   )
 })
+
+test_that("age_set_order_tree() with length-0 input returns empty factor", {
+  expect_identical(age_set_order_tree(character(0)), factor())
+  expect_identical(age_set_order_tree(factor()), factor())
+})
+
+test_that("age_set_order_tree() with length-0 factor orders levels as a tree", {
+  lev <- c("Missing", "0-14", "5-9", "0-4", "10-14")
+  fx <- factor(character(0), levels = lev)
+  expect_identical(
+    levels(age_set_order_tree(fx)),
+    c("0-4", "5-9", "10-14", "0-14", "Missing")
+  )
+})
+
+test_that("age_set_order_tree() preserves ordered on length-0 factor", {
+  lev <- c("0-14", "0-4", "5-9", "10-14")
+  out <- age_set_order_tree(ordered(character(0), levels = lev))
+  expect_true(is.ordered(out))
+  expect_identical(levels(out), c("0-4", "5-9", "10-14", "0-14"))
+})
