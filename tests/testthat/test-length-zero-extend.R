@@ -22,8 +22,9 @@ test_that("*_extend() errors on length-0 input even when width is supplied", {
 })
 
 test_that("*_extend() suggests a label when x has length 0", {
+  labels <- character(0)
   msg <- tryCatch(
-    age_extend(character(0)),
+    age_extend(labels),
     error = function(e) conditionMessage(e)
   )
   expect_match(msg, "`labels` has length 0\\.")

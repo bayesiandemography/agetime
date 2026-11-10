@@ -260,7 +260,8 @@ test_that("errors from parsing and checks report the function the user called", 
 })
 
 test_that("age_coarsen_five() gives a clear error when all labels are open and open_right is FALSE", {
-  expect_error(age_coarsen_five("90+", open_right = FALSE),
+  labels <- "90+"
+  expect_error(age_coarsen_five(labels, open_right = FALSE),
                "`labels` contains age group open on the right")
 })
 

@@ -169,12 +169,16 @@
 #' periods <- c(base = "2020", forecast = "2025-2030")
 #' period_lower(periods)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns numeric(0).
 period_lower <- function(labels,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -199,7 +203,10 @@ period_lower <- function(labels,
 period_mid <- function(labels,
                        interpret_single = c("lower", "upper"),
                        interpret_multi = NULL,
-                       interpret_fail = c("error", "warn", "silent")) {
+                       interpret_fail = c("error", "warn", "silent"),
+                       x_arg = rlang::caller_arg(labels),
+                       call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -224,7 +231,10 @@ period_mid <- function(labels,
 period_upper <- function(labels,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -250,7 +260,10 @@ period_width <- function(labels,
                          ## redundant, but keep so interface constant
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -275,7 +288,10 @@ period_width <- function(labels,
 period_interval <- function(labels,
                             interpret_single = c("lower", "upper"),
                             interpret_multi = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,

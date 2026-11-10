@@ -55,10 +55,14 @@
 #' df |>
 #'   filter(!age_is_subtotal(age))
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 age_is_subtotal <- function(labels,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_is_subtotal(
     labels = labels,

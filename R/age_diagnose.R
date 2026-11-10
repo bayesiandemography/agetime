@@ -94,11 +94,11 @@
 #' checked by `has_zero` and `has_open_right`.
 #' See the section on reporting trees.
 #' Default is `FALSE` (don't check).
-#' @param x_arg Name of `labels`, used in error messages
-#' from the `assert` functions.
-#' Defaults to the expression supplied for `labels`.
-#' Functions that call an `assert` function can
-#' supply their own name.
+#' @param x_arg Name of `labels` to use in error and warning
+#' messages, including messages about labels that cannot be
+#' interpreted. Defaults to the expression supplied for `labels`.
+#' A function that calls a `diagnose` or `assert` function can
+#' supply its own name, such as `"data$age"`.
 #' @param call Execution environment of the function
 #' to be named in error messages from the `assert` functions.
 #' The default is the `assert` function itself, so that errors
@@ -193,7 +193,9 @@ age_diagnose_levels <- function(labels,
                       has_zero = FALSE,
                       valid_life = FALSE,
                       valid_tree = FALSE,
-                      interpret_fail = c("error", "warn", "silent")) {
+                      interpret_fail = c("error", "warn", "silent"),
+                                x_arg = rlang::caller_arg(labels)) {
+  local_caller(args = list(labels = x_arg), call = rlang::current_env())
   interpret_fail <- match.arg(interpret_fail)
   inner_diagnose(
     labels = labels,
@@ -231,6 +233,7 @@ age_assert_levels <- function(labels,
                        interpret_fail = c("error", "warn", "silent"),
                        x_arg = rlang::caller_arg(labels),
                        call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_assert(
     labels = labels,
@@ -267,7 +270,9 @@ age_diagnose_values <- function(labels,
                                 has_zero = FALSE,
                                 valid_life = FALSE,
                                 valid_tree = FALSE,
-                                interpret_fail = c("error", "warn", "silent")) {
+                                interpret_fail = c("error", "warn", "silent"),
+                                x_arg = rlang::caller_arg(labels)) {
+  local_caller(args = list(labels = x_arg), call = rlang::current_env())
   interpret_fail <- match.arg(interpret_fail)
   inner_diagnose(
     labels = labels,
@@ -305,6 +310,7 @@ age_assert_values <- function(labels,
                               interpret_fail = c("error", "warn", "silent"),
                               x_arg = rlang::caller_arg(labels),
                               call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_assert(
     labels = labels,

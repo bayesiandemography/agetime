@@ -24,6 +24,7 @@
 #' labels <- c("Under 5", "5to9", "10--14", "100plus", "all")
 #' age_standard(labels)
 #' @export
+#' @template x-arg-call
 
 # Character input returns character; factor input returns factor with the same
 # length and ordered attribute. Element values and levels(labels)
@@ -33,7 +34,10 @@
 # interpret_fail = "silent", unparseable labels
 # become NA.
 age_standard <- function(labels,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_standard(
     labels = labels,

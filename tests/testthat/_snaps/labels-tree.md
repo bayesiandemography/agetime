@@ -22,7 +22,8 @@
       age_labels_tree(breaks_census, nodes = "15+x")
     Condition
       Error in `age_labels_tree()`:
-      ! Don't know how to interpret label "15+x".
+      ! Can't interpret labels in `nodes`.
+      x Don't know how to interpret label "15+x".
 
 ---
 

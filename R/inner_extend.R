@@ -35,7 +35,7 @@ inner_extend <- function(labels,
     length_zero_ok = TRUE
   )
   if (identical(length(labels), 0L)) {
-    cli::cli_abort(c("{.arg labels} has length 0.",
+    cli::cli_abort(c("{.arg {arg_nm('labels')}} has length 0.",
       i = "Supply at least one label to extend from?"
     ), call = user_frame())
   }
@@ -74,18 +74,20 @@ inner_extend <- function(labels,
   is_total <- get_is_total(intervals)
   if (any(is_total)) {
     label <- labels_orig[is_total][[1L]]
-    fix <- paste0("labels[!", label_type, "_is_total(labels)]")
+    nm_lab <- arg_nm("labels")
+    fix <- paste0(nm_lab, "[!", label_type, "_is_total(", nm_lab, ")]")
     cli::cli_abort(c(
-      "Can't extend {nm}s: {.arg labels} includes a total ({.val {label}}).",
+      "Can't extend {nm}s: {.arg {arg_nm('labels')}} includes a total ({.val {label}}).",
       i = "Remove totals first with {.code {fix}}?"
     ), call = user_frame())
   }
   is_missing <- get_is_missing(intervals)
   if (any(is_missing) || anyNA(labels)) {
     label <- if (any(is_missing)) labels_orig[is_missing][[1L]] else NA
-    fix <- paste0("labels[!", label_type, "_is_missing(labels)]")
+    nm_lab <- arg_nm("labels")
+    fix <- paste0(nm_lab, "[!", label_type, "_is_missing(", nm_lab, ")]")
     cli::cli_abort(c(
-      "Can't extend {nm}s: {.arg labels} includes a missing value ({.val {label}}).",
+      "Can't extend {nm}s: {.arg {arg_nm('labels')}} includes a missing value ({.val {label}}).",
       i = "Remove missing values first with {.code {fix}}?"
     ), call = user_frame())
   }

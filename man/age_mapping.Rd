@@ -11,7 +11,10 @@ age_mapping(
   format = c("tibble", "matrix"),
   name_x = "x",
   name_y = "y",
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels_x),
+  y_arg = rlang::caller_arg(labels_y),
+  call = rlang::current_env()
 )
 }
 \arguments{
@@ -35,6 +38,20 @@ Applied to tibble columns and to matrix dimnames.}
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
+
+\item{x_arg}{Name of \code{labels_x} to use in error and warning
+messages. Defaults to the expression supplied for \code{labels_x}.
+A function that calls this function can supply its own name,
+such as \code{"data$age"}.}
+
+\item{y_arg}{Name of \code{labels_y} to use in error and warning
+messages. Defaults to the expression supplied for \code{labels_y}.}
+
+\item{call}{Execution environment of the function to name
+in error and warning messages. The default is this function
+itself. A function that calls this function can supply
+\code{call = rlang::current_env()}, so that messages name it
+instead.}
 }
 \value{
 \link[tibble:tibble]{Tibble} or matrix,

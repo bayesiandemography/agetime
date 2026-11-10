@@ -68,6 +68,7 @@
 #' x <- c("0--4", "0-4", "5+")
 #' age_mapping(x)
 #' @export
+#' @template x-arg-call-mapping
 # When labels_x or labels_y is character(0), or a factor with no levels, returns
 # an empty mapping (zero-row tibble or zero-by-zero matrix, per format).
 age_mapping <- function(labels_x,
@@ -81,7 +82,11 @@ age_mapping <- function(labels_x,
                         format = c("tibble", "matrix"),
                         name_x = "x",
                         name_y = "y",
-                        interpret_fail = c("error", "warn", "silent")) {
+                        interpret_fail = c("error", "warn", "silent"),
+                        x_arg = rlang::caller_arg(labels_x),
+                        y_arg = rlang::caller_arg(labels_y),
+                        call = rlang::current_env()) {
+  local_caller(args = list(labels_x = x_arg, labels_y = y_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   relation <- match.arg(relation)
   format <- match.arg(format)

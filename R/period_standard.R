@@ -27,10 +27,14 @@
 #' labels <- c("2025to2030", "1910--1915", " 2022 ", "all")
 #' period_standard(labels)
 #' @export
+#' @template x-arg-call
 period_standard <- function(labels,
                             interpret_single = c("lower", "upper"),
                             interpret_multi = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,

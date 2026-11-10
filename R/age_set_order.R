@@ -37,6 +37,7 @@
 #' labels <- c("0-4", "50+", "Total", NA, "20-24")
 #' age_set_order(labels)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0 and there are no levels to order,
 # returns an empty factor.
@@ -45,7 +46,10 @@
 # The ordered attribute is preserved when labels is an ordered factor.
 age_set_order <- function(labels,
                           decreasing = FALSE,
-                          interpret_fail = c("error", "warn", "silent")) {
+                          interpret_fail = c("error", "warn", "silent"),
+                          x_arg = rlang::caller_arg(labels),
+                          call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_set_order(
     labels = labels,

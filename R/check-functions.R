@@ -204,9 +204,9 @@ check_coarsen_open_flags <- function(is_open_left,
       labels_open <- labels_as_supplied(is_orl)
       n <- length(labels_open)
       cli::cli_abort(c(
-        "{.arg labels} contains {cli::qty(n)} {ln}{?s} open on the left: {.val {labels_open}}.",
+        "{.arg {arg_nm('labels')}} contains {cli::qty(n)} {ln}{?s} open on the left: {.val {labels_open}}.",
         i = "{.arg open_left} is {.val {FALSE}}.",
-        i = "Remove open-left labels from {.arg labels}?",
+        i = "Remove open-left labels from {.arg {arg_nm('labels')}}?",
         i = "Or unset {.arg open_left}, or pass {.val {TRUE}}?"
       ), call = user_frame())
     }
@@ -217,9 +217,9 @@ check_coarsen_open_flags <- function(is_open_left,
       labels_open <- labels_as_supplied(is_orr)
       n <- length(labels_open)
       cli::cli_abort(c(
-        "{.arg labels} contains {cli::qty(n)} {ln}{?s} open on the right: {.val {labels_open}}.",
+        "{.arg {arg_nm('labels')}} contains {cli::qty(n)} {ln}{?s} open on the right: {.val {labels_open}}.",
         i = "{.arg open_right} is {.val {FALSE}}.",
-        i = "Remove open-right labels from {.arg labels}?",
+        i = "Remove open-right labels from {.arg {arg_nm('labels')}}?",
         i = "Or unset {.arg open_right}, or pass {.val {TRUE}}?"
       ), call = user_frame())
     }
@@ -268,7 +268,7 @@ check_m_contains <- function(m_contains,
   is_outside <- is_not_fit & !is_special & !is_split
   nm <- label_name(label_type)
   nm_cap <- paste0(toupper(substr(nm, 1L, 1L)), substring(nm, 2L))
-  new_desc <- if (source == "breaks") paste0("the new ", nm, "s") else "the labels in {.arg to}"
+  new_desc <- if (source == "breaks") paste0("the new ", nm, "s") else "the labels in {.arg {arg_nm('to')}}"
   env <- new.env(parent = environment())
   bullets <- character()
   if (any(is_split)) {
@@ -316,7 +316,7 @@ check_m_contains <- function(m_contains,
       }
     }
     if (source == "to") {
-      bullets <- c(bullets, i = "Add labels to {.arg to} that cover {cli::qty(outside_n)}{?it/them}?")
+      bullets <- c(bullets, i = "Add labels to {.arg {arg_nm('to')}} that cover {cli::qty(outside_n)}{?it/them}?")
     }
   }
   if (any(is_special)) {
@@ -325,12 +325,12 @@ check_m_contains <- function(m_contains,
     env$special_n <- sum(is_special)
     bullets <- c(
       bullets,
-      x = paste0("{.arg to} has no category for {.val {special_labels}}."),
-      i = "Add {cli::qty(special_n)}{?it/them} to {.arg to}?"
+      x = paste0("{.arg {arg_nm('to')}} has no category for {.val {special_labels}}."),
+      i = "Add {cli::qty(special_n)}{?it/them} to {.arg {arg_nm('to')}}?"
     )
   }
   cli::cli_abort(
-    c(paste0("Can't coarsen ", nm, "s."), bullets),
+    c(paste0("Can't coarsen ", nm, "s in {.arg {arg_nm('labels')}}."), bullets),
     .envir = env,
     call = user_frame()
   )
@@ -399,8 +399,8 @@ check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
     lab2 <- labels_unique[[i2]]
     ln <- label_name(label_type)
     cli::cli_abort(c(
-      "{.arg to} has overlapping {ln}s {.val {lab1}} and {.val {lab2}}.",
-      i = "Supply {ln}s in {.arg to} that do not overlap?"
+      "{.arg {arg_nm('to')}} has overlapping {ln}s {.val {lab1}} and {.val {lab2}}.",
+      i = "Supply {ln}s in {.arg {arg_nm('to')}} that do not overlap?"
     ), call = user_frame())
   }
   invisible(TRUE)

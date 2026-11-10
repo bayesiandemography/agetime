@@ -13,4 +13,5 @@
 ^dev$
 ^doc$
 ^docs$
+^man-roxygen$
 ^pkgdown$

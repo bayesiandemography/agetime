@@ -54,12 +54,16 @@
 #' df |>
 #'   filter(!cohort_is_subtotal(cohort))
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 cohort_is_subtotal <- function(labels,
                                interpret_single = c("lower", "upper"),
                                interpret_multi = NULL,
-                               interpret_fail = c("error", "warn", "silent")) {
+                               interpret_fail = c("error", "warn", "silent"),
+                               x_arg = rlang::caller_arg(labels),
+                               call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,

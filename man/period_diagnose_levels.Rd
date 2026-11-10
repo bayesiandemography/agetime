@@ -20,7 +20,8 @@ period_diagnose_levels(
   valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels)
 )
 
 period_assert_levels(
@@ -54,7 +55,8 @@ period_diagnose_values(
   valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels)
 )
 
 period_assert_values(
@@ -144,11 +146,11 @@ and \code{"below_upper"}. See below for details.}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
 
-\item{x_arg}{Name of \code{labels}, used in error messages
-from the \code{assert} functions.
-Defaults to the expression supplied for \code{labels}.
-Functions that call an \code{assert} function can
-supply their own name.}
+\item{x_arg}{Name of \code{labels} to use in error and warning
+messages, including messages about labels that cannot be
+interpreted. Defaults to the expression supplied for \code{labels}.
+A function that calls a \code{diagnose} or \code{assert} function can
+supply its own name, such as \code{"data$age"}.}
 
 \item{call}{Execution environment of the function
 to be named in error messages from the \code{assert} functions.

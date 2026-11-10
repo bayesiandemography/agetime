@@ -30,6 +30,7 @@
 #' labels <- c("2020-2025", "2025-2030", "2030")
 #' cohort_set_open_right(labels, at = 2030)
 #' @export
+#' @template x-arg-call
 
 cohort_set_open_left <- function(labels,
                                     at,
@@ -37,7 +38,10 @@ cohort_set_open_left <- function(labels,
                                     interpret_multi = NULL,
                                     interpret_fail = c(
                                       "error", "warn", "silent"
-                                    )) {
+                                    ),
+                                 x_arg = rlang::caller_arg(labels),
+                                 call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(

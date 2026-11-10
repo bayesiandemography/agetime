@@ -4,7 +4,14 @@
 \alias{age_coarsen_to}
 \title{Coarsen Age Groups to a Target Classification}
 \usage{
-age_coarsen_to(labels, to, interpret_fail = c("error", "warn", "silent"))
+age_coarsen_to(
+  labels,
+  to,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  to_arg = rlang::caller_arg(to),
+  call = rlang::current_env()
+)
 }
 \arguments{
 \item{labels}{Vector of age group labels.}
@@ -14,6 +21,20 @@ age_coarsen_to(labels, to, interpret_fail = c("error", "warn", "silent"))
 \item{interpret_fail}{Action if an element of \code{labels} or \code{to}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
+
+\item{x_arg}{Name of \code{labels} to use in error and warning
+messages. Defaults to the expression supplied for \code{labels}.
+A function that calls this function can supply its own name,
+such as \code{"data$age"}.}
+
+\item{to_arg}{Name of \code{to} to use in error and warning
+messages. Defaults to the expression supplied for \code{to}.}
+
+\item{call}{Execution environment of the function to name
+in error and warning messages. The default is this function
+itself. A function that calls this function can supply
+\code{call = rlang::current_env()}, so that messages name it
+instead.}
 }
 \value{
 Factor with the same length as \code{labels}.

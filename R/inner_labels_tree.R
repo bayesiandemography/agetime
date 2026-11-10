@@ -118,7 +118,8 @@ tree_check_nodes <- function(nodes,
     label_type = label_type,
     interpret_single = format_single,
     interpret_multi = format_multi,
-    interpret_fail = "error"
+    interpret_fail = "error",
+    nm_labels = "nodes"
   )
   i_row <- get_i_x_to_xunu(intervals)
   is_missing <- get_is_missing(intervals)[i_row]

@@ -79,6 +79,7 @@
 #' - [age_coarsen()] Age group equivalent of `period_coarsen()`
 #' - [cohort_coarsen()] Cohort equivalent of `period_coarsen()`
 #' @export
+#' @template x-arg-call
 
 period_coarsen <- function(labels,
                           breaks,
@@ -86,7 +87,10 @@ period_coarsen <- function(labels,
                           open_right = NULL,
                           interpret_single = c("lower", "upper"),
                           interpret_multi = NULL,
-                          interpret_fail = c("error", "warn", "silent")) {
+                          interpret_fail = c("error", "warn", "silent"),
+                           x_arg = rlang::caller_arg(labels),
+                           call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
@@ -152,12 +156,17 @@ period_coarsen <- function(labels,
 #' - [age_coarsen_to()] Age equivalent of `period_coarsen_to()`
 #' - [cohort_coarsen_to()] Cohort equivalent of `period_coarsen_to()`
 #' @export
+#' @template x-arg-call-to
 
 period_coarsen_to <- function(labels,
                               to,
                               interpret_single = c("lower", "upper"),
                               interpret_multi = NULL,
-                              interpret_fail = c("error", "warn", "silent")) {
+                              interpret_fail = c("error", "warn", "silent"),
+                              x_arg = rlang::caller_arg(labels),
+                              to_arg = rlang::caller_arg(to),
+                              call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg, to = to_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -231,6 +240,7 @@ period_coarsen_to <- function(labels,
 #' @inheritSection period_coarsen The `open_left` argument
 #' @inheritSection period_coarsen The `open_right` argument
 #' @export
+#' @template x-arg-call
 
 period_coarsen_five <- function(labels,
                                offset = 0,
@@ -238,7 +248,10 @@ period_coarsen_five <- function(labels,
                                open_right = NULL,
                                interpret_single = c("lower", "upper"),
                                interpret_multi = NULL,
-                               interpret_fail = c("error", "warn", "silent")) {
+                               interpret_fail = c("error", "warn", "silent"),
+                                x_arg = rlang::caller_arg(labels),
+                                call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)
@@ -272,7 +285,10 @@ period_coarsen_ten <- function(labels,
                               open_right = NULL,
                               interpret_single = c("lower", "upper"),
                               interpret_multi = NULL,
-                              interpret_fail = c("error", "warn", "silent")) {
+                              interpret_fail = c("error", "warn", "silent"),
+                               x_arg = rlang::caller_arg(labels),
+                               call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_left, nm_x = "open_left")
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_single <- match.arg(interpret_single)

@@ -4,7 +4,12 @@
 \alias{age_standard}
 \title{Standardize Age Group Labels}
 \usage{
-age_standard(labels, interpret_fail = c("error", "warn", "silent"))
+age_standard(
+  labels,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
+)
 }
 \arguments{
 \item{labels}{Vector of age group labels.}
@@ -12,6 +17,17 @@ age_standard(labels, interpret_fail = c("error", "warn", "silent"))
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
+
+\item{x_arg}{Name of \code{labels} to use in error and warning
+messages. Defaults to the expression supplied for \code{labels}.
+A function that calls this function can supply its own name,
+such as \code{"data$age"}.}
+
+\item{call}{Execution environment of the function to name
+in error and warning messages. The default is this function
+itself. A function that calls this function can supply
+\code{call = rlang::current_env()}, so that messages name it
+instead.}
 }
 \value{
 Character vector or factor with the same length as \code{labels}.

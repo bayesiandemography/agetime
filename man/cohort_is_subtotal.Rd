@@ -8,7 +8,9 @@ cohort_is_subtotal(
   labels,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 }
 \arguments{
@@ -26,6 +28,17 @@ and \code{"below_upper"}. See below for details.}
 \item{interpret_fail}{Action if element of \code{labels}
 cannot be interpreted. Choices are \code{"error"} (the default),
 \code{"warn"}, and \code{"silent"}.}
+
+\item{x_arg}{Name of \code{labels} to use in error and warning
+messages. Defaults to the expression supplied for \code{labels}.
+A function that calls this function can supply its own name,
+such as \code{"data$age"}.}
+
+\item{call}{Execution environment of the function to name
+in error and warning messages. The default is this function
+itself. A function that calls this function can supply
+\code{call = rlang::current_env()}, so that messages name it
+instead.}
 }
 \value{
 Logical vector with the same length as \code{labels}.

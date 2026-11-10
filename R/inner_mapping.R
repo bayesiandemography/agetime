@@ -91,14 +91,16 @@ inner_mapping <- function(labels_x,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    nm_labels = "labels_x"
   )
   intervals_y <- intervals(
     labels = labels_y,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    nm_labels = "labels_y"
   )
   construct_mapping(
     intervals_x = intervals_x,

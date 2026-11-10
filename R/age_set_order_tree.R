@@ -66,8 +66,12 @@
 #'             "0-14", "15+", "15-64", "65+", "Missing")
 #' levels(age_set_order_tree(labels))
 #' @export
+#' @template x-arg-call
 age_set_order_tree <- function(labels,
-                               interpret_fail = c("error", "warn", "silent")) {
+                               interpret_fail = c("error", "warn", "silent"),
+                               x_arg = rlang::caller_arg(labels),
+                               call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_set_order_tree(
     labels = labels,

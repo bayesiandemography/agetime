@@ -115,7 +115,7 @@ inner_diagnose <- function(labels,
                         has_open_right,
                         valid_life,
                         valid_tree,
-                        x_arg = "labels") {
+                        x_arg = arg_nm("labels")) {
   on <- match.arg(on, choices = c("levels", "values"))
   if (identical(on, "levels") && !is.factor(labels)) {
     cli::cli_abort(c("{.arg {x_arg}} is not a factor.",

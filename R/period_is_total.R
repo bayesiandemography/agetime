@@ -32,12 +32,16 @@
 #' df |>
 #'   filter(!period_is_total(period))
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 period_is_total <- function(labels,
                             interpret_single = c("lower", "upper"),
                             interpret_multi = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -80,12 +84,16 @@ period_is_total <- function(labels,
 #' labels <- c("2020-2025", NA, "not stated", "Total", "missing")
 #' period_is_missing(labels)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 period_is_missing <- function(labels,
                               interpret_single = c("lower", "upper"),
                               interpret_multi = NULL,
-                              interpret_fail = c("error", "warn", "silent")) {
+                              interpret_fail = c("error", "warn", "silent"),
+                              x_arg = rlang::caller_arg(labels),
+                              call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -135,12 +143,16 @@ period_is_missing <- function(labels,
 #' period_is_open_left(labels)
 #' period_is_open_right(labels)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 period_is_open_left <- function(labels,
                                 interpret_single = c("lower", "upper"),
                                 interpret_multi = NULL,
-                                interpret_fail = c("error", "warn", "silent")) {
+                                interpret_fail = c("error", "warn", "silent"),
+                                x_arg = rlang::caller_arg(labels),
+                                call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -169,7 +181,10 @@ period_is_open_left <- function(labels,
 period_is_open_right <- function(labels,
                                  interpret_single = c("lower", "upper"),
                                  interpret_multi = NULL,
-                                 interpret_fail = c("error", "warn", "silent")) {
+                                 interpret_fail = c("error", "warn", "silent"),
+                                 x_arg = rlang::caller_arg(labels),
+                                 call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,

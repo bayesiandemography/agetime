@@ -50,6 +50,7 @@
 #'   age_set_order() |>
 #'   table()
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0 and there are no levels to fill,
 # returns an empty factor.
@@ -59,7 +60,10 @@
 # is preserved when labels is an ordered factor.
 age_fill <- function(labels,
                             breaks = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                     x_arg = rlang::caller_arg(labels),
+                     call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -75,7 +79,10 @@ age_fill <- function(labels,
 #' @rdname age_fill
 #' @export
 age_fill_one <- function(labels,
-                                interpret_fail = c("error", "warn", "silent")) {
+                                interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -93,7 +100,10 @@ age_fill_one <- function(labels,
 age_fill_five <- function(labels,
                                  interpret_fail = c(
                                    "error", "warn", "silent"
-                                 )) {
+                                 ),
+                          x_arg = rlang::caller_arg(labels),
+                          call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -109,7 +119,10 @@ age_fill_five <- function(labels,
 #' @rdname age_fill
 #' @export
 age_fill_ten <- function(labels,
-                                interpret_fail = c("error", "warn", "silent")) {
+                                interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill(
     labels = labels,
@@ -128,7 +141,10 @@ age_fill_ten <- function(labels,
 age_fill_life <- function(labels,
                                  interpret_fail = c(
                                    "error", "warn", "silent"
-                                 )) {
+                                 ),
+                          x_arg = rlang::caller_arg(labels),
+                          call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_fill_life(
     labels = labels,

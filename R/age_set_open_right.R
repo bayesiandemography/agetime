@@ -21,10 +21,14 @@
 #' age_set_open_right(labels, at = 50)
 #' age_set_open_right(c("0-4", "60-64"), at = 70)
 #' @export
+#' @template x-arg-call
 
 age_set_open_right <- function(labels,
                                   at,
-                                  interpret_fail = c("error", "warn", "silent")) {
+                                  interpret_fail = c("error", "warn", "silent"),
+                               x_arg = rlang::caller_arg(labels),
+                               call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_levels_set_open(
     labels = labels,

@@ -46,6 +46,7 @@
 #'   period_set_order() |>
 #'   table()
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0 and there are no levels to fill,
 # returns an empty factor.
@@ -57,7 +58,10 @@ period_fill <- function(labels,
                                breaks = NULL,
                                interpret_single = c("lower", "upper"),
                                interpret_multi = NULL,
-                               interpret_fail = c("error", "warn", "silent")) {
+                               interpret_fail = c("error", "warn", "silent"),
+                        x_arg = rlang::caller_arg(labels),
+                        call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -85,7 +89,10 @@ period_fill_one <- function(labels,
                                    interpret_multi = NULL,
                                    interpret_fail = c(
                                      "error", "warn", "silent"
-                                   )) {
+                                   ),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -113,7 +120,10 @@ period_fill_five <- function(labels,
                                     interpret_multi = NULL,
                                     interpret_fail = c(
                                       "error", "warn", "silent"
-                                    )) {
+                                    ),
+                             x_arg = rlang::caller_arg(labels),
+                             call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -141,7 +151,10 @@ period_fill_ten <- function(labels,
                                    interpret_multi = NULL,
                                    interpret_fail = c(
                                      "error", "warn", "silent"
-                                   )) {
+                                   ),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,

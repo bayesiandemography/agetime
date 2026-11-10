@@ -13,7 +13,8 @@ intervals <- function(labels,
                       label_type,
                       interpret_single,
                       interpret_multi,
-                      interpret_fail) {
+                      interpret_fail,
+                      nm_labels = "labels") {
   label_type <- match.arg(label_type, choices = c("age", "cohort", "period"))
   if (label_type == "age") {
     labels_normalizers <- make_labels_normalizers_age()
@@ -37,7 +38,8 @@ intervals <- function(labels,
     label_parsers = label_parsers,
     label_type = label_type,
     interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    nm_labels = nm_labels
   )
   ans
 }
@@ -59,7 +61,8 @@ intervals_inner <- function(labels,
                             label_parsers,
                             label_type,
                             interpret_multi,
-                            interpret_fail) {
+                            interpret_fail,
+                            nm_labels = "labels") {
   if (is.factor(labels)) {
     labels_unique <- levels(labels)
   } else {
@@ -86,7 +89,7 @@ intervals_inner <- function(labels,
   )
   fails <- lapply(m, attr, which = "fail", exact = TRUE)
   fails <- fails[!vapply(fails, is.null, TRUE)]
-  signal_label_fails(fails = fails, interpret_fail = interpret_fail)
+  signal_label_fails(fails = fails, interpret_fail = interpret_fail, nm_labels = nm_labels)
   m <- matrix(as.numeric(unlist(m, use.names = FALSE)),
     ncol = 2L,
     byrow = TRUE,

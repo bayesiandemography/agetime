@@ -34,13 +34,17 @@
 #' age_extend(labels, n = 2, width = 10)
 #' age_extend(labels, n = 2, include_labels = FALSE)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, throws an error (no interval to extend from).
 age_extend <- function(labels,
                        n = 1L,
                        width = NULL,
                        include_labels = TRUE,
-                       interpret_fail = c("error", "warn", "silent")) {
+                       interpret_fail = c("error", "warn", "silent"),
+                       x_arg = rlang::caller_arg(labels),
+                       call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_extend(
     labels = labels,

@@ -107,29 +107,33 @@ test_that("age_coarsen_to() errors when to has nested intervals", {
 })
 
 test_that("age_coarsen_to() errors when a label would be split", {
+  to <- c("0-4", "5-9")
   expect_error(
-    age_coarsen_to("0-9", to = c("0-4", "5-9")),
+    age_coarsen_to("0-9", to = to),
     regexp = "Age group \"0-9\" would be split by the labels in `to`."
   )
 })
 
 test_that("age_coarsen_to() errors when a label is not covered", {
+  to <- c("0-4", "5-9")
   expect_error(
-    age_coarsen_to("10", to = c("0-4", "5-9")),
+    age_coarsen_to("10", to = to),
     regexp = "Age group \"10\" is not fully covered by the labels in `to`."
   )
 })
 
 test_that("age_coarsen_to() errors when Total is missing from to", {
+  to <- c("0-4", "5-9")
   expect_error(
-    age_coarsen_to(c("0", "Total"), to = c("0-4", "5-9")),
+    age_coarsen_to(c("0", "Total"), to = to),
     regexp = "`to` has no category for \"Total\"."
   )
 })
 
 test_that("age_coarsen_to() errors when to has no labels", {
+  to <- character(0)
   expect_error(
-    age_coarsen_to("0-4", to = character(0)),
+    age_coarsen_to("0-4", to = to),
     regexp = "to.*has no labels"
   )
 })

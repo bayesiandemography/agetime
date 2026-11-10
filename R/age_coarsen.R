@@ -56,11 +56,15 @@
 #' - [period_coarsen()] Period equivalent of `age_coarsen()`
 #' - [cohort_coarsen()] Cohort equivalent of `age_coarsen()`
 #' @export
+#' @template x-arg-call
 
 age_coarsen <- function(labels,
                        breaks,
                        open_right = NULL,
-                       interpret_fail = c("error", "warn", "silent")) {
+                       interpret_fail = c("error", "warn", "silent"),
+                        x_arg = rlang::caller_arg(labels),
+                        call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen(
@@ -115,10 +119,15 @@ age_coarsen <- function(labels,
 #' - [period_coarsen_to()] Period equivalent of `age_coarsen_to()`
 #' - [cohort_coarsen_to()] Cohort equivalent of `age_coarsen_to()`
 #' @export
+#' @template x-arg-call-to
 
 age_coarsen_to <- function(labels,
                            to,
-                           interpret_fail = c("error", "warn", "silent")) {
+                           interpret_fail = c("error", "warn", "silent"),
+                           x_arg = rlang::caller_arg(labels),
+                           to_arg = rlang::caller_arg(to),
+                           call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg, to = to_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen_to(
     labels = labels,
@@ -177,10 +186,14 @@ age_coarsen_to <- function(labels,
 #' age_coarsen_five(labels_no_open)
 #' age_coarsen_five(labels_no_open, open_right = TRUE)
 #' @export
+#' @template x-arg-call
 
 age_coarsen_five <- function(labels,
                             open_right = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                             x_arg = rlang::caller_arg(labels),
+                             call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen_width(
@@ -200,7 +213,10 @@ age_coarsen_five <- function(labels,
 #' @export
 age_coarsen_ten <- function(labels,
                            open_right = NULL,
-                           interpret_fail = c("error", "warn", "silent")) {
+                           interpret_fail = c("error", "warn", "silent"),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_right, nm_x = "open_right")
   interpret_fail <- match.arg(interpret_fail)
   inner_coarsen_width(
@@ -220,7 +236,10 @@ age_coarsen_ten <- function(labels,
 #' @export
 age_coarsen_life <- function(labels,
                             open_right = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                             x_arg = rlang::caller_arg(labels),
+                             call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   check_open_flag(x = open_right, nm_x = "open_right")
   is_ordered <- is.factor(labels) && is.ordered(labels)
   labels <- to_character_or_factor(

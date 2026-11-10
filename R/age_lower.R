@@ -68,10 +68,14 @@
 #' pop <- c(young = "0-14", working = "15-64", old = "65+")
 #' age_lower(pop)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns numeric(0).
 age_lower <- function(labels,
-                      interpret_fail = c("error", "warn", "silent")) {
+                      interpret_fail = c("error", "warn", "silent"),
+                      x_arg = rlang::caller_arg(labels),
+                      call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_lower(
     labels = labels,
@@ -85,7 +89,10 @@ age_lower <- function(labels,
 #' @export
 #' @rdname age_lower
 age_mid <- function(labels,
-                    interpret_fail = c("error", "warn", "silent")) {
+                    interpret_fail = c("error", "warn", "silent"),
+                    x_arg = rlang::caller_arg(labels),
+                    call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_mid(
     labels = labels,
@@ -99,7 +106,10 @@ age_mid <- function(labels,
 #' @export
 #' @rdname age_lower
 age_upper <- function(labels,
-                      interpret_fail = c("error", "warn", "silent")) {
+                      interpret_fail = c("error", "warn", "silent"),
+                      x_arg = rlang::caller_arg(labels),
+                      call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_upper(
     labels = labels,
@@ -113,7 +123,10 @@ age_upper <- function(labels,
 #' @export
 #' @rdname age_lower
 age_width <- function(labels,
-                      interpret_fail = c("error", "warn", "silent")) {
+                      interpret_fail = c("error", "warn", "silent"),
+                      x_arg = rlang::caller_arg(labels),
+                      call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_width(
     labels = labels,
@@ -127,7 +140,10 @@ age_width <- function(labels,
 #' @export
 #' @rdname age_lower
 age_interval <- function(labels,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_interval(
     labels = labels,

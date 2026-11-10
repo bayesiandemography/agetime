@@ -255,10 +255,12 @@ x_label_fail <- function(msg, label_orig, unknown = FALSE) {
 #'
 #' @param fails List of `"fail"` attributes from `x_label_fail()`.
 #' @param interpret_fail How to handle unparsable labels.
+#' @param nm_labels Name of the formal argument holding the labels,
+#' passed to `arg_nm()`.
 #' @returns `NULL`, invisibly, unless aborting.
 #'
 #' @noRd
-signal_label_fails <- function(fails, interpret_fail) {
+signal_label_fails <- function(fails, interpret_fail, nm_labels = "labels") {
   if (identical(interpret_fail, "silent") || length(fails) == 0L) {
     return(invisible(NULL))
   }
@@ -282,6 +284,16 @@ signal_label_fails <- function(fails, interpret_fail) {
       )
     }
   }
+  ## name the argument holding the labels
+  envir <- new.env(parent = envir)
+  envir$nm_labels_fail <- arg_nm(nm_labels)
+  nms <- names(msg)
+  if (is.null(nms)) {
+    nms <- rep("", times = length(msg))
+  }
+  nms[[1L]] <- "x"
+  names(msg) <- nms
+  msg <- c("Can't interpret labels in {.arg {nm_labels_fail}}.", msg)
   if (identical(interpret_fail, "error")) {
     cli::cli_abort(msg, .envir = envir, call = user_frame())
   }

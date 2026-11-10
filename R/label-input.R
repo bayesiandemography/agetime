@@ -78,6 +78,7 @@ label_name <- function(label_type) {
 #' @noRd
 
 to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
+  nm_labels <- arg_nm(nm_labels)
   if (is.data.frame(labels)) {
     cli::cli_abort("{.arg {nm_labels}} is a data frame.", call = user_frame())
   }
@@ -122,8 +123,10 @@ copy_labels_names <- function(x, labels) {
 
 #' Find the Frame of the User-Facing Function
 #'
-#' Return the frame of the outermost \pkg{agetime} function on the
-#' call stack, which is the function the user called. Used so that
+#' If a user-facing function has registered a calling function with
+#' `local_caller()`, return that. Otherwise return the frame of the
+#' outermost \pkg{agetime} function on the call stack, which is the
+#' function the user called. Used so that
 #' error messages report, for instance, `age_coarsen()` rather than
 #' an internal helper.
 #'
@@ -131,6 +134,9 @@ copy_labels_names <- function(x, labels) {
 #'
 #' @noRd
 user_frame <- function() {
+  if (isTRUE(caller_env$active)) {
+    return(caller_env$call)
+  }
   ns <- topenv(environment(user_frame))
   n <- sys.nframe()
   for (i in seq_len(n - 1L)) {

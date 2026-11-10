@@ -24,6 +24,22 @@
   function can supply `call = rlang::current_env()` so that errors,
   including errors from parsing labels, name that function instead.
   agetime now imports rlang (previously an indirect dependency).
+- All functions that take labels (for instance `age_lower()`,
+  `age_coarsen_to()`, `age_fill()`, and `period_set_open_left()`)
+  now have arguments `x_arg` and `call`, like the assert functions,
+  so that they can be used inside other functions. `x_arg` names the
+  labels in error and warning messages, and defaults to the
+  expression supplied for `labels`. `call` gives the function to name
+  in messages: by default the agetime function itself, but a calling
+  function can supply `call = rlang::current_env()`. Functions with a
+  second set of labels have a second name argument: `to_arg` for the
+  `coarsen_to()` functions, and `y_arg` for the `mapping()`
+  functions. The diagnose functions have `x_arg` only. Functions that
+  create labels (for instance `age_labels()`) are unchanged.
+- Messages about labels that cannot be interpreted now name the
+  labels, as in "Can't interpret labels in `age`", followed by the
+  details. Messages from the coarsen functions name the labels being
+  coarsened, as in "Can't coarsen age groups in `age`".
 - New functions `age_labels_tree()`, `period_labels_tree()`, and
   `cohort_labels_tree()` create labels for a reporting tree: detailed
   labels from `breaks`, broader labels given through `nodes` (nesting

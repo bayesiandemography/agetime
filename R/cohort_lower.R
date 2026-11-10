@@ -167,12 +167,16 @@
 #' cohorts <- c(parents = "1960-1970", children = "1990-2000")
 #' cohort_lower(cohorts)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns numeric(0).
 cohort_lower <- function(labels,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -197,7 +201,10 @@ cohort_lower <- function(labels,
 cohort_mid <- function(labels,
                        interpret_single = c("lower", "upper"),
                        interpret_multi = NULL,
-                       interpret_fail = c("error", "warn", "silent")) {
+                       interpret_fail = c("error", "warn", "silent"),
+                       x_arg = rlang::caller_arg(labels),
+                       call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -222,7 +229,10 @@ cohort_mid <- function(labels,
 cohort_upper <- function(labels,
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -248,7 +258,10 @@ cohort_width <- function(labels,
                          ## redundant, but keep so interface constant
                          interpret_single = c("lower", "upper"),
                          interpret_multi = NULL,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,
@@ -273,7 +286,10 @@ cohort_width <- function(labels,
 cohort_interval <- function(labels,
                             interpret_single = c("lower", "upper"),
                             interpret_multi = NULL,
-                            interpret_fail = c("error", "warn", "silent")) {
+                            interpret_fail = c("error", "warn", "silent"),
+                            x_arg = rlang::caller_arg(labels),
+                            call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_single <- match.arg(interpret_single)
   interpret_multi <- resolve_interpret_multi(
     interpret_multi = interpret_multi,

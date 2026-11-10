@@ -334,7 +334,7 @@ inner_coarsen_to <- function(labels,
       return(factor(levels = character(), ordered = is_ordered))
     }
     cli::cli_abort(c(
-      "{.arg to} has no labels.",
+      "{.arg {arg_nm('to')}} has no labels.",
       i = "Supply at least one label to coarsen to?"
     ), call = user_frame())
   }
@@ -343,7 +343,8 @@ inner_coarsen_to <- function(labels,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail
+    interpret_fail = interpret_fail,
+    nm_labels = "to"
   )
   check_coarsen_to_no_overlap(
     intervals_to = intervals_to,

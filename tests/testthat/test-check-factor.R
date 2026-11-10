@@ -1,7 +1,9 @@
 test_that("_levels() functions throw an error for non-factors", {
-  expect_error(age_diagnose_levels("0-4"), "`labels` is not a factor.")
+  labels <- "0-4"
+  expect_error(age_diagnose_levels(labels), "`labels` is not a factor.")
   expect_error(age_assert_levels(c("0", "0")), "age_assert_values")
-  expect_error(period_diagnose_levels(2020), "`labels` is not a factor.")
+  x <- 2020
+  expect_error(period_diagnose_levels(x), "`x` is not a factor.")
   expect_error(cohort_assert_levels("2020-2025"), "cohort_diagnose_values")
 })
 

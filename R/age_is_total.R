@@ -31,10 +31,14 @@
 #' df |>
 #'   filter(!age_is_total(age))
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 age_is_total <- function(labels,
-                         interpret_fail = c("error", "warn", "silent")) {
+                         interpret_fail = c("error", "warn", "silent"),
+                         x_arg = rlang::caller_arg(labels),
+                         call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_is_total(
     labels = labels,
@@ -66,10 +70,14 @@ age_is_total <- function(labels,
 #' labels <- c("0-4", NA, "not stated", "Total", "missing")
 #' age_is_missing(labels)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 age_is_missing <- function(labels,
-                           interpret_fail = c("error", "warn", "silent")) {
+                           interpret_fail = c("error", "warn", "silent"),
+                           x_arg = rlang::caller_arg(labels),
+                           call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_is_missing(
     labels = labels,
@@ -103,10 +111,14 @@ age_is_missing <- function(labels,
 #' labels <- c("20+", "infant", "100+", "60to79", "80 years or more")
 #' age_is_open_right(labels)
 #' @export
+#' @template x-arg-call
 
 # When length(labels) == 0, returns logical(0).
 age_is_open_right <- function(labels,
-                              interpret_fail = c("error", "warn", "silent")) {
+                              interpret_fail = c("error", "warn", "silent"),
+                              x_arg = rlang::caller_arg(labels),
+                              call = rlang::current_env()) {
+  local_caller(args = list(labels = x_arg), call = call)
   interpret_fail <- match.arg(interpret_fail)
   inner_is_open(
     labels = labels,
