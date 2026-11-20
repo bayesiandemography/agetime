@@ -17,7 +17,7 @@ Conditions include:
 
 - Not having gaps
 
-- Not having totals or missing values
+- Having, or not having, totals, subtotals, or missing values
 
 - Having, or not having, open cohorts
 
@@ -29,9 +29,13 @@ cohort_diagnose_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   valid_tree = FALSE,
@@ -46,9 +50,13 @@ cohort_assert_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   valid_tree = FALSE,
@@ -64,9 +72,13 @@ cohort_diagnose_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   valid_tree = FALSE,
@@ -81,9 +93,13 @@ cohort_assert_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_left = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
   valid_tree = FALSE,
@@ -123,6 +139,13 @@ cohort_assert_values(
   [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md).
   Default is `FALSE` (don't check).
 
+- no_subtotal:
+
+  Check that there are no subtotals, as defined by
+  [`cohort_is_subtotal()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_subtotal.md).
+  Subtotals are distinct from grand totals checked by `no_total`.
+  Default is `FALSE` (don't check).
+
 - no_missing:
 
   Check that there is no "missing" category, as defined by
@@ -142,6 +165,24 @@ cohort_assert_values(
   defined by
   [`cohort_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md).
   Default is `FALSE` (don't check).
+
+- has_total:
+
+  Check that there is at least one "total" category, as defined by
+  [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md).
+  Default is `FALSE` (don't check).
+
+- has_subtotal:
+
+  Check that there is at least one subtotal, as defined by
+  [`cohort_is_subtotal()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_subtotal.md).
+  Default is `FALSE` (don't check).
+
+- has_missing:
+
+  Check that there is at least one "missing" category, as defined by
+  [`cohort_is_missing()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_missing.md),
+  including `NA` values. Default is `FALSE` (don't check).
 
 - has_open_left:
 
@@ -213,6 +254,15 @@ cohort_assert_values(
 
 - `cohort_assert_levels()` and `cohort_assert_values()` return `labels`
   invisibly, or raise an error.
+
+## Presence and absence checks
+
+Arguments starting with `no_` require absence; arguments starting with
+`has_` require at least one occurrence. `FALSE` means that the check is
+not requested. On empty input, `no_` checks pass and `has_` checks fail.
+A subtotal must be fully divided by two or more other intervals in the
+labels being checked. For factor levels, this includes unused levels;
+for values, unused levels are ignored.
 
 ## Reporting trees
 
@@ -311,6 +361,26 @@ Labels starting with `"-"`, such as `"-2000"`, are not accepted.
 ## Examples
 
 ``` r
+## require totals, subtotals, and missing values
+cohort_assert_values(
+  c("2020-2025", "2025-2030", "2020-2030", "Total", "Missing"),
+  has_total = TRUE,
+  has_subtotal = TRUE,
+  has_missing = TRUE
+)
+
+## require no subtotals
+cohort_diagnose_values(c("2020-2025", "2025-2030", "2020-2030"), no_subtotal = TRUE)
+#> $ok
+#> [1] FALSE
+#> 
+#> $details
+#> # A tibble: 1 × 3
+#>   condition   passed comment                                      
+#>   <chr>       <lgl>  <chr>                                        
+#> 1 no_subtotal FALSE  Example of subtotal among values: '2020-2030'
+#> 
+
 lab <- cohort_labels_five(
   lower_first = 2020,
   lower_last = 2030

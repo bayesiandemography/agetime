@@ -12,7 +12,7 @@ Both functions require labels to be a factor.
 Conditions include:
 Not overlapping
 Not having gaps
-Not having totals or missing values
+Having, or not having, totals, subtotals, or missing values
 Having, or not having, open periods
 
 "><meta property="og:description" content="Check whether period labels meet conditions.
@@ -28,7 +28,7 @@ Both functions require labels to be a factor.
 Conditions include:
 Not overlapping
 Not having gaps
-Not having totals or missing values
+Having, or not having, totals, subtotals, or missing values
 Having, or not having, open periods
 
 "></head><body>
@@ -81,7 +81,7 @@ the levels of <code>labels</code>, including any unused levels.
 Both functions require <code>labels</code> to be a factor.</p></li>
 </ul><p>Conditions include:</p><ul><li><p>Not overlapping</p></li>
 <li><p>Not having gaps</p></li>
-<li><p>Not having totals or missing values</p></li>
+<li><p>Having, or not having, totals, subtotals, or missing values</p></li>
 <li><p>Having, or not having, open periods</p></li>
 </ul></div>
 
@@ -92,9 +92,13 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_overlap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  no_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -109,9 +113,13 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_overlap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  no_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -127,9 +135,13 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_overlap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  no_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -144,9 +156,13 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_overlap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_gap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  no_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_total <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_subtotal <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  has_missing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -188,6 +204,13 @@ as defined by <code><a href="period_is_total.html">period_is_total()</a></code>.
 Default is <code>FALSE</code> (don't check).</p></dd>
 
 
+<dt id="arg-no-subtotal">no_subtotal<a class="anchor" aria-label="anchor" href="#arg-no-subtotal"></a></dt>
+<dd><p>Check that there are no subtotals,
+as defined by <code><a href="period_is_subtotal.html">period_is_subtotal()</a></code>.
+Subtotals are distinct from grand totals checked by <code>no_total</code>.
+Default is <code>FALSE</code> (don't check).</p></dd>
+
+
 <dt id="arg-no-missing">no_missing<a class="anchor" aria-label="anchor" href="#arg-no-missing"></a></dt>
 <dd><p>Check that there is no "missing" category,
 as defined by <code><a href="period_is_missing.html">period_is_missing()</a></code>.
@@ -205,6 +228,24 @@ Default is <code>FALSE</code> (don't check).</p></dd>
 <dd><p>Check that no period
 is open on the right (has no upper limit),
 as defined by <code><a href="period_is_open_left.html">period_is_open_right()</a></code>.
+Default is <code>FALSE</code> (don't check).</p></dd>
+
+
+<dt id="arg-has-total">has_total<a class="anchor" aria-label="anchor" href="#arg-has-total"></a></dt>
+<dd><p>Check that there is at least one "total" category,
+as defined by <code><a href="period_is_total.html">period_is_total()</a></code>.
+Default is <code>FALSE</code> (don't check).</p></dd>
+
+
+<dt id="arg-has-subtotal">has_subtotal<a class="anchor" aria-label="anchor" href="#arg-has-subtotal"></a></dt>
+<dd><p>Check that there is at least one subtotal,
+as defined by <code><a href="period_is_subtotal.html">period_is_subtotal()</a></code>.
+Default is <code>FALSE</code> (don't check).</p></dd>
+
+
+<dt id="arg-has-missing">has_missing<a class="anchor" aria-label="anchor" href="#arg-has-missing"></a></dt>
+<dd><p>Check that there is at least one "missing" category,
+as defined by <code><a href="period_is_missing.html">period_is_missing()</a></code>, including <code>NA</code> values.
 Default is <code>FALSE</code> (don't check).</p></dd>
 
 
@@ -284,6 +325,18 @@ called <code>details</code>.</p></li>
 invisibly, or raise an error.</p></li>
 </ul></div>
     <div class="section level2">
+    <h2 id="presence-and-absence-checks">Presence and absence checks<a class="anchor" aria-label="anchor" href="#presence-and-absence-checks"></a></h2>
+
+
+
+<p>Arguments starting with <code>no_</code> require absence; arguments starting with
+<code>has_</code> require at least one occurrence. <code>FALSE</code> means that the check
+is not requested. On empty input, <code>no_</code> checks pass and <code>has_</code> checks fail.
+A subtotal must be fully divided by two or more other intervals in the
+labels being checked. For factor levels, this includes unused levels;
+for values, unused levels are ignored.</p>
+    </div>
+    <div class="section level2">
     <h2 id="reporting-trees">Reporting trees<a class="anchor" aria-label="anchor" href="#reporting-trees"></a></h2>
 
 
@@ -355,7 +408,27 @@ or <code>interpret_multi</code>.</p>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">lab</span> <span class="op">&lt;-</span> <span class="fu"><a href="period_labels.html">period_labels_five</a></span><span class="op">(</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## require totals, subtotals, and missing values</span></span></span>
+<span class="r-in"><span><span class="fu">period_assert_values</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-2025"</span>, <span class="st">"2025-2030"</span>, <span class="st">"2020-2030"</span>, <span class="st">"Total"</span>, <span class="st">"Missing"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  has_total <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  has_subtotal <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  has_missing <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## require no subtotals</span></span></span>
+<span class="r-in"><span><span class="fu">period_diagnose_values</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2020-2025"</span>, <span class="st">"2025-2030"</span>, <span class="st">"2020-2030"</span><span class="op">)</span>, no_subtotal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ok</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $details</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   condition   passed comment                                      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> no_subtotal FALSE  Example of subtotal among values: '2020-2030'</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lab</span> <span class="op">&lt;-</span> <span class="fu"><a href="period_labels.html">period_labels_five</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  lower_first <span class="op">=</span> <span class="fl">2020</span>,</span></span>
 <span class="r-in"><span>  lower_last <span class="op">=</span> <span class="fl">2030</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>

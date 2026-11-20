@@ -17,7 +17,7 @@ Conditions include:
 
 - Not having gaps
 
-- Not having totals or missing values
+- Having, or not having, totals, subtotals, or missing values
 
 - Having, or not having, open age groups
 
@@ -33,8 +33,12 @@ age_diagnose_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -48,8 +52,12 @@ age_assert_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -64,8 +72,12 @@ age_diagnose_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -79,8 +91,12 @@ age_assert_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -119,6 +135,13 @@ age_assert_values(
   [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md).
   Default is `FALSE` (don't check).
 
+- no_subtotal:
+
+  Check that there are no subtotals, as defined by
+  [`age_is_subtotal()`](https://bayesiandemography.github.io/agetime/reference/age_is_subtotal.md).
+  Subtotals are distinct from grand totals checked by `no_total`.
+  Default is `FALSE` (don't check).
+
 - no_missing:
 
   Check that there is no "missing" category, as defined by
@@ -131,6 +154,24 @@ age_assert_values(
   defined by
   [`age_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/age_is_open_right.md).
   Default is `FALSE` (don't check).
+
+- has_total:
+
+  Check that there is at least one "total" category, as defined by
+  [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md).
+  Default is `FALSE` (don't check).
+
+- has_subtotal:
+
+  Check that there is at least one subtotal, as defined by
+  [`age_is_subtotal()`](https://bayesiandemography.github.io/agetime/reference/age_is_subtotal.md).
+  Default is `FALSE` (don't check).
+
+- has_missing:
+
+  Check that there is at least one "missing" category, as defined by
+  [`age_is_missing()`](https://bayesiandemography.github.io/agetime/reference/age_is_missing.md),
+  including `NA` values. Default is `FALSE` (don't check).
 
 - has_open_right:
 
@@ -228,6 +269,15 @@ To check a complete age reporting tree, use `valid_tree = TRUE`,
 check trees separately for each sex or date, use
 [`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html).
 
+## Presence and absence checks
+
+Arguments starting with `no_` require absence; arguments starting with
+`has_` require at least one occurrence. `FALSE` means that the check is
+not requested. On empty input, `no_` checks pass and `has_` checks fail.
+A subtotal must be fully divided by two or more other intervals in the
+labels being checked. For factor levels, this includes unused levels;
+for values, unused levels are ignored.
+
 ## See also
 
 - [`period_assert_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md),
@@ -245,6 +295,26 @@ check trees separately for each sex or date, use
 ## Examples
 
 ``` r
+## require totals, subtotals, and missing values
+age_assert_values(
+  c("0-4", "5-9", "0-9", "Total", "Missing"),
+  has_total = TRUE,
+  has_subtotal = TRUE,
+  has_missing = TRUE
+)
+
+## require no subtotals
+age_diagnose_values(c("0-4", "5-9", "0-9"), no_subtotal = TRUE)
+#> $ok
+#> [1] FALSE
+#> 
+#> $details
+#> # A tibble: 1 × 3
+#>   condition   passed comment                                
+#>   <chr>       <lgl>  <chr>                                  
+#> 1 no_subtotal FALSE  Example of subtotal among values: '0-9'
+#> 
+
 lab <- age_labels_life()
 lab
 #>  [1] "0"     "1-4"   "5-9"   "10-14" "15-19" "20-24" "25-29" "30-34" "35-39"
