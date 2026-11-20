@@ -107,7 +107,7 @@ lab <- period_labels_five(
 )
 period_df_diagnose_values(
   data.frame(period = lab),
-  period = "period",
+  period = period,
   no_overlap = TRUE,
   no_gap = TRUE,
   no_open_right = TRUE

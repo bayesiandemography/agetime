@@ -364,7 +364,7 @@ Use the `df_diagnose_values` functions to report checks on observed labels in a 
 
 ```{r validate}
 dat <- tibble(period = c("2020-2025", "2025-2030", "2030-2035"))
-period_df_diagnose_values(dat, period = "period", no_gap = TRUE, no_overlap = TRUE)
+period_df_diagnose_values(dat, period = period, no_gap = TRUE, no_overlap = TRUE)
 
 pop <- tibble(
   age = c("0-4", "5-9", "10-14"),
@@ -372,7 +372,7 @@ pop <- tibble(
 )
 
 pop |>
-  age_df_assert_values(age = "age", has_zero = TRUE, no_gap = TRUE)
+  age_df_assert_values(age = age, has_zero = TRUE, no_gap = TRUE)
 ```
 
 ### Discussion
@@ -404,7 +404,7 @@ df <- tibble(
 )
 
 df |>
-  age_df_assert_values(age = "age", no_overlap = TRUE)
+  age_df_assert_values(age = age, no_overlap = TRUE)
 ```
 
 ### Solution
@@ -414,7 +414,7 @@ Group the data first, for instance using `group_by()`.
 ```{r validate-groups-solution}
 df |>
   group_by(sex) |>
-  age_df_assert_values(age = "age", no_overlap = TRUE, has_zero = TRUE)
+  age_df_assert_values(age = age, no_overlap = TRUE, has_zero = TRUE)
 ```
 
 ### Discussion
@@ -423,8 +423,21 @@ Every check is applied separately to each group. For instance, `has_zero = TRUE`
 
 ```{r validate-groups-explicit}
 df |>
-  age_df_diagnose_values(age = "age", by = "sex", no_overlap = TRUE, has_zero = TRUE)
+  age_df_diagnose_values(age = age, by = sex, no_overlap = TRUE, has_zero = TRUE)
 ```
+
+The label and grouping columns use tidyselect: use bare names such as `age`, combinations such as `c(country, year, sex)`, or helpers such as `starts_with()`. For names stored in character vectors, use `all_of()`:
+
+```{r validate-groups-programmatic}
+label_column <- "age"
+group_columns <- "sex"
+df |>
+  age_df_diagnose_values(
+    age = all_of(label_column), by = all_of(group_columns), no_overlap = TRUE
+  )
+```
+
+Column renaming is not supported. The `*_df_coarsen_to()` functions continue to use character-vector mappings between their two data frames.
 
 Omitting `by` uses existing groups, or the whole dataset for ungrouped input. Supplying `by` overrides existing groups. Explicit `by = NULL` checks all rows together, even for a grouped data frame. Assertions always preserve the input's original grouping.
 
@@ -450,7 +463,7 @@ age <- factor(
 )
 
 age_diagnose_levels(age, no_overlap = TRUE, has_open_right = TRUE)
-age_df_diagnose_values(tibble(age = age), age = "age",
+age_df_diagnose_values(tibble(age = age), age = age,
                        no_overlap = TRUE, has_open_right = TRUE)
 ```
 

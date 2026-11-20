@@ -27,6 +27,7 @@ Imports:
     cli,
     rlang,
     tibble,
+    tidyselect,
     vctrs
 Suggests:
     dplyr,

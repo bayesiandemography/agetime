@@ -181,7 +181,7 @@ even though the age groups look distinct.
 
 ```{r synonyms-problem, error = TRUE}
 x <- c("0", "infant", "1-4", "5+")
-age_df_assert_values(tibble(age = x), age = "age", no_overlap = TRUE)
+age_df_assert_values(tibble(age = x), age = age, no_overlap = TRUE)
 ```
 
 ### Solution
@@ -211,7 +211,7 @@ df <- tibble(
   sex = c("F", "F", "M", "M")
 )
 df |>
-  age_df_assert_values(age = "age", no_overlap = TRUE)
+  age_df_assert_values(age = age, no_overlap = TRUE)
 ```
 
 ### Solution
@@ -221,7 +221,7 @@ Check within groups.
 ```{r repeats-solution}
 df |>
   group_by(sex) |>
-  age_df_assert_values(age = "age", no_overlap = TRUE)
+  age_df_assert_values(age = age, no_overlap = TRUE)
 ```
 
 ### See Also
@@ -239,7 +239,7 @@ or a missing value.
 
 ```{r totals-problem, error = TRUE}
 x <- c("0-4", "5-9", "Total")
-age_df_assert_values(tibble(age = x), age = "age", no_total = TRUE)
+age_df_assert_values(tibble(age = x), age = age, no_total = TRUE)
 ```
 
 ### Solution

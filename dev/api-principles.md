@@ -49,7 +49,10 @@ label levels. Repeated observations remain significant for `no_overlap`.
 
 For data-frame validation, omitted `by` uses existing groups (or checks the
 whole dataset if ungrouped). Explicit `by` overrides them; explicit `NULL`
-checks the whole dataset. Column selectors are unnamed character vectors.
+checks the whole dataset. Column arguments use tidyselect semantics, without
+renaming: the label selector must choose exactly one column and `by` may
+choose several or none. Capture selectors with `rlang::enquo()` and evaluate
+them once per call. Use `all_of()` for programmatic character vectors.
 Assertions preserve input grouping even when checks use different groups.
 Diagnostics include passes and failures and return an ungrouped report.
 Reuse results for identical ordered observations within a call; preserve
@@ -57,7 +60,8 @@ multiplicities, spellings, missing values, and message context. Never cache
 across calls.
 
 Data-frame coarsening still requires explicit `by`, since it matches two
-frames using potentially different column names.
+frames using potentially different column names. Its character selectors
+and source-to-target mappings do not use tidyselect.
 
 ## Arguments
 
@@ -128,6 +132,6 @@ Rules that new formats must follow:
 - Use vctrs functions, such as `vctrs::vec_rbind()`, rather than base
   equivalents, so that code works with rvecs.
 - Pass information between functions as arguments, not as attributes.
-- Imports are kept to cli, rlang, tibble, and vctrs. Use dplyr from
+- Imports are kept to cli, rlang, tibble, tidyselect, and vctrs. Use dplyr from
   Suggests only when handling its grouped or rowwise data frames.
 - Examples, vignettes, and tests use packages in Suggests unconditionally.

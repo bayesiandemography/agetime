@@ -8,8 +8,9 @@
 #' If `by` is omitted, use existing [dplyr::group_by()] groups, or check all
 #' rows together for ungrouped input. An explicitly supplied `by` replaces
 #' existing groups. Explicit `by = NULL` or `character(0)` checks all rows
-#' together, even for grouped input. Column names are character strings,
-#' not tidyselect expressions; named mappings are not supported.
+#' together, even for grouped input. Column arguments use
+#' [tidyselect][tidyselect::language] semantics, including bare names,
+#' ranges, and selection helpers. Renaming columns is not supported.
 #'
 #' Groups appear in order of first observation. Missing keys match missing
 #' keys. Unused grouping-factor levels and empty groups are ignored.
@@ -29,6 +30,11 @@
 #' absent groups or missing end categories. Other checks retain the rules
 #' described in [age_diagnose_levels()].
 #'
+#' For column names stored in character vectors, use
+#' [tidyselect::all_of()] or [tidyselect::any_of()]. A wrapper accepting
+#' selection expressions can forward them with `{{ }}`. To preserve inferred
+#' grouping, a wrapper must omit `by` when its own `by` is omitted.
+#'
 #' @section Empty inputs:
 #' With no grouping, a zero-row frame represents one empty set of values:
 #' absence (`no_`) and validity checks pass, and presence (`has_`) checks
@@ -37,9 +43,11 @@
 #' have zero rows; input validation and parsing still apply.
 #'
 #' @param data A data frame or tibble with unique, nonempty column names.
-#' @param age One unnamed string selecting the age column.
-#' @param by An unnamed character vector of distinct grouping-column names,
-#' or `NULL`. Omit to use existing groups; explicitly supply `NULL` to check
+#' @param age <[tidy-select][tidyselect::language]> Select exactly one
+#' age column, for example `age` or `all_of(column_name)`.
+#' @param by <[tidy-select][tidyselect::language]> Select grouping columns,
+#' for example `c(country, year, sex)`. Omit to use existing groups;
+#' explicitly supply `NULL` to check
 #' the whole dataset. The label column cannot be a grouping column.
 #' Grouping names `condition`, `passed`, and `comment` are reserved for
 #' diagnostic fields; rename such grouping columns before checking.
@@ -68,17 +76,17 @@
 #' dat <- data.frame(country = c("A", "A", "B", "B"),
 #'                   age = c("0-4", "10-14", "0-4", "5-9"))
 #' report <- age_df_diagnose_values(
-#'   dat, age = "age", by = "country", no_gap = TRUE, no_overlap = TRUE
+#'   dat, age = age, by = country, no_gap = TRUE, no_overlap = TRUE
 #' )
 #' report[!report$passed, ]
 #'
 #' dat$age <- c("0-4", "5-9", "0-4", "5-9")
-#' dat |> age_df_assert_values(age = "age", by = "country", no_gap = TRUE)
+#' dat |> age_df_assert_values(age = age, by = country, no_gap = TRUE)
 #'
 #' library(dplyr, warn.conflicts = FALSE)
 #' dat |>
 #'   group_by(country) |>
-#'   age_df_diagnose_values(age = "age", no_overlap = TRUE)
+#'   age_df_diagnose_values(age = age, no_overlap = TRUE)
 #' @export
 age_df_diagnose_values <- function(
   data,
@@ -122,7 +130,7 @@ age_df_diagnose_values <- function(
   )
   withCallingHandlers(
     inner_df_diagnose_values(
-      data, age, by, missing(by), "age", checks,
+      data, rlang::enquo(age), rlang::enquo(by), missing(by), "age", checks,
       "lower", "below_upper",
       interpret_fail, data_arg, assert = FALSE
     ),
@@ -177,7 +185,7 @@ age_df_assert_values <- function(
   )
   withCallingHandlers(
     inner_df_diagnose_values(
-      data, age, by, missing(by), "age", checks,
+      data, rlang::enquo(age), rlang::enquo(by), missing(by), "age", checks,
       "lower", "below_upper",
       interpret_fail, data_arg, assert = TRUE
     ),

@@ -8,8 +8,9 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
   rowwise <- by_missing && inherits(data, "rowwise_df")
   if (by_missing && inherits(data, c("grouped_df", "rowwise_df"))) {
     by <- dplyr::group_vars(data)
+  } else {
+    by <- df_values_columns(by, "by", data, single = FALSE)
   }
-  by <- df_values_columns(by, "by", data, single = FALSE)
   if (column %in% by) {
     cli::cli_abort("The label column cannot also be selected in {.arg by}.",
                    call = user_frame())
@@ -113,21 +114,16 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
   tibble::as_tibble(vctrs::vec_rbind(!!!reports, .ptype = prototype))
 }
 
-# Column selectors for a single data frame have no source-to-target mappings.
+# Evaluate captured selectors once per call. These select existing columns;
+# renaming and source-to-target mappings belong to other operations.
 df_values_columns <- function(x, arg, data, single) {
-  if (is.null(x) && !single) x <- character()
-  if (!is.character(x) || !is.null(dim(x)) || !is.null(names(x)) ||
-      anyNA(x) || any(!nzchar(x)) || anyDuplicated(x) ||
-      (single && length(x) != 1L)) {
-    cli::cli_abort("{.arg {arg}} must be {if (single) 'one unnamed column name' else 'an unnamed character vector of distinct column names, or NULL'}.",
+  selected <- tidyselect::eval_select(x, data, allow_rename = FALSE,
+                                      error_call = user_frame())
+  if (single && length(selected) != 1L) {
+    cli::cli_abort("{.arg {arg}} must select exactly one column.",
                    call = user_frame())
   }
-  absent <- setdiff(x, names(data))
-  if (length(absent)) {
-    cli::cli_abort("Columns {.val {absent}} selected in {.arg {arg}} are missing from {.arg {arg_nm('data')}}.",
-                   call = user_frame())
-  }
-  x
+  names(selected)
 }
 
 df_values_group <- function(groups, i, rowwise) {

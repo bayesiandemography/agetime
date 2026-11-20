@@ -48,7 +48,7 @@ test_that("omitted by infers groups and explicit by overrides them", {
 
   wrapper <- function(data, by) {
     if (missing(by)) age_df_diagnose_values(data, "age", no_overlap = TRUE)
-    else age_df_diagnose_values(data, "age", by = by, no_overlap = TRUE)
+    else age_df_diagnose_values(data, "age", by = {{ by }}, no_overlap = TRUE)
   }
   expect_identical(wrapper(grouped), inferred)
   expect_identical(wrapper(grouped, NULL), whole)
@@ -108,19 +108,20 @@ test_that("empty groups, empty frames, and no checks have defined results", {
 test_that("data and column selection errors are informative", {
   data <- data.frame(g = 1L, age = "0-4")
   expect_error(age_df_diagnose_values("0-4", "age"), "must be a data frame")
-  for (column in list(NULL, character(), c("age", "g"), c(x = "age"), NA, 1, "")) {
-    expect_error(age_df_diagnose_values(data, column), "age.*one unnamed")
+  for (column in list(NULL, character(), c("age", "g"))) {
+    expect_error(age_df_diagnose_values(data, !!column), "age.*exactly one")
   }
-  for (by in list(c("g", "g"), c(x = "g"), NA_character_, 1, "")) {
-    expect_error(age_df_diagnose_values(data, "age", by = by), "by.*unnamed")
-  }
-  expect_error(age_df_diagnose_values(data, "absent"), "absent.*missing")
-  expect_error(age_df_diagnose_values(data, "age", by = "absent"), "absent.*missing")
+  expect_error(age_df_diagnose_values(data, c(x = age)), "rename")
+  expect_error(age_df_diagnose_values(data, age, by = c(x = g)), "rename")
+  expect_error(age_df_diagnose_values(data, NA), "missing values")
+  expect_error(age_df_diagnose_values(data, age, by = NA_character_), "missing values")
+  expect_error(age_df_diagnose_values(data, "absent"), "absent.*exist")
+  expect_error(age_df_diagnose_values(data, "age", by = "absent"), "absent.*exist")
   expect_error(age_df_diagnose_values(data, "age", by = "age"), "label column")
   for (name in c("condition", "passed", "comment")) {
     bad <- data
     names(bad)[1L] <- name
-    expect_error(age_df_diagnose_values(bad, "age", by = name), "Rename")
+    expect_error(age_df_diagnose_values(bad, "age", by = all_of(name)), "Rename")
     expect_error(age_df_assert_values(dplyr::group_by(bad, .data[[name]]), "age"), "Rename")
   }
   names(data) <- c("age", "age")

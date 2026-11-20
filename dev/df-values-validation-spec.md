@@ -129,16 +129,22 @@ data-frame coarsening functions.
 
 - `data` must be a data frame or tibble with unique, nonmissing, nonempty
   column names.
-- `age`, `period`, or `cohort` is one unnamed character string selecting an
-  existing column. There is no default column name and no tidy selection.
+- `age`, `period`, or `cohort` is a tidyselect expression selecting exactly
+  one existing column. There is no default column name.
 - The selected column accepts the same label types and conversions as the
   existing vector values function.
-- When supplied, `by` is an unnamed character vector of distinct, existing
-  grouping-column names, or `NULL`. Explicit `NULL` or `character(0)` checks
-  all rows together. When omitted, existing data-frame groups are used.
-- Named source-to-target mappings are not supported: there is only one
-  data frame. Character column names are consistent with the selection
-  style of `*_df_coarsen_to()`.
+- When supplied, `by` is a tidyselect expression selecting grouping columns.
+  Explicit `NULL`, `character(0)`, or any empty selection checks all rows
+  together. When omitted, existing data-frame groups are used.
+- Support bare column names, `c()`, ranges, exclusions, numeric positions,
+  and helpers such as `starts_with()`, `where()`, `all_of()`, and `any_of()`.
+  Literal character selections remain valid. Standard tidyselect rules
+  apply, including deduplicating repeated selections and errors for missing
+  columns (unless an optional selector such as `any_of()` omits them).
+- Renaming is not supported: selected columns and report keys retain their
+  original names. Source-to-target mappings are not supported by these
+  single-frame validation functions. The coarsening functions retain their
+  character-vector mappings and do not use tidyselect.
 - The label column cannot also be a grouping column.
 - Reserve `condition`, `passed`, and `comment` as diagnostic field names;
   reject grouping columns with these names in both members of the pair,
@@ -151,7 +157,7 @@ Resolve grouping as follows:
 |---|---|
 | `by` omitted, grouped input | Existing groups from `group_by()` |
 | `by` omitted, ungrouped input | Whole dataset |
-| `by = c("country", "year")` | Groups defined by those columns, replacing existing groups |
+| `by = c(country, year)` | Groups defined by those columns, replacing existing groups |
 | Explicit `by = NULL` or `by = character(0)` | Whole dataset, even for grouped input |
 
 Although the formal default is `NULL`, omitted `by` and explicit
@@ -159,6 +165,16 @@ Although the formal default is `NULL`, omitted `by` and explicit
 arguments through the public entry points and private engine. Wrapper
 functions that want to retain inferred grouping must likewise avoid
 forwarding an omitted `by` as an explicit `NULL`.
+
+Capture selectors at the public entry point with `rlang::enquo()` and
+evaluate them once per call with `tidyselect::eval_select()`, with renaming
+disabled and the public error context preserved. Do not force selectors
+before capturing them. Resolve each selector against the input frame, not
+against a group's rows.
+
+Use `all_of()` for column names stored in character vectors. Wrappers can
+forward selection expressions with `{{ }}`; they must still distinguish
+an omitted `by` from a supplied selection when inferred grouping is wanted.
 
 For a rowwise tibble, omitted `by` uses its existing per-row groups and
 retains any rowwise identifier columns as report keys. An explicit `by`
@@ -281,7 +297,7 @@ deaths <- data.frame(
 )
 
 report <- age_df_diagnose_values(
-  deaths, age = "age", by = "country",
+  deaths, age = age, by = country,
   no_overlap = TRUE, no_gap = TRUE
 )
 report |> dplyr::filter(!passed)
@@ -293,7 +309,7 @@ deaths <- rbind(
 )
 deaths |>
   age_df_assert_values(
-    age = "age", by = "country",
+    age = age, by = country,
     no_overlap = TRUE, no_gap = TRUE
   ) |>
   dplyr::summarise(total = sum(deaths), .by = country)
@@ -309,11 +325,11 @@ grouped <- deaths |> dplyr::group_by(country)
 
 # Omitted by: check separately within each country.
 grouped |>
-  age_df_diagnose_values(age = "age", no_overlap = TRUE)
+  age_df_diagnose_values(age = age, no_overlap = TRUE)
 
 # Explicit NULL: check all observations together, reporting repeated ages.
 grouped |>
-  age_df_diagnose_values(age = "age", by = NULL, no_overlap = TRUE)
+  age_df_diagnose_values(age = age, by = NULL, no_overlap = TRUE)
 ```
 
 An explicit character vector instead selects replacement grouping columns.
@@ -335,7 +351,7 @@ deaths |>
 # After
 deaths |>
   age_df_assert_values(
-    age = "age", by = c("country", "year", "sex"),
+    age = age, by = c(country, year, sex),
     no_gap = TRUE, no_total = TRUE,
     no_subtotal = TRUE, no_missing = TRUE
   )
@@ -352,7 +368,7 @@ age_diagnose_levels(age, no_overlap = TRUE)$details
 # Fails: the declared levels overlap, although only 0-4 is observed.
 
 age_df_diagnose_values(
-  data.frame(age = age), age = "age", by = NULL,
+  data.frame(age = age), age = age, by = NULL,
   no_overlap = TRUE
 )
 # Passes: the only observed age value is 0-4.
@@ -386,8 +402,9 @@ observations matter.
 7. Regenerate Rd and NAMESPACE. Do not add a NEWS item, following the
    existing project decision for the unreleased package.
 
-Use existing dependencies; no new dependency is needed. Avoid a full
-data-frame split or copying unrelated columns for each group.
+Add `tidyselect` to Imports; its selection engine does not require importing
+dplyr. Avoid a full data-frame split or copying unrelated columns for each
+group.
 
 ## Reuse classifications within a call
 
@@ -445,6 +462,11 @@ uncached per-group checks; no particular speedup is assumed in advance.
   between omitted `by` and explicit `NULL`.
 - Assertions preserve the input identically and invisibly on success;
   failures identify the right group and honor wrapper error context.
+- All six functions support bare selectors, helpers, ranges, exclusions,
+  numeric positions, literal strings, and programmatic `all_of()` selections.
+  Test wrapper forwarding, column precedence over external variables,
+  single-column enforcement, prohibited renaming, and selection errors.
+  Selectors are evaluated once per call, independently of group count.
 - Parsing errors, warnings, and default period/cohort interpretation
   messages follow the contracts above.
 - Repeated identical group inputs reuse parsing and check results within a
@@ -465,7 +487,12 @@ uncached per-group checks; no particular speedup is assumed in advance.
 On 20 November 2026, the full package check, including tests and vignette
 rendering, completed with zero errors, warnings, or notes.
 
-Benchmarks compare the new flat data-frame diagnostics with uncached calls
+After adding tidyselect support, all 2,300 tests passed without errors,
+warnings, or skips. Package checks, including regenerated help, examples,
+and vignette rendering, again completed with zero errors, warnings, or notes.
+
+The initial benchmarks below, recorded before tidyselect support was added,
+compare the flat data-frame diagnostics with uncached calls
 to the previous vector diagnostic function for each group. Checks were
 `no_gap`, `no_total`, `no_subtotal`, and `no_missing`, all enabled. Diagnostic
 conditions, results, and comments were identical after excluding grouping

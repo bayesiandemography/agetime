@@ -56,10 +56,12 @@ cohort_df_assert_values(
 \arguments{
 \item{data}{A data frame or tibble with unique, nonempty column names.}
 
-\item{cohort}{One unnamed string selecting the cohort column.}
+\item{cohort}{<\link[tidyselect:language]{tidy-select}> Select exactly one
+cohort column, for example \code{cohort} or \code{all_of(column_name)}.}
 
-\item{by}{An unnamed character vector of distinct grouping-column names,
-or \code{NULL}. Omit to use existing groups; explicitly supply \code{NULL} to check
+\item{by}{<\link[tidyselect:language]{tidy-select}> Select grouping columns,
+for example \code{c(country, year, sex)}. Omit to use existing groups;
+explicitly supply \code{NULL} to check
 the whole dataset. The label column cannot be a grouping column.
 Grouping names \code{condition}, \code{passed}, and \code{comment} are reserved for
 diagnostic fields; rename such grouping columns before checking.}
@@ -180,8 +182,9 @@ group and otherwise return the original data frame invisibly.
 If \code{by} is omitted, use existing \code{\link[dplyr:group_by]{dplyr::group_by()}} groups, or check all
 rows together for ungrouped input. An explicitly supplied \code{by} replaces
 existing groups. Explicit \code{by = NULL} or \code{character(0)} checks all rows
-together, even for grouped input. Column names are character strings,
-not tidyselect expressions; named mappings are not supported.
+together, even for grouped input. Column arguments use
+\link[tidyselect:language]{tidyselect} semantics, including bare names,
+ranges, and selection helpers. Renaming columns is not supported.
 
 Groups appear in order of first observation. Missing keys match missing
 keys. Unused grouping-factor levels and empty groups are ignored.
@@ -202,6 +205,11 @@ use \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}} or \code{\li
 intervals. It does not require groups to have the same span or detect
 absent groups or missing end categories. Other checks retain the rules
 described in \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}}.
+
+For column names stored in character vectors, use
+\code{\link[tidyselect:all_of]{tidyselect::all_of()}} or \code{\link[tidyselect:any_of]{tidyselect::any_of()}}. A wrapper accepting
+selection expressions can forward them with \code{{{ }}}. To preserve inferred
+grouping, a wrapper must omit \code{by} when its own \code{by} is omitted.
 }
 
 \section{Empty inputs}{
@@ -289,17 +297,17 @@ Labels starting with \code{"-"}, such as \code{"-2000"}, are not accepted.
 dat <- data.frame(country = c("A", "A", "B", "B"),
                   cohort = c("2020-2025", "2030-2035", "2020-2025", "2025-2030"))
 report <- cohort_df_diagnose_values(
-  dat, cohort = "cohort", by = "country", no_gap = TRUE, no_overlap = TRUE
+  dat, cohort = cohort, by = country, no_gap = TRUE, no_overlap = TRUE
 )
 report[!report$passed, ]
 
 dat$cohort <- c("2020-2025", "2025-2030", "2020-2025", "2025-2030")
-dat |> cohort_df_assert_values(cohort = "cohort", by = "country", no_gap = TRUE)
+dat |> cohort_df_assert_values(cohort = cohort, by = country, no_gap = TRUE)
 
 library(dplyr, warn.conflicts = FALSE)
 dat |>
   group_by(country) |>
-  cohort_df_diagnose_values(cohort = "cohort", no_overlap = TRUE)
+  cohort_df_diagnose_values(cohort = cohort, no_overlap = TRUE)
 }
 \seealso{
 \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}}, \code{\link[=cohort_assert_levels]{cohort_assert_levels()}},
