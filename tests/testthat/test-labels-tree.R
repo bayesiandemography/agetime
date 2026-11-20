@@ -55,9 +55,9 @@ test_that("age_labels_tree() output passes valid_tree and keeps tree order", {
   ans <- age_labels_tree(breaks = seq(0, 85, 5),
                          nodes = c("0-14", "15+", "15-64", "65+"))
   expect_identical(
-    age_assert_values(ans, valid_tree = TRUE, has_zero = TRUE,
+    age_df_assert_values(data.frame(age = ans), age = "age", valid_tree = TRUE, has_zero = TRUE,
                       has_open_right = TRUE, no_total = TRUE),
-    ans
+    data.frame(age = ans)
   )
   expect_identical(levels(age_set_order_tree(ans)), ans)
 })
@@ -137,8 +137,8 @@ test_that("cohort_labels_tree() creates open-left tree, with three levels", {
       "1980-1990", "1990-2000", "<1960", "1980-2000", "1960-2000", "Missing")
   )
   expect_identical(
-    cohort_assert_values(ans, valid_tree = TRUE, interpret_multi = "at_upper"),
-    ans
+    cohort_df_assert_values(data.frame(cohort = ans), cohort = "cohort", valid_tree = TRUE, interpret_multi = "at_upper"),
+    data.frame(cohort = ans)
   )
   expect_identical(
     levels(cohort_set_order_tree(ans, interpret_multi = "at_upper")),

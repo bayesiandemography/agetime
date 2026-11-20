@@ -75,12 +75,12 @@ test_that("functions with other errors use x_arg and call", {
 test_that("diagnose functions use x_arg", {
   expect_error(age_diagnose_levels("0-4", x_arg = "data$age"),
                "`data$age` is not a factor", fixed = TRUE)
-  expect_error(age_diagnose_values(c("0-4", "abc"), x_arg = "data$age"),
+  expect_error(age_df_diagnose_values(data.frame(age = c("0-4", "abc")), age = "age", data_arg = "data"),
                "Can't interpret labels in `data$age`", fixed = TRUE)
 })
 
 test_that("assert functions name x_arg in parse errors", {
-  f <- function(x) age_assert_values(x, x_arg = "data$age", call = rlang::current_env())
+  f <- function(x) age_df_assert_values(data.frame(age = x), age = "age", data_arg = "data", call = rlang::current_env())
   expect_snapshot(f(c("0-4", "abc")), error = TRUE)
 })
 

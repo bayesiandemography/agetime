@@ -128,6 +128,6 @@ age_df_coarsen_to(deaths[-2, ], target,
 \itemize{
 \item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Recode a vector to a target classification
 \item \code{\link[=period_df_coarsen_to]{period_df_coarsen_to()}}, \code{\link[=cohort_df_coarsen_to]{cohort_df_coarsen_to()}}
-\item \code{\link[=age_assert_values]{age_assert_values()}} Check labels before recoding or after aggregation
+\item \code{\link[=age_df_assert_values]{age_df_assert_values()}} Check labels before recoding or after aggregation
 }
 }

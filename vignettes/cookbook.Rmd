@@ -360,11 +360,11 @@ You want to check that a set of labels meets your expectations, such as having n
 
 ### Solution
 
-Use the `diagnose_values` functions for diagnostics. Use the `assert_values` functions to throw an error as soon as a condition is violated.
+Use the `df_diagnose_values` functions to report checks on observed labels in a data frame. Use the `df_assert_values` functions to stop a pipeline when a condition is violated.
 
 ```{r validate}
-lab <- c("2020-2025", "2025-2030", "2030-2035")
-period_diagnose_values(lab, no_gap = TRUE, no_overlap = TRUE)
+dat <- tibble(period = c("2020-2025", "2025-2030", "2030-2035"))
+period_df_diagnose_values(dat, period = "period", no_gap = TRUE, no_overlap = TRUE)
 
 pop <- tibble(
   age = c("0-4", "5-9", "10-14"),
@@ -372,20 +372,20 @@ pop <- tibble(
 )
 
 pop |>
-  mutate(age = age_assert_values(age, has_zero = TRUE, no_gap = TRUE))
+  age_df_assert_values(age = "age", has_zero = TRUE, no_gap = TRUE)
 ```
 
 ### Discussion
 
-The `diagnose` functions return a list with an `ok` flag and details.
+The data-frame diagnostic functions return an ungrouped tibble with grouping keys, `condition`, `passed`, and `comment`. It includes successful checks as well as failures; use `filter(!passed)` to inspect failures.
 
-The `assert` functions return their input invisibly when checks pass. Returning their inputs allows them to be used in pipelines.
+The data-frame assertion functions return the entire input data frame invisibly and unchanged when checks pass. They fit directly into pipelines.
 
-The `values` functions treat each element of `labels` as a separate group, so a label that appears more than once counts as overlapping.
+The `values` functions check observed labels. Repeated interval labels within a group count as overlapping; repeats across groups do not interact. Unused factor levels are ignored.
 
 ### See Also
 
-- `?age_diagnose_levels`, `?period_diagnose_levels`, or `?cohort_diagnose_levels` for the full set of conditions
+- `?age_df_diagnose_values`, `?period_df_diagnose_values`, or `?cohort_df_diagnose_values` for the full set of conditions
 - [Check labels within groups of a data frame](#validate-labels-groups)
 - [Check the levels of a factor](#validate-labels-levels)
 
@@ -404,7 +404,7 @@ df <- tibble(
 )
 
 df |>
-  mutate(age = age_assert_values(age, no_overlap = TRUE))
+  age_df_assert_values(age = "age", no_overlap = TRUE)
 ```
 
 ### Solution
@@ -414,12 +414,19 @@ Group the data first, for instance using `group_by()`.
 ```{r validate-groups-solution}
 df |>
   group_by(sex) |>
-  mutate(age = age_assert_values(age, no_overlap = TRUE, has_zero = TRUE))
+  age_df_assert_values(age = "age", no_overlap = TRUE, has_zero = TRUE)
 ```
 
 ### Discussion
 
-Every check is applied separately to each group. For instance, `has_zero = TRUE` checks that each sex has an age group starting at zero.
+Every check is applied separately to each group. For instance, `has_zero = TRUE` checks that each sex has an age group starting at zero. You can also specify grouping columns directly:
+
+```{r validate-groups-explicit}
+df |>
+  age_df_diagnose_values(age = "age", by = "sex", no_overlap = TRUE, has_zero = TRUE)
+```
+
+Omitting `by` uses existing groups, or the whole dataset for ungrouped input. Supplying `by` overrides existing groups. Explicit `by = NULL` checks all rows together, even for a grouped data frame. Assertions always preserve the input's original grouping.
 
 ### See Also
 
@@ -443,12 +450,13 @@ age <- factor(
 )
 
 age_diagnose_levels(age, no_overlap = TRUE, has_open_right = TRUE)
-age_diagnose_values(age, no_overlap = TRUE, has_open_right = TRUE)
+age_df_diagnose_values(tibble(age = age), age = "age",
+                       no_overlap = TRUE, has_open_right = TRUE)
 ```
 
 ### Discussion
 
-The `levels` functions throw an error if `labels` is not a factor.
+The `levels` functions throw an error if `labels` is not a factor. Factor-level diagnostics retain their list result with `ok` and `details`, while data-frame diagnostics return a flat table directly.
 
 ### See Also
 

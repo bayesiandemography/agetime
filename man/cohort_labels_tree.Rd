@@ -122,7 +122,7 @@ cohort_labels_tree(
 \itemize{
 \item \code{\link[=cohort_labels]{cohort_labels()}} Create labels without broad cohorts
 \item \code{\link[=cohort_set_order_tree]{cohort_set_order_tree()}} Order existing labels as a tree
-\item \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} Check labels, including with
+\item \code{\link[=cohort_df_diagnose_values]{cohort_df_diagnose_values()}} Check labels, including with
 \code{valid_tree = TRUE}
 \item \code{\link[=age_labels_tree]{age_labels_tree()}} Age equivalent of \code{cohort_labels_tree()}
 \item \code{\link[=period_labels_tree]{period_labels_tree()}} Period equivalent of \code{cohort_labels_tree()}

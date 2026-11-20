@@ -61,6 +61,9 @@
       f(c("0-4", "abc"))
     Condition
       Error in `f()`:
+      ! Can't check labels in `data$age`.
+      i Checking the whole dataset.
+      Caused by error in `f()`:
       ! Can't interpret labels in `data$age`.
       x Don't know how to interpret label "abc".
 

@@ -90,7 +90,7 @@ age_labels_tree(
 \itemize{
 \item \code{\link[=age_labels]{age_labels()}} Create labels without broad age groups
 \item \code{\link[=age_set_order_tree]{age_set_order_tree()}} Order existing labels as a tree
-\item \code{\link[=age_diagnose_values]{age_diagnose_values()}} Check labels, including with
+\item \code{\link[=age_df_diagnose_values]{age_df_diagnose_values()}} Check labels, including with
 \code{valid_tree = TRUE}
 \item \code{\link[=period_labels_tree]{period_labels_tree()}} Period equivalent of \code{age_labels_tree()}
 \item \code{\link[=cohort_labels_tree]{cohort_labels_tree()}} Cohort equivalent of \code{age_labels_tree()}

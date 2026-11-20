@@ -27,8 +27,11 @@ Some operations exist only in some domains:
 | `standard`, `extend` | Same type as `labels` (character or factor) |
 | `labels` | Character |
 | `coarsen`, `coarsen_to`, `fill`, `set_open_*`, `set_order` | Factor |
-| `diagnose`, `diagnose_values` | List with `ok` and a `details` tibble |
-| `assert`, `assert_values` | `labels`, invisibly, or an error |
+| `diagnose_levels` | List with `ok` and a `details` tibble |
+| `df_diagnose_values` | Ungrouped tibble with group keys and condition results |
+| `assert_levels` | `labels`, invisibly, or an error |
+| `df_assert_values` | Original `data`, invisibly, or an error |
+| `df_coarsen_to` | Original data-frame structure with one column recoded |
 | `mapping` | Tibble or matrix |
 
 - Functions that set or recode levels always return factors, so that
@@ -39,12 +42,27 @@ Some operations exist only in some domains:
 
 ## Labels and levels
 
-For factors, `diagnose` and `assert` check levels, including unused
-levels. The `_values` variants check only the values present.
+`diagnose_levels` and `assert_levels` accept factors and check their declared
+levels, including unused levels. `df_diagnose_values` and `df_assert_values`
+accept data frames and check observations within groups, ignoring unused
+label levels. Repeated observations remain significant for `no_overlap`.
+
+For data-frame validation, omitted `by` uses existing groups (or checks the
+whole dataset if ungrouped). Explicit `by` overrides them; explicit `NULL`
+checks the whole dataset. Column selectors are unnamed character vectors.
+Assertions preserve input grouping even when checks use different groups.
+Diagnostics include passes and failures and return an ungrouped report.
+Reuse results for identical ordered observations within a call; preserve
+multiplicities, spellings, missing values, and message context. Never cache
+across calls.
+
+Data-frame coarsening still requires explicit `by`, since it matches two
+frames using potentially different column names.
 
 ## Arguments
 
-- The main input is `labels`.
+- Vector functions take `labels`; data-frame functions take `data` and a
+  domain-named column selector (`age`, `period`, or `cohort`).
 - `interpret_*` arguments describe how input labels are parsed.
   `format_*` arguments describe how new labels are written. Age labels
   follow a fixed convention, so age functions have neither.
@@ -110,5 +128,6 @@ Rules that new formats must follow:
 - Use vctrs functions, such as `vctrs::vec_rbind()`, rather than base
   equivalents, so that code works with rvecs.
 - Pass information between functions as arguments, not as attributes.
-- Imports are kept to cli, tibble, and vctrs.
+- Imports are kept to cli, rlang, tibble, and vctrs. Use dplyr from
+  Suggests only when handling its grouped or rowwise data frames.
 - Examples, vignettes, and tests use packages in Suggests unconditionally.

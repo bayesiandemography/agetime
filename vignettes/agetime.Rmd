@@ -98,22 +98,26 @@ x |>
 
 ## Check and assert
 
-Check whether period labels conform to expectations:
+Check observed period labels in a data frame, optionally within groups:
 
 ```{r check}
 lab <- period_labels_five(
   lower_first = 2000,
   lower_last = 2020
 )
-period_diagnose_values(
-  lab,
+period_df_diagnose_values(
+  data.frame(period = lab),
+  period = "period",
   no_overlap = TRUE,
   no_gap = TRUE,
   no_open_right = TRUE
 )
 ```
 
-`period_assert_values()` throws an error if a check fails.
+`period_df_assert_values()` throws an error if a check fails and otherwise
+returns the original data frame invisibly. Data-frame diagnostics return a
+flat table with grouping keys and the results of each requested check.
+Omitted `by` uses existing groups; explicit `by = NULL` checks all rows together.
 `period_diagnose_levels()` and `period_assert_levels()` check
 the levels of a factor, including unused levels.
 
@@ -154,7 +158,7 @@ Most functions have age, period, and cohort equivalents. For instance:
 | Extract limits or identify special labels | `_lower()`, `_upper()`, `_mid()`, `_width()`, `_is_total()` | Numeric or logical |
 | Create a new series, or reformat existing labels | `_interval()`, `_labels_five()`, `_standard()`, `_extend()` | Character, or same type as `labels` |
 | Recode values and set factor levels | `_coarsen()`, `_fill()`, `_set_open_right()`, `_set_order()` | Factor |
-| Validate labels | `_diagnose_values()`, `_assert_values()` | Diagnostics, or `labels` |
+| Validate labels | `_df_diagnose_values()`, `_df_assert_values()`, `_diagnose_levels()`, `_assert_levels()` | Diagnostic table or list; original data frame or factor |
 | Relate two sets of labels | `_mapping()` | Tibble or matrix |
 
 

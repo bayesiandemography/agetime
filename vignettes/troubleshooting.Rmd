@@ -176,12 +176,12 @@ have open periods or cohorts are rare.
 
 ### Problem
 
-`age_assert_values()` or `age_diagnose_values()` reports an overlap,
+`age_df_assert_values()` or `age_df_diagnose_values()` reports an overlap,
 even though the age groups look distinct.
 
 ```{r synonyms-problem, error = TRUE}
 x <- c("0", "infant", "1-4", "5+")
-age_assert_values(x, no_overlap = TRUE)
+age_df_assert_values(tibble(age = x), age = "age", no_overlap = TRUE)
 ```
 
 ### Solution
@@ -202,7 +202,7 @@ groups](#overlap-df) for one possible approach.
 
 ### Problem
 
-`age_assert_values()` reports an overlap in a column of a data frame
+`age_df_assert_values()` reports an overlap in a column of a data frame
 where each age group appears once for each sex, region, or year.
 
 ```{r repeats-problem, error = TRUE}
@@ -211,7 +211,7 @@ df <- tibble(
   sex = c("F", "F", "M", "M")
 )
 df |>
-  mutate(age = age_assert_values(age, no_overlap = TRUE))
+  age_df_assert_values(age = "age", no_overlap = TRUE)
 ```
 
 ### Solution
@@ -221,7 +221,7 @@ Check within groups.
 ```{r repeats-solution}
 df |>
   group_by(sex) |>
-  mutate(age = age_assert_values(age, no_overlap = TRUE))
+  age_df_assert_values(age = "age", no_overlap = TRUE)
 ```
 
 ### See Also
@@ -239,7 +239,7 @@ or a missing value.
 
 ```{r totals-problem, error = TRUE}
 x <- c("0-4", "5-9", "Total")
-age_assert_values(x, no_total = TRUE)
+age_df_assert_values(tibble(age = x), age = "age", no_total = TRUE)
 ```
 
 ### Solution

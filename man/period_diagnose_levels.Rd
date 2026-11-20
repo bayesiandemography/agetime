@@ -3,8 +3,6 @@
 \name{period_diagnose_levels}
 \alias{period_diagnose_levels}
 \alias{period_assert_levels}
-\alias{period_diagnose_values}
-\alias{period_assert_values}
 \title{Diagnostics and Assertions for Periods}
 \usage{
 period_diagnose_levels(
@@ -29,49 +27,6 @@ period_diagnose_levels(
 )
 
 period_assert_levels(
-  labels,
-  no_overlap = FALSE,
-  no_gap = FALSE,
-  no_total = FALSE,
-  no_subtotal = FALSE,
-  no_missing = FALSE,
-  no_open_left = FALSE,
-  no_open_right = FALSE,
-  has_total = FALSE,
-  has_subtotal = FALSE,
-  has_missing = FALSE,
-  has_open_left = FALSE,
-  has_open_right = FALSE,
-  valid_tree = FALSE,
-  interpret_single = c("lower", "upper"),
-  interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent"),
-  x_arg = rlang::caller_arg(labels),
-  call = rlang::current_env()
-)
-
-period_diagnose_values(
-  labels,
-  no_overlap = FALSE,
-  no_gap = FALSE,
-  no_total = FALSE,
-  no_subtotal = FALSE,
-  no_missing = FALSE,
-  no_open_left = FALSE,
-  no_open_right = FALSE,
-  has_total = FALSE,
-  has_subtotal = FALSE,
-  has_missing = FALSE,
-  has_open_left = FALSE,
-  has_open_right = FALSE,
-  valid_tree = FALSE,
-  interpret_single = c("lower", "upper"),
-  interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent"),
-  x_arg = rlang::caller_arg(labels)
-)
-
-period_assert_values(
   labels,
   no_overlap = FALSE,
   no_gap = FALSE,
@@ -188,31 +143,26 @@ supply its own name, such as \code{"data$age"}.}
 \item{call}{Execution environment of the function
 to be named in error messages from the \code{assert} functions.
 The default is the \code{assert} function itself, so that errors
-name, for instance, \code{period_assert_values()}. A function that
+name, for instance, \code{period_assert_levels()}. A function that
 calls an \code{assert} function can supply
 \code{call = rlang::current_env()}, so that errors name that
 function instead.}
 }
 \value{
 \itemize{
-\item \code{period_diagnose_levels()} and \code{period_diagnose_values()} return a list
-with a logical flag called \code{ok} and a \link[tibble:tibble]{tibble}
-called \code{details}.
-\item \code{period_assert_levels()} and \code{period_assert_values()} return \code{labels}
-invisibly, or raise an error.
+\item \code{period_diagnose_levels()} returns a list with a logical \code{ok} flag
+and a \code{details} tibble containing \code{condition}, \code{passed}, and \code{comment}.
+\item \code{period_assert_levels()} returns \code{labels} invisibly, or raises an error.
 }
 }
 \description{
 Check whether period labels meet conditions.
 The \code{diagnose} functions report on each condition, and the
 \code{assert} functions throw an error if a condition is not met.
-\itemize{
-\item \code{period_diagnose_values()} and \code{period_assert_values()} check the
-elements of \code{labels}.
-\item \code{period_diagnose_levels()} and \code{period_assert_levels()} check
+
+\code{period_diagnose_levels()} and \code{period_assert_levels()} check
 the levels of \code{labels}, including any unused levels.
 Both functions require \code{labels} to be a factor.
-}
 
 Conditions include:
 \itemize{
@@ -230,7 +180,7 @@ Arguments starting with \code{no_} require absence; arguments starting with
 is not requested. On empty input, \code{no_} checks pass and \code{has_} checks fail.
 A subtotal must be fully divided by two or more other intervals in the
 labels being checked. For factor levels, this includes unused levels;
-for values, unused levels are ignored.
+for observed-value checks, use \code{\link[=period_df_diagnose_values]{period_df_diagnose_values()}}.
 }
 
 \section{Reporting trees}{
@@ -253,7 +203,7 @@ for instance using \code{x[period_is_total(x)] <- "Missing"},
 so that they are not treated as totals (for instance
 by \code{no_total}).
 
-To check trees separately for each group, use \code{\link[dplyr:group_by]{dplyr::group_by()}}.
+To check observed values separately for each group, use \code{\link[=period_df_diagnose_values]{period_df_diagnose_values()}}.
 }
 
 \section{Rules for interpreting inputs}{
@@ -323,66 +273,15 @@ Labels starting with \code{"-"}, such as \code{"-2000"}, are not accepted.
 }
 
 \examples{
-## require totals, subtotals, and missing values
-period_assert_values(
-  c("2020-2025", "2025-2030", "2020-2030", "Total", "Missing"),
-  has_total = TRUE,
-  has_subtotal = TRUE,
-  has_missing = TRUE
-)
+fac <- factor(c("2020-2025", "2025-2030", "2020-2025", "2025-2030"))
+period_diagnose_levels(fac, no_gap = TRUE, no_overlap = TRUE)
+period_assert_levels(fac, no_gap = TRUE)
 
-## require no subtotals
-period_diagnose_values(c("2020-2025", "2025-2030", "2020-2030"), no_subtotal = TRUE)
-
-lab <- period_labels_five(
-  lower_first = 2020,
-  lower_last = 2030
-)
-lab
-
-## get info on everything
-period_diagnose_values(
-  labels = lab,
-  no_overlap = TRUE,
-  no_gap = TRUE,
-  no_total = TRUE,
-  no_missing = TRUE
-)
-
-## throw error if overlap or gap
-period_assert_values(
-  labels = lab,
-  no_overlap = TRUE,
-  no_gap = TRUE
-)
-
-## repeated labels count as overlapping...
-df <- data.frame(
-  period = c("2020-2025", "2025-2030", "2020-2025", "2025-2030"),
-  sex = c("F", "F", "M", "M")
-)
-period_diagnose_values(df$period, no_overlap = TRUE)
-
-## ...so check within groups
-library(dplyr, warn.conflicts = FALSE)
-df |>
-  group_by(sex) |>
-  mutate(period = period_assert_values(period, no_overlap = TRUE))
-
-## factor with unused level
-fac <- factor(
-  x = "2020-2025",
-  levels = c("2020-2025", "2030-2035")
-)
-fac
+## unused levels are checked too
+fac <- factor("2020-2025",
+              levels = c("2020-2025", "2025-2030", "2030-2035"))
 period_diagnose_levels(fac, no_gap = TRUE)
-period_diagnose_values(fac, no_gap = TRUE)
 }
 \seealso{
-\itemize{
-\item \code{\link[=age_assert_values]{age_assert_values()}}, \code{\link[=age_assert_levels]{age_assert_levels()}}
-\item \code{\link[=age_diagnose_values]{age_diagnose_values()}}, \code{\link[=age_diagnose_levels]{age_diagnose_levels()}}
-\item \code{\link[=cohort_assert_values]{cohort_assert_values()}}, \code{\link[=cohort_assert_levels]{cohort_assert_levels()}}
-\item \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}}, \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}}
-}
+\code{\link[=period_df_diagnose_values]{period_df_diagnose_values()}}, \code{\link[=period_df_assert_values]{period_df_assert_values()}}
 }

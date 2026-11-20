@@ -3,8 +3,6 @@
 \name{age_diagnose_levels}
 \alias{age_diagnose_levels}
 \alias{age_assert_levels}
-\alias{age_diagnose_values}
-\alias{age_assert_values}
 \title{Diagnostics and Assertions for Age Groups}
 \usage{
 age_diagnose_levels(
@@ -27,45 +25,6 @@ age_diagnose_levels(
 )
 
 age_assert_levels(
-  labels,
-  no_overlap = FALSE,
-  no_gap = FALSE,
-  no_total = FALSE,
-  no_subtotal = FALSE,
-  no_missing = FALSE,
-  no_open_right = FALSE,
-  has_total = FALSE,
-  has_subtotal = FALSE,
-  has_missing = FALSE,
-  has_open_right = FALSE,
-  has_zero = FALSE,
-  valid_life = FALSE,
-  valid_tree = FALSE,
-  interpret_fail = c("error", "warn", "silent"),
-  x_arg = rlang::caller_arg(labels),
-  call = rlang::current_env()
-)
-
-age_diagnose_values(
-  labels,
-  no_overlap = FALSE,
-  no_gap = FALSE,
-  no_total = FALSE,
-  no_subtotal = FALSE,
-  no_missing = FALSE,
-  no_open_right = FALSE,
-  has_total = FALSE,
-  has_subtotal = FALSE,
-  has_missing = FALSE,
-  has_open_right = FALSE,
-  has_zero = FALSE,
-  valid_life = FALSE,
-  valid_tree = FALSE,
-  interpret_fail = c("error", "warn", "silent"),
-  x_arg = rlang::caller_arg(labels)
-)
-
-age_assert_values(
   labels,
   no_overlap = FALSE,
   no_gap = FALSE,
@@ -169,31 +128,26 @@ supply its own name, such as \code{"data$age"}.}
 \item{call}{Execution environment of the function
 to be named in error messages from the \code{assert} functions.
 The default is the \code{assert} function itself, so that errors
-name, for instance, \code{age_assert_values()}. A function that
+name, for instance, \code{age_assert_levels()}. A function that
 calls an \code{assert} function can supply
 \code{call = rlang::current_env()}, so that errors name that
 function instead.}
 }
 \value{
 \itemize{
-\item \code{age_diagnose_levels()} and \code{age_diagnose_values()} return a list with
-a logical flag called \code{ok} and a \link[tibble:tibble]{tibble}
-called \code{details}.
-\item \code{age_assert_levels()} and \code{age_assert_values()} return \code{labels}
-invisibly, or raise an error.
+\item \code{age_diagnose_levels()} returns a list with a logical \code{ok} flag
+and a \code{details} tibble containing \code{condition}, \code{passed}, and \code{comment}.
+\item \code{age_assert_levels()} returns \code{labels} invisibly, or raises an error.
 }
 }
 \description{
 Check whether age group labels meet conditions.
 The \code{diagnose} functions report on each condition, and the
 \code{assert} functions throw an error if a condition is not met.
-\itemize{
-\item \code{age_diagnose_values()} and \code{age_assert_values()} check the
-elements of \code{labels}.
-\item \code{age_diagnose_levels()} and \code{age_assert_levels()} check
+
+\code{age_diagnose_levels()} and \code{age_assert_levels()} check
 the levels of \code{labels}, including any unused levels.
 Both functions require \code{labels} to be a factor.
-}
 
 Conditions include:
 \itemize{
@@ -238,7 +192,7 @@ by \code{no_total}).
 
 To check a complete age reporting tree, use \code{valid_tree = TRUE},
 \code{has_zero = TRUE}, \code{has_open_right = TRUE}, and \code{no_total = TRUE}. To
-check trees separately for each sex or date, use \code{\link[dplyr:group_by]{dplyr::group_by()}}.
+check observed values separately for each sex or date, use \code{\link[=age_df_diagnose_values]{age_df_diagnose_values()}}.
 }
 
 \section{Presence and absence checks}{
@@ -249,84 +203,19 @@ Arguments starting with \code{no_} require absence; arguments starting with
 is not requested. On empty input, \code{no_} checks pass and \code{has_} checks fail.
 A subtotal must be fully divided by two or more other intervals in the
 labels being checked. For factor levels, this includes unused levels;
-for values, unused levels are ignored.
+for observed-value checks, use \code{\link[=age_df_diagnose_values]{age_df_diagnose_values()}}.
 }
 
 \examples{
-## require totals, subtotals, and missing values
-age_assert_values(
-  c("0-4", "5-9", "0-9", "Total", "Missing"),
-  has_total = TRUE,
-  has_subtotal = TRUE,
-  has_missing = TRUE
-)
+fac <- factor(c("0-4", "5-9", "0-4", "5-9"))
+age_diagnose_levels(fac, no_gap = TRUE, no_overlap = TRUE)
+age_assert_levels(fac, no_gap = TRUE)
 
-## require no subtotals
-age_diagnose_values(c("0-4", "5-9", "0-9"), no_subtotal = TRUE)
-
-lab <- age_labels_life()
-lab
-
-## get info on everything
-age_diagnose_values(
-  labels = lab,
-  no_overlap = TRUE,
-  no_gap = TRUE,
-  no_total = TRUE,
-  no_missing = TRUE,
-  has_open_right = TRUE,
-  has_zero = TRUE,
-  valid_life = TRUE
-)
-
-## throw error if overlap or gap
-age_assert_values(
-  labels = lab,
-  no_overlap = TRUE,
-  no_gap = TRUE
-)
-
-## check a complete reporting tree: detailed
-## ages, broad ages, and age not stated
-tree <- c("0-4", "5-9", "10-14", "15+", "0-14", "Missing")
-age_assert_values(
-  labels = tree,
-  valid_tree = TRUE,
-  has_zero = TRUE,
-  has_open_right = TRUE,
-  no_total = TRUE
-)
-
-## broad age group not fully divided
-age_diagnose_values(c("0-4", "5-9", "0-14"), valid_tree = TRUE)
-
-## repeated labels count as overlapping...
-df <- data.frame(
-  age = c("0-4", "5-9", "0-4", "5-9"),
-  sex = c("F", "F", "M", "M")
-)
-age_diagnose_values(df$age, no_overlap = TRUE)
-
-## ...so check within groups
-library(dplyr, warn.conflicts = FALSE)
-df |>
-  group_by(sex) |>
-  mutate(age = age_assert_values(age, no_overlap = TRUE))
-
-## factor with unused level
-fac <- factor(
-  x = "0-4",
-  levels = c("0-4", "3-7")
-)
-fac
-age_diagnose_levels(fac, no_overlap = TRUE)
-age_diagnose_values(fac, no_overlap = TRUE)
+## unused levels are checked too
+fac <- factor("0-4",
+              levels = c("0-4", "5-9", "10-14"))
+age_diagnose_levels(fac, no_gap = TRUE)
 }
 \seealso{
-\itemize{
-\item \code{\link[=period_assert_values]{period_assert_values()}}, \code{\link[=period_assert_levels]{period_assert_levels()}}
-\item \code{\link[=period_diagnose_values]{period_diagnose_values()}}, \code{\link[=period_diagnose_levels]{period_diagnose_levels()}}
-\item \code{\link[=cohort_assert_values]{cohort_assert_values()}}, \code{\link[=cohort_assert_levels]{cohort_assert_levels()}}
-\item \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}}, \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}}
-}
+\code{\link[=age_df_diagnose_values]{age_df_diagnose_values()}}, \code{\link[=age_df_assert_values]{age_df_assert_values()}}
 }

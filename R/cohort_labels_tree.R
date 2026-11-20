@@ -50,7 +50,7 @@
 #' @seealso
 #' - [cohort_labels()] Create labels without broad cohorts
 #' - [cohort_set_order_tree()] Order existing labels as a tree
-#' - [cohort_diagnose_values()] Check labels, including with
+#' - [cohort_df_diagnose_values()] Check labels, including with
 #'   `valid_tree = TRUE`
 #' - [age_labels_tree()] Age equivalent of `cohort_labels_tree()`
 #' - [period_labels_tree()] Period equivalent of `cohort_labels_tree()`

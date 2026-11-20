@@ -1,29 +1,37 @@
 # assert error messages name each failed condition and give comments
 
     Code
-      age_assert_values(c("0-4", "3-7", "10-14"), no_overlap = TRUE, no_gap = TRUE)
+      age_df_assert_values(data.frame(age = c("0-4", "3-7", "10-14")), age = "age",
+      no_overlap = TRUE, no_gap = TRUE)
     Condition
-      Error in `age_assert_values()`:
-      ! Age group labels in `c("0-4", "3-7", "10-14")` fail checks `no_overlap` and `no_gap`.
+      Error in `age_df_assert_values()`:
+      ! Age group labels in `data.frame(age = c("0-4", "3-7", "10-14"))$age` fail checks `no_overlap` and `no_gap`.
+      i Checking the whole dataset.
       x `no_overlap`: Example of overlap among values: '0-4' and '3-7'.
       x `no_gap`: Example: gap among values below '10-14'.
+      i Use `age_df_diagnose_values()` to report checks for every group.
 
 ---
 
     Code
-      period_assert_values(c("2020", "Total"), no_total = TRUE)
+      period_df_assert_values(data.frame(period = c("2020", "Total")), period = "period",
+      no_total = TRUE)
     Condition
-      Error in `period_assert_values()`:
-      ! Period labels in `c("2020", "Total")` fail check `no_total`.
+      Error in `period_df_assert_values()`:
+      ! Period labels in `data.frame(period = c("2020", "Total"))$period` fail check `no_total`.
+      i Checking the whole dataset.
       x `no_total`: Example among values: 'Total'.
+      i Use `period_df_diagnose_values()` to report checks for every group.
 
 ---
 
     Code
-      cohort_assert_values(c("2000-2004", "2005-2009"), has_open_left = TRUE,
-      interpret_multi = "at_upper")
+      cohort_df_assert_values(data.frame(cohort = c("2000-2004", "2005-2009")),
+      cohort = "cohort", has_open_left = TRUE, interpret_multi = "at_upper")
     Condition
-      Error in `cohort_assert_values()`:
-      ! Cohort labels in `c("2000-2004", "2005-2009")` fail check `has_open_left`.
+      Error in `cohort_df_assert_values()`:
+      ! Cohort labels in `data.frame(cohort = c("2000-2004", "2005-2009"))$cohort` fail check `has_open_left`.
+      i Checking the whole dataset.
       x `has_open_left`: Lowest interval among values: '2000-2004'.
+      i Use `cohort_df_diagnose_values()` to report checks for every group.
 

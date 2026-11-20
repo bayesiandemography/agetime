@@ -5,7 +5,9 @@
 #' Most functions take label vectors. The `age_df_coarsen_to()`,
 #' `period_df_coarsen_to()`, and `cohort_df_coarsen_to()` functions
 #' recode a column in a data frame using group-specific classifications
-#' from another data frame.
+#' from another data frame. The `*_df_assert_values()` and
+#' `*_df_diagnose_values()` functions check observed values within groups;
+#' `*_assert_levels()` and `*_diagnose_levels()` check factor classifications.
 #'
 #' @section Functions:
 #'
@@ -91,14 +93,20 @@
 #' | [age_labels_life()] |                         |                         |
 #' | [age_labels_tree()] | [period_labels_tree()] | [cohort_labels_tree()] |
 #'
-#' **Characterise labels or make assertions**
+#' **Check factor levels**
 #'
 #' |                |                   |                   |
 #' |----------------|-------------------|-------------------|
 #' | [age_diagnose_levels()]  | [period_diagnose_levels()]  | [cohort_diagnose_levels()]  |
-#' | [age_diagnose_values()]  | [period_diagnose_values()]  | [cohort_diagnose_values()]  |
 #' | [age_assert_levels()] | [period_assert_levels()] | [cohort_assert_levels()] |
-#' | [age_assert_values()] | [period_assert_values()] | [cohort_assert_values()] |
+#'
+
+#' **Check observed values in a data frame**
+#'
+#' | Age | Period | Cohort |
+#' |---|---|---|
+#' | [age_df_diagnose_values()]  | [period_df_diagnose_values()]  | [cohort_df_diagnose_values()]  |
+#' | [age_df_assert_values()] | [period_df_assert_values()] | [cohort_df_assert_values()] |
 #'
 #' **Create mappings between labels**
 #'

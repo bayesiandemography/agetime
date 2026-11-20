@@ -5,11 +5,9 @@
 #' The `diagnose` functions report on each condition, and the
 #' `assert` functions throw an error if a condition is not met.
 #'
-#' - `cohort_diagnose_values()` and `cohort_assert_values()` check the
-#'   elements of `labels`.
-#' - `cohort_diagnose_levels()` and `cohort_assert_levels()` check
-#'   the levels of `labels`, including any unused levels.
-#'   Both functions require `labels` to be a factor.
+#' `cohort_diagnose_levels()` and `cohort_assert_levels()` check
+#' the levels of `labels`, including any unused levels.
+#' Both functions require `labels` to be a factor.
 #'
 #' Conditions include:
 #'
@@ -25,7 +23,7 @@
 #' is not requested. On empty input, `no_` checks pass and `has_` checks fail.
 #' A subtotal must be fully divided by two or more other intervals in the
 #' labels being checked. For factor levels, this includes unused levels;
-#' for values, unused levels are ignored.
+#' for observed-value checks, use [cohort_df_diagnose_values()].
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
@@ -48,7 +46,7 @@
 #' so that they are not treated as totals (for instance
 #' by `no_total`).
 #'
-#' To check trees separately for each group, use [dplyr::group_by()].
+#' To check observed values separately for each group, use [cohort_df_diagnose_values()].
 #'
 #' @inheritParams cohort_lower
 #' @param no_overlap Check that no cohorts overlap.
@@ -117,81 +115,27 @@
 #' @param call Execution environment of the function
 #' to be named in error messages from the `assert` functions.
 #' The default is the `assert` function itself, so that errors
-#' name, for instance, `cohort_assert_values()`. A function that
+#' name, for instance, `cohort_assert_levels()`. A function that
 #' calls an `assert` function can supply
 #' `call = rlang::current_env()`, so that errors name that
 #' function instead.
 #'
 #' @return
-#' - `cohort_diagnose_levels()` and `cohort_diagnose_values()` return a list
-#'   with a logical flag called `ok` and a [tibble][tibble::tibble()]
-#'   called `details`.
-#' - `cohort_assert_levels()` and `cohort_assert_values()` return `labels`
-#'   invisibly, or raise an error.
+#' - `cohort_diagnose_levels()` returns a list with a logical `ok` flag
+#'   and a `details` tibble containing `condition`, `passed`, and `comment`.
+#' - `cohort_assert_levels()` returns `labels` invisibly, or raises an error.
 #'
-#' @seealso
-#' - [age_assert_values()], [age_assert_levels()]
-#' - [age_diagnose_values()], [age_diagnose_levels()]
-#' - [period_assert_values()], [period_assert_levels()]
-#' - [period_diagnose_values()], [period_diagnose_levels()]
+#' @seealso [cohort_df_diagnose_values()], [cohort_df_assert_values()]
 #'
 #' @examples
-#' ## require totals, subtotals, and missing values
-#' cohort_assert_values(
-#'   c("2020-2025", "2025-2030", "2020-2030", "Total", "Missing"),
-#'   has_total = TRUE,
-#'   has_subtotal = TRUE,
-#'   has_missing = TRUE
-#' )
+#' fac <- factor(c("2020-2025", "2025-2030", "2020-2025", "2025-2030"))
+#' cohort_diagnose_levels(fac, no_gap = TRUE, no_overlap = TRUE)
+#' cohort_assert_levels(fac, no_gap = TRUE)
 #'
-#' ## require no subtotals
-#' cohort_diagnose_values(c("2020-2025", "2025-2030", "2020-2030"), no_subtotal = TRUE)
-#'
-#' lab <- cohort_labels_five(
-#'   lower_first = 2020,
-#'   lower_last = 2030
-#' )
-#' lab
-#'
-#' ## get info on everything
-#' cohort_diagnose_values(
-#'   labels = lab,
-#'   no_overlap = TRUE,
-#'   no_gap = TRUE,
-#'   no_total = TRUE,
-#'   no_missing = TRUE,
-#'   has_open_left = TRUE,
-#'   has_open_right = TRUE
-#' )
-#'
-#' ## throw error if overlap or gap
-#' cohort_assert_values(
-#'   labels = lab,
-#'   no_overlap = TRUE,
-#'   no_gap = TRUE
-#' )
-#'
-#' ## repeated labels count as overlapping...
-#' df <- data.frame(
-#'   cohort = c("2020-2025", "2025-2030", "2020-2025", "2025-2030"),
-#'   sex = c("F", "F", "M", "M")
-#' )
-#' cohort_diagnose_values(df$cohort, no_overlap = TRUE)
-#'
-#' ## ...so check within groups
-#' library(dplyr, warn.conflicts = FALSE)
-#' df |>
-#'   group_by(sex) |>
-#'   mutate(cohort = cohort_assert_values(cohort, no_overlap = TRUE))
-#'
-#' ## factor with unused level
-#' fac <- factor(
-#'   x = "2020-2025",
-#'   levels = c("2020-2025", "2030-2035")
-#' )
-#' fac
+#' ## unused levels are checked too
+#' fac <- factor("2020-2025",
+#'               levels = c("2020-2025", "2025-2030", "2030-2035"))
 #' cohort_diagnose_levels(fac, no_gap = TRUE)
-#' cohort_diagnose_values(fac, no_gap = TRUE)
 #' @export
 # When length(labels) == 0, checks on overlap, gaps, totals,
 # and NA are vacuously satisfied and has_open_* checks fail.
@@ -286,119 +230,6 @@ cohort_assert_levels <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail,
     on = "levels",
-    no_overlap = no_overlap,
-    no_gap = no_gap,
-    no_total = no_total,
-    no_subtotal = no_subtotal,
-    no_missing = no_missing,
-    no_open_left = no_open_left,
-    no_open_right = no_open_right,
-    has_zero = FALSE,
-    has_total = has_total,
-    has_subtotal = has_subtotal,
-    has_missing = has_missing,
-    has_open_left = has_open_left,
-    has_open_right = has_open_right,
-    valid_life = FALSE,
-    valid_tree = valid_tree,
-    x_arg = x_arg,
-    call = call
-  )
-}
-
-#' @rdname cohort_diagnose_levels
-#' @export
-cohort_diagnose_values <- function(labels,
-                                   no_overlap = FALSE,
-                                   no_gap = FALSE,
-                                   no_total = FALSE,
-                                   no_subtotal = FALSE,
-                                   no_missing = FALSE,
-                                   no_open_left = FALSE,
-                                   no_open_right = FALSE,
-                                   has_total = FALSE,
-                                   has_subtotal = FALSE,
-                                   has_missing = FALSE,
-                                   has_open_left = FALSE,
-                                   has_open_right = FALSE,
-                                   valid_tree = FALSE,
-                                   interpret_single = c("lower", "upper"),
-                                   interpret_multi = NULL,
-                                   interpret_fail = c("error", "warn", "silent"),
-                                   x_arg = rlang::caller_arg(labels)) {
-  local_caller(args = list(labels = x_arg), call = rlang::current_env())
-  interpret_single <- match.arg(interpret_single)
-  interpret_multi <- resolve_interpret_multi(
-    interpret_multi = interpret_multi,
-    labels = labels,
-    labels_other = NULL,
-    label_type = "cohort",
-    interpret_single = interpret_single
-  )
-  interpret_fail <- match.arg(interpret_fail)
-  inner_diagnose(
-    labels = labels,
-    label_type = "cohort",
-    interpret_single = interpret_single,
-    interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail,
-    on = "values",
-    no_overlap = no_overlap,
-    no_gap = no_gap,
-    no_total = no_total,
-    no_subtotal = no_subtotal,
-    no_missing = no_missing,
-    no_open_left = no_open_left,
-    no_open_right = no_open_right,
-    has_zero = FALSE,
-    has_total = has_total,
-    has_subtotal = has_subtotal,
-    has_missing = has_missing,
-    has_open_left = has_open_left,
-    has_open_right = has_open_right,
-    valid_life = FALSE,
-    valid_tree = valid_tree
-  )
-}
-
-#' @rdname cohort_diagnose_levels
-#' @export
-cohort_assert_values <- function(labels,
-                                 no_overlap = FALSE,
-                                 no_gap = FALSE,
-                                 no_total = FALSE,
-                                 no_subtotal = FALSE,
-                                 no_missing = FALSE,
-                                 no_open_left = FALSE,
-                                 no_open_right = FALSE,
-                                 has_total = FALSE,
-                                 has_subtotal = FALSE,
-                                 has_missing = FALSE,
-                                 has_open_left = FALSE,
-                                 has_open_right = FALSE,
-                                 valid_tree = FALSE,
-                                 interpret_single = c("lower", "upper"),
-                                 interpret_multi = NULL,
-                                 interpret_fail = c("error", "warn", "silent"),
-                                 x_arg = rlang::caller_arg(labels),
-                                 call = rlang::current_env()) {
-  local_caller(args = list(labels = x_arg), call = call)
-  interpret_single <- match.arg(interpret_single)
-  interpret_multi <- resolve_interpret_multi(
-    interpret_multi = interpret_multi,
-    labels = labels,
-    labels_other = NULL,
-    label_type = "cohort",
-    interpret_single = interpret_single
-  )
-  interpret_fail <- match.arg(interpret_fail)
-  inner_assert(
-    labels = labels,
-    label_type = "cohort",
-    interpret_single = interpret_single,
-    interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail,
-    on = "values",
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,

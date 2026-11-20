@@ -5,11 +5,9 @@
 #' The `diagnose` functions report on each condition, and the
 #' `assert` functions throw an error if a condition is not met.
 #'
-#' - `age_diagnose_values()` and `age_assert_values()` check the
-#'   elements of `labels`.
-#' - `age_diagnose_levels()` and `age_assert_levels()` check
-#'   the levels of `labels`, including any unused levels.
-#'   Both functions require `labels` to be a factor.
+#' `age_diagnose_levels()` and `age_assert_levels()` check
+#' the levels of `labels`, including any unused levels.
+#' Both functions require `labels` to be a factor.
 #'
 #' Conditions include:
 #'
@@ -49,7 +47,7 @@
 #'
 #' To check a complete age reporting tree, use `valid_tree = TRUE`,
 #' `has_zero = TRUE`, `has_open_right = TRUE`, and `no_total = TRUE`. To
-#' check trees separately for each sex or date, use [dplyr::group_by()].
+#' check observed values separately for each sex or date, use [age_df_diagnose_values()].
 #'
 #' @section Presence and absence checks:
 #'
@@ -58,7 +56,7 @@
 #' is not requested. On empty input, `no_` checks pass and `has_` checks fail.
 #' A subtotal must be fully divided by two or more other intervals in the
 #' labels being checked. For factor levels, this includes unused levels;
-#' for values, unused levels are ignored.
+#' for observed-value checks, use [age_df_diagnose_values()].
 #'
 #' @inheritParams age_lower
 #' @param no_overlap Check that no age groups overlap.
@@ -124,93 +122,27 @@
 #' @param call Execution environment of the function
 #' to be named in error messages from the `assert` functions.
 #' The default is the `assert` function itself, so that errors
-#' name, for instance, `age_assert_values()`. A function that
+#' name, for instance, `age_assert_levels()`. A function that
 #' calls an `assert` function can supply
 #' `call = rlang::current_env()`, so that errors name that
 #' function instead.
 #'
 #' @return
-#' - `age_diagnose_levels()` and `age_diagnose_values()` return a list with
-#'   a logical flag called `ok` and a [tibble][tibble::tibble()]
-#'   called `details`.
-#' - `age_assert_levels()` and `age_assert_values()` return `labels`
-#'   invisibly, or raise an error.
+#' - `age_diagnose_levels()` returns a list with a logical `ok` flag
+#'   and a `details` tibble containing `condition`, `passed`, and `comment`.
+#' - `age_assert_levels()` returns `labels` invisibly, or raises an error.
 #'
-#' @seealso
-#' - [period_assert_values()], [period_assert_levels()]
-#' - [period_diagnose_values()], [period_diagnose_levels()]
-#' - [cohort_assert_values()], [cohort_assert_levels()]
-#' - [cohort_diagnose_values()], [cohort_diagnose_levels()]
+#' @seealso [age_df_diagnose_values()], [age_df_assert_values()]
 #'
 #' @examples
-#' ## require totals, subtotals, and missing values
-#' age_assert_values(
-#'   c("0-4", "5-9", "0-9", "Total", "Missing"),
-#'   has_total = TRUE,
-#'   has_subtotal = TRUE,
-#'   has_missing = TRUE
-#' )
+#' fac <- factor(c("0-4", "5-9", "0-4", "5-9"))
+#' age_diagnose_levels(fac, no_gap = TRUE, no_overlap = TRUE)
+#' age_assert_levels(fac, no_gap = TRUE)
 #'
-#' ## require no subtotals
-#' age_diagnose_values(c("0-4", "5-9", "0-9"), no_subtotal = TRUE)
-#'
-#' lab <- age_labels_life()
-#' lab
-#'
-#' ## get info on everything
-#' age_diagnose_values(
-#'   labels = lab,
-#'   no_overlap = TRUE,
-#'   no_gap = TRUE,
-#'   no_total = TRUE,
-#'   no_missing = TRUE,
-#'   has_open_right = TRUE,
-#'   has_zero = TRUE,
-#'   valid_life = TRUE
-#' )
-#'
-#' ## throw error if overlap or gap
-#' age_assert_values(
-#'   labels = lab,
-#'   no_overlap = TRUE,
-#'   no_gap = TRUE
-#' )
-#'
-#' ## check a complete reporting tree: detailed
-#' ## ages, broad ages, and age not stated
-#' tree <- c("0-4", "5-9", "10-14", "15+", "0-14", "Missing")
-#' age_assert_values(
-#'   labels = tree,
-#'   valid_tree = TRUE,
-#'   has_zero = TRUE,
-#'   has_open_right = TRUE,
-#'   no_total = TRUE
-#' )
-#'
-#' ## broad age group not fully divided
-#' age_diagnose_values(c("0-4", "5-9", "0-14"), valid_tree = TRUE)
-#'
-#' ## repeated labels count as overlapping...
-#' df <- data.frame(
-#'   age = c("0-4", "5-9", "0-4", "5-9"),
-#'   sex = c("F", "F", "M", "M")
-#' )
-#' age_diagnose_values(df$age, no_overlap = TRUE)
-#'
-#' ## ...so check within groups
-#' library(dplyr, warn.conflicts = FALSE)
-#' df |>
-#'   group_by(sex) |>
-#'   mutate(age = age_assert_values(age, no_overlap = TRUE))
-#'
-#' ## factor with unused level
-#' fac <- factor(
-#'   x = "0-4",
-#'   levels = c("0-4", "3-7")
-#' )
-#' fac
-#' age_diagnose_levels(fac, no_overlap = TRUE)
-#' age_diagnose_values(fac, no_overlap = TRUE)
+#' ## unused levels are checked too
+#' fac <- factor("0-4",
+#'               levels = c("0-4", "5-9", "10-14"))
+#' age_diagnose_levels(fac, no_gap = TRUE)
 #' @export
 
 # When length(labels) == 0, no_* and valid_* checks are vacuously
@@ -286,99 +218,6 @@ age_assert_levels <- function(labels,
     interpret_multi = "below_upper",
     interpret_fail = interpret_fail,
     on = "levels",
-    no_overlap = no_overlap,
-    no_gap = no_gap,
-    no_total = no_total,
-    no_subtotal = no_subtotal,
-    no_missing = no_missing,
-    no_open_left = FALSE,
-    no_open_right = no_open_right,
-    has_zero = has_zero,
-    has_open_left = FALSE,
-    has_total = has_total,
-    has_subtotal = has_subtotal,
-    has_missing = has_missing,
-    has_open_right = has_open_right,
-    valid_life = valid_life,
-    valid_tree = valid_tree,
-    x_arg = x_arg,
-    call = call
-  )
-}
-
-#' @rdname age_diagnose_levels
-#' @export
-age_diagnose_values <- function(labels,
-                                no_overlap = FALSE,
-                                no_gap = FALSE,
-                                no_total = FALSE,
-                                no_subtotal = FALSE,
-                                no_missing = FALSE,
-                                no_open_right = FALSE,
-                                has_total = FALSE,
-                                has_subtotal = FALSE,
-                                has_missing = FALSE,
-                                has_open_right = FALSE,
-                                has_zero = FALSE,
-                                valid_life = FALSE,
-                                valid_tree = FALSE,
-                                interpret_fail = c("error", "warn", "silent"),
-                                x_arg = rlang::caller_arg(labels)) {
-  local_caller(args = list(labels = x_arg), call = rlang::current_env())
-  interpret_fail <- match.arg(interpret_fail)
-  inner_diagnose(
-    labels = labels,
-    label_type = "age",
-    interpret_single = "lower",
-    interpret_multi = "below_upper",
-    interpret_fail = interpret_fail,
-    on = "values",
-    no_overlap = no_overlap,
-    no_gap = no_gap,
-    no_total = no_total,
-    no_subtotal = no_subtotal,
-    no_missing = no_missing,
-    no_open_left = FALSE,
-    no_open_right = no_open_right,
-    has_zero = has_zero,
-    has_open_left = FALSE,
-    has_total = has_total,
-    has_subtotal = has_subtotal,
-    has_missing = has_missing,
-    has_open_right = has_open_right,
-    valid_life = valid_life,
-    valid_tree = valid_tree
-  )
-}
-
-#' @rdname age_diagnose_levels
-#' @export
-age_assert_values <- function(labels,
-                              no_overlap = FALSE,
-                              no_gap = FALSE,
-                              no_total = FALSE,
-                              no_subtotal = FALSE,
-                              no_missing = FALSE,
-                              no_open_right = FALSE,
-                              has_total = FALSE,
-                              has_subtotal = FALSE,
-                              has_missing = FALSE,
-                              has_open_right = FALSE,
-                              has_zero = FALSE,
-                              valid_life = FALSE,
-                              valid_tree = FALSE,
-                              interpret_fail = c("error", "warn", "silent"),
-                              x_arg = rlang::caller_arg(labels),
-                              call = rlang::current_env()) {
-  local_caller(args = list(labels = x_arg), call = call)
-  interpret_fail <- match.arg(interpret_fail)
-  inner_assert(
-    labels = labels,
-    label_type = "age",
-    interpret_single = "lower",
-    interpret_multi = "below_upper",
-    interpret_fail = interpret_fail,
-    on = "values",
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,

@@ -11,7 +11,9 @@ labels for age groups, periods, and cohorts.
 Most functions take label vectors. The \code{age_df_coarsen_to()},
 \code{period_df_coarsen_to()}, and \code{cohort_df_coarsen_to()} functions
 recode a column in a data frame using group-specific classifications
-from another data frame.
+from another data frame. The \verb{*_df_assert_values()} and
+\verb{*_df_diagnose_values()} functions check observed values within groups;
+\verb{*_assert_levels()} and \verb{*_diagnose_levels()} check factor classifications.
 }
 \section{Functions}{
 
@@ -99,12 +101,17 @@ from another data frame.
 }
 
 
-\strong{Characterise labels or make assertions}\tabular{lll}{
+\strong{Check factor levels}\tabular{lll}{
     \tab  \tab  \cr
    \code{\link[=age_diagnose_levels]{age_diagnose_levels()}} \tab \code{\link[=period_diagnose_levels]{period_diagnose_levels()}} \tab \code{\link[=cohort_diagnose_levels]{cohort_diagnose_levels()}} \cr
-   \code{\link[=age_diagnose_values]{age_diagnose_values()}} \tab \code{\link[=period_diagnose_values]{period_diagnose_values()}} \tab \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} \cr
    \code{\link[=age_assert_levels]{age_assert_levels()}} \tab \code{\link[=period_assert_levels]{period_assert_levels()}} \tab \code{\link[=cohort_assert_levels]{cohort_assert_levels()}} \cr
-   \code{\link[=age_assert_values]{age_assert_values()}} \tab \code{\link[=period_assert_values]{period_assert_values()}} \tab \code{\link[=cohort_assert_values]{cohort_assert_values()}} \cr
+}
+
+
+\strong{Check observed values in a data frame}\tabular{lll}{
+   Age \tab Period \tab Cohort \cr
+   \code{\link[=age_df_diagnose_values]{age_df_diagnose_values()}} \tab \code{\link[=period_df_diagnose_values]{period_df_diagnose_values()}} \tab \code{\link[=cohort_df_diagnose_values]{cohort_df_diagnose_values()}} \cr
+   \code{\link[=age_df_assert_values]{age_df_assert_values()}} \tab \code{\link[=period_df_assert_values]{period_df_assert_values()}} \tab \code{\link[=cohort_df_assert_values]{cohort_df_assert_values()}} \cr
 }
 
 

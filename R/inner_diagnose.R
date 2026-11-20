@@ -140,8 +140,8 @@ inner_diagnose <- function(labels,
   if (identical(on, "levels") && !is.factor(labels)) {
     cli::cli_abort(c("{.arg {x_arg}} is not a factor.",
       i = paste(
-        "To check each element of {.arg {x_arg}}, use",
-        "{.fn {label_type}_diagnose_values} or {.fn {label_type}_assert_values}."
+        "To check observed labels in a data frame, use",
+        "{.fn {label_type}_df_diagnose_values} or {.fn {label_type}_df_assert_values}."
       ),
       i = "To treat the distinct values of {.arg {x_arg}} as levels, use {.fn factor}."
     ), call = user_frame())

@@ -46,7 +46,7 @@
 #' @seealso
 #' - [age_labels()] Create labels without broad age groups
 #' - [age_set_order_tree()] Order existing labels as a tree
-#' - [age_diagnose_values()] Check labels, including with
+#' - [age_df_diagnose_values()] Check labels, including with
 #'   `valid_tree = TRUE`
 #' - [period_labels_tree()] Period equivalent of `age_labels_tree()`
 #' - [cohort_labels_tree()] Cohort equivalent of `age_labels_tree()`

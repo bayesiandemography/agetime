@@ -70,7 +70,7 @@
 #' @seealso
 #' - [age_coarsen_to()] Recode a vector to a target classification
 #' - [period_df_coarsen_to()], [cohort_df_coarsen_to()]
-#' - [age_assert_values()] Check labels before recoding or after aggregation
+#' - [age_df_assert_values()] Check labels before recoding or after aggregation
 #'
 #' @examples
 #' deaths <- data.frame(
