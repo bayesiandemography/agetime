@@ -8,6 +8,10 @@
 \description{
 Functions for working with
 labels for age groups, periods, and cohorts.
+Most functions take label vectors. The \code{age_df_coarsen_to()},
+\code{period_df_coarsen_to()}, and \code{cohort_df_coarsen_to()} functions
+recode a column in a data frame using group-specific classifications
+from another data frame.
 }
 \section{Functions}{
 
@@ -45,6 +49,12 @@ labels for age groups, periods, and cohorts.
    \code{\link[=age_coarsen_five]{age_coarsen_five()}} \tab \code{\link[=period_coarsen_five]{period_coarsen_five()}} \tab \code{\link[=cohort_coarsen_five]{cohort_coarsen_five()}} \cr
    \code{\link[=age_coarsen_ten]{age_coarsen_ten()}} \tab \code{\link[=period_coarsen_ten]{period_coarsen_ten()}} \tab \code{\link[=cohort_coarsen_ten]{cohort_coarsen_ten()}} \cr
    \code{\link[=age_coarsen_life]{age_coarsen_life()}} \tab  \tab  \cr
+}
+
+
+\strong{Coarsen a column in a data frame}\tabular{lll}{
+    \tab  \tab  \cr
+   \code{\link[=age_df_coarsen_to]{age_df_coarsen_to()}} \tab \code{\link[=period_df_coarsen_to]{period_df_coarsen_to()}} \tab \code{\link[=cohort_df_coarsen_to]{cohort_df_coarsen_to()}} \cr
 }
 
 
@@ -95,8 +105,6 @@ labels for age groups, periods, and cohorts.
    \code{\link[=age_diagnose_values]{age_diagnose_values()}} \tab \code{\link[=period_diagnose_values]{period_diagnose_values()}} \tab \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} \cr
    \code{\link[=age_assert_levels]{age_assert_levels()}} \tab \code{\link[=period_assert_levels]{period_assert_levels()}} \tab \code{\link[=cohort_assert_levels]{cohort_assert_levels()}} \cr
    \code{\link[=age_assert_values]{age_assert_values()}} \tab \code{\link[=period_assert_values]{period_assert_values()}} \tab \code{\link[=cohort_assert_values]{cohort_assert_values()}} \cr
-   \code{\link[=age_diagnose_coarsen]{age_diagnose_coarsen()}} \tab \code{\link[=period_diagnose_coarsen]{period_diagnose_coarsen()}} \tab \code{\link[=cohort_diagnose_coarsen]{cohort_diagnose_coarsen()}} \cr
-   \code{\link[=age_assert_coarsen]{age_assert_coarsen()}} \tab \code{\link[=period_assert_coarsen]{period_assert_coarsen()}} \tab \code{\link[=cohort_assert_coarsen]{cohort_assert_coarsen()}} \cr
 }
 
 

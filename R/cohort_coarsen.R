@@ -151,8 +151,7 @@ cohort_coarsen <- function(labels,
 #' @seealso
 #' - [cohort_coarsen()] Coarsen using break points
 #' - [cohort_mapping()] Inspect the relationship between two sets of labels
-#' - [cohort_assert_coarsen()], [cohort_diagnose_coarsen()] Check complete aggregation
-#'   to a target classification
+#' - [cohort_df_coarsen_to()] Recode a data-frame column using group-specific targets
 #' - [cohort_labels()] Create cohort labels
 #' - [cohort_standard()] Clean existing labels
 #' - [age_coarsen_to()] Age equivalent of `cohort_coarsen_to()`

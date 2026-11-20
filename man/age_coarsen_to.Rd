@@ -67,8 +67,7 @@ age_coarsen_to(c("0", "1"), to)
 \itemize{
 \item \code{\link[=age_coarsen]{age_coarsen()}} Coarsen using break points
 \item \code{\link[=age_mapping]{age_mapping()}} Inspect the relationship between two sets of labels
-\item \code{\link[=age_assert_coarsen]{age_assert_coarsen()}}, \code{\link[=age_diagnose_coarsen]{age_diagnose_coarsen()}} Check that source
-observations can be aggregated to the complete target classification
+\item \code{\link[=age_df_coarsen_to]{age_df_coarsen_to()}} Recode a data-frame column using group-specific targets
 \item \code{\link[=age_labels]{age_labels()}} Create age group labels
 \item \code{\link[=age_standard]{age_standard()}} Clean existing labels
 \item \code{\link[=period_coarsen_to]{period_coarsen_to()}} Period equivalent of \code{age_coarsen_to()}

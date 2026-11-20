@@ -13,8 +13,8 @@ Authors@R:
              email = "junnizhang@163.com"),
       person(given = "Bayesian Demography Limited",
              role = "cph"))
-Description: Work with vectors of age, period, and
-    cohort labels. Infer the intervals underlying
+Description: Work with age, period, and cohort labels in
+    vectors and data frames. Infer the intervals underlying
     labels, and use this information to
     validate, reformat, and manipulate the labels.
     Common tasks such as filtering on age or

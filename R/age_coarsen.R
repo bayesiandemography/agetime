@@ -114,8 +114,7 @@ age_coarsen <- function(labels,
 #' @seealso
 #' - [age_coarsen()] Coarsen using break points
 #' - [age_mapping()] Inspect the relationship between two sets of labels
-#' - [age_assert_coarsen()], [age_diagnose_coarsen()] Check that source
-#'   observations can be aggregated to the complete target classification
+#' - [age_df_coarsen_to()] Recode a data-frame column using group-specific targets
 #' - [age_labels()] Create age group labels
 #' - [age_standard()] Clean existing labels
 #' - [period_coarsen_to()] Period equivalent of `age_coarsen_to()`

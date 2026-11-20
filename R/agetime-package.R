@@ -2,6 +2,10 @@
 #'
 #' Functions for working with
 #' labels for age groups, periods, and cohorts.
+#' Most functions take label vectors. The `age_df_coarsen_to()`,
+#' `period_df_coarsen_to()`, and `cohort_df_coarsen_to()` functions
+#' recode a column in a data frame using group-specific classifications
+#' from another data frame.
 #'
 #' @section Functions:
 #'
@@ -39,6 +43,12 @@
 #' | [age_coarsen_five()] | [period_coarsen_five()] | [cohort_coarsen_five()] |
 #' | [age_coarsen_ten()]  | [period_coarsen_ten()] | [cohort_coarsen_ten()] |
 #' | [age_coarsen_life()] |                      |                      |
+#'
+#' **Coarsen a column in a data frame**
+#'
+#' |                     |                      |                      |
+#' |---------------------|----------------------|----------------------|
+#' | [age_df_coarsen_to()] | [period_df_coarsen_to()] | [cohort_df_coarsen_to()] |
 #'
 #' **Continue series**
 #'
@@ -89,8 +99,6 @@
 #' | [age_diagnose_values()]  | [period_diagnose_values()]  | [cohort_diagnose_values()]  |
 #' | [age_assert_levels()] | [period_assert_levels()] | [cohort_assert_levels()] |
 #' | [age_assert_values()] | [period_assert_values()] | [cohort_assert_values()] |
-#' | [age_diagnose_coarsen()] | [period_diagnose_coarsen()] | [cohort_diagnose_coarsen()] |
-#' | [age_assert_coarsen()] | [period_assert_coarsen()] | [cohort_assert_coarsen()] |
 #'
 #' **Create mappings between labels**
 #'
