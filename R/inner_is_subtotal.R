@@ -111,12 +111,19 @@ subtotal_labels_from_pool <- function(intervals) {
   if (n < 2L) {
     return(character(0)) # nocov
   }
-  contain <- does_m1_contain_m2(m1 = m, m2 = m)
-  equal <- does_m1_equal_m2(m1 = m, m2 = m)
-  strict_contain <- contain & !equal
   subtotal <- character(0)
   for (i in seq_len(n)) {
-    child_idx <- which(strict_contain[i, ])
+    ## Only contained intervals can be children. Avoid equality checks
+    ## for every pair, especially when the age groups are disjoint.
+    child_idx <- which(m[i, 1L] <= m[, 1L] & m[, 2L] <= m[i, 2L])
+    child_idx <- child_idx[child_idx != i]
+    if (length(child_idx) < 2L) {
+      next
+    }
+    equal <- vapply(child_idx, function(j) {
+      does_int1_equal_int2(m[i, ], m[j, ])
+    }, logical(1))
+    child_idx <- child_idx[which(!equal)]
     if (length(child_idx) < 2L) {
       next
     }

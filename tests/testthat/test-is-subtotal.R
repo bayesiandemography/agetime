@@ -148,3 +148,21 @@ test_that("age_is_subtotal() is FALSE when there are no intervals", {
 test_that("age_is_subtotal() is FALSE when labels are synonyms for one interval", {
   expect_values(age_is_subtotal(c("0", "infant")), c(FALSE, FALSE))
 })
+
+test_that("synonyms do not supply extra children for a subtotal", {
+  expect_values(
+    age_is_subtotal(c("0-9", "0-9 years", "0-4")),
+    c(FALSE, FALSE, FALSE)
+  )
+})
+
+test_that("approximately equal intervals are not subtotal children", {
+  ## These children tile the parent, but the first child is treated as
+  ## equal to it under the existing tolerance, leaving only one child.
+  intervals <- list(
+    labels_unique = c("parent", "almost parent", "tiny interval"),
+    m = matrix(c(1, 2, 1, 2 - 1e-9, 2 - 1e-9, 2),
+               ncol = 2, byrow = TRUE)
+  )
+  expect_identical(agetime:::subtotal_labels_from_pool(intervals), character(0))
+})
