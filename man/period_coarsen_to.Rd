@@ -144,6 +144,8 @@ period_coarsen_to(c("2020", "2021"), to)
 \itemize{
 \item \code{\link[=period_coarsen]{period_coarsen()}} Coarsen using break points
 \item \code{\link[=period_mapping]{period_mapping()}} Inspect the relationship between two sets of labels
+\item \code{\link[=period_assert_coarsen]{period_assert_coarsen()}}, \code{\link[=period_diagnose_coarsen]{period_diagnose_coarsen()}} Check complete aggregation
+to a target classification
 \item \code{\link[=period_labels]{period_labels()}} Create period labels
 \item \code{\link[=period_standard]{period_standard()}} Clean existing labels
 \item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Age equivalent of \code{period_coarsen_to()}

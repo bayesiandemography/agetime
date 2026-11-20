@@ -144,6 +144,8 @@ cohort_coarsen_to(c("2020", "2021"), to)
 \itemize{
 \item \code{\link[=cohort_coarsen]{cohort_coarsen()}} Coarsen using break points
 \item \code{\link[=cohort_mapping]{cohort_mapping()}} Inspect the relationship between two sets of labels
+\item \code{\link[=cohort_assert_coarsen]{cohort_assert_coarsen()}}, \code{\link[=cohort_diagnose_coarsen]{cohort_diagnose_coarsen()}} Check complete aggregation
+to a target classification
 \item \code{\link[=cohort_labels]{cohort_labels()}} Create cohort labels
 \item \code{\link[=cohort_standard]{cohort_standard()}} Clean existing labels
 \item \code{\link[=age_coarsen_to]{age_coarsen_to()}} Age equivalent of \code{cohort_coarsen_to()}

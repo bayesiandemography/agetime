@@ -151,6 +151,8 @@ period_coarsen <- function(labels,
 #' @seealso
 #' - [period_coarsen()] Coarsen using break points
 #' - [period_mapping()] Inspect the relationship between two sets of labels
+#' - [period_assert_coarsen()], [period_diagnose_coarsen()] Check complete aggregation
+#'   to a target classification
 #' - [period_labels()] Create period labels
 #' - [period_standard()] Clean existing labels
 #' - [age_coarsen_to()] Age equivalent of `period_coarsen_to()`

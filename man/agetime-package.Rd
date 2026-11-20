@@ -95,6 +95,8 @@ labels for age groups, periods, and cohorts.
    \code{\link[=age_diagnose_values]{age_diagnose_values()}} \tab \code{\link[=period_diagnose_values]{period_diagnose_values()}} \tab \code{\link[=cohort_diagnose_values]{cohort_diagnose_values()}} \cr
    \code{\link[=age_assert_levels]{age_assert_levels()}} \tab \code{\link[=period_assert_levels]{period_assert_levels()}} \tab \code{\link[=cohort_assert_levels]{cohort_assert_levels()}} \cr
    \code{\link[=age_assert_values]{age_assert_values()}} \tab \code{\link[=period_assert_values]{period_assert_values()}} \tab \code{\link[=cohort_assert_values]{cohort_assert_values()}} \cr
+   \code{\link[=age_diagnose_coarsen]{age_diagnose_coarsen()}} \tab \code{\link[=period_diagnose_coarsen]{period_diagnose_coarsen()}} \tab \code{\link[=cohort_diagnose_coarsen]{cohort_diagnose_coarsen()}} \cr
+   \code{\link[=age_assert_coarsen]{age_assert_coarsen()}} \tab \code{\link[=period_assert_coarsen]{period_assert_coarsen()}} \tab \code{\link[=cohort_assert_coarsen]{cohort_assert_coarsen()}} \cr
 }
 
 

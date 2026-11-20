@@ -89,6 +89,8 @@
 #' | [age_diagnose_values()]  | [period_diagnose_values()]  | [cohort_diagnose_values()]  |
 #' | [age_assert_levels()] | [period_assert_levels()] | [cohort_assert_levels()] |
 #' | [age_assert_values()] | [period_assert_values()] | [cohort_assert_values()] |
+#' | [age_diagnose_coarsen()] | [period_diagnose_coarsen()] | [cohort_diagnose_coarsen()] |
+#' | [age_assert_coarsen()] | [period_assert_coarsen()] | [cohort_assert_coarsen()] |
 #'
 #' **Create mappings between labels**
 #'
