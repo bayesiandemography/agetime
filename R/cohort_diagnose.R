@@ -15,8 +15,17 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Not having totals or missing values
+#' - Having, or not having, totals, subtotals, or missing values
 #' - Having, or not having, open cohorts
+#'
+#' @section Presence and absence checks:
+#'
+#' Arguments starting with `no_` require absence; arguments starting with
+#' `has_` require at least one occurrence. `FALSE` means that the check
+#' is not requested. On empty input, `no_` checks pass and `has_` checks fail.
+#' A subtotal must be fully divided by two or more other intervals in the
+#' labels being checked. For factor levels, this includes unused levels;
+#' for values, unused levels are ignored.
 #'
 #' @inheritSection cohort_lower Rules for interpreting inputs
 #'
@@ -56,6 +65,10 @@
 #' @param no_total Check that there is no "total" category,
 #' as defined by [cohort_is_total()].
 #' Default is `FALSE` (don't check).
+#' @param no_subtotal Check that there are no subtotals,
+#' as defined by [cohort_is_subtotal()].
+#' Subtotals are distinct from grand totals checked by `no_total`.
+#' Default is `FALSE` (don't check).
 #' @param no_missing Check that there is no "missing" category,
 #' as defined by [cohort_is_missing()].
 #' Default is `FALSE` (don't check).
@@ -66,6 +79,15 @@
 #' @param no_open_right Check that no cohort
 #' is open on the right (has no upper limit),
 #' as defined by [cohort_is_open_right()].
+#' Default is `FALSE` (don't check).
+#' @param has_total Check that there is at least one "total" category,
+#' as defined by [cohort_is_total()].
+#' Default is `FALSE` (don't check).
+#' @param has_subtotal Check that there is at least one subtotal,
+#' as defined by [cohort_is_subtotal()].
+#' Default is `FALSE` (don't check).
+#' @param has_missing Check that there is at least one "missing" category,
+#' as defined by [cohort_is_missing()], including `NA` values.
 #' Default is `FALSE` (don't check).
 #' @param has_open_left Check that at least
 #' one cohort is open on the left (has no lower limit),
@@ -114,6 +136,17 @@
 #' - [period_diagnose_values()], [period_diagnose_levels()]
 #'
 #' @examples
+#' ## require totals, subtotals, and missing values
+#' cohort_assert_values(
+#'   c("2020-2025", "2025-2030", "2020-2030", "Total", "Missing"),
+#'   has_total = TRUE,
+#'   has_subtotal = TRUE,
+#'   has_missing = TRUE
+#' )
+#'
+#' ## require no subtotals
+#' cohort_diagnose_values(c("2020-2025", "2025-2030", "2020-2030"), no_subtotal = TRUE)
+#'
 #' lab <- cohort_labels_five(
 #'   lower_first = 2020,
 #'   lower_last = 2030
@@ -166,9 +199,13 @@ cohort_diagnose_levels <- function(labels,
                          no_overlap = FALSE,
                          no_gap = FALSE,
                          no_total = FALSE,
+                         no_subtotal = FALSE,
                          no_missing = FALSE,
                          no_open_left = FALSE,
                          no_open_right = FALSE,
+                         has_total = FALSE,
+                         has_subtotal = FALSE,
+                         has_missing = FALSE,
                          has_open_left = FALSE,
                          has_open_right = FALSE,
                          valid_tree = FALSE,
@@ -196,10 +233,14 @@ cohort_diagnose_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
     valid_life = FALSE,
@@ -213,9 +254,13 @@ cohort_assert_levels <- function(labels,
                           no_overlap = FALSE,
                           no_gap = FALSE,
                           no_total = FALSE,
+                          no_subtotal = FALSE,
                           no_missing = FALSE,
                           no_open_left = FALSE,
                           no_open_right = FALSE,
+                          has_total = FALSE,
+                          has_subtotal = FALSE,
+                          has_missing = FALSE,
                           has_open_left = FALSE,
                           has_open_right = FALSE,
                           valid_tree = FALSE,
@@ -244,10 +289,14 @@ cohort_assert_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
     valid_life = FALSE,
@@ -263,9 +312,13 @@ cohort_diagnose_values <- function(labels,
                                    no_overlap = FALSE,
                                    no_gap = FALSE,
                                    no_total = FALSE,
+                                   no_subtotal = FALSE,
                                    no_missing = FALSE,
                                    no_open_left = FALSE,
                                    no_open_right = FALSE,
+                                   has_total = FALSE,
+                                   has_subtotal = FALSE,
+                                   has_missing = FALSE,
                                    has_open_left = FALSE,
                                    has_open_right = FALSE,
                                    valid_tree = FALSE,
@@ -293,10 +346,14 @@ cohort_diagnose_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
     valid_life = FALSE,
@@ -310,9 +367,13 @@ cohort_assert_values <- function(labels,
                                  no_overlap = FALSE,
                                  no_gap = FALSE,
                                  no_total = FALSE,
+                                 no_subtotal = FALSE,
                                  no_missing = FALSE,
                                  no_open_left = FALSE,
                                  no_open_right = FALSE,
+                                 has_total = FALSE,
+                                 has_subtotal = FALSE,
+                                 has_missing = FALSE,
                                  has_open_left = FALSE,
                                  has_open_right = FALSE,
                                  valid_tree = FALSE,
@@ -341,10 +402,14 @@ cohort_assert_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = no_open_left,
     no_open_right = no_open_right,
     has_zero = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_left = has_open_left,
     has_open_right = has_open_right,
     valid_life = FALSE,

@@ -12,8 +12,12 @@ age_diagnose_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -27,8 +31,12 @@ age_assert_levels(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -43,8 +51,12 @@ age_diagnose_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -58,8 +70,12 @@ age_assert_values(
   no_overlap = FALSE,
   no_gap = FALSE,
   no_total = FALSE,
+  no_subtotal = FALSE,
   no_missing = FALSE,
   no_open_right = FALSE,
+  has_total = FALSE,
+  has_subtotal = FALSE,
+  has_missing = FALSE,
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
@@ -88,6 +104,11 @@ Default is \code{FALSE} (don't check).}
 as defined by \code{\link[=age_is_total]{age_is_total()}}.
 Default is \code{FALSE} (don't check).}
 
+\item{no_subtotal}{Check that there are no subtotals,
+as defined by \code{\link[=age_is_subtotal]{age_is_subtotal()}}.
+Subtotals are distinct from grand totals checked by \code{no_total}.
+Default is \code{FALSE} (don't check).}
+
 \item{no_missing}{Check that there is no "missing" category,
 as defined by \code{\link[=age_is_missing]{age_is_missing()}}.
 Default is \code{FALSE} (don't check).}
@@ -95,6 +116,18 @@ Default is \code{FALSE} (don't check).}
 \item{no_open_right}{Check that no age group
 is open on the right (has no upper limit),
 as defined by \code{\link[=age_is_open_right]{age_is_open_right()}}.
+Default is \code{FALSE} (don't check).}
+
+\item{has_total}{Check that there is at least one "total" category,
+as defined by \code{\link[=age_is_total]{age_is_total()}}.
+Default is \code{FALSE} (don't check).}
+
+\item{has_subtotal}{Check that there is at least one subtotal,
+as defined by \code{\link[=age_is_subtotal]{age_is_subtotal()}}.
+Default is \code{FALSE} (don't check).}
+
+\item{has_missing}{Check that there is at least one "missing" category,
+as defined by \code{\link[=age_is_missing]{age_is_missing()}}, including \code{NA} values.
 Default is \code{FALSE} (don't check).}
 
 \item{has_open_right}{Check that at least one age
@@ -166,7 +199,7 @@ Conditions include:
 \itemize{
 \item Not overlapping
 \item Not having gaps
-\item Not having totals or missing values
+\item Having, or not having, totals, subtotals, or missing values
 \item Having, or not having, open age groups
 \item Having an age group that starts at zero
 \item Only including age groups used by an abridged life table
@@ -208,7 +241,29 @@ To check a complete age reporting tree, use \code{valid_tree = TRUE},
 check trees separately for each sex or date, use \code{\link[dplyr:group_by]{dplyr::group_by()}}.
 }
 
+\section{Presence and absence checks}{
+
+
+Arguments starting with \code{no_} require absence; arguments starting with
+\code{has_} require at least one occurrence. \code{FALSE} means that the check
+is not requested. On empty input, \code{no_} checks pass and \code{has_} checks fail.
+A subtotal must be fully divided by two or more other intervals in the
+labels being checked. For factor levels, this includes unused levels;
+for values, unused levels are ignored.
+}
+
 \examples{
+## require totals, subtotals, and missing values
+age_assert_values(
+  c("0-4", "5-9", "0-9", "Total", "Missing"),
+  has_total = TRUE,
+  has_subtotal = TRUE,
+  has_missing = TRUE
+)
+
+## require no subtotals
+age_diagnose_values(c("0-4", "5-9", "0-9"), no_subtotal = TRUE)
+
 lab <- age_labels_life()
 lab
 

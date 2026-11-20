@@ -166,18 +166,39 @@ inner_is_subtotal <- function(labels,
     interpret_fail = interpret_fail
   )
   labels_chr <- as.character(labels)
-  pool_labels <- pool_labels_for_subtotal(intervals = intervals_all)
+  subtotal_labels <- find_subtotal_labels(
+    intervals = intervals_all,
+    label_type = label_type,
+    interpret_single = interpret_single,
+    interpret_multi = interpret_multi
+  )
+  is_subtotal <- labels_chr %in% subtotal_labels
+  copy_labels_names(is_subtotal, labels_input)
+}
+
+#' Find Subtotal Labels
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param label_type Label domain: `"age"`, `"cohort"`, or `"period"`.
+#' @param interpret_single Rule for one-year labels.
+#' @param interpret_multi Rule for multi-year labels.
+#' @returns Character vector of labels that are subtotals.
+#'
+#' @noRd
+find_subtotal_labels <- function(intervals,
+                                 label_type,
+                                 interpret_single,
+                                 interpret_multi) {
+  pool_labels <- pool_labels_for_subtotal(intervals = intervals)
   if (length(pool_labels) < 2L) {
-    return(copy_labels_names(rep(FALSE, length(labels_chr)), labels_input))
+    return(character(0))
   }
   intervals_pool <- intervals(
     labels = pool_labels,
     label_type = label_type,
     interpret_single = interpret_single,
     interpret_multi = interpret_multi,
-    interpret_fail = interpret_fail
+    interpret_fail = "error"
   )
-  subtotal_labels <- subtotal_labels_from_pool(intervals = intervals_pool)
-  is_subtotal <- labels_chr %in% subtotal_labels
-  copy_labels_names(is_subtotal, labels_input)
+  subtotal_labels_from_pool(intervals = intervals_pool)
 }

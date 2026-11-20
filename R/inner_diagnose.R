@@ -10,9 +10,13 @@
 #' @param no_overlap Run the no-overlap check?
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
+#' @param no_subtotal Run the no-subtotal check?
 #' @param no_missing Run the no-missing check?
 #' @param no_open_left Run the no-open-left check?
 #' @param no_open_right Run the no-open-right check?
+#' @param has_total Run the has-total check?
+#' @param has_subtotal Run the has-subtotal check?
+#' @param has_missing Run the has-missing check?
 #' @param has_zero Run the has-zero check?
 #' @param has_open_left Run the has-open-left check?
 #' @param has_open_right Run the has-open-right check?
@@ -32,9 +36,13 @@ inner_assert <- function(labels,
                          no_overlap,
                          no_gap,
                          no_total,
+                         no_subtotal,
                          no_missing,
                          no_open_left,
                          no_open_right,
+                         has_total,
+                         has_subtotal,
+                         has_missing,
                          has_zero,
                          has_open_left,
                          has_open_right,
@@ -53,9 +61,13 @@ inner_assert <- function(labels,
       no_overlap = no_overlap,
       no_gap = no_gap,
       no_total = no_total,
+      no_subtotal = no_subtotal,
       no_missing = no_missing,
       no_open_left = no_open_left,
       no_open_right = no_open_right,
+      has_total = has_total,
+      has_subtotal = has_subtotal,
+      has_missing = has_missing,
       has_zero = has_zero,
       has_open_left = has_open_left,
       has_open_right = has_open_right,
@@ -86,9 +98,13 @@ inner_assert <- function(labels,
 #' @param no_overlap Run the no-overlap check?
 #' @param no_gap Run the no-gap check?
 #' @param no_total Run the no-total check?
+#' @param no_subtotal Run the no-subtotal check?
 #' @param no_missing Run the no-missing check?
 #' @param no_open_left Run the no-open-left check?
 #' @param no_open_right Run the no-open-right check?
+#' @param has_total Run the has-total check?
+#' @param has_subtotal Run the has-subtotal check?
+#' @param has_missing Run the has-missing check?
 #' @param has_zero Run the has-zero check?
 #' @param has_open_left Run the has-open-left check?
 #' @param has_open_right Run the has-open-right check?
@@ -107,9 +123,13 @@ inner_diagnose <- function(labels,
                         no_overlap,
                         no_gap,
                         no_total,
+                        no_subtotal,
                         no_missing,
                         no_open_left,
                         no_open_right,
+                        has_total,
+                        has_subtotal,
+                        has_missing,
                         has_zero,
                         has_open_left,
                         has_open_right,
@@ -134,6 +154,10 @@ inner_diagnose <- function(labels,
   labels_for_intervals <- labels
   if (identical(on, "values") && is.factor(labels)) {
     labels_for_intervals <- droplevels(labels)
+    ## Retain missing values, which need not be listed as factor levels.
+    if (anyNA(labels)) {
+      labels_for_intervals <- addNA(labels_for_intervals)
+    }
   }
   intervals <- intervals(
     labels = labels_for_intervals,
@@ -142,6 +166,16 @@ inner_diagnose <- function(labels,
     interpret_multi = interpret_multi,
     interpret_fail = interpret_fail
   )
+  subtotal_labels <- if (isTRUE(no_subtotal) || isTRUE(has_subtotal)) {
+    find_subtotal_labels(
+      intervals = intervals,
+      label_type = label_type,
+      interpret_single = interpret_single,
+      interpret_multi = interpret_multi
+    )
+  } else {
+    character(0)
+  }
   details_list <- list()
   if (isTRUE(no_overlap)) {
     details_list <- c(
@@ -161,6 +195,12 @@ inner_diagnose <- function(labels,
       list(inner_diagnose_no_total(intervals = intervals, on = on))
     )
   }
+  if (isTRUE(no_subtotal)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_no_subtotal(subtotal_labels = subtotal_labels, on = on))
+    )
+  }
   if (isTRUE(no_missing)) {
     details_list <- c(
       details_list,
@@ -177,6 +217,24 @@ inner_diagnose <- function(labels,
     details_list <- c(
       details_list,
       list(inner_diagnose_no_open_right(intervals = intervals, on = on))
+    )
+  }
+  if (isTRUE(has_total)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_has_total(intervals = intervals, on = on))
+    )
+  }
+  if (isTRUE(has_subtotal)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_has_subtotal(subtotal_labels = subtotal_labels, on = on))
+    )
+  }
+  if (isTRUE(has_missing)) {
+    details_list <- c(
+      details_list,
+      list(inner_diagnose_has_missing(intervals = intervals, on = on))
     )
   }
   if (isTRUE(has_open_left)) {
@@ -442,6 +500,80 @@ inner_diagnose_no_total <- function(intervals, on) {
     comment = comment
   )
 }
+
+#' Inner Diagnose No Subtotal
+#'
+#' @param subtotal_labels Character vector of subtotal labels.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+inner_diagnose_no_subtotal <- function(subtotal_labels, on) {
+  passed <- length(subtotal_labels) == 0L
+  comment <- if (passed) {
+    NA_character_
+  } else {
+    sprintf("Example of subtotal among %s: '%s'", on, subtotal_labels[[1L]])
+  }
+  tibble::tibble_row(
+    condition = "no_subtotal",
+    passed = passed,
+    comment = comment
+  )
+}
+
+#' Inner Diagnose Has Total
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+inner_diagnose_has_total <- function(intervals, on) {
+  passed <- any(get_is_total(intervals))
+  tibble::tibble_row(
+    condition = "has_total",
+    passed = passed,
+    comment = if (passed) NA_character_ else sprintf("No total among %s", on)
+  )
+}
+
+#' Inner Diagnose Has Subtotal
+#'
+#' @param subtotal_labels Character vector of subtotal labels.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+inner_diagnose_has_subtotal <- function(subtotal_labels, on) {
+  passed <- length(subtotal_labels) > 0L
+  tibble::tibble_row(
+    condition = "has_subtotal",
+    passed = passed,
+    comment = if (passed) NA_character_ else sprintf("No subtotal among %s", on)
+  )
+}
+
+#' Inner Diagnose Has Missing
+#'
+#' @param intervals An `agetime_intervals` object.
+#' @param on Universe checked: `"levels"` or `"values"`.
+#' @returns One-row tibble with condition result details.
+#'
+#' @noRd
+inner_diagnose_has_missing <- function(intervals, on) {
+  passed <- any(get_is_missing(intervals))
+  tibble::tibble_row(
+    condition = "has_missing",
+    passed = passed,
+    comment = if (passed) {
+      NA_character_
+    } else {
+      sprintf("No missing category or NA among %s", on)
+    }
+  )
+}
+
 #' Inner Diagnose No Na
 #'
 #' @param intervals An `agetime_intervals` object.

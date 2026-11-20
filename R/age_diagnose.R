@@ -15,7 +15,7 @@
 #'
 #' - Not overlapping
 #' - Not having gaps
-#' - Not having totals or missing values
+#' - Having, or not having, totals, subtotals, or missing values
 #' - Having, or not having, open age groups
 #' - Having an age group that starts at zero
 #' - Only including age groups used by an abridged life table
@@ -51,6 +51,15 @@
 #' `has_zero = TRUE`, `has_open_right = TRUE`, and `no_total = TRUE`. To
 #' check trees separately for each sex or date, use [dplyr::group_by()].
 #'
+#' @section Presence and absence checks:
+#'
+#' Arguments starting with `no_` require absence; arguments starting with
+#' `has_` require at least one occurrence. `FALSE` means that the check
+#' is not requested. On empty input, `no_` checks pass and `has_` checks fail.
+#' A subtotal must be fully divided by two or more other intervals in the
+#' labels being checked. For factor levels, this includes unused levels;
+#' for values, unused levels are ignored.
+#'
 #' @inheritParams age_lower
 #' @param no_overlap Check that no age groups overlap.
 #' Different labels that describe the same interval,
@@ -65,12 +74,25 @@
 #' @param no_total Check that there is no "total" category,
 #' as defined by [age_is_total()].
 #' Default is `FALSE` (don't check).
+#' @param no_subtotal Check that there are no subtotals,
+#' as defined by [age_is_subtotal()].
+#' Subtotals are distinct from grand totals checked by `no_total`.
+#' Default is `FALSE` (don't check).
 #' @param no_missing Check that there is no "missing" category,
 #' as defined by [age_is_missing()].
 #' Default is `FALSE` (don't check).
 #' @param no_open_right Check that no age group
 #' is open on the right (has no upper limit),
 #' as defined by [age_is_open_right()].
+#' Default is `FALSE` (don't check).
+#' @param has_total Check that there is at least one "total" category,
+#' as defined by [age_is_total()].
+#' Default is `FALSE` (don't check).
+#' @param has_subtotal Check that there is at least one subtotal,
+#' as defined by [age_is_subtotal()].
+#' Default is `FALSE` (don't check).
+#' @param has_missing Check that there is at least one "missing" category,
+#' as defined by [age_is_missing()], including `NA` values.
 #' Default is `FALSE` (don't check).
 #' @param has_open_right Check that at least one age
 #' group is open on the right (has no upper limit),
@@ -121,6 +143,17 @@
 #' - [cohort_diagnose_values()], [cohort_diagnose_levels()]
 #'
 #' @examples
+#' ## require totals, subtotals, and missing values
+#' age_assert_values(
+#'   c("0-4", "5-9", "0-9", "Total", "Missing"),
+#'   has_total = TRUE,
+#'   has_subtotal = TRUE,
+#'   has_missing = TRUE
+#' )
+#'
+#' ## require no subtotals
+#' age_diagnose_values(c("0-4", "5-9", "0-9"), no_subtotal = TRUE)
+#'
 #' lab <- age_labels_life()
 #' lab
 #'
@@ -180,15 +213,18 @@
 #' age_diagnose_values(fac, no_overlap = TRUE)
 #' @export
 
-# When length(labels) == 0, checks on overlap, gaps, totals, NA, and life-table
-# validity are vacuously satisfied. Checks that require at
-# least one interval (has_*) fail.
+# When length(labels) == 0, no_* and valid_* checks are vacuously
+# satisfied. Checks that require presence (has_*) fail.
 age_diagnose_levels <- function(labels,
                       no_overlap = FALSE,
                       no_gap = FALSE,
                       no_total = FALSE,
+                      no_subtotal = FALSE,
                       no_missing = FALSE,
                       no_open_right = FALSE,
+                      has_total = FALSE,
+                      has_subtotal = FALSE,
+                      has_missing = FALSE,
                       has_open_right = FALSE,
                       has_zero = FALSE,
                       valid_life = FALSE,
@@ -207,11 +243,15 @@ age_diagnose_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_right = has_open_right,
     valid_life = valid_life,
     valid_tree = valid_tree
@@ -224,8 +264,12 @@ age_assert_levels <- function(labels,
                        no_overlap = FALSE,
                        no_gap = FALSE,
                        no_total = FALSE,
+                       no_subtotal = FALSE,
                        no_missing = FALSE,
                        no_open_right = FALSE,
+                       has_total = FALSE,
+                       has_subtotal = FALSE,
+                       has_missing = FALSE,
                        has_open_right = FALSE,
                        has_zero = FALSE,
                        valid_life = FALSE,
@@ -245,11 +289,15 @@ age_assert_levels <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_right = has_open_right,
     valid_life = valid_life,
     valid_tree = valid_tree,
@@ -264,8 +312,12 @@ age_diagnose_values <- function(labels,
                                 no_overlap = FALSE,
                                 no_gap = FALSE,
                                 no_total = FALSE,
+                                no_subtotal = FALSE,
                                 no_missing = FALSE,
                                 no_open_right = FALSE,
+                                has_total = FALSE,
+                                has_subtotal = FALSE,
+                                has_missing = FALSE,
                                 has_open_right = FALSE,
                                 has_zero = FALSE,
                                 valid_life = FALSE,
@@ -284,11 +336,15 @@ age_diagnose_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_right = has_open_right,
     valid_life = valid_life,
     valid_tree = valid_tree
@@ -301,8 +357,12 @@ age_assert_values <- function(labels,
                               no_overlap = FALSE,
                               no_gap = FALSE,
                               no_total = FALSE,
+                              no_subtotal = FALSE,
                               no_missing = FALSE,
                               no_open_right = FALSE,
+                              has_total = FALSE,
+                              has_subtotal = FALSE,
+                              has_missing = FALSE,
                               has_open_right = FALSE,
                               has_zero = FALSE,
                               valid_life = FALSE,
@@ -322,11 +382,15 @@ age_assert_values <- function(labels,
     no_overlap = no_overlap,
     no_gap = no_gap,
     no_total = no_total,
+    no_subtotal = no_subtotal,
     no_missing = no_missing,
     no_open_left = FALSE,
     no_open_right = no_open_right,
     has_zero = has_zero,
     has_open_left = FALSE,
+    has_total = has_total,
+    has_subtotal = has_subtotal,
+    has_missing = has_missing,
     has_open_right = has_open_right,
     valid_life = valid_life,
     valid_tree = valid_tree,
