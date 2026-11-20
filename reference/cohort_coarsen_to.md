@@ -147,6 +147,10 @@ Labels starting with `"-"`, such as `"-2000"`, are not accepted.
 - [`cohort_mapping()`](https://bayesiandemography.github.io/agetime/reference/cohort_mapping.md)
   Inspect the relationship between two sets of labels
 
+- [`cohort_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_coarsen.md),
+  [`cohort_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_coarsen.md)
+  Check complete aggregation to a target classification
+
 - [`cohort_labels()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   Create cohort labels
 

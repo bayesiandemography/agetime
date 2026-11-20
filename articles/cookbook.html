@@ -300,6 +300,8 @@ above <code>"7-14"</code>.</li>
 groups</a></li>
 <li><a href="#build-a-mapping-between-age-groups">Build a mapping
 between age groups</a></li>
+<li><a href="#coarsen-before-join">Coarsen and aggregate before joining
+datasets</a></li>
 <li>
 <code><a href="../reference/period_coarsen_to.html">period_coarsen_to()</a></code>,
 <code><a href="../reference/cohort_coarsen_to.html">cohort_coarsen_to()</a></code>
@@ -1194,20 +1196,167 @@ another age variable</a></li>
 </div>
 </div>
 <div class="section level3">
-<h3 id="build-a-mapping-between-age-groups">Build a mapping between age groups<a class="anchor" aria-label="anchor" href="#build-a-mapping-between-age-groups"></a>
+<h3 id="coarsen-before-join">Coarsen and aggregate before joining datasets<a class="anchor" aria-label="anchor" href="#coarsen-before-join"></a>
 </h3>
 <div class="section level4">
 <h4 id="problem-18">Problem<a class="anchor" aria-label="anchor" href="#problem-18"></a>
+</h4>
+<p>You want to join deaths and population by country, year, sex, and
+age. The population age groups are coarser than, or identical to, the
+death age groups. The classifications vary between countries. Before
+aggregating deaths, you want to check that every population age group
+will have a complete death count.</p>
+</div>
+<div class="section level4">
+<h4 id="solution-18">Solution<a class="anchor" aria-label="anchor" href="#solution-18"></a>
+</h4>
+<p>Use <code><a href="../reference/age_diagnose_coarsen.html">age_diagnose_coarsen()</a></code> within each country/year/sex
+combination. Correct any problems, then use
+<code><a href="../reference/age_coarsen_to.html">age_coarsen_to()</a></code> to recode the ages, sum the deaths, and
+join to the population.</p>
+<p>These example datasets cover ages 0-19. Country A has detailed death
+age groups; country B already uses the population classification.</p>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deaths</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">country</span>, <span class="op">~</span><span class="va">year</span>, <span class="op">~</span><span class="va">sex</span>,     <span class="op">~</span><span class="va">age</span>,    <span class="op">~</span><span class="va">deaths</span>,</span>
+<span>  <span class="st">"A"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"0-4"</span>,   <span class="fl">1</span>,</span>
+<span>  <span class="st">"A"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"5-9"</span>,   <span class="fl">2</span>,</span>
+<span>  <span class="st">"A"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"10-14"</span>, <span class="fl">3</span>,</span>
+<span>  <span class="st">"B"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"0-9"</span>,   <span class="fl">4</span>,</span>
+<span>  <span class="st">"B"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"10-19"</span>, <span class="fl">5</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">population</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">country</span>, <span class="op">~</span><span class="va">year</span>, <span class="op">~</span><span class="va">sex</span>,     <span class="op">~</span><span class="va">age</span>,    <span class="op">~</span><span class="va">population</span>,</span>
+<span>  <span class="st">"A"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"0-9"</span>,   <span class="fl">2000</span>,</span>
+<span>  <span class="st">"A"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"10-19"</span>, <span class="fl">1800</span>,</span>
+<span>  <span class="st">"B"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"0-9"</span>,   <span class="fl">2200</span>,</span>
+<span>  <span class="st">"B"</span>,      <span class="fl">2023</span>,  <span class="st">"Female"</span>, <span class="st">"10-19"</span>, <span class="fl">2100</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">keys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"country"</span>, <span class="st">"year"</span>, <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
+<p>First create a lookup containing the target age labels for each
+group. Joining this lookup to deaths attaches the classification to use,
+without attaching population counts yet.</p>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">target_ages</span> <span class="op">&lt;-</span> <span class="va">population</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>target_age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>, .by <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">keys</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">deaths_targets</span> <span class="op">&lt;-</span> <span class="va">deaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">target_ages</span>, by <span class="op">=</span> <span class="va">keys</span>, relationship <span class="op">=</span> <span class="st">"many-to-one"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">checks</span> <span class="op">&lt;-</span> <span class="va">deaths_targets</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">reframe</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/age_diagnose_coarsen.html">age_diagnose_coarsen</a></span><span class="op">(</span><span class="va">age</span>, to <span class="op">=</span> <span class="va">target_age</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">details</span>,</span>
+<span>    .by <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">keys</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">checks</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">passed</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span>width <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 6</span></span></span>
+<span><span class="co">#&gt;   country  year sex    condition passed</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A        <span style="text-decoration: underline;">2</span>023 Female complete  FALSE </span></span>
+<span><span class="co">#&gt;   comment                                                                       </span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                                         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> Target '10-19' in 'target_age[[1L]]' is not fully covered; source ages '15-19…</span></span></code></pre></div>
+<p>The diagnostic identifies incomplete coverage of country A’s target
+<code>"10-19"</code>: source ages <code>"15-19"</code> are missing.
+Neither classification has an internal gap, so separate
+<code>no_gap</code> checks would not detect this problem. Recoding alone
+would label the deaths for ages 10-14 as <code>"10-19"</code>, giving an
+incomplete count for the population denominator.</p>
+<p>Suppose checking the original source reveals an omitted row for ages
+15-19, with four deaths. Restore that row and repeat the diagnosis.</p>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deaths</span> <span class="op">&lt;-</span> <span class="va">deaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/add_row.html" class="external-link">add_row</a></span><span class="op">(</span>country <span class="op">=</span> <span class="st">"A"</span>, year <span class="op">=</span> <span class="fl">2023</span>, sex <span class="op">=</span> <span class="st">"Female"</span>,</span>
+<span>          age <span class="op">=</span> <span class="st">"15-19"</span>, deaths <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">deaths_targets</span> <span class="op">&lt;-</span> <span class="va">deaths</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">target_ages</span>, by <span class="op">=</span> <span class="va">keys</span>, relationship <span class="op">=</span> <span class="st">"many-to-one"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">checks</span> <span class="op">&lt;-</span> <span class="va">deaths_targets</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/reframe.html" class="external-link">reframe</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/age_diagnose_coarsen.html">age_diagnose_coarsen</a></span><span class="op">(</span><span class="va">age</span>, to <span class="op">=</span> <span class="va">target_age</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">$</span><span class="va">details</span>,</span>
+<span>    .by <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">keys</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">checks</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">passed</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 0 × 6</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 variables: country &lt;chr&gt;, year &lt;dbl&gt;, sex &lt;chr&gt;, condition &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   passed &lt;lgl&gt;, comment &lt;chr&gt;</span></span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">checks</span><span class="op">$</span><span class="va">passed</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>There are now no failed checks. Recode and aggregate within each
+group, then join on the complete set of keys. The final join requires
+one row on each side for every key combination and errors if either
+dataset has unmatched rows.</p>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">deaths_coarse</span> <span class="op">&lt;-</span> <span class="va">deaths_targets</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    age <span class="op">=</span> <span class="fu"><a href="../reference/age_coarsen_to.html">age_coarsen_to</a></span><span class="op">(</span><span class="va">age</span>, to <span class="op">=</span> <span class="va">target_age</span><span class="op">[[</span><span class="fl">1L</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>,</span>
+<span>    .by <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">keys</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>deaths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">deaths</span><span class="op">)</span>, .by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">keys</span><span class="op">)</span>, <span class="va">age</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">deaths_population</span> <span class="op">&lt;-</span> <span class="va">deaths_coarse</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">inner_join</a></span><span class="op">(</span></span>
+<span>    <span class="va">population</span>,</span>
+<span>    by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">keys</span>, <span class="st">"age"</span><span class="op">)</span>,</span>
+<span>    relationship <span class="op">=</span> <span class="st">"one-to-one"</span>,</span>
+<span>    unmatched <span class="op">=</span> <span class="st">"error"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">deaths_population</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 4 × 6</span></span></span>
+<span><span class="co">#&gt;   country  year sex    age   deaths population</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A        <span style="text-decoration: underline;">2</span>023 Female 0-9        3       <span style="text-decoration: underline;">2</span>000</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> A        <span style="text-decoration: underline;">2</span>023 Female 10-19      7       <span style="text-decoration: underline;">1</span>800</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> B        <span style="text-decoration: underline;">2</span>023 Female 0-9        4       <span style="text-decoration: underline;">2</span>200</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> B        <span style="text-decoration: underline;">2</span>023 Female 10-19      5       <span style="text-decoration: underline;">2</span>100</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="discussion-16">Discussion<a class="anchor" aria-label="anchor" href="#discussion-16"></a>
+</h4>
+<p>The default <code>include_equals = TRUE</code> allows country B’s
+classification to pass without any merging. Set
+<code>include_equals = FALSE</code> if every country/year/sex
+combination must involve a genuine coarsening.</p>
+<p>Use each group’s own target labels. Pooling labels across countries,
+years, or sexes can hide coverage problems or introduce overlaps that do
+not occur within any individual group.</p>
+<p>The example uses character age labels. With factors, the diagnostic
+checks observed values, whereas <code><a href="../reference/age_coarsen_to.html">age_coarsen_to()</a></code> also uses
+unused levels. Convert age columns to character before this workflow, or
+drop unused levels within each group before recoding.</p>
+</div>
+<div class="section level4">
+<h4 id="see-also-17">See Also<a class="anchor" aria-label="anchor" href="#see-also-17"></a>
+</h4>
+<ul>
+<li><a href="#recode-into-classification">Adopt coarser age groups from
+another age variable</a></li>
+<li><a href="#aggregate-to-broader-age-groups">Aggregate to broader age
+groups</a></li>
+<li>
+<code><a href="../reference/age_diagnose_coarsen.html">age_assert_coarsen()</a></code> stops at a failed check, as an
+alternative to inspecting diagnostics</li>
+</ul>
+</div>
+</div>
+<div class="section level3">
+<h3 id="build-a-mapping-between-age-groups">Build a mapping between age groups<a class="anchor" aria-label="anchor" href="#build-a-mapping-between-age-groups"></a>
+</h3>
+<div class="section level4">
+<h4 id="problem-19">Problem<a class="anchor" aria-label="anchor" href="#problem-19"></a>
 </h4>
 <p>You have two age classifications, and you want a lookup table showing
 how the age groups in one classification relate to the age groups in the
 other.</p>
 </div>
 <div class="section level4">
-<h4 id="solution-18">Solution<a class="anchor" aria-label="anchor" href="#solution-18"></a>
+<h4 id="solution-19">Solution<a class="anchor" aria-label="anchor" href="#solution-19"></a>
 </h4>
 <p>Use <code><a href="../reference/age_mapping.html">age_mapping()</a></code>.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">classif_fine</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_labels.html">age_labels_ten</a></span><span class="op">(</span>lower_last <span class="op">=</span> <span class="fl">60</span><span class="op">)</span></span>
 <span><span class="va">classif_broad</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/age_labels.html">age_labels</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">60</span><span class="op">)</span>, open_right <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_mapping.html">age_mapping</a></span><span class="op">(</span></span>
@@ -1227,14 +1376,14 @@ other.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">7</span> 60+   60+</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="discussion-16">Discussion<a class="anchor" aria-label="anchor" href="#discussion-16"></a>
+<h4 id="discussion-17">Discussion<a class="anchor" aria-label="anchor" href="#discussion-17"></a>
 </h4>
 <p>Other possible values for <code>relation</code> are
 <code>"equals"</code>, <code>"contains"</code>, and
 <code>"overlaps_with"</code>.</p>
 <p>To represent the mapping as a matrix rather than a data frame, set
 <code>format</code> to <code>"matrix"</code>,</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_mapping.html">age_mapping</a></span><span class="op">(</span></span>
 <span>  labels_x <span class="op">=</span> <span class="va">classif_fine</span>,</span>
 <span>  labels_y <span class="op">=</span> <span class="va">classif_broad</span>,</span>
@@ -1254,7 +1403,7 @@ other.</p>
 right. A total contains, and overlaps with, every other category,
 including missing values. A missing value matches other missing values,
 under every relation, but is unrelated to any age group.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_mapping.html">age_mapping</a></span><span class="op">(</span></span>
 <span>  labels_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"Not stated"</span>, <span class="st">"Total"</span><span class="op">)</span>,</span>
 <span>  labels_y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-9"</span>, <span class="st">"Missing"</span>, <span class="st">"Total"</span><span class="op">)</span>,</span>
@@ -1270,7 +1419,7 @@ under every relation, but is unrelated to any age group.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> Total      Total</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="see-also-17">See Also<a class="anchor" aria-label="anchor" href="#see-also-17"></a>
+<h4 id="see-also-18">See Also<a class="anchor" aria-label="anchor" href="#see-also-18"></a>
 </h4>
 <ul>
 <li><a href="#recode-into-classification">Adopt coarser age groups from
@@ -1288,13 +1437,13 @@ groups</a></li>
 <h3 id="plot-nicer">Use age, period, or cohort on the x-axis of a plot<a class="anchor" aria-label="anchor" href="#plot-nicer"></a>
 </h3>
 <div class="section level4">
-<h4 id="problem-19">Problem<a class="anchor" aria-label="anchor" href="#problem-19"></a>
+<h4 id="problem-20">Problem<a class="anchor" aria-label="anchor" href="#problem-20"></a>
 </h4>
 <p>You want to construct a plot with age, period, or cohort on the
 x-axis. But plots that use non-numeric age, period, or cohort labels on
 the x-axis often look terrible, and get categories in the wrong
 order.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  age <span class="op">=</span> <span class="fu"><a href="../reference/age_labels.html">age_labels_five</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rate <span class="op">=</span> <span class="fl">10</span> <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">21</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">21</span><span class="op">)</span></span>
@@ -1305,18 +1454,18 @@ order.</p>
 <p><img src="cookbook_files/figure-html/mid-plot-problem-1.png" class="r-plt" alt="" width="480"></p>
 </div>
 <div class="section level4">
-<h4 id="solution-19">Solution<a class="anchor" aria-label="anchor" href="#solution-19"></a>
+<h4 id="solution-20">Solution<a class="anchor" aria-label="anchor" href="#solution-20"></a>
 </h4>
 <p>Convert age, period, or cohort to a continuous variable by using
 <code><a href="../reference/age_lower.html">age_mid()</a></code>, <code><a href="../reference/period_lower.html">period_mid()</a></code>, or
 <code><a href="../reference/cohort_lower.html">cohort_mid()</a></code>.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">df</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="../reference/age_lower.html">age_mid</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span>, y <span class="op">=</span> <span class="va">rate</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="cookbook_files/figure-html/mid-plot-solution-1.png" class="r-plt" alt="" width="480"></p>
 </div>
 <div class="section level4">
-<h4 id="see-also-18">See Also<a class="anchor" aria-label="anchor" href="#see-also-18"></a>
+<h4 id="see-also-19">See Also<a class="anchor" aria-label="anchor" href="#see-also-19"></a>
 </h4>
 <ul>
 <li><a href="#sort-age-permanently">Create an age variable that sorts
@@ -1331,15 +1480,15 @@ properly</a></li>
 <h3 id="calculate-annual-rates">Calculate annual rates<a class="anchor" aria-label="anchor" href="#calculate-annual-rates"></a>
 </h3>
 <div class="section level4">
-<h4 id="problem-20">Problem<a class="anchor" aria-label="anchor" href="#problem-20"></a>
+<h4 id="problem-21">Problem<a class="anchor" aria-label="anchor" href="#problem-21"></a>
 </h4>
 <p>Your data use multi-year periods, and you want annual rates.</p>
 </div>
 <div class="section level4">
-<h4 id="solution-20">Solution<a class="anchor" aria-label="anchor" href="#solution-20"></a>
+<h4 id="solution-21">Solution<a class="anchor" aria-label="anchor" href="#solution-21"></a>
 </h4>
 <p>Use <code><a href="../reference/period_lower.html">period_width()</a></code>.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  period <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2010-2020"</span>, <span class="st">"2020-2023"</span>, <span class="st">"2023-2030"</span><span class="op">)</span>,</span>
 <span>  departures <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2000</span>, <span class="fl">50</span>, <span class="fl">3000</span><span class="op">)</span></span>
@@ -1358,12 +1507,12 @@ properly</a></li>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> 2023-2030       <span style="text-decoration: underline;">3</span>000      7       429.</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="discussion-17">Discussion<a class="anchor" aria-label="anchor" href="#discussion-17"></a>
+<h4 id="discussion-18">Discussion<a class="anchor" aria-label="anchor" href="#discussion-18"></a>
 </h4>
 <p>The width of an open interval is <code>Inf</code>.</p>
 </div>
 <div class="section level4">
-<h4 id="see-also-19">See Also<a class="anchor" aria-label="anchor" href="#see-also-19"></a>
+<h4 id="see-also-20">See Also<a class="anchor" aria-label="anchor" href="#see-also-20"></a>
 </h4>
 <ul>
 <li><a href="#plot-nicer">Use age, period, or cohort on the x-axis of a

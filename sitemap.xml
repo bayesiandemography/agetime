@@ -12,6 +12,7 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_coarsen_five.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_extend.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/age_fill.html</loc></url>
@@ -31,6 +32,7 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_five.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_extend.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/cohort_fill.html</loc></url>
@@ -50,6 +52,7 @@
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_coarsen_five.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.html</loc></url>
+<url><loc>https://bayesiandemography.github.io/agetime/reference/period_diagnose_coarsen.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_extend.html</loc></url>
 <url><loc>https://bayesiandemography.github.io/agetime/reference/period_fill.html</loc></url>

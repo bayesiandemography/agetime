@@ -243,6 +243,7 @@ age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
 - [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
 - [Build a mapping between age
   groups](#build-a-mapping-between-age-groups)
+- [Coarsen and aggregate before joining datasets](#coarsen-before-join)
 - [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md),
   [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
 
@@ -1053,6 +1054,162 @@ To aggregate to (abridged) life-table ages, use
 - [`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md),
   [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md),
   [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
+
+### Coarsen and aggregate before joining datasets
+
+#### Problem
+
+You want to join deaths and population by country, year, sex, and age.
+The population age groups are coarser than, or identical to, the death
+age groups. The classifications vary between countries. Before
+aggregating deaths, you want to check that every population age group
+will have a complete death count.
+
+#### Solution
+
+Use
+[`age_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.md)
+within each country/year/sex combination. Correct any problems, then use
+[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
+to recode the ages, sum the deaths, and join to the population.
+
+These example datasets cover ages 0-19. Country A has detailed death age
+groups; country B already uses the population classification.
+
+``` r
+
+deaths <- tribble(
+  ~country, ~year, ~sex,     ~age,    ~deaths,
+  "A",      2023,  "Female", "0-4",   1,
+  "A",      2023,  "Female", "5-9",   2,
+  "A",      2023,  "Female", "10-14", 3,
+  "B",      2023,  "Female", "0-9",   4,
+  "B",      2023,  "Female", "10-19", 5
+)
+population <- tribble(
+  ~country, ~year, ~sex,     ~age,    ~population,
+  "A",      2023,  "Female", "0-9",   2000,
+  "A",      2023,  "Female", "10-19", 1800,
+  "B",      2023,  "Female", "0-9",   2200,
+  "B",      2023,  "Female", "10-19", 2100
+)
+keys <- c("country", "year", "sex")
+```
+
+First create a lookup containing the target age labels for each group.
+Joining this lookup to deaths attaches the classification to use,
+without attaching population counts yet.
+
+``` r
+
+target_ages <- population |>
+  summarise(target_age = list(age), .by = all_of(keys))
+
+deaths_targets <- deaths |>
+  left_join(target_ages, by = keys, relationship = "many-to-one")
+
+checks <- deaths_targets |>
+  reframe(
+    age_diagnose_coarsen(age, to = target_age[[1L]])$details,
+    .by = all_of(keys)
+  )
+checks |>
+  filter(!passed) |>
+  print(width = Inf)
+#> # A tibble: 1 × 6
+#>   country  year sex    condition passed
+#>   <chr>   <dbl> <chr>  <chr>     <lgl> 
+#> 1 A        2023 Female complete  FALSE 
+#>   comment                                                                       
+#>   <chr>                                                                         
+#> 1 Target '10-19' in 'target_age[[1L]]' is not fully covered; source ages '15-19…
+```
+
+The diagnostic identifies incomplete coverage of country A’s target
+`"10-19"`: source ages `"15-19"` are missing. Neither classification has
+an internal gap, so separate `no_gap` checks would not detect this
+problem. Recoding alone would label the deaths for ages 10-14 as
+`"10-19"`, giving an incomplete count for the population denominator.
+
+Suppose checking the original source reveals an omitted row for ages
+15-19, with four deaths. Restore that row and repeat the diagnosis.
+
+``` r
+
+deaths <- deaths |>
+  add_row(country = "A", year = 2023, sex = "Female",
+          age = "15-19", deaths = 4)
+
+deaths_targets <- deaths |>
+  left_join(target_ages, by = keys, relationship = "many-to-one")
+
+checks <- deaths_targets |>
+  reframe(
+    age_diagnose_coarsen(age, to = target_age[[1L]])$details,
+    .by = all_of(keys)
+  )
+checks |>
+  filter(!passed)
+#> # A tibble: 0 × 6
+#> # ℹ 6 variables: country <chr>, year <dbl>, sex <chr>, condition <chr>,
+#> #   passed <lgl>, comment <chr>
+stopifnot(all(checks$passed))
+```
+
+There are now no failed checks. Recode and aggregate within each group,
+then join on the complete set of keys. The final join requires one row
+on each side for every key combination and errors if either dataset has
+unmatched rows.
+
+``` r
+
+deaths_coarse <- deaths_targets |>
+  mutate(
+    age = age_coarsen_to(age, to = target_age[[1L]]),
+    .by = all_of(keys)
+  ) |>
+  summarise(deaths = sum(deaths), .by = c(all_of(keys), age))
+
+deaths_population <- deaths_coarse |>
+  inner_join(
+    population,
+    by = c(keys, "age"),
+    relationship = "one-to-one",
+    unmatched = "error"
+  )
+deaths_population
+#> # A tibble: 4 × 6
+#>   country  year sex    age   deaths population
+#>   <chr>   <dbl> <chr>  <chr>  <dbl>      <dbl>
+#> 1 A        2023 Female 0-9        3       2000
+#> 2 A        2023 Female 10-19      7       1800
+#> 3 B        2023 Female 0-9        4       2200
+#> 4 B        2023 Female 10-19      5       2100
+```
+
+#### Discussion
+
+The default `include_equals = TRUE` allows country B’s classification to
+pass without any merging. Set `include_equals = FALSE` if every
+country/year/sex combination must involve a genuine coarsening.
+
+Use each group’s own target labels. Pooling labels across countries,
+years, or sexes can hide coverage problems or introduce overlaps that do
+not occur within any individual group.
+
+The example uses character age labels. With factors, the diagnostic
+checks observed values, whereas
+[`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
+also uses unused levels. Convert age columns to character before this
+workflow, or drop unused levels within each group before recoding.
+
+#### See Also
+
+- [Adopt coarser age groups from another age
+  variable](#recode-into-classification)
+- [Aggregate to broader age groups](#aggregate-to-broader-age-groups)
+- [`age_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.md)
+  stops at a failed check, as an alternative to inspecting diagnostics
 
 ### Build a mapping between age groups
 

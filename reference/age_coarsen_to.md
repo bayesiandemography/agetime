@@ -74,6 +74,11 @@ do not appear in `to`. Otherwise, the levels are the unique values of
 - [`age_mapping()`](https://bayesiandemography.github.io/agetime/reference/age_mapping.md)
   Inspect the relationship between two sets of labels
 
+- [`age_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.md),
+  [`age_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.md)
+  Check that source observations can be aggregated to the complete
+  target classification
+
 - [`age_labels()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   Create age group labels
 

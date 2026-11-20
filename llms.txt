@@ -99,6 +99,10 @@ df |>
   : Coarsen to Specialised Age Groups
 - [`age_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/age_coarsen_to.md)
   : Coarsen Age Groups to a Target Classification
+- [`age_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.md)
+  [`age_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_coarsen.md)
+  : Check Whether Age Groups Can Be Aggregated to a Target
+  Classification
 - [`age_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
   [`age_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
   [`age_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/age_diagnose_levels.md)
@@ -154,6 +158,9 @@ df |>
   : Coarsen to Cohorts with Equal Widths
 - [`cohort_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/cohort_coarsen_to.md)
   : Coarsen Cohorts to a Target Classification
+- [`cohort_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_coarsen.md)
+  [`cohort_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_coarsen.md)
+  : Check Whether Cohorts Can Be Aggregated to a Target Classification
 - [`cohort_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
   [`cohort_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
   [`cohort_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/cohort_diagnose_levels.md)
@@ -206,6 +213,9 @@ df |>
   : Coarsen to Periods with Equal Widths
 - [`period_coarsen_to()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen_to.md)
   : Coarsen Periods to a Target Classification
+- [`period_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_coarsen.md)
+  [`period_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_coarsen.md)
+  : Check Whether Periods Can Be Aggregated to a Target Classification
 - [`period_diagnose_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
   [`period_assert_levels()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)
   [`period_diagnose_values()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_levels.md)

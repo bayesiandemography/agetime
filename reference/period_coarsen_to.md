@@ -147,6 +147,10 @@ Labels starting with `"-"`, such as `"-2000"`, are not accepted.
 - [`period_mapping()`](https://bayesiandemography.github.io/agetime/reference/period_mapping.md)
   Inspect the relationship between two sets of labels
 
+- [`period_assert_coarsen()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_coarsen.md),
+  [`period_diagnose_coarsen()`](https://bayesiandemography.github.io/agetime/reference/period_diagnose_coarsen.md)
+  Check complete aggregation to a target classification
+
 - [`period_labels()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   Create period labels
 
