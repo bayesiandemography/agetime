@@ -231,11 +231,11 @@ throws an error, which distinguishes two problems:
 
 age_coarsen_to(c("0-4", "5-9", "20"), to = c("0-6", "7-14"))
 #> Error in `age_coarsen_to()`:
-#> ! Can't coarsen age groups.
-#> ✖ Age group "5-9" would be split by the labels in `to`.
+#> ! Can't coarsen age groups in `c("0-4", "5-9", "20")`.
+#> ✖ Age group "5-9" would be split by the labels in `c("0-6", "7-14")`.
 #> ℹ "5-9" overlaps "0-6" and "7-14".
-#> ✖ Age group "20" is not fully covered by the labels in `to`.
-#> ℹ Add labels to `to` that cover it?
+#> ✖ Age group "20" is not fully covered by the labels in `c("0-6", "7-14")`.
+#> ℹ Add labels to `c("0-6", "7-14")` that cover it?
 ```
 
 #### See Also
@@ -558,7 +558,7 @@ df |>
 #> Error in `mutate()`:
 #> ℹ In argument: `age = age_assert_values(age, no_overlap = TRUE)`.
 #> Caused by error in `age_assert_values()`:
-#> ! Age group labels fail check `no_overlap`.
+#> ! Age group labels in `age` fail check `no_overlap`.
 #> ✖ `no_overlap`: Example of overlap among values: '0-4' appears 2 times. To
 #>   allow repeats, such as one per sex, check within groups, for instance using
 #>   dplyr::group_by().

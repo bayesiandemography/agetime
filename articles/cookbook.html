@@ -286,11 +286,11 @@ above <code>"7-14"</code>.</li>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/age_coarsen_to.html">age_coarsen_to</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"20"</span><span class="op">)</span>, to <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-6"</span>, <span class="st">"7-14"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `age_coarsen_to()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't coarsen age groups.</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Age group <span style="color: #0000BB;">"5-9"</span> would be split by the labels in `to`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't coarsen age groups in `c("0-4", "5-9", "20")`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Age group <span style="color: #0000BB;">"5-9"</span> would be split by the labels in `c("0-6", "7-14")`.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #0000BB;">"5-9"</span> overlaps <span style="color: #0000BB;">"0-6"</span> and <span style="color: #0000BB;">"7-14"</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Age group <span style="color: #0000BB;">"20"</span> is not fully covered by the labels in `to`.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Add labels to `to` that cover it?</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Age group <span style="color: #0000BB;">"20"</span> is not fully covered by the labels in `c("0-6", "7-14")`.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Add labels to `c("0-6", "7-14")` that cover it?</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="see-also-3">See Also<a class="anchor" aria-label="anchor" href="#see-also-3"></a>
@@ -646,7 +646,7 @@ appears more than once.</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `mutate()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `age = age_assert_values(age, no_overlap = TRUE)`.</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `age_assert_values()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels fail check `no_overlap`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels in `age` fail check `no_overlap`.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> `no_overlap`: Example of overlap among values: '0-4' appears 2 times. To</span></span>
 <span><span class="co">#&gt;   allow repeats, such as one per sex, check within groups, for instance using</span></span>
 <span><span class="co">#&gt;   dplyr::group_by().</span></span></code></pre></div>

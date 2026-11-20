@@ -5,7 +5,14 @@ Recode age group labels so they match a second set of labels.
 ## Usage
 
 ``` r
-age_coarsen_to(labels, to, interpret_fail = c("error", "warn", "silent"))
+age_coarsen_to(
+  labels,
+  to,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  to_arg = rlang::caller_arg(to),
+  call = rlang::current_env()
+)
 ```
 
 ## Arguments
@@ -22,6 +29,24 @@ age_coarsen_to(labels, to, interpret_fail = c("error", "warn", "silent"))
 
   Action if an element of `labels` or `to` cannot be interpreted.
   Choices are `"error"` (the default), `"warn"`, and `"silent"`.
+
+- x_arg:
+
+  Name of `labels` to use in error and warning messages. Defaults to the
+  expression supplied for `labels`. A function that calls this function
+  can supply its own name, such as `"data$age"`.
+
+- to_arg:
+
+  Name of `to` to use in error and warning messages. Defaults to the
+  expression supplied for `to`.
+
+- call:
+
+  Execution environment of the function to name in error and warning
+  messages. The default is this function itself. A function that calls
+  this function can supply `call = rlang::current_env()`, so that
+  messages name it instead.
 
 ## Value
 

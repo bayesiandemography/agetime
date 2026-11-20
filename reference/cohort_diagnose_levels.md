@@ -34,9 +34,11 @@ cohort_diagnose_levels(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels)
 )
 
 cohort_assert_levels(
@@ -49,9 +51,12 @@ cohort_assert_levels(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 
 cohort_diagnose_values(
@@ -64,9 +69,11 @@ cohort_diagnose_values(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels)
 )
 
 cohort_assert_values(
@@ -79,9 +86,12 @@ cohort_assert_values(
   no_open_right = FALSE,
   has_open_left = FALSE,
   has_open_right = FALSE,
+  valid_tree = FALSE,
   interpret_single = c("lower", "upper"),
   interpret_multi = NULL,
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 ```
 
@@ -147,6 +157,21 @@ cohort_assert_values(
   [`cohort_is_open_right()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_open_left.md).
   Default is `FALSE` (don't check).
 
+- valid_tree:
+
+  Check that cohorts form a reporting tree: any two cohorts either do
+  not overlap, or one contains the other, and the most detailed cohorts
+  (those containing no other cohort) cover the full span of the cohorts,
+  with no gaps. Totals and missing values, as defined by
+  [`cohort_is_total()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_total.md)
+  and
+  [`cohort_is_missing()`](https://bayesiandemography.github.io/agetime/reference/cohort_is_missing.md),
+  are removed before the check. Unlike `no_overlap`, repeated labels,
+  and different labels that describe the same interval, are allowed.
+  Whether the span is open on the left or right is checked by
+  `has_open_left` and `has_open_right`. See the section on reporting
+  trees. Default is `FALSE` (don't check).
+
 - interpret_single:
 
   How to interpret a label for a single year, such as `"2020"`. Choices
@@ -163,6 +188,22 @@ cohort_assert_values(
   Action if element of `labels` cannot be interpreted. Choices are
   `"error"` (the default), `"warn"`, and `"silent"`.
 
+- x_arg:
+
+  Name of `labels` to use in error and warning messages, including
+  messages about labels that cannot be interpreted. Defaults to the
+  expression supplied for `labels`. A function that calls a `diagnose`
+  or `assert` function can supply its own name, such as `"data$age"`.
+
+- call:
+
+  Execution environment of the function to be named in error messages
+  from the `assert` functions. The default is the `assert` function
+  itself, so that errors name, for instance, `cohort_assert_values()`. A
+  function that calls an `assert` function can supply
+  `call = rlang::current_env()`, so that errors name that function
+  instead.
+
 ## Value
 
 - `cohort_diagnose_levels()` and `cohort_diagnose_values()` return a
@@ -172,6 +213,26 @@ cohort_assert_values(
 
 - `cohort_assert_levels()` and `cohort_assert_values()` return `labels`
   invisibly, or raise an error.
+
+## Reporting trees
+
+In a reporting tree, records are tabulated at different levels of
+detail. A census table, for instance, might have detailed cohorts, some
+broader cohorts for records with less detailed information, and a
+category for records with no information. The cohorts nest: any two
+either do not overlap, or one contains the other. The most detailed
+cohorts (the leaves of the tree) cover the full span, so that every
+broader cohort is divided exactly into narrower ones. Leaves do not need
+to be the same distance from the root: some broader cohorts can be
+divided further than others.
+
+Some tables use a label such as `"Total"` to mean that the cohort is not
+stated. Recode such labels to `"Missing"`, for instance using
+`x[cohort_is_total(x)] <- "Missing"`, so that they are not treated as
+totals (for instance by `no_total`).
+
+To check trees separately for each group, use
+[`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html).
 
 ## Rules for interpreting inputs
 

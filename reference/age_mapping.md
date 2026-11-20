@@ -21,7 +21,10 @@ age_mapping(
   format = c("tibble", "matrix"),
   name_x = "x",
   name_y = "y",
-  interpret_fail = c("error", "warn", "silent")
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels_x),
+  y_arg = rlang::caller_arg(labels_y),
+  call = rlang::current_env()
 )
 ```
 
@@ -55,6 +58,24 @@ age_mapping(
 
   Action if element of `labels` cannot be interpreted. Choices are
   `"error"` (the default), `"warn"`, and `"silent"`.
+
+- x_arg:
+
+  Name of `labels_x` to use in error and warning messages. Defaults to
+  the expression supplied for `labels_x`. A function that calls this
+  function can supply its own name, such as `"data$age"`.
+
+- y_arg:
+
+  Name of `labels_y` to use in error and warning messages. Defaults to
+  the expression supplied for `labels_y`.
+
+- call:
+
+  Execution environment of the function to name in error and warning
+  messages. The default is this function itself. A function that calls
+  this function can supply `call = rlang::current_env()`, so that
+  messages name it instead.
 
 ## Value
 

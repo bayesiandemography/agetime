@@ -76,6 +76,7 @@ Functions for working with labels for age groups, periods, and cohorts.
 |----|----|----|
 |  |  |  |
 | [`age_set_order()`](https://bayesiandemography.github.io/agetime/reference/age_set_order.md) | [`period_set_order()`](https://bayesiandemography.github.io/agetime/reference/period_set_order.md) | [`cohort_set_order()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_order.md) |
+| [`age_set_order_tree()`](https://bayesiandemography.github.io/agetime/reference/age_set_order_tree.md) | [`period_set_order_tree()`](https://bayesiandemography.github.io/agetime/reference/period_set_order_tree.md) | [`cohort_set_order_tree()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_order_tree.md) |
 
 **Create new labels**
 
@@ -87,6 +88,7 @@ Functions for working with labels for age groups, periods, and cohorts.
 | [`age_labels_five()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) | [`period_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md) | [`cohort_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md) |
 | [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md) |  |  |
+| [`age_labels_tree()`](https://bayesiandemography.github.io/agetime/reference/age_labels_tree.md) | [`period_labels_tree()`](https://bayesiandemography.github.io/agetime/reference/period_labels_tree.md) | [`cohort_labels_tree()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels_tree.md) |
 
 **Characterise labels or make assertions**
 

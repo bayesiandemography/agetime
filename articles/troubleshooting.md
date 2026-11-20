@@ -22,7 +22,8 @@ A label is in a format that `agetime` does not recognize.
 x <- c("0-4", "5-9", "Everything", "85+ (a)")
 age_standard(x)
 #> Error in `age_standard()`:
-#> ! Don't know how to interpret 2 labels: "Everything" and "85+ (a)".
+#> ! Can't interpret labels in `x`.
+#> ✖ Don't know how to interpret 2 labels: "Everything" and "85+ (a)".
 ```
 
 #### Solution
@@ -66,7 +67,8 @@ A period label such as `"2020-2021"` gives an error.
 
 period_standard("2020-2021")
 #> Error in `period_standard()`:
-#> ! Label "2020-2021" describes a one-year period.
+#> ! Can't interpret labels in `"2020-2021"`.
+#> ✖ Label "2020-2021" describes a one-year period.
 #> ℹ With `interpret_multi` = "at_upper", "2020-2021" is the interval [2020,
 #>   2021).
 #> ℹ Write one-year periods as a single year, e.g. "2020"?
@@ -107,7 +109,8 @@ that starts in the year 2019 and ends in the year 20.
 
 period_standard("2019/20")
 #> Error in `period_standard()`:
-#> ! Label "2019/20" invalid.
+#> ! Can't interpret labels in `"2019/20"`.
+#> ✖ Label "2019/20" invalid.
 #> ℹ Lower limit greater than upper limit.
 #> ℹ With `interpret_multi` = "at_upper", "2019/20" is the interval [2019, 20).
 ```
@@ -198,7 +201,7 @@ reports an overlap, even though the age groups look distinct.
 x <- c("0", "infant", "1-4", "5+")
 age_assert_values(x, no_overlap = TRUE)
 #> Error in `age_assert_values()`:
-#> ! Age group labels fail check `no_overlap`.
+#> ! Age group labels in `x` fail check `no_overlap`.
 #> ✖ `no_overlap`: Example of overlap among values: '0' and 'infant' describe the
 #>   same interval.
 ```
@@ -237,7 +240,7 @@ df |>
 #> Error in `mutate()`:
 #> ℹ In argument: `age = age_assert_values(age, no_overlap = TRUE)`.
 #> Caused by error in `age_assert_values()`:
-#> ! Age group labels fail check `no_overlap`.
+#> ! Age group labels in `age` fail check `no_overlap`.
 #> ✖ `no_overlap`: Example of overlap among values: '0-4' appears 2 times. To
 #>   allow repeats, such as one per sex, check within groups, for instance using
 #>   dplyr::group_by().
@@ -282,7 +285,7 @@ gives an error, because the labels include a total or a missing value.
 x <- c("0-4", "5-9", "Total")
 age_assert_values(x, no_total = TRUE)
 #> Error in `age_assert_values()`:
-#> ! Age group labels fail check `no_total`.
+#> ! Age group labels in `x` fail check `no_total`.
 #> ✖ `no_total`: Example among values: 'Total'.
 ```
 
@@ -340,7 +343,7 @@ or one of their variants gives an error.
 x <- c("0-4", "5-9", "12")
 age_coarsen(x, breaks = c(0, 7, 10))
 #> Error in `age_coarsen()`:
-#> ! Can't coarsen age groups.
+#> ! Can't coarsen age groups in `x`.
 #> ✖ Age group "5-9" would be split by the new age groups.
 #> ℹ "5-9" overlaps "0-6" and "7-9".
 #> ✖ Age group "12" is not fully covered by the new age groups.

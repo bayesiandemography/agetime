@@ -97,9 +97,11 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
 <span>  interpret_multi <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span>,</span>
+<span>  x_arg <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">caller_arg</a></span><span class="op">(</span><span class="va">labels</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">period_assert_levels</span><span class="op">(</span></span>
@@ -112,9 +114,12 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
 <span>  interpret_multi <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span>,</span>
+<span>  x_arg <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">caller_arg</a></span><span class="op">(</span><span class="va">labels</span><span class="op">)</span>,</span>
+<span>  call <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">current_env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">period_diagnose_values</span><span class="op">(</span></span>
@@ -127,9 +132,11 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
 <span>  interpret_multi <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span>,</span>
+<span>  x_arg <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">caller_arg</a></span><span class="op">(</span><span class="va">labels</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">period_assert_values</span><span class="op">(</span></span>
@@ -142,9 +149,12 @@ Both functions require <code>labels</code> to be a factor.</p></li>
 <span>  no_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_left <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  has_open_right <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  valid_tree <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
 <span>  interpret_multi <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span>,</span>
+<span>  x_arg <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">caller_arg</a></span><span class="op">(</span><span class="va">labels</span><span class="op">)</span>,</span>
+<span>  call <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">current_env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -212,6 +222,21 @@ as defined by <code><a href="period_is_open_left.html">period_is_open_right()</a
 Default is <code>FALSE</code> (don't check).</p></dd>
 
 
+<dt id="arg-valid-tree">valid_tree<a class="anchor" aria-label="anchor" href="#arg-valid-tree"></a></dt>
+<dd><p>Check that periods form a reporting tree:
+any two periods either do not overlap, or one contains the other,
+and the most detailed periods (those containing no other period)
+cover the full span of the periods, with no gaps.
+Totals and missing values, as defined by <code><a href="period_is_total.html">period_is_total()</a></code>
+and <code><a href="period_is_missing.html">period_is_missing()</a></code>, are removed before the check.
+Unlike <code>no_overlap</code>, repeated labels, and different labels
+that describe the same interval, are allowed.
+Whether the span is open on the left or right is checked by
+<code>has_open_left</code> and <code>has_open_right</code>.
+See the section on reporting trees.
+Default is <code>FALSE</code> (don't check).</p></dd>
+
+
 <dt id="arg-interpret-single">interpret_single<a class="anchor" aria-label="anchor" href="#arg-interpret-single"></a></dt>
 <dd><p>How to interpret a label for a single year,
 such as <code>"2020"</code>. Choices are <code>"lower"</code> (the default) and <code>"upper"</code>.
@@ -230,6 +255,24 @@ and <code>"below_upper"</code>. See below for details.</p></dd>
 cannot be interpreted. Choices are <code>"error"</code> (the default),
 <code>"warn"</code>, and <code>"silent"</code>.</p></dd>
 
+
+<dt id="arg-x-arg">x_arg<a class="anchor" aria-label="anchor" href="#arg-x-arg"></a></dt>
+<dd><p>Name of <code>labels</code> to use in error and warning
+messages, including messages about labels that cannot be
+interpreted. Defaults to the expression supplied for <code>labels</code>.
+A function that calls a <code>diagnose</code> or <code>assert</code> function can
+supply its own name, such as <code>"data$age"</code>.</p></dd>
+
+
+<dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>
+<dd><p>Execution environment of the function
+to be named in error messages from the <code>assert</code> functions.
+The default is the <code>assert</code> function itself, so that errors
+name, for instance, <code>period_assert_values()</code>. A function that
+calls an <code>assert</code> function can supply
+<code>call = rlang::current_env()</code>, so that errors name that
+function instead.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -240,6 +283,28 @@ called <code>details</code>.</p></li>
 <li><p><code>period_assert_levels()</code> and <code>period_assert_values()</code> return <code>labels</code>
 invisibly, or raise an error.</p></li>
 </ul></div>
+    <div class="section level2">
+    <h2 id="reporting-trees">Reporting trees<a class="anchor" aria-label="anchor" href="#reporting-trees"></a></h2>
+
+
+
+<p>In a reporting tree, records are tabulated at different levels of
+detail. A census table, for instance, might have detailed
+periods, some broader periods for records with less detailed
+information, and a category for records with no information.
+The periods nest: any two either do not overlap, or one
+contains the other. The most detailed periods (the leaves of
+the tree) cover the full span, so that every broader period is
+divided exactly into narrower ones. Leaves do not need to be
+the same distance from the root: some broader periods can be
+divided further than others.</p>
+<p>Some tables use a label such as <code>"Total"</code> to mean that the
+period is not stated. Recode such labels to <code>"Missing"</code>,
+for instance using <code>x[period_is_total(x)] &lt;- "Missing"</code>,
+so that they are not treated as totals (for instance
+by <code>no_total</code>).</p>
+<p>To check trees separately for each group, use <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code>.</p>
+    </div>
     <div class="section level2">
     <h2 id="rules-for-interpreting-inputs">Rules for interpreting inputs<a class="anchor" aria-label="anchor" href="#rules-for-interpreting-inputs"></a></h2>
 

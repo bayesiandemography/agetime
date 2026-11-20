@@ -37,6 +37,8 @@
   [`age_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   [`age_labels_life()`](https://bayesiandemography.github.io/agetime/reference/age_labels.md)
   : Create New Age Group Labels
+- [`age_labels_tree()`](https://bayesiandemography.github.io/agetime/reference/age_labels_tree.md)
+  : Create Age Group Labels for a Reporting Tree
 - [`age_lower()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_mid()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
   [`age_upper()`](https://bayesiandemography.github.io/agetime/reference/age_lower.md)
@@ -49,6 +51,8 @@
   : Specify Open Age Group
 - [`age_set_order()`](https://bayesiandemography.github.io/agetime/reference/age_set_order.md)
   : Set Order of Age Group Levels
+- [`age_set_order_tree()`](https://bayesiandemography.github.io/agetime/reference/age_set_order_tree.md)
+  : Set Order of Age Group Levels for a Reporting Tree
 - [`age_standard()`](https://bayesiandemography.github.io/agetime/reference/age_standard.md)
   : Standardize Age Group Labels
 - [`agetime-package`](https://bayesiandemography.github.io/agetime/reference/agetime-package.md)
@@ -87,6 +91,8 @@
   [`cohort_labels_five()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   [`cohort_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels.md)
   : Create New Cohort Labels
+- [`cohort_labels_tree()`](https://bayesiandemography.github.io/agetime/reference/cohort_labels_tree.md)
+  : Create Cohort Labels for a Reporting Tree
 - [`cohort_lower()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_mid()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
   [`cohort_upper()`](https://bayesiandemography.github.io/agetime/reference/cohort_lower.md)
@@ -100,6 +106,8 @@
   : Specify Open Cohort
 - [`cohort_set_order()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_order.md)
   : Set Order of Cohort Levels
+- [`cohort_set_order_tree()`](https://bayesiandemography.github.io/agetime/reference/cohort_set_order_tree.md)
+  : Set Order of Cohort Levels for a Reporting Tree
 - [`cohort_standard()`](https://bayesiandemography.github.io/agetime/reference/cohort_standard.md)
   : Standardize Cohort Labels
 - [`period_coarsen()`](https://bayesiandemography.github.io/agetime/reference/period_coarsen.md)
@@ -135,6 +143,8 @@
   [`period_labels_five()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   [`period_labels_ten()`](https://bayesiandemography.github.io/agetime/reference/period_labels.md)
   : Create New Period Labels
+- [`period_labels_tree()`](https://bayesiandemography.github.io/agetime/reference/period_labels_tree.md)
+  : Create Period Labels for a Reporting Tree
 - [`period_lower()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_mid()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
   [`period_upper()`](https://bayesiandemography.github.io/agetime/reference/period_lower.md)
@@ -148,5 +158,7 @@
   : Specify Open Period
 - [`period_set_order()`](https://bayesiandemography.github.io/agetime/reference/period_set_order.md)
   : Set Order of Period Levels
+- [`period_set_order_tree()`](https://bayesiandemography.github.io/agetime/reference/period_set_order_tree.md)
+  : Set Order of Period Levels for a Reporting Tree
 - [`period_standard()`](https://bayesiandemography.github.io/agetime/reference/period_standard.md)
   : Standardize Period Labels

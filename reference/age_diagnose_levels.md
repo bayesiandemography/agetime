@@ -38,7 +38,9 @@ age_diagnose_levels(
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
-  interpret_fail = c("error", "warn", "silent")
+  valid_tree = FALSE,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels)
 )
 
 age_assert_levels(
@@ -51,7 +53,10 @@ age_assert_levels(
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
-  interpret_fail = c("error", "warn", "silent")
+  valid_tree = FALSE,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 
 age_diagnose_values(
@@ -64,7 +69,9 @@ age_diagnose_values(
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
-  interpret_fail = c("error", "warn", "silent")
+  valid_tree = FALSE,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels)
 )
 
 age_assert_values(
@@ -77,7 +84,10 @@ age_assert_values(
   has_open_right = FALSE,
   has_zero = FALSE,
   valid_life = FALSE,
-  interpret_fail = c("error", "warn", "silent")
+  valid_tree = FALSE,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
 )
 ```
 
@@ -139,10 +149,41 @@ age_assert_values(
   Check that all labels are valid for an abridged life table. Default is
   `FALSE` (don't check).
 
+- valid_tree:
+
+  Check that age groups form a reporting tree: any two age groups either
+  do not overlap, or one contains the other, and the most detailed age
+  groups (those containing no other age group) cover the full span of
+  the age groups, with no gaps. Totals and missing values, as defined by
+  [`age_is_total()`](https://bayesiandemography.github.io/agetime/reference/age_is_total.md)
+  and
+  [`age_is_missing()`](https://bayesiandemography.github.io/agetime/reference/age_is_missing.md),
+  are removed before the check. Unlike `no_overlap`, repeated labels,
+  and different labels that describe the same interval, are allowed.
+  Whether the span starts at zero, or ends with an open age group, is
+  checked by `has_zero` and `has_open_right`. See the section on
+  reporting trees. Default is `FALSE` (don't check).
+
 - interpret_fail:
 
   Action if element of `labels` cannot be interpreted. Choices are
   `"error"` (the default), `"warn"`, and `"silent"`.
+
+- x_arg:
+
+  Name of `labels` to use in error and warning messages, including
+  messages about labels that cannot be interpreted. Defaults to the
+  expression supplied for `labels`. A function that calls a `diagnose`
+  or `assert` function can supply its own name, such as `"data$age"`.
+
+- call:
+
+  Execution environment of the function to be named in error messages
+  from the `assert` functions. The default is the `assert` function
+  itself, so that errors name, for instance, `age_assert_values()`. A
+  function that calls an `assert` function can supply
+  `call = rlang::current_env()`, so that errors name that function
+  instead.
 
 ## Value
 
@@ -164,6 +205,28 @@ age_assert_values(
 
 - Both types of life table usually have an open age group such as
   `"85+"` or `"100+"`.
+
+## Reporting trees
+
+In a reporting tree, records are tabulated at different levels of
+detail. A census table, for instance, might have detailed age groups,
+some broader age groups for records with less detailed information, and
+a category for records with no information. The age groups nest: any two
+either do not overlap, or one contains the other. The most detailed age
+groups (the leaves of the tree) cover the full span, so that every
+broader age group is divided exactly into narrower ones. Leaves do not
+need to be the same distance from the root: some broader age groups can
+be divided further than others.
+
+Some tables use a label such as `"Total"` to mean that the age is not
+stated. Recode such labels to `"Missing"`, for instance using
+`x[age_is_total(x)] <- "Missing"`, so that they are not treated as
+totals (for instance by `no_total`).
+
+To check a complete age reporting tree, use `valid_tree = TRUE`,
+`has_zero = TRUE`, `has_open_right = TRUE`, and `no_total = TRUE`. To
+check trees separately for each sex or date, use
+[`dplyr::group_by()`](https://dplyr.tidyverse.org/reference/group_by.html).
 
 ## See also
 
@@ -221,6 +284,29 @@ age_assert_values(
   no_overlap = TRUE,
   no_gap = TRUE
 )
+
+## check a complete reporting tree: detailed
+## ages, broad ages, and age not stated
+tree <- c("0-4", "5-9", "10-14", "15+", "0-14", "Missing")
+age_assert_values(
+  labels = tree,
+  valid_tree = TRUE,
+  has_zero = TRUE,
+  has_open_right = TRUE,
+  no_total = TRUE
+)
+
+## broad age group not fully divided
+age_diagnose_values(c("0-4", "5-9", "0-14"), valid_tree = TRUE)
+#> $ok
+#> [1] FALSE
+#> 
+#> $details
+#> # A tibble: 1 × 3
+#>   condition  passed comment                                                     
+#>   <chr>      <lgl>  <chr>                                                       
+#> 1 valid_tree FALSE  Example: most detailed age groups do not reach upper limit …
+#> 
 
 ## repeated labels count as overlapping...
 df <- data.frame(

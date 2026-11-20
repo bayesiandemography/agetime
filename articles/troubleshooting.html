@@ -86,7 +86,8 @@ recognize.</p>
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"Everything"</span>, <span class="st">"85+ (a)"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_standard.html">age_standard</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `age_standard()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Don't know how to interpret 2 labels: <span style="color: #0000BB;">"Everything"</span> and <span style="color: #0000BB;">"85+ (a)"</span>.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't interpret labels in `x`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Don't know how to interpret 2 labels: <span style="color: #0000BB;">"Everything"</span> and <span style="color: #0000BB;">"85+ (a)"</span>.</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="solution">Solution<a class="anchor" aria-label="anchor" href="#solution"></a>
@@ -135,7 +136,8 @@ and</li>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/period_standard.html">period_standard</a></span><span class="op">(</span><span class="st">"2020-2021"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `period_standard()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Label <span style="color: #0000BB;">"2020-2021"</span> describes a one-year period.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't interpret labels in `"2020-2021"`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Label <span style="color: #0000BB;">"2020-2021"</span> describes a one-year period.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> With `interpret_multi` = <span style="color: #0000BB;">"at_upper"</span>, <span style="color: #0000BB;">"2020-2021"</span> is the interval [2020,</span></span>
 <span><span class="co">#&gt;   2021).</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Write one-year periods as a single year, e.g. <span style="color: #0000BB;">"2020"</span>?</span></span>
@@ -181,7 +183,8 @@ how to interpret these labels. For instance, it interprets
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/period_standard.html">period_standard</a></span><span class="op">(</span><span class="st">"2019/20"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `period_standard()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Label <span style="color: #0000BB;">"2019/20"</span> invalid.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't interpret labels in `"2019/20"`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Label <span style="color: #0000BB;">"2019/20"</span> invalid.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Lower limit greater than upper limit.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> With `interpret_multi` = <span style="color: #0000BB;">"at_upper"</span>, <span style="color: #0000BB;">"2019/20"</span> is the interval [2019, 20).</span></span></code></pre></div>
 </div>
@@ -277,7 +280,7 @@ age groups look distinct.</p>
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0"</span>, <span class="st">"infant"</span>, <span class="st">"1-4"</span>, <span class="st">"5+"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_diagnose_levels.html">age_assert_values</a></span><span class="op">(</span><span class="va">x</span>, no_overlap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `age_assert_values()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels fail check `no_overlap`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels in `x` fail check `no_overlap`.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> `no_overlap`: Example of overlap among values: '0' and 'infant' describe the</span></span>
 <span><span class="co">#&gt;   same interval.</span></span></code></pre></div>
 </div>
@@ -314,7 +317,7 @@ year.</p>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `mutate()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> In argument: `age = age_assert_values(age, no_overlap = TRUE)`.</span></span>
 <span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `age_assert_values()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels fail check `no_overlap`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels in `age` fail check `no_overlap`.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> `no_overlap`: Example of overlap among values: '0-4' appears 2 times. To</span></span>
 <span><span class="co">#&gt;   allow repeats, such as one per sex, check within groups, for instance using</span></span>
 <span><span class="co">#&gt;   dplyr::group_by().</span></span></code></pre></div>
@@ -359,7 +362,7 @@ a total or a missing value.</p>
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"Total"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_diagnose_levels.html">age_assert_values</a></span><span class="op">(</span><span class="va">x</span>, no_total <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `age_assert_values()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels fail check `no_total`.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Age group labels in `x` fail check `no_total`.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> `no_total`: Example among values: 'Total'.</span></span></code></pre></div>
 </div>
 <div class="section level4">
@@ -416,7 +419,7 @@ their variants gives an error.</p>
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0-4"</span>, <span class="st">"5-9"</span>, <span class="st">"12"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/age_coarsen.html">age_coarsen</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">7</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `age_coarsen()`:</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't coarsen age groups.</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't coarsen age groups in `x`.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Age group <span style="color: #0000BB;">"5-9"</span> would be split by the new age groups.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> <span style="color: #0000BB;">"5-9"</span> overlaps <span style="color: #0000BB;">"0-6"</span> and <span style="color: #0000BB;">"7-9"</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Age group <span style="color: #0000BB;">"12"</span> is not fully covered by the new age groups.</span></span>

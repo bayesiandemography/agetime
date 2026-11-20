@@ -53,7 +53,9 @@ are ordered by their lower limits.</p>
 <span>  decreasing <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  interpret_single <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lower"</span>, <span class="st">"upper"</span><span class="op">)</span>,</span>
 <span>  interpret_multi <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span></span>
+<span>  interpret_fail <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"error"</span>, <span class="st">"warn"</span>, <span class="st">"silent"</span><span class="op">)</span>,</span>
+<span>  x_arg <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/caller_arg.html" class="external-link">caller_arg</a></span><span class="op">(</span><span class="va">labels</span><span class="op">)</span>,</span>
+<span>  call <span class="op">=</span> <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">current_env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -88,6 +90,21 @@ and <code>"below_upper"</code>. See below for details.</p></dd>
 <dd><p>Action if element of <code>labels</code>
 cannot be interpreted. Choices are <code>"error"</code> (the default),
 <code>"warn"</code>, and <code>"silent"</code>.</p></dd>
+
+
+<dt id="arg-x-arg">x_arg<a class="anchor" aria-label="anchor" href="#arg-x-arg"></a></dt>
+<dd><p>Name of <code>labels</code> to use in error and warning
+messages. Defaults to the expression supplied for <code>labels</code>.
+A function that calls this function can supply its own name,
+such as <code>"data$age"</code>.</p></dd>
+
+
+<dt id="arg-call">call<a class="anchor" aria-label="anchor" href="#arg-call"></a></dt>
+<dd><p>Execution environment of the function to name
+in error and warning messages. The default is this function
+itself. A function that calls this function can supply
+<code>call = rlang::current_env()</code>, so that messages name it
+instead.</p></dd>
 
 </dl></div>
     <div class="section level2">

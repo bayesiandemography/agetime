@@ -16,15 +16,41 @@ intermediate age groups are added as factor levels.
 ## Usage
 
 ``` r
-age_fill(labels, breaks = NULL, interpret_fail = c("error", "warn", "silent"))
+age_fill(
+  labels,
+  breaks = NULL,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
+)
 
-age_fill_one(labels, interpret_fail = c("error", "warn", "silent"))
+age_fill_one(
+  labels,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
+)
 
-age_fill_five(labels, interpret_fail = c("error", "warn", "silent"))
+age_fill_five(
+  labels,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
+)
 
-age_fill_ten(labels, interpret_fail = c("error", "warn", "silent"))
+age_fill_ten(
+  labels,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
+)
 
-age_fill_life(labels, interpret_fail = c("error", "warn", "silent"))
+age_fill_life(
+  labels,
+  interpret_fail = c("error", "warn", "silent"),
+  x_arg = rlang::caller_arg(labels),
+  call = rlang::current_env()
+)
 ```
 
 ## Arguments
@@ -42,6 +68,19 @@ age_fill_life(labels, interpret_fail = c("error", "warn", "silent"))
 
   Action if element of `labels` cannot be interpreted. Choices are
   `"error"` (the default), `"warn"`, and `"silent"`.
+
+- x_arg:
+
+  Name of `labels` to use in error and warning messages. Defaults to the
+  expression supplied for `labels`. A function that calls this function
+  can supply its own name, such as `"data$age"`.
+
+- call:
+
+  Execution environment of the function to name in error and warning
+  messages. The default is this function itself. A function that calls
+  this function can supply `call = rlang::current_env()`, so that
+  messages name it instead.
 
 ## Value
 
