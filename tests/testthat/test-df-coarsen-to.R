@@ -170,3 +170,38 @@ test_that("tibbles and grouping metadata survive recoding", {
   expect_identical(as.character(dplyr::group_data(obtained)$age), c("0-9", "0-9"))
   expect_identical(as.list(dplyr::group_data(obtained)$.rows), list(1L, 2L))
 })
+
+test_that("repeated classifications preserve each group's target labels and source rows", {
+  x <- data.frame(country = rep(c("A", "B", "C", "D"), each = 3),
+                   age = rep(c("0-4", "5-9", "10+"), 4), count = 1:12)
+  x$age[10:12] <- rev(x$age[10:12])
+  to <- data.frame(country = rep(c("A", "B", "C", "D"), each = 2),
+                    age = c("0-9", "10+", "10+", "0-9", "0-9 years", "10 or older", "0-9", "10+"))
+  result <- age_df_coarsen_to(x, to, age = "age", by = "country")
+  expected <- x
+  expected$age <- factor(c("0-9", "0-9", "10+", "0-9", "0-9", "10+",
+                            "0-9 years", "0-9 years", "10 or older", "10+", "0-9", "0-9"),
+                          levels = c("0-9", "10+", "0-9 years", "10 or older"))
+  expect_identical(result, expected)
+})
+
+test_that("an earlier valid classification does not hide a later incomplete group", {
+  x <- data.frame(country = c("A", "A", "B"), age = c("0-4", "5-9", "0-4"))
+  to <- data.frame(country = c("A", "B"), age = "0-9")
+  err <- expect_error(age_df_coarsen_to(x, to, age = "age", by = "country"), "5-9")
+  expect_match(conditionMessage(err), "country = B", fixed = TRUE)
+  x <- data.frame(country = rep(c("A", "B"), each = 2), age = rep(c("0-4", "5-9"), 2))
+  to <- data.frame(country = c("A", "B", "B"), age = c("0-9", "0-9", "10-14"))
+  err <- expect_error(age_df_coarsen_to(x, to, age = "age", by = "country"), "10-14")
+  expect_match(conditionMessage(err), "country = B", fixed = TRUE)
+})
+
+test_that("classification reuse is confined to one call", {
+  x <- data.frame(country = rep(c("A", "B"), each = 2), age = rep(c("0-4", "5-9"), 2))
+  coarse <- data.frame(country = c("A", "B"), age = "0-9")
+  expect_identical(as.character(age_df_coarsen_to(x, coarse, age = "age", by = "country")$age),
+                     rep("0-9", 4))
+  expect_identical(as.character(age_df_coarsen_to(x, x, age = "age", by = "country")$age), x$age)
+  x$age <- rep(c("0-3", "4-8"), 2)
+  expect_error(age_df_coarsen_to(x, coarse, age = "age", by = "country"), "9")
+})

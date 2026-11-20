@@ -79,3 +79,24 @@ for (domain in c("period", "cohort")) {
     expect_false(caller_env$active)
   })
 }
+
+test_that("default time interpretation messages are retained for each group", {
+  for (domain in c("period", "cohort")) {
+    fun <- get(paste0(domain, "_df_coarsen_to"))
+    x <- data.frame(country = c("A", "B"))
+    x[[domain]] <- "2000-2004"
+    args <- list(data = x, to = x, by = "country")
+    args[[domain]] <- domain
+    messages <- character()
+    result <- withCallingHandlers(do.call(fun, args), message = function(cnd) {
+      messages <<- c(messages, conditionMessage(cnd))
+      invokeRestart("muffleMessage")
+    })
+    expect_identical(as.character(result[[domain]]), x[[domain]])
+    expect_length(messages, 2L)
+    expect_true(all(grepl("Interpreting", messages)))
+    args$interpret_multi <- "at_upper"
+    expect_silent(explicit <- do.call(fun, args))
+    expect_identical(explicit, result)
+  }
+})

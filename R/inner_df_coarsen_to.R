@@ -35,28 +35,48 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
   key_data <- vctrs::vec_cast(groups_data$key, key_type, x_arg = data_arg)
   key_to <- vctrs::vec_cast(groups_to$key, key_type, x_arg = to_arg)
   matches <- vctrs::vec_match(key_data, key_to)
+  labels_chr <- as.character(labels)
+  targets_chr <- as.character(targets)
+  source_labels <- lapply(groups_data$loc, function(rows) unique(labels_chr[rows]))
+  target_labels <- lapply(matches, function(j) {
+    if (is.na(j)) character(0) else unique(targets_chr[groups_to$loc[[j]]])
+  })
+  ## Reuse validated mappings within this call for identical classification
+  ## pairs. Label order matters, since it determines output factor levels.
+  ## Keep default period/cohort interpretation messages once per group.
+  reuse_mapping <- label_type == "age" || !is.null(interpret_multi)
+  classification <- if (reuse_mapping) {
+    vctrs::vec_group_id(vctrs::new_data_frame(
+      list(source = source_labels, target = target_labels), n = length(matches)
+    ))
+  } else seq_along(matches)
+  mappings <- vector("list", length(matches))
   recoded <- character(nrow(data))
   levels_output <- character(0)
   for (i in seq_along(groups_data$loc)) {
-    context <- df_coarsen_group(groups_data$key, i)
     if (is.na(matches[[i]])) {
       cli::cli_abort(c("No target classification in {.arg {to_arg}} for a group in {.arg {data_arg}}.",
-                       i = "{context}"), call = user_frame())
+                       i = "{df_coarsen_group(groups_data$key, i)}"), call = user_frame())
     }
     rows <- groups_data$loc[[i]]
-    target_rows <- groups_to$loc[[matches[[i]]]]
-    mapped <- tryCatch(
-      df_coarsen_classification(
-        unique(as.character(labels[rows])), unique(as.character(targets[target_rows])),
-        label_type, interpret_single, interpret_multi, interpret_fail,
-        source_arg, target_arg
-      ),
-      error = function(cnd) {
-        cli::cli_abort(c("Can't coarsen {.arg {source_arg}} to {.arg {target_arg}}.",
-                         i = "{context}"), parent = cnd, call = user_frame())
-      }
-    )
-    recoded[rows] <- mapped$values[match(as.character(labels[rows]), mapped$labels)]
+    id <- classification[[i]]
+    mapped <- mappings[[id]]
+    if (is.null(mapped)) {
+      mapped <- tryCatch(
+        df_coarsen_classification(
+          source_labels[[i]], target_labels[[i]],
+          label_type, interpret_single, interpret_multi, interpret_fail,
+          source_arg, target_arg
+        ),
+        error = function(cnd) {
+          cli::cli_abort(c("Can't coarsen {.arg {source_arg}} to {.arg {target_arg}}.",
+                           i = "{df_coarsen_group(groups_data$key, i)}"),
+                          parent = cnd, call = user_frame())
+        }
+      )
+      if (reuse_mapping) mappings[[id]] <- mapped
+    }
+    recoded[rows] <- mapped$values[match(labels_chr[rows], mapped$labels)]
     levels_output <- unique(c(levels_output, mapped$levels))
   }
   ## Retain target factor ordering, but not unused levels or target-only groups.
@@ -136,7 +156,7 @@ df_coarsen_columns <- function(x, arg, data, to, single) {
 #' Extract Grouping Keys Without Data-Frame Subclass Behaviour
 #' @param data A data frame.
 #' @param columns Selected column names.
-#' @param names Names to use for the key columns.
+#' @param key_names Names to use for the key columns.
 #' @returns A plain data frame of keys.
 #' @noRd
 df_coarsen_keys <- function(data, columns, key_names = columns) {
