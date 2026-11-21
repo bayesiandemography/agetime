@@ -16,7 +16,7 @@
 #' - Having, or not having, totals, subtotals, or missing values
 #' - Having, or not having, open age groups
 #' - Having an age group that starts at zero
-#' - Only including age groups used by an abridged life table
+#' - Forming a full age classification for an abridged life table
 #'
 #' @section Abridged and complete life tables:
 #'
@@ -25,6 +25,15 @@
 #' - A complete life table uses single-year age groups such as `"0"`, `"1"`, and `"2"`.
 #' - Both types of life table usually have an open age group
 #'   such as `"85+"` or `"100+"`.
+#'
+#' @section Life-table validation:
+#'
+#' `valid_life = TRUE` checks that the age groups form a full classification
+#' for an abridged life table: admissible intervals cover all ages from zero
+#' through an open final age group, with no gaps or overlaps. After `"1-4"`,
+#' closed groups may span multiples of five years, with boundaries at
+#' multiples of five. This checks the age classification, not the data
+#' needed to calculate a life table. Empty classifications fail.
 #'
 #' @section Reporting trees:
 #'
@@ -99,8 +108,15 @@
 #' @param has_zero Check that at least one
 #' age group has a lower limit of zero.
 #' Default is `FALSE` (don't check).
-#' @param valid_life Check that all labels are
-#' valid for an abridged life table.
+#' @param valid_life Check that the age groups form a full classification
+#' for an abridged life table. All intervals must be admissible for an
+#' abridged life table. Together they must cover all ages from zero through
+#' an open final age group, with no gaps or overlaps.
+#' Repeated labels and synonyms count as overlaps
+#' under the same rules as `no_overlap`. Totals and missing values are
+#' ignored; use `no_total` and `no_missing` to forbid them.
+#' Empty classifications fail. See [age_diagnose_levels()] for life-table
+#' conventions.
 #' Default is `FALSE` (don't check).
 #' @param valid_tree Check that age groups form a reporting tree:
 #' any two age groups either do not overlap, or one contains the other,
@@ -143,10 +159,14 @@
 #' fac <- factor("0-4",
 #'               levels = c("0-4", "5-9", "10-14"))
 #' age_diagnose_levels(fac, no_gap = TRUE)
+#'
+#' ## full abridged life-table classification
+#' fac <- factor(c("0", "1-4", "5-9", "10+"))
+#' age_assert_levels(fac, valid_life = TRUE)
 #' @export
 
-# When length(labels) == 0, no_* and valid_* checks are vacuously
-# satisfied. Checks that require presence (has_*) fail.
+# Empty classifications pass no_* and valid_tree checks, but fail
+# checks that require presence (has_* and valid_life).
 age_diagnose_levels <- function(labels,
                       no_overlap = FALSE,
                       no_gap = FALSE,

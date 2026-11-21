@@ -264,9 +264,9 @@ test_that("age_df_assert_values() reports a failed no_open_right check", {
   )
 })
 
-test_that("valid_life passes for life-table labels even when there is a gap", {
+test_that("valid_life fails for life-table labels when there is a gap", {
   val <- age_df_diagnose_values(data.frame(age = age_life_gap), age = "age", valid_life = TRUE)
-  expect_diagnose_result(val, "valid_life", TRUE)
+  expect_diagnose_result(val, "valid_life", FALSE)
   expect_false(diagnostic_ok(age_df_diagnose_values(data.frame(age = age_life_gap), age = "age", no_gap = TRUE)))
 })
 
@@ -350,7 +350,8 @@ test_that("age_df_assert_values succeeds and fails as expected", {
   expect_invisible(age_df_assert_values(data.frame(age = age_closed), age = "age", no_overlap = TRUE))
   expect_error(age_df_assert_values(data.frame(age = age_overlap), age = "age", no_overlap = TRUE),
                "fail check `no_overlap`")
-  expect_invisible(age_df_assert_values(data.frame(age = age_life_gap), age = "age", valid_life = TRUE))
+  expect_error(age_df_assert_values(data.frame(age = age_life_gap), age = "age", valid_life = TRUE),
+               "fail check `valid_life`")
   expect_error(age_df_assert_values(data.frame(age = age_life_gap), age = "age", no_gap = TRUE),
                "fail check `no_gap`")
 })

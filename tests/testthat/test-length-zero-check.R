@@ -1,5 +1,5 @@
-# *_diagnose_*() / *_assert_*(): empty input is valid. Universal conditions like
-# no_overlap are TRUE on empty input; has_* conditions are FALSE, like any().
+# Universal conditions like no_overlap are TRUE on empty input;
+# checks requiring presence (has_* and valid_life) are FALSE.
 
 test_that("has_* checks work on length-0 input", {
   val <- age_df_diagnose_values(data.frame(age = character(0)), age = "age", has_zero = TRUE)
@@ -25,7 +25,6 @@ test_that("universal checks pass on length-0 input", {
   expect_true(diagnostic_ok(age_df_diagnose_values(data.frame(age = x), age = "age", no_gap = TRUE)))
   expect_true(diagnostic_ok(age_df_diagnose_values(data.frame(age = x), age = "age", no_total = TRUE)))
   expect_true(diagnostic_ok(age_df_diagnose_values(data.frame(age = x), age = "age", no_missing = TRUE)))
-  expect_true(diagnostic_ok(age_df_diagnose_values(data.frame(age = x), age = "age", valid_life = TRUE)))
   expect_true(diagnostic_ok(age_df_diagnose_values(data.frame(age = x), age = "age", no_open_right = TRUE)))
   expect_true(diagnostic_ok(period_df_diagnose_values(data.frame(period = x), period = "period", no_open_left = TRUE)))
   expect_true(diagnostic_ok(cohort_df_diagnose_values(data.frame(cohort = x), cohort = "cohort", no_open_right = TRUE)))

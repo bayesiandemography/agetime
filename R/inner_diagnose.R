@@ -805,24 +805,30 @@ inner_diagnose_has_open_right <- function(intervals, on) {
 
 
 inner_diagnose_valid_life <- function(intervals, on) {
-  int_is_empty <- int_is_empty(intervals)
-  if (int_is_empty) {
-    passed <- TRUE
-  } else {
-    val <- label_non_life(intervals)
-    passed <- is.null(val)
-  }
-  if (identical(passed, TRUE)) {
-    comment <- NA_character_
-  } else {
+  val <- label_non_life(intervals)
+  comment <- NA_character_
+  if (!is.null(val)) {
     comment <- sprintf(
       "Not valid for life table among %s: '%s'",
       on, val
     )
+  } else {
+    ## Reuse the individual checks, retaining their explanatory comments.
+    ## Checking for zero before gaps also handles empty/non-interval input.
+    for (check in list(inner_diagnose_no_overlap,
+                       inner_diagnose_has_zero,
+                       inner_diagnose_no_gap,
+                       inner_diagnose_has_open_right)) {
+      result <- check(intervals = intervals, on = on)
+      if (!result$passed) {
+        comment <- result$comment
+        break
+      }
+    }
   }
   tibble::tibble_row(
     condition = "valid_life",
-    passed = passed,
+    passed = is.na(comment),
     comment = comment
   )
 }

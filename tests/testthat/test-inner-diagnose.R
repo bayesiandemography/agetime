@@ -88,9 +88,9 @@ test_that("inner_diagnose_has_open_right() passes when open-right period is pres
   expect_identical(val$comment, NA_character_)
 })
 
-test_that("inner_diagnose_valid_life() passes for valid labels", {
+test_that("inner_diagnose_valid_life() passes for a full classification", {
   intervals <- intervals(
-    labels = c("0", "5-9"),
+    labels = c("0", "1-4", "5-9", "10+"),
     label_type = "age",
     interpret_single = "lower",
     interpret_multi = "below_upper",

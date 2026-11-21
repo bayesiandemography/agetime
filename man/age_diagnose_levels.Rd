@@ -98,8 +98,15 @@ Default is \code{FALSE} (don't check).}
 age group has a lower limit of zero.
 Default is \code{FALSE} (don't check).}
 
-\item{valid_life}{Check that all labels are
-valid for an abridged life table.
+\item{valid_life}{Check that the age groups form a full classification
+for an abridged life table. All intervals must be admissible for an
+abridged life table. Together they must cover all ages from zero through
+an open final age group, with no gaps or overlaps.
+Repeated labels and synonyms count as overlaps
+under the same rules as \code{no_overlap}. Totals and missing values are
+ignored; use \code{no_total} and \code{no_missing} to forbid them.
+Empty classifications fail. See \code{\link[=age_diagnose_levels]{age_diagnose_levels()}} for life-table
+conventions.
 Default is \code{FALSE} (don't check).}
 
 \item{valid_tree}{Check that age groups form a reporting tree:
@@ -156,7 +163,7 @@ Conditions include:
 \item Having, or not having, totals, subtotals, or missing values
 \item Having, or not having, open age groups
 \item Having an age group that starts at zero
-\item Only including age groups used by an abridged life table
+\item Forming a full age classification for an abridged life table
 }
 }
 \section{Abridged and complete life tables}{
@@ -168,6 +175,17 @@ and \code{"1-4"}, followed by 5-year age groups such as \code{"5-9"} and \code{"
 \item Both types of life table usually have an open age group
 such as \code{"85+"} or \code{"100+"}.
 }
+}
+
+\section{Life-table validation}{
+
+
+\code{valid_life = TRUE} checks that the age groups form a full classification
+for an abridged life table: admissible intervals cover all ages from zero
+through an open final age group, with no gaps or overlaps. After \code{"1-4"},
+closed groups may span multiples of five years, with boundaries at
+multiples of five. This checks the age classification, not the data
+needed to calculate a life table. Empty classifications fail.
 }
 
 \section{Reporting trees}{
@@ -215,6 +233,10 @@ age_assert_levels(fac, no_gap = TRUE)
 fac <- factor("0-4",
               levels = c("0-4", "5-9", "10-14"))
 age_diagnose_levels(fac, no_gap = TRUE)
+
+## full abridged life-table classification
+fac <- factor(c("0", "1-4", "5-9", "10+"))
+age_assert_levels(fac, valid_life = TRUE)
 }
 \seealso{
 \code{\link[=age_df_diagnose_values]{age_df_diagnose_values()}}, \code{\link[=age_df_assert_values]{age_df_assert_values()}}

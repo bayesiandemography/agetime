@@ -37,9 +37,9 @@
 #'
 #' @section Empty inputs:
 #' With no grouping, a zero-row frame represents one empty set of values:
-#' absence (`no_`) and validity checks pass, and presence (`has_`) checks
-#' fail. With grouping and no rows there are no observed groups, so the
-#' report is empty and assertions pass. With no checks requested, reports
+#' absence (`no_`) and `valid_tree` checks pass, and presence (`has_`) and
+#' `valid_life` checks fail. With grouping and no rows there are no observed
+#' groups, so the report is empty and assertions pass. With no checks requested, reports
 #' have zero rows; input validation and parsing still apply.
 #'
 #' @param data A data frame or tibble with unique, nonempty column names.
@@ -82,6 +82,11 @@
 #'
 #' dat$age <- c("0-4", "5-9", "0-4", "5-9")
 #' dat |> age_df_assert_values(age = age, by = country, no_gap = TRUE)
+#'
+#' ## check a full life-table age classification within each country
+#' dat <- data.frame(country = rep(c("A", "B"), each = 4),
+#'                   age = rep(c("0", "1-4", "5-9", "10+"), 2))
+#' age_df_assert_values(dat, age = age, by = country, valid_life = TRUE)
 #'
 #' library(dplyr, warn.conflicts = FALSE)
 #' dat |>
