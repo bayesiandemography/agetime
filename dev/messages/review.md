@@ -143,7 +143,9 @@ whole dataset." All currently `i`. The last is dropped (decided).
   summary even for a user who never saw the argument.
 - **Q4. Literal argument names (finding 6).** Rule now ("headers and
   details name only arguments registered with `local_caller()`"), or
-  defer until a dependant calls one of these functions indirectly?
-  popcounts and dac currently call none of `age_labels_tree()`,
-  `age_labels()` with `breaks` problems, or the data-frame coarsening
-  functions in ways that reach these messages. Leaning defer.
+  defer until a dependant needs it? popcounts calls `age_labels()` and
+  `age_set_order_tree()`, but with `breaks` it computes itself (so a
+  `breaks` error would be a popcounts bug, not a user error), and the
+  tree messages name no arguments. Neither package calls
+  `age_labels_tree()` or the data-frame coarsening functions. Leaning
+  defer.
