@@ -103,13 +103,12 @@ so `devtools::test()` catches a new message that breaks it.
 4. **Checks**: add them to the script; fix the messages that break them;
    promote stable checks to a test.
 
-## Questions
+## Answers (2026-11-24)
 
-- **Q1.** Rendered examples: the inventory holds templates. Add a column
-  linking each site to a snapshot that shows it rendered, where one exists?
-  (Leaning no for now: matching snapshots to sites is fiddly, and the
-  templates are what we edit.)
-- **Q2.** Base-R signals (`stop()`, `warning()`): agetime has about 11.
-  Convert to `cli` as part of step 4, or leave any that are internal
-  assertions ("should never happen")? (Leaning: convert user-reachable
-  ones; keep internal assertions, marked as such.)
+- **A1.** No snapshot links: the inventory holds templates only.
+- **A2.** All messages use `cli`; base-R `stop()`, `warning()` and
+  `message()` with message text are converted. This is a check.
+  On inspection agetime has none: its 11 base-R calls are re-signals,
+  `stop(cnd)` or `warning(cnd)` inside a condition handler, after changing
+  `cnd$call`. They carry no text of their own, so the inventory skips
+  them (a base-R call whose argument is the handler's condition object).
