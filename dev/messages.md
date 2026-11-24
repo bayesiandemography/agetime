@@ -32,14 +32,19 @@ The script parses each file in `R/` and walks the parsed code to every
 |---|---|
 | `file`, `line` | Location of the call |
 | `fun` | Enclosing function |
-| `signal` | `abort`, `warn`, `inform`, or a base function |
+| `text_line`, `via` | Where the text is written, and the variable it came through, when assigned before signalling |
+| `signal` | `abort`, `warn`, `inform`, `stored`, or a base function |
 | `bullet` | Position within the message (1 = header) |
 | `type` | Bullet name: `""` (header), `x`, `i`, `v`, `!`, `*`, ... |
 | `text` | Template text, e.g. `"Can't interpret labels in {.arg {x_arg}}."` |
 | `hint` | Whether the bullet is a hint (see below) |
-| `built_elsewhere` | Message passed as a variable or built with `paste0()`, so text not read from the call |
-| `exported` | Exported functions that can reach this site |
+| `literal_arg` | Names an argument literally, not via `x_arg` / `arg_nm()` |
+| `internal` | "Internal error: ..." |
+| `built_elsewhere` | Text the script could not read (helper functions, `if` values, stored lists) |
+| `n_exported`, `exported` | Exported functions that can reach this site |
 | `has_call` | Whether `call =` is passed |
+
+Details of what the script sees: dev/messages/README.md.
 
 ### Hints
 
