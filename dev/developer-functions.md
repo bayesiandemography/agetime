@@ -1,7 +1,7 @@
 # Calling agetime from other packages
 
 Status: agreed in outline (2026-11-24). Depends on dev/messages.md
-(message inventory, then `hint()`). Nothing built.
+(message inventory, review, then the `i` convention). Nothing built.
 Date: 23 November 2026; rewritten 24 November 2026.
 
 ## Problem
@@ -46,21 +46,35 @@ Not hints, and kept in every case:
   are already the caller's names for its own arguments ("Add labels to
   `to` ...").
 
+### Encoding: `i` bullets are hints
+
+Decided 2026-11-24 (replacing a proposed `hint()` helper):
+
+- A bullet named `i` is a **hint**, and may be dropped.
+- Everything else (facts about the input, advice about the data, context
+  such as group lines) uses any other bullet type that fits: `x` for what
+  is wrong, `" "` or `*` for context, `!`, `v`. No stronger rule than
+  "not `i`".
+- The same convention covers errors, warnings and messages (e.g. "Supplying
+  a value for `interpret_multi` silences this message" is an `i` bullet).
+- It applies to agetime now, to dac and popcounts in the short run, and to
+  all packages in the long run (proposed for the global CLAUDE.md). In
+  packages that never drop hints, `i` still means "hint".
+
 ### Mechanism
 
 - `local_caller()` already receives `call` and the exported function's
   frame. It also records `caller_env$direct <- identical(call, frame)`.
   Only the outermost agetime function registers, so `direct` describes the
-  call the user made.
-- `hint(text)` returns `c(i = text)` for a direct call, otherwise
-  `character(0)`. With nothing registered (internal use), it treats the
-  call as direct.
-- Every hint goes through `hint()`. This marks hints in the code, and lets
-  the message inventory (dev/messages.md) report them exactly.
-- Errors, warnings and messages alike (e.g. "Supplying a value for
-  `interpret_multi` silences this message" is a hint).
-- `cli` interpolates `{...}` when the condition is signalled, so hint text
-  is written as now.
+  call the user made. With nothing registered (internal use), the call
+  counts as direct.
+- Internal wrappers around `cli::cli_abort()`, `cli::cli_warn()` and
+  `cli::cli_inform()` drop bullets named `i` when the call is not direct,
+  then signal as before (passing `call` and `.envir` through, so `{...}`
+  is interpolated in the caller's environment). All agetime messages go
+  through the wrappers; converting the existing calls is mechanical.
+- The message inventory (dev/messages.md) reports hints exactly
+  (`type == "i"`), and checks for likely misclassifications.
 
 ### Group lines in data-frame functions
 
@@ -81,7 +95,7 @@ tibble, which the developer did not choose.
   arguments, which may not make sense to users of the calling function."
 - dev/api-principles.md: the rule, the definition of a hint, and the `by`
   rule, pointing to dev/messages.md.
-- Tests: `hint()` and `local_caller()`'s `direct`; snapshots of
+- Tests: the wrappers and `local_caller()`'s `direct`; snapshots of
   representative messages called directly and from a wrapper that
   supplies `call`.
 

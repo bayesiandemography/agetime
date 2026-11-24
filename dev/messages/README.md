@@ -28,7 +28,7 @@ One row per bullet.
 | `bullet` | Position within the message |
 | `type` | `""` (header), `i`, `x`, ... |
 | `text` | Template text. `<...>` is an expression the script could not read as text |
-| `hint` | Hint candidate: a non-header bullet naming a function (`{.fn}`) or a literal argument (`{.arg width}`). Heuristic until `hint()` exists |
+| `hint` | Hint candidate: a non-header bullet naming a function (`{.fn}`) or a literal argument (`{.arg width}`). Heuristic until messages follow the `i` convention (`i` = hint) |
 | `literal_arg` | Names an argument by its literal name rather than via `x_arg` / `arg_nm()` |
 | `internal` | "Internal error: ..." |
 | `built_elsewhere` | Text not read (shown as `<...>`); read these by hand |

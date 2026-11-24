@@ -48,13 +48,16 @@ Details of what the script sees: dev/messages/README.md.
 
 ### Hints
 
-- Before `hint()` exists: a heuristic flag, `TRUE` when a bullet names a
-  fixed function (`{.fn age_...}`, `{.fn factor}`) or a literal argument
-  (`{.arg open_left}`), and not an argument via `arg_nm()` or `x_arg`.
-  Used to find candidates for review.
-- After `hint()` exists: `TRUE` exactly when the bullet is a `hint()`
-  call. The heuristic then becomes a check: a heuristic hint not wrapped
-  in `hint()` is reported.
+Convention (2026-11-24; dev/developer-functions.md): a bullet named `i`
+is a hint, and may be dropped; every other type is not.
+
+- Until messages follow the convention: a heuristic flag, `TRUE` when a
+  non-header bullet names a fixed function (`{.fn age_...}`, `{.fn factor}`)
+  or a literal argument (`{.arg open_left}`). Used to find candidates in
+  the review.
+- After: `hint` is exactly `type == "i"`. The heuristic becomes a check
+  for misclassification: a non-`i` bullet that looks like a hint, or an
+  `i` bullet that does not.
 
 ### Reach from exported functions
 
@@ -89,7 +92,10 @@ Candidates:
 - Every signalling call passes `call =`.
 - Suggestions phrased consistently (questions, "Supply ...?", or
   imperatives, "Supply ...": pick one).
-- Hints go through `hint()` (after step 3).
+- `i` bullets are hints and other bullets are not (heuristic, after
+  step 3).
+- Messages go through the package's signalling wrappers, not
+  `cli::cli_abort()` directly (after step 3).
 
 Once a check is stable, it can move into a test that is skipped on CRAN,
 so `devtools::test()` catches a new message that breaks it.
@@ -101,10 +107,12 @@ so `devtools::test()` catches a new message that breaks it.
 2. **Review the inventory.** Classify each bullet (fact, advice about the
    data, hint); note inconsistencies; settle conventions and record them
    above.
-3. **`hint()`** (dev/developer-functions.md): `local_caller()` records
-   whether the call is direct; route every hint through `hint()`; drop
-   "Checking the whole dataset"; update the `call` docs and
-   api-principles. The inventory's `hint` column becomes exact.
+3. **The `i` convention** (dev/developer-functions.md): re-type bullets
+   so that `i` means hint; `local_caller()` records whether the call is
+   direct; wrappers around the cli signalling functions drop `i` bullets
+   for indirect calls; drop "Checking the whole dataset"; update the
+   `call` docs and api-principles. The inventory's `hint` column becomes
+   exact.
 4. **Checks**: add them to the script; fix the messages that break them;
    promote stable checks to a test.
 
