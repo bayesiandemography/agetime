@@ -122,10 +122,10 @@ mid_intervals <- function(m, label_type, call) {
     i_open <- match(TRUE, is_open_left | is_open_right)
     label <- rownames(m)[[i_open]]
     nm <- label_name(label_type)
-    cli::cli_abort(
+    abort_msg(
       c(
         "Can't calculate midpoint of open {nm} {.val {label}}.",
-        i = "No closed {nm}s to take a width from."
+        "*" = "No closed {nm}s to take a width from."
       ),
       call = call
     )

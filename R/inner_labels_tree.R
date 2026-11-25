@@ -64,7 +64,7 @@ inner_labels_tree <- function(breaks,
     noun = paste0(label_name(label_type), "s")
   )
   if (!is.na(comment)) {
-    cli::cli_abort("Internal error: labels do not form a tree. {comment}") # nocov
+    abort_msg("Internal error: labels do not form a tree. {comment}") # nocov
   }
   ord <- tree_order(m)
   ans <- vapply(ord, label_row, "")
@@ -97,16 +97,16 @@ tree_check_nodes <- function(nodes,
     return(character())
   }
   if (!is.character(nodes)) {
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg nodes} is not a character vector.",
-      i = "{.arg nodes} has class {.cls {class(nodes)}}."
+      x = "{.arg nodes} has class {.cls {class(nodes)}}."
     ), call = user_frame())
   }
   if (length(nodes) == 0L) {
     return(character())
   }
   if (anyNA(nodes)) {
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg nodes} has {.val {NA}}.",
       i = "To include a category for missing values, use {.arg include_missing}."
     ), call = user_frame())
@@ -126,16 +126,16 @@ tree_check_nodes <- function(nodes,
   is_total <- get_is_total(intervals)[i_row]
   if (any(is_missing)) {
     lab <- nodes[[match(TRUE, is_missing)]]
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg nodes} includes {.val {lab}}, which is a label for missing values.",
       i = "To include a category for missing values, use {.arg include_missing}."
     ), call = user_frame())
   }
   if (any(is_total)) {
     lab <- nodes[[match(TRUE, is_total)]]
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg nodes} includes {.val {lab}}, which is a label for a total.",
-      i = "A total is not part of a reporting tree.",
+      "*" = "A total is not part of a reporting tree.",
       i = paste("To include a category for {label_type} not stated,",
                 "use {.arg include_missing}.")
     ), call = user_frame())
@@ -164,9 +164,9 @@ tree_check_nodes <- function(nodes,
       paste("{.val {nodes[[i]]}} is interpreted as {interval},",
             "and {limit} is not one of the {.arg breaks}: {.val {breaks}}.")
     }
-    cli::cli_abort(c(
+    abort_msg(c(
       "{noun_broad} {.val {nodes[[i]]}} does not line up with {.arg breaks}.",
-      i = hint
+      x = hint
     ), call = user_frame())
   }
   m_leaf <- get_m(intervals(
@@ -181,17 +181,17 @@ tree_check_nodes <- function(nodes,
   }, 1L)
   if (any(n_spanned < 2L)) {
     i <- match(TRUE, n_spanned < 2L)
-    cli::cli_abort(c(
+    abort_msg(c(
       "{noun_broad} {.val {nodes[[i]]}} is the same as a most detailed {noun}.",
-      i = "A broad {noun} must contain two or more of the most detailed {noun}s."
+      "*" = "A broad {noun} must contain two or more of the most detailed {noun}s."
     ), call = user_frame())
   }
   n_leaf <- nrow(m_leaf)
   if (any(n_spanned == n_leaf)) {
     i <- match(TRUE, n_spanned == n_leaf)
-    cli::cli_abort(c(
+    abort_msg(c(
       "{noun_broad} {.val {nodes[[i]]}} contains all the most detailed {noun}s.",
-      i = "Records with no information on {label_type} are represented by {.val Missing}.",
+      "*" = "Records with no information on {label_type} are represented by {.val Missing}.",
       i = "To include {.val Missing}, use {.arg include_missing}."
     ), call = user_frame())
   }
@@ -210,15 +210,15 @@ tree_check_nodes <- function(nodes,
       msg <- paste("{.arg nodes} includes {.val {nodes[[i1]]}} and",
                    "{.val {nodes[[i2]]}}, which describe the same {noun}.")
     }
-    cli::cli_abort(msg, call = user_frame())
+    abort_msg(msg, call = user_frame())
   }
   pairs <- tree_find_partial_overlaps(m)
   if (nrow(pairs) > 0L) {
     lab1 <- nodes[[pairs[1L, 1L]]]
     lab2 <- nodes[[pairs[1L, 2L]]]
-    cli::cli_abort(c(
+    abort_msg(c(
       "{noun_broad}s do not form a tree.",
-      i = "{.val {lab1}} and {.val {lab2}} overlap, but neither contains the other."
+      x = "{.val {lab1}} and {.val {lab2}} overlap, but neither contains the other."
     ), call = user_frame())
   }
   nodes_std

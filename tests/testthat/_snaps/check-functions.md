@@ -7,8 +7,8 @@
       Error in `agetime:::check_m_contains()`:
       ! Can't coarsen age groups in `labels`.
       x Age group "5-9" would be split by the new age groups.
-      i "5-9" overlaps "0-6" and "7-9".
+      x "5-9" overlaps "0-6" and "7-9".
       x Age group "10-14" is not fully covered by the new age groups.
-      i New age groups cover [0, 10).
+      * New age groups cover [0, 10).
       i Set `open_right = TRUE` to include age groups above 10?
 

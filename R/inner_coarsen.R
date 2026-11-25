@@ -333,9 +333,9 @@ inner_coarsen_to <- function(labels,
     if (mapping_has_no_labels(labels)) {
       return(factor(levels = character(), ordered = is_ordered))
     }
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg {arg_nm('to')}} has no labels.",
-      i = "Supply at least one label to coarsen to?"
+      "*" = "Supply at least one label to coarsen to?"
     ), call = user_frame())
   }
   intervals_to <- intervals(

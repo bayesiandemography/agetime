@@ -24,11 +24,12 @@ One row per bullet.
 | `fun` | Enclosing top-level function |
 | `text_line` | Line where the text is written (differs from `line` when the message was assigned to a variable first) |
 | `via` | Variable the text came through, if any |
-| `signal` | `abort`, `warn`, `inform` (cli); `stored` (`x_label_fail()`, signalled later by `signal_label_fails()`); base or rlang signals would show as `base_*` or `rlang_*` |
+| `signal` | `abort`, `warn`, `inform` (the wrappers `abort_msg()`, `warn_msg()`, `inform_msg()`); `stored` (`x_label_fail()`, signalled later by `signal_label_fails()`); direct cli, rlang or base signals show as `cli_*`, `rlang_*` or `base_*` |
 | `bullet` | Position within the message |
 | `type` | `""` (header), `i`, `x`, ... |
 | `text` | Template text. `<...>` is an expression the script could not read as text |
-| `hint` | Hint candidate: a non-header bullet naming a function (`{.fn}`) or a literal argument (`{.arg width}`). Heuristic until messages follow the `i` convention (`i` = hint) |
+| `hint` | Bullet is a hint: `type == "i"` |
+| `looks_like_hint` | Heuristic: a non-header bullet naming a function (`{.fn}`), a literal argument (`{.arg width}`), or giving code (`{.code}`). Disagreement with `hint` flags a possible misclassification |
 | `literal_arg` | Names an argument by its literal name rather than via `x_arg` / `arg_nm()` |
 | `internal` | "Internal error: ..." |
 | `built_elsewhere` | Text not read (shown as `<...>`); read these by hand |
@@ -41,7 +42,8 @@ One row per bullet.
   (`msg <- c(...)`, `names(bullets) <- rep("x", ...)`), using assignments
   before the signalling call. Text from one assignment used at several
   sites of the same signal type is listed once, at the first site.
-- Skips re-signals: `stop(cnd)` / `warning(cnd)` inside a handler.
+- Skips re-signals (`stop(cnd)` / `warning(cnd)` inside a handler), and
+  the cli calls inside the signalling wrappers themselves.
 - Treats `cli::format_inline("...")` as its text.
 - Does not read: messages from helper functions
   (`msg_i_parsed_interval()`), values built with `if`, `vapply()`, etc.,

@@ -5,7 +5,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! `nodes` is not a character vector.
-      i `nodes` has class <numeric>.
+      x `nodes` has class <numeric>.
 
 ---
 
@@ -41,7 +41,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! `nodes` includes "Total", which is a label for a total.
-      i A total is not part of a reporting tree.
+      * A total is not part of a reporting tree.
       i To include a category for age not stated, use `include_missing`.
 
 ---
@@ -51,7 +51,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Broad age group "15-25" does not line up with `breaks`.
-      i "15-25" is interpreted as [15, 26), and 26 is not one of the `breaks`: 0, 5, 10, 15, 20, 30, 40, 50, 60, and 70.
+      x "15-25" is interpreted as [15, 26), and 26 is not one of the `breaks`: 0, 5, 10, 15, 20, 30, 40, 50, 60, and 70.
 
 ---
 
@@ -60,7 +60,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Broad age group "12+" does not line up with `breaks`.
-      i "12+" is interpreted as [12, Inf), and 12 is not one of the `breaks`: 0, 5, 10, 15, 20, 30, 40, 50, 60, and 70.
+      x "12+" is interpreted as [12, Inf), and 12 is not one of the `breaks`: 0, 5, 10, 15, 20, 30, 40, 50, 60, and 70.
 
 ---
 
@@ -69,7 +69,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Broad age group "10+" does not line up with `breaks`.
-      i "10+" is open, but the most detailed age groups are not open on the right.
+      x "10+" is open, but the most detailed age groups are not open on the right.
 
 ---
 
@@ -78,7 +78,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Broad age group "20-29" is the same as a most detailed age group.
-      i A broad age group must contain two or more of the most detailed age groups.
+      * A broad age group must contain two or more of the most detailed age groups.
 
 ---
 
@@ -87,7 +87,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Broad age group "0+" contains all the most detailed age groups.
-      i Records with no information on age are represented by "Missing".
+      * Records with no information on age are represented by "Missing".
       i To include "Missing", use `include_missing`.
 
 ---
@@ -113,7 +113,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Broad age groups do not form a tree.
-      i "0-29" and "20-39" overlap, but neither contains the other.
+      x "0-29" and "20-39" overlap, but neither contains the other.
 
 # period_labels_tree() and cohort_labels_tree() throw errors
 
@@ -122,7 +122,7 @@
     Condition
       Error in `period_labels_tree()`:
       ! Broad period "<2010" does not line up with `breaks`.
-      i "<2010" is open, but the most detailed periods are not open on the left.
+      x "<2010" is open, but the most detailed periods are not open on the left.
 
 ---
 
@@ -131,5 +131,5 @@
     Condition
       Error in `cohort_labels_tree()`:
       ! Broad cohort "1945-1960" does not line up with `breaks`.
-      i "1945-1960" is interpreted as [1945, 1960), and 1945 is not one of the `breaks`: 1940, 1950, 1960, 1970, 1980, 1990, and 2000.
+      x "1945-1960" is interpreted as [1945, 1960), and 1945 is not one of the `breaks`: 1940, 1950, 1960, 1970, 1980, 1990, and 2000.
 

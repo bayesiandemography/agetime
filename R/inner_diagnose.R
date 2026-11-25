@@ -138,7 +138,7 @@ inner_diagnose <- function(labels,
                         x_arg = arg_nm("labels")) {
   on <- match.arg(on, choices = c("levels", "values"))
   if (identical(on, "levels") && !is.factor(labels)) {
-    cli::cli_abort(c("{.arg {x_arg}} is not a factor.",
+    abort_msg(c("{.arg {x_arg}} is not a factor.",
       i = paste(
         "To check observed labels in a data frame, use",
         "{.fn {label_type}_df_diagnose_values} or {.fn {label_type}_df_assert_values}."
@@ -871,7 +871,7 @@ throw_assert_error <- function(val, label_type, x_arg, call) {
     msg <- paste0(label, " labels in {.arg {x_arg}} fail {cli::qty(n)}check{?s} {.arg {conditions}}.")
     bullets <- paste0("{.arg {conditions[[", seq_len(n), "]]}}: {comments[[", seq_len(n), "]]}")
     names(bullets) <- rep("x", times = n)
-    cli::cli_abort(c(msg, bullets), call = call)
+    abort_msg(c(msg, bullets), call = call)
   }
   invisible(NULL)
 }

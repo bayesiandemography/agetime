@@ -6,8 +6,8 @@
 #' @noRd
 check_breaks <- function(breaks) {
   if (length(breaks) < 2L) {
-    cli::cli_abort(c("{.arg breaks} has length {.val {length(breaks)}}.",
-      i = "Use at least two break points?"
+    abort_msg(c("{.arg breaks} has length {.val {length(breaks)}}.",
+      "*" = "Use at least two break points?"
     ), call = user_frame())
   }
   check_incr_nonneg_integers(
@@ -26,16 +26,16 @@ check_breaks <- function(breaks) {
 #' @noRd
 check_flag <- function(x, nm_x) {
   if (length(x) != 1L) {
-    cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
-      i = "Supply a single value?"
+    abort_msg(c("{.arg {nm_x}} has length {.val {length(x)}}.",
+      "*" = "Supply a single value?"
     ), call = user_frame())
   }
   if (is.na(x)) {
-    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.", call = user_frame())
+    abort_msg("{.arg {nm_x}} is {.val {NA}}.", call = user_frame())
   }
   if (!(x %in% c(TRUE, FALSE, 1L, 0L))) {
-    cli::cli_abort(c("{.arg {nm_x}} is {.val {x}}.",
-      i = "Use {.val {TRUE}} or {.val {FALSE}}?"
+    abort_msg(c("{.arg {nm_x}} is {.val {x}}.",
+      "*" = "Use {.val {TRUE}} or {.val {FALSE}}?"
     ), call = user_frame())
   }
   invisible(TRUE)
@@ -109,15 +109,15 @@ check_in_limits_intervals <- function(x,
       "Highest interval: {.val {label_highest}}.",
       .envir = msg_envir
     )
-    cli::cli_abort(c(
+    abort_msg(c(
       paste0(
         "{.arg {nm_x}} is outside the range covered by ",
         "{label_name(label_type)}s in {.arg {nm_intervals}}."
       ),
-      i = x_msg,
-      i = label_lowest_msg,
-      i = label_highest_msg,
-      i = paste0(
+      x = x_msg,
+      "*" = label_lowest_msg,
+      "*" = label_highest_msg,
+      "*" = paste0(
         "Use values within the range covered by ",
         "{label_name(label_type)}s in {.arg {nm_intervals}}?"
       )
@@ -137,30 +137,30 @@ check_in_limits_intervals <- function(x,
 check_incr_nonneg_integers <- function(x, nm_x, min_length) {
   eps <- 1e-8
   if (length(x) < min_length) {
-    cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
-      i = "Use at least {min_length} value{?s}?"
+    abort_msg(c("{.arg {nm_x}} has length {.val {length(x)}}.",
+      "*" = "Use at least {min_length} value{?s}?"
     ), call = user_frame())
   }
   if (!is.numeric(x)) {
-    cli::cli_abort(c("{.arg {nm_x}} is non-numeric.",
-      i = "{.arg {nm_x}} has class {.cls {class(x)}}."
+    abort_msg(c("{.arg {nm_x}} is non-numeric.",
+      x = "{.arg {nm_x}} has class {.cls {class(x)}}."
     ), call = user_frame())
   }
   n_na <- sum(is.na(x))
   if (n_na > 0L) {
-    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.", call = user_frame())
+    abort_msg("{.arg {nm_x}} has {cli::qty(n_na)} NA{?s}.", call = user_frame())
   }
   is_integerish <- abs(x - round(x)) < eps
   i_not_integerish <- match(FALSE, is_integerish, nomatch = 0L)
   if (i_not_integerish > 0L) {
-    cli::cli_abort(paste0(
+    abort_msg(paste0(
       "{.arg {nm_x}} has value {.val {x[[i_not_integerish]]}} ",
       "that is not a whole number."
     ), call = user_frame())
   }
   n_neg <- sum(x < 0L)
   if (n_neg > 0L) {
-    cli::cli_abort("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.", call = user_frame())
+    abort_msg("{.arg {nm_x}} has {cli::qty(n_neg)} negative value{?s}.", call = user_frame())
   }
   is_non_incr <- diff(x) <= 0L
   i_non_incr <- match(TRUE, is_non_incr, nomatch = 0L)
@@ -174,7 +174,7 @@ check_incr_nonneg_integers <- function(x, nm_x, min_length) {
       "{.arg {nm_x}} has non-increasing values: {.val {x_non}}.",
       .envir = msg_envir
     )
-    cli::cli_abort(msg, call = user_frame())
+    abort_msg(msg, call = user_frame())
   }
   invisible(TRUE)
 }
@@ -203,10 +203,10 @@ check_coarsen_open_flags <- function(is_open_left,
     if (any(is_orl)) {
       labels_open <- labels_as_supplied(is_orl)
       n <- length(labels_open)
-      cli::cli_abort(c(
+      abort_msg(c(
         "{.arg {arg_nm('labels')}} contains {cli::qty(n)} {ln}{?s} open on the left: {.val {labels_open}}.",
         i = "{.arg open_left} is {.val {FALSE}}.",
-        i = "Remove open-left labels from {.arg {arg_nm('labels')}}?",
+        "*" = "Remove open-left labels from {.arg {arg_nm('labels')}}?",
         i = "Or unset {.arg open_left}, or pass {.val {TRUE}}?"
       ), call = user_frame())
     }
@@ -216,10 +216,10 @@ check_coarsen_open_flags <- function(is_open_left,
     if (any(is_orr)) {
       labels_open <- labels_as_supplied(is_orr)
       n <- length(labels_open)
-      cli::cli_abort(c(
+      abort_msg(c(
         "{.arg {arg_nm('labels')}} contains {cli::qty(n)} {ln}{?s} open on the right: {.val {labels_open}}.",
         i = "{.arg open_right} is {.val {FALSE}}.",
-        i = "Remove open-right labels from {.arg {arg_nm('labels')}}?",
+        "*" = "Remove open-right labels from {.arg {arg_nm('labels')}}?",
         i = "Or unset {.arg open_right}, or pass {.val {TRUE}}?"
       ), call = user_frame())
     }
@@ -282,7 +282,7 @@ check_m_contains <- function(m_contains,
       bullets,
       x = paste0("{cli::qty(split_n)}", nm_cap, "{?s} {.val {split_labels}}{split_more} ",
                  "would be split by ", new_desc, "."),
-      i = "{.val {split_first}} overlaps {.val {split_over}}."
+      x = "{.val {split_first}} overlaps {.val {split_over}}."
     )
   }
   if (any(is_outside)) {
@@ -299,7 +299,7 @@ check_m_contains <- function(m_contains,
       lower_new <- min(m_new[is_interval, 1L])
       upper_new <- max(m_new[is_interval, 2L])
       env$cover <- paste0("[", lower_new, ", ", upper_new, ")")
-      bullets <- c(bullets, i = paste0("New ", nm, "s cover {cover}."))
+      bullets <- c(bullets, "*" = paste0("New ", nm, "s cover {cover}."))
       m_outside <- m_old[is_outside, , drop = FALSE]
       if (any(m_outside[, 2L] > upper_new, na.rm = TRUE)) {
         bullets <- c(bullets, i = paste0(
@@ -307,16 +307,17 @@ check_m_contains <- function(m_contains,
         ))
       }
       if (any(m_outside[, 1L] < lower_new, na.rm = TRUE)) {
-        hint <- if (label_type == "age") {
-          "Add a lower break?"
+        ## for ages, advice about the data; otherwise also names
+        ## an agetime argument, so a hint
+        if (label_type == "age") {
+          bullets <- c(bullets, "*" = "Add a lower break?")
         } else {
-          "Set {.code open_left = TRUE}, or add a lower break?"
+          bullets <- c(bullets, i = "Set {.code open_left = TRUE}, or add a lower break?")
         }
-        bullets <- c(bullets, i = hint)
       }
     }
     if (source == "to") {
-      bullets <- c(bullets, i = "Add labels to {.arg {arg_nm('to')}} that cover {cli::qty(outside_n)}{?it/them}?")
+      bullets <- c(bullets, "*" = "Add labels to {.arg {arg_nm('to')}} that cover {cli::qty(outside_n)}{?it/them}?")
     }
   }
   if (any(is_special)) {
@@ -326,10 +327,10 @@ check_m_contains <- function(m_contains,
     bullets <- c(
       bullets,
       x = paste0("{.arg {arg_nm('to')}} has no category for {.val {special_labels}}."),
-      i = "Add {cli::qty(special_n)}{?it/them} to {.arg {arg_nm('to')}}?"
+      "*" = "Add {cli::qty(special_n)}{?it/them} to {.arg {arg_nm('to')}}?"
     )
   }
-  cli::cli_abort(
+  abort_msg(
     c(paste0("Can't coarsen ", nm, "s in {.arg {arg_nm('labels')}}."), bullets),
     .envir = env,
     call = user_frame()
@@ -398,9 +399,9 @@ check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
     lab1 <- labels_unique[[i1]]
     lab2 <- labels_unique[[i2]]
     ln <- label_name(label_type)
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg {arg_nm('to')}} has overlapping {ln}s {.val {lab1}} and {.val {lab2}}.",
-      i = "Supply {ln}s in {.arg {arg_nm('to')}} that do not overlap?"
+      "*" = "Supply {ln}s in {.arg {arg_nm('to')}} that do not overlap?"
     ), call = user_frame())
   }
   invisible(TRUE)
@@ -429,39 +430,39 @@ check_coarsen_to_no_overlap <- function(intervals_to, label_type) {
 #' @noRd
 check_n <- function(n, nm_n, min, max, divisible_by) {
   if (!is.numeric(n)) {
-    cli::cli_abort(c("{.arg {nm_n}} is non-numeric.",
-      i = "{.arg {nm_n}} has class {.cls {class(n)}}."
+    abort_msg(c("{.arg {nm_n}} is non-numeric.",
+      x = "{.arg {nm_n}} has class {.cls {class(n)}}."
     ), call = user_frame())
   }
   if (length(n) != 1L) {
-    cli::cli_abort(c("{.arg {nm_n}} has length {.val {length(n)}}.",
-      i = "Supply a single value?"
+    abort_msg(c("{.arg {nm_n}} has length {.val {length(n)}}.",
+      "*" = "Supply a single value?"
     ), call = user_frame())
   }
   if (is.na(n)) {
-    cli::cli_abort("{.arg {nm_n}} is {.val {NA}}.", call = user_frame())
+    abort_msg("{.arg {nm_n}} is {.val {NA}}.", call = user_frame())
   }
   if (is.infinite(n)) {
-    cli::cli_abort("{.arg {nm_n}} is {.val {n}}.", call = user_frame())
+    abort_msg("{.arg {nm_n}} is {.val {n}}.", call = user_frame())
   }
   if (!isTRUE(all.equal(round(n), n))) {
-    cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-      i = "Use a whole number?"
+    abort_msg(c("{.arg {nm_n}} is {.val {n}}.",
+      "*" = "Use a whole number?"
     ), call = user_frame())
   }
   if (!is.null(min) && (n < min)) {
-    cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-      i = "Use a value of at least {.val {min}}?"
+    abort_msg(c("{.arg {nm_n}} is {.val {n}}.",
+      "*" = "Use a value of at least {.val {min}}?"
     ), call = user_frame())
   }
   if (!is.null(max) && (n > max)) {
-    cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-      i = "Use a value of at most {.val {max}}?"
+    abort_msg(c("{.arg {nm_n}} is {.val {n}}.",
+      "*" = "Use a value of at most {.val {max}}?"
     ), call = user_frame())
   }
   if (!is.null(divisible_by) && (n %% divisible_by != 0L)) {
-    cli::cli_abort(c("{.arg {nm_n}} is {.val {n}}.",
-      i = "Use a value divisible by {.val {divisible_by}}?"
+    abort_msg(c("{.arg {nm_n}} is {.val {n}}.",
+      "*" = "Use a value divisible by {.val {divisible_by}}?"
     ), call = user_frame())
   }
   invisible(TRUE)
@@ -481,9 +482,9 @@ check_n <- function(n, nm_n, min, max, divisible_by) {
 check_diff_divisible <- function(x, y, nm_x, nm_y, divisible_by) {
   diff <- y - x
   if (diff %% divisible_by != 0L) {
-    cli::cli_abort(c(
+    abort_msg(c(
       "Difference between {.arg {nm_x}} and {.arg {nm_y}} is {.val {diff}}.",
-      i = paste0(
+      "*" = paste0(
         "Use values whose difference is divisible by ",
         "{.val {divisible_by}}?"
       )
@@ -534,13 +535,13 @@ check_not_in_intervals <- function(x,
           "Interval: {.val {label}}.",
           .envir = msg_envir
         )
-        cli::cli_abort(c(
+        abort_msg(c(
           paste0(
             "{.arg {nm_x}} lies inside an existing ",
             "{label_name(label_type)}."
           ),
-          i = value_msg,
-          i = interval_msg
+          x = value_msg,
+          x = interval_msg
         ), call = user_frame())
       }
     }
@@ -560,9 +561,9 @@ check_not_in_intervals <- function(x,
 check_x_lt_y <- function(x, y, nm_x, nm_y) {
   if (x >= y) {
     if (x == y) {
-      cli::cli_abort("{.arg {nm_x}} equals {.arg {nm_y}} ({.val {x}}).", call = user_frame())
+      abort_msg("{.arg {nm_x}} equals {.arg {nm_y}} ({.val {x}}).", call = user_frame())
     } else {
-      cli::cli_abort(paste0(
+      abort_msg(paste0(
         "{.arg {nm_x}} ({.val {x}}) is greater than ",
         "{.arg {nm_y}} ({.val {y}})."
       ), call = user_frame())
@@ -580,23 +581,23 @@ check_x_lt_y <- function(x, y, nm_x, nm_y) {
 #' @noRd
 check_mapping_name <- function(x, nm_x) {
   if (length(x) != 1L) {
-    cli::cli_abort(c("{.arg {nm_x}} has length {.val {length(x)}}.",
-      i = "Supply a single name?"
+    abort_msg(c("{.arg {nm_x}} has length {.val {length(x)}}.",
+      "*" = "Supply a single name?"
     ), call = user_frame())
   }
   if (!(is.character(x) || is.numeric(x) || is.factor(x))) {
-    cli::cli_abort(c("{.arg {nm_x}} is {.obj_type_friendly {x}}.",
-      i = "Use a character, numeric, or factor name?"
+    abort_msg(c("{.arg {nm_x}} is {.obj_type_friendly {x}}.",
+      "*" = "Use a character, numeric, or factor name?"
     ), call = user_frame())
   }
   x <- as.character(x)
   if (is.na(x)) {
-    cli::cli_abort("{.arg {nm_x}} is {.val {NA}}.", call = user_frame())
+    abort_msg("{.arg {nm_x}} is {.val {NA}}.", call = user_frame())
   }
   x <- trimws(x)
   if (!nzchar(x)) {
-    cli::cli_abort(c("{.arg {nm_x}} is an empty string.",
-      i = "Supply a non-empty name?"
+    abort_msg(c("{.arg {nm_x}} is an empty string.",
+      "*" = "Supply a non-empty name?"
     ), call = user_frame())
   }
   x
@@ -613,9 +614,9 @@ check_mapping_names <- function(name_x, name_y) {
   name_x <- check_mapping_name(x = name_x, nm_x = "name_x")
   name_y <- check_mapping_name(x = name_y, nm_x = "name_y")
   if (identical(name_x, name_y)) {
-    cli::cli_abort(c(
+    abort_msg(c(
       "{.arg name_x} and {.arg name_y} are both {.val {name_x}}.",
-      i = "Supply two different names?"
+      "*" = "Supply two different names?"
     ), call = user_frame())
   }
   list(name_x = name_x, name_y = name_y)

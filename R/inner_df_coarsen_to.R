@@ -17,7 +17,7 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
   column <- df_coarsen_columns(column, label_type, data, to, single = TRUE)
   by <- df_coarsen_columns(by, "by", data, to, single = FALSE)
   if (column$data %in% by$data || column$to %in% by$to) {
-    cli::cli_abort("The label column cannot also be selected in {.arg by}.",
+    abort_msg("The label column cannot also be selected in {.arg by}.",
                     call = user_frame())
   }
   if (!is.null(interpret_multi)) {
@@ -55,8 +55,8 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
   levels_output <- character(0)
   for (i in seq_along(groups_data$loc)) {
     if (is.na(matches[[i]])) {
-      cli::cli_abort(c("No target classification in {.arg {to_arg}} for a group in {.arg {data_arg}}.",
-                       i = "{df_coarsen_group(groups_data$key, i)}"), call = user_frame())
+      abort_msg(c("No target classification in {.arg {to_arg}} for a group in {.arg {data_arg}}.",
+                       "*" = "{df_coarsen_group(groups_data$key, i)}"), call = user_frame())
     }
     rows <- groups_data$loc[[i]]
     id <- classification[[i]]
@@ -69,8 +69,8 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
           source_arg, target_arg
         ),
         error = function(cnd) {
-          cli::cli_abort(c("Can't coarsen {.arg {source_arg}} to {.arg {target_arg}}.",
-                           i = "{df_coarsen_group(groups_data$key, i)}"),
+          abort_msg(c("Can't coarsen {.arg {source_arg}} to {.arg {target_arg}}.",
+                           "*" = "{df_coarsen_group(groups_data$key, i)}"),
                           parent = cnd, call = user_frame())
         }
       )
@@ -100,11 +100,11 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
 #' @noRd
 check_df_coarsen_data <- function(x, arg) {
   if (!is.data.frame(x)) {
-    cli::cli_abort("{.arg {arg}} must be a data frame.", call = user_frame())
+    abort_msg("{.arg {arg}} must be a data frame.", call = user_frame())
   }
   nms <- names(x)
   if (anyNA(nms) || any(!nzchar(nms)) || anyDuplicated(nms)) {
-    cli::cli_abort("{.arg {arg}} must have unique, nonmissing, nonempty column names.",
+    abort_msg("{.arg {arg}} must have unique, nonmissing, nonempty column names.",
                     call = user_frame())
   }
   invisible(NULL)
@@ -123,7 +123,7 @@ df_coarsen_columns <- function(x, arg, data, to, single) {
   }
   if (!is.character(x) || !is.null(dim(x)) || anyNA(x) || any(!nzchar(x)) ||
       (single && length(x) != 1L)) {
-    cli::cli_abort(c("{.arg {arg}} must be {if (single) 'a single column name or named mapping' else 'a character vector of column names or named mappings, or NULL'}.",
+    abort_msg(c("{.arg {arg}} must be {if (single) 'a single column name or named mapping' else 'a character vector of column names or named mappings, or NULL'}.",
                      i = "Use {.code c(source_column = \"target_column\")} when names differ."),
                     call = user_frame())
   }
@@ -132,22 +132,22 @@ df_coarsen_columns <- function(x, arg, data, to, single) {
     source <- unname(x)
   } else {
     if (anyNA(source)) {
-      cli::cli_abort("Names in {.arg {arg}} must not be missing.", call = user_frame())
+      abort_msg("Names in {.arg {arg}} must not be missing.", call = user_frame())
     }
     source[!nzchar(source)] <- x[!nzchar(source)]
   }
   target <- unname(x)
   if (anyDuplicated(source) || anyDuplicated(target)) {
-    cli::cli_abort("Each column can appear only once in {.arg {arg}}.", call = user_frame())
+    abort_msg("Each column can appear only once in {.arg {arg}}.", call = user_frame())
   }
   if (any(!source %in% names(data))) {
     missing <- source[!source %in% names(data)]
-    cli::cli_abort("Source columns {.val {missing}} selected in {.arg {arg}} are missing from {.arg {arg_nm('data')}}.",
+    abort_msg("Source columns {.val {missing}} selected in {.arg {arg}} are missing from {.arg {arg_nm('data')}}.",
                     call = user_frame())
   }
   if (any(!target %in% names(to))) {
     missing <- target[!target %in% names(to)]
-    cli::cli_abort("Target columns {.val {missing}} selected in {.arg {arg}} are missing from {.arg {arg_nm('to')}}.",
+    abort_msg("Target columns {.val {missing}} selected in {.arg {arg}} are missing from {.arg {arg_nm('to')}}.",
                     call = user_frame())
   }
   list(data = unname(source), to = target)
@@ -209,7 +209,7 @@ df_coarsen_classification <- function(labels, to, label_type, interpret_single,
     bad <- which(is.na(m[, 1L]) | is.na(m[, 2L]))
     if (length(bad)) {
       label <- labs[[bad[[1L]]]]
-      cli::cli_abort("Label {.val {label}} in {.arg {arg}} does not describe an interval; totals and missing categories are not supported.",
+      abort_msg("Label {.val {label}} in {.arg {arg}} does not describe an interval; totals and missing categories are not supported.",
                       call = user_frame())
     }
   }
@@ -224,7 +224,7 @@ df_coarsen_classification <- function(labels, to, label_type, interpret_single,
   bad <- which(rowSums(contained) != 1L)
   if (length(bad)) {
     label <- labels[[bad[[1L]]]]
-    cli::cli_abort("Source {.val {label}} does not fit wholly inside a single target interval in {.arg {target_arg}}; it crosses a boundary or lies outside the target classification.",
+    abort_msg("Source {.val {label}} does not fit wholly inside a single target interval in {.arg {target_arg}}; it crosses a boundary or lies outside the target classification.",
                     call = user_frame())
   }
   assignment <- max.col(contained, ties.method = "first")
@@ -247,7 +247,7 @@ check_df_coarsen_overlap <- function(m, labels, arg) {
     bad <- which(m[ord[-1L], 1L] < cummax(m[ord, 2L])[-n])
     if (length(bad)) {
       pair <- labels[ord[c(bad[[1L]], bad[[1L]] + 1L)]]
-      cli::cli_abort("Intervals {.val {pair}} in {.arg {arg}} overlap or describe the same interval.",
+      abort_msg("Intervals {.val {pair}} in {.arg {arg}} overlap or describe the same interval.",
                       call = user_frame())
     }
   }
@@ -285,7 +285,7 @@ check_df_coarsen_coverage <- function(m_source, m_target, assignment, to,
       paste0(lower[[i]], "-", end)
     }
     label <- to[[j]]
-    cli::cli_abort("Target {.val {label}} in {.arg {target_arg}} is not fully covered; source {label_type}s {.val {gap}} are missing from {.arg {source_arg}}.",
+    abort_msg("Target {.val {label}} in {.arg {target_arg}} is not fully covered; source {label_type}s {.val {gap}} are missing from {.arg {source_arg}}.",
                     call = user_frame())
   }
   invisible(NULL)

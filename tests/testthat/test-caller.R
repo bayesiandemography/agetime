@@ -89,3 +89,49 @@ test_that("invalid x_arg and call are errors", {
   expect_error(age_lower("0-4", x_arg = c("a", "b")), "`labels` must be a single string")
   expect_error(age_lower("0-4", call = "wrong"), "`call` must be an environment")
 })
+
+
+## Direct and indirect calls: hints ("i" bullets) ----------------------------
+
+fun_registers <- function(call = rlang::current_env()) {
+  local_caller(args = list(), call = call)
+  is_direct_call()
+}
+
+test_that("local_caller() records whether the call is direct", {
+  expect_true(fun_registers())
+  wrapper <- function() fun_registers(call = rlang::current_env())
+  expect_false(wrapper())
+  expect_false(caller_env$active)
+  expect_null(caller_env$direct)
+})
+
+test_that("is_direct_call() is TRUE when nothing is registered", {
+  expect_true(is_direct_call())
+})
+
+test_that("drop_hints() drops 'i' bullets only for indirect calls", {
+  msg <- c("Header.", x = "Detail.", i = "Hint?", "*" = "Context.")
+  f <- function(call = rlang::current_env()) {
+    local_caller(args = list(), call = call)
+    drop_hints(msg)
+  }
+  expect_identical(f(), msg)
+  wrapper <- function() f(call = rlang::current_env())
+  expect_identical(wrapper(), msg[-3L])
+  expect_identical(drop_hints(msg), msg)
+  expect_identical(drop_hints("Header only."), "Header only.")
+})
+
+test_that("errors keep hints for direct calls and drop them for indirect calls", {
+  expect_snapshot(age_coarsen_five("90+", open_right = FALSE), error = TRUE)
+  f <- function(x) age_coarsen_five(x, open_right = FALSE, x_arg = "data$age",
+                                    call = rlang::current_env())
+  expect_snapshot(f("90+"), error = TRUE)
+})
+
+test_that("messages keep hints for direct calls and drop them for indirect calls", {
+  expect_snapshot(ans <- period_lower("2000-2004"))
+  f <- function(x) period_lower(x, x_arg = "data$time", call = rlang::current_env())
+  expect_snapshot(ans <- f("2000-2004"))
+})

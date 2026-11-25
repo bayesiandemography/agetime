@@ -35,8 +35,8 @@ inner_extend <- function(labels,
     length_zero_ok = TRUE
   )
   if (identical(length(labels), 0L)) {
-    cli::cli_abort(c("{.arg {arg_nm('labels')}} has length 0.",
-      i = "Supply at least one label to extend from?"
+    abort_msg(c("{.arg {arg_nm('labels')}} has length 0.",
+      "*" = "Supply at least one label to extend from?"
     ), call = user_frame())
   }
   check_n(
@@ -76,7 +76,7 @@ inner_extend <- function(labels,
     label <- labels_orig[is_total][[1L]]
     nm_lab <- arg_nm("labels")
     fix <- paste0(nm_lab, "[!", label_type, "_is_total(", nm_lab, ")]")
-    cli::cli_abort(c(
+    abort_msg(c(
       "Can't extend {nm}s: {.arg {arg_nm('labels')}} includes a total ({.val {label}}).",
       i = "Remove totals first with {.code {fix}}?"
     ), call = user_frame())
@@ -86,7 +86,7 @@ inner_extend <- function(labels,
     label <- if (any(is_missing)) labels_orig[is_missing][[1L]] else NA
     nm_lab <- arg_nm("labels")
     fix <- paste0(nm_lab, "[!", label_type, "_is_missing(", nm_lab, ")]")
-    cli::cli_abort(c(
+    abort_msg(c(
       "Can't extend {nm}s: {.arg {arg_nm('labels')}} includes a missing value ({.val {label}}).",
       i = "Remove missing values first with {.code {fix}}?"
     ), call = user_frame())
@@ -94,7 +94,7 @@ inner_extend <- function(labels,
   is_open_right <- get_is_open_right(intervals)
   if (any(is_open_right)) {
     label <- labels_orig[is_open_right][[1L]]
-    cli::cli_abort(
+    abort_msg(
       "Can't extend {nm}s: {.val {label}} is open on the right.",
       call = user_frame()
     )
@@ -103,7 +103,7 @@ inner_extend <- function(labels,
   upper <- get_upper(intervals)
   is_valid <- !is.na(upper)
   if (!any(is_valid)) {
-    cli::cli_abort("Can't extend {nm}s: no valid {nm}s to extend from.",
+    abort_msg("Can't extend {nm}s: no valid {nm}s to extend from.",
                    call = user_frame())
   }
   ## extend from the interval with the highest upper limit,
@@ -114,7 +114,7 @@ inner_extend <- function(labels,
   if (!has_width) {
     if (is.infinite(lower[[i_top]])) {
       label <- labels_orig[[i_top]]
-      cli::cli_abort(c(
+      abort_msg(c(
         "Can't infer width of new {nm}s from {.val {label}}, which is open on the left.",
         i = "Supply a value for {.arg width}?"
       ), call = user_frame())

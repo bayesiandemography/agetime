@@ -12,14 +12,20 @@
 ## Functions that signal conditions, or store message text for later
 ## signalling. 'arg' is the argument holding the message.
 SIGNALS <- data.frame(
-  fun = c("cli_abort", "cli_warn", "cli_inform", "abort", "warn", "inform",
+  fun = c("abort_msg", "warn_msg", "inform_msg",
+          "cli_abort", "cli_warn", "cli_inform", "abort", "warn", "inform",
           "stop", "warning", "message", "x_label_fail"),
-  signal = c("abort", "warn", "inform", "rlang_abort", "rlang_warn",
+  signal = c("abort", "warn", "inform",
+             "cli_abort", "cli_warn", "cli_inform", "rlang_abort", "rlang_warn",
              "rlang_inform", "base_stop", "base_warning", "base_message",
              "stored"),
-  arg = c("message", "message", "message", "message", "message", "message",
+  arg = c("message", "message", "message",
+          "message", "message", "message", "message", "message", "message",
           "...", "...", "...", "msg")
 )
+
+## The signalling wrappers themselves, whose cli calls are not messages.
+WRAPPERS <- c("abort_msg", "warn_msg", "inform_msg")
 
 PATH_R <- "R"
 PATH_OUT <- file.path("dev", "messages", "inventory.csv")
@@ -198,12 +204,14 @@ names_literal_arg <- function(text) {
   !is.na(text) & grepl("\\{\\.arg [A-Za-z._]", text)
 }
 
-## Heuristic, until hint() exists: a bullet other than the header that
-## names a function ({.fn ...}) or an argument by its literal name.
-## Headers state the problem, so are not hints.
-is_hint_candidate <- function(text, type) {
+## Heuristic: a bullet other than the header that names a function
+## ({.fn ...}), an argument by its literal name, or code ({.code ...}).
+## Hints are exactly the
+## 'i' bullets; this flags possible misclassifications.
+looks_like_hint <- function(text, type) {
   type != "" & (names_literal_arg(text) |
-                  (!is.na(text) & grepl("{.fn ", text, fixed = TRUE)))
+                  (!is.na(text) & (grepl("{.fn ", text, fixed = TRUE) |
+                                     grepl("{.code ", text, fixed = TRUE))))
 }
 
 ## Internal errors: conditions that should never reach users.
@@ -251,7 +259,7 @@ build_inventory <- function() {
   calls <- do.call(rbind, lapply(files, find_signal_calls))
   is_re <- mapply(is_resignal, calls$call, calls$called)
   n_resignal <- sum(is_re)
-  calls <- calls[!is_re, ]
+  calls <- calls[!is_re & !calls$fun %in% WRAPPERS, ]
   assigns <- do.call(rbind, lapply(files, find_assignments))
   reach <- exported_reach()
   rows <- lapply(seq_len(nrow(calls)), function(k) {
@@ -272,7 +280,8 @@ build_inventory <- function() {
       bullet = seq_len(nrow(bullets)),
       type = bullets$type,
       text = bullets$text,
-      hint = is_hint_candidate(bullets$text, bullets$type),
+      hint = bullets$type == "i",
+      looks_like_hint = looks_like_hint(bullets$text, bullets$type),
       literal_arg = names_literal_arg(bullets$text),
       internal = is_internal(bullets$text),
       built_elsewhere = !bullets$literal,
@@ -304,11 +313,14 @@ summarise_inventory <- function(inv) {
   print(table(sites$signal))
   cat("\nBullets by type\n")
   print(table(ifelse(inv$type == "", "(header)", inv$type)))
-  cat("\nHint candidates:  ", sum(inv$hint), "\n")
+  cat("\nHints (i bullets):", sum(inv$hint), "\n")
+  cat("Non-hints that look like hints:", sum(!inv$hint & inv$looks_like_hint), "\n")
+  cat("Hints that do not look like hints:", sum(inv$hint & !inv$looks_like_hint), "\n")
   cat("Literal argument names:", sum(inv$literal_arg), "\n")
   cat("Internal errors:  ", sum(inv$internal), "\n")
   cat("Built elsewhere:  ", sum(inv$built_elsewhere), "\n")
-  is_signal <- sites$signal %in% c("abort", "warn", "rlang_abort", "rlang_warn")
+  is_signal <- sites$signal %in% c("abort", "warn", "cli_abort", "cli_warn",
+                                   "rlang_abort", "rlang_warn")
   cat("Sites without call =:", sum(is_signal & !sites$has_call), "\n")
   cat("Bullets in functions no export reaches:",
       sum(inv$n_exported == 0L), "\n")

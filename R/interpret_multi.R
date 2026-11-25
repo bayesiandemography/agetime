@@ -47,7 +47,7 @@ resolve_interpret_multi <- function(interpret_multi,
     l <- m[row, 1L]
     u <- m[row, 2L]
     w <- width[[row]]
-    cli::cli_inform(c(
+    inform_msg(c(
       "Interpreting {.val {label}} as [{l}, {u}), which has width {w}.",
       i = paste0(
         "If {.val {label}} should instead be interpreted as [{l}, {u + 1}), ",

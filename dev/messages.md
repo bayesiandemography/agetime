@@ -143,6 +143,16 @@ so `devtools::test()` catches a new message that breaks it.
    for indirect calls; drop "Checking the whole dataset"; update the
    `call` docs and api-principles. The inventory's `hint` column becomes
    exact.
+   In three commits:
+   - **3a** (done 2026-11-25): `local_caller()` records whether the call
+     is direct; `abort_msg()`, `warn_msg()`, `inform_msg()` drop `i`
+     bullets for indirect calls; all messages go through them; bullets
+     re-typed (`i` → `x` or `*`) so that only interface hints are `i`.
+     Re-typing went into 3a so that no commit drops group lines or advice.
+   - **3b**: rewording to conventions 2-6 ("must" headers, hints as
+     questions, "Can't", internal errors); drop "Checking the whole
+     dataset".
+   - **3c**: `call` docs, api-principles.
 4. **Checks**: add them to the script; fix the messages that break them;
    promote stable checks to a test.
 

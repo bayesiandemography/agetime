@@ -6,9 +6,9 @@
       Error in `age_coarsen()`:
       ! Can't coarsen age groups in `c("3", "7", "12")`.
       x Age groups "3" and "12" are not fully covered by the new age groups.
-      i New age groups cover [5, 10).
+      * New age groups cover [5, 10).
       i Set `open_right = TRUE` to include age groups above 10?
-      i Add a lower break?
+      * Add a lower break?
 
 ---
 
@@ -19,10 +19,10 @@
       Error in `age_coarsen()`:
       ! Can't coarsen age groups in `c("0-4", "5-9", "10-14", "15-19", "20-24", "25+")`.
       x Age groups "5-9", "10-14", "15-19", and 2 others would be split by the new age groups.
-      i "5-9" overlaps "2-6" and "7-11".
+      x "5-9" overlaps "2-6" and "7-11".
       x Age group "0-4" is not fully covered by the new age groups.
-      i New age groups cover [2, Inf).
-      i Add a lower break?
+      * New age groups cover [2, Inf).
+      * Add a lower break?
 
 ---
 
@@ -32,7 +32,7 @@
       Error in `period_coarsen()`:
       ! Can't coarsen periods in `c("2000", "2010")`.
       x Period "2000" is not fully covered by the new periods.
-      i New periods cover [2005, 2015).
+      * New periods cover [2005, 2015).
       i Set `open_left = TRUE`, or add a lower break?
 
 ---
@@ -43,9 +43,9 @@
       Error in `age_coarsen_to()`:
       ! Can't coarsen age groups in `c("0-4", "10-14", NA)`.
       x Age group "0-4" would be split by the labels in `c("0-2", "3-9")`.
-      i "0-4" overlaps "0-2" and "3-9".
+      x "0-4" overlaps "0-2" and "3-9".
       x Age group "10-14" is not fully covered by the labels in `c("0-2", "3-9")`.
-      i Add labels to `c("0-2", "3-9")` that cover it?
+      * Add labels to `c("0-2", "3-9")` that cover it?
       x `c("0-2", "3-9")` has no category for "NA".
-      i Add it to `c("0-2", "3-9")`?
+      * Add it to `c("0-2", "3-9")`?
 

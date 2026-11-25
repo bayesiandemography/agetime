@@ -125,8 +125,8 @@ x_label <- function(label,
         if (l == u && is_two_value_label(label)) {
           msg <- c(
             "Label {.val {label_orig}} describes a zero-width {label_name(label_type)}.",
-            i = parsed_i,
-            i = paste0(
+            "*" = parsed_i,
+            "*" = paste0(
               "Write one-year {label_name(label_type)}s as a single year, ",
               "e.g. {.val {as.character(l)}}?"
             )
@@ -134,19 +134,19 @@ x_label <- function(label,
         } else {
           msg <- c("Label {.val {label_orig}} invalid.")
           if (l == u) {
-            msg <- c(msg, i = "Lower limit equals upper limit.") # nocov
+            msg <- c(msg, x = "Lower limit equals upper limit.") # nocov
           } else {
-            msg <- c(msg, i = "Lower limit greater than upper limit.")
+            msg <- c(msg, x = "Lower limit greater than upper limit.")
           }
-          msg <- c(msg, i = parsed_i)
+          msg <- c(msg, "*" = parsed_i)
         }
         return(x_label_fail(msg = msg, label_orig = label_orig))
       }
       if (is_one_year_range_label(label = label, l = l, u = u)) {
         msg <- c(
           "Label {.val {label_orig}} describes a one-year {label_name(label_type)}.",
-          i = parsed_i,
-          i = paste0(
+          "*" = parsed_i,
+          "*" = paste0(
             "Write one-year {label_name(label_type)}s as a single year, ",
             "e.g. {.val {as.character(l)}}?"
           )
@@ -168,13 +168,13 @@ x_label <- function(label,
   if (startsWith(label, "-")) {
     msg <- c(
       "Can't interpret label {.val {label_orig}}.",
-      i = "Labels starting with {.val -} are not accepted, since negative values are not allowed."
+      x = "Labels starting with {.val -} are not accepted, since negative values are not allowed."
     )
     if (!identical(label_type, "age")) {
       year <- sub("^-+", "", label)
       msg <- c(
         msg,
-        i = "For a {label_name(label_type)} that is open on the left, use {.val {paste0(\"<\", year)}}?"
+        "*" = "For a {label_name(label_type)} that is open on the left, use {.val {paste0(\"<\", year)}}?"
       )
     }
     return(x_label_fail(msg = msg, label_orig = label_orig))
@@ -280,7 +280,7 @@ signal_label_fails <- function(fails, interpret_fail, nm_labels = "labels") {
       envir$labels_other <- cli::cli_vec(labels_fail[-1L], list("vec-trunc" = 5))
       msg <- c(
         msg,
-        i = "Also can't interpret {n_other} other label{?s}: {.val {labels_other}}."
+        x = "Also can't interpret {n_other} other label{?s}: {.val {labels_other}}."
       )
     }
   }
@@ -295,8 +295,8 @@ signal_label_fails <- function(fails, interpret_fail, nm_labels = "labels") {
   names(msg) <- nms
   msg <- c("Can't interpret labels in {.arg {nm_labels_fail}}.", msg)
   if (identical(interpret_fail, "error")) {
-    cli::cli_abort(msg, .envir = envir, call = user_frame())
+    abort_msg(msg, .envir = envir, call = user_frame())
   }
-  cli::cli_warn(msg, .envir = envir, call = user_frame())
+  warn_msg(msg, .envir = envir, call = user_frame())
   invisible(NULL)
 }

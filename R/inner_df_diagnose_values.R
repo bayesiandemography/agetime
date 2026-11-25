@@ -12,14 +12,14 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
     by <- df_values_columns(by, "by", data, single = FALSE)
   }
   if (column %in% by) {
-    cli::cli_abort("The label column cannot also be selected in {.arg by}.",
+    abort_msg("The label column cannot also be selected in {.arg by}.",
                    call = user_frame())
   }
   reserved <- intersect(by, c("condition", "passed", "comment"))
   if (length(reserved)) {
-    cli::cli_abort(c(
+    abort_msg(c(
       "Grouping columns {.val {reserved}} conflict with diagnostic field names.",
-      i = "Rename these grouping columns before checking values."
+      "*" = "Rename these grouping columns before checking values."
     ), call = user_frame())
   }
   column_arg <- paste0(data_arg, "$", column)
@@ -73,9 +73,9 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
           }
         ),
         error = function(cnd) {
-          cli::cli_abort(c(
+          abort_msg(c(
             "Can't check labels in {.arg {column_arg}}.",
-            i = "{df_values_group(groups, i, rowwise)}"
+            "*" = "{df_values_group(groups, i, rowwise)}"
           ), parent = cnd, call = user_frame())
         }
       )
@@ -93,9 +93,9 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
       bullets <- paste0("{.arg {conditions[[", seq_along(conditions),
                         "]]}}: {comments[[", seq_along(conditions), "]]}")
       names(bullets) <- rep("x", length(bullets))
-      cli::cli_abort(c(
+      abort_msg(c(
         "{label} labels in {.arg {column_arg}} fail {cli::qty(length(conditions))}check{?s} {.arg {conditions}}.",
-        i = "{df_values_group(groups, i, rowwise)}",
+        "*" = "{df_values_group(groups, i, rowwise)}",
         bullets,
         i = "Use {.fn {label_type}_df_diagnose_values} to report checks for every group."
       ), call = user_frame())
@@ -120,7 +120,7 @@ df_values_columns <- function(x, arg, data, single) {
   selected <- tidyselect::eval_select(x, data, allow_rename = FALSE,
                                       error_call = user_frame())
   if (single && length(selected) != 1L) {
-    cli::cli_abort("{.arg {arg}} must select exactly one column.",
+    abort_msg("{.arg {arg}} must select exactly one column.",
                    call = user_frame())
   }
   names(selected)

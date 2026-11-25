@@ -52,13 +52,13 @@ inner_levels_set_order_tree <- function(labels,
     labels_total <- labels_unique[is_total[i_xun_to_xunu]]
     hint_recode <- sprintf("%s[%s_is_total(%s)] <- \"Missing\"",
                            label_type, label_type, label_type)
-    cli::cli_abort(c(
+    abort_msg(c(
       "{noun} include a total, so do not form a reporting tree.",
-      i = "Total{?s}: {.val {labels_total}}.",
+      x = "Total{?s}: {.val {labels_total}}.",
       i = paste("If a total means {label_type} not stated,",
                 "recode it to {.val Missing} first,",
                 "e.g. {.code {hint_recode}}."),
-      i = "If a total is a sum over other {tolower(noun)}, remove it."
+      "*" = "If a total is a sum over other {tolower(noun)}, remove it."
     ), call = user_frame())
   }
   is_failed <- !is_missing & (is.na(m[, 1L]) | is.na(m[, 2L]))
@@ -75,13 +75,13 @@ inner_levels_set_order_tree <- function(labels,
       sprintf("'%s' and '%s' overlap, but neither contains the other.",
               lab1, lab2)
     }, "")
-    names(msg_pairs) <- rep("i", n_show)
+    names(msg_pairs) <- rep("x", n_show)
     msg <- c("{noun} do not form a tree.", msg_pairs)
     n_more <- n_pairs - n_show
     if (n_more > 0L) {
-      msg <- c(msg, i = "...and {n_more} more pair{?s}.")
+      msg <- c(msg, x = "...and {n_more} more pair{?s}.")
     }
-    cli::cli_abort(msg, call = user_frame())
+    abort_msg(msg, call = user_frame())
   }
   ord_valid <- i_valid[tree_order(m_valid)]
   ord_norm <- c(ord_valid, which(is_failed), which(is_missing))

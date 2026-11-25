@@ -61,7 +61,7 @@ label_name <- function(label_type) {
     NULL
   )
   if (is.null(ans)) {
-    cli::cli_abort(paste0(
+    abort_msg(paste0(
       "Internal error: {.val {label_type}} is not a valid value for ",
       "{.arg label_type}."
     ))
@@ -80,24 +80,24 @@ label_name <- function(label_type) {
 to_character_or_factor <- function(labels, nm_labels, length_zero_ok) {
   nm_labels <- arg_nm(nm_labels)
   if (is.data.frame(labels)) {
-    cli::cli_abort("{.arg {nm_labels}} is a data frame.", call = user_frame())
+    abort_msg("{.arg {nm_labels}} is a data frame.", call = user_frame())
   }
   if (is.list(labels)) {
-    cli::cli_abort("{.arg {nm_labels}} is a list.", call = user_frame())
+    abort_msg("{.arg {nm_labels}} is a list.", call = user_frame())
   }
   if (!is.null(dim(labels))) {
-    cli::cli_abort("{.arg {nm_labels}} is not a vector.", call = user_frame())
+    abort_msg("{.arg {nm_labels}} is not a vector.", call = user_frame())
   }
   if (identical(length(labels), 0L) && !length_zero_ok) {
-    cli::cli_abort("{.arg {nm_labels}} has length 0.", call = user_frame())
+    abort_msg("{.arg {nm_labels}} has length 0.", call = user_frame())
   }
   if (is.factor(labels)) {
     return(labels)
   }
   labels_char <- tryCatch(as.character(labels), error = function(e) NULL)
   if (is.null(labels_char)) {
-    cli::cli_abort(c("{.arg {nm_labels}} is not a vector of labels.",
-      i = "{.arg {nm_labels}} has class {.cls {class(labels)}}."
+    abort_msg(c("{.arg {nm_labels}} is not a vector of labels.",
+      x = "{.arg {nm_labels}} has class {.cls {class(labels)}}."
     ), call = user_frame())
   }
   labels_char

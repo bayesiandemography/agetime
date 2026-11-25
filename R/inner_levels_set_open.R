@@ -70,7 +70,7 @@ inner_levels_set_open <- function(labels,
       "Interval {.val {lab_split}} would be split.",
       .envir = msg_envir
     )
-    cli::cli_abort(msg, call = user_frame())
+    abort_msg(msg, call = user_frame())
   }
   if (make_open_left) {
     is_le_open <- !is.na(u) & (u <= open_boundary)
@@ -83,7 +83,7 @@ inner_levels_set_open <- function(labels,
     label_open <- paste0(open_boundary, "+")
     i_open <- i_ge_open
   } else {
-    cli::cli_abort("Internal error: no open direction specified.")
+    abort_msg("Internal error: no open direction specified.")
   }
   is_label_now_open <- i_xun_to_xunu %in% i_open
   labels_new <- ifelse(is_label_now_open, label_open, labels_unique)
