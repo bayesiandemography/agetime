@@ -31,7 +31,7 @@ One row per bullet.
 | `hint` | Bullet is a hint: `type == "i"` |
 | `looks_like_hint` | Heuristic: a non-header bullet naming a function (`{.fn}`), a literal argument (`{.arg width}`), or giving code (`{.code}`). Disagreement with `hint` flags a possible misclassification |
 | `literal_arg` | Names an argument by its literal name rather than via `x_arg` / `arg_nm()` |
-| `internal` | "Internal error: ..." |
+| `internal` | Internal error: signalled with `.internal = TRUE` |
 | `built_elsewhere` | Text not read (shown as `<...>`); read these by hand |
 | `has_call` | `call =` passed |
 | `n_exported`, `exported` | Exported functions that can reach the site (approximate call graph; overstates reach) |

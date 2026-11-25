@@ -32,7 +32,7 @@ test_that("parse errors quote the label as supplied, not the normalized label", 
 test_that("parse errors list all uninterpretable labels at once", {
   expect_error(
     age_standard(c("0-4", "bad1", "5-9", "bad2")),
-    "Don't know how to interpret 2 labels: \"bad1\" and \"bad2\""
+    "Can't interpret 2 labels: \"bad1\" and \"bad2\""
   )
   err <- expect_error(age_lower(c("0-4", paste0("bad", 1:12))))
   msg <- conditionMessage(err)
@@ -45,7 +45,7 @@ test_that("parse errors list all uninterpretable labels at once", {
 test_that("a parse failure with hints is shown in full, followed by the other failures", {
   err <- expect_error(age_lower(c("50-40", "bad1", "bad2")))
   msg <- conditionMessage(err)
-  expect_match(msg, "Label \"50-40\" invalid")
+  expect_match(msg, "Label \"50-40\" is invalid")
   expect_match(msg, "Lower limit greater than upper limit")
   expect_match(msg, "Also can't interpret 2 other labels: \"bad1\" and \"bad2\"")
 })

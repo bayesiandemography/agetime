@@ -39,7 +39,7 @@ The script parses each file in `R/` and walks the parsed code to every
 | `text` | Template text, e.g. `"Can't interpret labels in {.arg {x_arg}}."` |
 | `hint` | Whether the bullet is a hint (see below) |
 | `literal_arg` | Names an argument literally, not via `x_arg` / `arg_nm()` |
-| `internal` | "Internal error: ..." |
+| `internal` | Internal error (`.internal = TRUE`) |
 | `built_elsewhere` | Text the script could not read (helper functions, `if` values, stored lists) |
 | `n_exported`, `exported` | Exported functions that can reach this site |
 | `has_call` | Whether `call =` is passed |
@@ -149,9 +149,13 @@ so `devtools::test()` catches a new message that breaks it.
      bullets for indirect calls; all messages go through them; bullets
      re-typed (`i` → `x` or `*`) so that only interface hints are `i`.
      Re-typing went into 3a so that no commit drops group lines or advice.
-   - **3b**: rewording to conventions 2-6 ("must" headers, hints as
-     questions, "Can't", internal errors); drop "Checking the whole
-     dataset".
+   - **3b** (done 2026-11-25): rewording to conventions 2-6 ("must"
+     headers become facts, with the requirement in a `*` bullet; hints
+     and advice as questions; "Can't interpret"; "Label "x" is invalid.";
+     internal errors with `.internal = TRUE` and cli formatting); drop
+     "Checking the whole dataset" (`group_bullet()` omits the line when
+     the data are checked as a whole). The inventory flags internal errors
+     by `.internal = TRUE`.
    - **3c**: `call` docs, api-principles.
 
    Afterwards (user, 2026-11-25): once we are happy with the changes,

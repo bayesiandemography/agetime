@@ -61,10 +61,10 @@ label_name <- function(label_type) {
     NULL
   )
   if (is.null(ans)) {
-    abort_msg(paste0(
-      "Internal error: {.val {label_type}} is not a valid value for ",
-      "{.arg label_type}."
-    ))
+    abort_msg(
+      "{.val {label_type}} is not a valid value for {.arg label_type}.",
+      .internal = TRUE
+    )
   }
   ans
 }

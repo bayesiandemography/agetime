@@ -45,7 +45,7 @@ test_that("label_non_life() flags a lower bound not divisible by 5", {
 test_that("label_name() errors for an invalid label_type", {
   expect_error(
     agetime:::label_name("bogus"),
-    'Internal error: "bogus" is not a valid value for `label_type`.'
+    '"bogus" is not a valid value for `label_type`.'
   )
 })
 

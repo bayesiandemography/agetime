@@ -57,8 +57,8 @@ inner_levels_set_order_tree <- function(labels,
       x = "Total{?s}: {.val {labels_total}}.",
       i = paste("If a total means {label_type} not stated,",
                 "recode it to {.val Missing} first,",
-                "e.g. {.code {hint_recode}}."),
-      "*" = "If a total is a sum over other {tolower(noun)}, remove it."
+                "e.g. {.code {hint_recode}}?"),
+      "*" = "If a total is a sum over other {tolower(noun)}, remove it?"
     ), call = user_frame())
   }
   is_failed <- !is_missing & (is.na(m[, 1L]) | is.na(m[, 2L]))

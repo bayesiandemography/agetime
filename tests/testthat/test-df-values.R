@@ -107,7 +107,7 @@ test_that("empty groups, empty frames, and no checks have defined results", {
 
 test_that("data and column selection errors are informative", {
   data <- data.frame(g = 1L, age = "0-4")
-  expect_error(age_df_diagnose_values("0-4", "age"), "must be a data frame")
+  expect_error(age_df_diagnose_values("0-4", "age"), "has class <character>")
   for (column in list(NULL, character(), c("age", "g"))) {
     expect_error(age_df_diagnose_values(data, !!column), "age.*exactly one")
   }

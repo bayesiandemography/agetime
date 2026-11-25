@@ -164,10 +164,10 @@ construct_mapping <- function(intervals_x,
     mxy[is_total_x, ] <- TRUE
     mxy[, is_total_y] <- TRUE
   } else {
-    abort_msg(paste0(
-      "Internal error: {.val {relation}} is not a valid value for ",
-      "{.arg relation}."
-    ))
+    abort_msg(
+      "{.val {relation}} is not a valid value for {.arg relation}.",
+      .internal = TRUE
+    )
   }
   ## missing values form their own category: they match each
   ## other under every relation, are disjoint from intervals,

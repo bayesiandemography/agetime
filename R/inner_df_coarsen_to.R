@@ -100,12 +100,17 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
 #' @noRd
 check_df_coarsen_data <- function(x, arg) {
   if (!is.data.frame(x)) {
-    abort_msg("{.arg {arg}} must be a data frame.", call = user_frame())
+    abort_msg(c(
+      "{.arg {arg}} has class {.cls {class(x)}}.",
+      "*" = "Supply a data frame?"
+    ), call = user_frame())
   }
   nms <- names(x)
   if (anyNA(nms) || any(!nzchar(nms)) || anyDuplicated(nms)) {
-    abort_msg("{.arg {arg}} must have unique, nonmissing, nonempty column names.",
-                    call = user_frame())
+    abort_msg(c(
+      "{.arg {arg}} has missing, empty, or duplicated column names.",
+      "*" = "Give every column a unique name?"
+    ), call = user_frame())
   }
   invisible(NULL)
 }
@@ -121,18 +126,33 @@ df_coarsen_columns <- function(x, arg, data, to, single) {
   if (is.null(x) && !single) {
     x <- character(0)
   }
-  if (!is.character(x) || !is.null(dim(x)) || anyNA(x) || any(!nzchar(x)) ||
-      (single && length(x) != 1L)) {
-    abort_msg(c("{.arg {arg}} must be {if (single) 'a single column name or named mapping' else 'a character vector of column names or named mappings, or NULL'}.",
-                     i = "Use {.code c(source_column = \"target_column\")} when names differ."),
-                    call = user_frame())
+  if (!is.character(x) || !is.null(dim(x))) {
+    problem <- "{.arg {arg}} has class {.cls {class(x)}}."
+  } else if (anyNA(x) || any(!nzchar(x))) {
+    problem <- "{.arg {arg}} contains missing or empty strings."
+  } else if (single && length(x) != 1L) {
+    problem <- "{.arg {arg}} has length {length(x)}."
+  } else {
+    problem <- NULL
+  }
+  if (!is.null(problem)) {
+    required <- if (single) {
+      "Supply a single column name or named mapping?"
+    } else {
+      "Supply a character vector of column names or named mappings, or NULL?"
+    }
+    abort_msg(c(
+      problem,
+      "*" = required,
+      i = "When names differ, use {.code c(source_column = \"target_column\")}?"
+    ), call = user_frame())
   }
   source <- names(x)
   if (is.null(source)) {
     source <- unname(x)
   } else {
     if (anyNA(source)) {
-      abort_msg("Names in {.arg {arg}} must not be missing.", call = user_frame())
+      abort_msg("{.arg {arg}} has missing names.", call = user_frame())
     }
     source[!nzchar(source)] <- x[!nzchar(source)]
   }

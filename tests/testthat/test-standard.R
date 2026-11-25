@@ -16,7 +16,7 @@ test_that("age_standard() standardizes missing and Total", {
 })
 
 test_that("age_standard() errors on unparseable labels by default", {
-  expect_error(age_standard("young people"), "Don't know how to interpret")
+  expect_error(age_standard("young people"), "Can't interpret")
 })
 
 test_that("age_standard() returns NA silently for invalid labels", {
@@ -160,7 +160,7 @@ test_that("age_standard() treats 'under N' as the age group from 0 to N - 1", {
     age_standard(c("Under 1", "Under 5", "under 16", "less than 5", "<20", "under 5 years")),
     c("0", "0-4", "0-15", "0-4", "0-19", "0-4")
   )
-  expect_error(age_standard("Under 0"), "Don't know how to interpret")
+  expect_error(age_standard("Under 0"), "Can't interpret")
 })
 
 test_that("age_standard() removes leading 'age', 'ages', and 'aged'", {
@@ -168,7 +168,7 @@ test_that("age_standard() removes leading 'age', 'ages', and 'aged'", {
     age_standard(c("Age 0-4", "Ages 5-9", "aged 15-19", "Age not stated", "Age unknown")),
     c("0-4", "5-9", "15-19", "Missing", "Missing")
   )
-  expect_error(age_standard("agenda"), "Don't know how to interpret label \"agenda\"")
+  expect_error(age_standard("agenda"), "Can't interpret label \"agenda\"")
 })
 
 test_that("age_standard() removes year words attached to numbers, and 'years old'", {
@@ -187,7 +187,7 @@ test_that("age_standard() understands more synonyms for open age groups", {
 
 test_that("period_standard() and cohort_standard() do not treat 'under N' or 'age' as age words", {
   expect_identical(cohort_standard("under 2000"), "<2000")
-  expect_error(period_standard("Age 2020"), "Don't know how to interpret")
+  expect_error(period_standard("Age 2020"), "Can't interpret")
 })
 
 test_that("suffixes such as 'or earlier' include the year, prefixes such as 'before' exclude it", {
@@ -228,12 +228,12 @@ test_that("open labels do not depend on interpret_single", {
 test_that("'or later' is recognized for periods and cohorts but not ages", {
   expect_identical(period_standard(c("2000 or later", "2000 & later")), c("2000+", "2000+"))
   expect_identical(cohort_standard("2000 and later"), "2000+")
-  expect_error(age_standard("85 or later"), "Don't know how to interpret")
+  expect_error(age_standard("85 or later"), "Can't interpret")
 })
 
 test_that("'after' is not recognized", {
-  expect_error(period_standard("after 2000"), "Don't know how to interpret")
-  expect_error(cohort_standard("after 2000"), "Don't know how to interpret")
+  expect_error(period_standard("after 2000"), "Can't interpret")
+  expect_error(cohort_standard("after 2000"), "Can't interpret")
 })
 
 test_that("labels starting with '-' are rejected", {
@@ -254,15 +254,15 @@ test_that("'older' and 'younger' are recognized for ages but not periods or coho
   expect_identical(age_standard("0 or younger"), "0")
   expect_identical(age_lower("5 or younger"), 0)
   expect_identical(age_upper("5 or younger"), 6)
-  expect_error(cohort_standard("1990 or older"), "Don't know how to interpret")
-  expect_error(cohort_standard("1990 or younger"), "Don't know how to interpret")
-  expect_error(period_standard("2000 and older"), "Don't know how to interpret")
-  expect_error(period_standard("2000 or younger"), "Don't know how to interpret")
+  expect_error(cohort_standard("1990 or older"), "Can't interpret")
+  expect_error(cohort_standard("1990 or younger"), "Can't interpret")
+  expect_error(period_standard("2000 and older"), "Can't interpret")
+  expect_error(period_standard("2000 or younger"), "Can't interpret")
 })
 
 test_that("decimal labels are not treated as ranges", {
-  expect_error(age_standard("5.5"), "Don't know how to interpret label \"5.5\"")
-  expect_error(period_standard("2020.5"), "Don't know how to interpret label \"2020.5\"")
+  expect_error(age_standard("5.5"), "Can't interpret label \"5.5\"")
+  expect_error(period_standard("2020.5"), "Can't interpret label \"2020.5\"")
   expect_identical(age_standard(c("5_9", "5:9", "5/9", "5--9")), rep("5-9", 4))
 })
 

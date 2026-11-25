@@ -140,10 +140,11 @@ inner_diagnose <- function(labels,
   if (identical(on, "levels") && !is.factor(labels)) {
     abort_msg(c("{.arg {x_arg}} is not a factor.",
       i = paste(
-        "To check observed labels in a data frame, use",
-        "{.fn {label_type}_df_diagnose_values} or {.fn {label_type}_df_assert_values}."
+        "Use {.fn {label_type}_df_diagnose_values} or",
+        "{.fn {label_type}_df_assert_values} to check observed labels",
+        "in a data frame?"
       ),
-      i = "To treat the distinct values of {.arg {x_arg}} as levels, use {.fn factor}."
+      i = "Use {.fn factor} to treat the distinct values of {.arg {x_arg}} as levels?"
     ), call = user_frame())
   }
   labels <- to_character_or_factor(

@@ -5,7 +5,7 @@
     Condition
       Error in `wrapper_lower()`:
       ! Can't interpret labels in `standard$age`.
-      x Don't know how to interpret label "abc".
+      x Can't interpret label "abc".
 
 # warnings name the calling function
 
@@ -14,7 +14,7 @@
     Condition
       Warning in `f()`:
       Can't interpret labels in `data$age`.
-      x Don't know how to interpret label "abc".
+      x Can't interpret label "abc".
 
 # age_coarsen_to() names labels and to
 
@@ -33,7 +33,7 @@
     Condition
       Error in `f()`:
       ! Can't interpret labels in `ages`.
-      x Don't know how to interpret label "abc".
+      x Can't interpret label "abc".
 
 # functions with other errors use x_arg and call
 
@@ -59,10 +59,9 @@
     Condition
       Error in `f()`:
       ! Can't check labels in `data$age`.
-      * Checking the whole dataset.
       Caused by error in `f()`:
       ! Can't interpret labels in `data$age`.
-      x Don't know how to interpret label "abc".
+      x Can't interpret label "abc".
 
 # errors keep hints for direct calls and drop them for indirect calls
 
@@ -90,8 +89,8 @@
       ans <- period_lower("2000-2004")
     Message
       Interpreting "2000-2004" as [2000, 2004), which has width 4.
-      i If "2000-2004" should instead be interpreted as [2000, 2005), set `interpret_multi` to "below_upper".
-      i Supplying a value for `interpret_multi` silences this message.
+      i If "2000-2004" should instead be interpreted as [2000, 2005), set `interpret_multi` to "below_upper"?
+      i Supply a value for `interpret_multi` to silence this message?
 
 ---
 

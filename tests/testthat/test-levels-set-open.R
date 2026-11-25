@@ -114,6 +114,6 @@ test_that("inner_levels_set_open() errors when no open direction is specified", 
       interpret_multi = "below_upper",
       interpret_fail = "error"
     ),
-    "Internal error: no open direction specified."
+    "No open direction specified."
   )
 })

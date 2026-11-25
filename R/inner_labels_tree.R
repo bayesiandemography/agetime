@@ -64,7 +64,7 @@ inner_labels_tree <- function(breaks,
     noun = paste0(label_name(label_type), "s")
   )
   if (!is.na(comment)) {
-    abort_msg("Internal error: labels do not form a tree. {comment}") # nocov
+    abort_msg(c("Labels do not form a tree.", x = "{comment}"), .internal = TRUE) # nocov
   }
   ord <- tree_order(m)
   ans <- vapply(ord, label_row, "")
@@ -108,7 +108,7 @@ tree_check_nodes <- function(nodes,
   if (anyNA(nodes)) {
     abort_msg(c(
       "{.arg nodes} has {.val {NA}}.",
-      i = "To include a category for missing values, use {.arg include_missing}."
+      i = "Use {.arg include_missing} to include a category for missing values?"
     ), call = user_frame())
   }
   noun <- label_name(label_type)
@@ -128,7 +128,7 @@ tree_check_nodes <- function(nodes,
     lab <- nodes[[match(TRUE, is_missing)]]
     abort_msg(c(
       "{.arg nodes} includes {.val {lab}}, which is a label for missing values.",
-      i = "To include a category for missing values, use {.arg include_missing}."
+      i = "Use {.arg include_missing} to include a category for missing values?"
     ), call = user_frame())
   }
   if (any(is_total)) {
@@ -136,8 +136,8 @@ tree_check_nodes <- function(nodes,
     abort_msg(c(
       "{.arg nodes} includes {.val {lab}}, which is a label for a total.",
       "*" = "A total is not part of a reporting tree.",
-      i = paste("To include a category for {label_type} not stated,",
-                "use {.arg include_missing}.")
+      i = paste("Use {.arg include_missing} to include a category for",
+                "{label_type} not stated?")
     ), call = user_frame())
   }
   m <- get_m(intervals)[i_row, , drop = FALSE]
@@ -192,7 +192,7 @@ tree_check_nodes <- function(nodes,
     abort_msg(c(
       "{noun_broad} {.val {nodes[[i]]}} contains all the most detailed {noun}s.",
       "*" = "Records with no information on {label_type} are represented by {.val Missing}.",
-      i = "To include {.val Missing}, use {.arg include_missing}."
+      i = "Use {.arg include_missing} to include {.val Missing}?"
     ), call = user_frame())
   }
   nodes_std <- construct_labels_intervals(

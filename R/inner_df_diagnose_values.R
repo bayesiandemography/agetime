@@ -19,7 +19,7 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
   if (length(reserved)) {
     abort_msg(c(
       "Grouping columns {.val {reserved}} conflict with diagnostic field names.",
-      "*" = "Rename these grouping columns before checking values."
+      "*" = "Rename these grouping columns before checking values?"
     ), call = user_frame())
   }
   column_arg <- paste0(data_arg, "$", column)
@@ -65,17 +65,18 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
           warning = function(cnd) {
             warned <<- TRUE
             ## Keep the original warning class and parsing details.
-            cnd$message <- paste(conditionMessage(cnd),
-              df_values_group(groups, i, rowwise), sep = "\n")
+            cnd$message <- paste(c(conditionMessage(cnd),
+              df_values_group(groups, i, rowwise)), collapse = "\n")
             cnd$call <- rlang::frame_call(user_frame())
             warning(cnd)
             invokeRestart("muffleWarning")
           }
         ),
         error = function(cnd) {
+          group <- df_values_group(groups, i, rowwise)
           abort_msg(c(
             "Can't check labels in {.arg {column_arg}}.",
-            "*" = "{df_values_group(groups, i, rowwise)}"
+            group_bullet(group)
           ), parent = cnd, call = user_frame())
         }
       )
@@ -93,11 +94,12 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
       bullets <- paste0("{.arg {conditions[[", seq_along(conditions),
                         "]]}}: {comments[[", seq_along(conditions), "]]}")
       names(bullets) <- rep("x", length(bullets))
+      group <- df_values_group(groups, i, rowwise)
       abort_msg(c(
         "{label} labels in {.arg {column_arg}} fail {cli::qty(length(conditions))}check{?s} {.arg {conditions}}.",
-        "*" = "{df_values_group(groups, i, rowwise)}",
+        group_bullet(group),
         bullets,
-        i = "Use {.fn {label_type}_df_diagnose_values} to report checks for every group."
+        i = "Use {.fn {label_type}_df_diagnose_values} to report checks for every group?"
       ), call = user_frame())
     }
     if (!assert) {
@@ -120,16 +122,29 @@ df_values_columns <- function(x, arg, data, single) {
   selected <- tidyselect::eval_select(x, data, allow_rename = FALSE,
                                       error_call = user_frame())
   if (single && length(selected) != 1L) {
-    abort_msg("{.arg {arg}} must select exactly one column.",
-                   call = user_frame())
+    abort_msg(c(
+      "{.arg {arg}} selects {length(selected)} column{?s}.",
+      "*" = "Select exactly one column?"
+    ), call = user_frame())
   }
   names(selected)
+}
+
+#' Group Line as a Message Bullet
+#'
+#' @param group Text from `df_values_group()`: one string, or empty when the
+#'   data are checked as a whole.
+#' @returns A `*` bullet that interpolates `group` in the caller's
+#'   environment, or an empty character vector.
+#' @noRd
+group_bullet <- function(group) {
+  if (length(group)) c("*" = "{group}") else character()
 }
 
 df_values_group <- function(groups, i, rowwise) {
   if (rowwise && !ncol(groups$key)) {
     return(paste0("Input row ", groups$loc[[i]][[1L]], "."))
   }
-  if (!ncol(groups$key)) return("Checking the whole dataset.")
+  if (!ncol(groups$key)) return(character())
   df_coarsen_group(groups$key, i)
 }

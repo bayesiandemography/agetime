@@ -83,7 +83,7 @@ inner_levels_set_open <- function(labels,
     label_open <- paste0(open_boundary, "+")
     i_open <- i_ge_open
   } else {
-    abort_msg("Internal error: no open direction specified.")
+    abort_msg("No open direction specified.", .internal = TRUE)
   }
   is_label_now_open <- i_xun_to_xunu %in% i_open
   labels_new <- ifelse(is_label_now_open, label_open, labels_unique)

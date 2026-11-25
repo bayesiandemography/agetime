@@ -153,7 +153,7 @@ test_that("construct_mapping() errors for an invalid relation", {
       name_x = "x",
       name_y = "y"
     ),
-    'Internal error: "bogus" is not a valid value for `relation`.'
+    '"bogus" is not a valid value for `relation`.'
   )
 })
 

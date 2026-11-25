@@ -41,7 +41,7 @@ test_that("construct_labels_intervals() errors for an invalid interval", {
       format_single = "lower",
       format_multi = "below_upper"
     ),
-    "Internal error: Invalid interval."
+    "Intervals include invalid values."
   )
 })
 
@@ -58,7 +58,7 @@ test_that("construct_labels_intervals() errors for invalid format_single", {
       format_single = "bogus",
       format_multi = "below_upper"
     ),
-    "Internal error: 'format_single' invalid."
+    '"bogus" is not a valid value for `format_single`.'
   )
 })
 
@@ -75,6 +75,6 @@ test_that("construct_labels_intervals() errors for invalid format_multi", {
       format_single = "lower",
       format_multi = "bogus"
     ),
-    "Internal error: 'format_multi' invalid."
+    '"bogus" is not a valid value for `format_multi`.'
   )
 })

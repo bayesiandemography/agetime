@@ -85,9 +85,9 @@ test_that("assert functions name x_arg in parse errors", {
 })
 
 test_that("invalid x_arg and call are errors", {
-  expect_error(age_lower("0-4", x_arg = NULL), "`labels` must be a single string")
-  expect_error(age_lower("0-4", x_arg = c("a", "b")), "`labels` must be a single string")
-  expect_error(age_lower("0-4", call = "wrong"), "`call` must be an environment")
+  expect_error(age_lower("0-4", x_arg = NULL), "`labels` is not a single string")
+  expect_error(age_lower("0-4", x_arg = c("a", "b")), "`labels` is not a single string")
+  expect_error(age_lower("0-4", call = "wrong"), "`call` is not an environment")
 })
 
 

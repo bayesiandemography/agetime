@@ -132,7 +132,7 @@ x_label <- function(label,
             )
           )
         } else {
-          msg <- c("Label {.val {label_orig}} invalid.")
+          msg <- c("Label {.val {label_orig}} is invalid.")
           if (l == u) {
             msg <- c(msg, x = "Lower limit equals upper limit.") # nocov
           } else {
@@ -179,7 +179,7 @@ x_label <- function(label,
     }
     return(x_label_fail(msg = msg, label_orig = label_orig))
   }
-  msg <- "Don't know how to interpret label {.val {label_orig}}."
+  msg <- "Can't interpret label {.val {label_orig}}."
   x_label_fail(msg = msg, label_orig = label_orig, unknown = TRUE)
 }
 
@@ -269,7 +269,7 @@ signal_label_fails <- function(fails, interpret_fail, nm_labels = "labels") {
   n_fail <- length(fails)
   if (n_fail > 1L && all(is_unknown)) {
     labels_fail <- cli::cli_vec(labels_fail, list("vec-trunc" = 5))
-    msg <- "Don't know how to interpret {n_fail} labels: {.val {labels_fail}}."
+    msg <- "Can't interpret {n_fail} labels: {.val {labels_fail}}."
     envir <- environment()
   } else {
     msg <- fails[[1L]]$msg

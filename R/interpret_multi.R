@@ -51,9 +51,9 @@ resolve_interpret_multi <- function(interpret_multi,
       "Interpreting {.val {label}} as [{l}, {u}), which has width {w}.",
       i = paste0(
         "If {.val {label}} should instead be interpreted as [{l}, {u + 1}), ",
-        "set {.arg interpret_multi} to {.val {\"below_upper\"}}."
+        "set {.arg interpret_multi} to {.val {\"below_upper\"}}?"
       ),
-      i = "Supplying a value for {.arg interpret_multi} silences this message."
+      i = "Supply a value for {.arg interpret_multi} to silence this message?"
     ))
   }
   ans

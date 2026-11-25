@@ -182,7 +182,7 @@ test_that("assert functions use 'x_arg' and 'call' supplied by calling function"
 
 test_that("assert functions apply 'call' to errors raised while parsing labels", {
   foo <- function(x) age_df_assert_values(data.frame(age = x), age = "age", valid_tree = TRUE, call = rlang::current_env())
-  err <- expect_error(foo(c("0-4", "foo")), "Don't know how to interpret")
+  err <- expect_error(foo(c("0-4", "foo")), "Can't interpret")
   expect_identical(err$call, quote(foo(c("0-4", "foo"))))
   bar <- function(x) {
     age_assert_levels(x, valid_tree = TRUE, x_arg = "age", call = rlang::current_env())

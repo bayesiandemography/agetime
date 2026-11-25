@@ -27,8 +27,8 @@
       Error in `age_set_order_tree()`:
       ! Age groups include a total, so do not form a reporting tree.
       x Total: "Total".
-      i If a total means age not stated, recode it to "Missing" first, e.g. `age[age_is_total(age)] <- "Missing"`.
-      * If a total is a sum over other age groups, remove it.
+      i If a total means age not stated, recode it to "Missing" first, e.g. `age[age_is_total(age)] <- "Missing"`?
+      * If a total is a sum over other age groups, remove it?
 
 ---
 
@@ -38,8 +38,8 @@
       Error in `age_set_order_tree()`:
       ! Age groups include a total, so do not form a reporting tree.
       x Totals: "Total" and "all".
-      i If a total means age not stated, recode it to "Missing" first, e.g. `age[age_is_total(age)] <- "Missing"`.
-      * If a total is a sum over other age groups, remove it.
+      i If a total means age not stated, recode it to "Missing" first, e.g. `age[age_is_total(age)] <- "Missing"`?
+      * If a total is a sum over other age groups, remove it?
 
 # period_set_order_tree() and cohort_set_order_tree() throw errors
 
@@ -58,6 +58,6 @@
       Error in `cohort_set_order_tree()`:
       ! Cohorts include a total, so do not form a reporting tree.
       x Total: "Total".
-      i If a total means cohort not stated, recode it to "Missing" first, e.g. `cohort[cohort_is_total(cohort)] <- "Missing"`.
-      * If a total is a sum over other cohorts, remove it.
+      i If a total means cohort not stated, recode it to "Missing" first, e.g. `cohort[cohort_is_total(cohort)] <- "Missing"`?
+      * If a total is a sum over other cohorts, remove it?
 

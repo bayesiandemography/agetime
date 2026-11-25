@@ -41,11 +41,11 @@ local_caller <- function(args, call, frame = parent.frame()) {
   is_valid_arg <- function(x) is.character(x) && length(x) == 1L && !is.na(x)
   for (nm in names(args)) {
     if (!is_valid_arg(args[[nm]])) {
-      abort_msg("{.arg {nm}} must be a single string.", call = call)
+      abort_msg("{.arg {nm}} is not a single string.", call = call)
     }
   }
   if (!is.environment(call)) {
-    abort_msg("{.arg call} must be an environment.", call = frame)
+    abort_msg("{.arg call} is not an environment.", call = frame)
   }
   caller_env$active <- TRUE
   caller_env$args <- args

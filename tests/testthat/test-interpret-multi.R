@@ -57,6 +57,6 @@ test_that("invalid values of interpret_multi give an error", {
 test_that("unparsable labels are left for the main parse to report", {
   expect_error(
     suppressMessages(period_lower(c("2020-2024", "long ago"))),
-    "Don't know how to interpret"
+    "Can't interpret"
   )
 })

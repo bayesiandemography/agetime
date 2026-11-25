@@ -14,7 +14,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! `nodes` has NA.
-      i To include a category for missing values, use `include_missing`.
+      i Use `include_missing` to include a category for missing values?
 
 ---
 
@@ -23,7 +23,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! Can't interpret labels in `nodes`.
-      x Don't know how to interpret label "15+x".
+      x Can't interpret label "15+x".
 
 ---
 
@@ -32,7 +32,7 @@
     Condition
       Error in `age_labels_tree()`:
       ! `nodes` includes "Missing", which is a label for missing values.
-      i To include a category for missing values, use `include_missing`.
+      i Use `include_missing` to include a category for missing values?
 
 ---
 
@@ -42,7 +42,7 @@
       Error in `age_labels_tree()`:
       ! `nodes` includes "Total", which is a label for a total.
       * A total is not part of a reporting tree.
-      i To include a category for age not stated, use `include_missing`.
+      i Use `include_missing` to include a category for age not stated?
 
 ---
 
@@ -88,7 +88,7 @@
       Error in `age_labels_tree()`:
       ! Broad age group "0+" contains all the most detailed age groups.
       * Records with no information on age are represented by "Missing".
-      i To include "Missing", use `include_missing`.
+      i Use `include_missing` to include "Missing"?
 
 ---
 

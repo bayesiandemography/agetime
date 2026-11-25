@@ -31,7 +31,7 @@ construct_labels_intervals <- function(intervals,
       is_total | is_missing | is_unparseable
   )
   if (any(!is_valid)) {
-    abort_msg("Internal error: Invalid interval.")
+    abort_msg("Intervals include invalid values.", .internal = TRUE)
   }
   ans <- character(length = length(l))
   if (format_single == "lower") {
@@ -39,14 +39,14 @@ construct_labels_intervals <- function(intervals,
   } else if (format_single == "upper") {
     ans[is_one] <- as.character(u[is_one])
   } else {
-    abort_msg("Internal error: 'format_single' invalid.")
+    abort_msg("{.val {format_single}} is not a valid value for {.arg format_single}.", .internal = TRUE)
   }
   if (format_multi == "at_upper") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi], sep = "-")
   } else if (format_multi == "below_upper") {
     ans[is_multi] <- paste(l[is_multi], u[is_multi] - 1, sep = "-")
   } else {
-    abort_msg("Internal error: 'format_multi' invalid.")
+    abort_msg("{.val {format_multi}} is not a valid value for {.arg format_multi}.", .internal = TRUE)
   }
   ans[is_open_left] <- paste0("<", u[is_open_left])
   ans[is_open_right] <- paste0(l[is_open_right], "+")

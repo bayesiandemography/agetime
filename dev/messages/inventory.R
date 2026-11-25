@@ -214,9 +214,10 @@ looks_like_hint <- function(text, type) {
                                      grepl("{.code ", text, fixed = TRUE))))
 }
 
-## Internal errors: conditions that should never reach users.
-is_internal <- function(text) {
-  !is.na(text) & grepl("^Internal error", text)
+## Internal errors: conditions that should never reach users, signalled
+## with `.internal = TRUE`.
+is_internal <- function(call) {
+  isTRUE(as.list(call)$.internal)
 }
 
 
@@ -283,7 +284,7 @@ build_inventory <- function() {
       hint = bullets$type == "i",
       looks_like_hint = looks_like_hint(bullets$text, bullets$type),
       literal_arg = names_literal_arg(bullets$text),
-      internal = is_internal(bullets$text),
+      internal = is_internal(call),
       built_elsewhere = !bullets$literal,
       has_call = "call" %in% names(as.list(call)),
       n_exported = length(exported),
@@ -304,7 +305,7 @@ build_inventory <- function() {
 }
 
 summarise_inventory <- function(inv) {
-  sites <- unique(inv[c("file", "line", "signal", "has_call")])
+  sites <- unique(inv[c("file", "line", "signal", "has_call", "internal")])
   cat("Message inventory\n")
   cat("  sites:            ", nrow(sites), "\n")
   cat("  bullets:          ", nrow(inv), "\n")
@@ -317,11 +318,12 @@ summarise_inventory <- function(inv) {
   cat("Non-hints that look like hints:", sum(!inv$hint & inv$looks_like_hint), "\n")
   cat("Hints that do not look like hints:", sum(inv$hint & !inv$looks_like_hint), "\n")
   cat("Literal argument names:", sum(inv$literal_arg), "\n")
-  cat("Internal errors:  ", sum(inv$internal), "\n")
+  cat("Internal errors (sites):", sum(sites$internal), "\n")
   cat("Built elsewhere:  ", sum(inv$built_elsewhere), "\n")
   is_signal <- sites$signal %in% c("abort", "warn", "cli_abort", "cli_warn",
                                    "rlang_abort", "rlang_warn")
-  cat("Sites without call =:", sum(is_signal & !sites$has_call), "\n")
+  cat("Sites without call =, other than internal errors:",
+      sum(is_signal & !sites$has_call & !sites$internal), "\n")
   cat("Bullets in functions no export reaches:",
       sum(inv$n_exported == 0L), "\n")
   invisible(inv)

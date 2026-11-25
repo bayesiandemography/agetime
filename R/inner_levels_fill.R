@@ -144,7 +144,7 @@ inner_levels_fill <- function(labels,
   has_breaks <- length(breaks) > 0L
   has_width <- length(width) > 0L
   if (has_breaks && has_width) {
-    abort_msg("Internal error: 'breaks' and 'width' both supplied.")
+    abort_msg("{.arg breaks} and {.arg width} both supplied.", .internal = TRUE)
   }
   if (has_breaks) {
     check_incr_nonneg_integers(

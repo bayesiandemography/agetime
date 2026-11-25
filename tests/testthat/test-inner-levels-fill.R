@@ -9,7 +9,7 @@ test_that("inner_levels_fill() errors with breaks and width", {
       interpret_multi = "below_upper",
       interpret_fail = "error"
     ),
-    "Internal error: 'breaks' and 'width' both supplied"
+    "`breaks` and `width` both supplied"
   )
 })
 
