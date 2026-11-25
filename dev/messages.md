@@ -153,6 +153,9 @@ so `devtools::test()` catches a new message that breaks it.
      questions, "Can't", internal errors); drop "Checking the whole
      dataset".
    - **3c**: `call` docs, api-principles.
+
+   Afterwards (user, 2026-11-25): once we are happy with the changes,
+   consider adding the Conventions section to the global CLAUDE.md.
 4. **Checks**: add them to the script; fix the messages that break them;
    promote stable checks to a test.
 
