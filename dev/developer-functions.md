@@ -2,7 +2,7 @@
 
 Status: hints rule built (2026-11-25; dev/messages.md, steps 3a-3c).
 Dot functions and error classes deferred (below); popcounts follow-up
-pending.
+done (popcounts dcad20b).
 Date: 23 November 2026; rewritten 24 November 2026.
 
 ## Problem
@@ -153,6 +153,7 @@ Revisit when a dependant needs to handle a particular failure in code.
 
 ## Follow-up in popcounts
 
+Done 2026-11-25 (popcounts dcad20b, spec/impl-age-label-checks.md).
 Once agetime has the hints rule:
 
 - Replace `assert_age_labels()` with `agetime::age_df_assert_values()`,
