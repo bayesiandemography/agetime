@@ -55,8 +55,11 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
   levels_output <- character(0)
   for (i in seq_along(groups_data$loc)) {
     if (is.na(matches[[i]])) {
-      abort_msg(c("No target classification in {.arg {to_arg}} for a group in {.arg {data_arg}}.",
-                       "*" = "{df_coarsen_group(groups_data$key, i)}"), call = user_frame())
+      group <- df_coarsen_group(groups_data$key, i)
+      abort_msg(c(
+        "No target classification in {.arg {to_arg}} for a group in {.arg {data_arg}}.",
+        group_bullet(group)
+      ), call = user_frame())
     }
     rows <- groups_data$loc[[i]]
     id <- classification[[i]]
@@ -69,9 +72,17 @@ inner_df_coarsen_to <- function(data, to, column, by, label_type,
           source_arg, target_arg
         ),
         error = function(cnd) {
-          abort_msg(c("Can't coarsen {.arg {source_arg}} to {.arg {target_arg}}.",
-                           "*" = "{df_coarsen_group(groups_data$key, i)}"),
-                          parent = cnd, call = user_frame())
+          group <- df_coarsen_group(groups_data$key, i)
+          hint_by <- if (length(group)) {
+            character()
+          } else {
+            c(i = "Use {.arg by} to coarsen each group with its own classification?")
+          }
+          abort_msg(c(
+            "Can't coarsen {.arg {source_arg}} to {.arg {target_arg}}.",
+            group_bullet(group),
+            hint_by
+          ), parent = cnd, call = user_frame())
         }
       )
       if (reuse_mapping) mappings[[id]] <- mapped
@@ -188,11 +199,12 @@ df_coarsen_keys <- function(data, columns, key_names = columns) {
 #' Describe a Source Group in Error Messages
 #' @param keys Data frame of distinct grouping keys.
 #' @param i Row number.
-#' @returns A character string.
+#' @returns A character string, or an empty character vector when the
+#'   data are not grouped.
 #' @noRd
 df_coarsen_group <- function(keys, i) {
   if (!ncol(keys)) {
-    return("Using one classification for the whole dataset (by = NULL).")
+    return(character())
   }
   values <- vapply(names(keys), function(nm) {
     value <- format(keys[[nm]][i], trim = TRUE)

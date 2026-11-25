@@ -205,3 +205,15 @@ test_that("classification reuse is confined to one call", {
   x$age <- rep(c("0-3", "4-8"), 2)
   expect_error(age_df_coarsen_to(x, coarse, age = "age", by = "country"), "9")
 })
+
+test_that("ungrouped coarsening errors suggest `by` only in direct calls", {
+  x <- data.frame(age = c("0-4", "5-9"))
+  to <- data.frame(age = c("0-2", "3-9"))
+  expect_snapshot(age_df_coarsen_to(x, to, age = "age", by = NULL),
+                  error = TRUE)
+  f <- function(x) {
+    age_df_coarsen_to(x, to, age = "age", by = NULL, data_arg = "x",
+                      call = rlang::current_env())
+  }
+  expect_snapshot(f(x), error = TRUE)
+})

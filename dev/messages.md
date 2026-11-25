@@ -156,6 +156,9 @@ so `devtools::test()` catches a new message that breaks it.
      "Checking the whole dataset" (`group_bullet()` omits the line when
      the data are checked as a whole). The inventory flags internal errors
      by `.internal = TRUE`.
+     Likewise "Using one classification for the whole dataset (by =
+     NULL)" in the coarsening functions is dropped; when ungrouped data
+     can't be coarsened, an `i` hint suggests `by` instead.
    - **3c**: `call` docs, api-principles.
 
    Afterwards (user, 2026-11-25): once we are happy with the changes,

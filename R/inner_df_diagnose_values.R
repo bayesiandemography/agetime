@@ -145,6 +145,5 @@ df_values_group <- function(groups, i, rowwise) {
   if (rowwise && !ncol(groups$key)) {
     return(paste0("Input row ", groups$loc[[i]][[1L]], "."))
   }
-  if (!ncol(groups$key)) return(character())
   df_coarsen_group(groups$key, i)
 }
