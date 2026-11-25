@@ -95,23 +95,38 @@ find_assignments <- function(file) {
 }
 
 ## Replace bullets read as a variable ('<sym>') with the values
-## assigned to that variable in the same function, recursively.
-## Self-references ('msg <- c(msg, ...)') are dropped.
+## assigned to that variable in the same function, recursively. Only
+## assignments before the line where the variable is used count, and
+## assignments with no text ('problem <- NULL') are skipped.
+##
+## An assignment that does not refer to the variable starts a version of
+## the message; when there are several ('if (...) x <- "a" else
+## x <- "b"'), 'alternative' numbers them. An assignment that refers to
+## the variable ('msg <- c(msg, x = ...)') adds bullets to the version
+## before it. Approximate: it does not follow control flow, so appends
+## in 'if'/'else' branches are listed one after the other.
 resolve_bullets <- function(bullets, file, fun, assigns, line, seen = character()) {
   rows <- lapply(seq_len(nrow(bullets)), function(j) {
     b <- bullets[j, ]
     b$line <- line
     b$via <- NA_character_
+    b$alternative <- NA_integer_
     sym <- sub("^<(.*)>$", "\\1", b$text)
     is_var <- !b$literal && !is.na(b$text) && grepl("^<[A-Za-z._][A-Za-z0-9._]*>$", b$text)
     if (!is_var) return(b)
     if (sym %in% seen) return(NULL)
-    ## only assignments before the line where the variable is used
     a <- assigns[assigns$file == file & assigns$fun %in% fun &
                    assigns$sym == sym & assigns$line <= line, ]
     values <- a[a$kind == "value", ]
+    values <- values[!vapply(values$value, is_empty_value, TRUE), ]
+    values <- values[order(values$line), ]
     if (!nrow(values)) return(b)
     types <- a[a$kind == "type", ]
+    is_append <- vapply(values$value, function(v) sym %in% all.names(v), TRUE)
+    ## each version: a starting assignment and the appends that follow it
+    version <- cumsum(!is_append)
+    if (!any(!is_append)) version[] <- 1L
+    n_version <- max(version)
     out <- lapply(seq_len(nrow(values)), function(k) {
       vb <- message_bullets(values$value[[k]])
       vb <- resolve_bullets(vb, file, fun, assigns, values$line[[k]], c(seen, sym))
@@ -119,11 +134,21 @@ resolve_bullets <- function(bullets, file, fun, assigns, line, seen = character(
       if (nrow(types)) vb$type[vb$type == ""] <- types$value[[1L]]
       if (nzchar(b$type)) vb$type[vb$type == ""] <- b$type
       vb$via[is.na(vb$via)] <- sym
+      v <- version[[k]]
+      if (n_version > 1L) vb$alternative[is.na(vb$alternative)] <- v
       vb
     })
     do.call(rbind, out)
   })
   do.call(rbind, rows)
+}
+
+## An assigned value with no message text: NULL, character(), character(0).
+is_empty_value <- function(value) {
+  is.null(value) ||
+    (is.call(value) && identical(value[[1L]], as.name("character")) &&
+       (length(value) == 1L || identical(value[[2L]], 0) ||
+          identical(value[[2L]], 0L)))
 }
 
 ## Name of the top-level function containing 'line', or NA.
@@ -279,7 +304,8 @@ build_inventory <- function() {
       text_line = bullets$line,
       via = bullets$via,
       signal = spec$signal,
-      bullet = seq_len(nrow(bullets)),
+      bullet = NA_integer_,
+      alternative = bullets$alternative,
       type = bullets$type,
       text = bullets$text,
       hint = bullets$type == "i",
@@ -298,11 +324,40 @@ build_inventory <- function() {
   is_dup <- !is.na(ans$via) &
     duplicated(ans[c("file", "signal", "text_line", "type", "text")])
   ans <- ans[!is_dup, ]
-  ans$bullet <- stats::ave(seq_len(nrow(ans)), ans$file, ans$line,
-                           FUN = seq_along)
+  ans <- number_bullets(ans)
   rownames(ans) <- NULL
   attr(ans, "n_resignal") <- n_resignal
   ans
+}
+
+## Number alternatives within each message (none when the message has
+## only one version), and bullets within each alternative. Bullets shared
+## by all alternatives take their numbers from the first.
+number_bullets <- function(inv) {
+  site <- paste(inv$file, inv$line)
+  inv$bullet <- NA_integer_
+  for (idx in split(seq_len(nrow(inv)), factor(site, levels = unique(site)))) {
+    alt <- inv$alternative[idx]
+    alts <- unique(alt[!is.na(alt)])
+    if (length(alts) <= 1L) {
+      inv$alternative[idx] <- NA_integer_
+      inv$bullet[idx] <- seq_along(idx)
+      next
+    }
+    alt <- match(alt, alts)
+    inv$alternative[idx] <- alt
+    bullet <- rep(NA_integer_, length(idx))
+    for (a in seq_along(alts)) {
+      sel <- which(is.na(alt) | alt == a)
+      num <- seq_along(sel)
+      own <- !is.na(alt[sel])
+      bullet[sel[own]] <- num[own]
+      fill <- !own & is.na(bullet[sel])
+      bullet[sel[fill]] <- num[fill]
+    }
+    inv$bullet[idx] <- bullet
+  }
+  inv
 }
 
 summarise_inventory <- function(inv) {

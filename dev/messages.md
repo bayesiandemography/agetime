@@ -35,6 +35,7 @@ The script parses each file in `R/` and walks the parsed code to every
 | `text_line`, `via` | Where the text is written, and the variable it came through, when assigned before signalling |
 | `signal` | `abort`, `warn`, `inform`, `stored`, or a base function |
 | `bullet` | Position within the message (1 = header) |
+| `alternative` | Version of the message, when text is assigned in more than one place |
 | `type` | Bullet name: `""` (header), `x`, `i`, `v`, `!`, `*`, ... |
 | `text` | Template text, e.g. `"Can't interpret labels in {.arg {x_arg}}."` |
 | `hint` | Whether the bullet is a hint (see below) |

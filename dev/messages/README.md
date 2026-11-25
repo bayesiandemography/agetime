@@ -26,7 +26,8 @@ One row per bullet.
 | `text_line` | Line where the text is written (differs from `line` when the message was assigned to a variable first) |
 | `via` | Variable the text came through, if any |
 | `signal` | `abort`, `warn`, `inform` (the wrappers `abort_msg()`, `warn_msg()`, `inform_msg()`); `stored` (`x_label_fail()`, signalled later by `signal_label_fails()`); direct cli, rlang or base signals show as `cli_*`, `rlang_*` or `base_*` |
-| `bullet` | Position within the message |
+| `bullet` | Position within the message (within the alternative, if any) |
+| `alternative` | Version of the message, when a variable holding message text is assigned in more than one place (`if (...) x <- "a" else x <- "b"`); empty otherwise |
 | `type` | `""` (header), `i`, `x`, ... |
 | `text` | Template text. `<...>` is an expression the script could not read as text |
 | `hint` | Bullet is a hint: `type == "i"` |
@@ -43,6 +44,12 @@ One row per bullet.
   (`msg <- c(...)`, `names(bullets) <- rep("x", ...)`), using assignments
   before the signalling call. Text from one assignment used at several
   sites of the same signal type is listed once, at the first site.
+- Several assignments to the variable give alternative versions of the
+  message (`alternative`). An assignment that refers to the variable
+  (`msg <- c(msg, x = ...)`) adds bullets instead. Assignments with no
+  text (`problem <- NULL`) are skipped. The script does not follow
+  control flow, so appends in `if`/`else` branches are listed one after
+  the other.
 - Skips re-signals (`stop(cnd)` / `warning(cnd)` inside a handler), and
   the cli calls inside the signalling wrappers themselves.
 - Treats `cli::format_inline("...")` as its text.
