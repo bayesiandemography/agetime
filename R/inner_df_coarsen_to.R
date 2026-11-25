@@ -241,8 +241,10 @@ df_coarsen_classification <- function(labels, to, label_type, interpret_single,
     bad <- which(is.na(m[, 1L]) | is.na(m[, 2L]))
     if (length(bad)) {
       label <- labs[[bad[[1L]]]]
-      abort_msg("Label {.val {label}} in {.arg {arg}} does not describe an interval; totals and missing categories are not supported.",
-                      call = user_frame())
+      abort_msg(c(
+        "Label {.val {label}} in {.arg {arg}} does not describe an interval.",
+        "*" = "Totals and missing categories can't be coarsened."
+      ), call = user_frame())
     }
   }
   ## Repeated source observations and synonymous source labels describe a
@@ -256,8 +258,10 @@ df_coarsen_classification <- function(labels, to, label_type, interpret_single,
   bad <- which(rowSums(contained) != 1L)
   if (length(bad)) {
     label <- labels[[bad[[1L]]]]
-    abort_msg("Source {.val {label}} does not fit wholly inside a single target interval in {.arg {target_arg}}; it crosses a boundary or lies outside the target classification.",
-                    call = user_frame())
+    abort_msg(c(
+      "Source {.val {label}} does not fit inside a single interval in {.arg {target_arg}}.",
+      x = "{.val {label}} crosses a boundary or lies outside the target classification."
+    ), call = user_frame())
   }
   assignment <- max.col(contained, ties.method = "first")
   check_df_coarsen_coverage(distinct_source, m_target, assignment[unique_source], to,
@@ -317,8 +321,10 @@ check_df_coarsen_coverage <- function(m_source, m_target, assignment, to,
       paste0(lower[[i]], "-", end)
     }
     label <- to[[j]]
-    abort_msg("Target {.val {label}} in {.arg {target_arg}} is not fully covered; source {label_type}s {.val {gap}} are missing from {.arg {source_arg}}.",
-                    call = user_frame())
+    abort_msg(c(
+      "Target {.val {label}} in {.arg {target_arg}} is not fully covered.",
+      x = "Source {label_type}s {.val {gap}} are missing from {.arg {source_arg}}."
+    ), call = user_frame())
   }
   invisible(NULL)
 }

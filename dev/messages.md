@@ -1,6 +1,6 @@
 # Messages: inventory, conventions and checks
 
-Status: steps 1-3 done (2026-11-25); step 4 (checks) to do.
+Status: built (2026-11-25). Run the script after changing messages.
 
 ## Purpose
 
@@ -111,24 +111,26 @@ of their own; every signalling call outside internal errors passes
 
 ## Checks
 
-The script reports the rows that break each convention it can test
-mechanically:
+`check_inventory()` in the script tests the conventions that can be tested
+mechanically. The script prints any breaches, and
+tests/testthat/test-messages.R fails on them (skipped on CRAN, and
+wherever dev/ is absent, as in the built package).
 
-- bullet types: an `i` bullet that does not look like an interface hint,
-  or a non-`i` bullet that does (heuristic: `{.fn}`, literal `{.arg}`,
-  `{.code}` naming an agetime function);
-- headers using "must";
-- hints and advice not ending in `?` (`i` and `*` bullets that look like
-  advice: starting "Use", "Supply", "Set", "Add", "Remove", "To ...");
-- "Don't know", "Cannot", "Unable to";
-- "Internal error:" text, or `.internal = TRUE` missing on internal
-  errors;
-- bullets not ending in `.` or `?`;
-- base-R signals with text; signalling calls without `call =`; direct
-  `cli::cli_abort()` etc. rather than the wrappers (after step 3).
+| Check | Breach |
+|---|---|
+| `hint_not_interface` | An `i` bullet that does not name a function, a literal argument or code |
+| `interface_not_hint` | A `*` bullet that does (headers and `x` bullets may name arguments literally: A4 in dev/messages/review.md) |
+| `must_header` | A header using "must" (convention 2) |
+| `header_semicolon` | A header joining two sentences with ";" (convention 2: short headers) |
+| `advice_not_question` | An `i` or `*` bullet starting "Use", "Supply", "Set", "Add", "Remove", "Rename", "Select", "Give", "Write", "Recode", "Or", "To" or "If" that does not end in "?" (convention 3) |
+| `wording` | "Don't know", "Cannot", "Unable to", "Internal error" (conventions 4, 5) |
+| `bullet_ending` | A bullet not ending in "." or "?" (convention 6); bullets that are a single interpolation, such as `{group}`, are skipped |
+| `base_signal` | A base-R signal with text of its own |
+| `direct_signal` | A cli or rlang signal outside the wrappers |
+| `no_call` | An error or warning without `call =`, other than internal errors |
 
-Once a check is stable, it can move into a test that is skipped on CRAN,
-so `devtools::test()` catches a new message that breaks it.
+Text the script can't read (`built_elsewhere`) escapes the checks; read
+those messages by hand when reviewing the inventory.
 
 ## Order of work
 
@@ -167,8 +169,9 @@ so `devtools::test()` catches a new message that breaks it.
 
    Afterwards (user, 2026-11-25): once we are happy with the changes,
    consider adding the Conventions section to the global CLAUDE.md.
-4. **Checks**: add them to the script; fix the messages that break them;
-   promote stable checks to a test.
+4. **Checks** (done 2026-11-25): in the script and in
+   tests/testthat/test-messages.R. Fixed the three coarsening headers
+   that joined two sentences with ";".
 
 ## Answers (2026-11-24)
 

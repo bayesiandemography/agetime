@@ -10,8 +10,9 @@ From the package root:
 Rscript dev/messages/inventory.R
 ```
 
-Needs pkgload and codetools. Writes `inventory.csv` here and prints a
-summary. Commit the CSV, so that `git diff dev/messages/inventory.csv`
+Needs pkgload and codetools. Writes `inventory.csv` here, prints a
+summary, and lists breaches of the conventions (checks: dev/messages.md).
+tests/testthat/test-messages.R runs the same checks. Commit the CSV, so that `git diff dev/messages/inventory.csv`
 shows messages added, removed or reworded.
 
 ## Columns

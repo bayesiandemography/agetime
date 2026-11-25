@@ -7,7 +7,8 @@
       ! Can't coarsen `x$age` to `to$age`.
       i Use `by` to coarsen each group with its own classification?
       Caused by error in `age_df_coarsen_to()`:
-      ! Source "0-4" does not fit wholly inside a single target interval in `to$age`; it crosses a boundary or lies outside the target classification.
+      ! Source "0-4" does not fit inside a single interval in `to$age`.
+      x "0-4" crosses a boundary or lies outside the target classification.
 
 ---
 
@@ -17,5 +18,6 @@
       Error in `f()`:
       ! Can't coarsen `x$age` to `to$age`.
       Caused by error in `f()`:
-      ! Source "0-4" does not fit wholly inside a single target interval in `to$age`; it crosses a boundary or lies outside the target classification.
+      ! Source "0-4" does not fit inside a single interval in `to$age`.
+      x "0-4" crosses a boundary or lies outside the target classification.
 

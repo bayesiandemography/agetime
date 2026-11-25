@@ -3,8 +3,9 @@
 ## Run from the package root:
 ##   Rscript dev/messages/inventory.R
 ##
-## Writes dev/messages/inventory.csv (one row per message bullet) and
-## prints a summary. See dev/messages.md for the design.
+## Writes dev/messages/inventory.csv (one row per message bullet), and
+## prints a summary and any breaches of the conventions. See
+## dev/messages.md for the design.
 
 
 ## Settings ------------------------------------------------------------------
@@ -330,6 +331,61 @@ summarise_inventory <- function(inv) {
 }
 
 
+## Checks --------------------------------------------------------------------
+
+## Conventions in dev/messages.md that can be tested mechanically. Returns
+## one row per violation (empty when all pass).
+
+## Imperative openings of advice: hints and advice should be questions.
+ADVICE_START <- paste0("^(Use|Supply|Set|Add|Remove|Rename|Select|Give|",
+                       "Write|Recode|Or|To|If) ")
+
+check_inventory <- function(inv) {
+  text <- ifelse(is.na(inv$text), "", inv$text)
+  readable <- !inv$built_elsewhere
+  is_header <- inv$type == ""
+  ## a bullet that is a single interpolation, such as "{group}", has no
+  ## wording of its own
+  is_template_only <- grepl("^[{].*[}]$", text)
+  is_signal_site <- inv$bullet == 1L
+  rules <- list(
+    hint_not_interface = inv$type == "i" & readable & !inv$looks_like_hint,
+    interface_not_hint = inv$type == "*" & inv$looks_like_hint,
+    must_header = is_header & grepl("\\bmust\\b", text),
+    header_semicolon = is_header & grepl(";", text, fixed = TRUE),
+    advice_not_question = inv$type %in% c("i", "*") &
+      grepl(ADVICE_START, text) & !grepl("[?]$", text),
+    wording = grepl("Don't know|Cannot|Unable to|Internal error", text),
+    bullet_ending = readable & !is_template_only & !grepl("[.?]$", text),
+    base_signal = is_signal_site & startsWith(inv$signal, "base_"),
+    direct_signal = is_signal_site &
+      grepl("^(cli|rlang)_", inv$signal),
+    no_call = is_signal_site & inv$signal %in% c("abort", "warn") &
+      !inv$has_call & !inv$internal
+  )
+  ans <- lapply(names(rules), function(nm) {
+    i <- which(rules[[nm]])
+    data.frame(check = rep(nm, length(i)),
+               inv[i, c("file", "line", "text_line", "type", "text")])
+  })
+  ans <- do.call(rbind, ans)
+  rownames(ans) <- NULL
+  ans
+}
+
+print_checks <- function(fails) {
+  cat("\nChecks:", if (nrow(fails)) paste(nrow(fails), "violations") else "all pass",
+      "\n")
+  if (nrow(fails)) {
+    out <- sprintf("  [%s] %s:%d (%s) %s", fails$check, fails$file,
+                   fails$text_line,
+                   ifelse(fails$type == "", "header", fails$type), fails$text)
+    writeLines(out)
+  }
+  invisible(fails)
+}
+
+
 ## Run -----------------------------------------------------------------------
 
 if (sys.nframe() == 0L) {
@@ -339,5 +395,6 @@ if (sys.nframe() == 0L) {
   inv <- build_inventory()
   utils::write.csv(inv, PATH_OUT, row.names = FALSE, na = "")
   summarise_inventory(inv)
+  print_checks(check_inventory(inv))
   cat("\nWrote", PATH_OUT, "\n")
 }
