@@ -76,26 +76,56 @@ signalling site with `built_elsewhere = TRUE`, and also lists the
 messages are built this way, a small refactor that puts the text at the
 signalling call is a decision for step 2.
 
+## Conventions
+
+Agreed 2026-11-25, from the review (dev/messages/review.md). They apply
+to errors, warnings and messages.
+
+1. **Bullet types.**
+   - `i`: hints about agetime's interface: advice that names an agetime
+     function or a literal agetime argument, or gives code using them.
+     Dropped when a function is called from another function.
+   - `x`: problem details: what exactly is wrong (offending values,
+     overlaps, classes).
+   - `*`: context and explanation, group lines, and advice about the data
+     or input that names nothing of agetime's ("Supply a single value?",
+     "Write one-year ages as a single year, e.g. "5"?"). Kept in every
+     call.
+   A message with its `i` bullets removed must still make sense.
+2. **Headers state the problem as a fact**, short ("`labels` is a data
+   frame.", "`x` has length 3."), not "must". What is required goes in
+   later bullets.
+3. **Hints and advice are questions**, ending in `?`.
+4. **"Can't ..."** for failures ("Can't interpret", not "Don't know how
+   to interpret" or "Cannot"); no headers without a verb.
+5. **Internal errors** use `.internal = TRUE` (rlang adds a line asking
+   users to report the bug at the `BugReports` URL); no "Internal error:"
+   prefix; cli formatting for arguments and values.
+6. **Every bullet ends with `.` or `?`.**
+
+Also: arguments with `{.arg}`, values with `{.val}`, classes with
+`{.cls}`, functions with `{.fn}`; `cli` only, no base-R signals with text
+of their own; every signalling call outside internal errors passes
+`call =`; all messages go through the package's signalling wrappers
+(after step 3).
+
 ## Checks
 
-Rules the messages should follow; the script reports the rows that break
-each one. Rules come from the first inventory: look at what agetime
-already does, choose where it varies, and write the choice here.
-Candidates:
+The script reports the rows that break each convention it can test
+mechanically:
 
-- Every bullet ends with `.` or `?`.
-- The header states the problem; suggestions go in `i` bullets.
-- "Can't", not "Cannot" or "Unable to".
-- Arguments with `{.arg}`, values with `{.val}`, classes with `{.cls}`,
-  functions with `{.fn}`.
-- `cli` functions, not `stop()` or `warning()`.
-- Every signalling call passes `call =`.
-- Suggestions phrased consistently (questions, "Supply ...?", or
-  imperatives, "Supply ...": pick one).
-- `i` bullets are hints and other bullets are not (heuristic, after
-  step 3).
-- Messages go through the package's signalling wrappers, not
-  `cli::cli_abort()` directly (after step 3).
+- bullet types: an `i` bullet that does not look like an interface hint,
+  or a non-`i` bullet that does (heuristic: `{.fn}`, literal `{.arg}`,
+  `{.code}` naming an agetime function);
+- headers using "must";
+- hints and advice not ending in `?` (`i` and `*` bullets that look like
+  advice: starting "Use", "Supply", "Set", "Add", "Remove", "To ...");
+- "Don't know", "Cannot", "Unable to";
+- "Internal error:" text, or `.internal = TRUE` missing on internal
+  errors;
+- bullets not ending in `.` or `?`;
+- base-R signals with text; signalling calls without `call =`; direct
+  `cli::cli_abort()` etc. rather than the wrappers (after step 3).
 
 Once a check is stable, it can move into a test that is skipped on CRAN,
 so `devtools::test()` catches a new message that breaks it.
@@ -106,7 +136,7 @@ so `devtools::test()` catches a new message that breaks it.
    Run it, commit the CSV.
 2. **Review the inventory.** Classify each bullet (fact, advice about the
    data, hint); note inconsistencies; settle conventions and record them
-   above.
+   above. Done 2026-11-25: dev/messages/review.md.
 3. **The `i` convention** (dev/developer-functions.md): re-type bullets
    so that `i` means hint; `local_caller()` records whether the call is
    direct; wrappers around the cli signalling functions drop `i` bullets

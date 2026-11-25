@@ -4,8 +4,8 @@ Step 2 of dev/messages.md. Based on inventory.csv at commit 712b122
 (97 sites, 187 bullets). Row numbers below are inventory rows; locations
 are `file:text_line`.
 
-Status: for discussion. Conventions become rules (in dev/messages.md) once
-agreed; step 3 then applies them.
+Status: agreed 2026-11-25. Conventions recorded as rules in dev/messages.md;
+step 3 applies them. Answers at the end.
 
 ## Classification
 
@@ -149,3 +149,18 @@ whole dataset." All currently `i`. The last is dropped (decided).
   tree messages name no arguments. Neither package calls
   `age_labels_tree()` or the data-frame coarsening functions. Leaning
   defer.
+
+## Answers (2026-11-25)
+
+- Proposed conventions K1-K4 and K6: agreed.
+- **A1.** Keep advice about the data in indirect calls: it uses `*`, not
+  `i`. Global CLAUDE.md wording narrowed accordingly ("a hint about the
+  package's own interface").
+- **A2.** Keep the current approach: headers state the problem as a short
+  fact; what is required goes in later bullets (users read messages only
+  if each line is short, and the required form is often not simple to
+  state). Becomes K5; the eight "must" headers are reworded.
+- **A3.** Keep check names in assertion errors, in all calls.
+- **A4.** Deferred: no rule yet on literal argument names in headers and
+  details; revisit when a dependant can reach one of these messages
+  through a user error.
