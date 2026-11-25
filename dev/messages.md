@@ -1,6 +1,6 @@
 # Messages: inventory, conventions and checks
 
-Status: proposed (2026-11-24). Nothing built.
+Status: steps 1-3 done (2026-11-25); step 4 (checks) to do.
 
 ## Purpose
 
@@ -19,7 +19,7 @@ periodically, not a one-off review. `dev/` is in `.Rbuildignore`.
   that `git diff` shows every message added, removed or reworded.
 - `dev/messages/README.md`: how to run the script and read its output.
 
-Conventions (once settled) go in this note, with a pointer from
+Conventions are in this note, with a pointer from
 dev/api-principles.md.
 
 ## The inventory
@@ -159,7 +159,11 @@ so `devtools::test()` catches a new message that breaks it.
      Likewise "Using one classification for the whole dataset (by =
      NULL)" in the coarsening functions is dropped; when ungrouped data
      can't be coarsened, an `i` hint suggests `by` instead.
-   - **3c**: `call` docs, api-principles.
+   - **3c** (done 2026-11-25): the `call` docs (man-roxygen templates
+     and the help pages that document `call` themselves) say that
+     supplying `call` drops hints; the data-frame check functions also
+     ask wrappers to pass `by`. dev/api-principles.md gains the hints
+     rule, the definition of a hint, the wrappers and the `by` rule.
 
    Afterwards (user, 2026-11-25): once we are happy with the changes,
    consider adding the Conventions section to the global CLAUDE.md.

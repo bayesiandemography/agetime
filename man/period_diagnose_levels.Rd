@@ -146,7 +146,8 @@ The default is the \code{assert} function itself, so that errors
 name, for instance, \code{period_assert_levels()}. A function that
 calls an \code{assert} function can supply
 \code{call = rlang::current_env()}, so that errors name that
-function instead.}
+function instead. Supplying \code{call} also drops hints that name agetime functions and
+arguments, which may not make sense to users of the calling function.}
 }
 \value{
 \itemize{

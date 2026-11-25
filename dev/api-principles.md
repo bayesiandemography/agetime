@@ -116,13 +116,34 @@ Rules that new formats must follow:
   closed interval. If there are no closed intervals, `mid` functions throw
   an error.
 
-## Errors
+## Errors, warnings and messages
+
+Conventions for wording and bullet types, and the inventory script that
+checks them: dev/messages.md.
 
 - Errors report the function the user called. Internal helpers pass
-  `call = user_frame()` to `cli::cli_abort()`.
+  `call = user_frame()`.
+- All signals go through `abort_msg()`, `warn_msg()` and `inform_msg()`
+  (R/caller.R), not `cli::cli_abort()` etc. directly.
 - Messages name the problem and suggest a fix, using cli bullets. For
   instance, coarsening errors say whether a label would be split or is not
   fully covered, and assertion errors list each failed condition.
+- **Hints only for direct calls.** A hint is advice about agetime's own
+  interface: it names an agetime function or an agetime argument by its
+  literal name, or gives code using them. Hints are `i` bullets, and only
+  hints are `i` bullets. A function is called directly when `call` is left
+  at its default; `local_caller()` records this, and the wrappers drop `i`
+  bullets when the call is not direct, since the end user of a calling
+  package may have no such function or argument. A message without its
+  hints must still make sense. Facts, context, group lines and advice
+  about the data use other bullet types and are kept. Arguments named
+  through `x_arg`, `to_arg`, `data_arg` or `arg_nm()` are the caller's
+  names, so bullets that use them are not hints. Background:
+  dev/developer-functions.md.
+- **Callers pass `by` explicitly.** Functions called from other packages
+  should always receive `by`, even when it is `NULL`: an omitted `by`
+  picks up the grouping of a grouped data frame, which the calling
+  package did not choose.
 - Parse messages quote labels as the user supplied them, not their
   normalized forms. `intervals_inner()` passes the original label to
   `x_label()` as `label_orig`.

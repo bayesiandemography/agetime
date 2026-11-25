@@ -51,7 +51,8 @@ messages. Defaults to the expression supplied for \code{labels_y}.}
 in error and warning messages. The default is this function
 itself. A function that calls this function can supply
 \code{call = rlang::current_env()}, so that messages name it
-instead.}
+instead. Supplying \code{call} also drops hints that name agetime functions and
+arguments, which may not make sense to users of the calling function.}
 }
 \value{
 \link[tibble:tibble]{Tibble} or matrix,

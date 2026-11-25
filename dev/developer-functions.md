@@ -1,7 +1,8 @@
 # Calling agetime from other packages
 
-Status: agreed in outline (2026-11-24). Depends on dev/messages.md
-(message inventory, review, then the `i` convention). Nothing built.
+Status: hints rule built (2026-11-25; dev/messages.md, steps 3a-3c).
+Dot functions and error classes deferred (below); popcounts follow-up
+pending.
 Date: 23 November 2026; rewritten 24 November 2026.
 
 ## Problem

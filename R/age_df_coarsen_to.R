@@ -63,6 +63,8 @@
 #' @param call Execution environment of the function to name in errors.
 #' Defaults to this function. A calling function can supply
 #' `call = rlang::current_env()`.
+#' Supplying `call` also drops hints that name agetime functions and
+#' arguments, which may not make sense to users of the calling function.
 #' @returns A data frame of the same class and size as `data`, with the
 #' selected column recoded. Source groups may now have repeated labels;
 #' aggregate observations separately if required.

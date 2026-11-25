@@ -59,7 +59,8 @@ such as \code{"data$age"}.}
 in error and warning messages. The default is this function
 itself. A function that calls this function can supply
 \code{call = rlang::current_env()}, so that messages name it
-instead.}
+instead. Supplying \code{call} also drops hints that name agetime functions and
+arguments, which may not make sense to users of the calling function.}
 }
 \value{
 \code{age_interval()} returns a character vector,

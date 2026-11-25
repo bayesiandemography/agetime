@@ -145,7 +145,12 @@ cannot be interpreted. Choices are \code{"error"} (the default),
 expression. Selected-column messages append the column name.}
 
 \item{call}{Execution environment of the function to name in errors.
-Defaults to this function. A wrapper can supply \code{rlang::current_env()}.}
+Defaults to this function. A wrapper can supply \code{rlang::current_env()}.
+Supplying \code{call} also drops hints that name agetime functions and
+arguments, which may not make sense to users of the calling function.
+A wrapper should also supply \code{by} explicitly (\code{NULL} to check the
+whole data frame), so that grouping in its users' data does not
+change the checks.}
 }
 \value{
 \itemize{

@@ -35,7 +35,9 @@ warning messages. Default to the expressions supplied for the frames.}
 
 \item{call}{Execution environment of the function to name in errors.
 Defaults to this function. A calling function can supply
-\code{call = rlang::current_env()}.}
+\code{call = rlang::current_env()}.
+Supplying \code{call} also drops hints that name agetime functions and
+arguments, which may not make sense to users of the calling function.}
 }
 \value{
 A data frame of the same class and size as \code{data}, with the

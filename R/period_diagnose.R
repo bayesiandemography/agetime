@@ -117,7 +117,8 @@
 #' name, for instance, `period_assert_levels()`. A function that
 #' calls an `assert` function can supply
 #' `call = rlang::current_env()`, so that errors name that
-#' function instead.
+#' function instead. Supplying `call` also drops hints that name agetime functions and
+#' arguments, which may not make sense to users of the calling function.
 #'
 #' @return
 #' - `period_diagnose_levels()` returns a list with a logical `ok` flag

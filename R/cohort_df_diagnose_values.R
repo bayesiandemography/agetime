@@ -56,6 +56,11 @@
 #' expression. Selected-column messages append the column name.
 #' @param call Execution environment of the function to name in errors.
 #' Defaults to this function. A wrapper can supply `rlang::current_env()`.
+#' Supplying `call` also drops hints that name agetime functions and
+#' arguments, which may not make sense to users of the calling function.
+#' A wrapper should also supply `by` explicitly (`NULL` to check the
+#' whole data frame), so that grouping in its users' data does not
+#' change the checks.
 #' @returns
 #' - `cohort_df_diagnose_values()` returns an ungrouped tibble containing
 #'   grouping columns followed by `condition` (character), `passed`
