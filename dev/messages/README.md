@@ -57,7 +57,7 @@ other than internal errors.
 
 | Check | Breach |
 |---|---|
-| `hint_not_interface` | An `i` bullet that does not name a function, a literal argument or code |
+| `hint_not_interface` | An `i` bullet that does not name a function, an argument (literally, or through a variable such as `{.arg {x_arg}}`) or code |
 | `interface_not_hint` | A `*` bullet that does (headers and `x` bullets may name arguments literally) |
 | `must_header` | A header using "must" (convention 2) |
 | `header_semicolon` | A header joining two sentences with ";" (convention 2) |

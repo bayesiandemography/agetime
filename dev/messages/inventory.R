@@ -1,7 +1,7 @@
 ## Message inventory for an R package.
 ##
 ## Source: bayesiandemography/bdtools, dev/messages/inventory.R
-## last-updated: 2026-11-27 (S3 methods as entry points)
+## last-updated: 2026-11-27 (S3 methods as entry points; arguments named through variables count as interface in hints)
 ## Copied into each package's dev/messages/. Do not edit the copy:
 ## change the source, then copy it again. Package-specific settings go
 ## in dev/messages/config.R (see "Settings").
@@ -258,6 +258,13 @@ names_literal_arg <- function(text) {
   !is.na(text) & grepl("\\{\\.arg [A-Za-z._]", text)
 }
 
+## Does the text name an argument through a variable ({.arg {x_arg}})?
+## In an 'i' bullet, this is still an argument (the package's own, or
+## its caller's), so the bullet counts as interface.
+names_variable_arg <- function(text) {
+  !is.na(text) & grepl("{.arg {", text, fixed = TRUE)
+}
+
 ## Heuristic: a bullet other than the header that names a function
 ## ({.fn ...}), an argument by its literal name, or code ({.code ...}).
 ## Hints are exactly the
@@ -436,7 +443,8 @@ check_inventory <- function(inv) {
   is_template_only <- grepl("^[{].*[}]$", text)
   is_signal_site <- inv$bullet == 1L
   rules <- list(
-    hint_not_interface = inv$type == "i" & readable & !inv$looks_like_hint,
+    hint_not_interface = inv$type == "i" & readable & !inv$looks_like_hint &
+      !names_variable_arg(inv$text),
     interface_not_hint = inv$type == "*" & inv$looks_like_hint,
     must_header = is_header & grepl("\\bmust\\b", text),
     header_semicolon = is_header & grepl(";", text, fixed = TRUE),
