@@ -298,7 +298,13 @@ exported_reach <- function() {
     intersect(g, nms)
   })
   names(calls) <- nms
-  methods <- getNamespaceInfo(ns, "S3methods")[, 3L]
+  ## Column 3 is the method's name, or the method itself if it was
+  ## registered at run time with registerS3method() (as in tests)
+  s3 <- getNamespaceInfo(ns, "S3methods")
+  methods <- vapply(seq_len(nrow(s3)), function(i) {
+    m <- s3[[i, 3L]]
+    if (is.character(m)) m else paste(s3[[i, 1L]], s3[[i, 2L]], sep = ".")
+  }, "")
   exports <- sort(union(getNamespaceExports(ns), intersect(methods, nms)))
   reach <- stats::setNames(vector("list", length(nms)), nms)
   for (ex in exports) {
