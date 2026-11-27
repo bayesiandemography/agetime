@@ -24,12 +24,12 @@ test_that("registration is cleared after an error", {
   cnd <- tryCatch(age_upper(y), error = function(e) e)
   expect_match(conditionMessage(cnd), "in `y`", fixed = TRUE)
   expect_identical(deparse(cnd$call[[1L]]), "age_upper")
-  expect_false(caller_env$active)
+  expect_false(msg_registry$active)
 })
 
 test_that("registration is cleared after success", {
   expect_identical(age_lower(c("0-4", "5+")), c(0, 5))
-  expect_false(caller_env$active)
+  expect_false(msg_registry$active)
 })
 
 test_that("warnings name the calling function", {
@@ -102,8 +102,8 @@ test_that("local_caller() records whether the call is direct", {
   expect_true(fun_registers())
   wrapper <- function() fun_registers(call = rlang::current_env())
   expect_false(wrapper())
-  expect_false(caller_env$active)
-  expect_null(caller_env$direct)
+  expect_false(msg_registry$active)
+  expect_null(msg_registry$direct)
 })
 
 test_that("is_direct_call() is TRUE when nothing is registered", {

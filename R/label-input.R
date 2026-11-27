@@ -119,31 +119,3 @@ copy_labels_names <- function(x, labels) {
   names(x) <- names(labels)
   x
 }
-
-
-#' Find the Frame of the User-Facing Function
-#'
-#' If a user-facing function has registered a calling function with
-#' `local_caller()`, return that. Otherwise return the frame of the
-#' outermost \pkg{agetime} function on the call stack, which is the
-#' function the user called. Used so that
-#' error messages report, for instance, `age_coarsen()` rather than
-#' an internal helper.
-#'
-#' @returns An environment.
-#'
-#' @noRd
-user_frame <- function() {
-  if (isTRUE(caller_env$active)) {
-    return(caller_env$call)
-  }
-  ns <- topenv(environment(user_frame))
-  n <- sys.nframe()
-  for (i in seq_len(n - 1L)) {
-    env_fun <- environment(sys.function(i))
-    if (is.environment(env_fun) && identical(topenv(env_fun), ns)) {
-      return(sys.frame(i))
-    }
-  }
-  parent.frame() # nocov
-}

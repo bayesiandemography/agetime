@@ -24,12 +24,13 @@ Encoding: UTF-8
 Depends:
     R (>= 4.1.0)
 Imports:
-    cli,
+    cli (>= 3.0.0),
     rlang,
     tibble,
     tidyselect,
     vctrs
 Suggests:
+    codetools,
     dplyr,
     ggplot2,
     knitr,

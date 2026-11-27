@@ -149,7 +149,7 @@ test_that("data_arg, to_arg and call identify frames and columns in errors", {
   err <- expect_error(bad_keys(data.frame(age = "0+", year = 2023),
                                 data.frame(age = "0+", year = "2023")))
   expect_identical(err$call[[1L]], quote(bad_keys))
-  expect_false(caller_env$active)
+  expect_false(msg_registry$active)
 })
 
 test_that("tibbles and grouping metadata survive recoding", {

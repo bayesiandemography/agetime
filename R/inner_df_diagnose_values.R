@@ -25,7 +25,7 @@ inner_df_diagnose_values <- function(data, column, by, by_missing, label_type,
   column_arg <- paste0(data_arg, "$", column)
   ## Parsing helpers obtain the selected-column name from the outer call's
   ## temporary registration, cleared when the public entry point exits.
-  if (is.null(caller_env$args$labels)) caller_env$args$labels <- column_arg
+  if (is.null(msg_registry$args$labels)) msg_registry$args$labels <- column_arg
   labels <- to_character_or_factor(data[[column]], column_arg, TRUE)
   ## Character observations exclude unused factor levels, while retaining NA
   ## and repeats. The ordered observations also determine diagnostic examples.

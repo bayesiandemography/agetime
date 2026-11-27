@@ -124,7 +124,7 @@ checks them: dev/messages.md.
 - Errors report the function the user called. Internal helpers pass
   `call = user_frame()`.
 - All signals go through `abort_msg()`, `warn_msg()` and `inform_msg()`
-  (R/caller.R), not `cli::cli_abort()` etc. directly.
+  (R/import-standalone-messages.R, from bdtools), not `cli::cli_abort()` etc. directly.
 - Messages name the problem and suggest a fix, using cli bullets. For
   instance, coarsening errors say whether a label would be split or is not
   fully covered, and assertion errors list each failed condition.

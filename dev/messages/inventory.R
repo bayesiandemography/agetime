@@ -1,35 +1,63 @@
-## Message inventory for agetime.
+## Message inventory for an R package.
+##
+## Source: bayesiandemography/bdtools, dev/messages/inventory.R
+## last-updated: 2026-11-27 (S3 methods as entry points)
+## Copied into each package's dev/messages/. Do not edit the copy:
+## change the source, then copy it again. Package-specific settings go
+## in dev/messages/config.R (see "Settings").
 ##
 ## Run from the package root:
 ##   Rscript dev/messages/inventory.R
 ##
 ## Writes dev/messages/inventory.csv (one row per message bullet), and
-## prints a summary and any breaches of the conventions. See
-## dev/messages.md for the design.
+## prints a summary and any breaches of the conventions (global
+## CLAUDE.md, "Message wording"; listed in dev/messages/README.md).
+## tests/testthat/test-messages.R runs the same checks.
+##
+## Based on agetime's dev/messages/inventory.R (2026-11-25).
 
 
 ## Settings ------------------------------------------------------------------
 
-## Functions that signal conditions, or store message text for later
-## signalling. 'arg' is the argument holding the message.
+## Functions that signal conditions. 'arg' is the argument holding the
+## message.
 SIGNALS <- data.frame(
   fun = c("abort_msg", "warn_msg", "inform_msg",
           "cli_abort", "cli_warn", "cli_inform", "abort", "warn", "inform",
-          "stop", "warning", "message", "x_label_fail"),
+          "stop", "warning", "message"),
   signal = c("abort", "warn", "inform",
              "cli_abort", "cli_warn", "cli_inform", "rlang_abort", "rlang_warn",
-             "rlang_inform", "base_stop", "base_warning", "base_message",
-             "stored"),
+             "rlang_inform", "base_stop", "base_warning", "base_message"),
   arg = c("message", "message", "message",
           "message", "message", "message", "message", "message", "message",
-          "...", "...", "...", "msg")
+          "...", "...", "...")
 )
 
-## The signalling wrappers themselves, whose cli calls are not messages.
+## The signalling wrappers themselves (standalone-messages.R), whose cli
+## calls are not messages.
 WRAPPERS <- c("abort_msg", "warn_msg", "inform_msg")
+
+## Files not inventoried: standalone copies, whose messages are checked
+## in bdtools itself.
+SKIP_FILES <- "^import-standalone-"
 
 PATH_R <- "R"
 PATH_OUT <- file.path("dev", "messages", "inventory.csv")
+PATH_CONFIG <- file.path("dev", "messages", "config.R")
+
+## Package-specific settings. dev/messages/config.R, if present, is
+## sourced here, and may:
+## - add rows to SIGNALS, for functions that store message text to be
+##   signalled later (signal "stored"; e.g. agetime's x_label_fail(),
+##   with arg "msg");
+## - change SKIP_FILES.
+if (file.exists(PATH_CONFIG))
+  sys.source(PATH_CONFIG, envir = environment())
+
+## Name of the package, from DESCRIPTION.
+package_name <- function() {
+  unname(read.dcf("DESCRIPTION", fields = "Package")[1L, 1L])
+}
 
 
 ## Parsing -------------------------------------------------------------------
@@ -249,10 +277,12 @@ is_internal <- function(call) {
 
 ## Reach from exported functions ---------------------------------------------
 
-## For each package function, the exported functions that can reach
-## it, via an approximate call graph (codetools::findGlobals()).
+## For each package function, the entry points that can reach it, via
+## an approximate call graph (codetools::findGlobals()). Entry points
+## are exported functions and registered S3 methods (which users reach
+## through generics).
 exported_reach <- function() {
-  ns <- asNamespace("agetime")
+  ns <- asNamespace(package_name())
   nms <- ls(ns, all.names = TRUE)
   is_fn <- vapply(nms, function(nm) is.function(get(nm, envir = ns)), TRUE)
   nms <- nms[is_fn]
@@ -261,7 +291,8 @@ exported_reach <- function() {
     intersect(g, nms)
   })
   names(calls) <- nms
-  exports <- sort(getNamespaceExports(ns))
+  methods <- getNamespaceInfo(ns, "S3methods")[, 3L]
+  exports <- sort(union(getNamespaceExports(ns), intersect(methods, nms)))
   reach <- stats::setNames(vector("list", length(nms)), nms)
   for (ex in exports) {
     seen <- character()
@@ -283,6 +314,7 @@ exported_reach <- function() {
 
 build_inventory <- function() {
   files <- sort(list.files(PATH_R, pattern = "[.][Rr]$", full.names = TRUE))
+  files <- files[!grepl(SKIP_FILES, basename(files))]
   calls <- do.call(rbind, lapply(files, find_signal_calls))
   is_re <- mapply(is_resignal, calls$call, calls$called)
   n_resignal <- sum(is_re)
@@ -380,7 +412,7 @@ summarise_inventory <- function(inv) {
                                    "rlang_abort", "rlang_warn")
   cat("Sites without call =, other than internal errors:",
       sum(is_signal & !sites$has_call & !sites$internal), "\n")
-  cat("Bullets in functions no export reaches:",
+  cat("Bullets in functions no entry point reaches:",
       sum(inv$n_exported == 0L), "\n")
   invisible(inv)
 }
@@ -388,8 +420,8 @@ summarise_inventory <- function(inv) {
 
 ## Checks --------------------------------------------------------------------
 
-## Conventions in dev/messages.md that can be tested mechanically. Returns
-## one row per violation (empty when all pass).
+## Conventions that can be tested mechanically (dev/messages/README.md).
+## Returns one row per violation (empty when all pass).
 
 ## Imperative openings of advice: hints and advice should be questions.
 ADVICE_START <- paste0("^(Use|Supply|Set|Add|Remove|Rename|Select|Give|",

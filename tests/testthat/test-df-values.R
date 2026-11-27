@@ -178,7 +178,7 @@ test_that("errors and warnings retain each group's context and wrapper call", {
   err <- expect_error(wrapper(data), "g = B")
   expect_match(conditionMessage(err), "observations$age", fixed = TRUE)
   expect_identical(err$call[[1L]], quote(wrapper))
-  expect_false(caller_env$active)
+  expect_false(msg_registry$active)
   data$age <- rep(c("0-4", "bad"), 2)
   messages <- character()
   report <- withCallingHandlers(

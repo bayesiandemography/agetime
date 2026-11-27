@@ -76,7 +76,7 @@ for (domain in c("period", "cohort")) {
     expect_match(conditionMessage(err), "target$years", fixed = TRUE)
     expect_error(run("young", "2000+"), "Can't interpret")
     expect_error(run("2000+", "young", interpret_fail = "silent"), "does not describe an interval")
-    expect_false(caller_env$active)
+    expect_false(msg_registry$active)
   })
 }
 

@@ -65,7 +65,7 @@ Decided 2026-11-24 (replacing a proposed `hint()` helper):
 ### Mechanism
 
 - `local_caller()` already receives `call` and the exported function's
-  frame. It also records `caller_env$direct <- identical(call, frame)`.
+  frame. It also records `msg_registry$direct <- identical(call, frame)`.
   Only the outermost agetime function registers, so `direct` describes the
   call the user made. With nothing registered (internal use), the call
   counts as direct.
